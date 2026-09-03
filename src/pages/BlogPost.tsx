@@ -236,6 +236,7 @@ const BlogPost = () => {
   const articleSchema = {
     "@context": "https://schema.org",
     "@type": "BlogPosting",
+    "@id": `https://luxemia.shop/blog/${post.slug}#article`,
     "headline": post.title,
     "description": post.excerpt,
     "image": {
@@ -246,22 +247,16 @@ const BlogPost = () => {
     "dateModified": post.updatedAt,
     "author": {
       "@type": "Organization",
+      "@id": "https://luxemia.shop/authors/luxemia-editorial-team#editorial-team",
       "name": "LuxeMia Editorial Team",
       "url": "https://luxemia.shop/authors/luxemia-editorial-team"
     },
-    "publisher": {
-      "@type": "Organization",
-      "name": "LuxeMia",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://luxemia.shop/favicon.ico"
-      }
-    },
+    "publisher": { "@id": "https://luxemia.shop/#organization" },
     "mainEntityOfPage": {
-      "@id": `https://luxemia.shop/blog/${post.slug}`
+      "@id": `https://luxemia.shop/blog/${post.slug}#webpage`
     },
     "keywords": post.tags.join(", "),
-    "inLanguage": "en-US",
+    "inLanguage": "en",
     "genre": post.category,
     "wordCount": wordCount,
     "citation": post.sources.map(source => source.url),
@@ -276,6 +271,7 @@ const BlogPost = () => {
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    "@id": `https://luxemia.shop/blog/${post.slug}#breadcrumb`,
     "itemListElement": [
       {
         "@type": "ListItem",
@@ -286,7 +282,7 @@ const BlogPost = () => {
       {
         "@type": "ListItem",
         "position": 2,
-        "name": "Blog",
+        "name": "Guides",
         "item": "https://luxemia.shop/blog"
       },
       {
@@ -328,7 +324,7 @@ const BlogPost = () => {
     return faqs;
   };
 
-  const faqPairs = extractFAQPairs(post.content);
+  const faqPairs = post.guideStandard?.faqs ?? extractFAQPairs(post.content);
   const faqSchema = faqPairs.length >= 3 ? {
     "@context": "https://schema.org",
     "@type": "FAQPage",
@@ -364,7 +360,7 @@ const BlogPost = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead 
-        title={`${post.title} | LuxeMia Blog`}
+        title={`${post.title} | LuxeMia Guides`}
         description={post.excerpt}
         image={post.image}
         canonical={`https://luxemia.shop/blog/${post.slug}`}
@@ -411,7 +407,7 @@ const BlogPost = () => {
             <ol className="flex items-center gap-2 text-sm">
               <li><Link to="/" className="text-muted-foreground hover:text-primary">Home</Link></li>
               <li className="text-muted-foreground">/</li>
-              <li><Link to="/blog" className="text-muted-foreground hover:text-primary">Blog</Link></li>
+              <li><Link to="/blog" className="text-muted-foreground hover:text-primary">Guides</Link></li>
               <li className="text-muted-foreground">/</li>
               <li className="text-foreground truncate max-w-[200px]">{post.title}</li>
             </ol>
@@ -428,7 +424,7 @@ const BlogPost = () => {
                 className="inline-flex items-center gap-2 text-muted-foreground hover:text-primary mb-8 transition-colors"
               >
                 <ArrowLeft className="w-4 h-4" />
-                Back to Blog
+                Back to Guides
               </Link>
 
               {/* Category & Meta */}
@@ -444,6 +440,15 @@ const BlogPost = () => {
               <h1 className="text-3xl lg:text-4xl xl:text-5xl font-display font-bold text-foreground mb-6 leading-tight">
                 {post.title}
               </h1>
+
+              {post.guideStandard && (
+                <p
+                  data-guide-direct-answer
+                  className="mb-8 border-l-4 border-primary bg-primary/5 rounded-r-lg px-5 py-4 text-base leading-relaxed text-foreground sm:text-lg"
+                >
+                  {post.guideStandard.directAnswer}
+                </p>
+              )}
 
               {/* Author & Date */}
               <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground mb-2">
@@ -478,25 +483,23 @@ const BlogPost = () => {
                 })()}
                 <span className="flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
-                  {formatDateOnly(post.publishedAt)}
+                  Published {formatDateOnly(post.publishedAt)}
                 </span>
                 <span className="flex items-center gap-2">
                   <Clock className="w-4 h-4" />
                   {post.readTime} min read
                 </span>
               </div>
-              {/* Last Updated Date */}
-              {showUpdatedDate && (
-                <p className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
+              <p className="mb-2 mt-2 flex items-center gap-2 text-sm text-muted-foreground">
+                <BadgeCheck className="h-4 w-4 text-primary" />
+                Last reviewed: {formatDateOnly(post.factCheckedAt)}
+              </p>
+              {showUpdatedDate && post.updatedAt !== post.factCheckedAt && (
+                <p className="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
                   <RefreshCw className="w-3.5 h-3.5" />
                   Last updated: {formatDateOnly(post.updatedAt)}
                 </p>
               )}
-
-              <p className="mb-8 flex items-center gap-2 text-sm text-muted-foreground">
-                <BadgeCheck className="h-4 w-4 text-primary" />
-                Fact-checked against the sources below on {formatDateOnly(post.factCheckedAt)}
-              </p>
 
               {/* Featured Image */}
               <div className="aspect-[16/9] rounded-lg overflow-hidden mb-6">
@@ -504,12 +507,14 @@ const BlogPost = () => {
               </div>
 
               {/* Article Summary Box */}
-              <div className="mb-10 border-l-4 border-primary bg-primary/5 rounded-r-lg px-5 py-4">
-                <p className="text-sm font-semibold text-foreground mb-1">Article Summary</p>
-                <p className="text-sm text-muted-foreground leading-relaxed">
-                  {post.excerpt}
-                </p>
-              </div>
+              {!post.guideStandard && (
+                <div className="mb-10 border-l-4 border-primary bg-primary/5 rounded-r-lg px-5 py-4">
+                  <p className="text-sm font-semibold text-foreground mb-1">Article Summary</p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {post.excerpt}
+                  </p>
+                </div>
+              )}
 
               <aside className="mb-10 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6" aria-label="Shop LuxeMia styles related to this guide">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">

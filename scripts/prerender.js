@@ -18,8 +18,12 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const DIST_DIR = path.resolve(__dirname, '../dist');
 const SITE_URL = 'https://luxemia.shop';
-const FALLBACK_OG_IMAGE = `${SITE_URL}/og-image.jpg`;
-const FALLBACK_PRICE = '299.00';
+const DURABLE_INTENT_COLLECTION_PATHS = new Set([
+  '/collections/wedding-guest-lehengas',
+  '/collections/wedding-guest-kurta-sets',
+  '/collections/diwali-womenswear',
+  '/collections/diwali-menswear',
+]);
 const SEO_ARCHITECTURE = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8')
 );
@@ -49,12 +53,6 @@ const APPROVED_SITEMAP_PATHS = new Set(
 const OCCASION_SIGNALS = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/occasionSignals.json'), 'utf8')
 );
-const CUSTOMIZABLE_PRODUCTS = JSON.parse(
-  fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/customizableProducts.json'), 'utf8')
-);
-const CUSTOMIZABLE_PRODUCTS_BY_HANDLE = new Map(
-  CUSTOMIZABLE_PRODUCTS.map((product) => [product.handle, product])
-);
 const PRERENDER_MADE_TO_ORDER_TAGS = new Set([
   'made to order',
   'availability:made to order',
@@ -63,11 +61,21 @@ const PRERENDER_MADE_TO_ORDER_TAGS = new Set([
 
 function isMadeToOrderProduct(product) {
   if (!product) return false;
-  if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) return true;
+  return hasExplicitMadeToOrderEvidence(product);
+}
+
+function hasExplicitMadeToOrderEvidence(product) {
   return (product.tags || []).some((tag) =>
     PRERENDER_MADE_TO_ORDER_TAGS.has(String(tag).trim().toLowerCase())
   );
 }
+
+// Assigned from src/lib/productEvidence.ts before any catalog filtering or
+// product rendering. Keeping one implementation prevents initial HTML from
+// claiming customization that the hydrated purchase controls do not support.
+let hasExplicitCustomColorEvidence = () => false;
+let hasExplicitCustomMeasurementEvidence = () => false;
+let hasExplicitCustomizationEvidence = () => false;
 const RETIRED_PRODUCT_HANDLES = new Set(
   JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/data/legacyGoneProductHandles.json'), 'utf8'))
 );
@@ -82,8 +90,6 @@ const SIZE_OPTION_NAMES = new Set([
   'chest size',
   'stitching size',
 ]);
-const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
-
 function normalizeOptionName(value) {
   return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
 }
@@ -92,33 +98,11 @@ function isSizeOptionName(value) {
   return SIZE_OPTION_NAMES.has(normalizeOptionName(value));
 }
 
-function getCustomProductDescription(title) {
-  return `${title}. Made to order from measurements confirmed with LuxeMia, with a custom color available for this design. ${CUSTOM_PRODUCT_TIMING} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
-}
-
-function applyCustomizableProductDetails(product) {
-  const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product?.handle);
-  if (!matched) return product;
-
-  const description = getCustomProductDescription(matched.title);
-
-  return {
-    ...product,
-    title: matched.title,
-    description,
-    tags: [
-      ...(product.tags || []).filter((tag) => !/ready[- ]?to[- ]?ship|ships? within|worldwide|canada|australia|dhl|ddp/i.test(String(tag))),
-      'customizable',
-      'made to order',
-      'custom color',
-      'custom measurements',
-    ],
-    shipsWithinMetafield: null,
-    seo: {
-      title: `${matched.title} | LuxeMia`,
-      description,
-    },
-  };
+function isExplicitlyOrderable(product) {
+  const variants = product?.variants?.edges || [];
+  return product?.availableForSale === true
+    && variants.length > 0
+    && variants.some((variant) => variant?.node?.availableForSale === true);
 }
 
 // ─── TypeScript Data Loader ───────────────────────────────────────────────
@@ -154,8 +138,13 @@ async function loadTsModule(relativeSrcPath) {
     fs.unlinkSync(tmpFile);
   }
 }
-const FALLBACK_CURRENCY = 'USD';
 let rankCommercialProducts = (products) => [...products];
+let rankGenericLehengasByIntent = (products) => [...products];
+let getCollectionStandard = () => undefined;
+let indexableCollectionPaths = [];
+let hasExplicitReadyToShipEvidence = () => false;
+let isDurableIntentCollectionSlug = () => false;
+let isEligibleForDurableIntent = () => false;
 
 function normalizeWhitespace(value) {
   return value.replace(/\s+/g, ' ').trim();
@@ -167,22 +156,22 @@ function sanitizeProductCopy(value) {
     // facts, structured data, or customer-facing copy.
     .replace(/\s*Shipping:\s*5-day express delivery to USA and Canada[\s\S]*$/gi, '')
     .replace(/\s*FAQQ\s*:[\s\S]*$/gi, '')
-    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'U.S. standard shipping is $14.99 below $199 and free at $199 and above')
-    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'U.S. standard shipping is free at $199 and above and $14.99 below $199')
-    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Free U.S. standard shipping at $199 and above')
+    .replace(/(?:U\.S\.\s+)?standard shipping is \$12 below \$150 and free at \$150(?: and above|\+)?/gi, 'Review destination-specific shipping rates on the shipping page; checkout is the final source of truth')
+    .replace(/standard shipping is free at \$150(?: and above|\+)? and \$12 below \$150/gi, 'Review destination-specific shipping rates on the shipping page; checkout is the final source of truth')
+    .replace(/free (?:U\.S\.\s+)?(?:standard )?shipping (?:at|over) \$150(?: and above|\+)?/gi, 'Review destination-specific shipping rates on the shipping page')
     .replace(/shipping is free at \$150(?: and above|\+)?/gi, 'shipping is free at $199 and above')
-    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Free U.S. standard shipping at $199 and above. $14.99 below $199. Tracking provided after dispatch.')
-    .replace(/Free worldwide shipping to the seven supported destination countries via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Current U.S. rates and services are shown at checkout')
-    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Current U.S. rates and services are shown at checkout')
-    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Current U.S. rates and services are shown at checkout')
-    .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: tracking provided after dispatch')
+    .replace(/Ships within 1[–-]2 business days from the USA\.\s*Free shipping on orders over \$99\./gi, 'Review destination-specific shipping rates on the shipping page. When tracking is issued, carrier scans can appear after label creation.')
+    .replace(/Free worldwide shipping to the seven supported destination countries via DHL\/USPS\/UPS \(7-10 business days\)/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review destination-specific rates on the shipping page; checkout is the final source of truth')
+    .replace(/Free worldwide shipping to [^.]+?(?:arriving in |delivered in |within )?7-10 business days/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review destination-specific rates on the shipping page; checkout is the final source of truth')
+    .replace(/Free worldwide shipping to [^.]+?via DHL\/USPS\/UPS/gi, 'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review destination-specific rates on the shipping page; checkout is the final source of truth')
+    .replace(/Shipping:\s*5-day express delivery to USA and Canada/gi, 'Shipping: when tracking is issued, carrier scans can appear after label creation')
     .replace(/ready[- ]to[- ]ship Indian wear USA/gi, 'Indian ethnic wear online')
     .replace(/ready[- ]to[- ]ship/gi, 'Ready to Ship')
     .replace(/within two business days/gi, 'with tracked shipping')
     .replace(/within 2 business days/gi, 'with tracked shipping')
-    .replace(/from the USA/gi, 'with U.S. delivery')
-    .replace(/the seven supported destination countries/gi, 'the United States')
-    .replace(/free shipping on orders over \$350/gi, 'current U.S. shipping shown at checkout');
+    .replace(/from the USA/gi, 'for supported destinations')
+    .replace(/the seven supported destination countries/gi, 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius')
+    .replace(/free shipping on orders over \$350/gi, 'destination-specific shipping shown at checkout');
 }
 
 function sanitizeProductTitle(value) {
@@ -251,29 +240,6 @@ function getLabeledListingFact(description, labels) {
   return cleanVerifiedFact(plainMatch?.[1]);
 }
 
-function inferIncludedPiecesFromTitle(productTitle = '', tags = []) {
-  const title = String(productTitle || '').replace(/\s+/g, ' ').trim();
-  if (!title) return undefined;
-
-  const normalizedTags = (tags || []).map((tag) => String(tag).trim().toLowerCase());
-  const hasThreePieceEvidence = /\b(?:three|3)[-\s]?piece\b/i.test(title)
-    || normalizedTags.some((tag) => /^(?:three|3)[-\s]?piece(?:\s+suit|\s+set)?$/.test(tag));
-  const hasDupatta = /\bwith\b[^|,;]{0,48}\bdupatta\b/i.test(title);
-
-  if (hasThreePieceEvidence && hasDupatta && /\bpalazzo\b/i.test(title)) return 'Tunic, palazzo pants, and dupatta';
-  if (hasThreePieceEvidence && hasDupatta && /\bsharara\b/i.test(title)) return 'Tunic, sharara pants, and dupatta';
-  if (hasThreePieceEvidence && hasDupatta && /\bgharara\b/i.test(title)) return 'Tunic, gharara pants, and dupatta';
-  if (hasDupatta && /\bsalwar\s+kameez\b/i.test(title)) return 'Kameez, salwar pants, and dupatta';
-  if (hasThreePieceEvidence && hasDupatta && /\b(?:salwar\s+)?suit\b/i.test(title)) return 'Tunic, pants, and dupatta';
-  if (hasDupatta && /\blehenga\s+choli\b/i.test(title)) return 'Lehenga, choli, and dupatta';
-  if (hasDupatta && /\blehenga\b/i.test(title)) return 'Lehenga and dupatta';
-  if (/\bsaree\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bblouse\s+(?:piece|fabric|material)\b/i.test(title)) return 'Saree and blouse fabric';
-  if (/\bsherwani\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bstole\b/i.test(title)) return 'Sherwani and stole';
-  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bvest\b/i.test(title)) return 'Kurta, pajama pants, and vest';
-  if (/\bkurta\s+(?:pajama|pyjama)\b/i.test(title) && /\bwith\b[^|,;]{0,48}\bjacket\b/i.test(title)) return 'Kurta, pajama pants, and jacket';
-  return undefined;
-}
-
 function getExplicitIncludedPieces(product) {
   const fromTag = (product?.tags || []).find((tag) => /^(?:included|included pieces|pieces|set includes|package includes):/i.test(String(tag)));
   if (fromTag) {
@@ -281,11 +247,14 @@ function getExplicitIncludedPieces(product) {
     return cleanVerifiedFact(parsed);
   }
 
+  const sourceVerified = (product?.tags || []).some(
+    (tag) => String(tag).trim().toLowerCase() === 'facts:source-verified',
+  );
+  if (!sourceVerified) return undefined;
+
   const listingText = textFromListing(product?.description);
   if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
   const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
-  const titleBackedPieces = inferIncludedPiecesFromTitle(product?.title, product?.tags || []);
-  if (titleBackedPieces) return titleBackedPieces;
   const parsed = cleanVerifiedFact(explicit?.[1]);
   if (!parsed) return undefined;
 
@@ -294,10 +263,10 @@ function getExplicitIncludedPieces(product) {
   // product component when it names an actual garment/accessory and contains
   // no commercial-service language.
   if (/\$|\b(?:approved|price|pricing|fee|charge|service|shipping|delivery|return|refund|tier)\b/i.test(parsed)) {
-    return titleBackedPieces;
+    return undefined;
   }
   if (!/\b(?:blouse|choli|lehenga|skirt|dupatta|saree|fabric|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?|bracelet|ring|tikka|purse|potli)\b/i.test(parsed)) {
-    return titleBackedPieces;
+    return undefined;
   }
   return parsed;
 }
@@ -310,7 +279,9 @@ function getVerifiedOccasion(product) {
 
 function getListedProductAttributes(product) {
   const jewelry = isJewelryProduct(product?.productType, product?.title);
-  const listingText = `${product?.title || ''} ${product?.description || ''}`.toLowerCase();
+  const sourceVerified = (product?.tags || []).some(
+    (tag) => String(tag).trim().toLowerCase() === 'facts:source-verified',
+  );
   const optionValue = (...names) => product?.options
     ?.find(option => names.includes((option.name || '').toLowerCase()))
     ?.values?.[0];
@@ -328,8 +299,16 @@ function getListedProductAttributes(product) {
   const taggedColor = prefixedTagValue('color');
   const taggedMaterial = prefixedTagValue('fabric', 'material');
   const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
-  const listedMaterial = getLabeledListingFact(product?.description, ['Fabric', 'Material']);
-  const listedWork = getLabeledListingFact(product?.description, ['Work', 'Embroidery', 'Embellishment']);
+  const taggedCare = prefixedTagValue('care', 'care instructions');
+  const listedMaterial = sourceVerified
+    ? getLabeledListingFact(product?.description, ['Fabric', 'Material'])
+    : undefined;
+  const listedWork = sourceVerified
+    ? getLabeledListingFact(product?.description, ['Work', 'Embroidery', 'Embellishment'])
+    : undefined;
+  const listedCare = sourceVerified
+    ? getLabeledListingFact(product?.description, ['Care', 'Care Instructions'])
+    : undefined;
   const sizeValues = product?.options
     ?.find(option => isSizeOptionName(option?.name))
     ?.values
@@ -355,13 +334,10 @@ function getListedProductAttributes(product) {
 
   return {
     jewelry,
-    color: (rawColor || taggedColor) && (!jewelry || listingText.includes((rawColor || taggedColor).toLowerCase()))
-      ? (rawColor || taggedColor)
-      : undefined,
-    material: (rawMaterial || taggedMaterial || listedMaterial) && (!jewelry || listingText.includes((rawMaterial || taggedMaterial || listedMaterial).toLowerCase()))
-      ? cleanVerifiedFact(rawMaterial || taggedMaterial || listedMaterial)
-      : undefined,
+    color: cleanVerifiedFact(rawColor || taggedColor),
+    material: cleanVerifiedFact(rawMaterial || taggedMaterial || listedMaterial),
     work: !jewelry ? cleanVerifiedFact(taggedWork || listedWork) : undefined,
+    care: cleanVerifiedFact(taggedCare || listedCare),
     occasion: !jewelry ? getVerifiedOccasion(product) : undefined,
     sizes: jewelry ? [] : sizeValues,
     includedPieces: cleanVerifiedFact(includedPieces),
@@ -392,57 +368,7 @@ function getVerifiedPrimaryStyleReference(product) {
   return (referenceIsProductSpecific ? styleReference : skus[0]).slice(0, 80);
 }
 
-function buildVerifiedProductCopy(product) {
-  if (!product) return '';
-
-  const styleReference = getVerifiedPrimaryStyleReference(product);
-  const styleReferenceCopy = styleReference ? `Style reference: ${styleReference}.` : '';
-
-  if (CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(product.handle)) {
-    const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product.handle);
-    return normalizeWhitespace(
-      `${getCustomProductDescription(matched.title)} ${styleReferenceCopy} Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.`,
-    );
-  }
-
-  const isSourceVerifiedListing = (product.tags || []).some(
-    (tag) => String(tag).trim().toLowerCase() === 'facts:source-verified',
-  );
-  const sourceVerifiedDescription = isSourceVerifiedListing
-    ? textFromListing(sanitizeProductCopy(product.description))
-    : '';
-  if (sourceVerifiedDescription.length >= 80) {
-    return normalizeWhitespace(
-      `${styleReferenceCopy} ${sourceVerifiedDescription} Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.`,
-    );
-  }
-
-  const title = sanitizeProductTitle(product.title || product.handle || 'Indian ethnic wear');
-  const attributes = getListedProductAttributes(product);
-  const parts = [`${title}.`];
-
-  if (styleReferenceCopy) parts.push(styleReferenceCopy);
-
-  if (product.productType) parts.push(`Category: ${product.productType}.`);
-  if (attributes.color) parts.push(`Color: ${attributes.color}.`);
-  if (attributes.material) parts.push(`Material: ${attributes.material}.`);
-  if (attributes.work) parts.push(`Work: ${attributes.work}.`);
-  if (attributes.includedPieces) parts.push(`Includes: ${attributes.includedPieces}.`);
-  if (attributes.occasion) parts.push(`Suitable for: ${attributes.occasion}.`);
-  if (attributes.sizes.length > 0) {
-    parts.push(`Available options: ${attributes.sizes.join(', ')}.`);
-  }
-  if (attributes.shipsWithinDays) {
-    parts.push(`Catalog shipping estimate: ${attributes.shipsWithinDays} business day${attributes.shipsWithinDays === 1 ? '' : 's'} before carrier transit.`);
-  }
-
-  parts.push(
-    'Review the product images and available options for the exact pieces, measurements, and current availability.',
-    'Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.'
-  );
-
-  return normalizeWhitespace(parts.join(' '));
-}
+let buildVerifiedProductCopy = () => '';
 
 function getProductCategoryInfo(productType = '', title = '') {
   const type = productType.toLowerCase();
@@ -560,9 +486,6 @@ function clampDescription(raw, maxLength = 155) {
 // Listings / Rich Results validation.
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
-if (!SHOPIFY_STOREFRONT_TOKEN) {
-  console.warn('[prerender] WARNING: SHOPIFY_STOREFRONT_TOKEN env var is not set. Product prerendering will use fallback data.');
-}
 
 
 const ALL_PRODUCTS_QUERY = `
@@ -600,6 +523,15 @@ query GetAllProducts($first: Int!, $after: String) {
         materialMetafield: metafield(namespace: "custom", key: "material") {
           value
         }
+        occasionMetafield: metafield(namespace: "custom", key: "occasion") {
+          value
+        }
+        genderMetafield: metafield(namespace: "custom", key: "gender") {
+          value
+        }
+        conditionMetafield: metafield(namespace: "custom", key: "condition") {
+          value
+        }
         seo {
           title
           description
@@ -625,6 +557,9 @@ query GetAllProducts($first: Int!, $after: String) {
           }
         }
         variants(first: 100) {
+          pageInfo {
+            hasNextPage
+          }
           edges {
             node {
               id
@@ -681,8 +616,13 @@ function forceJpegForGmc(url) {
 }
 
 async function fetchAllShopifyProducts() {
+  if (!SHOPIFY_STOREFRONT_TOKEN) {
+    throw new Error('[catalog-integrity] SHOPIFY_STOREFRONT_TOKEN is required; product prerendering cannot use cached or hardcoded fallbacks.');
+  }
+
   const map = new Map();
   let cursor = null;
+  let reachedCatalogEnd = false;
   try {
     for (let i = 0; i < 20; i++) {
       const resp = await fetch(SHOPIFY_STOREFRONT_URL, {
@@ -697,25 +637,45 @@ async function fetchAllShopifyProducts() {
         }),
       });
       if (!resp.ok) {
-        console.warn(`[prerender] Shopify fetch returned ${resp.status} — using fallbacks`);
-        break;
+        throw new Error(`Shopify Storefront API returned HTTP ${resp.status}`);
       }
       const json = await resp.json();
+      if (Array.isArray(json?.errors) && json.errors.length > 0) {
+        throw new Error(`Shopify Storefront API returned GraphQL errors: ${json.errors.map((error) => error.message).join('; ')}`);
+      }
       const data = json?.data?.products;
-      if (!data) break;
+      if (!data || !Array.isArray(data.edges)) {
+        throw new Error('Shopify Storefront API response did not contain a products connection');
+      }
       for (const edge of data.edges || []) {
         const p = edge.node;
-        if (p?.handle && !HIDDEN_BILLING_PRODUCT_HANDLES.has(p.handle)) {
-          map.set(p.handle, applyCustomizableProductDetails(p));
+        if (
+          p?.handle
+          && !HIDDEN_BILLING_PRODUCT_HANDLES.has(p.handle)
+          && !RETIRED_PRODUCT_HANDLES.has(p.handle)
+        ) {
+          map.set(p.handle, p);
         }
       }
-      if (!data.pageInfo?.hasNextPage) break;
+      if (!data.pageInfo?.hasNextPage) {
+        reachedCatalogEnd = true;
+        break;
+      }
+      if (!data.pageInfo.endCursor || data.pageInfo.endCursor === cursor) {
+        throw new Error('Shopify pagination reported another page without a new cursor');
+      }
       cursor = data.pageInfo.endCursor;
     }
   } catch (err) {
-    console.warn(`[prerender] Shopify fetch failed: ${err.message} — using fallbacks`);
+    throw new Error(`[catalog-integrity] Live Shopify product fetch failed: ${err.message}`);
   }
-  console.log(`[prerender] Loaded ${map.size} products from Shopify Storefront API`);
+  if (!reachedCatalogEnd) {
+    throw new Error('[catalog-integrity] Live Shopify product fetch exceeded the 2,000-product pagination guard before reaching the catalog end.');
+  }
+  if (map.size === 0) {
+    throw new Error('[catalog-integrity] Live Shopify product fetch returned no eligible products; refusing to generate product prerenders.');
+  }
+  console.log(`[prerender] Loaded ${map.size} eligible products from the complete Shopify Storefront API catalog`);
   return map;
 }
 
@@ -799,7 +759,7 @@ function escapeRegex(value) {
 
 function matchesOccasionProduct(product, occasion) {
   const signals = OCCASION_SIGNALS[occasion];
-  if (!signals || product.availableForSale === false) return false;
+  if (!signals || !isExplicitlyOrderable(product)) return false;
 
   const searchableValues = [
     product.title || '',
@@ -816,22 +776,40 @@ function matchesOccasionProduct(product, occasion) {
 function filterProductsForCategory(allProducts, category, newestFirst = false, maxProducts = MAX_COLLECTION_PRODUCTS) {
   if (category === 'ready-to-ship') {
     return allProducts
-      .filter((product) => product.availableForSale !== false)
+      .filter(isExplicitlyOrderable)
       .filter((product) => !isMadeToOrderProduct(product))
-      .slice(0, MAX_COLLECTION_PRODUCTS);
+      .filter((product) => hasExplicitReadyToShipEvidence(product))
+      .slice(0, maxProducts);
+  }
+  if (category === 'made-to-order') {
+    return allProducts
+      .filter((product) => hasExplicitMadeToOrderEvidence(product))
+      .filter(isExplicitlyOrderable)
+      .slice(0, maxProducts);
   }
   if (category === 'customizable') {
     return allProducts
-      .filter((product) => product.availableForSale !== false)
-      .filter((product) => isMadeToOrderProduct(product))
+      .filter(isExplicitlyOrderable)
+      .filter((product) => hasExplicitCustomizationEvidence(product))
       .slice(0, maxProducts);
   }
 
   if (category.startsWith('occasion:')) {
     const occasion = category.slice('occasion:'.length);
+    if (isDurableIntentCollectionSlug(occasion)) {
+      return allProducts
+        .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
+        .filter((product) => isEligibleForDurableIntent(product, occasion))
+        .slice(0, maxProducts);
+    }
+    const signalOccasion = occasion.startsWith('wedding-guest-')
+      ? 'wedding-guest'
+      : occasion.startsWith('diwali-')
+        ? 'diwali'
+        : occasion;
     return allProducts
       .filter((product) => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
-      .filter((product) => matchesOccasionProduct(product, occasion))
+      .filter((product) => matchesOccasionProduct(product, signalOccasion))
       .filter((product) => occasion !== 'groomsmen' || isMenswearProduct(product))
       .filter((product) => {
         if (occasion !== 'navratri-chaniya') return true;
@@ -1077,6 +1055,7 @@ function buildHydrationProductNode(product) {
     tags: getCrawlerSafeTags(product.tags),
     availableForSale: product.availableForSale,
     shipsWithinMetafield: product.shipsWithinMetafield || null,
+    conditionMetafield: product.conditionMetafield || null,
     priceRange: product.priceRange,
     compareAtPriceRange: product.compareAtPriceRange,
     images: product.images,
@@ -1111,21 +1090,24 @@ function generateCollectionProductHtml(products) {
     return '<p>New arrivals are being added to this collection. Please check back shortly.</p>';
   }
   const cards = products.map(p => {
-    const price = p.priceRange?.minVariantPrice?.amount;
-    const currency = p.priceRange?.minVariantPrice?.currencyCode || 'USD';
-    const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
-    const isAvailable = p.availableForSale !== false;
+    const priceMoney = p.priceRange?.minVariantPrice;
+    if (!isValidShopifyMoney(priceMoney)) {
+      throw new Error(`[catalog-integrity] /product/${p.handle || '(missing-handle)'} cannot appear in collection HTML without an explicit valid Shopify price and currency.`);
+    }
+    const price = priceMoney.amount;
+    const currency = priceMoney.currencyCode;
+    const compareMoney = p.compareAtPriceRange?.maxVariantPrice;
+    const isAvailable = isExplicitlyOrderable(p);
     const firstImage = p.images?.edges?.[0]?.node;
     const imgHtml = firstImage
       ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || sanitizeProductTitle(p.title) || '')}" width="400" height="500" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`
       : '';
 
-    let priceHtml = '';
-    if (price) {
-      priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
-      if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
-        priceHtml += ` <s style="color:#888">${currency} ${parseFloat(comparePrice).toFixed(2)}</s>`;
-      }
+    let priceHtml = `<strong>${currency} ${Number(price).toFixed(2)}</strong>`;
+    if (isValidShopifyMoney(compareMoney)
+      && compareMoney.currencyCode === currency
+      && Number(compareMoney.amount) > Number(price)) {
+      priceHtml += ` <s style="color:#888">${currency} ${Number(compareMoney.amount).toFixed(2)}</s>`;
     }
 
     const availability = isAvailable ? 'In Stock' : 'Currently Unavailable';
@@ -1145,6 +1127,49 @@ function generateCollectionProductHtml(products) {
   return `<div style="margin:24px 0">${cards}</div>`;
 }
 
+function generateCollectionStandardHtml(standard) {
+  if (!standard) return '';
+  const chooseBy = standard.chooseBy
+    .map((item) => `<li><a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a></li>`)
+    .join('');
+  const rows = standard.decisionRows
+    .map((row) => `<tr>${row.map((cell) => `<td>${escapeHtml(cell)}</td>`).join('')}</tr>`)
+    .join('');
+  const guides = standard.guideLinks
+    .map((item) => `<li><a href="${escapeHtml(item.href)}">${escapeHtml(item.label)}</a></li>`)
+    .join('');
+  const faqs = standard.faqs
+    .map((faq) => `<h3>${escapeHtml(faq.question)}</h3><p>${escapeHtml(faq.answer)}</p>`)
+    .join('');
+
+  return `<section data-collection-standard>
+      <h2>Choose by shopping need</h2>
+      <nav aria-label="Choose by shopping need"><ul>${chooseBy}</ul></nav>
+      <h2>Compare before choosing</h2>
+      <table data-collection-decision-table>
+        <thead><tr><th>Option</th><th>May suit</th><th>Verify on the listing</th></tr></thead>
+        <tbody>${rows}</tbody>
+      </table>
+      <div data-collection-selection-guidance>
+        <h2>Product selection guidance</h2>
+        <p>${escapeHtml(standard.selectionGuidance)}</p>
+      </div>
+      <h2>Relevant guides</h2>
+      <ul data-collection-guides>${guides}</ul>
+      <h2>Shipping, returns and support</h2>
+      <nav aria-label="Shipping, returns and support">
+        <a href="/shipping">Shipping rates and planning</a> |
+        <a href="/returns#merchant-return-policy">Returns and covered order issues</a> |
+        <a href="/sizing-measurements-guide">Sizing and measurements</a> |
+        <a href="/contact">Contact LuxeMia support</a>
+      </nav>
+      <div data-collection-faqs>
+        <h2>Frequently asked questions</h2>
+        ${faqs}
+      </div>
+    </section>`;
+}
+
 function generateApprovedOverflowProductLinks(allProducts, displayedProducts) {
   const displayedHandles = new Set((displayedProducts || []).map((product) => product.handle));
   const overflowProducts = (allProducts || [])
@@ -1159,8 +1184,7 @@ function generateApprovedOverflowProductLinks(allProducts, displayedProducts) {
 }
 
 function isAvailableForSiblingLinks(product) {
-  return product?.availableForSale === true
-    || product?.variants?.edges?.some((variant) => variant?.node?.availableForSale === true);
+  return isExplicitlyOrderable(product);
 }
 
 function generateApprovedSiblingProductLinks(product, allShopifyProducts, limit = 4) {
@@ -1300,8 +1324,134 @@ function generateUsProductShippingDetails(shipsWithinDays) {
 
 function normalizeBrand(vendor) {
   const raw = (vendor || '').trim();
-  if (!raw) return 'LuxeMia';
-  return /^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, '')) ? 'LuxeMia' : raw;
+  if (!raw) return '';
+  // `vendor` can contain an internal supplier label. Only the catalog's
+  // explicitly recognized LuxeMia aliases are valid consumer-brand evidence.
+  return /^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, '')) ? 'LuxeMia' : '';
+}
+
+function generateProductBrandSchema(vendor) {
+  const name = normalizeBrand(vendor);
+  if (!name) return undefined;
+  return name === 'LuxeMia'
+    ? { '@id': `${SITE_URL}/#brand` }
+    : { '@type': 'Brand', name };
+}
+
+function getVerifiedItemCondition(product) {
+  const conditionTag = (product?.tags || []).find((tag) => /^condition\s*[:=]\s*\S/i.test(String(tag).trim()));
+  const raw = String(
+    product?.conditionMetafield?.value
+    || (conditionTag ? conditionTag.replace(/^condition\s*[:=]\s*/i, '') : ''),
+  ).trim().toLowerCase();
+  const normalized = raw.replace(/[\s_-]+/g, '');
+  const conditions = {
+    new: 'NewCondition',
+    newcondition: 'NewCondition',
+    used: 'UsedCondition',
+    usedcondition: 'UsedCondition',
+    preowned: 'UsedCondition',
+    refurbished: 'RefurbishedCondition',
+    refurbishedcondition: 'RefurbishedCondition',
+    damaged: 'DamagedCondition',
+    damagedcondition: 'DamagedCondition',
+  };
+  return conditions[normalized] ? `https://schema.org/${conditions[normalized]}` : undefined;
+}
+
+function isValidShopifyMoney(money) {
+  return typeof money?.amount === 'string'
+    && money.amount.trim() !== ''
+    && Number.isFinite(Number(money.amount))
+    && Number(money.amount) > 0
+    && /^[A-Z]{3}$/.test(String(money.currencyCode || ''));
+}
+
+function getLiveProductPrerenderEvidence(product) {
+  const handle = String(product?.handle || '').trim();
+  const errors = [];
+  if (!handle) errors.push('missing handle');
+  if (!String(product?.title || '').trim()) errors.push('missing title');
+  if (typeof product?.availableForSale !== 'boolean') errors.push('missing product availability');
+
+  const rawImages = product?.images?.edges
+    ?.map((edge) => edge?.node?.url)
+    .filter((url) => typeof url === 'string' && url.trim()) || [];
+  if (rawImages.length === 0) errors.push('missing Shopify product image');
+
+  const variants = product?.variants?.edges?.map((edge) => edge?.node).filter(Boolean) || [];
+  if (product?.variants?.pageInfo?.hasNextPage) errors.push('more than 100 variants; fetched variant set is incomplete');
+  if (variants.length === 0) errors.push('missing Shopify variant');
+
+  const minimumPrice = product?.priceRange?.minVariantPrice;
+  if (!isValidShopifyMoney(minimumPrice)) errors.push('missing or invalid Shopify minimum price');
+
+  variants.forEach((variant, index) => {
+    const numericVariantId = String(variant?.id || '').trim().split('/').pop() || '';
+    if (!/^\d+$/.test(numericVariantId)) errors.push(`variant ${index + 1} is missing its numeric Shopify ID`);
+    if (typeof variant?.availableForSale !== 'boolean') errors.push(`variant ${index + 1} is missing availability`);
+    if (!isValidShopifyMoney(variant?.price)) errors.push(`variant ${index + 1} is missing a valid Shopify price`);
+  });
+
+  const description = buildVerifiedProductCopy(product);
+  if (!description) errors.push('missing source-backed product description');
+  if (errors.length > 0) {
+    throw new Error(`[catalog-integrity] /product/${handle || '(missing-handle)'} cannot be prerendered from current Shopify evidence: ${errors.join('; ')}`);
+  }
+
+  return {
+    images: rawImages.map(forceJpegForGmc),
+    variants,
+    minimumPrice,
+    description,
+    availableForSale: product.availableForSale === true && variants.some((variant) => variant.availableForSale === true),
+  };
+}
+
+function getProductVariantUrl(canonical, variant) {
+  const numericVariantId = String(variant?.id || '').trim().split('/').pop() || '';
+  if (!/^\d+$/.test(numericVariantId)) {
+    throw new Error(`[catalog-integrity] Cannot publish an exact-variant URL without a numeric Shopify variant ID.`);
+  }
+  return `${canonical}?variant=${encodeURIComponent(numericVariantId)}`;
+}
+
+function getVisibleVariantLabel(variant, index) {
+  const optionValues = (variant?.selectedOptions || [])
+    .filter((option) => (
+      option?.value
+      && String(option.name || '').trim().toLowerCase() !== 'title'
+      && String(option.value).trim().toLowerCase() !== 'default title'
+    ))
+    .map((option) => String(option.value).trim())
+    .filter(Boolean);
+  return [...new Set(optionValues)].join(' / ') || `available variant ${index + 1}`;
+}
+
+function assertExactLiveProductRouteSet(routeInventory, productMap) {
+  const productRoutes = routeInventory.filter((route) => route.path.startsWith('/product/'));
+  const routeHandles = productRoutes.map((route) => route.path.slice('/product/'.length));
+  const routeHandleSet = new Set(routeHandles);
+  const eligibleHandles = [...productMap.keys()].sort();
+  const missing = eligibleHandles.filter((handle) => !routeHandleSet.has(handle));
+  const extra = [...routeHandleSet].filter((handle) => !productMap.has(handle)).sort();
+  const duplicates = [...routeHandleSet].filter(
+    (handle) => routeHandles.filter((candidate) => candidate === handle).length > 1,
+  );
+  const detached = productRoutes
+    .filter((route) => productMap.get(route.path.slice('/product/'.length)) !== route.product)
+    .map((route) => route.path);
+
+  if (missing.length > 0 || extra.length > 0 || duplicates.length > 0 || detached.length > 0) {
+    throw new Error(
+      '[catalog-integrity] Generated product routes do not exactly match the eligible live Shopify catalog. '
+      + `Missing: ${missing.join(', ') || 'none'}; extra: ${extra.join(', ') || 'none'}; `
+      + `duplicates: ${duplicates.join(', ') || 'none'}; detached records: ${detached.join(', ') || 'none'}.`,
+    );
+  }
+
+  for (const product of productMap.values()) getLiveProductPrerenderEvidence(product);
+  return eligibleHandles;
 }
 
 function getGtinSchemaProperty(value) {
@@ -1321,55 +1471,46 @@ function getGtinSchemaProperty(value) {
 
 // schema.org ItemList JSON-LD for collection pages. Each ListItem wraps a Product
 // with url/image/name/offers — what Google Merchant Center reads for rich results.
-function generateItemListJsonLd(products, category, routePath) {
+function generateItemListJsonLd(products, collectionName, routePath) {
   const canonical = SITE_URL + routePath;
-  const items = products.map((p, i) => {
-    const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
-    const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
-    const image = p.images?.edges?.[0]?.node?.url
-      ? forceJpegForGmc(p.images.edges[0].node.url)
-      : FALLBACK_OG_IMAGE;
-    const availability = p.availableForSale === true || p.variants?.edges?.some((variant) => variant.node.availableForSale)
-      ? 'https://schema.org/InStock'
-      : 'https://schema.org/OutOfStock';
-    const productUrl = `${SITE_URL}/product/${p.handle}`;
-    const shipsWithinDays = getListedProductAttributes(p).shipsWithinDays;
-    return {
-      '@type': 'ListItem',
-      position: i + 1,
-      item: {
-        '@type': 'Product',
-        name: sanitizeProductTitle(p.title),
-        image,
-        url: productUrl,
-        description: buildVerifiedProductCopy(p).slice(0, 5000),
-        sku: (p.id || '').split('/').pop() || p.handle,
-        brand: { '@type': 'Brand', name: 'LuxeMia' },
-        offers: {
-          '@type': 'Offer',
-          url: productUrl,
-          price,
-          priceCurrency: currency,
-          availability,
-          itemCondition: 'https://schema.org/NewCondition',
-          seller: { '@id': `${SITE_URL}/#organization` },
-          merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-          shippingDetails: generateUsProductShippingDetails(shipsWithinDays),
-        },
-      },
-    };
-  });
+  const items = products.map((product, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name: sanitizeProductTitle(product.title),
+    url: `${SITE_URL}/product/${product.handle}`,
+    ...(product.images?.edges?.[0]?.node?.url
+      ? { image: forceJpegForGmc(product.images.edges[0].node.url) }
+      : {}),
+  }));
 
   return {
     '@context': 'https://schema.org',
     '@type': 'ItemList',
-    '@id': `${canonical}#products`,
-    name: category === 'all' ? 'LuxeMia Collection' : `LuxeMia ${category.charAt(0).toUpperCase() + category.slice(1)}`,
+    '@id': `${canonical}#itemlist`,
+    name: collectionName,
     url: canonical,
     numberOfItems: items.length,
     itemListElement: items,
   };
 }
+
+function generateFaqPageJsonLd(faqs) {
+  if (!Array.isArray(faqs) || faqs.length === 0) return null;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map((faq) => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      },
+    })),
+  };
+}
+
+const CANCELLATION_POLICY_ANSWER = 'Contact LuxeMia immediately to request cancellation. Requests received within 24 hours are more likely to be reviewed before fulfillment begins, but cancellation is not guaranteed and may become unavailable sooner. A request is not confirmed until LuxeMia accepts it. Nothing in this process limits rights that cannot legally be excluded.';
 
 const FAQ_PAGE_SCHEMA = {
   '@context': 'https://schema.org',
@@ -1380,7 +1521,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'Where does LuxeMia ship?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.',
+        text: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Rates vary by destination; the shipping page lists current destination-specific rates and checkout is the final source of truth.',
       },
     },
     {
@@ -1388,7 +1529,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'How long does LuxeMia shipping take?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.',
+        text: 'When tracking is issued, carrier scans can appear after label creation. Carrier transit time begins after dispatch.',
       },
     },
     {
@@ -1404,7 +1545,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'What is LuxeMia’s return policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours with supporting evidence.',
+        text: 'Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.',
       },
     },
     {
@@ -1412,7 +1553,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'Can I cancel a LuxeMia order?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.',
+        text: `${CANCELLATION_POLICY_ANSWER} Email hello@luxemia.shop immediately with your order number.`,
       },
     },
   ],
@@ -1442,24 +1583,24 @@ const MEASUREMENT_HOW_TO_SCHEMA = {
 const semanticCommerceRoutes = [
   {
     path: '/us-support',
-    title: 'U.S.-Based Online Customer Support | LuxeMia',
-    description: 'Contact LuxeMia for product, sizing, order and issue-reporting support from its U.S.-based online retail team.',
-    h1: 'U.S.-Based Online Customer Support',
-    content: '<p>LuxeMia is an online-only retailer. Contact support by email, phone, WhatsApp or the contact form for product, sizing and order questions.</p><h2>Before ordering</h2><p>Share the product link, destination, selected option, measurements and event date. Support can clarify published details but cannot guarantee event-date delivery.</p><h2>Issue escalation</h2><p>Report damage, defects, a materially misdescribed item, an incorrect item or missing pieces promptly. The 48-hour evidence request does not remove rights that cannot legally be excluded.</p>',
+    title: 'Online Support for U.S. Customers | LuxeMia',
+    description: 'Contact LuxeMia for online product, sizing, order and issue-reporting support for customers shopping from the United States.',
+    h1: 'Online Support for U.S. Customers',
+    content: '<p>LuxeMia is an online-only retailer. Customers can use the <a href="/contact">contact form</a>, email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a>, call <a href="tel:+12153419990">+1 215-341-9990</a> or use the listed <a href="https://wa.me/12153419990">WhatsApp contact</a> for product, sizing and order questions. Requests are reviewed through the online queue; response times vary and same-day replies or event-date delivery are not guaranteed.</p><h2>Before ordering</h2><p>Share the product link, destination, selected size or stitching option, measurements and event date. Support can help locate the relevant published details and identify anything that must be confirmed before purchase.</p><h2>After ordering</h2><p>Include the order number when asking about processing, tracking, address corrections or a delivery issue. Address changes may not be possible after fulfillment begins.</p><h2>Issue escalation</h2><p>For damage, defects, a materially misdescribed item, an incorrect item or missing pieces, contact LuxeMia promptly. Keep all packaging and provide clear photos and a continuous unboxing video when available. The 48-hour request supports faster evidence review; it does not remove rights that cannot legally be excluded.</p><h2>Policies and standards</h2><p><a href="/privacy">Privacy choices</a>, <a href="/terms">terms</a>, <a href="/editorial-policy">editorial policy</a> and <a href="/review-policy">review safeguards</a>.</p>',
   },
   {
     path: '/editorial-policy',
     title: 'Editorial Policy and Product-Fact Standards | LuxeMia',
     description: 'How LuxeMia sources, reviews, dates and corrects product information and Indian attire guides.',
     h1: 'Editorial Policy and Product-Fact Standards',
-    content: '<p>LuxeMia separates supplier-provided product facts from general educational guidance. Missing optional facts are omitted rather than guessed.</p><h2>Product-fact verification</h2><p>Included pieces require explicit evidence. Availability, price and selected options come from current commerce data.</p><h2>Corrections</h2><p>Send the page URL and supporting source to hello@luxemia.shop.</p>',
+    content: '<p>LuxeMia separates supplier-provided product facts from general educational guidance. Product claims are limited to the current listing, selected variant, tags, metafields or other traceable catalog evidence; missing optional facts are omitted rather than guessed.</p><h2>Product-fact verification</h2><p>Included pieces require explicit evidence. Material names are not converted into fiber percentages. Availability, price and selected options come from current commerce data. Fulfillment labels describe processing classification and are not inferred from sale availability alone.</p><h2>Guide methodology</h2><p>Guides use identified primary or established sources where factual background is needed. Cultural practices are described with regional, religious and family variation in mind. Commercial links are selected by verified attributes rather than unsupported assumptions.</p><h2>Corrections</h2><p>Articles display publication and last-reviewed dates. Send a material correction request with the page URL and supporting source to <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a>; warranted corrections are reflected on the page.</p><p><a href="/blog">Indian attire guides</a> · <a href="/review-policy">Review safeguards</a> · <a href="/contact">Contact the editorial team</a></p>',
   },
   {
     path: '/review-policy',
-    title: 'Customer Review Policy | LuxeMia',
-    description: 'How LuxeMia requests, labels, moderates and publishes customer reviews without inventing or selectively rewriting them.',
-    h1: 'Customer Review Policy',
-    content: '<p>LuxeMia does not invent reviews or alter a customer’s meaning. Verified-purchase labels require a connection to a completed order.</p><h2>Moderation</h2><p>Privacy violations, unlawful content, abuse and spam may be removed. Critical reviews are not rejected simply because they are negative.</p>',
+    title: 'Customer Review Program Conditions | LuxeMia',
+    description: 'How LuxeMia handles review claims and the safeguards required before any third-party post-purchase survey can be enabled.',
+    h1: 'Customer Review Program Conditions',
+    content: '<p>LuxeMia does not operate or seed a separate on-site customer-review feed. This page does not claim that Google Customer Reviews enrollment, survey eligibility or a seller rating is currently active. Any future Google survey may run only inside Shopify’s protected post-purchase context, using verified order fields and an evidence-based delivery estimate, with the shopper deciding whether to opt in.</p><h2>Public return page</h2><p>The public LuxeMia return page has no signed Shopify order context. It does not trust order identifiers, email addresses, totals, countries or delivery dates supplied in a URL, and it does not pass those values to Google or record a purchase from them.</p><h2>Conditions for any survey</h2><p>A survey integration may be enabled only in Shopify’s protected post-purchase context after the required order identifier, customer email, delivery country and delivery estimate are verified. The estimate must come from evidence for that order rather than a universal number of days. If a required field is unavailable or cannot be verified, the survey must not render. The shopper must retain the optional opt-in choice described by the provider.</p><h2>Review integrity and control</h2><p>LuxeMia does not create, seed, rewrite or selectively suppress customer reviews. If a third-party review program is later verified and enabled, that provider controls its survey, content rules, privacy handling and any aggregate rating. A badge-script request by itself is not evidence that enrollment, survey eligibility or a seller rating is active.</p><p><a href="/privacy">Privacy policy</a> · <a href="/editorial-policy">Editorial policy</a> · <a href="/contact">Contact support</a></p>',
   },
   ...[
     ['/shipping/united-states', 'Shipping Indian Clothing to the United States', '$14.99 USD below $199 USD and free standard shipping at $199 USD or more'],
@@ -1471,37 +1612,38 @@ const semanticCommerceRoutes = [
     title: `${h1} | LuxeMia`,
     description: `Current LuxeMia rate, processing, tracking, duties, returns and event-date guidance for ${h1.replace('Shipping Indian Clothing to ', '')}.`,
     h1,
-    content: `<p>LuxeMia currently offers tracked standard shipping: ${rate}. The final checkout amount is the source of truth.</p><h2>Processing and carrier transit</h2><p>Processing occurs before dispatch. Carrier transit begins after dispatch, and estimates do not guarantee event-date delivery.</p><h2>Duties, taxes and fees</h2><p>Destination-country duties, taxes, brokerage or carrier fees may apply unless checkout expressly states otherwise.</p>`,
+    content: `<p>LuxeMia currently offers tracked standard shipping: ${rate}. The final checkout amount is the source of truth.</p><h2>Processing and carrier transit</h2><p>Processing occurs before dispatch. Carrier transit begins after dispatch, and estimates do not guarantee event-date delivery.</p><h2>Duties, taxes and fees</h2><p>Destination-country duties, taxes, brokerage or carrier fees may apply unless checkout expressly states otherwise.</p><h2>Returns and support</h2><p>Review the <a href="/returns">returns policy</a> before ordering and <a href="/us-support">contact LuxeMia support</a> when a timing or destination detail is important.</p>`,
   })),
   {
     path: '/festive-wear', title: 'Indian Festive Wear | LuxeMia', h1: 'Indian Festive Wear',
     description: 'Shop Indian festive outfits for Navratri, Garba, Diwali and other celebrations.',
-    content: '<p>Browse celebration-focused outfits separately from bridal shopping, then confirm each item’s included pieces, stitching, size, processing and availability.</p><h2>Shop by celebration</h2><p><a href="/collections/navratri-outfits">Navratri and Garba outfits</a>, <a href="/collections/diwali-outfits">Diwali outfits</a>, and <a href="/menswear">festive menswear</a>.</p>',
+    content: '<p>Browse celebration-focused outfits separately from bridal shopping, then confirm each item’s included pieces, stitching, size, processing and availability.</p><h2>Shop by celebration</h2><p><a href="/collections/navratri-chaniya-choli">Navratri chaniya choli</a>, <a href="/collections/garba-outfits">Garba outfits</a>, <a href="/collections/diwali-outfits">Diwali outfits</a>, and <a href="/menswear">festive menswear</a>.</p><h2>Related guide</h2><p><a href="/blog/chaniya-choli-versus-lehenga">Compare chaniya choli and lehenga shopping terms</a>.</p>',
   },
   {
     path: '/indian-wedding-guest-outfits', title: 'Indian Wedding Guest Outfits | LuxeMia', h1: 'Indian Wedding Guest Outfits',
     description: 'Compare sarees, lehengas, suits and menswear for Indian wedding guests.',
-    content: '<p>Choose by event, venue, dress guidance and comfort rather than one universal rule. Confirm expectations with the hosts when possible.</p><h2>Shop wedding guest styles</h2><p><a href="/collections/wedding-guest-outfits">Browse the wedding guest collection</a>.</p>',
+    content: '<p>Choose by event, venue, dress guidance and comfort rather than one universal rule. Confirm expectations with the hosts when possible.</p><h2>Shop wedding guest styles</h2><p><a href="/collections/wedding-guest-outfits">Browse the wedding guest collection</a>.</p><h2>Guest guides</h2><p><a href="/blog/what-should-a-male-guest-wear-to-a-three-day-indian-wedding">Three-day menswear planning</a> · <a href="/blog/what-should-a-non-indian-guest-wear-to-an-indian-wedding">non-Indian guest guidance</a>.</p>',
   },
   {
     path: '/wedding-events', title: 'Shop Outfits by Indian Wedding Event | LuxeMia', h1: 'Shop Outfits by Indian Wedding Event',
     description: 'Find outfit guidance and collections for Mehendi, Haldi, Sangeet and reception events.',
-    content: '<p>Event pages organize current products by shopping intent, not universal dress rules. Hosts, region, religion, venue and family preferences can change what is appropriate.</p><h2>Browse events</h2><p><a href="/collections/mehendi-outfits">Mehendi</a>, <a href="/collections/haldi-outfits">Haldi</a>, <a href="/collections/sangeet-outfits">Sangeet</a>, and <a href="/collections/reception-outfits">reception</a>.</p>',
+    content: '<p>Event pages organize current products by shopping intent, not universal dress rules. Hosts, region, religion, venue and family preferences can change what is appropriate.</p><h2>Browse events</h2><p><a href="/collections/mehendi-outfits">Mehendi</a>, <a href="/collections/haldi-outfits">Haldi</a>, <a href="/collections/sangeet-outfits">Sangeet</a>, and <a href="/collections/reception-outfits">reception</a>.</p><h2>Event guides</h2><p><a href="/blog/what-should-guests-wear-to-a-mehendi">Mehendi guest guide</a> · <a href="/blog/what-should-guests-wear-to-a-sangeet">Sangeet guest guide</a>.</p>',
   },
   {
     path: '/shop-by-fulfillment', title: 'Shop Indian Outfits by Fulfillment | LuxeMia', h1: 'Shop Indian Outfits by Fulfillment',
     description: 'Separate ready-to-ship, made-to-order and customizable Indian outfits before ordering.',
-    content: '<p>Fulfillment describes what happens before dispatch. Availability for sale alone does not prove immediate stock.</p><h2>Choose a fulfillment path</h2><p><a href="/shop-by-fulfillment/ready-to-ship">Ready to ship</a>, <a href="/shop-by-fulfillment/made-to-order">made to order</a>, or <a href="/shop-by-fulfillment/customizable-outfits">customizable outfits</a>.</p>',
+    content: '<p>Fulfillment describes what happens before dispatch. Availability for sale alone does not prove immediate stock.</p><h2>Choose a fulfillment path</h2><p><a href="/shop-by-fulfillment/ready-to-ship">Ready to ship</a>, <a href="/shop-by-fulfillment/made-to-order">made to order</a>, or <a href="/shop-by-fulfillment/customizable-outfits">customizable outfits</a>.</p><h2>Planning guides</h2><p><a href="/blog/ready-to-ship-versus-made-to-order">Ready-to-ship versus made-to-order</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">fixed wedding-date planning</a>.</p>',
   },
   {
     path: '/shop-by-fulfillment/ready-to-ship', title: 'Ready-to-Ship Indian Outfits | LuxeMia', h1: 'Ready-to-Ship Indian Outfits',
-    description: 'Shop items classified as stocked while confirming selected-variant availability and processing.',
-    content: '<p>Ready-to-ship removes the production stage for the selected item but still requires order processing before carrier transit.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event.</p>',
+    description: 'Browse products with explicit positive ready-to-ship catalog evidence while confirming selected-variant availability and processing.',
+    content: '<p>Ready-to-ship applies only when the current catalog record has a supported ready-to-ship tag or positive ships-within value, the product has an available variant, and it is not marked Made to Order. Sale availability alone does not prove this fulfillment status.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event. Carrier transit begins after dispatch.</p>',
   },
   {
     path: '/shop-by-fulfillment/made-to-order', title: 'Made-to-Order Indian Outfits | LuxeMia', h1: 'Made-to-Order Indian Outfits',
+    category: 'made-to-order',
     description: 'Understand production, measurements and timing for made-to-order Indian clothing.',
-    content: '<p>Made-to-order products begin production after an order is confirmed. Review stated customization, measurements and processing separately from carrier transit.</p>',
+    content: '<p>This page includes current, orderable products whose catalog record explicitly identifies Made to Order. Production begins after an order is confirmed; review measurements, supported options and processing separately from carrier transit.</p><h2>Made to order is not the same as customizable</h2><p>A made-to-order classification does not imply every design detail can be changed. Use the <a href="/collections/customizable-indian-outfits">customizable collection</a> only for products with an expressly supported color, measurement or other customization option.</p>',
   },
   {
     path: '/shop-by-fulfillment/customizable-outfits', title: 'Customizable Indian Outfits | LuxeMia', h1: 'Customizable Indian Outfits',
@@ -1519,17 +1661,21 @@ const routes = [
     description: getIndexableRouteSeo('/').description,
     h1: getIndexableRouteSeo('/').h1,
     content: `
-      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Browse Indian wedding guest outfits with U.S.-based support.</p>
+      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Browse Indian wedding guest outfits with online support.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <nav>
         <ul>
           <li><a href="/collections/navratri-outfits">Navratri &amp; Garba Outfits 2026</a> — Current chaniya choli, lehenga and festive styles for U.S. celebrations</li>
-          <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
+          <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Current products with explicit catalog customization options</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
           <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
           <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
+          <li><a href="/festive-wear">Indian Festive Wear</a> — Celebration-focused collections by current catalog signals</li>
+          <li><a href="/indian-wedding-guest-outfits">Indian Wedding Guest Outfits</a> — Compare venue, dress guidance and comfort</li>
+          <li><a href="/wedding-events">Shop by Indian Wedding Event</a> — Mehendi, Haldi, Sangeet and reception destinations</li>
+          <li><a href="/shop-by-fulfillment">Shop by Fulfillment</a> — Separate ready-to-ship, made-to-order and customizable items</li>
         </ul>
       </nav>
       <h2>Which LuxeMia collections are best for weddings?</h2>
@@ -1541,7 +1687,7 @@ const routes = [
         <li><a href="/festive-wear">Festive Wear</a></li>
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
-      <p>Free U.S. standard shipping at $199 and above. $14.99 below $199. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <p>Rates vary across the seven supported destination countries. Review the <a href="/shipping">destination-specific shipping rates</a>; checkout is the final source of truth. When tracking is issued, carrier scans can appear after label creation.</p>
     `,
   },
   {
@@ -1573,7 +1719,7 @@ const routes = [
         <li><a href="/anarkali-suit-for-mother-of-bride">Anarkali Suits for the Mother of the Bride</a> — Occasion and fit considerations</li>
         <li><a href="/sharara-for-bride-sister">Sharara Sets for the Bride's Sister</a> — Compare current wide-leg styles</li>
         <li><strong>Gharara Suits</strong> — Review the style filters and exact listing for the supplied bottom silhouette</li>
-        <li><a href="/suits?sub=palazzo">Palazzo Suits</a> — Modern wide-leg pants with kurta</li>
+        <li><a href="/collections/palazzo-suits">Palazzo Suits</a> — Compare current wide-leg suit listings</li>
         <li><a href="/suits?sub=pakistani">Pakistani-Style Suits</a> — Straight-cut options</li>
         <li><a href="/suits?sub=straight-cut">Straight Cut Suits</a> — Classic everyday salwar kameez</li>
       </ul>
@@ -1614,9 +1760,9 @@ const routes = [
     description: getIndexableRouteSeo('/lehengas').description,
     h1: getIndexableRouteSeo('/lehengas').h1,
     content: `
-      <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter for stocked non-custom products, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
-      <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
-      <p>The Ready to Ship availability filter includes purchasable products unless Shopify identifies them as Made to Order or Made to Measure. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
+      <p>Discover bridal, wedding guest, reception and festive lehengas with shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Use the Ready to Ship filter only for products with positive catalog evidence, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
+      <h2>How the Ready-to-Ship Lehenga Filter Works</h2>
+      <p>The Ready to Ship filter includes only purchasable products with positive ready-to-ship catalog evidence and an available variant, excluding products marked Made to Order or Made to Measure. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
       <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
       <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
       <h2>Shop Lehengas by Occasion</h2>
@@ -1674,7 +1820,7 @@ const routes = [
     description: getIndexableRouteSeo('/sarees').description,
     h1: getIndexableRouteSeo('/sarees').h1,
     content: `
-      <p>Explore wedding, silk and festive sarees for U.S. delivery. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
+      <p>Explore wedding, silk and festive sarees with shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
       <h2>Shop Sarees by Occasion</h2>
       <ul>
         <li><a href="/sarees?sub=bridal">Bridal Sarees</a> — Heavily embellished sarees for the bride</li>
@@ -1752,7 +1898,7 @@ const routes = [
     path: '/collections/manthrakodi-sarees',
     category: 'collection:manthrakodi-sarees',
     title: 'Manthrakodi Sarees for Kerala Christian Weddings | LuxeMia',
-    description: 'Shop Manthrakodi sarees for Kerala Christian weddings. Browse bridal sarees with clearly stated fabric, border, blouse and product details for U.S. delivery.',
+    description: 'Shop Manthrakodi sarees for Kerala Christian weddings. Browse bridal sarees with clearly stated fabric, border, blouse and product details, with shipping to supported destinations.',
     h1: 'Manthrakodi Sarees',
     content: `
       <p>This collection shows current listings identified for Manthrakodi sarees associated with Kerala Christian wedding traditions. Review each product page for the exact fabric, border, blouse and availability details.</p>
@@ -1799,7 +1945,7 @@ const routes = [
       <p>Select active listings state plus-size custom stitching and include a kurta, pajama and Nehru jacket. When comparing a men's plus-size kurta pajama with matching jacket for a wedding guest or cocktail night, or a big-and-tall Nehru-jacket look, confirm the exact fabric, measurement process, set contents and event timing on the product page before ordering.</p>
       <h2>Shop Menswear by Style</h2>
       <ul>
-        <li><a href="/menswear?sub=sherwani">Sherwanis</a> — Regal wedding sherwanis for the groom</li>
+        <li><a href="/collections/sherwani-for-groom">Groom Sherwanis</a> — Compare current role-verified groom listings</li>
         <li><a href="/menswear?sub=kurta-pajama">Kurta Pajama Sets</a> — Classic & comfortable ethnic wear</li>
         <li><a href="/menswear?sub=modi-jacket">Modi Jackets</a> — Tailored Nehru-style jackets</li>
         <li><a href="/menswear?sub=indo-western">Indo Western</a> — Modern fusion silhouettes</li>
@@ -1893,7 +2039,7 @@ const routes = [
     category: 'all',
     title: 'All Collections | Indian Ethnic Wear | LuxeMia',
     description: 'Browse all LuxeMia collections. Bridal lehengas, wedding sarees, reception outfits, festive wear & more. Curated for every occasion.',
-    h1: 'All Collections',
+    h1: 'All Indian Ethnic Wear Collections',
     content: `
       <p>Browse our curated collections of Indian ethnic wear, thoughtfully organized for every occasion.</p>
       <ul>
@@ -1904,41 +2050,49 @@ const routes = [
         <li><a href="/collections/sharara-suits">Sharara Suits</a> — Wedding and festive sharara sets</li>
         <li><a href="/collections/gharara-suits">Gharara Suits</a> — Gharara sets for weddings and celebrations</li>
         <li><a href="/collections/anarkali-suits">Anarkali Suits</a> — Anarkali styles for weddings and party wear</li>
+        <li><a href="/collections/palazzo-suits">Palazzo Suits</a> — Current wide-leg suit listings</li>
         <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Indian wedding lehenga styles</li>
         <li><a href="/collections/party-wear-lehengas">Party-Wear Lehengas</a> — Festive lehenga choli styles</li>
+        <li><a href="/collections/banarasi-sarees">Banarasi Sarees</a> — Current listings with explicit Banarasi catalog evidence</li>
+        <li><a href="/collections/sherwani-for-groom">Groom Sherwanis</a> — Current listings with both groom and sherwani evidence</li>
+        <li><a href="/collections/wedding-guest-lehengas">Wedding Guest Lehengas</a> — Current role- and garment-matched listings</li>
+        <li><a href="/collections/wedding-guest-kurta-sets">Wedding Guest Kurta Sets</a> — Current kurta menswear matched to guest events</li>
+        <li><a href="/collections/diwali-womenswear">Diwali Womenswear</a> — Current festive womenswear</li>
+        <li><a href="/collections/diwali-menswear">Diwali Menswear</a> — Current festive menswear</li>
+        <li><a href="/collections/groomsmen-outfits">Groomsmen Outfits</a> — Current menswear explicitly identified for groomsmen</li>
       </ul>
     `,
   },
   {
     path: '/collections/customizable-indian-outfits',
     category: 'customizable',
-    title: 'Customizable Indian Outfits | Custom Color & Measurements | LuxeMia',
-    description: 'Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering.',
+    title: 'Customizable Indian Outfits | Product-Specific Options | LuxeMia',
+    description: 'Browse currently orderable Indian outfits whose Shopify records explicitly identify a customization option. Confirm the exact option and timing on the product page.',
     h1: 'Customizable Indian Outfits',
     content: `
-      <p>These selected lehengas, sarees, kurta sets, and wedding outfits are verified for a custom color and made-to-order construction from measurements confirmed with LuxeMia.</p>
+      <p>This collection is generated from current Shopify products that have an available variant and explicitly identify at least one customization option. The exact supported option varies by product; the collection label does not promise custom color, measurements, or another change unless the listing states it.</p>
       <h2>How does a LuxeMia custom order work?</h2>
       <ol>
-        <li>Send the exact product link, requested color, event date, and delivery country.</li>
-        <li>LuxeMia confirms fabric availability, timing, and the measurements required for that design.</li>
-        <li>Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after all required details and the delivery address are known.</li>
+        <li>Open the exact current product page and identify the customization option it expressly offers.</li>
+        <li>Send the product link, requested option, event date, and delivery country so LuxeMia can confirm what is supported.</li>
+        <li>There is no universal production window. Obtain product-specific written confirmation of production time and carrier transit before ordering for a fixed date.</li>
       </ol>
       <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
       <h2>Current shipping availability</h2>
-      <p>Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Applicable taxes are calculated at checkout.</p>
+      <p>Checkout accepts addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the <a href="/shipping">destination-specific rates</a>; checkout is the final source of truth. Applicable taxes are calculated at checkout.</p>
       <p><a href="/contact">Contact LuxeMia</a> | <a href="/sizing-measurements-guide">Measurement guide</a> | <a href="/returns">Returns policy</a></p>
     `,
   },
   {
     path: '/products',
     title: 'All Products | Shop Indian Ethnic Wear Online | LuxeMia',
-    description: 'Browse all products at LuxeMia. Designer lehengas, silk sarees, salwar suits, sherwanis & more. Free U.S. standard shipping at $199 and above.',
+    description: 'Browse all LuxeMia products, including lehengas, sarees, salwar suits, sherwanis and more, with shipping to seven supported destination countries.',
     h1: 'All Products',
     content: `
-      <p>Explore our complete collection of Indian ethnic wear. Designer lehengas, silk sarees, salwar suits, sherwanis and more — all with free U.S. standard shipping at $199 and above.</p>
+      <p>Explore our complete collection of Indian ethnic wear, including lehengas, sarees, salwar suits, sherwanis and more.</p>
       <h2>Shop by Category</h2>
       <p>Browse our full catalog organized by type: <a href="/lehengas">Lehengas</a>, <a href="/sarees">Sarees</a>, <a href="/suits">Salwar Kameez</a>, and <a href="/menswear">Menswear</a>. Use filters to sort by price, color, fabric, and occasion.</p>
-      <p>Pieces ship with tracking to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199.</p>
+      <p>Pieces ship with tracking to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the <a href="/shipping">destination-specific rates</a>; checkout is the final source of truth.</p>
     `,
   },
   {
@@ -1951,8 +2105,8 @@ const routes = [
       <h2>Compare Bridal Lehenga Details Before Ordering</h2>
       <p>Use the product grid to compare current styles, then open the exact listing to confirm the supplied fabric, work, included pieces, measurements and selected option. A category label does not confirm the construction or contents of every design.</p>
       <h3>Plan for a Wedding Date</h3>
-      <p>For an event with a fixed date, review the selected product details and current policy information before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and <a href="/shipping">U.S. shipping information</a> for planning details.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>For an event with a fixed date, review the selected product details and current policy information before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and the <a href="/shipping">shipping information for supported destinations</a> for planning details.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
   },
   {
     path: '/collections/sharara-suits',
@@ -1964,8 +2118,8 @@ const routes = [
       <h2>Compare Sharara Suit Fabric, Work and Included Pieces</h2>
       <p>Use the current product grid to compare color, stated fabric, embroidery or work, price and available options. Open the exact listing to confirm the supplied kurti, bottoms, dupatta, lining, size and current availability rather than assuming every set includes the same pieces.</p>
       <h3>Size and Event Planning</h3>
-      <p>For a time-sensitive celebration, compare your measurements with the selected listing before ordering. See the <a href="/size-guide">size guide</a>, <a href="/shipping">U.S. shipping information</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>For a time-sensitive celebration, compare your measurements with the selected listing before ordering. See the <a href="/size-guide">size guide</a>, <a href="/shipping">shipping information for supported destinations</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
   },
   {
     path: '/collections/gharara-suits',
@@ -1977,8 +2131,8 @@ const routes = [
       <h2>Choose a Gharara Set by Color, Work and Included Pieces</h2>
       <p>Compare currently listed colors, fabrics, work and price, then confirm the supplied included pieces, size options and availability on the individual product page. Product details—not a style name alone—are the reliable specification for every outfit.</p>
       <h3>Size and Delivery Planning</h3>
-      <p>For a fixed event date, compare your measurements with the selected listing before ordering. Review the <a href="/size-guide">size guide</a>, <a href="/shipping">U.S. shipping information</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>For a fixed event date, compare your measurements with the selected listing before ordering. Review the <a href="/size-guide">size guide</a>, <a href="/shipping">shipping information for supported destinations</a> and <a href="/suits">all current suits</a> for planning and comparison.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
   },
   {
     path: '/collections/anarkali-suits',
@@ -1990,8 +2144,32 @@ const routes = [
       <h2>Compare Anarkali Suit Fabric, Work and Fit</h2>
       <p>Compare current colors, stated fabric, embroidery or work, price and available options in the product grid. Confirm whether the selected set includes a dupatta, bottoms or lining, plus the listed size and current availability.</p>
       <h3>Plan for a Wedding or Celebration</h3>
-      <p>For an event with a fixed date, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and browse <a href="/suits">all current suits</a> for additional styles.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>For an event with a fixed date, review the selected listing and <a href="/shipping">shipping information for supported destinations</a> before ordering. Use the <a href="/size-guide">size guide</a> to compare measurements and browse <a href="/suits">all current suits</a> for additional styles.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
+  },
+  {
+    path: '/collections/palazzo-suits',
+    commercialLanding: 'palazzo-suits',
+    title: getIndexableRouteSeo('/collections/palazzo-suits').title,
+    description: getIndexableRouteSeo('/collections/palazzo-suits').description,
+    h1: getIndexableRouteSeo('/collections/palazzo-suits').h1,
+    content: `<p>Browse current palazzo suit listings and compare the exact top or kurta, wide-leg bottoms, dupatta, lining, fabric wording, work, measurements, selected option and current availability. The collection name does not establish a universal set of included pieces.</p>
+      <h2>Compare Palazzo Suit Silhouettes and Contents</h2>
+      <p>Use the current product grid to identify a suitable silhouette, then open the exact listing to verify every supplied garment, closure, measurement and care instruction. Do not assume a dupatta, jacket or accessory is included unless the product record states it.</p>
+      <h3>Plan Sizing and Event Timing</h3>
+      <p>Compare current measurements with the <a href="/sizing-measurements-guide">measurement guide</a>, then review <a href="/shipping">shipping rates and planning for supported destinations</a>. Product processing occurs before carrier transit, and delivery by a fixed event date is not guaranteed.</p>`,
+  },
+  {
+    path: '/collections/sherwani-for-groom',
+    commercialLanding: 'sherwani-for-groom',
+    title: getIndexableRouteSeo('/collections/sherwani-for-groom').title,
+    description: getIndexableRouteSeo('/collections/sherwani-for-groom').description,
+    h1: getIndexableRouteSeo('/collections/sherwani-for-groom').h1,
+    content: `<p>This collection requires current catalog evidence for both a sherwani garment and a groom role. Compare the selected product's fabric wording, work, closures, included garments, measurements, selected size, fulfillment classification and current availability.</p>
+      <h2>Confirm Every Included Garment and Accessory</h2>
+      <p>A groom sherwani does not automatically include a kurta, churidar, pajama, stole, turban or footwear. Treat only the pieces expressly stated on the exact listing as included with the order.</p>
+      <h3>Plan Measurements and Wedding Timing</h3>
+      <p>Use the <a href="/sizing-measurements-guide">measurement guide</a>, confirm product-level processing and then review <a href="/shipping">shipping and event-date planning</a>. Processing and carrier transit are separate, and delivery by a fixed date is not guaranteed.</p>`,
   },
   {
     path: '/collections/party-wear-lehengas',
@@ -2003,8 +2181,8 @@ const routes = [
       <h2>Compare Party-Wear Lehenga Details Before Ordering</h2>
       <p>Use the product grid to compare currently listed styles, then open the selected product page to confirm its supplied fabric, embroidery or work, included pieces, measurements and available option. Do not assume construction or package contents from the category alone.</p>
       <h3>Plan for a Reception or Festive Event</h3>
-      <p>For a time-sensitive event, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/lehengas">all current lehengas</a> to compare styles.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>For a time-sensitive event, review the selected listing and <a href="/shipping">shipping information for supported destinations</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/lehengas">all current lehengas</a> to compare styles.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
   },
   {
     path: '/collections/wedding-sarees',
@@ -2016,8 +2194,20 @@ const routes = [
       <h2>Compare Wedding Saree Details Before Ordering</h2>
       <p>Use the current product grid to compare wedding and bridal sarees, then verify the selected listing’s fabric wording, blouse material or blouse details, available option and current availability. A category label does not confirm that every saree has the same construction or included pieces.</p>
       <h3>Plan Size and Delivery for a Wedding Event</h3>
-      <p>Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. Review <a href="/shipping">U.S. shipping information</a> and browse <a href="/sarees">all current sarees</a> for additional comparison.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. Review <a href="/shipping">shipping information for supported destinations</a> and browse <a href="/sarees">all current sarees</a> for additional comparison.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
+  },
+  {
+    path: '/collections/banarasi-sarees',
+    commercialLanding: 'banarasi-sarees',
+    title: getIndexableRouteSeo('/collections/banarasi-sarees').title,
+    description: getIndexableRouteSeo('/collections/banarasi-sarees').description,
+    h1: getIndexableRouteSeo('/collections/banarasi-sarees').h1,
+    content: `<p>This collection is limited to current saree listings whose title, product type or tags explicitly identify Banarasi fabric or styling. The collection label does not independently certify fiber composition, weaving method or geographic origin; use the exact product record for those facts.</p>
+      <h2>Verify Fabric, Weave and Blouse Details</h2>
+      <p>Compare the stated fabric wording, zari or other work, saree dimensions, border, pallu and blouse information. Do not assume pure silk, hand weaving, a stitched blouse or any other construction detail unless the selected listing expressly states it.</p>
+      <h3>Plan Draping, Processing and Transit</h3>
+      <p>Review the selected option and <a href="/sizing-measurements-guide">measurement guide</a>, then check <a href="/shipping">shipping rates and planning for supported destinations</a>. Processing occurs before carrier transit, and delivery by a fixed event date is not guaranteed.</p>`,
   },
   {
     path: '/collections/designer-sarees',
@@ -2029,8 +2219,8 @@ const routes = [
       <h2>Compare Designer Saree Fabric, Work and Blouse Details</h2>
       <p>Use the product grid to compare currently listed colors, stated fabric, embroidery or work, price and available options. Open the selected listing to verify its blouse details, dimensions, included pieces and current availability before ordering.</p>
       <h3>Plan for a Reception or Celebration</h3>
-      <p>For a fixed event date, review the selected listing and <a href="/shipping">U.S. shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/sarees">all current sarees</a> to compare styles.</p>
-      <p>Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below $199.</p>`,
+      <p>For a fixed event date, review the selected listing and <a href="/shipping">shipping information for supported destinations</a> before ordering. Use the <a href="/size-guide">size guide</a> and browse <a href="/sarees">all current sarees</a> to compare styles.</p>
+      <p>Rates vary by destination; checkout is the final source of truth.</p>`,
   },
   {
     path: '/size-guide',
@@ -2082,15 +2272,15 @@ const routes = [
     schemas: [FAQ_PAGE_SCHEMA],
     content: `<p>Find answers to common questions about LuxeMia orders, shipping, final-sale terms, covered order issues, sizing, product details and payment.</p>
       <h2>Where does LuxeMia ship?</h2>
-      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Rates vary by destination; review the <a href="/shipping">destination-specific rates</a> and confirm the final amount at checkout.</p>
       <h2>How long does LuxeMia shipping take?</h2>
-      <p>In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.</p>
+      <p>When tracking is issued, carrier scans can appear after label creation. Carrier transit time begins after dispatch.</p>
       <h2>How should I choose a LuxeMia size?</h2>
       <p>Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.</p>
       <h2>What is LuxeMia’s return policy?</h2>
-      <p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.</p>
+      <p>Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.</p>
       <h2>Can I cancel a LuxeMia order?</h2>
-      <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
+      <p>${CANCELLATION_POLICY_ANSWER} Email hello@luxemia.shop immediately with your order number.</p>
 `,
   },
   {
@@ -2101,11 +2291,13 @@ const routes = [
     content: `
       <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. Processing time happens before carrier transit, and checkout shows the final available service and converted amount where supported.</p>
       <h2>Standard shipping rates</h2>
-      <h3>United States</h3>
+      <h3><a href="/shipping/united-states">United States shipping</a></h3>
       <ul><li>$14.99 below $199</li><li>Free standard shipping at $199 and above</li></ul>
       <h3>Canada and the United Kingdom</h3>
+      <p><a href="/shipping/canada">Canada shipping details</a> · <a href="/shipping/united-kingdom">United Kingdom shipping details</a></p>
       <ul><li>$24.99 below $299</li><li>Free standard shipping at $299 and above</li></ul>
       <h3>Australia and New Zealand</h3>
+      <p><a href="/shipping/australia">Australia shipping details</a></p>
       <ul><li>$29.99 below $349</li><li>Free standard shipping at $349 and above</li></ul>
       <h3>South Africa</h3><p>$49.99 per order.</p>
       <h3>Mauritius</h3><p>$59.99 per order.</p>
@@ -2115,18 +2307,20 @@ const routes = [
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
       <h2>Customs and duties</h2>
       <p>Orders outside the United States may incur duties, taxes, brokerage or carrier fees unless checkout or a written quote explicitly states that they are included.</p>
+      <h2>Before ordering</h2>
+      <p><a href="/shop-by-fulfillment">Compare fulfillment types</a>, read the <a href="/returns">returns and covered-order-issue policy</a>, or <a href="/us-support">contact LuxeMia support</a> when a timing, sizing or destination detail is important.</p>
     `,
   },
   {
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.',
+    description: 'Browse products whose current catalog record explicitly identifies ready-to-ship status. Confirm the selected variant, processing information and destination before ordering.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
-      <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
-      <h2>Stocked selections and custom selections</h2>
-      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Standard stocked selections remain Ready to Ship, while the custom selection requires additional processing. Fully custom products are shown separately as Made to Order.</p>
+      <p>This page includes only currently purchasable products whose catalog record explicitly identifies ready-to-ship status through a supported tag or positive ships-within value. Ready to ship describes the product's fulfillment classification; it does not promise same-day dispatch or event-date delivery.</p>
+      <h2>Positive catalog evidence</h2>
+      <p>A product must carry an explicit ready-to-ship tag or a positive product-level ships-within value, have an available variant, and not be classified as Made to Order. Sale availability by itself is not evidence of stocked fulfillment.</p>
       <h2>Processing and carrier transit are separate</h2>
       <p>Order processing happens before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Confirm the selected size, included pieces and any custom option before ordering for a fixed event date.</p>
       <h2>Shipping rates and timing</h2>
@@ -2153,67 +2347,81 @@ const routes = [
   {
     path: '/returns',
     title: 'Returns, Refunds & Cancellations | LuxeMia',
-    description: 'LuxeMia’s final-sale policy, 48-hour damage and order-issue claim requirements, and cancellation terms.',
+    description: 'Review LuxeMia’s change-of-mind final-sale terms, covered order-issue evidence guidance, mandatory consumer rights and cancellation terms.',
     h1: 'Returns, Refunds & Cancellations',
-    content: '<p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>',
+    content: `<p>Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.</p><h2>Order cancellations</h2><p>${CANCELLATION_POLICY_ANSWER} Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> with the order number.</p>`,
   },
   {
     path: '/contact',
     title: 'Contact Us | LuxeMia',
-    description: 'Contact LuxeMia with questions about orders, sizing or a product listing. Reach U.S.-based support by email, phone, WhatsApp or the contact form.',
+    description: 'Contact LuxeMia with questions about orders, sizing or a product listing. Reach online support by email, phone, WhatsApp or the contact form.',
     h1: 'Contact Us',
-    content: '<p>Have questions about an order, sizing or a product listing? Reach U.S.-based support by email, phone, WhatsApp or the contact form.</p>',
+    content: `
+      <p>Have questions about an order, sizing or a product listing? Contact LuxeMia before ordering when an important detail is unclear. Support requests are reviewed through the online queue; response times vary and same-day replies are not guaranteed.</p>
+      <h2>Support channels</h2>
+      <p>Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a>, call <a href="tel:+12153419990">+1 215-341-9990</a>, send a <a href="https://wa.me/12153419990">WhatsApp message</a>, or use the contact form. Do not send payment-card details through these channels.</p>
+      <h2>What to include</h2>
+      <p>For product help, include the product link, selected option, destination and the exact fact you need confirmed. For an order issue, include the order number and a concise description. Available photos or unboxing evidence can help with damage, defect, incorrect-item or missing-piece review, but a missing video does not by itself remove rights that cannot legally be excluded.</p>
+      <h2>Before a fixed event date</h2>
+      <p>Support can clarify published processing and shipping information but cannot guarantee an event-date delivery unless that guarantee is expressly confirmed for the order.</p>
+      <p><a href="/us-support">Support guidance</a> · <a href="/sizing-measurements-guide">Sizing and measurements</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns and covered issues</a> · <a href="/privacy">Privacy choices</a></p>
+    `,
   },
   // --- Additional routes previously missing from prerender ---
   {
     path: '/lookbook',
-    title: 'Lookbook 2026 — LuxeMia | Editorial Indian Ethnic Wear',
-    description: 'Explore the LuxeMia 2026 Lookbook — curated styling stories with wedding lehengas & festive ethnic wear. Editorial inspiration for the modern Indian wardrobe.',
-    h1: 'Lookbook 2026',
+    title: 'Lookbook — Current LuxeMia Product Groupings',
+    description: 'Browse current LuxeMia products grouped by configured wedding, festive and occasion-wear listing tags, then verify each item on its product page.',
+    h1: 'LuxeMia Lookbook',
     content: `
-      <p>The LuxeMia 2026 Lookbook is a series of styling chapters that celebrate the modern Indian wardrobe — from intimate haldi mornings to grand reception nights.</p>
-      <h2>Wedding Season</h2>
-      <p>From the bride's grand lehenga to the groom's regal sherwani — curated ensembles for every wedding ceremony, from mehendi to reception.</p>
-      <h2>Eid Collection</h2>
-      <p>Celebrate in style with flowing shararas and elegant palazzo suits — graceful silhouettes in luxurious georgette, chinon, and net fabrics.</p>
-      <h2>Festive Favorites</h2>
-      <p>A curated mix of featured pieces across categories — versatile outfits for festive gatherings and celebrations.</p>
-      <h2>His & Hers</h2>
-      <p>Perfectly paired looks for couples — elegant kurta pajamas and jodhpuri suits alongside complementing lehengas and sharara sets.</p>
+      <p>The lookbook groups current LuxeMia listings by configured product tags. Sections appear only when the Storefront API returns matching products; a section label is a browsing theme, not proof that every item is suitable for every event.</p>
+      <h2>How products appear here</h2>
+      <p>Wedding Season uses current lehenga and sherwani tag matches. Eid Collection uses current sharara and palazzo tag matches. Festive Favorites uses current salwar, anarkali and lehenga tag matches. His &amp; Hers uses current kurta-pajama, jodhpuri and menswear tag matches.</p>
+      <h2>Verify before choosing</h2>
+      <p>Open the individual product page to confirm the exact material wording, included pieces, sizes, price, selected-variant availability and processing information. Confirm event expectations with the host when relevant.</p>
     `,
   },
   {
     path: '/about',
     title: 'About LuxeMia — Indian Ethnic Wear Online',
-    description: 'Learn about LuxeMia, an online Indian ethnic wear store with clear product details, U.S.-based support, and tracked U.S. shipping.',
+    description: 'About LuxeMia, an online-only Indian ethnic wear store serving shoppers in seven countries with product-specific information and online support.',
     h1: 'About LuxeMia',
-    content: '<p>LuxeMia is an online Indian ethnic wear store shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Product pages explain the available fabric, work, stitching status, sizing, and package contents for each listing.</p><p>USA-based customer support: hello@luxemia.shop or +1 215-341-9990.</p>',
+    content: `
+      <p>LuxeMia is an online-only Indian ethnic wear store serving the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. There is no public walk-in showroom; current products, options, availability and prices are shown online.</p>
+      <h2>How product facts are handled</h2>
+      <p>The exact product page is the source of truth for stated materials, included pieces, stitching status, measurements, selectable variants, customization, price, availability and processing. A general fabric name is not presented as an exact fiber composition unless the product record supports it, and missing details are not guessed from photographs or category labels.</p>
+      <h2>Fulfillment and event planning</h2>
+      <p>Ready-to-ship, made-to-order and customizable products follow different pre-dispatch paths. Processing occurs before carrier transit, and availability to buy does not itself prove immediate dispatch. Support can help locate published details but cannot promise delivery for an event date when checkout or the carrier does not provide that guarantee.</p>
+      <h2>Support and standards</h2>
+      <p>Online support is available at <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a>, <a href="tel:+12153419990">+1 215-341-9990</a>, WhatsApp and the contact form. Requests use an online queue, so response times vary.</p>
+      <p><a href="/editorial-policy">Editorial and product-fact policy</a> · <a href="/review-policy">Review safeguards</a> · <a href="/privacy">Privacy choices</a> · <a href="/terms">Terms</a> · <a href="/us-support">Customer support</a></p>
+    `,
   },
 
   {
     path: '/new-arrivals',
     category: 'all',
     title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
-    description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. standard shipping at $199 and above.",
+    description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details, availability and destination-specific shipping.",
     h1: 'New Arrivals',
     content: `
       <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p>
       <h2>What is new at LuxeMia?</h2>
       <p>This collection brings together LuxeMia's latest wedding, reception, festival, and special-occasion styles so shoppers can find newly added pieces in one place.</p>
-      <p>Free U.S. standard shipping is available at $199 and above, with $14.99 shipping below $199. Tracking is provided after dispatch.</p>
+      <p>Review the <a href="/shipping">destination-specific shipping rates</a>; checkout is the final source of truth. When tracking is issued, carrier scans can appear after label creation.</p>
     `,
   },
   {
     path: '/indowestern',
     category: 'indowestern',
     title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
-    description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free U.S. standard shipping at $199 and above.',
+    description: 'Shop Indo-Western fusion wear at LuxeMia, including modern ethnic suits, fusion lehengas and contemporary Indian outfits, with shipping to supported destinations.',
     h1: 'Indo-Western Collection',
     content: `
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>
       <h2>Fusion Style</h2>
       <p>Our Indo-Western collection blends the elegance of Indian craftsmanship with contemporary global fashion. Think asymmetrical hemlines, cape-style dupattas, dhoti pants paired with crop tops, and jacket-style anarkalis.</p>
-      <p>Compare Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. If you are shopping for an Indo-Western dress for an office Diwali party or an American wedding guest, open the exact listing for its fabric, embellishment, included pieces, sizes, and availability. Free U.S. standard shipping applies at $199 and above.</p>
+      <p>Compare Indo-Western dresses and fusion wedding-guest outfits for receptions, sangeet, mehendi, and office Diwali parties. Open the exact listing for its fabric, embellishment, included pieces, sizes and availability, then review shipping for the destination country.</p>
     `,
   },
   {
@@ -2224,7 +2432,7 @@ const routes = [
     content: `
       <p>Browse lehengas, sarees, salwar kameez, menswear and jewelry available online for delivery to United States addresses.</p>
       <h2>Shipping to the United States</h2>
-      <p>Shipping is free at $199 and above and costs $14.99 below $199. Tracking is provided after dispatch. Review each product page for exact sizing, tailoring options and availability.</p>
+      <p>Shipping is free at $199 and above and costs $14.99 below $199. When tracking is issued, carrier scans can appear after label creation. Review each product page for exact sizing, tailoring options and availability.</p>
     `,
   },
   {
@@ -2235,7 +2443,7 @@ const routes = [
     content: `
       <p>LuxeMia is an online Indian ethnic wear store serving shoppers with United States delivery addresses.</p>
       <h2>United States Shipping</h2>
-      <p>Shipping is free at $199 and above and costs $14.99 below $199. Tracking is provided after dispatch. Duties, taxes or carrier processing fees may apply unless checkout explicitly states otherwise.</p>
+      <p>Shipping is free at $199 and above and costs $14.99 below $199. When tracking is issued, carrier scans can appear after label creation. Duties, taxes or carrier processing fees may apply unless checkout explicitly states otherwise.</p>
       <h2>Shop by Category</h2>
       <p>Browse <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a>, <a href="/suits">salwar kameez</a>, <a href="/menswear">menswear</a> and <a href="/jewelry">jewelry</a>. Review each listing for exact product details, sizing and availability.</p>
     `,
@@ -2246,7 +2454,7 @@ const routes = [
     path: '/collections/diwali-outfits',
     category: 'occasion:diwali',
     title: 'Diwali Outfits — Current Festive Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for Diwali or festive occasions. Review exact product details and U.S. shipping terms.',
+    description: 'Browse currently available LuxeMia products explicitly marked for Diwali or festive occasions. Review exact product details and destination-specific shipping.',
     h1: 'Diwali Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Diwali, festive, or festival.</p>
@@ -2259,14 +2467,14 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/indowestern">Indo-Western</a></li>
       </ul>
-      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
+      <p>Shipping is available to seven supported destination countries. Review the <a href="/shipping">destination-specific rates</a>. When tracking is issued, carrier scans can appear after label creation.</p>
     `,
   },
   {
     path: '/collections/wedding-guest-outfits',
     category: 'occasion:wedding-guest',
     title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms.',
+    description: 'Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and destination-specific shipping.',
     h1: 'Indian Wedding Guest Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception.</p>
@@ -2279,14 +2487,14 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
-      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
+      <p>Shipping is available to seven supported destination countries. Review the <a href="/shipping">destination-specific rates</a>. When tracking is issued, carrier scans can appear after label creation.</p>
     `,
   },
   {
     path: '/collections/mehendi-outfits',
     category: 'occasion:mehendi',
     title: 'Mehendi Ceremony Outfits — Current Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for mehendi or mehndi. Review exact product details and U.S. shipping terms.',
+    description: 'Browse currently available LuxeMia products explicitly marked for mehendi or mehndi. Review exact product details and destination-specific shipping.',
     h1: 'Mehendi Ceremony Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention mehendi or mehndi.</p>
@@ -2297,14 +2505,14 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
-      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
+      <p>Shipping is available to seven supported destination countries. Review the <a href="/shipping">destination-specific rates</a>. When tracking is issued, carrier scans can appear after label creation.</p>
     `,
   },
   {
     path: '/collections/haldi-outfits',
     category: 'occasion:haldi',
     title: 'Haldi Ceremony Outfits — Current Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms.',
+    description: 'Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and destination-specific shipping.',
     h1: 'Haldi Ceremony Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention haldi or turmeric.</p>
@@ -2315,14 +2523,14 @@ const routes = [
         <li><a href="/suits">Suits</a></li>
         <li><a href="/collections/mehendi-outfits">Mehendi Outfits</a></li>
       </ul>
-      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is emailed after dispatch.</p>
+      <p>Shipping is available to seven supported destination countries. Review the <a href="/shipping">destination-specific rates</a>. When tracking is issued, carrier scans can appear after label creation.</p>
     `,
   },
   {
     path: '/collections/eid-outfits',
     category: 'occasion:eid',
     title: 'Eid Outfits — Current Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms.',
+    description: 'Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and destination-specific shipping.',
     h1: 'Eid Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Eid, Ramadan, or chikankari.</p>
@@ -2333,37 +2541,69 @@ const routes = [
         <li><a href="/lehengas">Lehengas</a></li>
         <li><a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a></li>
       </ul>
-      <p>U.S. standard shipping is $14.99 below $199 and free at $199 and above. Confirm timing before ordering for a fixed date.</p>
+      <p>Shipping is available to seven supported destination countries. Review the <a href="/shipping">destination-specific rates</a> and confirm timing before ordering for a fixed date.</p>
     `,
   },
   {
     path: '/collections/navratri-outfits',
     category: 'occasion:navratri',
-    title: 'Navratri Outfits USA 2026 | Garba Styles | LuxeMia',
-    description: 'Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 for first orders.',
-    h1: 'Navratri Outfits for Garba in the USA',
+    title: 'Navratri Outfits 2026 | Garba Styles | LuxeMia',
+    description: 'Shop current Navratri outfits for Garba and Dandiya, including chaniya choli and festive styles. Compare exact listing details and shipping to seven supported countries.',
+    h1: 'Navratri Outfits for Garba',
     content: `
-      <p>Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events in the United States. This collection includes available products whose catalog details explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
-      <p>United States calendars list Navratri beginning Sunday, October 11, 2026. Confirm religious dates and event schedules with your temple or organizer because practices can vary by location and community.</p>
+      <p>Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events. This collection includes available products whose catalog details explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
+      <p>Referenced calendars list Navratri beginning Sunday, October 11, 2026. Confirm religious dates and event schedules with your temple or organizer because practices can vary by location and community.</p>
       <h2>Choose a Navratri Outfit</h2>
       <p>For Garba and Dandiya, compare skirt or garment length, closures, measurements, stitching status, included pieces, and embellishment placement. Open the exact listing to confirm fabric, work, size options, price, and availability.</p>
       <ul>
-        <li><a href="/blog/navratri-9-day-color-guide-2026">Navratri Outfits USA 2026 Buying Guide</a></li>
+        <li><a href="/blog/navratri-9-day-color-guide-2026">Navratri 2026 Buying Guide</a></li>
         <li><a href="/lehengas">Shop Lehengas and Chaniya Choli</a></li>
         <li><a href="/suits">Shop Anarkali and Salwar Suits</a></li>
         <li><a href="/sizing-measurements-guide">Sizing and Measurement Guide</a></li>
       </ul>
-      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch. First-time shoppers can use LUXE10 for 10% off with no minimum purchase requirement.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. When tracking is issued, carrier scans can appear after label creation. First-time shoppers can use LUXE10 for 10% off with no minimum purchase requirement.</p>
       <p>Contact LuxeMia before ordering when your celebration date is fixed. Delivery by a particular event is not guaranteed.</p>
     `,
   },
   {
+    path: '/collections/wedding-guest-lehengas',
+    category: 'occasion:wedding-guest-lehengas',
+    title: 'Wedding Guest Lehengas | Current Styles | LuxeMia',
+    description: 'Browse orderable lehengas with explicit wedding-guest or bridesmaid evidence; expressly bridal listings are excluded. Verify every product detail.',
+    h1: 'Wedding Guest Lehengas',
+    content: '',
+  },
+  {
+    path: '/collections/wedding-guest-kurta-sets',
+    category: 'occasion:wedding-guest-kurta-sets',
+    title: 'Wedding Guest Kurta Sets | Indian Menswear | LuxeMia',
+    description: 'Browse orderable menswear with explicit kurta-set and wedding-guest catalog evidence. Verify included garments, measurements, variants and fulfillment.',
+    h1: 'Wedding Guest Kurta Sets',
+    content: '',
+  },
+  {
+    path: '/collections/diwali-womenswear',
+    category: 'occasion:diwali-womenswear',
+    title: 'Diwali Womenswear | Sarees, Lehengas & Suits | LuxeMia',
+    description: 'Browse orderable women’s outfits with explicit Diwali or festival evidence and a supported garment signal. Compare sizes, contents and fulfillment.',
+    h1: 'Diwali Outfits for Women',
+    content: '',
+  },
+  {
+    path: '/collections/diwali-menswear',
+    category: 'occasion:diwali-menswear',
+    title: 'Diwali Menswear | Kurta & Indian Festive Styles | LuxeMia',
+    description: 'Browse orderable menswear with explicit Diwali or festival evidence and a supported garment signal. Verify garments, measurements and fulfillment.',
+    h1: 'Diwali Outfits for Men',
+    content: '',
+  },
+  {
     path: '/collections/navratri-chaniya-choli',
     category: 'occasion:navratri-chaniya',
-    title: 'Navratri Chaniya Choli USA | Current Styles | LuxeMia',
+    title: 'Navratri Chaniya Choli | Current Styles | LuxeMia',
     description: 'Shop current Navratri chaniya choli and lehenga sets. Compare included pieces, fabric, work, measurements, stitching, price and availability.',
-    h1: 'Navratri Chaniya Choli Online in the USA',
-    content: `<p>This collection contains active lehenga, chaniya and choli listings whose catalog information explicitly mentions Navratri or chaniya. Confirm each product’s exact pieces, measurements, stitching, price and availability.</p>
+    h1: 'Navratri Chaniya Choli Online',
+    content: `<p>This collection contains active lehenga, chaniya and choli listings whose current catalog information explicitly mentions Navratri or chaniya. Compare the selected product’s exact skirt, blouse or choli, dupatta, fabric, work, measurements, stitching status, price and availability before ordering for Garba or Dandiya.</p>
       <h2>Choose by shopping need</h2><p><a href="/collections/navratri-outfits">All Navratri outfits</a> · <a href="/collections/garba-outfits">Garba outfits</a> · <a href="/festive-wear">Festive wear</a></p>
       <h2>Compare before choosing</h2><p>Compare waist, bust, skirt length, closures, garment weight when supplied, dupatta security, embellishment placement and exact included pieces.</p>
       <h2>Guides and support</h2><p><a href="/blog/chaniya-choli-versus-lehenga">Chaniya choli versus lehenga</a> · <a href="/sizing-measurements-guide">Measurement guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
@@ -2372,10 +2612,10 @@ const routes = [
   {
     path: '/collections/garba-outfits',
     category: 'occasion:garba',
-    title: 'Garba Outfits USA | Dandiya Clothing | LuxeMia',
+    title: 'Garba Outfits | Dandiya Clothing | LuxeMia',
     description: 'Shop active Garba and Dandiya outfit listings. Compare movement, included pieces, fabric, work, measurements, stitching and availability.',
-    h1: 'Garba and Dandiya Outfits Online in the USA',
-    content: `<p>This collection contains active products whose current title, product type or tags explicitly mention Garba or Dandiya. Verify every included piece, measurement, closure, fabric, work, price and selected-variant availability.</p>
+    h1: 'Garba and Dandiya Outfits Online',
+    content: `<p>This collection contains active products whose current title, product type, or tags explicitly mention Garba or Dandiya. Choose for movement and venue conditions, then verify every included piece, measurement, closure, fabric, embellishment, stitching option, price and selected-variant availability on the exact product page.</p>
       <h2>Choose by shopping need</h2><p><a href="/collections/navratri-chaniya-choli">Navratri chaniya choli</a> · <a href="/collections/navratri-outfits">All Navratri outfits</a> · <a href="/collections/party-wear-lehengas">Festive lehengas</a></p>
       <h2>Compare before choosing</h2><p>For movement, compare hem length, waist security, sleeves, neckline, dupatta handling, embellishment placement and footwear.</p>
       <h2>Guides and support</h2><p><a href="/blog/navratri-9-day-color-guide-2026">Navratri buying guide</a> · <a href="/blog/ready-to-ship-versus-made-to-order">Fulfillment guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
@@ -2384,10 +2624,10 @@ const routes = [
   {
     path: '/collections/groomsmen-outfits',
     category: 'occasion:groomsmen',
-    title: 'Indian Groomsmen Outfits USA | Kurta & Sherwani | LuxeMia',
+    title: 'Indian Groomsmen Outfits | Kurta & Sherwani | LuxeMia',
     description: 'Shop active menswear listings explicitly identified for groomsmen. Compare kurta, jacket and sherwani pieces, measurements and availability.',
-    h1: 'Indian Groomsmen Outfits Online in the USA',
-    content: `<p>This collection is limited to active menswear whose current catalog information explicitly identifies a groomsman or groomsmen use. Compare included garments, chest and length measurements, fulfillment, price and availability.</p>
+    h1: 'Indian Groomsmen Outfits Online',
+    content: `<p>This collection is limited to active menswear whose current catalog information explicitly identifies a groomsman or groomsmen use. Compare kurta sets, Nehru-style jacket sets, sherwanis, stated colors, included garments, chest and length measurements, fulfillment, price and availability before planning a coordinated group order.</p>
       <h2>Choose by shopping need</h2><p><a href="/menswear">All menswear</a> · <a href="/wedding-party-orders">Group-order support</a> · <a href="/shop-by-fulfillment/made-to-order">Made-to-order outfits</a></p>
       <h2>Compare before choosing</h2><p>Compare kurta sets, Nehru-style jacket sets and sherwanis by their exact garments, fabric wording, measurements and current selected-size availability.</p>
       <h2>Guides and support</h2><p><a href="/blog/sherwani-versus-kurta-set">Sherwani versus kurta set</a> · <a href="/sizing-measurements-guide">Measurement guide</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
@@ -2396,11 +2636,11 @@ const routes = [
   {
     path: '/collections/sangeet-outfits',
     category: 'occasion:sangeet',
-    title: 'Sangeet Outfits USA | Indian Dance-Event Styles | LuxeMia',
+    title: 'Sangeet Outfits | Indian Dance-Event Styles | LuxeMia',
     description: 'Shop active products explicitly identified for Sangeet. Compare movement, fabric, included pieces, measurements, fulfillment and availability.',
-    h1: 'Sangeet Outfits Online in the USA',
-    content: `<p>This collection contains active products whose current catalog information explicitly mentions Sangeet. Compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment and selected-variant availability.</p>
-      <h2>Choose by shopping need</h2><p><a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/sharara-suits">Sharara suits</a> · <a href="/menswear">Menswear</a></p>
+    h1: 'Sangeet Outfits Online',
+    content: `<p>This collection contains active products whose current catalog information explicitly mentions Sangeet. Lehengas, shararas, sarees, kurta sets and Indo-Western outfits can suit different events; compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment, price and selected-variant availability before ordering.</p>
+      <h2>Choose by shopping need</h2><p><a href="/wedding-events">All wedding events</a> · <a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/sharara-suits">Sharara suits</a> · <a href="/menswear">Menswear</a></p>
       <h2>Compare before choosing</h2><p>Compare lehengas, shararas, sarees and menswear by manageable hems, secure draping, exact set contents, measurements and current availability.</p>
       <h2>Guides and support</h2><p><a href="/blog/what-should-guests-wear-to-a-sangeet">Sangeet guide</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">Ordering timeline</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
       <h2>Frequently asked questions</h2><h3>How are Sangeet products selected?</h3><p>The current catalog must explicitly mention Sangeet.</p><h3>Is one silhouette required?</h3><p>No. Follow the host’s dress guidance and event format.</p>`,
@@ -2408,11 +2648,11 @@ const routes = [
   {
     path: '/collections/reception-outfits',
     category: 'occasion:reception',
-    title: 'Indian Reception Outfits USA | Guest & Party Wear | LuxeMia',
+    title: 'Indian Reception Outfits | Guest & Party Wear | LuxeMia',
     description: 'Shop active products explicitly identified for receptions. Compare formality, fabric, work, included pieces, measurements, price and availability.',
-    h1: 'Indian Reception Outfits Online in the USA',
-    content: `<p>This collection contains active products whose current catalog information explicitly mentions a reception. Compare the host’s dress code with each listing’s silhouette, fabric wording, work, included pieces, measurements, fulfillment and availability.</p>
-      <h2>Choose by shopping need</h2><p><a href="/collections/designer-sarees">Designer sarees</a> · <a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/wedding-guest-outfits">Wedding guest outfits</a></p>
+    h1: 'Indian Reception Outfits Online',
+    content: `<p>This collection contains active products whose current catalog information explicitly mentions a reception. Compare the host’s dress code with each listing’s silhouette, fabric wording, work, included pieces, measurements, fulfillment, price and selected-variant availability. Reception formality varies, so no single garment type is universally required.</p>
+      <h2>Choose by shopping need</h2><p><a href="/wedding-events">All wedding events</a> · <a href="/collections/designer-sarees">Designer sarees</a> · <a href="/collections/party-wear-lehengas">Party-wear lehengas</a> · <a href="/collections/wedding-guest-outfits">Wedding guest outfits</a></p>
       <h2>Compare before choosing</h2><p>Compare sarees, lehengas, shararas and menswear by the invitation, venue, movement needs, exact product construction and current selected-size availability.</p>
       <h2>Guides and support</h2><p><a href="/blog/saree-versus-lehenga-for-a-wedding-guest">Saree versus lehenga</a> · <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">Ordering timeline</a> · <a href="/shipping">Shipping</a> · <a href="/returns">Returns</a> · <a href="/contact">Support</a></p>
       <h2>Frequently asked questions</h2><h3>How are reception products selected?</h3><p>The current catalog must explicitly mention reception.</p><h3>Are reception outfits always black-tie?</h3><p>No. Follow the invitation and host guidance.</p>`,
@@ -2422,14 +2662,14 @@ const routes = [
     title: 'Indian Wedding Party & Group Outfit Orders | LuxeMia',
     description: 'Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups. Tell LuxeMia your event date, palette, sizes and budget.',
     h1: 'Wedding Party & Group Orders',
-    content: '<p>Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups across multiple sizes, colors and events. Send LuxeMia your wedding date, group size, palette and budget for personalized help.</p>',
+    content: '<p>Coordinate Indian wedding outfits for bridesmaids, groomsmen and family groups across multiple sizes, colors and events. Send LuxeMia your wedding date, group size, palette and budget for personalized help.</p><h2>Current groomsmen inventory</h2><p><a href="/collections/groomsmen-outfits">Browse products explicitly identified for groomsmen</a>, then request a current size-and-quantity check for the group.</p>',
   },
   {
     path: '/style-quiz',
-    title: 'Style Quiz — Find Your Perfect Indian Outfit | LuxeMia',
-    description: 'Take the LuxeMia style quiz to discover your perfect Indian outfit. Personalized recommendations based on your taste, occasion & budget.',
+    title: 'Style Quiz — Filter Current Indian Outfits',
+    description: 'Answer five preference questions to filter current LuxeMia products by silhouette and, when enough matches exist, budget.',
     h1: 'Style Quiz',
-    content: '<p>Discover your signature ethnic style. Answer a few questions and we\'ll recommend the perfect lehenga, saree, or suit for you.</p>',
+    content: '<p>This five-question shopping tool applies automated rules to current LuxeMia products. Product results use the selected silhouette and, when at least four products remain, the selected budget; otherwise the broader silhouette results are shown.</p><h2>What the result means</h2><p>The result is a browsing suggestion, not individualized styling, fit, cultural-suitability or event-date advice. Verify the exact product listing, measurements, included pieces, price, availability and processing before ordering.</p>',
     noIndex: true,
   },
 
@@ -2437,16 +2677,45 @@ const routes = [
   {
     path: '/privacy',
     title: 'Privacy Policy | LuxeMia',
-    description: 'LuxeMia privacy policy. How we collect, use, and protect your personal information when you shop with us.',
+    description: 'How LuxeMia handles storefront, checkout, support, consultation, email, review-program and optional analytics information, including analytics choices.',
     h1: 'Privacy Policy',
-    content: '<p>Your privacy matters to us. Read our full privacy policy to understand how we collect, use, and protect your personal information.</p>',
+    content: `
+      <p>Last reviewed September 2, 2026. This notice describes the information flows used at luxemia.shop. Merely using the site is not consent to optional analytics; Google Analytics remains off unless the visitor accepts it.</p>
+      <h2>Information and purpose</h2>
+      <p>Storefront, account and order interactions can involve contact, delivery, cart, transaction and support information. A consultation or support request can include measurements, budget, event date, free-text requirements and any photos or unboxing evidence a customer chooses to provide. LuxeMia uses the information to operate checkout, fulfill orders, answer requests, prevent abuse, meet legal obligations and honor communication choices.</p>
+      <h2>Providers and disclosure</h2>
+      <p>Relevant providers can include Shopify and checkout/payment services, Supabase for support or consultation processing, Resend for email, Vercel for hosting and logs, delivery carriers and customs participants, WhatsApp when that channel is chosen, and Google for optional Analytics after consent plus any future Customer Reviews badge or survey processing only under the verified conditions described below. Each provider processes information for its role and under its own terms.</p>
+      <h2>Analytics and browser choices</h2>
+      <p>Google Analytics is not loaded from the initial HTML and stays disabled when no choice exists or analytics is declined. Accept and decline are both available. The footer’s Cookie Settings control can withdraw analytics later; withdrawal disables future collection from the storefront and attempts to remove LuxeMia-domain analytics cookies.</p>
+      <h2>Google Customer Reviews</h2>
+      <p>LuxeMia does not operate or seed a separate on-site customer-review feed. The storefront does not currently request Google’s Customer Reviews rating-badge script. A badge-script request is not a claim that program enrollment, survey eligibility or a seller rating is currently active. A badge must not be enabled until program status is verified and its third-party data flow is covered by a specific, informed choice.</p>
+      <p>The public LuxeMia return page does not trust order identifiers, email addresses, totals, countries or delivery dates supplied in its URL and does not send those values to Google or record a purchase from them. A Customer Reviews survey may be enabled only within Shopify’s protected post-purchase context when every required order field and an evidence-based delivery estimate are verified. If a required value is unavailable or cannot be verified, the survey must not render.</p>
+      <p>If a survey is later verified and enabled, Google controls its optional survey, content rules, privacy handling and any aggregate rating. LuxeMia does not create, seed or rewrite those reviews. See the <a href="/review-policy">customer review safeguards page</a> for the storefront explanation.</p>
+      <h2>Retention, international processing and requests</h2>
+      <p>Records are retained only as reasonably needed for their purpose, provider operation, disputes, fraud prevention and applicable legal, tax, accounting or customs duties; there is no single promised period for every record. Providers and order participants can process information in other countries. Depending on location, rights can include access, correction, deletion, portability, restriction, objection, consent withdrawal and direct-marketing opt-out, subject to legal conditions and exceptions.</p>
+      <h2>Security and contact</h2>
+      <p>The storefront uses HTTPS, and payment-card entry occurs through Shopify-hosted checkout rather than LuxeMia support forms. No internet service can guarantee complete security. Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> with “Privacy request,” or use <a href="/contact">LuxeMia support</a>. See the <a href="/review-policy">review-program explanation</a>.</p>
+    `,
   },
   {
     path: '/terms',
     title: 'Terms of Service | LuxeMia',
-    description: 'LuxeMia terms of service. Our policies for orders, shipping, returns, and use of the LuxeMia website.',
+    description: 'LuxeMia terms for online orders, product information, fulfillment, shipping, cancellations, covered order issues and website use.',
     h1: 'Terms of Service',
-    content: '<p>Read our terms of service for information about orders, shipping, returns, and use of the LuxeMia website.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>',
+    content: `
+      <p>Last updated September 2, 2026. These terms apply to the LuxeMia online store. Review the exact product listing, checkout total, shipping policy and returns policy before ordering.</p>
+      <h2>Product information</h2>
+      <p>The exact product page is the source of truth for stated materials, included pieces, stitching status, measurements, selectable variants, customization, price and current availability. Photography and displays can affect apparent colour or texture, and facts not shown should not be assumed.</p>
+      <h2>Orders, price and payment</h2>
+      <p>Prices and shipping thresholds are in USD unless checkout expressly displays another currency. Shopify-hosted checkout shows the submitted cart, destination charges and available payment methods. An automated receipt does not override availability, payment review or a genuine catalog error.</p>
+      <h2>Fulfillment and delivery</h2>
+      <p>Ready-to-ship means the selected item is classified as stocked, while made-to-order production starts after confirmation and customizable applies only to options expressly offered. Processing occurs before carrier transit. No event-date delivery is guaranteed unless that guarantee is expressly confirmed for the order.</p>
+      <h2>Cancellations, returns and covered issues</h2>
+      <p>Change-of-mind purchases are final sale. Damage, defects, material misdescription, incorrect items and missing pieces use the covered-issue process. Report an issue promptly—preferably within 48 hours—with available evidence. A missing video does not by itself remove rights that cannot legally be excluded. Cancellation requests are not confirmed until LuxeMia accepts them, and fulfillment may begin before a request is reviewed.</p>
+      <h2>Website content and privacy</h2>
+      <p>LuxeMia owns or licenses its original site copy, branding and software, but product photographs, marks, descriptions and designs may belong to suppliers, brands or other rights holders. The <a href="/privacy">Privacy Policy</a> describes checkout, support, consultation, email, review and optional-analytics information.</p>
+      <p><a href="/shipping">Shipping policy</a> · <a href="/returns">Returns and cancellations</a> · <a href="/editorial-policy">Editorial policy</a> · <a href="/review-policy">Review safeguards</a> · <a href="/contact">Contact LuxeMia</a></p>
+    `,
   },
   {
     path: '/press',
@@ -2505,8 +2774,8 @@ const routes = [
     path: '/order-confirmation',
     title: 'Order Confirmation | LuxeMia',
     description: 'LuxeMia order confirmation.',
-    h1: 'Thank You for Your Order',
-    content: '<p>If your order was completed successfully, confirmation details will be sent to the email used at checkout. Tracking is provided after dispatch.</p>',
+    h1: 'Check Your Shopify Order Status',
+    content: '<p>This public page cannot verify an order. Use Shopify\'s protected order-status page or, if Shopify sends one, its confirmation message for verified details. When tracking is issued, carrier scans can appear after label creation.</p>',
     noIndex: true,
   },
 
@@ -2549,6 +2818,7 @@ function generateHtml(template, route, allShopifyProducts) {
   const seoTitle = clampTitle(route.title);
   const seoDescription = clampDescription(route.description);
   const routeContent = normalizeInternalNavigationHtml(route.content);
+  const collectionStandard = route.collectionStandard;
 
   // Replace title
   html = html.replace(
@@ -2575,7 +2845,7 @@ function generateHtml(template, route, allShopifyProducts) {
     );
     // Also remove hreflang tags for noIndex pages
     html = html.replace(
-      /<link rel="alternate" hreflang="en-US" href="[^"]*"\s*\/?>/,
+      /<link rel="alternate" hreflang="en" href="[^"]*"\s*\/?>/,
       ''
     );
     html = html.replace(
@@ -2598,8 +2868,8 @@ function generateHtml(template, route, allShopifyProducts) {
 
     // Replace hreflang alternate tags to point to the route's canonical URL
     html = html.replace(
-      /<link rel="alternate" hreflang="en-US" href="[^"]*"\s*\/?>/,
-      `<link rel="alternate" hreflang="en-US" href="${canonical}" />`
+      /<link rel="alternate" hreflang="en" href="[^"]*"\s*\/?>/,
+      `<link rel="alternate" hreflang="en" href="${canonical}" />`
     );
     html = html.replace(
       /<link rel="alternate" hreflang="x-default" href="[^"]*"\s*\/?>/,
@@ -2616,6 +2886,17 @@ function generateHtml(template, route, allShopifyProducts) {
     /<meta property="og:description" content="[^"]*" \/>/,
     `<meta property="og:description" content="${escapeHtml(seoDescription)}" />`
   );
+  const openGraphType = route.path.startsWith('/product/')
+    ? 'product'
+    : route.category
+      ? 'collection'
+      : null;
+  if (openGraphType) {
+    html = html.replace(
+      /<meta property="og:type" content="[^"]*" \/>/,
+      `<meta property="og:type" content="${openGraphType}" />`
+    );
+  }
 
   // Replace Twitter tags
   html = html.replace(
@@ -2640,7 +2921,7 @@ function generateHtml(template, route, allShopifyProducts) {
       name: seoTitle,
       description: seoDescription,
       isPartOf: { '@id': `${SITE_URL}/#website` },
-      inLanguage: 'en-US',
+      inLanguage: 'en',
     };
     html = html.replace(
       '</head>',
@@ -2655,18 +2936,25 @@ function generateHtml(template, route, allShopifyProducts) {
     html = html.replace('</head>', `    ${routeSchemas}\n</head>`);
   }
 
-  // Every static collection route needs a BreadcrumbList in the initial HTML.
-  // Commercial landings use their own route records and may not enter the
-  // category-product branch below, so this must be applied before that split.
-  if (!route.noIndex && route.path.startsWith('/collections/')) {
+  // Every indexable collection route needs a BreadcrumbList in the initial
+  // HTML, including root categories and semantic fulfillment/occasion hubs.
+  if (!route.noIndex && collectionStandard) {
     const collectionCanonical = `${SITE_URL}${route.path}`;
+    const parentName = route.path.startsWith('/shop-by-fulfillment/')
+      ? 'Shop by Fulfillment'
+      : 'Collections';
+    const parentUrl = route.path.startsWith('/shop-by-fulfillment/')
+      ? `${SITE_URL}/shop-by-fulfillment`
+      : `${SITE_URL}/collections`;
+    const isParentRoute = route.path === '/collections' || route.path === '/shop-by-fulfillment';
     const collectionBreadcrumbSchema = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
+      '@id': `${collectionCanonical}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: 'Collections', item: `${SITE_URL}/collections` },
-        { '@type': 'ListItem', position: 3, name: route.h1, item: collectionCanonical },
+        ...(!isParentRoute ? [{ '@type': 'ListItem', position: 2, name: parentName, item: parentUrl }] : []),
+        { '@type': 'ListItem', position: isParentRoute ? 2 : 3, name: route.h1, item: collectionCanonical },
       ],
     };
     html = html.replace(
@@ -2680,30 +2968,27 @@ function generateHtml(template, route, allShopifyProducts) {
     const canonical = SITE_URL + route.path;
     const handle = route.path.slice('/product/'.length);
 
-    // Look up live product data (image, price, description) from Shopify map.
-    // Fall back to the route's own metadata when Shopify lookup misses, so the
-    // emitted Product schema is ALWAYS valid (Google Merchant Listings rejects
-    // products missing image / offers.price / description).
-    const live = route.product || null;
-    const liveImages = live?.images?.edges?.map(e => forceJpegForGmc(e.node.url)).filter(Boolean) || [];
-    const productImages = liveImages.length > 0 ? liveImages : [FALLBACK_OG_IMAGE];
-    const productDescription = (live ? buildVerifiedProductCopy(live) : route.description || '').slice(0, 5000);
-    const productPrice = live?.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
-    const productCurrency = live?.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
-    const productVariant = live?.variants?.edges?.find((variant) => variant.node.availableForSale)?.node
-      || live?.variants?.edges?.[0]?.node;
+    // Product pages are generated only from the complete, current Shopify map.
+    // A missing route product or an incomplete commerce record is a release
+    // failure, never a signal to manufacture placeholder schema or visible facts.
+    const live = route.product;
+    if (!live || live.handle !== handle) {
+      throw new Error(`[catalog-integrity] ${route.path} has no matching live Shopify product record.`);
+    }
+    const liveEvidence = getLiveProductPrerenderEvidence(live);
+    const productImages = liveEvidence.images;
+    const productDescription = liveEvidence.description.slice(0, 5000);
+    const productVariant = (live.availableForSale === true
+      ? liveEvidence.variants.find((variant) => variant.availableForSale === true)
+      : undefined)
+      || liveEvidence.variants[0];
     const productSku = productVariant?.sku || '';
     const productGtin = productVariant?.barcode || '';
-    const productAvailability = live?.availableForSale === true || live?.variants?.edges?.some((variant) => variant.node.availableForSale)
-      ? 'InStock'
-      : 'OutOfStock';
-    const productBrand = normalizeBrand(live?.vendor);
+    const productBrandSchema = generateProductBrandSchema(live?.vendor);
+    const productItemCondition = getVerifiedItemCondition(live);
     const productGtinSchema = getGtinSchemaProperty(productGtin);
-    const productMpn = productBrand === 'LuxeMia' && productSku && !Object.keys(productGtinSchema).length
-      ? productSku
-      : '';
     const productAttributes = getListedProductAttributes(live);
-    const productCategory = isMadeToOrderProduct(live)
+    const productCategory = hasExplicitMadeToOrderEvidence(live)
       ? { label: 'Made-to-Order Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
@@ -2712,7 +2997,7 @@ function generateHtml(template, route, allShopifyProducts) {
     // switch variants with query parameters. This preserves a direct, current
     // offer for every source-backed Shopify variant rather than exposing only
     // the initially selected option in static HTML.
-    const schemaVariants = live?.variants?.edges?.map((edge) => edge.node).filter(Boolean) || [];
+    const schemaVariants = liveEvidence.variants;
     const productId = live?.id?.split('/').pop() || '';
     const productGroupId = (live?.handle || '').length <= 50
       ? (live?.handle || '')
@@ -2722,10 +3007,10 @@ function generateHtml(template, route, allShopifyProducts) {
       '@id': `${variantUrl}#offer`,
       url: variantUrl,
       // Active price only; compare-at values never create unsupported sale windows.
-      price: variant?.price?.amount || productPrice,
-      priceCurrency: variant?.price?.currencyCode || productCurrency,
-      availability: `https://schema.org/${variant?.availableForSale === false ? 'OutOfStock' : 'InStock'}`,
-      itemCondition: 'https://schema.org/NewCondition',
+      price: variant.price.amount,
+      priceCurrency: variant.price.currencyCode,
+      availability: `https://schema.org/${live.availableForSale === true && variant.availableForSale === true ? 'InStock' : 'OutOfStock'}`,
+      ...(productItemCondition ? { itemCondition: productItemCondition } : {}),
       seller: { '@id': `${SITE_URL}/#organization` },
       merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
       shippingDetails: generateUsProductShippingDetails(productAttributes.shipsWithinDays),
@@ -2739,14 +3024,11 @@ function generateHtml(template, route, allShopifyProducts) {
         .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
         .map((option) => option.value);
       const variantLabel = [...new Set(visibleOptions)].join(' / ');
-      const variantUrl = variantId ? `${canonical}?variant=${encodeURIComponent(variantId)}` : canonical;
+      const variantUrl = getProductVariantUrl(canonical, variant);
       const variantImages = variant?.image?.url ? [forceJpegForGmc(variant.image.url)] : productImages;
       const variantSku = variant?.sku || '';
       const variantGtin = variant?.barcode || '';
       const variantGtinSchema = getGtinSchemaProperty(variantGtin);
-      const variantMpn = productBrand === 'LuxeMia' && variantSku && !Object.keys(variantGtinSchema).length
-        ? variantSku
-        : '';
       return {
         '@type': 'Product',
         '@id': `${variantUrl}#product`,
@@ -2755,11 +3037,10 @@ function generateHtml(template, route, allShopifyProducts) {
         image: variantImages,
         description: productDescription,
         ...(variantSku ? { sku: variantSku } : {}),
-        ...(variantMpn ? { mpn: variantMpn } : {}),
         ...variantGtinSchema,
         url: variantUrl,
-        brand: { '@type': 'Brand', name: productBrand },
-        category: productCategory.schemaCategory,
+        ...(productBrandSchema ? { brand: productBrandSchema } : {}),
+        ...(productCategory.schemaCategory ? { category: productCategory.schemaCategory } : {}),
         ...(color ? { color } : {}),
         ...(productAttributes.material ? { material: productAttributes.material } : {}),
         ...(size ? { size } : {}),
@@ -2767,6 +3048,7 @@ function generateHtml(template, route, allShopifyProducts) {
       };
     };
     const emittedSchemaVariants = schemaVariants.map(schemaVariantProduct);
+    const productVariantUrl = getProductVariantUrl(canonical, productVariant);
     const schemaVariesBy = [
       ...(emittedSchemaVariants.some((variant) => Boolean(variant.color)) ? ['https://schema.org/color'] : []),
       ...(emittedSchemaVariants.some((variant) => Boolean(variant.size)) ? ['https://schema.org/size'] : []),
@@ -2780,8 +3062,8 @@ function generateHtml(template, route, allShopifyProducts) {
           image: productImages,
           description: productDescription,
           url: canonical,
-          brand: { '@type': 'Brand', name: productBrand },
-          category: productCategory.schemaCategory,
+          ...(productBrandSchema ? { brand: productBrandSchema } : {}),
+          ...(productCategory.schemaCategory ? { category: productCategory.schemaCategory } : {}),
           ...(productAttributes.material ? { material: productAttributes.material } : {}),
           ...(productGroupId ? { productGroupID: productGroupId } : {}),
           ...(schemaVariesBy.length > 0 ? { variesBy: schemaVariesBy } : {}),
@@ -2795,22 +3077,22 @@ function generateHtml(template, route, allShopifyProducts) {
           image: productImages,
           description: productDescription,
           ...(productSku ? { sku: productSku } : {}),
-          ...(productMpn ? { mpn: productMpn } : {}),
           ...productGtinSchema,
           url: canonical,
-          brand: { '@type': 'Brand', name: productBrand },
-          category: productCategory.schemaCategory,
+          ...(productBrandSchema ? { brand: productBrandSchema } : {}),
+          ...(productCategory.schemaCategory ? { category: productCategory.schemaCategory } : {}),
           ...(productAttributes.color ? { color: productAttributes.color } : {}),
           ...(productAttributes.material ? { material: productAttributes.material } : {}),
           ...(productAttributes.sizes.length > 0 ? { size: productAttributes.sizes } : {}),
-          itemCondition: 'https://schema.org/NewCondition',
-          offers: offerForVariant(productVariant, canonical),
+          ...(productItemCondition ? { itemCondition: productItemCondition } : {}),
+          offers: offerForVariant(productVariant, productVariantUrl),
         };
 
     // Breadcrumb schema for product pages
     const breadcrumbSchema = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
       itemListElement: [
         { '@type': 'ListItem', position: 1, name: 'Home', item: SITE_URL + '/' },
         { '@type': 'ListItem', position: 2, name: productCategory.label, item: SITE_URL + productCategory.link },
@@ -2839,18 +3121,25 @@ function generateHtml(template, route, allShopifyProducts) {
   // Blog routes need article-specific schema in the initial HTML. The author
   // is the real editorial team; individual credentials are not implied.
   if (route.blogPost) {
-    const { publishedAt, updatedAt, factCheckedAt, sources = [] } = route.blogPost;
+    const { publishedAt, updatedAt, factCheckedAt, sources = [], faqs = [] } = route.blogPost;
+    const canonical = SITE_URL + route.path;
     const articleSchema = {
       '@context': 'https://schema.org',
       '@type': 'BlogPosting',
+      '@id': `${canonical}#article`,
       headline: route.h1,
       description: route.description,
-      url: SITE_URL + route.path,
-      mainEntityOfPage: SITE_URL + route.path,
+      url: canonical,
+      mainEntityOfPage: { '@id': `${canonical}#webpage` },
       datePublished: publishedAt,
       dateModified: updatedAt,
-      author: { '@type': 'Organization', name: 'LuxeMia Editorial Team', url: SITE_URL + '/authors/luxemia-editorial-team' },
-      publisher: { '@type': 'Organization', name: 'LuxeMia', url: SITE_URL },
+      author: {
+        '@type': 'Organization',
+        '@id': `${SITE_URL}/authors/luxemia-editorial-team#editorial-team`,
+        name: 'LuxeMia Editorial Team',
+        url: `${SITE_URL}/authors/luxemia-editorial-team`,
+      },
+      publisher: { '@id': `${SITE_URL}/#organization` },
       citation: sources.map(source => source.url),
       isBasedOn: sources.map(source => ({
         '@type': 'CreativeWork',
@@ -2859,11 +3148,36 @@ function generateHtml(template, route, allShopifyProducts) {
         url: source.url,
       })),
     };
+    const breadcrumbSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      '@id': `${canonical}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
+        { '@type': 'ListItem', position: 2, name: 'Guides', item: `${SITE_URL}/blog` },
+        { '@type': 'ListItem', position: 3, name: route.h1, item: canonical },
+      ],
+    };
+    const faqSchema = faqs.length >= 4
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((faq) => ({
+            '@type': 'Question',
+            name: faq.question,
+            acceptedAnswer: { '@type': 'Answer', text: faq.answer },
+          })),
+        }
+      : null;
     const reviewMeta = `
     <meta property="article:published_time" content="${escapeHtml(publishedAt)}" />
     <meta property="article:modified_time" content="${escapeHtml(updatedAt)}" />
     <meta name="last-reviewed" content="${escapeHtml(factCheckedAt)}" />`;
-    html = html.replace('</head>', `${reviewMeta}\n    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(articleSchema)}</script>\n</head>`);
+    const structuredData = [articleSchema, breadcrumbSchema, faqSchema]
+      .filter(Boolean)
+      .map((schema) => `<script type="application/ld+json" data-prerender-schema>${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>`)
+      .join('\n    ');
+    html = html.replace('</head>', `${reviewMeta}\n    ${structuredData}\n</head>`);
   }
 
   // Inject SEO content into the body. This content is visible to search engine crawlers
@@ -2874,34 +3188,53 @@ function generateHtml(template, route, allShopifyProducts) {
   // price, image, full description, product details, shipping info.
   // This is the key fix for Google's "thin content" / "crawled but not indexed" signal.
   let mainBodyContent;
-  if (route.path.startsWith('/product/') && route.product) {
+  if (route.path.startsWith('/product/')) {
     const p = route.product;
+    if (!p || p.handle !== route.path.slice('/product/'.length)) {
+      throw new Error(`[catalog-integrity] ${route.path} cannot emit visible product HTML without its matching live Shopify record.`);
+    }
+    const liveEvidence = getLiveProductPrerenderEvidence(p);
     const initialProductPayload = buildInitialProductPayload(p);
     html = html.replace('</head>', `    <script>window.__INITIAL_PRODUCT_DATA__ = ${initialProductPayload};</script>\n</head>`);
-    const isCustomizable = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle);
-    const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
-    const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
-    const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
-    const isAvailable = p.availableForSale === true || p.variants?.edges?.some((variant) => variant.node.availableForSale);
+    const hasMadeToOrderEvidence = hasExplicitMadeToOrderEvidence(p);
+    const hasCustomColorEvidence = hasExplicitCustomColorEvidence(p);
+    const hasCustomMeasurementEvidence = hasExplicitCustomMeasurementEvidence(p);
+    const defaultVariant = (p.availableForSale === true
+      ? liveEvidence.variants.find((variant) => variant.availableForSale === true)
+      : undefined) || liveEvidence.variants[0];
+    const price = defaultVariant.price.amount;
+    const currency = defaultVariant.price.currencyCode;
+    const comparePriceMoney = p.compareAtPriceRange?.maxVariantPrice;
+    const isAvailable = liveEvidence.availableForSale;
     const images = p.images?.edges?.map(e => e.node) || [];
-    const description = buildVerifiedProductCopy(p);
+    const description = liveEvidence.description;
     const productType = (p.productType || '').trim();
-    const vendor = (p.vendor || '').trim();
-    const brandName = (!vendor || vendor.toLowerCase() === 'luxemia') ? 'LuxeMia' : vendor;
+    const brandName = normalizeBrand(p.vendor);
     const productAttributes = getListedProductAttributes(p);
     const styleReference = getVerifiedPrimaryStyleReference(p);
-    const productCategory = isMadeToOrderProduct(p)
+    const productCategory = hasMadeToOrderEvidence
       ? { label: 'Made-to-Order Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(productType, p.title || route.h1);
 
     let priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
-    if (comparePrice && parseFloat(comparePrice) > parseFloat(price)) {
-      priceHtml += ` <s style="color:#888">${currency} ${parseFloat(comparePrice).toFixed(2)}</s>`;
+    if (isValidShopifyMoney(comparePriceMoney)
+      && comparePriceMoney.currencyCode === currency
+      && Number(comparePriceMoney.amount) > Number(price)) {
+      priceHtml += ` <s style="color:#888">${currency} ${Number(comparePriceMoney.amount).toFixed(2)}</s>`;
     }
 
     // Category link and schema category use the same product classification.
     const categoryLink = productCategory.link;
     const categoryLabel = productCategory.label;
+    const productGuide = categoryLink === '/lehengas'
+      ? { href: '/blog/how-to-measure-for-a-lehenga-ordered-online', label: 'How to measure for a lehenga' }
+      : categoryLink === '/sarees'
+      ? { href: '/blog/saree-versus-lehenga-for-a-wedding-guest', label: 'Saree versus lehenga guide' }
+      : categoryLink === '/menswear'
+      ? { href: '/blog/sherwani-versus-kurta-set', label: 'Sherwani versus kurta guide' }
+      : categoryLink === '/collections/customizable-indian-outfits'
+      ? { href: '/blog/ready-to-ship-versus-made-to-order', label: 'Ready-to-ship versus made-to-order guide' }
+      : { href: '/sizing-measurements-guide', label: 'Sizing and measurement guide' };
 
     const firstImage = images[0];
     const imgHtml = firstImage
@@ -2915,16 +3248,16 @@ function generateHtml(template, route, allShopifyProducts) {
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';
     const includedPieces = productAttributes.includedPieces;
-    const sizingDetails = isCustomizable
-      ? 'Made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+    const sizingDetails = hasCustomMeasurementEvidence
+      ? 'The current Shopify listing explicitly includes a custom-size or custom-measurement option. Contact LuxeMia before ordering to confirm the measurements required for this product.'
       : productAttributes.sizes.length > 0
       ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
-    const shippingEstimate = isCustomizable
-      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
-      : productAttributes.shipsWithinDays
-      ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
-      : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
+    const shippingEstimate = productAttributes.shipsWithinDays
+      ? `Listing processing estimate: within ${productAttributes.shipsWithinDays} day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Carrier transit and delivery timing are separate.`
+      : hasMadeToOrderEvidence
+      ? 'The current Shopify listing identifies this product as made to order but does not supply a positive processing-day value. Confirm production time and carrier transit before ordering for a fixed date.'
+      : 'Timing depends on the item and selected options. When tracking is issued, carrier scans can appear after label creation.';
     const detailRows = [
       `<div><dt>Fabric Details</dt><dd>${escapeHtml(fabricDetails)}</dd></div>`,
       includedPieces ? `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>` : '',
@@ -2932,43 +3265,62 @@ function generateHtml(template, route, allShopifyProducts) {
       `<div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>`,
       productType ? `<div><dt>Type</dt><dd>${escapeHtml(productType)}</dd></div>` : '',
       styleReference ? `<div><dt>Style Reference</dt><dd>${escapeHtml(styleReference)}</dd></div>` : '',
-      `<div><dt>Brand</dt><dd>${escapeHtml(brandName)}</dd></div>`,
+      brandName ? `<div><dt>Brand</dt><dd>${escapeHtml(brandName)}</dd></div>` : '',
       productAttributes.color ? `<div><dt>Color</dt><dd>${escapeHtml(productAttributes.color)}</dd></div>` : '',
       `<div><dt>Availability</dt><dd>${isAvailable ? 'In Stock' : 'Currently Unavailable'}</dd></div>`,
-      `<div><dt>Ships to</dt><dd>United States</dd></div>`,
+      `<div><dt>Ships to</dt><dd>United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius</dd></div>`,
     ].filter(Boolean).join('\n        ');
 
-    const sizeAnswer = isCustomizable
-      ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+    const sizeAnswer = hasCustomMeasurementEvidence
+      ? 'The current Shopify listing explicitly includes a custom-size or custom-measurement option. Contact LuxeMia before ordering to confirm the measurements required for this product.'
       : productAttributes.sizes.length > 0
       ? `Available choices shown for this listing are ${escapeHtml(productAttributes.sizes.join(', '))}. Review the Size Guide before ordering.`
       : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
     const firstQuestion = productAttributes.jewelry
       ? `<h3>What is included with the ${escapeHtml(p.title || route.h1)}?</h3><p>The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.</p>`
       : `<h3>What sizes are available?</h3><p>${sizeAnswer}</p>`;
-    const careAnswer = productAttributes.jewelry
-      ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
-      : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
-    const deliveryAnswer = isCustomizable
-      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
+    const careAnswer = productAttributes.care
+      ? escapeHtml(productAttributes.care)
+      : 'Product-specific care instructions were not supplied in the current listing. Ask LuxeMia before cleaning or treating this item.';
+    const deliveryAnswer = hasMadeToOrderEvidence
+      ? 'The current Shopify listing identifies this product as made to order. Confirm product-specific production time and carrier transit before ordering for a fixed date; no timing is promised unless the listing or LuxeMia supplies it for this product.'
       : productAttributes.jewelry
-      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.'
-      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.';
+      ? 'Delivery timing depends on the item. When tracking is issued, carrier scans can appear after label creation. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.'
+      : 'Delivery timing depends on the item and any selected tailoring. When tracking is issued, carrier scans can appear after label creation. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.';
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
       ${firstQuestion}
-      ${isCustomizable ? `<h3>Can I request another color?</h3><p>Yes. A custom color is available for this verified design, subject to fabric availability. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.</p>` : ''}
+      ${hasCustomColorEvidence ? `<h3>Does this product have a custom-color option?</h3><p>The current Shopify listing explicitly identifies a custom-color option. Contact LuxeMia with the product link and requested color before ordering so availability and the exact request can be confirmed. Other design changes are not promised unless confirmed in writing.</p>` : ''}
       <h3>How is this product shipped?</h3>
       <p>${deliveryAnswer}</p>
       <h3>What is the return policy?</h3>
-      <p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.</p>
+      <p>Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.</p>
       <h3>How should I care for this product?</h3>
       <p>${careAnswer}</p>`;
+    const availableVariants = p.availableForSale === true
+      ? liveEvidence.variants.filter((variant) => variant.availableForSale === true)
+      : [];
+    const purchaseOptionsHtml = availableVariants.length > 0
+      ? `
+      <h2>Choose an Available Variant</h2>
+      <p>Each link opens that exact Shopify variant in the live product purchase controls.</p>
+      <ul data-product-variant-purchase-links>
+        ${availableVariants.map((variant, index) => {
+          const numericVariantId = String(variant.id).split('/').pop();
+          const variantUrl = getProductVariantUrl(`${SITE_URL}${route.path}`, variant);
+          const variantLabel = getVisibleVariantLabel(variant, index);
+          return `<li><a data-product-variant-cta="true" data-variant-id="${numericVariantId}" data-price="${escapeHtml(variant.price.amount)}" data-currency="${escapeHtml(variant.price.currencyCode)}" href="${escapeHtml(`${variantUrl}#product-purchase`)}">Choose ${escapeHtml(variantLabel)} to purchase — ${escapeHtml(variant.price.currencyCode)} ${Number(variant.price.amount).toFixed(2)}</a></li>`;
+        }).join('\n        ')}
+      </ul>`
+      : `
+      <h2>Purchase Availability</h2>
+      <p>No Shopify variant for this product was available for purchase when this page was generated.</p>`;
     const siblingProductLinksHtml = generateApprovedSiblingProductLinks(p, allShopifyProducts);
 
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      <p>Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p>
+      <p data-product-primary-offer data-variant-id="${escapeHtml(String(defaultVariant.id).split('/').pop())}" data-price="${escapeHtml(defaultVariant.price.amount)}" data-currency="${escapeHtml(defaultVariant.price.currencyCode)}" data-availability="${isAvailable ? 'In Stock' : 'Out of Stock'}">Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p>
+      ${purchaseOptionsHtml}
       ${imgHtml}
       ${descHtml}
       <h2>Product Specifications</h2>
@@ -2978,7 +3330,9 @@ function generateHtml(template, route, allShopifyProducts) {
       ${productQuestionsHtml}
       ${siblingProductLinksHtml}
       <h2>Shipping &amp; Delivery</h2>
-      <p>Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <p>Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the destination-specific rates in the shipping policy; checkout is the final source of truth. When tracking is issued, carrier scans can appear after label creation.</p>
+      <h2>Plan fit, shipping and support</h2>
+      <p><a href="/sizing-measurements-guide">Sizing and measurement help</a> | <a href="${escapeHtml(productGuide.href)}">${escapeHtml(productGuide.label)}</a> | <a href="/shipping">Shipping policy</a> | <a href="/returns">Returns and covered order issues</a> | <a href="/contact">Contact support</a></p>
       <p><a href="${escapeHtml(categoryLink)}">${escapeHtml(categoryLabel)}</a> | <a href="/collections">All Collections</a></p>`;
   } else if (route.htmlSitemap && allShopifyProducts && allShopifyProducts.size > 0) {
     const approvedProducts = Array.from(allShopifyProducts.values())
@@ -2996,11 +3350,14 @@ function generateHtml(template, route, allShopifyProducts) {
     // first byte instead of an empty marketing shell. This is the SEO fix for the
     // 100 -> 7 impression drop on collection pages.
     const allProducts = Array.from(allShopifyProducts.values());
-    const allCollectionProducts = rankCommercialProducts(filterProductsForCollectionRoute(
+    const commerciallyRankedProducts = rankCommercialProducts(filterProductsForCollectionRoute(
       allProducts,
       route,
       Number.POSITIVE_INFINITY,
     ));
+    const allCollectionProducts = route.path === '/lehengas'
+      ? rankGenericLehengasByIntent(commerciallyRankedProducts)
+      : commerciallyRankedProducts;
     const collectionProducts = allCollectionProducts.slice(0, MAX_COLLECTION_PRODUCTS);
     const matchLabel = route.prerenderSubcategory
       ? `${route.category}:${route.prerenderSubcategory.slug}`
@@ -3014,25 +3371,32 @@ function generateHtml(template, route, allShopifyProducts) {
       );
     }
 
+    if (DURABLE_INTENT_COLLECTION_PATHS.has(route.path) && collectionStandard) {
+      const faqPageJsonLd = generateFaqPageJsonLd(collectionStandard.faqs);
+      if (faqPageJsonLd) {
+        html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(faqPageJsonLd)}</script>\n</head>`);
+      }
+    }
+
     if (collectionProducts.length > 0) {
       // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
-      const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
-      html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+      const itemListJsonLd = generateItemListJsonLd(collectionProducts.slice(0, 30), route.h1, route.path);
+      html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
 
       const canonical = `${SITE_URL}${route.path}`;
       const collectionPageJsonLd = {
         '@context': 'https://schema.org',
         '@type': 'CollectionPage',
-        '@id': canonical,
+        '@id': `${canonical}#collection`,
         url: canonical,
         name: route.h1,
         description: route.description,
-        inLanguage: 'en-US',
-        mainEntity: { '@id': `${canonical}#products` },
+        inLanguage: 'en',
+        mainEntity: { '@id': `${canonical}#itemlist` },
         isPartOf: { '@id': `${SITE_URL}/#website` },
         breadcrumb: { '@id': `${canonical}#breadcrumb` },
       };
-      html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(collectionPageJsonLd)}</script>\n</head>`);
+      html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(collectionPageJsonLd)}</script>\n</head>`);
 
       // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
       // and skips the client-side Shopify fetch entirely on first paint.
@@ -3040,25 +3404,42 @@ function generateHtml(template, route, allShopifyProducts) {
       html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
     }
 
-    // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
-    const productCardsHtml = generateCollectionProductHtml(collectionProducts);
-    const overflowProductLinksHtml = generateApprovedOverflowProductLinks(
-      allCollectionProducts,
-      collectionProducts,
-    );
-    mainBodyContent = `
-      <h1>${escapeHtml(route.h1)}</h1>
-      ${routeContent}
-      <h2>Products in this Collection</h2>
-      ${productCardsHtml}
-      ${overflowProductLinksHtml}`;
+    if (route.category === 'ready-to-ship' && collectionProducts.length === 0) {
+      // An empty positive-evidence result is a noindex status response, not a
+      // substantive Ready-to-Ship collection or an invitation to infer stock.
+      mainBodyContent = `
+        <h1>${escapeHtml(route.h1)}</h1>
+        <p>No current products met the explicit ready-to-ship evidence and available-variant requirements when this page was generated.</p>
+        <p><a href="/collections">Browse current collections</a> or <a href="/contact">contact LuxeMia</a> to confirm a product's fulfillment information.</p>`;
+    } else {
+      // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
+      const productCardsHtml = generateCollectionProductHtml(collectionProducts);
+      const overflowProductLinksHtml = generateApprovedOverflowProductLinks(
+        allCollectionProducts,
+        collectionProducts,
+      );
+      const collectionDirectAnswer = collectionStandard
+        ? `<p data-collection-direct-answer>${escapeHtml(collectionStandard.directAnswer)}</p>`
+        : '';
+      const collectionDecisionSupport = generateCollectionStandardHtml(collectionStandard);
+      mainBodyContent = `
+        <h1>${escapeHtml(route.h1)}</h1>
+        ${collectionDirectAnswer}
+        ${routeContent}
+        <section data-collection-products>
+          <h2>Products in this Collection</h2>
+          ${productCardsHtml}
+          ${overflowProductLinksHtml}
+        </section>
+        ${collectionDecisionSupport}`;
+    }
   } else if (route.path === '/' && allShopifyProducts && allShopifyProducts.size > 0) {
     const homepageProducts = filterProductsForCategory(
       Array.from(allShopifyProducts.values()),
       'all',
       true,
     ).slice(0, 12);
-    const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'all', route.path);
+    const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'LuxeMia Collection', route.path);
     html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
@@ -3066,8 +3447,20 @@ function generateHtml(template, route, allShopifyProducts) {
       <h2>Recently Added Indian Ethnic Wear</h2>
       ${generateCollectionProductHtml(homepageProducts)}`;
   } else {
+    const blogDirectAnswer = route.blogPost?.directAnswer
+      ? `<p data-guide-direct-answer>${escapeHtml(route.blogPost.directAnswer)}</p>`
+      : '';
+    const blogEditorialMeta = route.blogPost
+      ? `<p data-guide-editorial-meta>By LuxeMia Editorial Team · Published <time datetime="${escapeHtml(route.blogPost.publishedAt)}">${escapeHtml(route.blogPost.publishedAt)}</time> · Last reviewed <time datetime="${escapeHtml(route.blogPost.factCheckedAt)}">${escapeHtml(route.blogPost.factCheckedAt)}</time></p>`
+      : '';
+    const blogBreadcrumb = route.blogPost
+      ? `<nav aria-label="Breadcrumb"><a href="/">Home</a> · <a href="/blog">Guides</a> · <span aria-current="page">${escapeHtml(route.h1)}</span></nav>`
+      : '';
     mainBodyContent = `
+      ${blogBreadcrumb}
       <h1>${escapeHtml(route.h1)}</h1>
+      ${blogDirectAnswer}
+      ${blogEditorialMeta}
       ${routeContent}`;
   }
 
@@ -3110,7 +3503,7 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/suits">Suits</a> |
         <a href="/menswear">Menswear</a> |
         <a href="/collections/customizable-indian-outfits">Customizable Outfits</a> |
-        <a href="/blog">Blog</a> |
+        <a href="/blog">Guides</a> |
         <a href="/collections">Collections</a> |
         <a href="/sitemap">Product Directory</a> |
         <a href="/contact">Contact</a>
@@ -3141,12 +3534,78 @@ function escapeHtml(str) {
 }
 
 async function main() {
-  const rankingModule = await loadTsModule('src/lib/commercialProductRanking.ts');
-  if (typeof rankingModule.rankCommercialProducts !== 'function') {
-    throw new Error('[commercial-ranking] Shared ranking module did not export rankCommercialProducts.');
+  const [
+    rankingModule,
+    collectionStandardsModule,
+    readyToShipEvidenceModule,
+    productCopyModule,
+    productEvidenceModule,
+    intentCollectionEligibilityModule,
+  ] = await Promise.all([
+    loadTsModule('src/lib/commercialProductRanking.ts'),
+    loadTsModule('src/config/collectionStandards.ts'),
+    loadTsModule('src/lib/readyToShipEvidence.ts'),
+    loadTsModule('src/lib/productDescriptionEnrichment.ts'),
+    loadTsModule('src/lib/productEvidence.ts'),
+    loadTsModule('src/lib/intentCollectionEligibility.ts'),
+  ]);
+  if (
+    typeof rankingModule.rankCommercialProducts !== 'function'
+    || typeof rankingModule.rankGenericLehengasByIntent !== 'function'
+  ) {
+    throw new Error('[commercial-ranking] Shared ranking module did not export both required ranking functions.');
   }
   rankCommercialProducts = rankingModule.rankCommercialProducts;
-  console.log('[commercial-ranking] Shared commercial-quality ranking loaded for collection prerenders.');
+  rankGenericLehengasByIntent = rankingModule.rankGenericLehengasByIntent;
+  console.log('[commercial-ranking] Shared commercial-quality and lehenga-intent ranking loaded for collection prerenders.');
+
+  if (typeof readyToShipEvidenceModule.hasExplicitReadyToShipEvidence !== 'function') {
+    throw new Error('[ready-to-ship] Shared positive-evidence helper is missing.');
+  }
+  hasExplicitReadyToShipEvidence = readyToShipEvidenceModule.hasExplicitReadyToShipEvidence;
+
+  if (
+    typeof productEvidenceModule.hasExplicitCustomColorEvidence !== 'function'
+    || typeof productEvidenceModule.hasExplicitCustomMeasurementEvidence !== 'function'
+    || typeof productEvidenceModule.hasExplicitCustomizationEvidence !== 'function'
+  ) {
+    throw new Error('[product-evidence] Shared customization-evidence helpers are missing.');
+  }
+  hasExplicitCustomColorEvidence = productEvidenceModule.hasExplicitCustomColorEvidence;
+  hasExplicitCustomMeasurementEvidence = productEvidenceModule.hasExplicitCustomMeasurementEvidence;
+  hasExplicitCustomizationEvidence = productEvidenceModule.hasExplicitCustomizationEvidence;
+
+  if (typeof productCopyModule.buildVerifiedProductCopy !== 'function') {
+    throw new Error('[product-copy] Shared evidence-safe product-copy builder is missing.');
+  }
+  buildVerifiedProductCopy = productCopyModule.buildVerifiedProductCopy;
+
+  if (
+    typeof intentCollectionEligibilityModule.isDurableIntentCollectionSlug !== 'function'
+    || typeof intentCollectionEligibilityModule.isEligibleForDurableIntent !== 'function'
+  ) {
+    throw new Error('[intent-collections] Shared durable-intent eligibility helpers are missing.');
+  }
+  isDurableIntentCollectionSlug = intentCollectionEligibilityModule.isDurableIntentCollectionSlug;
+  isEligibleForDurableIntent = intentCollectionEligibilityModule.isEligibleForDurableIntent;
+
+  if (
+    typeof collectionStandardsModule.getCollectionStandard !== 'function'
+    || !Array.isArray(collectionStandardsModule.INDEXABLE_COLLECTION_PATHS)
+  ) {
+    throw new Error('[collection-standard] Shared collection-standard module is missing required exports.');
+  }
+  getCollectionStandard = collectionStandardsModule.getCollectionStandard;
+  indexableCollectionPaths = collectionStandardsModule.INDEXABLE_COLLECTION_PATHS;
+  for (const routePath of indexableCollectionPaths) {
+    const route = routes.find((candidate) => candidate.path === routePath);
+    if (!route) throw new Error(`[collection-standard] Missing prerender route for ${routePath}`);
+    const standard = getCollectionStandard(routePath);
+    if (!standard) throw new Error(`[collection-standard] Missing standard configuration for ${routePath}`);
+    route.collectionStandard = standard;
+    route.category ||= standard.category;
+  }
+  console.log(`[collection-standard] Loaded decision support for ${indexableCollectionPaths.length} indexable collection routes.`);
 
   const indexPath = path.join(DIST_DIR, 'index.html');
 
@@ -3156,6 +3615,11 @@ async function main() {
   }
 
   const template = fs.readFileSync(indexPath, 'utf-8');
+  // Resolve the complete live catalog before deleting or rewriting any prior
+  // build output. A credentials/network/catalog failure therefore leaves the
+  // last generated artifacts intact and exits without a partial prerender.
+  const productMap = await fetchAllShopifyProducts();
+  for (const product of productMap.values()) getLiveProductPrerenderEvidence(product);
   const prerenderDir = path.join(DIST_DIR, '_prerender');
 
   // Clean previous prerender output
@@ -3234,6 +3698,14 @@ async function main() {
     let autoBlogCount = 0;
     for (const post of allBlogPosts) {
       if (!post.slug || routes.some(route => route.path === `/blog/${post.slug}`)) continue;
+      const relatedGuideItems = allBlogPosts
+        .filter(candidate => candidate.slug !== post.slug && categoryMap[candidate.slug] === categoryMap[post.slug])
+        .slice(0, 4)
+        .map(candidate => `<li><a href="/blog/${escapeHtml(candidate.slug)}">${escapeHtml(candidate.title)}</a></li>`)
+        .join('');
+      const relatedGuides = relatedGuideItems
+        ? `<nav aria-labelledby="prerender-related-guides"><h2 id="prerender-related-guides">Related guides</h2><ul>${relatedGuideItems}</ul></nav>`
+        : '';
       const sourceItems = (post.sources || [])
         .map(source =>
           `<li><a href="${escapeHtml(source.url)}">${escapeHtml(source.title)}</a> — ${escapeHtml(source.publisher)}</li>`
@@ -3247,12 +3719,14 @@ async function main() {
         title: `${post.title} | LuxeMia`,
         description: post.excerpt || `${post.title} — read the full guide on the LuxeMia blog.`,
         h1: post.title,
-        content: `${post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`}${sourceReview}`,
+        content: `${post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`}${relatedGuides}${sourceReview}`,
         blogPost: {
           publishedAt: post.publishedAt,
           updatedAt: post.updatedAt,
           factCheckedAt: post.factCheckedAt,
           sources: post.sources || [],
+          directAnswer: post.guideStandard?.directAnswer || '',
+          faqs: post.guideStandard?.faqs || [],
         },
       });
       autoBlogCount++;
@@ -3285,44 +3759,40 @@ async function main() {
     route.prerenderSubcategory = subcategory;
   }
 
-  // A product marked as permanently retired must never retain bot-facing
-  // prerendered HTML or a manifest entry. Remove stale fixed-route entries
-  // before loading current catalog data; the same handle is also excluded from
-  // Shopify's broad catalog response below.
-  const retiredFixedRouteCount = routes.length;
+  // Fixed route metadata is allowed only while the handle still exists in the
+  // current eligible Shopify map. Prune every stale, retired, or hidden product
+  // route before attaching commerce facts; no hardcoded route may survive a
+  // live lookup miss.
+  const productRouteCountBeforePruning = routes.filter((route) => route.path.startsWith('/product/')).length;
   for (let index = routes.length - 1; index >= 0; index--) {
     const routePath = routes[index].path;
     if (
-      routePath.startsWith('/product/') &&
-      (
-        RETIRED_PRODUCT_HANDLES.has(routePath.slice('/product/'.length)) ||
-        HIDDEN_BILLING_PRODUCT_HANDLES.has(routePath.slice('/product/'.length))
-      )
+      routePath.startsWith('/product/')
+      && !productMap.has(routePath.slice('/product/'.length))
     ) {
       routes.splice(index, 1);
     }
   }
-  const retiredFixedRoutesRemoved = retiredFixedRouteCount - routes.length;
-  if (retiredFixedRoutesRemoved > 0) {
-    console.log(`[prerender] Removed ${retiredFixedRoutesRemoved} explicit 410 product route(s) from the fixed prerender inventory.`);
+  const staleProductRoutesRemoved = productRouteCountBeforePruning
+    - routes.filter((route) => route.path.startsWith('/product/')).length;
+  if (staleProductRoutesRemoved > 0) {
+    console.log(`[catalog-integrity] Pruned ${staleProductRoutesRemoved} product route(s) absent from the eligible live Shopify catalog.`);
   }
 
-  // Pre-fetch live Shopify product data so /product/* prerendered HTML
-  // emits valid Product JSON-LD with image, description, and offers.price.
-  const productMap = await fetchAllShopifyProducts();
   const hardcodedProductHandles = new Set();
   for (const route of routes) {
     if (route.path.startsWith('/product/')) {
       const handle = route.path.slice('/product/'.length);
+      if (hardcodedProductHandles.has(handle)) {
+        throw new Error(`[catalog-integrity] Duplicate fixed product route: /product/${handle}`);
+      }
       hardcodedProductHandles.add(handle);
       const live = productMap.get(handle);
-      if (live) {
-        route.product = live;
-        // The hardcoded route inventory predates some Shopify title cleanups.
-        // Keep static H1, schema, breadcrumb, and hydrated title parity by
-        // normalizing the current live title before HTML is rendered.
-        route.h1 = sanitizeProductTitle(live.title || route.h1) || route.h1;
-      }
+      route.product = live;
+      // The hardcoded route inventory predates some Shopify title cleanups.
+      // Keep static H1, schema, breadcrumb, and hydrated title parity by
+      // normalizing the current live title before HTML is rendered.
+      route.h1 = sanitizeProductTitle(live.title);
     }
   }
 
@@ -3340,60 +3810,20 @@ async function main() {
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
-    const seoDescription = ''; // Ignore obsolete Shopify SEO copy; use field-backed copy below.
-
-    // ─── USP-enhanced title generation ──────────────────────────────────────
-    // When no Shopify SEO title is set, inject fabric/color USP into the title
-    // to carve out high-converting long-tail niches (e.g., "Maroon Raw Silk
-    // Bridal Lehenga | Hand Embroidery | LuxeMia") that corporate catalogs lack.
     const desc = buildVerifiedProductCopy(p);
     const baseTitle = sanitizeProductTitle(p.title || handle);
-    const productIsJewelry = isJewelryProduct(p.productType, baseTitle);
-    const titleDescLower = `${baseTitle} ${desc}`.toLowerCase();
-
-    // Fabric + color detection arrays (shared by title + description generation)
-    const fabrics = ['raw silk', 'banarasi silk', 'kanchipuram silk', 'kanjivaram', 'georgette', 'chiffon', 'velvet', 'organza', 'chinnon', 'chinon', 'crepe', 'net', 'cotton', 'satin', 'taffeta', 'jacquard', 'tussar', 'brocade', 'silk', 'art silk'];
-    const colors = ['maroon', 'wine', 'burgundy', 'red', 'pink', 'rani pink', 'baby pink', 'dusty rose', 'blue', 'navy', 'royal blue', 'sky blue', 'teal', 'green', 'emerald', 'olive', 'mint', 'sage', 'yellow', 'gold', 'mustard', 'orange', 'peach', 'coral', 'rust', 'purple', 'lavender', 'plum', 'mauve', 'lilac', 'white', 'ivory', 'cream', 'beige', 'black', 'grey', 'gray', 'champagne', 'copper', 'bronze'];
-    const foundFabric = productIsJewelry ? undefined : fabrics.find(f => titleDescLower.includes(f));
-    const foundColor = colors.find(c => titleDescLower.includes(c));
-
-    let title;
-    if (seoTitle) {
-      title = seoTitle;
-    } else {
-      // Build USP suffix: "in Maroon Raw Silk" or "in Raw Silk" or ""
-      let uspSuffix = '';
-      if (foundFabric && foundColor) {
-        uspSuffix = ` in ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)} ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}`;
-      } else if (foundFabric) {
-        uspSuffix = ` in ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}`;
-      }
-
-      // Keep title under 70 chars for SERP display
-      const candidateTitle = `${baseTitle}${uspSuffix} | LuxeMia`;
-      title = candidateTitle.length > 70
-        ? `${baseTitle} | LuxeMia`
-        : candidateTitle;
-    }
-
-    // ─── USP-enhanced fallback description ──────────────────────────────────
-    // Injects fabric, color, and shipping turnaround into the fallback so even
-    // products with thin Shopify descriptions get unique, keyword-rich meta.
-    const fabricPhrase = foundFabric ? ` ${foundFabric.charAt(0).toUpperCase() + foundFabric.slice(1)}` : '';
-    const colorPhrase = foundColor ? ` ${foundColor.charAt(0).toUpperCase() + foundColor.slice(1)}` : '';
-    const fallbackDesc = productIsJewelry
-      ? `Shop ${baseTitle} at LuxeMia. Indian jewelry with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the listing for exact materials, finish, stones, and included pieces.`
-      : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius; current rates are shown at checkout.`;
-    const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
+    const title = seoTitle || `${baseTitle} | LuxeMia`;
+    const description = desc.slice(0, 320);
     routes.push({
       path: `/product/${handle}`,
       title,
       description,
       h1: sanitizeProductTitle(p.title) || handle,
-      content: `<p>${escapeHtml(desc || fallbackDesc).slice(0, 1200)}</p>`,
+      content: `<p>${escapeHtml(desc).slice(0, 1200)}</p>`,
       product: p,
     });
   }
+  const eligibleLiveProductHandles = assertExactLiveProductRouteSet(routes, productMap);
   console.log(`[prerender] Total /product/* routes after Shopify merge: ${routes.filter(r => r.path.startsWith('/product/')).length}`);
   disambiguateDuplicateProductRouteTitles(routes);
 
@@ -3425,46 +3855,63 @@ async function main() {
   console.log(`[prerender] Product pages: ${productCount}`);
   console.log(`[prerender] Static/blog pages: ${count - productCount}`);
 
-  // Fail the build loudly if Shopify fetch returned no products.
-  // This prevents deploying a site where every product page returns an empty SPA shell.
-  if (SHOPIFY_STOREFRONT_TOKEN && productCount < 10) {
-    console.error(`\n[prerender] CRITICAL BUILD FAILURE`);
-    console.error(`[prerender] Only ${productCount} product HTML files generated but SHOPIFY_STOREFRONT_TOKEN is set.`);
-    console.error(`[prerender] This means the Shopify Storefront API returned 0 products.`);
-    console.error(`[prerender] Possible causes:`);
-    console.error(`[prerender]   - SHOPIFY_STOREFRONT_TOKEN is set but invalid or expired`);
-    console.error(`[prerender]   - Shopify store has no published products`);
-    console.error(`[prerender]   - Shopify API rate limit hit`);
-    console.error(`[prerender]   - Network error connecting to Shopify`);
-    console.error(`[prerender] Fix: verify the token at Vercel → Project → Settings → Environment Variables`);
-    process.exit(1);
+  if (productCount !== eligibleLiveProductHandles.length) {
+    throw new Error(
+      `[catalog-integrity] Wrote ${productCount} product pages for ${eligibleLiveProductHandles.length} eligible live Shopify products.`,
+    );
   }
 
-  if (!SHOPIFY_STOREFRONT_TOKEN) {
-    console.warn(`\n[prerender] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set.`);
-    console.warn(`[prerender] Only ${productCount} hardcoded product pages were generated.`);
-    console.warn(`[prerender] Set SHOPIFY_STOREFRONT_TOKEN in Vercel environment variables to prerender all products.`);
-  }
-
-  // Write prerenderManifest.ts with the EXACT set of product handles that have
-  // prerendered HTML files. Middleware imports this so it knows which handles to
-  // rewrite without self-HTTP requests or mismatches with generate-routes output.
+  // Validate the committed middleware manifest against the EXACT set of
+  // product handles written in this release. Production builds must never
+  // rewrite source after checkout: catalog drift fails closed and the manifest
+  // is regenerated and reviewed before the next commit.
   const prerenderedHandles = routes
     .filter(r => r.path.startsWith('/product/'))
-    .map(r => r.path.slice('/product/'.length));
-
-  const manifestContent = `// AUTO-GENERATED by scripts/prerender.js — do not edit manually.
-// Contains the exact set of product handles with a prerendered HTML file in dist/_prerender/product/.
-// Regenerated on each build. Imported by middleware.ts to avoid self-HTTP HEAD requests.
-
-export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
-${prerenderedHandles.map(h => `  '${h}',`).join('\n')}
-]);
-`;
+    .map(r => r.path.slice('/product/'.length))
+    .sort();
 
   const manifestPath = path.resolve(__dirname, '../src/lib/prerenderManifest.ts');
-  fs.writeFileSync(manifestPath, manifestContent, 'utf-8');
-  console.log(`[prerender] Written src/lib/prerenderManifest.ts with ${prerenderedHandles.length} product handles`);
+  if (process.argv.includes('--write-source-manifest')) {
+    const sourceManifest = `// AUTO-GENERATED by scripts/prerender.js — do not edit manually.
+// Contains the exact set of product handles with a prerendered HTML file in dist/_prerender/product/.
+// Regenerate and commit deliberately when the live catalog changes. Release builds validate this set.
+// Imported by middleware.ts to avoid self-HTTP HEAD requests.
+
+export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
+${prerenderedHandles.map((handle) => `  '${handle}',`).join('\n')}
+]);
+`;
+    fs.writeFileSync(manifestPath, sourceManifest, 'utf8');
+    console.log(`[prerender] Explicitly wrote src/lib/prerenderManifest.ts with ${prerenderedHandles.length} current product handles`);
+  } else {
+    if (!fs.existsSync(manifestPath)) {
+    throw new Error('[catalog-integrity] src/lib/prerenderManifest.ts is missing; generate and commit it before releasing.');
+    }
+    const committedManifestSource = fs.readFileSync(manifestPath, 'utf8');
+    const committedManifestBlock = committedManifestSource.match(
+      /PRERENDERED_PRODUCT_HANDLES:\s*Set<string>\s*=\s*new Set\(\[([\s\S]*?)\]\);/,
+    )?.[1];
+    if (committedManifestBlock === undefined) {
+      throw new Error('[catalog-integrity] PRERENDERED_PRODUCT_HANDLES could not be parsed from src/lib/prerenderManifest.ts.');
+    }
+    const committedHandles = [...committedManifestBlock.matchAll(/['"]([^'"]+)['"]/g)]
+      .map((match) => match[1]);
+    const committedHandleSet = new Set(committedHandles);
+    const liveHandleSet = new Set(prerenderedHandles);
+    const missingFromSource = prerenderedHandles.filter((handle) => !committedHandleSet.has(handle));
+    const absentFromShopify = committedHandles.filter((handle) => !liveHandleSet.has(handle));
+    const hasDuplicates = committedHandleSet.size !== committedHandles.length;
+    if (missingFromSource.length > 0 || absentFromShopify.length > 0 || hasDuplicates) {
+      throw new Error(
+        '[catalog-integrity] Committed src/lib/prerenderManifest.ts does not exactly match this release catalog. '
+        + `Missing current handles: ${missingFromSource.slice(0, 10).join(', ') || 'none'}; `
+        + `absent from current Shopify catalog: ${absentFromShopify.slice(0, 10).join(', ') || 'none'}; `
+        + `duplicates: ${hasDuplicates ? 'yes' : 'no'}. `
+        + 'Run prerender.js with --write-source-manifest and commit the result before releasing.',
+      );
+    }
+    console.log(`[prerender] Verified committed src/lib/prerenderManifest.ts against ${prerenderedHandles.length} current product handles`);
+  }
 
   const buildManifestPath = path.join(prerenderDir, 'manifest.json');
   fs.writeFileSync(
@@ -3473,6 +3920,12 @@ ${prerenderedHandles.map(h => `  '${h}',`).join('\n')}
       generatedAt: new Date().toISOString(),
       routes: routes.map((route) => route.path),
       productHandles: prerenderedHandles,
+      eligibleLiveProductHandles,
+      catalogIntegrity: {
+        source: 'Shopify Storefront API complete pagination',
+        exactProductSet: true,
+        eligibleProductCount: eligibleLiveProductHandles.length,
+      },
     }, null, 2),
     'utf-8'
   );

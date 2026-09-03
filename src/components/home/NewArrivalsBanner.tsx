@@ -31,14 +31,14 @@ const featuredSlides: FeaturedSlide[] = [
   {
     id: 'navratri-2026',
     eyebrow: 'Navratri 2026',
-    headline: 'Garba-ready color, movement, and mirror work.',
+    headline: 'Browse current Navratri and Garba listings.',
     subline:
-      'Shop current chaniya choli, lehenga, and festive styles for Navratri, Garba, and Dandiya celebrations.',
+      'Open each listing to verify its garment type, work, included pieces, sizes, and current availability.',
     cta: 'Shop Navratri',
     link: '/collections/navratri-outfits',
     image: '/images/hero-carousel/navratri-lehenga',
     desktopImage: '/images/hero-carousel/navratri-lehenga-desktop',
-    alt: 'Woman wearing a bright pink lehenga suitable for a Navratri celebration',
+    alt: 'Woman wearing a bright pink Indian outfit',
     width: 1672,
     height: 941,
     imageFit: 'cover',
@@ -47,9 +47,9 @@ const featuredSlides: FeaturedSlide[] = [
   {
     id: 'new-arrivals',
     eyebrow: 'New Arrivals',
-    headline: 'Fresh Indian occasionwear, selected for the season.',
+    headline: 'Recently added Indian occasionwear listings.',
     subline:
-      'Explore the newest sarees, lehengas, sharara sets, and celebration styles now available at LuxeMia.',
+      'Explore products ordered by their Shopify catalog creation date and verify current details on each listing.',
     cta: 'Shop New Arrivals',
     link: '/new-arrivals',
     image: '/images/campaigns/new-indian-ethnic-wear-2026-mobile',
@@ -62,9 +62,9 @@ const featuredSlides: FeaturedSlide[] = [
   {
     id: 'ready-to-ship',
     eyebrow: 'Ready to Ship',
-    headline: 'Stocked styles for plans that cannot wait.',
+    headline: 'Products with explicit ready-to-ship catalog evidence.',
     subline:
-      'Browse in-stock outfits that can proceed to order handling and dispatch after payment and verification. Review each product for available sizes and options.',
+      'This view requires a ready-to-ship tag or a positive ships-within field plus current product and variant availability. Review the selected size and options before ordering.',
     cta: 'Shop Ready to Ship',
     link: '/ready-to-ship',
     image: '/images/campaigns/sharara-palazzo-sets-2026-mobile',
@@ -76,9 +76,9 @@ const featuredSlides: FeaturedSlide[] = [
   {
     id: 'wedding-lehengas',
     eyebrow: 'Wedding Lehengas',
-    headline: 'Statement lehengas for weddings and milestone moments.',
+    headline: 'Browse current wedding-related lehenga listings.',
     subline:
-      'Explore embroidered lehenga choli sets for ceremonies, receptions, sangeet celebrations, and wedding guests.',
+      'Confirm the exact garment, work, included pieces, sizing, color, and availability on the selected product page.',
     cta: 'Shop Lehengas',
     link: '/lehengas',
     image: '/images/campaigns/wedding-lehengas-usa-2026-mobile',

@@ -14,15 +14,37 @@ import { getMerchantGoogleProductCategory } from './merchantTaxonomy.js';
 
 export const SITE_URL = 'https://luxemia.shop';
 export const BRAND_NAME = 'LuxeMia';
-export const LEGAL_BUSINESS_NAME = 'LuxeMia';
 export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 export const INTERNATIONAL_SHIPPING_COUNTRIES = ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 export const BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`;
+const SHIPPING_COUNTRY_NAMES: Record<(typeof SHIPPING_COUNTRIES)[number], string> = {
+  US: 'United States',
+  CA: 'Canada',
+  GB: 'United Kingdom',
+  AU: 'Australia',
+  NZ: 'New Zealand',
+  ZA: 'South Africa',
+  MU: 'Mauritius',
+};
 
-export function normalizeBrandName(value?: string | null): string {
+export function normalizeBrandName(value?: string | null): string | undefined {
   const raw = (value || '').trim();
-  if (!raw) return BRAND_NAME;
-  return /^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, '')) ? BRAND_NAME : raw;
+  if (!raw) return undefined;
+  // Shopify's `vendor` field is an operational catalog field, not proof that
+  // an arbitrary supplier name is the consumer-facing product brand. Publish
+  // only the explicitly recognized LuxeMia aliases; omit every unknown value
+  // until a dedicated, verified product-brand source is available.
+  return /^luxemi(?:a|ashop)$/i.test(raw.replace(/[^a-z0-9]/gi, ''))
+    ? BRAND_NAME
+    : undefined;
+}
+
+function generateBrandReference(value?: string | null) {
+  const name = normalizeBrandName(value);
+  if (!name) return undefined;
+  return name === 'LuxeMia'
+    ? { '@id': `${SITE_URL}/#brand` }
+    : { '@type': 'Brand', name };
 }
 
 // ─── Price Handling ─────────────────────────────────────────────────────────
@@ -135,6 +157,8 @@ export interface ProductSchemaInput {
   name: string;
   description: string;
   url: string;
+  /** Exact purchasable variant URL for the Offer; the Product URL remains canonical. */
+  offerUrl?: string;
   image: string[];
   sku: string;
   gtin?: string | null;
@@ -149,7 +173,8 @@ export interface ProductSchemaInput {
   price: string;
   compareAtPrice?: string | null;
   currency: string;
-  availability: 'InStock' | 'OutOfStock';
+  availability: 'InStock' | 'OutOfStock' | 'PreOrder';
+  condition?: string | null;
   /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
   shipsWithinDays?: number | null;
 }
@@ -168,7 +193,27 @@ export interface ProductVariantSchemaInput {
   additionalProperties?: Array<{ name: string; value: string }>;
   price: string;
   currency: string;
-  availability: 'InStock' | 'OutOfStock';
+  availability: 'InStock' | 'OutOfStock' | 'PreOrder';
+  condition?: string | null;
+}
+
+export function normalizeProductCondition(value?: string | null): 'new' | 'used' | 'refurbished' | undefined {
+  const normalized = (value || '').trim().toLowerCase().replace(/[\s_-]+/g, '');
+  if (normalized === 'new' || normalized === 'newcondition') return 'new';
+  if (normalized === 'used' || normalized === 'usedcondition') return 'used';
+  if (normalized === 'refurbished' || normalized === 'refurbishedcondition') return 'refurbished';
+  return undefined;
+}
+
+function getSchemaCondition(value?: string | null): string | undefined {
+  const condition = normalizeProductCondition(value);
+  if (!condition) return undefined;
+  const schemaName = condition === 'new'
+    ? 'NewCondition'
+    : condition === 'used'
+      ? 'UsedCondition'
+      : 'RefurbishedCondition';
+  return `https://schema.org/${schemaName}`;
 }
 
 function getGtinSchemaProperty(value?: string | null): Record<string, string> {
@@ -188,10 +233,11 @@ function getGtinSchemaProperty(value?: string | null): Record<string, string> {
 }
 
 function generateOfferSchema(
-  input: Pick<ProductVariantSchemaInput, 'url' | 'price' | 'currency' | 'availability'> & {
+  input: Pick<ProductVariantSchemaInput, 'url' | 'price' | 'currency' | 'availability' | 'condition'> & {
     shipsWithinDays?: number | null;
   },
 ) {
+  const itemCondition = getSchemaCondition(input.condition);
   return {
     '@type': 'Offer',
     '@id': `${input.url}#offer`,
@@ -199,7 +245,7 @@ function generateOfferSchema(
     price: input.price,
     priceCurrency: input.currency,
     availability: `https://schema.org/${input.availability}`,
-    itemCondition: 'https://schema.org/NewCondition',
+    ...(itemCondition && { itemCondition }),
     seller: { '@id': `${SITE_URL}/#organization` },
     merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
     shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays),
@@ -219,10 +265,12 @@ export function generateProductGroupSchema(input: {
   productGroupId: string;
   variesBy: string[];
   variants: ProductVariantSchemaInput[];
+  condition?: string | null;
   /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
   shipsWithinDays?: number | null;
 }) {
   const groupId = `${input.url}#productgroup`;
+  const brand = generateBrandReference(input.brand);
   return {
     '@context': 'https://schema.org',
     '@type': 'ProductGroup',
@@ -231,8 +279,8 @@ export function generateProductGroupSchema(input: {
     image: input.image,
     description: input.description,
     url: input.url,
-    brand: { '@type': 'Brand', name: normalizeBrandName(input.brand) },
-    category: input.category || 'Clothing > Traditional & Ethnic Wear',
+    ...(brand && { brand }),
+    ...(input.category && { category: input.category }),
     ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
     ...(input.material && { material: input.material }),
     ...(input.additionalProperties && input.additionalProperties.length > 0 && {
@@ -255,8 +303,8 @@ export function generateProductGroupSchema(input: {
       ...(variant.mpn && { mpn: variant.mpn }),
       ...getGtinSchemaProperty(variant.gtin),
       url: variant.url,
-      brand: { '@type': 'Brand', name: normalizeBrandName(input.brand) },
-      category: input.category || 'Clothing > Traditional & Ethnic Wear',
+      ...(brand && { brand }),
+      ...(input.category && { category: input.category }),
       ...(variant.color && { color: variant.color }),
       ...(input.material && { material: input.material }),
       ...(input.additionalProperties && input.additionalProperties.length > 0 && {
@@ -267,7 +315,11 @@ export function generateProductGroupSchema(input: {
         })),
       }),
       ...(variant.size && { size: variant.size }),
-      offers: generateOfferSchema({ ...variant, shipsWithinDays: input.shipsWithinDays }),
+      offers: generateOfferSchema({
+        ...variant,
+        condition: variant.condition ?? input.condition,
+        shipsWithinDays: input.shipsWithinDays,
+      }),
     })),
   };
 }
@@ -278,6 +330,7 @@ export function generateProductSchema(input: ProductSchemaInput) {
     compareAtPrice: input.compareAtPrice,
     currency: input.currency,
   });
+  const brand = generateBrandReference(input.brand);
 
   return {
     '@context': 'https://schema.org',
@@ -290,8 +343,8 @@ export function generateProductSchema(input: ProductSchemaInput) {
     ...(input.mpn && { mpn: input.mpn }),
     ...getGtinSchemaProperty(input.gtin),
     url: input.url,
-    brand: { '@type': 'Brand', name: normalizeBrandName(input.brand) },
-    category: input.category || 'Clothing > Traditional & Ethnic Wear',
+    ...(brand && { brand }),
+    ...(input.category && { category: input.category }),
     ...(input.googleProductCategory && { googleProductCategory: input.googleProductCategory }),
     ...(input.color && { color: input.color }),
     ...(input.material && { material: input.material }),
@@ -306,10 +359,11 @@ export function generateProductSchema(input: ProductSchemaInput) {
     // Always expose the current purchasable price. Do not manufacture sale
     // windows: terms are only valid when backed by a real promotion schedule.
     offers: generateOfferSchema({
-      url: input.url,
+      url: input.offerUrl || input.url,
       price: schemaPrice,
       currency: input.currency,
       availability: input.availability,
+      condition: input.condition,
       shipsWithinDays: input.shipsWithinDays,
     }),
   };
@@ -361,17 +415,17 @@ export function generateFaqSchema(faqs: FAQItem[]) {
 export function generateOrganizationSchema() {
   return {
     '@context': 'https://schema.org',
-    '@type': 'Organization',
+    '@type': ['Organization', 'OnlineStore', 'ClothingStore'],
     '@id': `${SITE_URL}/#organization`,
     name: BRAND_NAME,
     url: SITE_URL,
     logo: BRAND_LOGO_URL,
-    description: 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and tracking after dispatch.',
-    address: {
-      '@type': 'PostalAddress',
-      addressCountry: 'US',
-      addressRegion: 'Pennsylvania',
-    },
+    description: 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and shipment-tracking information.',
+    // Published catalog prices and shipping rates are USD. Shopify may offer
+    // a checkout conversion, but that is not a storefront promise that each
+    // destination currency is accepted or displayed.
+    currenciesAccepted: 'USD',
+    areaServed: SHIPPING_COUNTRIES.map(country => ({ '@type': 'Country', name: SHIPPING_COUNTRY_NAMES[country] })),
     contactPoint: {
       '@type': 'ContactPoint',
       '@id': `${SITE_URL}/#customer-support`,
@@ -382,6 +436,11 @@ export function generateOrganizationSchema() {
       availableLanguage: ['English'],
     },
     brand: { '@id': `${SITE_URL}/#brand` },
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'LuxeMia Indian Ethnic Wear',
+      url: `${SITE_URL}/collections`,
+    },
     knowsAbout: [
       'Indian Ethnic Wear',
       'Bridal Lehengas',
@@ -429,10 +488,11 @@ export function generateWebPageSchema(options: {
   return {
     '@context': 'https://schema.org',
     '@type': pageType,
-    '@id': options.url,
+    '@id': `${options.url}#webpage`,
     url: options.url,
     name: options.title,
     description: options.description,
+    inLanguage: 'en',
     isPartOf: { '@id': `${SITE_URL}/#website` },
     ...(breadcrumbSchema && { breadcrumb: breadcrumbSchema }),
   };
@@ -454,7 +514,7 @@ export function generateSiteNavigationSchema() {
     { name: 'Indo-Western', url: '/indowestern' },
     { name: 'New Arrivals', url: '/new-arrivals' },
     { name: 'Collections', url: '/collections' },
-    { name: 'Blog', url: '/blog' },
+    { name: 'Guides', url: '/blog' },
     { name: 'Our Story', url: '/about' },
   ];
 

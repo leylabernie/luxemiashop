@@ -53,6 +53,9 @@ public/merchant-feed.xml
 # CSV data files (not web assets — keep them out of public/)
 public/*.csv
 
+# Supabase CLI local state
+supabase/.temp/
+
 
 # Local test scripts (use real Shopify data, not for commit)
 scripts/*
@@ -61,4 +64,15 @@ scripts/*
 !scripts/generate-openai-search-feed.cjs
 !scripts/validate-openai-search-feed.cjs
 !scripts/submit-indexnow.cjs
+!scripts/notify-indexnow.cjs
 !scripts/validate-semantic-completion.cjs
+!scripts/validate-authority-inbound-links.cjs
+!scripts/validate-analytics-consent.cjs
+!scripts/validate-collection-page-standard.cjs
+!scripts/validate-product-fact-integrity.cjs
+!scripts/validate-product-prerender-integrity.cjs
+!scripts/validate-schema-entity-integrity.cjs
+!scripts/validate-legacy-commerce-retirement.cjs
+!scripts/validate-visible-claims.cjs
+!scripts/validate-llms-canonical-inventory.cjs
+!scripts/validate-storefront-orderability.cjs

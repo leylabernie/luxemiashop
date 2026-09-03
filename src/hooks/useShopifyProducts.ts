@@ -2,10 +2,15 @@ import { useState, useEffect, useCallback } from 'react';
 import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 import { sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
 import occasionSignals from '@/data/occasionSignals.json';
+import { isMadeToOrderProduct } from '@/lib/customizableProducts';
+import { hasExplicitCustomizationEvidence } from '@/lib/productEvidence';
+import { rankGenericLehengasByIntent } from '@/lib/commercialProductRanking';
+import { hasExplicitReadyToShipEvidence } from '@/lib/readyToShipEvidence';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
 import {
-  applyCustomizableProductDetails,
-  isMadeToOrderProduct,
-} from '@/lib/customizableProducts';
+  isDurableIntentCollectionSlug,
+  isEligibleForDurableIntent,
+} from '@/lib/intentCollectionEligibility';
 
 // Shopify productType values mapped to category page routes
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
@@ -23,7 +28,9 @@ const escapeRegex = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]
 
 const matchesOccasion = (product: ShopifyProduct, occasion: string): boolean => {
   const signals = (occasionSignals as Record<string, string[]>)[occasion];
-  if (!signals || product.node.availableForSale === false) return false;
+  const hasOrderableVariant = product.node.availableForSale === true
+    && product.node.variants.edges.some((edge) => edge.node.availableForSale === true);
+  if (!signals || !hasOrderableVariant) return false;
 
   const searchableValues = [
     product.node.title || '',
@@ -249,17 +256,46 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
 
   if (category === 'all') return allowed;
 
+  if (category === 'ready-to-ship') {
+    return allowed.filter((product) => {
+      if (product.node.availableForSale !== true) return false;
+      if (isMadeToOrderProduct(product.node.handle, product.node.tags)) return false;
+      if (!hasExplicitReadyToShipEvidence(product.node)) return false;
+
+      const variants = product.node.variants?.edges || [];
+      return variants.length > 0 && variants.some((edge) => edge.node.availableForSale === true);
+    });
+  }
+
+  if (category === 'made-to-order') {
+    return allowed.filter((product) => (
+      isMadeToOrderProduct(product.node.handle, product.node.tags)
+      && isProductExplicitlyOrderable(product.node)
+    ));
+  }
+
   if (category === 'customizable') {
-    return allowed.filter((product) => isMadeToOrderProduct(product.node.handle, product.node.tags));
+    return allowed.filter((product) => (
+      hasExplicitCustomizationEvidence(product.node)
+      && isProductExplicitlyOrderable(product.node)
+    ));
   }
 
   if (category.startsWith('occasion:')) {
     const occasion = category.slice('occasion:'.length);
+    if (isDurableIntentCollectionSlug(occasion)) {
+      return allowed.filter((product) => isEligibleForDurableIntent(product.node, occasion));
+    }
+    const signalOccasion = occasion.startsWith('wedding-guest-')
+      ? 'wedding-guest'
+      : occasion.startsWith('diwali-')
+        ? 'diwali'
+        : occasion;
     return allowed.filter((product) => {
-      if (!matchesOccasion(product, occasion)) return false;
+      if (!matchesOccasion(product, signalOccasion)) return false;
+      const typeAndTitle = `${product.node.productType ?? ''} ${product.node.title ?? ''}`;
       if (occasion === 'groomsmen') return isMenswear(product);
       if (occasion === 'navratri-chaniya') {
-        const typeAndTitle = `${product.node.productType ?? ''} ${product.node.title ?? ''}`;
         return /lehenga|lehnga|chaniya|choli/i.test(typeAndTitle) && !isMenswear(product);
       }
       return true;
@@ -341,7 +377,7 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   }
 
   // For lehengas, sarees: match by product type (already menswear-excluded)
-  return filtered.filter(p => {
+  const categoryProducts = filtered.filter(p => {
     const pt = (p.node.productType ?? '').toLowerCase();
     const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
     const title = (p.node.title ?? '').toLowerCase();
@@ -384,18 +420,21 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
 
     return false;
   });
+
+  return category === 'lehengas'
+    ? rankGenericLehengasByIntent(categoryProducts)
+    : categoryProducts;
 };
 
 // Enrich products with display category — preserve original productType for filtering
 const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
   products.map((p) => {
-    const verifiedNode = applyCustomizableProductDetails(p.node);
     return {
       node: {
-        ...verifiedNode,
-        _originalProductType: verifiedNode.productType, // keep original for menswear detection
-        title: sanitizeProductTitle(verifiedNode.title),
-        productType: getDisplayCategory(verifiedNode.productType),
+        ...p.node,
+        _originalProductType: p.node.productType, // keep original for menswear detection
+        title: sanitizeProductTitle(p.node.title),
+        productType: getDisplayCategory(p.node.productType),
       },
     };
   });

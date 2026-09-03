@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { CheckCircle, Loader2, Users } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -38,9 +39,9 @@ const WeddingPartyOrders = () => {
         },
       });
       if (error) throw error;
-      trackConsultationSubmission({ name, email, phone, country, occasion: 'wedding_party_group_order', budget });
+      trackConsultationSubmission({ country, occasion: 'wedding_party_group_order' });
       setSubmitted(true);
-      toast({ title: 'Enquiry received', description: 'LuxeMia will review your requirements and contact you shortly.' });
+      toast({ title: 'Enquiry saved', description: 'Your request was saved. Response times vary.' });
     } catch (error) {
       console.error('Group order enquiry failed:', error);
       toast({ title: 'Could not send enquiry', description: 'Please try again or contact hello@luxemia.shop.', variant: 'destructive' });
@@ -75,7 +76,8 @@ const WeddingPartyOrders = () => {
                   <li key={item} className="flex gap-3"><CheckCircle className="h-5 w-5 text-primary shrink-0 mt-0.5" /><span>{item}</span></li>
                 ))}
               </ul>
-              <p className="mt-7 text-sm text-muted-foreground">Availability, pricing, production time and fit options depend on the selected products. We will confirm details before you place an order.</p>
+              <p className="mt-7 text-sm text-muted-foreground">Availability, pricing, production time and fit options depend on the selected products and are not confirmed by submitting this form. Obtain written confirmation before placing an order.</p>
+              <p className="mt-4 text-sm"><Link className="text-primary underline underline-offset-4" to="/collections/groomsmen-outfits">Browse current products explicitly identified for groomsmen</Link> before requesting a size-and-quantity check.</p>
             </div>
 
             <form onSubmit={handleSubmit} className="border bg-card p-6 lg:p-8 space-y-5">
@@ -91,8 +93,12 @@ const WeddingPartyOrders = () => {
                 <div><Label htmlFor="budget">Budget</Label><Input id="budget" name="budget" placeholder="Per person or total" /></div>
               </div>
               <div><Label htmlFor="details">Colors, events, garments and other details</Label><textarea id="details" name="details" required rows={5} className="mt-2 w-full rounded-md border border-input bg-background px-3 py-2 text-sm" /></div>
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                LuxeMia uses these details only to review and respond to your group-order request. Do not include payment information or identity documents. See the{' '}
+                <Link className="text-primary underline underline-offset-4" to="/privacy">Privacy Policy</Link> for retention, service-provider, and deletion-request information.
+              </p>
               <Button type="submit" className="w-full" disabled={submitting || submitted}>
-                {submitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}{submitted ? 'Enquiry sent' : 'Request group-order help'}
+                {submitting && <Loader2 className="h-4 w-4 mr-2 animate-spin" />}{submitted ? 'Enquiry saved' : 'Request group-order help'}
               </Button>
             </form>
           </div>

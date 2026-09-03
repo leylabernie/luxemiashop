@@ -10,7 +10,7 @@ const reasons = [
   {
     icon: Truck,
     title: 'Tracked Shipping',
-    description: 'Tracking is provided after dispatch for online orders to supported destinations.',
+    description: 'When tracking is issued, carrier scans can appear after label creation.',
   },
   {
     icon: RefreshCcw,
@@ -19,7 +19,7 @@ const reasons = [
   },
   {
     icon: Headphones,
-    title: 'U.S.-Based Support',
+    title: 'Pre-Order Support',
     description: 'Contact us before ordering with questions about sizing, fabric, product details, or policies.',
   },
   {
@@ -45,7 +45,7 @@ const CustomerStories = () => {
             viewport={{ once: true }}
             className="text-xs tracking-luxury uppercase text-muted-foreground mb-3 block"
           >
-            Why Shop With Us
+            Shopping Information
           </motion.span>
           <motion.h2
             initial={{ opacity: 0, y: 20 }}
@@ -54,7 +54,7 @@ const CustomerStories = () => {
             viewport={{ once: true }}
             className="font-serif text-3xl lg:text-4xl"
           >
-            Built on Honesty
+            What to Review Before Ordering
           </motion.h2>
         </div>
 

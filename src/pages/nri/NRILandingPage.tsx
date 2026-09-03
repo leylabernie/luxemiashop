@@ -8,6 +8,7 @@ import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
 
 interface CountryConfig {
   country: string;
@@ -25,9 +26,11 @@ interface CountryConfig {
 }
 
 const NRILandingPage = ({ config }: { config: CountryConfig }) => {
-  const { products } = useShopifyProducts();
+  const { products, error } = useShopifyProducts();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const featuredProducts = products.slice(0, 8);
+  const featuredProducts = products
+    .filter(({ node }) => isProductExplicitlyOrderable(node))
+    .slice(0, 8);
 
   const occasions = [
     { name: 'Wedding', link: '/collections?occasion=wedding', description: 'Bridal lehengas, wedding sarees & reception outfits' },
@@ -117,7 +120,7 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
         </section>
 
         {/* Editorially featured products */}
-        {featuredProducts.length > 0 && (
+        {!error && featuredProducts.length > 0 && (
           <section className="py-16 bg-secondary/30">
             <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
               <h2 className="text-2xl font-serif text-center mb-10">Featured Styles for {config.country}</h2>

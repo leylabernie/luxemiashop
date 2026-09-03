@@ -24,21 +24,13 @@ CREATE INDEX idx_consultation_leads_status ON public.consultation_leads(status);
 CREATE INDEX idx_consultation_leads_created_at ON public.consultation_leads(created_at DESC);
 CREATE INDEX idx_consultation_leads_country ON public.consultation_leads(country);
 
--- RLS Policies
--- Allow anonymous users to insert their own consultation requests
-CREATE POLICY "Allow anonymous insert" ON public.consultation_leads
-  FOR INSERT
-  WITH CHECK (true);
-
--- Allow authenticated users (admin) to read all leads
-CREATE POLICY "Allow authenticated read" ON public.consultation_leads
-  FOR SELECT
-  USING (auth.role() = 'authenticated');
-
--- Allow service role to manage all leads
-CREATE POLICY "Service role full access" ON public.consultation_leads
-  FOR ALL
-  USING (auth.role() = 'service_role');
+-- Consultation data contains contact and event-planning details. Browser
+-- roles must not bypass the validated, rate-limited Edge Function by writing
+-- directly to PostgREST. Trusted server-side code uses the service role.
+REVOKE ALL ON public.consultation_leads FROM PUBLIC;
+REVOKE SELECT, INSERT, UPDATE, DELETE, TRUNCATE, REFERENCES, TRIGGER
+  ON public.consultation_leads FROM anon, authenticated;
+GRANT ALL ON public.consultation_leads TO service_role;
 
 -- Create trigger for updated_at
 CREATE OR REPLACE FUNCTION update_consultation_leads_updated_at()
@@ -47,7 +39,7 @@ BEGIN
   NEW.updated_at = TIMEZONE('utc'::text, NOW());
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql;
+$$ LANGUAGE plpgsql SET search_path = pg_catalog;
 
 CREATE TRIGGER update_consultation_leads_updated_at
   BEFORE UPDATE ON public.consultation_leads

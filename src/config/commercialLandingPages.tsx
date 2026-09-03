@@ -8,12 +8,15 @@ export type CommercialLandingSlug =
   | 'gharara-suits'
   | 'anarkali-suits'
   | 'wedding-sarees'
+  | 'banarasi-sarees'
   | 'designer-sarees'
   | 'bridal-lehengas'
-  | 'party-wear-lehengas';
+  | 'party-wear-lehengas'
+  | 'palazzo-suits'
+  | 'sherwani-for-groom';
 
 interface CommercialLandingDefinition {
-  categorySlug: 'suits' | 'lehengas' | 'sarees';
+  categorySlug: 'suits' | 'lehengas' | 'sarees' | 'menswear';
   subcategorySlug: string;
   subcategoryLabel?: string;
   name: string;
@@ -24,20 +27,107 @@ interface CommercialLandingDefinition {
   faqs: Array<{ question: string; answer: string }>;
 }
 
-const US_SHIPPING_COPY = (
+const SHIPPING_COPY = (
   <p>
-    Free U.S. standard shipping applies at $199 and above; shipping is $14.99 below that threshold.
-    Review the exact listing for size, included pieces, current availability and any product-specific timing before ordering.
+    LuxeMia offers tracked shipping to seven supported countries. U.S. standard shipping is $14.99 below $199 and
+    free at $199 and above; the other destinations use the rates and thresholds on the Shipping page. Review the
+    exact listing for size, included pieces, current availability and any product-specific timing before ordering.
   </p>
 );
 
+const SHIPPING_ANSWER = 'LuxeMia offers tracked shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is free at $199 and above and costs $14.99 below that threshold; the other destinations use the rates and thresholds on the Shipping page. When tracking is issued, carrier scans can appear after label creation.';
+
 const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
+  'banarasi-sarees': {
+    categorySlug: 'sarees',
+    subcategorySlug: 'banarasi',
+    name: 'Banarasi Sarees',
+    title: 'Banarasi Sarees | Current Catalog Listings | LuxeMia',
+    description: 'Browse current sarees with explicit Banarasi catalog evidence. Verify fabric wording, weave or work, blouse details, dimensions and availability.',
+    editorialTitle: 'Compare Current Banarasi Saree Listings',
+    editorialContent: (
+      <>
+        <p>
+          This collection is limited to current saree listings whose title, product type or tags explicitly identify Banarasi fabric or styling. The collection label does not independently certify fiber composition, weaving method or geographic origin; use the exact product record for those facts.
+        </p>
+        <h3>Verify Fabric, Weave and Blouse Details</h3>
+        <p>
+          Compare the stated fabric wording, zari or other work, saree dimensions, border, pallu and blouse information. Do not assume pure silk, hand weaving, a stitched blouse or any other construction detail unless the selected listing expressly states it.
+        </p>
+        <h3>Plan Draping, Processing and Transit</h3>
+        <p>
+          Review the selected option and <a href="/sizing-measurements-guide">measurement guide</a>, then check <a href="/shipping">shipping rates and planning for supported destinations</a>. Processing occurs before carrier transit, and delivery by a fixed event date is not guaranteed.
+        </p>
+      </>
+    ),
+    faqs: [
+      { question: 'How are sarees selected for this Banarasi collection?', answer: 'A current saree listing must contain an explicit Banarasi signal in its title, product type or supported catalog tags and remain available for purchase.' },
+      { question: 'Does the Banarasi collection label prove pure silk or hand weaving?', answer: 'No. Verify the exact fiber, fabric and weaving wording on the selected product page. A collection label does not add an unstated composition, technique or origin claim.' },
+      { question: 'Does every Banarasi saree include a stitched blouse?', answer: 'No. Blouse fabric, stitching and other included pieces vary. Confirm the exact blouse information and selected option on the individual listing.' },
+    ],
+  },
+  'palazzo-suits': {
+    categorySlug: 'suits',
+    subcategorySlug: 'palazzo',
+    name: 'Palazzo Suits',
+    title: 'Palazzo Suits | Wedding & Festive Styles | LuxeMia',
+    description: 'Browse current palazzo suit listings. Verify fabric, work, included pieces, sizing and availability. Tracked shipping serves seven countries.',
+    editorialTitle: 'Compare Current Palazzo Suit Listings',
+    editorialContent: (
+      <>
+        <p>
+          Palazzo suit listings can pair a kurta, tunic or top with wide-leg bottoms, and some include a dupatta or another layer. The exact construction and package contents vary, so the selected product page—not the collection name—controls what is supplied.
+        </p>
+        <h3>Verify the Silhouette and Included Pieces</h3>
+        <p>
+          Compare the stated top and bottom shape, fabric wording, work, lining, closures, measurements and every expressly included piece. Do not assume that a dupatta, jacket or accessory is supplied unless the listing says so.
+        </p>
+        <h3>Plan Sizing, Processing and Transit Separately</h3>
+        <p>
+          Use the <a href="/sizing-measurements-guide">measurement guide</a>, review the selected variant and product-level processing information, and then check <a href="/shipping">shipping rates and planning for all supported destinations</a>. Delivery by a fixed event date is not guaranteed.
+        </p>
+      </>
+    ),
+    faqs: [
+      { question: 'What is included with a palazzo suit?', answer: 'Contents vary by listing. Confirm the exact top or kurta, palazzo bottoms, dupatta, lining, jacket and any other expressly stated piece on the selected product page.' },
+      { question: 'How are products selected for this palazzo-suit collection?', answer: 'A current catalog title, product type or supported tag must identify the product as a palazzo style, and the selected product must remain explicitly available for purchase.' },
+      { question: 'How should I plan for a fixed event date?', answer: 'Compare the selected size, product-level processing information and carrier transit separately, then contact LuxeMia before ordering. Delivery by a particular event date is not guaranteed.' },
+    ],
+  },
+  'sherwani-for-groom': {
+    categorySlug: 'menswear',
+    subcategorySlug: 'groom-sherwani',
+    name: 'Groom Sherwanis',
+    title: 'Groom Sherwanis | Indian Wedding Menswear | LuxeMia',
+    description: 'Browse current groom sherwani listings. Verify fabric, work, included garments, measurements and availability. Tracked shipping serves seven countries.',
+    editorialTitle: 'Compare Current Groom Sherwani Listings',
+    editorialContent: (
+      <>
+        <p>
+          This collection is limited to current menswear with positive catalog evidence for both a sherwani garment and a groom role. Open the exact listing to verify its fabric wording, decorative work, closure, measurements, selected size and fulfillment classification.
+        </p>
+        <h3>Confirm Every Included Garment and Accessory</h3>
+        <p>
+          A sherwani listing does not automatically include a kurta, churidar, pajama, stole, turban or footwear. Treat only the pieces expressly stated on the selected product page as included with the order.
+        </p>
+        <h3>Plan Measurements and Wedding Timing</h3>
+        <p>
+          Compare current body measurements with the exact listing and use the <a href="/sizing-measurements-guide">measurement guide</a>. Processing occurs before carrier transit; review <a href="/shipping">shipping and event-date guidance</a> and contact LuxeMia before an event-critical order. Delivery by a fixed date is not guaranteed.
+        </p>
+      </>
+    ),
+    faqs: [
+      { question: 'Which products appear in the groom-sherwani collection?', answer: 'Products require current catalog evidence for both a sherwani garment and a groom role. A general wedding or menswear label alone is not enough.' },
+      { question: 'Does every groom sherwani include matching bottoms and a stole?', answer: 'No. Included garments and accessories vary. Confirm the exact sherwani, kurta, pajama or churidar, stole and any other piece on the selected listing.' },
+      { question: 'Can LuxeMia guarantee that a sherwani will arrive before my wedding?', answer: 'No. Confirm sizing, fulfillment, processing and carrier transit separately and contact LuxeMia before ordering for a fixed date.' },
+    ],
+  },
   'sharara-suits': {
     categorySlug: 'suits',
     subcategorySlug: 'sharara',
     name: 'Sharara Suits',
-    title: 'Sharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
-    description: 'Shop sharara suits online in the USA. Compare current colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.',
+    title: 'Sharara Suits Online | Wedding & Festive Sets | LuxeMia',
+    description: 'Shop sharara suits online. Compare current colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.',
     editorialTitle: 'Shop Sharara Suits Online for Weddings and Celebrations',
     editorialContent: (
       <>
@@ -52,21 +142,21 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           For a time-sensitive celebration, compare the selected size and product-specific dispatch information before ordering. See the <a href="/size-guide">size guide</a> and <a href="/shipping">shipping information</a> for planning details.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
       { question: 'What is included in a sharara suit set?', answer: 'Included pieces vary by design. Check the exact listing to confirm the kurti, sharara bottoms, dupatta, lining and any other components.' },
       { question: 'Can I use the Sharara Suits page to compare wedding outfits?', answer: 'Yes. Use the filters to compare currently available styles, then verify fabric, work, size and timing on the specific product page before ordering.' },
-      { question: 'Do you ship sharara suits in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $199 and above, and tracking is provided after dispatch.' },
+      { question: 'Where does LuxeMia ship sharara suits?', answer: SHIPPING_ANSWER },
     ],
   },
   'gharara-suits': {
     categorySlug: 'suits',
     subcategorySlug: 'gharara',
     name: 'Gharara Suits',
-    title: 'Gharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
-    description: 'Shop gharara suits online in the USA. Compare current colors, stated fabric, embroidery, included pieces, sizes and product availability for weddings and celebrations.',
+    title: 'Gharara Suits Online | Wedding & Festive Sets | LuxeMia',
+    description: 'Shop gharara suits online. Compare current colors, stated fabric, embroidery, included pieces, sizes and product availability for weddings and celebrations.',
     editorialTitle: 'Shop Gharara Suits Online for Weddings and Festive Events',
     editorialContent: (
       <>
@@ -81,21 +171,21 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           Review the <a href="/size-guide">size guide</a> and confirm the current product details before ordering for a fixed event date. For policy information, see <a href="/shipping">shipping information</a>.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
       { question: 'What is the difference between gharara and sharara suits?', answer: 'Both styles use flared bottoms, but the exact cut, fit and construction vary by design. Check the product images and description for the specific LuxeMia set.' },
       { question: 'How many gharara suits are currently available?', answer: 'Availability changes. The product grid on this page reflects the current LuxeMia listings; open a listing to confirm the selected size and variant.' },
-      { question: 'Do you ship gharara suits in the United States?', answer: 'Yes. LuxeMia ships to U.S. addresses, with free standard shipping at $199 and above.' },
+      { question: 'Where does LuxeMia ship gharara suits?', answer: SHIPPING_ANSWER },
     ],
   },
   'anarkali-suits': {
     categorySlug: 'suits',
     subcategorySlug: 'anarkali',
     name: 'Anarkali Suits',
-    title: 'Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia',
-    description: 'Shop Anarkali suits online in the USA. Compare current colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.',
+    title: 'Anarkali Suits Online | Wedding & Party Wear | LuxeMia',
+    description: 'Shop Anarkali suits online. Compare current colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.',
     editorialTitle: 'Shop Anarkali Suits Online for Weddings and Party Wear',
     editorialContent: (
       <>
@@ -110,7 +200,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           For an event with a fixed date, review the listing and <a href="/shipping">shipping information</a> before ordering. Use the <a href="/size-guide">size guide</a> to compare your measurements with the product details.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
@@ -124,8 +214,8 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     subcategorySlug: 'wedding',
     subcategoryLabel: 'Ceremony Sarees',
     name: 'Wedding Sarees',
-    title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
-    description: 'Shop wedding sarees online in the USA. Compare current bridal and wedding saree listings by stated fabric, work, blouse details, price and availability before ordering.',
+    title: 'Wedding Sarees Online | Indian Wedding Sarees | LuxeMia',
+    description: 'Shop wedding sarees online. Compare current bridal and wedding saree listings by stated fabric, work, blouse details, price and availability before ordering.',
     editorialTitle: 'Shop Wedding Sarees Online for Indian Wedding Events',
     editorialContent: (
       <>
@@ -140,13 +230,13 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. See <a href="/shipping">shipping information</a> for current policy details and contact LuxeMia if an event-critical question remains unanswered.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
       { question: 'What is included with a wedding saree?', answer: 'Included blouse material, stitching status and other pieces vary by listing. Check the exact product description and images before ordering.' },
       { question: 'How do I compare wedding sarees for an event?', answer: 'Compare the stated fabric, work, blouse details, price and current availability, then confirm the exact selected listing before placing an event-critical order.' },
-      { question: 'Do you ship wedding sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $199 and above, and tracking is provided after dispatch.' },
+      { question: 'Where does LuxeMia ship wedding sarees?', answer: SHIPPING_ANSWER },
     ],
   },
   'designer-sarees': {
@@ -154,8 +244,8 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     subcategorySlug: 'designer',
     subcategoryLabel: 'Designer',
     name: 'Designer Sarees',
-    title: 'Designer Sarees Online USA | Embroidered & Party-Wear Styles | LuxeMia',
-    description: 'Shop designer sarees online in the USA. Compare current colors, stated fabric, embroidery or work, blouse details, price and availability before ordering.',
+    title: 'Designer Sarees Online | Embroidered & Party-Wear Styles | LuxeMia',
+    description: 'Shop designer sarees online. Compare current colors, stated fabric, embroidery or work, blouse details, price and availability before ordering.',
     editorialTitle: 'Shop Designer Sarees Online for Receptions and Celebrations',
     editorialContent: (
       <>
@@ -170,21 +260,21 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           Compare the selected item’s availability and product-specific timing before ordering for a fixed event. Review the <a href="/size-guide">size guide</a> and <a href="/shipping">shipping information</a> for planning details.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
       { question: 'What does designer saree mean on this collection page?', answer: 'It identifies the current product category or style label. Confirm the exact fabric, work, included blouse details and availability on the individual listing.' },
       { question: 'How can I compare designer sarees online?', answer: 'Compare the stated fabric, color, work, blouse details, price and availability on each individual product page before ordering.' },
-      { question: 'Do you ship designer sarees in the United States?', answer: 'LuxeMia ships to U.S. addresses. Free standard shipping applies at $199 and above, and tracking is provided after dispatch.' },
+      { question: 'Where does LuxeMia ship designer sarees?', answer: SHIPPING_ANSWER },
     ],
   },
   'bridal-lehengas': {
     categorySlug: 'lehengas',
     subcategorySlug: 'bridal',
     name: 'Bridal Lehengas',
-    title: 'Bridal Lehengas Online USA | Indian Wedding Lehengas | LuxeMia',
-    description: 'Shop bridal lehengas online in the USA. Compare current colors, stated fabric, embroidery, included choli and dupatta pieces, sizing and availability.',
+    title: 'Bridal Lehengas Online | Indian Wedding Lehengas | LuxeMia',
+    description: 'Shop bridal lehengas online. Compare current colors, stated fabric, embroidery, included choli and dupatta pieces, sizing and availability.',
     editorialTitle: 'Shop Bridal Lehengas Online for Indian Wedding Events',
     editorialContent: (
       <>
@@ -199,21 +289,21 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           Begin with the <a href="/size-guide">size guide</a>, then read the selected product’s details and <a href="/shipping">shipping information</a>. Contact LuxeMia before ordering if a date, size or included-piece detail needs confirmation.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
       { question: 'What is included with a bridal lehenga?', answer: 'Included pieces vary by design. Confirm the exact skirt, blouse or choli, dupatta, lining and accessory details on the individual product page.' },
       { question: 'How do I choose a bridal lehenga size?', answer: 'Compare your measurements with the selected listing and LuxeMia size guide. Size availability and tailoring options vary by product.' },
-      { question: 'Do you offer U.S. shipping for bridal lehengas?', answer: 'Yes. LuxeMia ships to U.S. addresses, and free standard shipping applies at $199 and above.' },
+      { question: 'Where does LuxeMia ship bridal lehengas?', answer: SHIPPING_ANSWER },
     ],
   },
   'party-wear-lehengas': {
     categorySlug: 'lehengas',
     subcategorySlug: 'party-wear',
     name: 'Party-Wear Lehengas',
-    title: 'Party-Wear Lehengas Online USA | Festive Lehenga Choli | LuxeMia',
-    description: 'Shop party-wear lehengas online in the USA. Compare current colors, stated fabric, embroidery, included pieces, sizing and availability for festive events.',
+    title: 'Party-Wear Lehengas Online | Festive Lehenga Choli | LuxeMia',
+    description: 'Shop party-wear lehengas online. Compare current colors, stated fabric, embroidery, included pieces, sizing and availability for festive events.',
     editorialTitle: 'Shop Party-Wear Lehengas Online for Festive Celebrations',
     editorialContent: (
       <>
@@ -224,17 +314,17 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
         <p>
           Use the filters to compare current designs by color, fabric, work and price. Check the chosen listing for the exact included pieces, available size and product-specific availability.
         </p>
-        <h3>Event Planning and U.S. Delivery</h3>
+        <h3>Event Planning and Shipping</h3>
         <p>
           For a celebration with a fixed date, review the listing, <a href="/size-guide">size guide</a> and <a href="/shipping">shipping information</a> before ordering.
         </p>
-        {US_SHIPPING_COPY}
+        {SHIPPING_COPY}
       </>
     ),
     faqs: [
       { question: 'What makes a lehenga suitable for party wear?', answer: 'Occasion, color, work and styling vary by design. Use the product images and supplied listing details to choose a style for your event.' },
       { question: 'What is included in a party-wear lehenga set?', answer: 'Included pieces vary. Confirm the exact skirt, choli or blouse, dupatta, lining and any accessories on the selected product page.' },
-      { question: 'Can I order party-wear lehengas for U.S. delivery?', answer: 'Yes. LuxeMia ships to U.S. addresses, with free standard shipping at $199 and above.' },
+      { question: 'Where does LuxeMia ship party-wear lehengas?', answer: SHIPPING_ANSWER },
     ],
   },
 };

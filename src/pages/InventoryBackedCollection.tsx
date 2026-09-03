@@ -10,8 +10,13 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
+import { getCollectionStandard } from '@/config/collectionStandards';
 
-export type InventoryCollectionSlug =
+type InventoryCollectionSlug =
+  | 'wedding-guest-lehengas'
+  | 'wedding-guest-kurta-sets'
+  | 'diwali-womenswear'
+  | 'diwali-menswear'
   | 'navratri-chaniya-choli'
   | 'garba-outfits'
   | 'groomsmen-outfits'
@@ -43,13 +48,60 @@ const sharedFaqs = [
   },
 ];
 
-export const inventoryCollectionConfigs: Record<InventoryCollectionSlug, InventoryCollectionConfig> = {
+type StandardBackedInventoryConfig = Pick<
+  InventoryCollectionConfig,
+  'slug' | 'category' | 'title' | 'description' | 'h1'
+>;
+
+const withCollectionStandard = (metadata: StandardBackedInventoryConfig): InventoryCollectionConfig => {
+  const standard = getCollectionStandard(`/collections/${metadata.slug}`);
+  if (!standard) throw new Error(`Missing collection standard for ${metadata.slug}`);
+  return {
+    ...metadata,
+    answer: standard.directAnswer,
+    chooseBy: standard.chooseBy,
+    decisionRows: standard.decisionRows,
+    selectionGuidance: standard.selectionGuidance,
+    guideLinks: standard.guideLinks,
+    faqs: standard.faqs,
+  };
+};
+
+const inventoryCollectionConfigs: Record<InventoryCollectionSlug, InventoryCollectionConfig> = {
+  'wedding-guest-lehengas': withCollectionStandard({
+    slug: 'wedding-guest-lehengas',
+    category: 'occasion:wedding-guest-lehengas',
+    title: 'Wedding Guest Lehengas | Current Styles | LuxeMia',
+    description: 'Browse orderable lehengas with explicit wedding-guest or bridesmaid evidence; expressly bridal listings are excluded. Verify every product detail.',
+    h1: 'Wedding Guest Lehengas',
+  }),
+  'wedding-guest-kurta-sets': withCollectionStandard({
+    slug: 'wedding-guest-kurta-sets',
+    category: 'occasion:wedding-guest-kurta-sets',
+    title: 'Wedding Guest Kurta Sets | Indian Menswear | LuxeMia',
+    description: 'Browse orderable menswear with explicit kurta-set and wedding-guest catalog evidence. Verify included garments, measurements, variants and fulfillment.',
+    h1: 'Wedding Guest Kurta Sets',
+  }),
+  'diwali-womenswear': withCollectionStandard({
+    slug: 'diwali-womenswear',
+    category: 'occasion:diwali-womenswear',
+    title: 'Diwali Womenswear | Sarees, Lehengas & Suits | LuxeMia',
+    description: 'Browse orderable women’s outfits with explicit Diwali or festival evidence and a supported garment signal. Compare sizes, contents and fulfillment.',
+    h1: 'Diwali Outfits for Women',
+  }),
+  'diwali-menswear': withCollectionStandard({
+    slug: 'diwali-menswear',
+    category: 'occasion:diwali-menswear',
+    title: 'Diwali Menswear | Kurta & Indian Festive Styles | LuxeMia',
+    description: 'Browse orderable menswear with explicit Diwali or festival evidence and a supported garment signal. Verify garments, measurements and fulfillment.',
+    h1: 'Diwali Outfits for Men',
+  }),
   'navratri-chaniya-choli': {
     slug: 'navratri-chaniya-choli',
     category: 'occasion:navratri-chaniya',
-    title: 'Navratri Chaniya Choli USA | Current Styles | LuxeMia',
+    title: 'Navratri Chaniya Choli | Current Styles | LuxeMia',
     description: 'Shop current Navratri chaniya choli and lehenga sets. Compare included pieces, fabric, work, measurements, stitching, price and availability.',
-    h1: 'Navratri Chaniya Choli Online in the USA',
+    h1: 'Navratri Chaniya Choli Online',
     answer: 'This collection contains active lehenga, chaniya and choli listings whose current catalog information explicitly mentions Navratri or chaniya. Compare the selected product’s exact skirt, blouse or choli, dupatta, fabric, work, measurements, stitching status, price and availability before ordering for Garba or Dandiya.',
     chooseBy: [
       { label: 'All Navratri outfits', href: '/collections/navratri-outfits' },
@@ -76,9 +128,9 @@ export const inventoryCollectionConfigs: Record<InventoryCollectionSlug, Invento
   'garba-outfits': {
     slug: 'garba-outfits',
     category: 'occasion:garba',
-    title: 'Garba Outfits USA | Dandiya Clothing | LuxeMia',
+    title: 'Garba Outfits | Dandiya Clothing | LuxeMia',
     description: 'Shop active Garba and Dandiya outfit listings. Compare movement, included pieces, fabric, work, measurements, stitching and availability.',
-    h1: 'Garba and Dandiya Outfits Online in the USA',
+    h1: 'Garba and Dandiya Outfits Online',
     answer: 'This collection contains active products whose current title, product type, or tags explicitly mention Garba or Dandiya. Choose for movement and venue conditions, then verify every included piece, measurement, closure, fabric, embellishment, stitching option, price and selected-variant availability on the exact product page.',
     chooseBy: [
       { label: 'Navratri chaniya choli', href: '/collections/navratri-chaniya-choli' },
@@ -105,9 +157,9 @@ export const inventoryCollectionConfigs: Record<InventoryCollectionSlug, Invento
   'groomsmen-outfits': {
     slug: 'groomsmen-outfits',
     category: 'occasion:groomsmen',
-    title: 'Indian Groomsmen Outfits USA | Kurta & Sherwani | LuxeMia',
+    title: 'Indian Groomsmen Outfits | Kurta & Sherwani | LuxeMia',
     description: 'Shop active menswear listings explicitly identified for groomsmen. Compare kurta, jacket and sherwani pieces, measurements and availability.',
-    h1: 'Indian Groomsmen Outfits Online in the USA',
+    h1: 'Indian Groomsmen Outfits Online',
     answer: 'This collection is limited to active menswear whose current catalog information explicitly identifies a groomsman or groomsmen use. Compare kurta sets, Nehru-style jacket sets, sherwanis, stated colors, included garments, chest and length measurements, fulfillment, price and availability before planning a coordinated group order.',
     chooseBy: [
       { label: 'All Indian menswear', href: '/menswear' },
@@ -134,11 +186,12 @@ export const inventoryCollectionConfigs: Record<InventoryCollectionSlug, Invento
   'sangeet-outfits': {
     slug: 'sangeet-outfits',
     category: 'occasion:sangeet',
-    title: 'Sangeet Outfits USA | Indian Dance-Event Styles | LuxeMia',
+    title: 'Sangeet Outfits | Indian Dance-Event Styles | LuxeMia',
     description: 'Shop active products explicitly identified for Sangeet. Compare movement, fabric, included pieces, measurements, fulfillment and availability.',
-    h1: 'Sangeet Outfits Online in the USA',
-    answer: 'This collection contains active products whose current catalog information explicitly mentions Sangeet. Lehengas, shararas, sarees, kurta sets and Indo-Western outfits can suit different events; compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment and selected-variant availability before ordering.',
+    h1: 'Sangeet Outfits Online',
+    answer: 'This collection contains active products whose current catalog information explicitly mentions Sangeet. Lehengas, shararas, sarees, kurta sets and Indo-Western outfits can suit different events; compare movement, secure draping, included pieces, measurements, fabric, work, fulfillment, price and selected-variant availability before ordering.',
     chooseBy: [
+      { label: 'All wedding events', href: '/wedding-events' },
       { label: 'Party-wear lehengas', href: '/collections/party-wear-lehengas' },
       { label: 'Sharara suits', href: '/collections/sharara-suits' },
       { label: 'Indian menswear', href: '/menswear' },
@@ -163,11 +216,12 @@ export const inventoryCollectionConfigs: Record<InventoryCollectionSlug, Invento
   'reception-outfits': {
     slug: 'reception-outfits',
     category: 'occasion:reception',
-    title: 'Indian Reception Outfits USA | Guest & Party Wear | LuxeMia',
+    title: 'Indian Reception Outfits | Guest & Party Wear | LuxeMia',
     description: 'Shop active products explicitly identified for receptions. Compare formality, fabric, work, included pieces, measurements, price and availability.',
-    h1: 'Indian Reception Outfits Online in the USA',
+    h1: 'Indian Reception Outfits Online',
     answer: 'This collection contains active products whose current catalog information explicitly mentions a reception. Compare the host’s dress code with each listing’s silhouette, fabric wording, work, included pieces, measurements, fulfillment, price and selected-variant availability. Reception formality varies, so no single garment type is universally required.',
     chooseBy: [
+      { label: 'All wedding events', href: '/wedding-events' },
       { label: 'Designer sarees', href: '/collections/designer-sarees' },
       { label: 'Party-wear lehengas', href: '/collections/party-wear-lehengas' },
       { label: 'Wedding guest outfits', href: '/collections/wedding-guest-outfits' },
@@ -198,12 +252,30 @@ const sortOptions = [
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
 
-const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSlug }) => {
+const PRODUCTS_PER_PAGE = 24;
+const SCHEMA_PRODUCT_LIMIT = 30;
+
+const CatalogLoadError = ({ retryHref }: { retryHref: string }) => (
+  <div className="rounded-sm border border-destructive/30 bg-destructive/5 p-8 text-center" role="alert">
+    <h2 className="font-serif text-xl">Current inventory could not be loaded</h2>
+    <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+      Product availability is temporarily unavailable. Try this page again, or contact LuxeMia before relying on a specific option.
+    </p>
+    <Button asChild className="mt-5" variant="outline">
+      <a href={retryHref}>Try again</a>
+    </Button>
+  </div>
+);
+
+const InventoryBackedCollectionContent = ({ landing }: { landing: InventoryCollectionSlug }) => {
   const config = inventoryCollectionConfigs[landing];
-  const { products, isLoading } = useShopifyProducts(config.category);
+  const { products, isLoading, error } = useShopifyProducts(config.category);
   const [sortBy, setSortBy] = useState('featured');
+  const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
-  const collectionItems = sortedProducts.slice(0, 30).map(({ node }) => ({
+  const visibleProducts = sortedProducts.slice(0, visibleCount);
+  const hasMore = visibleProducts.length < sortedProducts.length;
+  const collectionItems = sortedProducts.slice(0, SCHEMA_PRODUCT_LIMIT).map(({ node }) => ({
     id: node.id,
     name: node.title,
     url: node.handle,
@@ -211,6 +283,18 @@ const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSl
     price: node.priceRange.minVariantPrice.amount,
     currency: node.priceRange.minVariantPrice.currencyCode,
   }));
+
+  const handleSortChange = (nextSort: string) => {
+    setSortBy(nextSort);
+    setVisibleCount(PRODUCTS_PER_PAGE);
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount((currentCount) => Math.min(
+      currentCount + PRODUCTS_PER_PAGE,
+      sortedProducts.length,
+    ));
+  };
 
   return (
     <div className="min-h-screen bg-background">
@@ -224,8 +308,11 @@ const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSl
           { name: 'Collections', url: '/collections' },
           { name: config.h1, url: `/collections/${config.slug}` },
         ]}
-        collection={{ name: config.h1, description: config.description, items: collectionItems }}
+        collection={!isLoading && !error
+          ? { name: config.h1, description: config.description, items: collectionItems }
+          : undefined}
         faqs={config.faqs}
+        noIndexFollow={!isLoading && !error && sortedProducts.length === 0}
       />
       <Header />
       <main className="pt-[88px] lg:pt-[130px]">
@@ -239,7 +326,11 @@ const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSl
 
         <nav aria-label="Choose by" className="border-b border-border/30 bg-background py-5">
           <div className="container mx-auto flex max-w-5xl flex-wrap justify-center gap-3 px-4 lg:px-8">
-            {config.chooseBy.map((item) => <Link key={item.href} to={item.href}><Button variant="outline" size="sm">{item.label}</Button></Link>)}
+            {config.chooseBy.map((item) => (
+              <Button key={item.href} asChild variant="outline" size="sm">
+                <Link to={item.href}>{item.label}</Link>
+              </Button>
+            ))}
           </div>
         </nav>
 
@@ -248,19 +339,40 @@ const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSl
             <div>
               <p className="text-xs font-semibold uppercase tracking-[0.18em] text-primary">Verified catalog matches</p>
               <h2 id={`${landing}-products`} className="mt-2 font-serif text-2xl">Current products</h2>
-              <p className="mt-2 text-sm text-muted-foreground">{isLoading ? 'Loading current inventory…' : `${sortedProducts.length} active matches`}</p>
+              <p className="mt-2 text-sm text-muted-foreground">
+                {isLoading
+                  ? 'Loading current inventory…'
+                  : error
+                    ? 'Current inventory is temporarily unavailable'
+                    : `${visibleProducts.length} of ${sortedProducts.length} active matches shown`}
+              </p>
             </div>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild><Button variant="outline" size="sm">Sort <ChevronDown className="ml-2 h-4 w-4" /></Button></DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {sortOptions.map((option) => <DropdownMenuItem key={option.value} onClick={() => setSortBy(option.value)}>{option.label}</DropdownMenuItem>)}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {!error ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild><Button variant="outline" size="sm">Sort <ChevronDown className="ml-2 h-4 w-4" /></Button></DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {sortOptions.map((option) => <DropdownMenuItem key={option.value} onClick={() => handleSortChange(option.value)}>{option.label}</DropdownMenuItem>)}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : null}
           </div>
           {isLoading ? (
             <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4">{Array.from({ length: 12 }).map((_, i) => <div key={i} className="aspect-[3/4] animate-pulse rounded-sm bg-muted" />)}</div>
+          ) : error ? (
+            <CatalogLoadError retryHref={`/collections/${config.slug}`} />
           ) : sortedProducts.length > 0 ? (
-            <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">{sortedProducts.map((product, index) => <ProductCard key={product.node.id} product={product} index={index} />)}</div>
+            <>
+              <div className="grid grid-cols-2 gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
+                {visibleProducts.map((product, index) => <ProductCard key={product.node.id} product={product} index={index} />)}
+              </div>
+              {hasMore ? (
+                <div className="mt-10 flex justify-center">
+                  <Button type="button" variant="outline" onClick={handleLoadMore}>
+                    Load more ({sortedProducts.length - visibleProducts.length} remaining)
+                  </Button>
+                </div>
+              ) : null}
+            </>
           ) : (
             <div className="rounded-sm border border-border p-8 text-center"><h2 className="font-serif text-xl">No verified products currently available</h2><p className="mt-2 text-sm text-muted-foreground">This page is excluded from discovery when durable inventory is unavailable.</p></div>
           )}
@@ -283,7 +395,7 @@ const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSl
               <Link className="text-primary underline" to="/shipping">Shipping rates and planning</Link>
               <Link className="text-primary underline" to="/returns#merchant-return-policy">Returns and order issues</Link>
               <Link className="text-primary underline" to="/sizing-measurements-guide">Sizing and measurements</Link>
-              <Link className="text-primary underline" to="/contact">Contact U.S.-based support</Link>
+              <Link className="text-primary underline" to="/contact">Contact online support</Link>
             </div>
           </div>
         </section>
@@ -297,5 +409,9 @@ const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSl
     </div>
   );
 };
+
+const InventoryBackedCollection = ({ landing }: { landing: InventoryCollectionSlug }) => (
+  <InventoryBackedCollectionContent key={landing} landing={landing} />
+);
 
 export default InventoryBackedCollection;

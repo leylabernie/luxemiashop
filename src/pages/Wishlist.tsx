@@ -10,6 +10,7 @@ import { useCartStore, type CartItem } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { toast } from 'sonner';
 import { getDirectCardVariant } from '@/lib/purchaseOptions';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
 
 const Wishlist = () => {
   const { items, removeItem, clearWishlist } = useWishlistStore();
@@ -17,6 +18,7 @@ const Wishlist = () => {
   const addToCart = useCartStore(state => state.addItem);
 
   const handleAddToCart = (product: typeof items[0]) => {
+    if (!isProductExplicitlyOrderable(product.node)) return;
     const variant = getDirectCardVariant(product.node);
     if (!variant) {
       navigate(`/product/${product.node.handle}#product-purchase`);
@@ -169,6 +171,7 @@ const Wishlist = () => {
                   {items.map((product, index) => {
                     const firstImage = product.node.images.edges[0]?.node;
                     const price = product.node.priceRange.minVariantPrice;
+                    const isOrderable = isProductExplicitlyOrderable(product.node);
                     const directCardVariant = getDirectCardVariant(product.node);
 
                     return (
@@ -223,9 +226,10 @@ const Wishlist = () => {
                             initial={{ opacity: 0, y: 10 }}
                             whileHover={{ scale: 1.02 }}
                             className="absolute bottom-4 left-4 right-4 bg-background/95 backdrop-blur-sm py-3 text-center text-sm tracking-editorial uppercase opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-2"
+                            disabled={!isOrderable}
                           >
                             <ShoppingBag className="w-4 h-4" />
-                            {directCardVariant ? 'Add to Bag' : 'Choose Options'}
+                            {!isOrderable ? 'Sold Out' : directCardVariant ? 'Add to Bag' : 'Choose Options'}
                           </motion.button>
                         </Link>
 

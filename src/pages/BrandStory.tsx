@@ -31,11 +31,11 @@ const BrandStory = () => {
     <div className="min-h-screen bg-[#fffaf6] text-[#352629]">
       <SEOHead
         title="Our Story — LuxeMia"
-        description="Discover LuxeMia: Indian occasionwear chosen for weddings, festivals, and meaningful celebrations in the United States."
-        canonical="https://luxemia.shop/brand-story"
+        description="About LuxeMia, an online-only Indian ethnic wear store serving shoppers in seven countries with product-specific information and online support."
+        canonical="https://luxemia.shop/about"
         breadcrumbs={[
           { name: 'Home', url: '/' },
-          { name: 'Our Story', url: '/brand-story' },
+          { name: 'About LuxeMia', url: '/about' },
         ]}
       />
       <Header />
@@ -48,7 +48,7 @@ const BrandStory = () => {
               Dressing for the moments that <em className="font-normal text-[#a96f72]">stay with you.</em>
             </h1>
             <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-[#6f5d59] sm:text-lg">
-              Every celebration has its own rhythm: a familiar song, a hallway full of voices, a photograph you will keep returning to. LuxeMia is here for the feeling of stepping into those moments with grace, colour, and a little more of home.
+              LuxeMia is an online-only Indian ethnic wear store. We organize current sarees, lehengas, suits, menswear and jewelry for weddings, festivals and other celebrations, with online support and tracked shipping to seven supported countries.
             </p>
           </div>
         </section>
@@ -84,7 +84,7 @@ const BrandStory = () => {
                   A saree can bring back the warmth of a mother&rsquo;s wardrobe. A lehenga can turn a long-awaited wedding into the entrance you imagined. A beautifully chosen suit can make a festival dinner feel like a return to something familiar.
                 </p>
                 <p>
-                  LuxeMia was created for those feelings. We celebrate the colour, movement, texture, and ceremony of Indian dressing while making it easier to find a piece that feels right for your own story in the United States.
+                  LuxeMia serves shoppers in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. There is no public walk-in showroom; product availability, options and current prices are shown online.
                 </p>
               </div>
             </div>
@@ -98,7 +98,7 @@ const BrandStory = () => {
                 <span className="h-px w-9 bg-[#f1bbb5]" />
                 What guides us
               </p>
-              <h2 className="font-serif text-4xl leading-[0.96] tracking-[-0.025em] sm:text-5xl">A boutique should feel considered from the first look.</h2>
+              <h2 className="font-serif text-4xl leading-[0.96] tracking-[-0.025em] sm:text-5xl">Online shopping should make the important facts easy to check.</h2>
             </div>
             <div className="mt-12 grid gap-px overflow-hidden border border-white/15 bg-white/15 md:grid-cols-3">
               {values.map((value) => {
@@ -112,6 +112,25 @@ const BrandStory = () => {
                 );
               })}
             </div>
+          </div>
+        </section>
+
+        <section className="bg-[#fffaf6] px-5 py-16 sm:px-8 sm:py-20">
+          <div className="mx-auto max-w-5xl">
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">How LuxeMia works</p>
+            <h2 className="mt-4 max-w-3xl font-serif text-4xl leading-tight text-[#352629]">Use the exact listing for product facts, and the policy pages for order terms.</h2>
+            <div className="mt-8 grid gap-6 text-sm leading-7 text-[#6f5d59] md:grid-cols-3">
+              <p><strong className="block text-[#352629]">Product information</strong>Materials, included pieces, sizes, options, availability and processing are stated only when supported by the current product record. Missing details are not guessed.</p>
+              <p><strong className="block text-[#352629]">Fulfillment</strong>Ready-to-ship, made-to-order and customizable describe different pre-dispatch paths. A product being available to buy does not by itself prove immediate dispatch.</p>
+              <p><strong className="block text-[#352629]">Customer help</strong>Support can help locate published details and policy information. It cannot promise an event-date delivery when the checkout or carrier does not provide that guarantee.</p>
+            </div>
+            <nav aria-label="LuxeMia trust and policy information" className="mt-9 flex flex-wrap gap-x-6 gap-y-3 text-sm">
+              <Link className="underline underline-offset-4" to="/editorial-policy">Editorial and product-fact policy</Link>
+              <Link className="underline underline-offset-4" to="/review-policy">Review program</Link>
+              <Link className="underline underline-offset-4" to="/privacy">Privacy choices</Link>
+              <Link className="underline underline-offset-4" to="/terms">Terms</Link>
+              <Link className="underline underline-offset-4" to="/us-support">Customer support</Link>
+            </nav>
           </div>
         </section>
 

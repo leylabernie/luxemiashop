@@ -1,5 +1,3 @@
-import { motion } from 'framer-motion';
-import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import ProductCard from '@/components/ui/ProductCard';
 import type { ShopifyProduct } from '@/lib/shopify';
 
@@ -33,35 +31,11 @@ export const ProductGrid = ({ products, isLoading, columns = 4 }: ProductGridPro
 
   if (products.length === 0) {
     return (
-      <div className={`grid ${gridCols} gap-2 sm:gap-4 lg:gap-6`}>
-        {placeholderProducts.map((item, index) => (
-          <motion.div
-            key={index}
-            initial={{ opacity: 0, y: 15 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4, delay: Math.min(index * 0.03, 0.15) }}
-            className="group"
-          >
-            <div className="relative aspect-[3/4] mb-2 sm:mb-4 overflow-hidden rounded-sm bg-card">
-              <ProductPlaceholder aspectRatio="portrait" label={item.label} />
-              
-              {/* Badge */}
-              {item.badge && (
-                <span className="absolute top-3 left-3 px-2 py-1 text-xs uppercase tracking-wide bg-primary text-primary-foreground rounded-sm">
-                  {item.badge}
-                </span>
-              )}
-            </div>
-
-            <div className="space-y-1">
-              <p className="text-xs uppercase tracking-wide text-muted-foreground">
-                {item.category}
-              </p>
-              <h3 className="font-medium text-sm">{item.name}</h3>
-              <p className="text-sm text-muted-foreground">{item.price}</p>
-            </div>
-          </motion.div>
-        ))}
+      <div className="rounded-sm border border-border/60 bg-card/40 px-6 py-12 text-center" role="status">
+        <p className="font-medium text-foreground">No current products were returned for this view.</p>
+        <p className="mt-2 text-sm text-muted-foreground">
+          Try another collection or return later after the catalog refreshes.
+        </p>
       </div>
     );
   }
@@ -79,14 +53,3 @@ export const ProductGrid = ({ products, isLoading, columns = 4 }: ProductGridPro
     </div>
   );
 };
-
-const placeholderProducts = [
-  { name: 'Banarasi Silk Saree', category: 'Sarees', price: '₹24,999', label: 'Product Image', badge: 'New' },
-  { name: 'Bridal Lehenga Set', category: 'Lehengas', price: '₹89,999', label: 'Product Image', badge: 'Bestseller' },
-  { name: 'Chanderi Cotton Suit', category: 'Suits', price: '₹12,499', label: 'Product Image' },
-  { name: 'Organza Dupatta', category: 'Accessories', price: '₹4,999', label: 'Product Image' },
-  { name: 'Embroidered Anarkali', category: 'Anarkalis', price: '₹18,999', label: 'Product Image' },
-  { name: 'Kanjivaram Silk Saree', category: 'Sarees', price: '₹45,999', label: 'Product Image', badge: 'Limited' },
-  { name: 'Designer Blouse', category: 'Blouses', price: '₹6,499', label: 'Product Image' },
-  { name: 'Festive Palazzo Set', category: 'Suits', price: '₹15,999', label: 'Product Image' },
-];

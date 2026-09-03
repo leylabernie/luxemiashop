@@ -1,4 +1,5 @@
-import type { ShopifyProduct } from '@/lib/shopify';
+import type { ShopifyProduct } from './shopify.ts';
+import { isProductExplicitlyOrderable } from './orderability.ts';
 
 type ProductNode = ShopifyProduct['node'];
 
@@ -22,10 +23,11 @@ export const requiresProductPageSelection = (product: ProductNode): boolean =>
  * options and with one available Shopify variant.
  */
 export const getDirectCardVariant = (product: ProductNode) => {
+  if (!isProductExplicitlyOrderable(product)) return null;
   if (requiresProductPageSelection(product)) return null;
 
   const availableVariants = product.variants.edges.filter(
-    (edge) => edge.node.availableForSale !== false,
+    (edge) => edge.node.availableForSale === true,
   );
 
   return availableVariants.length === 1 ? availableVariants[0].node : null;

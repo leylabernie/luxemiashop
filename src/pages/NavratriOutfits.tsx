@@ -12,6 +12,10 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
+import CollectionDecisionSupport from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
+import { getCollectionStandard } from '@/config/collectionStandards';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -43,7 +47,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'How much is U.S. shipping for Navratri outfits?',
-    answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch.',
+    answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. When tracking is issued, carrier scans can appear after label creation.',
   },
   {
     question: 'Is there a first-order discount?',
@@ -51,24 +55,29 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Can I return a Navratri outfit?',
-    answer: 'All sales are final. Damage, incorrect-item, or missing-item claims must be submitted within 48 hours of delivery with the evidence required by the LuxeMia return policy. Review sizing and product details before ordering.',
+    answer: 'Change-of-mind purchases are final sale. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours of delivery—with available photos and, when available, unboxing evidence. A missing video does not by itself remove rights that cannot legally be excluded.',
   },
 ];
 
 const NavratriOutfits = () => {
-  const { products, isLoading } = useShopifyProducts('occasion:navratri');
+  const { products, isLoading, error } = useShopifyProducts('occasion:navratri');
   const [sortBy, setSortBy] = useState('featured');
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const collectionStandard = getCollectionStandard('/collections/navratri-outfits');
+  const collectionItems = toCollectionSchemaItems(sortedProducts);
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Navratri Outfits USA 2026 | Garba Styles | LuxeMia"
-        description="Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 for first orders."
+        title="Navratri Outfits 2026 | Garba Styles | LuxeMia"
+        description="Shop current Navratri outfits for Garba and Dandiya, including chaniya choli and festive styles. Compare exact listing details and tracked shipping to seven supported countries."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         image="/images/hero-carousel/navratri-lehenga-desktop.jpg"
         type="collection"
+        collection={!isLoading && !error && collectionItems.length > 0
+          ? { name: 'Navratri Outfits for Garba', description: 'Current catalog products explicitly marked for Navratri, Garba, chaniya, or dandiya.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Occasions', url: '/collections' },
@@ -92,14 +101,14 @@ const NavratriOutfits = () => {
           <div className="absolute inset-0 bg-gradient-to-r from-[#211311] via-[#211311]/85 to-[#211311]/20" />
           <div className="container relative mx-auto px-4 py-14 lg:px-8 lg:py-20">
             <div className="max-w-2xl">
-              <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.22em] text-[#f7d9a7]">Navratri 2026 · U.S. Shopping Guide</span>
-              <h1 className="mb-4 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">Navratri Outfits for Garba in the USA</h1>
-              <p className="max-w-xl text-sm leading-relaxed text-[#fffaf3]/85 sm:text-base">
-                Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events. Review each listing for its exact pieces, measurements, stitching options, price and availability.
+              <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.22em] text-[#f7d9a7]">Navratri 2026 Shopping Guide</span>
+              <h1 className="mb-4 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">Navratri Outfits for Garba</h1>
+              <p className="max-w-2xl text-sm leading-relaxed text-[#fffaf3]/85 sm:text-base">
+                {collectionStandard?.directAnswer}
               </p>
               <div className="mt-6 flex flex-wrap gap-2 text-xs text-[#fffaf3]/90">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><CalendarDays className="h-4 w-4" /> Begins October 11, 2026</span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><Truck className="h-4 w-4" /> Tracked U.S. shipping</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><Truck className="h-4 w-4" /> Shipping to 7 countries</span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><Gift className="h-4 w-4" /> 10% off first order</span>
               </div>
               <div className="mt-7 flex flex-wrap gap-3">
@@ -125,7 +134,7 @@ const NavratriOutfits = () => {
         <div className="border-b border-border/30 bg-background sticky top-[90px] lg:top-[132px] z-30">
           <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              {isLoading ? 'Loading…' : `${sortedProducts.length} styles`}
+              {isLoading ? 'Loading…' : error ? 'Inventory unavailable' : `${sortedProducts.length} styles`}
             </p>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -161,6 +170,8 @@ const NavratriOutfits = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <CatalogLoadError retryHref="/collections/navratri-outfits" />
           ) : sortedProducts.length > 0 ? (
             <motion.div
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
@@ -172,7 +183,7 @@ const NavratriOutfits = () => {
             </motion.div>
           ) : (
             <div className="rounded-sm border border-border bg-secondary/20 px-6 py-12 text-center">
-              <h3 className="font-serif text-xl">More Navratri styles are being prepared</h3>
+              <h3 className="font-serif text-xl">No current Navratri styles were returned</h3>
               <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">Browse the current lehenga collection or contact LuxeMia with your event date, size and preferred color.</p>
               <div className="mt-5 flex flex-wrap justify-center gap-3">
                 <Link to="/lehengas"><Button>Shop Lehengas</Button></Link>
@@ -181,6 +192,8 @@ const NavratriOutfits = () => {
             </div>
           )}
         </section>
+
+        {!error ? <CollectionDecisionSupport path="/collections/navratri-outfits" products={sortedProducts} isLoading={isLoading} showFaqs={false} /> : null}
 
         {/* About section */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">

@@ -26,7 +26,7 @@ const Lookbook = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Lookbook — LuxeMia"
-        description="Explore the LuxeMia lookbook. Curated styling inspiration featuring real products — wedding lehengas, sherwanis, sharara suits, and festive ethnic wear."
+        description="Browse current LuxeMia products grouped by supplied catalog tags. Verify occasion, materials, included pieces, sizing and fulfillment on each exact listing."
         canonical="https://luxemia.shop/lookbook"
       />
       <Header />
@@ -57,7 +57,7 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-xs tracking-luxury uppercase mb-6 text-background/80"
           >
-            The LuxeMia edit
+            Current catalog groupings
           </motion.p>
           <motion.h1
             initial={{ opacity: 0, y: 40 }}
@@ -74,7 +74,7 @@ const Lookbook = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-sm lg:text-base font-light max-w-md mx-auto text-background/90"
           >
-            Real LuxeMia pieces, chosen for weddings, festivals, and the moments you want to remember.
+            Browse live products grouped by supplied tags, then use the exact listing to verify every product and fulfillment detail.
           </motion.p>
         </motion.div>
 
@@ -90,7 +90,7 @@ const Lookbook = () => {
             transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
             className="flex flex-col items-center gap-2 text-background/80"
           >
-            <span className="text-xs tracking-luxury uppercase">Scroll to Explore</span>
+            <span className="text-xs tracking-luxury uppercase">Explore Current Products</span>
             <ArrowDown className="w-4 h-4" />
           </motion.div>
         </motion.div>

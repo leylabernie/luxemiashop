@@ -22,6 +22,10 @@ const fail = (label, values) => {
 
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
+const REQUIRED_OWNER_RETIRED_HANDLES = [
+  'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
+  'lavender-blush-pink-georgette-lucknowi-chikankari-front-cut-top-palazzo-set',
+];
 const PRODUCT_HANDLES_QUERY = `
   query ProductHandles($first: Int!, $after: String) {
     products(first: $first, after: $after, sortKey: UPDATED_AT, reverse: true) {
@@ -82,6 +86,9 @@ async function fetchCurrentProductPaths() {
 }
 
 async function main() {
+  if (!SHOPIFY_STOREFRONT_TOKEN) {
+    throw new Error('SHOPIFY_STOREFRONT_TOKEN is required for the release retirement-lifecycle comparison.');
+  }
   const inventory = JSON.parse(read('scripts/approved-sitemap-inventory.json'));
   const activeProductPaths = new Set((inventory.paths || []).filter((value) => value.startsWith('/product/')));
   const retiredProductPaths = new Set(
@@ -96,6 +103,12 @@ async function main() {
     sellablePaths: currentSellableShopifyProductPaths,
   } = await fetchCurrentProductPaths();
 
+  fail(
+    'Owner-removed product is missing its committed 410 disposition',
+    REQUIRED_OWNER_RETIRED_HANDLES
+      .map((handle) => `/product/${handle}`)
+      .filter((pathname) => !retiredProductPaths.has(pathname)),
+  );
   fail('Active sitemap product URL is also marked retired', [...activeProductPaths].filter((value) => retiredProductPaths.has(value)));
   fail('Retired product URL still appears in the approved sitemap inventory', [...retiredProductPaths].filter((value) => activeProductPaths.has(value)));
   fail('Product 301 source still appears in the approved sitemap inventory', redirectSources.filter((value) => activeProductPaths.has(value)));

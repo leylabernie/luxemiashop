@@ -59,7 +59,7 @@ export const SHIPPING_DESTINATION_NAMES =
   'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 
 export const SHIPPING_POLICY_SUMMARY =
-  'Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
+  'Tracked shipping is available to seven countries. All published rates and thresholds are USD. U.S. standard shipping is $14.99 below $199 and free at $199+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
 
 export const SHIPPING_TIMING_NOTICE =
   'Processing time and carrier transit are separate. Review the product page for its published processing or ship-by estimate. Transit begins only after dispatch.';

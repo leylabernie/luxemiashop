@@ -25,7 +25,8 @@ const INTENTS = [
   ['menswear', '/menswear'],
   ['jewelry', '/jewelry'],
   ['ready-to-ship', '/ready-to-ship'],
-  ['made-to-order', '/collections/customizable-indian-outfits'],
+  ['made-to-order', '/shop-by-fulfillment/made-to-order'],
+  ['customizable', '/shop-by-fulfillment/customizable-outfits'],
   ['navratri/festive', '/collections/navratri-outfits'],
 ];
 
@@ -89,31 +90,35 @@ function feedItems() {
 function findCandidate(route, items) {
   for (const product of collectionProducts(route)) {
     for (const variant of product.variants?.edges?.map((entry) => entry.node) || []) {
-      if (!variant.availableForSale) continue;
+      if (product.availableForSale !== true || variant.availableForSale !== true) continue;
       const numericId = variant.id.split('/').pop();
       const item = items.find((entry) => {
         const link = extractTag(entry, 'link');
-        if (!link.includes(`/product/${product.handle}`)) return false;
-        const variantCount = product.variants?.edges?.length || 0;
-        return link.includes(`variant=${numericId}`) || (variantCount === 1 && !link.includes('variant='));
+        return link === `https://luxemia.shop/product/${product.handle}?variant=${numericId}`;
       });
       if (item) return { product, variant, item, numericId };
     }
   }
-  throw new Error(`${route}: no in-stock variant was shared by the page and Merchant feed`);
+  throw new Error(`${route}: no explicitly orderable default variant was shared by the page and Merchant feed`);
 }
 
 function productEvidence(handle, numericId) {
   const html = fs.readFileSync(routeFile(`/product/${handle}`), 'utf8');
-  const visible = html.match(/Price:\s*<strong>([A-Z]{3})\s+(\d+(?:\.\d+)?)<\/strong>/);
+  const visible = html.match(/<p data-product-primary-offer data-variant-id="(\d+)" data-price="([^"]+)" data-currency="([A-Z]{3})" data-availability="(In Stock|Out of Stock)">Price:\s*<strong>([A-Z]{3})\s+(\d+(?:\.\d+)?)<\/strong>[\s\S]{0,200}?\|\s*(In Stock|Out of Stock)<\/p>/);
   if (!visible) throw new Error(`/product/${handle}: missing visible price`);
+  if (visible[1] !== numericId) throw new Error(`/product/${handle}: visible primary offer does not match variant ${numericId}`);
   const schemas = [...html.matchAll(/<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi)]
     .map((match) => JSON.parse(match[1]));
   const products = schemas.flatMap((schema) => schema['@type'] === 'ProductGroup' ? schema.hasVariant || [] : schema['@type'] === 'Product' ? [schema] : []);
-  const schemaProduct = products.find((product) => String(product.url || '').includes(`variant=${numericId}`)) || products[0];
+  const schemaProduct = products.find((product) => String(product.url || '').includes(`variant=${numericId}`))
+    || (products.length === 1 ? products[0] : null);
   if (!schemaProduct?.offers) throw new Error(`/product/${handle}: missing variant Offer schema`);
   return {
-    visible: { currency: visible[1], amount: Number(visible[2]).toFixed(2) },
+    visible: {
+      currency: visible[5],
+      amount: Number(visible[6]).toFixed(2),
+      availability: visible[7] === 'In Stock' ? 'InStock' : 'OutOfStock',
+    },
     schema: {
       currency: schemaProduct.offers.priceCurrency,
       amount: Number(schemaProduct.offers.price).toFixed(2),
@@ -152,8 +157,9 @@ async function main() {
     const page = productEvidence(product.handle, numericId);
     const feed = money(extractTag(item, 'sale_price') || extractTag(item, 'price'));
     const availability = extractTag(item, 'availability');
-    assertEqual(page.visible.amount, product.priceRange.minVariantPrice.amount, `${intent} visible collection/product price`);
+    assertEqual(page.visible.amount, expected.amount, `${intent} visible price`);
     assertEqual(page.visible.currency, expected.currency, `${intent} visible currency`);
+    assertEqual(page.visible.availability, 'InStock', `${intent} visible availability`);
     assertEqual(page.schema.amount, expected.amount, `${intent} schema price`);
     assertEqual(page.schema.currency, expected.currency, `${intent} schema currency`);
     assertEqual(page.schema.availability, 'InStock', `${intent} schema availability`);

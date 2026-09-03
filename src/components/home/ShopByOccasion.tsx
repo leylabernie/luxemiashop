@@ -4,56 +4,56 @@ import { Link } from 'react-router-dom';
 const occasions = [
   {
     label: 'Bridal',
-    sublabel: 'Make it unforgettable',
+    sublabel: 'Browse bridal listings',
     href: '/collections/bridal-lehengas',
     color: 'bg-rose-50 dark:bg-rose-950/30',
     accent: 'text-rose-700 dark:text-rose-300',
   },
   {
     label: 'Bridesmaids',
-    sublabel: 'The perfect squad look',
+    sublabel: 'Browse bridal-party listings',
     href: '/collections/bridal-party-outfits',
     color: 'bg-purple-50 dark:bg-purple-950/30',
     accent: 'text-purple-700 dark:text-purple-300',
   },
   {
     label: 'Reception',
-    sublabel: 'Evening glamour',
+    sublabel: 'Browse party-wear listings',
     href: '/collections/party-wear-lehengas',
     color: 'bg-indigo-50 dark:bg-indigo-950/30',
     accent: 'text-indigo-700 dark:text-indigo-300',
   },
   {
     label: 'Haldi & Mehendi',
-    sublabel: 'Vibrant ceremony wear',
+    sublabel: 'Browse ceremony listings',
     href: '/collections/mehendi-outfits',
     color: 'bg-yellow-50 dark:bg-yellow-950/30',
     accent: 'text-yellow-700 dark:text-yellow-300',
   },
   {
     label: 'Groom',
-    sublabel: 'Dapper ethnic styles',
+    sublabel: 'Browse menswear listings',
     href: '/menswear',
     color: 'bg-blue-50 dark:bg-blue-950/30',
     accent: 'text-blue-700 dark:text-blue-300',
   },
   {
     label: 'Wedding Guest',
-    sublabel: 'Stand out at every shaadi',
+    sublabel: 'Browse wedding-guest listings',
     href: '/collections/wedding-guest-outfits',
     color: 'bg-amber-50 dark:bg-amber-950/30',
     accent: 'text-amber-700 dark:text-amber-300',
   },
   {
     label: 'Navratri & Garba',
-    sublabel: 'Chaniya choli & dance-ready styles',
+    sublabel: 'Browse Navratri listings',
     href: '/collections/navratri-outfits',
     color: 'bg-orange-50 dark:bg-orange-950/30',
     accent: 'text-orange-700 dark:text-orange-300',
   },
   {
     label: 'Casual & Office',
-    sublabel: 'Everyday elegance',
+    sublabel: 'Browse suit listings',
     href: '/suits',
     color: 'bg-teal-50 dark:bg-teal-950/30',
     accent: 'text-teal-700 dark:text-teal-300',
@@ -66,7 +66,7 @@ const ShopByOccasion = () => {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="text-center mb-10">
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">Shop by Occasion</p>
-          <h2 className="font-serif text-2xl lg:text-4xl">Dressed for Every Moment</h2>
+          <h2 className="font-serif text-2xl lg:text-4xl">Browse Event Collections</h2>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 lg:gap-4">
           {occasions.map((occ, i) => (

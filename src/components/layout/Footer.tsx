@@ -1,19 +1,9 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck, Check } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
-
-// Google Customer Reviews badge — loads the merchant widget script and renders
-// the badge showing our seller rating. Positioned in the footer so it appears
-// on every page. Shows "no rating available" until we collect enough reviews.
-declare global {
-  interface Window {
-    merchantwidget?: {
-      start: (config: { merchant_id: number; position?: string; region?: string }) => void;
-    };
-  }
-}
+import { openAnalyticsConsentSettings } from '@/lib/analyticsConsent';
 
 const footerLinks = {
   shop: [
@@ -25,6 +15,7 @@ const footerLinks = {
     { name: 'Menswear', href: '/menswear' },
     { name: 'Festive Wear', href: '/festive-wear' },
     { name: 'Wedding Guest Outfits', href: '/indian-wedding-guest-outfits' },
+    { name: 'Shop by Wedding Event', href: '/wedding-events' },
     { name: 'Shop by Fulfillment', href: '/shop-by-fulfillment' },
   ],
   collections: [
@@ -54,7 +45,7 @@ const footerLinks = {
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Shipping Info', href: '/shipping' },
-    { name: 'U.S. Customer Support', href: '/us-support' },
+    { name: 'Support for U.S. Customers', href: '/us-support' },
     { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'Measurement Worksheet', href: '/sizing-measurements-guide' },
@@ -79,13 +70,13 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
         body: { email: newsletterEmail, type: 'newsletter', source: 'footer' },
       });
       if (error) throw error;
-      // Verified against the active Shopify welcome discount on August 20, 2026.
+      // Verified against the active Shopify welcome discount on September 3, 2026.
       // Do not rely on a stale backend response for a checkout-facing promotion.
       const discountCode = 'LUXE10';
       setNewsletterDiscountCode(discountCode);
       setNewsletterSubmitted(true);
       toast.success(`Welcome — use ${discountCode}`, {
-        description: 'Use your 10% first-order code at checkout. We\'ll also send new arrivals and offers.',
+        description: 'Use your 10% first-order code at checkout. This address is subscribed to new-arrival and offer updates.',
       });
     } catch {
       toast.error('Something went wrong', {
@@ -95,27 +86,6 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
       setNewsletterSubmitting(false);
     }
   };
-  // Google Customer Reviews badge — load script and render badge
-  useEffect(() => {
-    // Skip if script already loaded (e.g., on client-side navigation)
-    if (document.querySelector('script[src*="merchantwidget.js"]')) {
-      return;
-    }
-    const script = document.createElement('script');
-    script.id = 'merchantWidgetScript';
-    script.src = 'https://www.gstatic.com/shopping/merchant/merchantwidget.js';
-    script.defer = true;
-    script.addEventListener('load', () => {
-      if (window.merchantwidget) {
-        window.merchantwidget.start({
-          merchant_id: 5773333098,
-          position: 'BOTTOM_LEFT',
-        });
-      }
-    });
-    document.body.appendChild(script);
-  }, []);
-
   return (
     <footer ref={ref} className="bg-card border-t border-border/50">
       {/* ─── Newsletter Section ─────────────────────────────────────────── */}
@@ -126,7 +96,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               Join Our World
             </h3>
             <p className="text-foreground/60 text-sm mb-6 font-light">
-              Be the first to discover new collections, exclusive offers, and styling inspiration.
+              Receive updates about new collections, offers, and styling inspiration.
             </p>
             {newsletterSubmitted ? (
               <div className="flex items-center justify-center gap-2 py-3 text-sm text-green-700 dark:text-green-400">
@@ -156,6 +126,12 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
                 </button>
               </form>
             )}
+            {!newsletterSubmitted && (
+              <p className="mt-3 text-xs leading-relaxed text-foreground/50">
+                By subscribing, you ask LuxeMia to email product and offer updates. You can unsubscribe from marketing emails. See the{' '}
+                <Link to="/privacy" className="underline underline-offset-2 hover:text-foreground">Privacy Policy</Link>.
+              </p>
+            )}
           </div>
         </div>
       </div>
@@ -170,7 +146,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               LuxeMia
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed max-w-xs">
-              Indian ethnic wear available online for weddings and festivals coming up soon.
+              Indian ethnic wear available online for weddings, festivals, and other celebrations.
             </p>
             {/* Social icons */}
             <div className="flex gap-3 mt-6">
@@ -203,7 +179,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               </a>
               <div className="flex items-start gap-2">
                 <Clock className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <span>Mon-Sat 10am-7pm EST<br />Sun 11am-5pm EST</span>
+                <span>Online contact options<br />Response times vary</span>
               </div>
             </div>
           </div>
@@ -272,7 +248,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 text-center">
             <div className="flex flex-col items-center gap-1.5">
               <Lock className="h-5 w-5 text-foreground/50" />
-              <span className="text-xs font-medium">SSL Secure Checkout</span>
+              <span className="text-xs font-medium">HTTPS Storefront</span>
             </div>
             <div className="flex flex-col items-center gap-1.5">
               <Shield className="h-5 w-5 text-foreground/50" />
@@ -284,7 +260,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             </div>
             <div className="flex flex-col items-center gap-1.5">
               <CreditCard className="h-5 w-5 text-foreground/50" />
-              <span className="text-xs font-medium">Safe Payments</span>
+              <span className="text-xs font-medium">Payment Options at Checkout</span>
             </div>
           </div>
           <div className="mt-6 text-center text-xs text-foreground/60">
@@ -300,6 +276,8 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           <div className="flex flex-wrap justify-center gap-x-5 gap-y-2 text-xs text-foreground/60 mb-4">
             <Link to="/privacy" className="hover:text-foreground transition-colors">Privacy Policy</Link>
             <span className="text-foreground/20">·</span>
+            <button type="button" onClick={openAnalyticsConsentSettings} className="text-foreground/80 hover:text-foreground transition-colors">Cookie Settings</button>
+            <span className="text-foreground/20">·</span>
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
             <span className="text-foreground/20">·</span>
             <Link to="/returns" className="hover:text-foreground transition-colors">Returns & Cancellations</Link>
@@ -312,7 +290,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* Copyright + business info — bottom row, centered */}
           <div className="text-center text-xs text-foreground/50 space-y-1">
             <p>© 2026 LuxeMia. All rights reserved.</p>
-            <p>LuxeMia &middot; Online Indian ethnic wear &middot; USA-based support</p>
+            <p>LuxeMia &middot; Online Indian ethnic wear &middot; Online support</p>
           </div>
         </div>
       </div>

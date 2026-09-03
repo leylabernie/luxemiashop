@@ -9,16 +9,16 @@ const NRIGeneral = () => (
       countryCode: 'US',
       slug: 'nri',
       seoTitle: 'Indian Ethnic Wear Online for U.S. Shoppers | LuxeMia',
-      seoDescription: 'Shop Indian ethnic wear online for U.S. delivery. Compare exact product details, sizing and availability. Free shipping at $199 and above; tracking after dispatch.',
+      seoDescription: 'Shop Indian ethnic wear online for U.S. delivery. Compare exact product details, sizing and availability. Free shipping applies at $199 and above.',
       heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
       heroSubtitle: 'Compare Exact Product Details Before Ordering',
-      shippingTime: 'tracking provided after dispatch',
+      shippingTime: 'tracking timing varies by fulfilled order',
       shippingCost: '$14.99 per order; free at $199 and above',
       customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
           question: 'Where does LuxeMia ship?',
-          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Tracking is provided after dispatch.',
+          answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. When tracking is issued, carrier scans can appear after label creation.',
         },
         {
           question: 'When does shipping become free?',
@@ -40,7 +40,7 @@ const NRIGeneral = () => (
       benefits: [
         { icon: Truck, title: 'U.S. Delivery', description: '$14.99 per order; free at $199 and above' },
         { icon: Shield, title: 'Clear Product Details', description: 'Review materials, sizing and included pieces' },
-        { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
+        { icon: Clock, title: 'Tracked', description: 'When tracking is issued, carrier scans may appear after label creation' },
       ],
     }}
   />

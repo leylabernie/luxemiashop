@@ -1,398 +1,122 @@
-import { motion } from 'framer-motion';
+import type { ReactNode } from 'react';
+import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { AlertTriangle, FileText, Scale } from 'lucide-react';
+import { RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 
-const Terms = () => {
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOHead
-        title="Terms of Service — LuxeMia"
-        description="Review the LuxeMia terms of service. Understand our policies on orders, payments, shipping, and returns before shopping."
-        canonical="https://luxemia.shop/terms"
-      />
-      <Header />
-      
-      <main className="pt-[90px] lg:pt-[132px] pb-16">
-        <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary to-background">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-            >
-              <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
-                <Scale className="w-4 h-4" />
-                <span className="text-sm font-medium">Legal Agreement</span>
-              </div>
-              <h1 className="text-4xl md:text-5xl font-serif mb-6">Terms of Service</h1>
-              <p className="text-muted-foreground">Last updated: August 11, 2026</p>
-              <p className="text-muted-foreground mt-2 max-w-2xl mx-auto">
-                Please read these terms carefully before making a purchase. By using our services, 
-                you agree to be legally bound by these terms.
-              </p>
-            </motion.div>
-          </div>
-        </section>
+const Section = ({ id, title, children }: { id: string; title: string; children: ReactNode }) => (
+  <section id={id} className="scroll-mt-32 space-y-4">
+    <h2 className="font-serif text-2xl text-foreground">{title}</h2>
+    <div className="space-y-4 leading-7 text-muted-foreground">{children}</div>
+  </section>
+);
 
-        {/* Important Notice */}
-        <section className="py-8 bg-destructive/10 border-y border-destructive/20">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="flex items-start gap-4 max-w-4xl mx-auto">
-              <AlertTriangle className="w-6 h-6 text-destructive flex-shrink-0 mt-1" />
-              <div>
-                <h3 className="font-semibold text-foreground mb-2">Important Notice</h3>
-                <p className="text-muted-foreground text-sm">
-                  Custom-made and made-to-measure garments are final sale and cannot be returned or exchanged 
-                  due to measurement discrepancies. You are solely responsible for providing accurate measurements. 
-                  Please read our measurement policy carefully before placing an order.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+const Terms = () => (
+  <div className="min-h-screen bg-background">
+    <SEOHead
+      title="Terms of Service — LuxeMia"
+      description="LuxeMia terms for online orders, product information, fulfillment, shipping, cancellations, covered order issues and website use."
+      canonical="https://luxemia.shop/terms"
+      breadcrumbs={[{ name: 'Home', url: '/' }, { name: 'Terms of Service', url: '/terms' }]}
+    />
+    <Header />
 
-        <section className="py-16">
-          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              className="space-y-10"
-            >
-              {/* Table of Contents */}
-              <div className="bg-card border border-border rounded-lg p-6">
-                <div className="flex items-center gap-2 mb-4">
-                  <FileText className="w-5 h-5 text-primary" />
-                  <h2 className="text-lg font-semibold text-foreground">Table of Contents</h2>
-                </div>
-                <div className="grid md:grid-cols-2 gap-2 text-sm">
-                  <a href="#acceptance" className="text-muted-foreground hover:text-primary transition-colors">1. Acceptance of Terms</a>
-                  <a href="#eligibility" className="text-muted-foreground hover:text-primary transition-colors">2. Eligibility</a>
-                  <a href="#products" className="text-muted-foreground hover:text-primary transition-colors">3. Products & Pricing</a>
-                  <a href="#orders" className="text-muted-foreground hover:text-primary transition-colors">4. Orders & Payment</a>
-                  <a href="#custom" className="text-muted-foreground hover:text-primary transition-colors">5. Custom Orders & Measurements</a>
-                  <a href="#cancellation" className="text-muted-foreground hover:text-primary transition-colors">6. Order Cancellation</a>
-                  <a href="#shipping" className="text-muted-foreground hover:text-primary transition-colors">7. Shipping & Delivery</a>
-                  <a href="#returns" className="text-muted-foreground hover:text-primary transition-colors">8. Returns & Exchanges</a>
-                  <a href="#warranty" className="text-muted-foreground hover:text-primary transition-colors">9. Product Care and Variations</a>
-                  <a href="#ip" className="text-muted-foreground hover:text-primary transition-colors">10. Intellectual Property</a>
-                  <a href="#accounts" className="text-muted-foreground hover:text-primary transition-colors">11. User Accounts</a>
-                  <a href="#privacy" className="text-muted-foreground hover:text-primary transition-colors">12. Privacy & Data</a>
-                  <a href="#liability" className="text-muted-foreground hover:text-primary transition-colors">13. Limitation of Liability</a>
-                  <a href="#indemnification" className="text-muted-foreground hover:text-primary transition-colors">14. Indemnification</a>
-                  <a href="#disputes" className="text-muted-foreground hover:text-primary transition-colors">15. Dispute Resolution</a>
-                  <a href="#governing" className="text-muted-foreground hover:text-primary transition-colors">16. Governing Law</a>
-                  <a href="#changes" className="text-muted-foreground hover:text-primary transition-colors">17. Changes to Terms</a>
-                  <a href="#contact" className="text-muted-foreground hover:text-primary transition-colors">18. Contact Information</a>
-                </div>
-              </div>
+    <main id="main-content" className="pb-16 pt-[90px] lg:pt-[132px]">
+      <section className="bg-secondary/45 py-14 lg:py-20">
+        <div className="container mx-auto max-w-4xl px-4 lg:px-8">
+          <p className="text-sm uppercase tracking-luxury text-muted-foreground">Website and order terms</p>
+          <h1 className="mt-3 font-serif text-4xl md:text-5xl">Terms of Service</h1>
+          <p className="mt-5 max-w-3xl leading-7 text-muted-foreground">Last updated: September 2, 2026. These terms apply to the LuxeMia online store at luxemia.shop. Read the product listing, checkout total, shipping policy and returns policy before placing an order.</p>
+        </div>
+      </section>
 
-              <div className="space-y-8 text-muted-foreground">
-                <section id="acceptance">
-                  <h2 className="text-xl font-serif text-foreground mb-4">1. Acceptance of Terms</h2>
-                  <p className="mb-4">
-                    By accessing, browsing, or using LuxeMia's website (luxemia.shop), mobile applications, 
-                    or any of our services, you acknowledge that you have read, understood, and agree to be 
-                    bound by these Terms of Service ("Terms") and our Privacy Policy.
-                  </p>
-                  <p>
-                    If you do not agree to these Terms, you must immediately discontinue use of our services. 
-                    Your continued use of our services following the posting of changes to these Terms will 
-                    constitute your acceptance of those changes.
-                  </p>
-                </section>
+      <section className="container mx-auto max-w-4xl px-4 py-12 lg:px-8">
+        <nav aria-label="Terms sections" className="mb-12 grid gap-2 rounded-sm border border-border bg-card p-6 text-sm sm:grid-cols-2">
+          {[
+            ['agreement', '1. Agreement and eligibility'],
+            ['products', '2. Product information'],
+            ['orders', '3. Orders, price and payment'],
+            ['fulfillment', '4. Fulfillment and customization'],
+            ['shipping', '5. Shipping and delivery'],
+            ['returns', '6. Cancellations and order issues'],
+            ['accounts', '7. Accounts and acceptable use'],
+            ['content', '8. Website content and third-party rights'],
+            ['privacy', '9. Privacy'],
+            ['availability', '10. Service availability and liability'],
+            ['disputes', '11. Questions and disputes'],
+            ['changes', '12. Changes and contact'],
+          ].map(([id, label]) => <a className="underline-offset-4 hover:underline" href={`#${id}`} key={id}>{label}</a>)}
+        </nav>
 
-                <section id="eligibility">
-                  <h2 className="text-xl font-serif text-foreground mb-4">2. Eligibility</h2>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>You must be at least 18 years of age to make purchases on our website.</li>
-                    <li>By placing an order, you represent that you have the legal capacity to enter into a binding contract.</li>
-                    <li>We reserve the right to refuse service to anyone for any reason at any time.</li>
-                    <li>You may not use our products for any illegal or unauthorized purpose.</li>
-                  </ul>
-                </section>
+        <div className="space-y-12">
+          <Section id="agreement" title="1. Agreement and eligibility">
+            <p>By using this website or placing an order, you agree to these terms and the policies linked from them. If you do not agree, do not use the service or submit an order.</p>
+            <p>You must have legal capacity to enter the transaction and provide accurate order, contact and delivery information. You may not use the site for unlawful activity, fraud, interference, scraping that disrupts service, or unauthorized access.</p>
+          </Section>
 
-                <section id="products">
-                  <h2 className="text-xl font-serif text-foreground mb-4">3. Products and Pricing</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">3.1 Pricing</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>All prices are listed in US Dollars (USD) unless otherwise specified.</li>
-                        <li>Applicable shipping and taxes are shown at checkout.</li>
-                        <li>We reserve the right to modify prices at any time without prior notice.</li>
-                        <li>Promotional discounts cannot be combined unless explicitly stated.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">3.2 Product Accuracy</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>Colors and apparent textures can vary with photography, lighting, and display settings. Review all available images and contact LuxeMia before ordering if a specific detail is essential.</li>
-                        <li>Use the exact product listing for stated materials, included pieces, measurements, stitching status, and available options.</li>
-                        <li>We make every effort to display accurate product descriptions but do not warrant that descriptions are error-free.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </section>
+          <Section id="products" title="2. Product information">
+            <p>The exact product page is the source of truth for the item&apos;s stated materials, included pieces, stitching status, measurements, selectable variants, customization, price and current availability. Optional facts that are not shown should not be assumed.</p>
+            <p>Photography, lighting and display settings can change apparent color or texture. Handmade or decorated items may have product-specific variation only where the listing says so. Contact support before ordering if a detail is essential.</p>
+            <p>We may correct a genuine listing, price or inventory error. If a material error affects an order before fulfillment, LuxeMia will contact the customer about the available resolution.</p>
+          </Section>
 
-                <section id="orders">
-                  <h2 className="text-xl font-serif text-foreground mb-4">4. Orders and Payment</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">4.1 Order Acceptance</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>All orders are subject to acceptance and availability.</li>
-                        <li>We reserve the right to refuse or cancel any order for any reason, including suspected fraud, pricing errors, or product unavailability.</li>
-                        <li>Order confirmation emails do not guarantee acceptance; acceptance occurs only upon shipment.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">4.2 Payment Terms</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>Full payment is required at the time of order placement.</li>
-                        <li>The payment methods currently available for an order are displayed at checkout and may vary by location, device, currency, or checkout provider.</li>
-                        <li>Payment information is handled by the checkout and payment providers identified during checkout.</li>
-                        <li>Orders will not be processed until payment is successfully completed.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </section>
+          <Section id="orders" title="3. Orders, price and payment">
+            <p>Prices and shipping thresholds are stated in USD unless checkout expressly displays another currency. The cart and checkout show the amount submitted for the selected products, shipping destination and available payment method.</p>
+            <p>An automated order message confirms receipt; it does not override availability, payment review or a genuine catalog error. LuxeMia may reject or cancel an order for unavailability, failed or reversed payment, suspected fraud, an invalid address, a genuine pricing error or another lawful reason. Any amount captured for a cancelled order will be handled through the original payment channel.</p>
+            <p>Checkout and payment processing are provided through Shopify and the payment methods shown there. LuxeMia does not ask customers to send full card details through email, WhatsApp or the contact form.</p>
+          </Section>
 
-                <section id="custom" className="bg-amber-50 dark:bg-amber-950/30 -mx-4 px-4 py-6 rounded-lg border border-amber-200 dark:border-amber-900">
-                  <h2 className="text-xl font-serif text-foreground mb-4">5. Custom Orders & Measurements</h2>
-                  <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
-                    <p className="font-semibold text-destructive">
-                      ⚠️ CRITICAL: Please read this section carefully. Measurement errors are NOT covered 
-                      under our return or exchange policy.
-                    </p>
-                  </div>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">5.1 Customer Responsibility</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>You are solely and fully responsible</strong> for providing accurate measurements when placing a custom order.</li>
-                        <li>We strongly recommend having measurements taken by a professional tailor.</li>
-                        <li>All measurements must be submitted in inches unless otherwise specified.</li>
-                        <li>Once measurements are submitted and production begins, they cannot be modified.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">5.2 Measurement Disclaimer</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>Any fitting issues arising from incorrect measurements submitted by the customer are NOT eligible for return, exchange, or refund.</strong></li>
-                        <li>We are not responsible for garments that do not fit due to customer-provided measurements.</li>
-                        <li>Alterations required due to measurement errors are the customer's responsibility and expense.</li>
-                        <li>By submitting your measurements, you acknowledge and accept full responsibility for their accuracy.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">5.3 Custom Order Terms</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>Custom and made-to-measure orders are final sale.</li>
-                        <li>Use approximately 4–5 weeks as a total planning window for verified customizable designs. LuxeMia confirms production and carrier timing after the requested color, measurements, fabric availability, and delivery address are known.</li>
-                        <li>Custom orders require full payment upfront before production begins.</li>
-                        <li>Customization requests (color changes, design modifications) must be specified at order placement and may incur additional charges.</li>
-                      </ul>
-                    </div>
-                  </div>
-                </section>
+          <Section id="fulfillment" title="4. Fulfillment and customization">
+            <p><strong className="text-foreground">Ready-to-ship</strong> means the catalog supplies an explicit ready-to-ship tag or positive ships-within value for the selected item; order processing still occurs before carrier transit. <strong className="text-foreground">Made-to-order</strong> means production begins after order confirmation. <strong className="text-foreground">Customizable</strong> means only the options expressly offered on the product page can be requested.</p>
+            <p>Availability for sale does not by itself prove immediate dispatch. Processing and transit are separate. When an event date is important, review the selected product and contact support before checkout; an event date shared with support is not a delivery guarantee.</p>
+            <p>For measurements or selected custom options, submit the information requested by the exact listing and check it carefully. A customer-provided measurement does not create an unstated alteration or fit guarantee. Rights for damage, defects, material misdescription, incorrect items or missing pieces remain governed by the returns policy and applicable law.</p>
+          </Section>
 
-                <section id="cancellation" className="bg-card -mx-4 px-4 py-6 rounded-lg border border-border">
-                  <h2 className="text-xl font-serif text-foreground mb-4">6. Order Cancellation Policy</h2>
-                  <div className="bg-primary/10 border border-primary/30 rounded-lg p-4 mb-4">
-                    <p className="font-semibold text-primary">
-                      🕐 24-Hour Cancellation Window
-                    </p>
-                  </div>
-                  <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
-                </section>
+          <Section id="shipping" title="5. Shipping and delivery">
+            <p>LuxeMia currently ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. Current rates, thresholds, processing distinctions, tracking guidance and destination-charge information are on the <Link className="text-primary underline underline-offset-4" to="/shipping">Shipping Policy</Link>. Checkout is the final source for the selected cart and address.</p>
+            <p>Carrier transit begins after dispatch. Tracking-label creation is not the same as carrier acceptance or delivery. Customs, weather, address problems, carrier operations and other events outside reasonable control can affect timing. No delivery date is guaranteed unless checkout expressly sells that guarantee.</p>
+          </Section>
 
-                <section id="shipping">
-                  <h2 className="text-xl font-serif text-foreground mb-4">7. Shipping and Delivery</h2>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Please refer to our <a href="/shipping" className="text-primary hover:underline">Shipping Policy</a> for details.</li>
-                    <li>Delivery estimates are not guaranteed and may be affected by weather or carrier delays.</li>
-                    <li>LuxeMia is not responsible for delays caused by weather or carrier issues.</li>
-                    <li>Risk of loss passes to you upon delivery to the carrier.</li>
-                    <li>Customers are responsible for providing accurate shipping addresses. Reshipment due to incorrect addresses will incur additional charges.</li>
-                  </ul>
-                </section>
+          <Section id="returns" title="6. Cancellations and covered order issues">
+            <p>{RETURN_POLICY_SUMMARY}</p>
+            <p>Keep the item and available packaging while the request is reviewed, and do not send an item back without instructions. A cancellation request is not confirmed until LuxeMia accepts it; fulfillment may begin before a request is reviewed. Read the complete <Link className="text-primary underline underline-offset-4" to="/returns">Returns &amp; Cancellations Policy</Link>.</p>
+            <p>Nothing in these terms limits a consumer right or remedy that cannot lawfully be excluded.</p>
+          </Section>
 
-                <section id="returns" className="bg-card -mx-4 px-4 py-6 rounded-lg border border-border">
-                  <h2 className="text-xl font-serif text-foreground mb-4">8. Returns and Cancellations</h2>
-                  <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
-                    <p className="font-semibold text-destructive">
-                      All sales are final. Exchanges are not accepted.
-                    </p>
-                  </div>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.1 Final-Sale Policy</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>LuxeMia does not accept buyer-remorse returns or exchanges for fit, color preference, event changes, or a change of mind.</strong></li>
-                        <li>Please review all product details and sizing information carefully before purchasing.</li>
-                      </ul>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">8.2 Covered Order Issues</h3>
-                      <ul className="list-disc pl-6 space-y-2">
-                        <li>For genuine shipping damage or defect, an incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
-                        <li>Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</li>
-                        <li>Keep the item and all packaging until LuxeMia reviews the claim. Do not send an item back unless LuxeMia authorizes it and provides instructions.</li>
-                      </ul>
-                    </div>
-                    <p className="text-sm">
-                      For complete details, please refer to our <a href="/returns" className="text-primary hover:underline">Returns &amp; Cancellations Policy</a>.
-                    </p>
-                    <p className="text-sm">Nothing in these terms limits mandatory consumer rights or remedies that cannot legally be excluded.</p>
-                  </div>
-                </section>
+          <Section id="accounts" title="7. Accounts and acceptable use">
+            <p>If you create an account, keep its credentials confidential and tell support if you believe it has been used without authorization. LuxeMia may restrict activity that threatens customers, the site, payment integrity or lawful operation.</p>
+            <p>Content submitted through a form must be accurate to the best of your knowledge and must not contain malicious code, unlawful material, another person&apos;s sensitive information without authority, harassment or spam.</p>
+          </Section>
 
-                <section id="warranty">
-                  <h2 className="text-xl font-serif text-foreground mb-4">9. Product Information and Care</h2>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>Review the exact listing for the product details supplied for that item.</li>
-                    <li>Follow the care label or product-specific instructions provided with the item.</li>
-                    <li>Report genuine shipping damage, an incorrect item, or a missing item under Section 8.</li>
-                  </ul>
-                </section>
+          <Section id="content" title="8. Website content and third-party rights">
+            <p>LuxeMia&apos;s original site copy, branding and software are owned by or licensed to LuxeMia. Product photographs, marks, descriptions and designs may belong to suppliers, brands or other rights holders. These terms do not claim LuxeMia created or owns every product design shown on the site.</p>
+            <p>You may use the site for personal shopping and may share ordinary page links. You may not falsely present LuxeMia content as your own, remove rights notices, impersonate LuxeMia or exploit protected content where permission is required.</p>
+          </Section>
 
-                <section id="ip">
-                  <h2 className="text-xl font-serif text-foreground mb-4">10. Intellectual Property</h2>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>All content on this website, including but not limited to images, text, logos, designs, graphics, and software, is the exclusive property of LuxeMia and protected by copyright, trademark, and other intellectual property laws.</li>
-                    <li>You may not reproduce, distribute, modify, create derivative works, publicly display, or use our content without prior written permission.</li>
-                    <li>Unauthorized use may result in legal action.</li>
-                    <li>Product designs are proprietary and may not be copied or replicated.</li>
-                  </ul>
-                </section>
+          <Section id="privacy" title="9. Privacy">
+            <p>The <Link className="text-primary underline underline-offset-4" to="/privacy">Privacy Policy</Link> explains the information used for storefront operation, checkout, support, consultation requests, email, reviews and optional analytics. It also explains analytics choices and how to make a privacy request.</p>
+          </Section>
 
-                <section id="accounts">
-                  <h2 className="text-xl font-serif text-foreground mb-4">11. User Accounts</h2>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>You are responsible for maintaining the confidentiality and security of your account credentials.</li>
-                    <li>You must provide accurate, current, and complete information during registration.</li>
-                    <li>You are responsible for all activities that occur under your account.</li>
-                    <li>Notify us immediately of any unauthorized use of your account.</li>
-                    <li>We reserve the right to suspend or terminate accounts that violate these Terms or for any other reason at our discretion.</li>
-                  </ul>
-                </section>
+          <Section id="availability" title="10. Service availability and liability">
+            <p>The site may be unavailable during maintenance, provider incidents or events outside reasonable control. To the extent permitted by applicable law, LuxeMia is not responsible for indirect or consequential loss that was not reasonably foreseeable from a breach of these terms.</p>
+            <p>Nothing here excludes liability or remedies that applicable law does not allow a business to exclude. Product remedies are also subject to the mandatory protections that apply to the customer and transaction.</p>
+          </Section>
 
-                <section id="privacy">
-                  <h2 className="text-xl font-serif text-foreground mb-4">12. Privacy and Data Protection</h2>
-                  <p className="mb-4">
-                    Your privacy is important to us. Our collection, use, and protection of your personal information 
-                    is governed by our <a href="/privacy" className="text-primary hover:underline">Privacy Policy</a>, 
-                    which is incorporated into these Terms by reference.
-                  </p>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>By using our services, you consent to the collection and use of your information as described in our Privacy Policy.</li>
-                    <li>We implement industry-standard security measures to protect your data.</li>
-                    <li>We do not sell your personal information to third parties.</li>
-                  </ul>
-                </section>
+          <Section id="disputes" title="11. Questions and disputes">
+            <p>Contact <a className="text-primary underline underline-offset-4" href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> with the order number and relevant facts so the issue can be reviewed. These terms do not impose a private arbitration venue, class-action waiver or a jurisdiction that overrides rights and forums available under applicable law.</p>
+          </Section>
 
-                <section id="liability">
-                  <h2 className="text-xl font-serif text-foreground mb-4">13. Limitation of Liability</h2>
-                  <div className="bg-secondary/50 rounded-lg p-4 mb-4">
-                    <p className="text-sm uppercase font-semibold text-foreground">
-                      PLEASE READ THIS SECTION CAREFULLY AS IT LIMITS OUR LIABILITY
-                    </p>
-                  </div>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>TO THE MAXIMUM EXTENT PERMITTED BY LAW, LUXEMIA SHALL NOT BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF OUR SERVICES OR PRODUCTS.</li>
-                    <li>OUR TOTAL LIABILITY SHALL NOT EXCEED THE AMOUNT ACTUALLY PAID BY YOU FOR THE SPECIFIC PRODUCT OR SERVICE GIVING RISE TO THE CLAIM.</li>
-                    <li>WE ARE NOT LIABLE FOR ANY DAMAGES ARISING FROM CUSTOMER-PROVIDED MEASUREMENTS OR SPECIFICATIONS.</li>
-                    <li>We are not responsible for any loss, damage, or delay caused by events beyond our reasonable control (force majeure).</li>
-                  </ul>
-                </section>
+          <Section id="changes" title="12. Changes and contact">
+            <p>LuxeMia may update these terms when the service, providers, policies or legal requirements change. The page shows its current review date; changes apply prospectively from publication unless applicable law requires otherwise.</p>
+            <p>LuxeMia is an online-only store. Contact <a className="text-primary underline underline-offset-4" href="mailto:hello@luxemia.shop">hello@luxemia.shop</a>, call <a className="text-primary underline underline-offset-4" href="tel:+12153419990">+1 215-341-9990</a>, or use the <Link className="text-primary underline underline-offset-4" to="/contact">contact page</Link>. Response times vary. Review the <Link className="text-primary underline underline-offset-4" to="/editorial-policy">editorial policy</Link> and <Link className="text-primary underline underline-offset-4" to="/review-policy">review program</Link> for those separate standards.</p>
+          </Section>
+        </div>
+      </section>
+    </main>
 
-                <section id="indemnification">
-                  <h2 className="text-xl font-serif text-foreground mb-4">14. Indemnification</h2>
-                  <p>
-                    You agree to indemnify, defend, and hold harmless LuxeMia, its officers, directors, employees, 
-                    agents, and affiliates from and against any and all claims, damages, losses, liabilities, costs, 
-                    and expenses (including reasonable attorneys' fees) arising out of or related to:
-                  </p>
-                  <ul className="list-disc pl-6 space-y-2 mt-4">
-                    <li>Your use of our services or products</li>
-                    <li>Your violation of these Terms</li>
-                    <li>Your violation of any third-party rights</li>
-                    <li>Any content or information you submit through our services</li>
-                    <li>Inaccurate measurements or specifications you provide</li>
-                  </ul>
-                </section>
-
-                <section id="disputes">
-                  <h2 className="text-xl font-serif text-foreground mb-4">15. Dispute Resolution</h2>
-                  <div className="space-y-4">
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">15.1 Informal Resolution</h3>
-                      <p>Before initiating any legal action, you agree to first contact us and attempt to resolve any dispute informally within 30 days.</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">15.2 Arbitration</h3>
-                      <p>Any disputes that cannot be resolved informally shall be resolved through binding arbitration in accordance with the rules of the American Arbitration Association. The arbitration shall take place in Los Angeles County, California.</p>
-                    </div>
-                    <div>
-                      <h3 className="font-semibold text-foreground mb-2">15.3 Class Action Waiver</h3>
-                      <p>You agree to resolve disputes on an individual basis and waive any right to participate in class action lawsuits or class-wide arbitration.</p>
-                    </div>
-                  </div>
-                </section>
-
-                <section id="governing">
-                  <h2 className="text-xl font-serif text-foreground mb-4">16. Governing Law</h2>
-                  <p>
-                    These Terms shall be governed by and construed in accordance with the laws of the State of California, 
-                    United States, without regard to its conflict of law provisions. Any legal action or proceeding 
-                    shall be brought exclusively in the state or federal courts located in Los Angeles County, California, 
-                    and you hereby consent to the personal jurisdiction of such courts.
-                  </p>
-                </section>
-
-                <section id="changes">
-                  <h2 className="text-xl font-serif text-foreground mb-4">17. Changes to Terms</h2>
-                  <ul className="list-disc pl-6 space-y-2">
-                    <li>We reserve the right to modify these Terms at any time at our sole discretion.</li>
-                    <li>Changes will be effective immediately upon posting on our website.</li>
-                    <li>Your continued use of our services after changes constitutes acceptance of the modified Terms.</li>
-                    <li>We encourage you to review these Terms periodically for updates.</li>
-                  </ul>
-                </section>
-
-                <section id="contact" className="bg-card -mx-4 px-4 py-6 rounded-lg border border-border">
-                  <h2 className="text-xl font-serif text-foreground mb-4">18. Contact Information</h2>
-                  <p className="mb-4">For questions about these Terms of Service, please contact us:</p>
-                  <div className="space-y-2">
-                    <p><strong>Glamour Indian Wear</strong></p>
-                    <p>USA-based support</p>
-                    <p className="mt-4">
-                      Email: <a href="mailto:hello@luxemia.shop" className="text-primary hover:underline">hello@luxemia.shop</a>
-                    </p>
-                    <p>
-                      Phone: <a href="tel:+12153419990" className="text-primary hover:underline">+1-215-341-9990</a>
-                    </p>
-                  </div>
-                </section>
-
-                <section className="text-center pt-8 border-t border-border">
-                  <p className="text-sm text-muted-foreground">
-                    By using LuxeMia's services, you acknowledge that you have read, understood, and agree 
-                    to be bound by these Terms of Service.
-                  </p>
-                </section>
-              </div>
-            </motion.div>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+    <Footer />
+  </div>
+);
 
 export default Terms;

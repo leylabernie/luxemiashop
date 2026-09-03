@@ -1,11 +1,9 @@
-import {
-  getMerchantGoogleProductCategory,
-  isMerchantApparelCategory,
-} from '../src/lib/merchantTaxonomy.js';
+import { buildVerifiedProductCopy } from '../src/lib/productDescriptionEnrichment.js';
+import { normalizeBrandName } from '../src/lib/schema.js';
 
-// Supabase Edge Function: Google Merchant Center XML Product Feed
+// Vercel function source for a Google Merchant Center XML Product Feed.
 // Fetches ALL products from Shopify Storefront API with pagination
-// and generates a compliant GMC XML feed with numeric taxonomy IDs
+// and generates a GMC XML feed from explicit Shopify fields only.
 
 const SHOPIFY_DOMAIN = "lovable-project-zlh0w.myshopify.com";
 const SHOPIFY_STOREFRONT_TOKEN =
@@ -20,6 +18,10 @@ const SHOPIFY_API_VERSION = "2025-10";
 const STOREFRONT_API_URL = `https://${SHOPIFY_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 
 const SITE_URL = "https://luxemia.shop";
+const HIDDEN_PRODUCT_HANDLES = new Set([
+  "luxemia-tailoring-saree-finishing-add-ons",
+  "custom-order-balance-payment",
+]);
 const corsHeaders: Record<string, string> = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers":
@@ -38,9 +40,12 @@ interface ShopifySelectedOption {
   value: string;
 }
 
+interface ShopifyMetafield {
+  value: string | null;
+}
+
 interface ShopifyVariant {
   id: string;
-  title: string;
   sku: string | null;
   availableForSale: boolean;
   price: { amount: string; currencyCode: string };
@@ -57,8 +62,21 @@ interface ShopifyProduct {
   handle: string;
   vendor: string;
   productType: string;
-  tags: string[];
+  availableForSale: boolean;
   options: { name: string; values: string[] }[];
+  fabricMetafield?: ShopifyMetafield | null;
+  materialMetafield?: ShopifyMetafield | null;
+  colorMetafield?: ShopifyMetafield | null;
+  googleProductCategoryMetafield?: ShopifyMetafield | null;
+  genderMetafield?: ShopifyMetafield | null;
+  conditionMetafield?: ShopifyMetafield | null;
+  ageGroupMetafield?: ShopifyMetafield | null;
+  sizeTypeMetafield?: ShopifyMetafield | null;
+  sizeSystemMetafield?: ShopifyMetafield | null;
+  careInstructionsMetafield?: ShopifyMetafield | null;
+  includedComponentsMetafield?: ShopifyMetafield | null;
+  occasionMetafield?: ShopifyMetafield | null;
+  shipsWithinMetafield?: ShopifyMetafield | null;
   images: { edges: { node: ShopifyImage }[] };
   variants: { edges: { node: ShopifyVariant }[] };
 }
@@ -96,7 +114,20 @@ query FetchProducts($first: Int!, $after: String) {
         handle
         vendor
         productType
-        tags
+        availableForSale
+        fabricMetafield: metafield(namespace: "custom", key: "fabric") { value }
+        materialMetafield: metafield(namespace: "custom", key: "material") { value }
+        colorMetafield: metafield(namespace: "custom", key: "color") { value }
+        googleProductCategoryMetafield: metafield(namespace: "custom", key: "google_product_category") { value }
+        genderMetafield: metafield(namespace: "custom", key: "gender") { value }
+        conditionMetafield: metafield(namespace: "custom", key: "condition") { value }
+        ageGroupMetafield: metafield(namespace: "custom", key: "age_group") { value }
+        sizeTypeMetafield: metafield(namespace: "custom", key: "size_type") { value }
+        sizeSystemMetafield: metafield(namespace: "custom", key: "size_system") { value }
+        careInstructionsMetafield: metafield(namespace: "custom", key: "care_instructions") { value }
+        includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
+        occasionMetafield: metafield(namespace: "custom", key: "occasion") { value }
+        shipsWithinMetafield: metafield(namespace: "custom", key: "ships_within") { value }
         options {
           name
           values
@@ -113,7 +144,6 @@ query FetchProducts($first: Int!, $after: String) {
           edges {
             node {
               id
-              title
               sku
               availableForSale
               price { amount currencyCode }
@@ -202,20 +232,6 @@ async function fetchAllProducts(): Promise<ShopifyProduct[]> {
   return allProducts;
 }
 
-// ─── Gender Mapping ──────────────────────────────────────────────────
-
-function getGender(productType: string, title: string): string {
-  const text = `${productType} ${title}`.toLowerCase();
-
-  if (/\b(?:women|womens|women's|female)\b/.test(text)) {
-    return "female";
-  }
-  if (/\b(?:men|mens|men's|male|groom|sherwanis?|kurta pajama|nehru jackets?|jodhpuris?)\b/.test(text)) {
-    return "male";
-  }
-  return "female";
-}
-
 // ─── Size Extraction ─────────────────────────────────────────────────
 
 const SIZE_OPTION_NAMES = new Set([
@@ -250,36 +266,33 @@ function getSizeFromVariant(
 // ─── Force JPEG on image URLs ────────────────────────────────────────
 
 function forceJpeg(url: string): string {
-  if (!url) return url;
+  if (!url) return "";
 
-  if (url.includes("cdn.shopify.com") || url.includes("myshopify.com")) {
-    try {
-      const parsed = new URL(url);
-      parsed.searchParams.set("width", "1500");
-      parsed.searchParams.set("format", "jpg");
-      return parsed.toString();
-    } catch {
-      const separator = url.includes("?") ? "&" : "?";
-      return `${url}${separator}width=1500&format=jpg`;
-    }
+  let parsed: URL;
+  try {
+    parsed = new URL(url);
+  } catch {
+    return "";
+  }
+  if (parsed.protocol !== "https:" || parsed.username || parsed.password) {
+    return "";
+  }
+  if (/(?:og-image|campaign|placeholder)/i.test(parsed.pathname)) {
+    return "";
   }
 
-  if (url.includes("kesimg.b-cdn.net")) {
-    if (!url.includes("format=")) {
-      return url + (url.includes("?") ? "&" : "?") + "format=jpg";
-    }
-    return url.replace(/format=\w+/, "format=jpg");
+  if (parsed.hostname.endsWith("cdn.shopify.com") || parsed.hostname.endsWith("myshopify.com")) {
+    parsed.searchParams.set("width", "1500");
+    parsed.searchParams.set("format", "jpg");
+    return parsed.toString();
   }
 
-  // If URL has no image extension and no format= param
-  const hasImageExtension = /\.(jpg|jpeg|png|gif|webp|bmp|svg)(\?.*)?$/i.test(
-    url
-  );
-  if (!hasImageExtension && !url.includes("format=")) {
-    return url + (url.includes("?") ? "&" : "?") + "format=jpg";
+  if (parsed.hostname === "kesimg.b-cdn.net") {
+    parsed.searchParams.set("format", "jpg");
+    return parsed.toString();
   }
 
-  return url;
+  return parsed.toString();
 }
 
 // ─── XML Escape ──────────────────────────────────────────────────────
@@ -308,14 +321,6 @@ function escapeXml(str: string): string {
     .replace(/'/g, "&apos;");
 }
 
-function normalizeBrand(vendor: string): string {
-  const brand = vendor.trim();
-  if (!brand) return "LuxeMia";
-  return /^luxemi(?:a|ashop)$/i.test(brand.replace(/[^a-z0-9]/gi, ""))
-    ? "LuxeMia"
-    : brand;
-}
-
 function isValidGtin(value: string): boolean {
   if (!/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(value)) return false;
 
@@ -334,64 +339,9 @@ function normalizeGtin(value: string | null): string {
   return isValidGtin(digits) ? digits : "";
 }
 
-function normalizeMpn(value: string | null): string {
-  return Array.from(value || "")
-    .filter((character) => {
-      const codePoint = character.codePointAt(0) ?? 0;
-      return codePoint >= 0x20 && codePoint !== 0x7f;
-    })
-    .join("")
-    .trim()
-    .slice(0, 70);
-}
+// ─── Read only explicit structured catalog attributes ────────────────
 
-// ─── Extract work type from tags ─────────────────────────────────────
-
-function getWorkFromTags(tags: string[]): string {
-  const workKeywords = [
-    "embroidery",
-    "embroidered",
-    "sequins",
-    "sequin",
-    "zari",
-    "zardozi",
-    "kundan",
-    "mirror work",
-    "mirror",
-    "thread work",
-    "thread",
-    "resham",
-    "stone",
-    "bead",
-    "print",
-    "printed",
-    "weaving",
-    "woven",
-    "brocade",
-    "handwork",
-    "hand work",
-    "heavy work",
-    "neck work",
-  ];
-
-  for (const tag of tags) {
-    const tagLower = tag.toLowerCase();
-    for (const work of workKeywords) {
-      if (tagLower.includes(work)) {
-        // Capitalize first letter of each word
-        return work
-          .split(" ")
-          .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
-          .join(" ");
-      }
-    }
-  }
-  return "";
-}
-
-// ─── Extract verified material/fabric from structured catalog data ───
-
-function getMaterialFromProduct(
+function getExplicitMaterial(
   product: ShopifyProduct,
   selectedOptions: ShopifySelectedOption[] = []
 ): string {
@@ -400,6 +350,10 @@ function getMaterialFromProduct(
   )?.value?.trim();
   if (selectedMaterial) return selectedMaterial;
 
+  const metafieldMaterial = product.materialMetafield?.value?.trim()
+    || product.fabricMetafield?.value?.trim();
+  if (metafieldMaterial) return metafieldMaterial;
+
   const materialOption = product.options.find((option) =>
     ["fabric", "material"].includes(normalizeOptionName(option.name))
   );
@@ -407,52 +361,29 @@ function getMaterialFromProduct(
     return materialOption.values[0].trim();
   }
 
-  return getStructuredTagValues(product.tags, "material")[0]
-    || getStructuredTagValues(product.tags, "fabric")[0]
-    || "";
+  return "";
 }
 
-// ─── Extract color from product options ──────────────────────────────
-
-function getColorFromProduct(
+function getExplicitColor(
   product: ShopifyProduct,
   selectedOptions: ShopifySelectedOption[]
 ): string {
   const selectedColor = selectedOptions.find((option) =>
     ["color", "colour"].includes(option.name.toLowerCase())
   );
-  if (selectedColor?.value) return selectedColor.value;
+  if (selectedColor?.value?.trim()) return selectedColor.value.trim();
+
+  const metafieldColor = product.colorMetafield?.value?.trim();
+  if (metafieldColor) return metafieldColor;
 
   const productColor = product.options.find((option) =>
     ["color", "colour"].includes(option.name.toLowerCase())
   );
-  if (productColor?.values.length === 1) return productColor.values[0];
-
-  for (const tag of product.tags) {
-    const match = tag.match(/^colou?r\s*:\s*(.+)$/i);
-    if (match?.[1]) return match[1].trim();
+  if (productColor?.values.length === 1 && productColor.values[0]?.trim()) {
+    return productColor.values[0].trim();
   }
 
-  const colorNames = [
-    "off white", "rose gold", "royal blue", "navy blue", "sky blue",
-    "dusty rose", "baby pink", "hot pink", "emerald green", "olive green",
-    "mint green", "lime green", "sage green", "bottle green", "mustard yellow",
-    "burnt orange", "champagne", "lavender", "lilac", "maroon", "burgundy",
-    "fuchsia", "magenta", "turquoise", "teal", "aqua", "ivory", "cream",
-    "beige", "brown", "copper", "gold", "silver", "black", "white", "grey",
-    "gray", "red", "pink", "orange", "yellow", "green", "blue", "purple"
-  ];
-  const title = product.title.toLowerCase();
-  const matches: string[] = [];
-  for (const color of colorNames) {
-    const pattern = new RegExp(`\\b${color.replace(" ", "\\s+")}\\b`, "i");
-    if (pattern.test(title) && !matches.some((existing) => existing.includes(color) || color.includes(existing))) {
-      matches.push(color.replace(/\b\w/g, (letter) => letter.toUpperCase()));
-    }
-    if (matches.length === 3) break;
-  }
-
-  return matches.join("/");
+  return "";
 }
 
 function sanitizeProductTitle(value: string): string {
@@ -479,48 +410,30 @@ function composeMerchantVariantTitle(baseTitle: string, selectedOptions: Shopify
   return `${baseTitle.slice(0, baseLimit).trim()}${suffix}`.slice(0, 150).trim();
 }
 
-function getStructuredTagValues(tags: string[], prefix: string): string[] {
-  const matcher = new RegExp(`^${prefix}\\s*:\\s*(.+)$`, "i");
-  return [...new Set(tags
-    .map((tag) => tag.match(matcher)?.[1]?.trim() || "")
-    .filter(Boolean))];
+function normalizeMetafieldEnum(
+  metafield: ShopifyMetafield | null | undefined,
+  allowed: ReadonlySet<string>
+): string {
+  const value = metafield?.value?.trim().toLowerCase() || "";
+  return allowed.has(value) ? value : "";
 }
 
-// ─── Enriched Description ────────────────────────────────────────────
+function getExplicitGoogleProductCategory(product: ShopifyProduct): string {
+  const value = product.googleProductCategoryMetafield?.value?.trim() || "";
+  return /^\d+$/.test(value) ? value : "";
+}
 
-// Raw Shopify descriptions are intentionally excluded because legacy policy text can conflict with the live store policy.
+const MERCHANT_GENDERS = new Set(["female", "male", "unisex"]);
+const MERCHANT_CONDITIONS = new Set(["new", "refurbished", "used"]);
+const MERCHANT_AGE_GROUPS = new Set(["newborn", "infant", "toddler", "kids", "adult"]);
+const MERCHANT_SIZE_TYPES = new Set(["regular", "petite", "plus", "tall", "big", "maternity"]);
+const MERCHANT_SIZE_SYSTEMS = new Set(["au", "br", "cn", "de", "eu", "fr", "it", "jp", "mex", "uk", "us"]);
 
-function enrichDescription(
-  product: ShopifyProduct,
-  title: string,
-  selectedOptions: ShopifySelectedOption[]
-): string {
-  const fabric = getMaterialFromProduct(product, selectedOptions);
-  const work = getStructuredTagValues(product.tags, "work")[0] || getWorkFromTags(product.tags);
-  const includedPieces = getStructuredTagValues(product.tags, "included");
-  const size = getSizeFromVariant(selectedOptions);
-  const optionDetails = [...new Map(selectedOptions
-    .filter((option) => option.name && option.value)
-    .filter((option) => normalizeOptionName(option.name) !== "title" && normalizeOptionName(option.value) !== "default title")
-    .filter((option) => !isSizeOptionName(option.name))
-    .map((option) => [normalizeOptionName(option.name), `${option.name}: ${option.value}`]))
-    .values()];
-
-  const details = [`${title} from LuxeMia.`];
-  if (product.productType) details.push(`Style: ${product.productType}.`);
-  if (fabric) details.push(`Material: ${fabric}.`);
-  if (size) details.push(`Size: ${size}.`);
-  if (work) details.push(`Design detail: ${work}.`);
-  if (includedPieces.length > 0) details.push(`Included pieces: ${includedPieces.join("; ")}.`);
-  if (optionDetails.length > 0) details.push(`Selected options: ${optionDetails.join("; ")}.`);
-  details.push(
-    "Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering."
-  );
-  details.push(
-    "Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch."
-  );
-
-  return details.join(" ").slice(0, 5000);
+// Use the same evidence-safe description contract as the hydrated storefront.
+function getExplicitDescription(product: ShopifyProduct): string {
+  return buildVerifiedProductCopy(
+    product as unknown as Parameters<typeof buildVerifiedProductCopy>[0]
+  ).trim().slice(0, 5000);
 }
 
 // ─── Shorten Shopify GID ─────────────────────────────────────────────
@@ -529,8 +442,7 @@ function shortenId(gid: string): string {
   // Shopify GIDs look like "gid://shopify/Product/1234567890"
   // Extract the numeric part for cleaner IDs
   const match = gid.match(/\/(\d+)$/);
-  if (match) return match[1];
-  return gid.replace("gid://shopify/", "").replace(/\//g, "-");
+  return match?.[1] || "";
 }
 
 // ─── Generate XML item for a product variant ─────────────────────────
@@ -539,44 +451,68 @@ function generateItem(
   product: ShopifyProduct,
   variant: ShopifyVariant
 ): string {
-  const baseTitle = sanitizeProductTitle(product.title);
-  const meaningfulOptions = variant.selectedOptions
+  if (product.availableForSale !== true || variant.availableForSale !== true) {
+    throw new Error(`Variant ${variant.id || "(unknown)"} is not explicitly available in Shopify`);
+  }
+  const baseTitle = sanitizeProductTitle(product.title || "");
+  if (!baseTitle) {
+    throw new Error(`No explicit product title for variant ${variant.id || "(unknown)"}`);
+  }
+
+  const selectedOptions = Array.isArray(variant.selectedOptions) ? variant.selectedOptions : [];
+  const meaningfulOptions = selectedOptions
     .filter((option) => option.name && option.value)
     .filter((option) => option.name.toLowerCase() !== "title" && option.value.toLowerCase() !== "default title");
   const listingTitle = composeMerchantVariantTitle(baseTitle, meaningfulOptions);
-  const variantId = shortenId(variant.id);
-  const productId = shortenId(product.id);
-  const googleCategory = getMerchantGoogleProductCategory(product.productType, product.title);
-  const gender = getGender(product.productType, product.title);
-  const size = getSizeFromVariant(variant.selectedOptions);
-  const color = getColorFromProduct(product, variant.selectedOptions);
-  const material = getMaterialFromProduct(product, variant.selectedOptions);
-  const work = getWorkFromTags(product.tags);
-  const availability = variant.availableForSale ? "in_stock" : "out_of_stock";
-  const currencyCode = variant.price.currencyCode || "USD";
+  const variantId = shortenId(variant.id || "");
+  const productId = shortenId(product.id || "");
+  const handle = product.handle?.trim() || "";
+  if (!variantId || !productId || !handle) {
+    throw new Error(`Missing explicit product, variant, or handle identifier for ${variant.id || "(unknown)"}`);
+  }
+
+  const googleCategory = getExplicitGoogleProductCategory(product);
+  const gender = normalizeMetafieldEnum(product.genderMetafield, MERCHANT_GENDERS);
+  const condition = normalizeMetafieldEnum(product.conditionMetafield, MERCHANT_CONDITIONS);
+  const ageGroup = normalizeMetafieldEnum(product.ageGroupMetafield, MERCHANT_AGE_GROUPS);
+  const sizeType = normalizeMetafieldEnum(product.sizeTypeMetafield, MERCHANT_SIZE_TYPES);
+  const sizeSystem = normalizeMetafieldEnum(product.sizeSystemMetafield, MERCHANT_SIZE_SYSTEMS).toUpperCase();
+  const size = getSizeFromVariant(selectedOptions);
+  const color = getExplicitColor(product, selectedOptions);
+  const material = getExplicitMaterial(product, selectedOptions);
+  const productType = product.productType?.trim() || "";
+  const availability = "in_stock";
+  const currencyCode = variant.price?.currencyCode?.trim().toUpperCase() || "";
+  if (!/^[A-Z]{3}$/.test(currencyCode)) {
+    throw new Error(`Invalid or missing currency for variant ${variant.id}`);
+  }
   const gtin = normalizeGtin(variant.barcode);
-  const brand = normalizeBrand(product.vendor || "");
-  const mpn = brand === "LuxeMia" && !gtin ? normalizeMpn(variant.sku) : "";
-  const isApparel = isMerchantApparelCategory(googleCategory);
-  const productLink = `${SITE_URL}/product/${encodeURIComponent(product.handle)}${
-    product.variants.edges.length > 1 ? `?variant=${encodeURIComponent(variantId)}` : ""
-  }`;
+  const brand = normalizeBrandName(product.vendor) || "";
+  if (!brand) {
+    throw new Error(`No verified consumer brand for variant ${variant.id}`);
+  }
+  const productLink = `${SITE_URL}/product/${encodeURIComponent(handle)}?variant=${encodeURIComponent(variantId)}`;
 
   // Price handling
-  const price = parseFloat(variant.price.amount);
+  const price = parseFloat(variant.price?.amount || "");
   const compareAtPrice = variant.compareAtPrice
     ? parseFloat(variant.compareAtPrice.amount)
     : null;
 
   // If compareAtPrice exists and is higher than price, then price is the sale price
   // and compareAtPrice is the original price
-  const hasSale = compareAtPrice !== null && compareAtPrice > price;
+  const hasSale = compareAtPrice !== null
+    && Number.isFinite(compareAtPrice)
+    && variant.compareAtPrice?.currencyCode?.trim().toUpperCase() === currencyCode
+    && compareAtPrice > price;
   if (!Number.isFinite(price) || price <= 0) {
     throw new Error(`Invalid price for variant ${variant.id}`);
   }
 
   // Image handling
-  const allImages = product.images.edges.map((e) => e.node);
+  const allImages = (product.images?.edges || [])
+    .map((edge) => edge.node)
+    .filter((image) => Boolean(image?.url));
   let mainImageUrl = "";
   if (variant.image && variant.image.url) {
     mainImageUrl = variant.image.url;
@@ -597,14 +533,13 @@ function generateItem(
       return img !== allImages[0];
     })
     .slice(0, 10)
-    .map((img) => forceJpeg(img.url));
+    .map((img) => forceJpeg(img.url))
+    .filter(Boolean);
 
-  // Enriched description
-  const description = enrichDescription(
-    product,
-    listingTitle,
-    meaningfulOptions
-  );
+  const description = getExplicitDescription(product);
+  if (!description) {
+    throw new Error(`No explicit Shopify description for variant ${variant.id}`);
+  }
 
   let xml = `
   <item>
@@ -629,43 +564,39 @@ function generateItem(
     <g:sale_price>${price.toFixed(2)} ${currencyCode}</g:sale_price>`;
   }
 
-  xml += `
-    <g:condition>new</g:condition>
-    <g:brand>${escapeXml(brand)}</g:brand>
+  if (condition) xml += `
+    <g:condition>${condition}</g:condition>`;
+  if (brand) xml += `
+    <g:brand>${escapeXml(brand)}</g:brand>`;
+  if (googleCategory) xml += `
     <g:google_product_category>${googleCategory}</g:google_product_category>`;
 
-  if (product.productType) xml += `
-    <g:product_type>${escapeXml(product.productType)}</g:product_type>`;
+  if (productType) xml += `
+    <g:product_type>${escapeXml(productType)}</g:product_type>`;
   if (gender) xml += `
     <g:gender>${gender}</g:gender>`;
-  if (isApparel) xml += `
-    <g:age_group>adult</g:age_group>`;
+  if (ageGroup) xml += `
+    <g:age_group>${ageGroup}</g:age_group>`;
   if (color) xml += `
     <g:color>${escapeXml(color)}</g:color>`;
   if (material) xml += `
     <g:material>${escapeXml(material)}</g:material>`;
-  if (work) xml += `
-    <g:pattern>${escapeXml(work)}</g:pattern>`;
   if (size) {
     xml += `
-    <g:size>${escapeXml(size)}</g:size>
-    <g:size_type>regular</g:size_type>
-    <g:size_system>US</g:size_system>`;
+    <g:size>${escapeXml(size)}</g:size>`;
+    if (sizeType) xml += `
+    <g:size_type>${sizeType}</g:size_type>`;
+    if (sizeSystem) xml += `
+    <g:size_system>${sizeSystem}</g:size_system>`;
   }
 
   if (gtin) {
     xml += `
     <g:gtin>${gtin}</g:gtin>`;
-  } else if (mpn) {
-    xml += `
-    <g:mpn>${escapeXml(mpn)}</g:mpn>`;
-  } else {
-    xml += `
-    <g:identifier_exists>no</g:identifier_exists>`;
   }
 
-  if (product.productType) xml += `
-    <g:custom_label_0>${escapeXml(product.productType)}</g:custom_label_0>`;
+  if (productType) xml += `
+    <g:custom_label_0>${escapeXml(productType)}</g:custom_label_0>`;
 
   xml += `
   </item>`;
@@ -682,6 +613,9 @@ async function handleRequest(req: Request): Promise<Response> {
   }
 
   try {
+    if (!SHOPIFY_STOREFRONT_TOKEN) {
+      throw new Error("SHOPIFY_STOREFRONT_TOKEN is required; no cached or synthetic fallback is permitted");
+    }
     console.log("Generating Google Merchant Center XML feed...");
 
     // Fetch all products from Shopify
@@ -691,14 +625,38 @@ async function handleRequest(req: Request): Promise<Response> {
 
     // Generate XML items for all product variants
     const items: string[] = [];
+    let invalidAvailableItems = 0;
 
     for (const product of products) {
-      const variants = product.variants.edges.map((e) => e.node);
+      if (HIDDEN_PRODUCT_HANDLES.has(product.handle?.trim() || "")) {
+        continue;
+      }
+      const variants = product.variants?.edges?.map((edge) => edge.node).filter(Boolean) || [];
+      if (!(product.availableForSale === true)) {
+        if (typeof product.availableForSale !== "boolean") {
+          invalidAvailableItems += Math.max(1, variants.length);
+          console.error(`Invalid product ${product.id || "(unknown)"}: missing explicit availability`);
+        }
+        continue;
+      }
+      if (variants.length === 0) {
+        invalidAvailableItems++;
+        console.error(`Invalid available product ${product.id || "(unknown)"}: no explicit variants`);
+        continue;
+      }
 
       for (const variant of variants) {
+        if (!(variant.availableForSale === true)) {
+          if (typeof variant.availableForSale !== "boolean") {
+            invalidAvailableItems++;
+            console.error(`Invalid variant ${variant.id || "(unknown)"}: missing explicit availability`);
+          }
+          continue;
+        }
         try {
           items.push(generateItem(product, variant));
         } catch (itemError) {
+          invalidAvailableItems++;
           console.error(
             `Error generating item for variant ${variant.id}: ${itemError}`
           );
@@ -706,7 +664,16 @@ async function handleRequest(req: Request): Promise<Response> {
       }
     }
 
-    console.log(`Generated ${items.length} variant items`);
+    if (invalidAvailableItems > 0) {
+      throw new Error(`${invalidAvailableItems} available Shopify variants lack complete, explicit merchant-feed evidence`);
+    }
+    if (items.length === 0) {
+      throw new Error("Shopify returned no variants with complete, explicit merchant-feed evidence");
+    }
+
+    console.log(
+      `Generated ${items.length} complete, explicitly available variant items`
+    );
 
     // Assemble the full XML feed
     const xmlFeed = `<?xml version="1.0" encoding="UTF-8"?>

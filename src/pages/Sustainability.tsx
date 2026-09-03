@@ -1,165 +1,96 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import SEOHead from "@/components/seo/SEOHead";
-import { motion } from "framer-motion";
-import { Leaf, Droplets, Recycle, Heart, Sun, Shield } from "lucide-react";
+import { Link } from 'react-router-dom';
+import { BadgeCheck, Box, Factory, Leaf, Truck, SearchCheck } from 'lucide-react';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 
-const Sustainability = () => {
-  const initiatives = [
-    {
-      icon: Leaf,
-      title: "Natural Fabrics",
-      description: "We offer a selection of natural fiber fabrics including cotton and silk from established Indian textile suppliers."
-    },
-    {
-      icon: Droplets,
-      title: "Learning & Improving",
-      description: "We are learning about the environmental impact of textile production and encourage our suppliers to adopt water-efficient practices."
-    },
-    {
-      icon: Recycle,
-      title: "Minimal Packaging",
-      description: "We use minimal packaging and are working toward reducing waste wherever we can. Each order is packaged with care using recyclable materials where possible."
-    },
-    {
-      icon: Sun,
-      title: "Reducing Our Footprint",
-      description: "We are exploring ways to reduce our environmental footprint as we grow, from shipping efficiency to material choices."
-    },
-    {
-      icon: Heart,
-      title: "Responsible Sourcing",
-      description: "We choose to work with established suppliers and manufacturers and aim to build long-term, responsible relationships."
-    },
-    {
-      icon: Shield,
-      title: "Honest Standards",
-      description: "We believe in being upfront about where we are. We don't claim certifications we don't have, and we're committed to earning trust through transparency."
-    }
-  ];
+const claimStatus = [
+  {
+    icon: Leaf,
+    title: 'Materials',
+    description: 'A fabric or fiber is shown only when supplied for the selected product. A material name is not evidence that the item is organic, low-impact, biodegradable or environmentally preferable.',
+  },
+  {
+    icon: BadgeCheck,
+    title: 'Certifications',
+    description: 'LuxeMia does not currently publish a store-wide organic, fair-trade, carbon-neutral, recycled-content or other environmental certification.',
+  },
+  {
+    icon: Factory,
+    title: 'Production and labor',
+    description: 'LuxeMia does not infer factory conditions, artisan participation, handmade production, wage standards or supply-chain traceability from a garment name, supplier description or photograph.',
+  },
+  {
+    icon: Box,
+    title: 'Packaging',
+    description: 'No universal recyclable, plastic-free, compostable or minimal-packaging claim is made. Packaging can vary according to the product and transit requirements.',
+  },
+  {
+    icon: Truck,
+    title: 'Delivery',
+    description: 'The shipping page states supported destinations and current charges. LuxeMia does not describe shipping as carbon neutral or emissions free without a verified program.',
+  },
+  {
+    icon: SearchCheck,
+    title: 'Questions and corrections',
+    description: 'When an environmental or sourcing detail is material to a purchase, request evidence for the exact product before ordering. Unsupported optional facts remain omitted.',
+  },
+];
 
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOHead
-        title="Our Approach to Responsibility — LuxeMia"
-        description="Learn about LuxeMia's approach to responsible business and our goals for doing better as we grow. Honest, transparent, and committed to improvement."
-        canonical="https://luxemia.shop/sustainability"
-      />
-      <Header />
-      
-      <main className="pt-[90px] lg:pt-[132px]">
-        {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-green-50 to-background dark:from-green-950/20">
-          <div className="container mx-auto px-4 text-center">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="inline-flex items-center gap-2 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-4 py-2 rounded-full mb-6"
-            >
-              <Leaf className="w-4 h-4" />
-              <span className="text-sm font-medium">Doing Better, Honestly</span>
-            </motion.div>
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
-            >
-              Our Approach to Responsibility
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
-            >
-              At LuxeMia, we're honest about where we are. We're a growing business and we have a long way to go, 
-              but we're committed to learning and improving every step of the way.
-            </motion.p>
+const Sustainability = () => (
+  <div className="min-h-screen bg-background">
+    <SEOHead
+      title="Environmental and Sourcing Claims | LuxeMia"
+      description="What LuxeMia does and does not claim about materials, certifications, production, packaging and delivery."
+      canonical="https://luxemia.shop/sustainability"
+    />
+    <Header />
+
+    <main className="pt-[90px] lg:pt-[132px]">
+      <section className="bg-gradient-to-b from-green-50 to-background py-20 dark:from-green-950/20">
+        <div className="container mx-auto max-w-4xl px-4 text-center">
+          <p className="mb-4 text-sm uppercase tracking-widest text-muted-foreground">Evidence before environmental claims</p>
+          <h1 className="font-display text-4xl text-foreground md:text-5xl">Environmental and Sourcing Claims</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted-foreground">
+            LuxeMia publishes a product-specific environmental, origin or labor claim only when support for that
+            exact claim is available. The store does not turn general goals, fabric names or supplier relationships
+            into certifications or measured impact claims.
+          </p>
+        </div>
+      </section>
+
+      <section className="py-16">
+        <div className="container mx-auto max-w-6xl px-4">
+          <h2 className="text-center font-display text-3xl text-foreground">Current claim boundaries</h2>
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {claimStatus.map(({ icon: Icon, title, description }) => (
+              <article key={title} className="rounded-lg border border-border bg-card p-6">
+                <Icon className="h-6 w-6 text-green-700 dark:text-green-300" />
+                <h3 className="mt-5 font-display text-xl text-foreground">{title}</h3>
+                <p className="mt-3 text-sm leading-7 text-muted-foreground">{description}</p>
+              </article>
+            ))}
           </div>
-        </section>
+        </div>
+      </section>
 
-        {/* Mission Statement */}
-        <section className="py-16">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto">
-              <div className="bg-card rounded-2xl p-8 md:p-12 border border-border">
-                <h2 className="font-display text-2xl md:text-3xl text-foreground mb-6 text-center">
-                  What We're Working Toward
-                </h2>
-                <p className="text-muted-foreground text-lg leading-relaxed text-center">
-                  We are a young company, and we know we have a lot to learn. Our goals include understanding our supply 
-                  chain better, reducing waste where we can, and being transparent about what we can and cannot verify. 
-                  We'd rather under-promise and over-deliver than make claims we can't back up.
-                </p>
-              </div>
-            </div>
-          </div>
-        </section>
+      <section className="bg-secondary/30 py-14">
+        <div className="container mx-auto max-w-3xl px-4 text-center">
+          <h2 className="font-display text-2xl text-foreground">Check the selected product</h2>
+          <p className="mt-4 leading-7 text-muted-foreground">
+            Use the exact listing for stated material and product facts. If a certification, manufacturing location,
+            packaging characteristic or production method is essential, contact LuxeMia with the product link before ordering.
+          </p>
+          <nav className="mt-6 flex flex-wrap justify-center gap-5 text-sm">
+            <Link className="text-primary underline underline-offset-4" to="/editorial-policy">Read the product-fact policy</Link>
+            <Link className="text-primary underline underline-offset-4" to="/contact">Contact LuxeMia</Link>
+          </nav>
+        </div>
+      </section>
+    </main>
 
-        {/* Initiatives Grid */}
-        <section className="py-16 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Where We Stand
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {initiatives.map((initiative, index) => (
-                <motion.div
-                  key={initiative.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-card rounded-lg p-6 border border-border"
-                >
-                  <div className="w-12 h-12 bg-green-100 dark:bg-green-900/30 rounded-lg flex items-center justify-center mb-4">
-                    <initiative.icon className="w-6 h-6 text-green-600 dark:text-green-400" />
-                  </div>
-                  <h3 className="font-display text-xl text-foreground mb-3">{initiative.title}</h3>
-                  <p className="text-muted-foreground">{initiative.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Our Goals */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Looking Ahead
-            </h2>
-            <div className="max-w-3xl mx-auto text-center">
-              <p className="text-muted-foreground text-lg leading-relaxed">
-                We are a small team doing our best. Right now that means careful packaging, choosing quality over quantity, 
-                and being honest about our limitations. As we grow, we'll share real progress — not just promises. 
-                We believe that transparency is more valuable than certifications we haven't earned.
-              </p>
-            </div>
-          </div>
-        </section>
-
-        {/* Transparency Note */}
-        <section className="py-16 bg-primary/5">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="font-display text-2xl md:text-3xl text-foreground mb-8">
-              Our Promise to You
-            </h2>
-            <div className="max-w-2xl mx-auto">
-              <p className="text-muted-foreground text-lg">
-                We won't claim certifications we don't hold or make promises we can't verify. 
-                What we can promise is that we'll keep learning, keep improving, and always be honest with you about 
-                where we stand. If you have questions about our practices, reach out — we're happy to talk.
-              </p>
-            </div>
-          </div>
-        </section>
-      </main>
-
-      <Footer />
-    </div>
-  );
-};
+    <Footer />
+  </div>
+);
 
 export default Sustainability;

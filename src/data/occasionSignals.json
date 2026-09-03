@@ -1,6 +1,8 @@
 {
   "diwali": ["diwali", "festive", "festival"],
+  "festive": ["diwali", "festive", "festival", "eid", "ramadan", "navratri", "garba", "chaniya", "dandiya"],
   "wedding-guest": ["wedding guest", "bridesmaid", "maid of honor", "maid of honour", "sangeet", "reception"],
+  "wedding-event": ["mehendi", "mehndi", "haldi", "turmeric", "sangeet", "reception"],
   "mehendi": ["mehendi", "mehndi"],
   "eid": ["eid", "chikankari", "ramadan"],
   "navratri": ["navratri", "garba", "chaniya", "dandiya"],

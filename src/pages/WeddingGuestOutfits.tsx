@@ -11,6 +11,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import CollectionDecisionSupport from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -19,6 +22,9 @@ const sortOptions = [
   { label: 'Price: Low to High', value: 'price-asc' },
   { label: 'Price: High to Low', value: 'price-desc' },
 ];
+
+const PRODUCTS_PER_PAGE = 24;
+const SCHEMA_PRODUCT_LIMIT = 30;
 
 const weddingGuestFaqs = [
   {
@@ -35,7 +41,7 @@ const weddingGuestFaqs = [
   },
   {
     question: 'Do you ship Indian wedding guest outfits to the United States?',
-    answer: 'LuxeMia ships Indian wedding guest outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $199 and above and $14.99 below $199. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships Indian wedding guest outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199; the other destinations use the rates and thresholds on the Shipping page. Confirm timing before ordering for a fixed wedding date.',
   },
   {
     question: 'Can I repeat an outfit at multiple wedding events?',
@@ -44,17 +50,38 @@ const weddingGuestFaqs = [
 ];
 
 const WeddingGuestOutfits = () => {
-  const { products, isLoading } = useShopifyProducts('occasion:wedding-guest');
+  const { products, isLoading, error } = useShopifyProducts('occasion:wedding-guest');
   const [sortBy, setSortBy] = useState('featured');
+  const [visibleCount, setVisibleCount] = useState(PRODUCTS_PER_PAGE);
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
+  const visibleProducts = sortedProducts.slice(0, visibleCount);
+  const hasMore = visibleProducts.length < sortedProducts.length;
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const collectionItems = toCollectionSchemaItems(sortedProducts, SCHEMA_PRODUCT_LIMIT);
+
+  const handleSortChange = (nextSort: string) => {
+    setSortBy(nextSort);
+    setVisibleCount(PRODUCTS_PER_PAGE);
+  };
+
+  const handleLoadMore = () => {
+    setVisibleCount((currentCount) => Math.min(
+      currentCount + PRODUCTS_PER_PAGE,
+      sortedProducts.length,
+    ));
+  };
 
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia"
-        description="Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms."
+        description="Browse current products explicitly marked for wedding guests, bridesmaids, Sangeet or receptions. Review exact listing details and shipping to seven supported countries."
         canonical="https://luxemia.shop/collections/wedding-guest-outfits"
+        type="collection"
+        collection={!isLoading && !error
+          ? { name: 'Indian Wedding Guest Outfits', description: 'Current products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions.', items: collectionItems }
+          : undefined}
+        noIndexFollow={!isLoading && !error && sortedProducts.length === 0}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Occasions', url: '/collections' },
@@ -89,22 +116,28 @@ const WeddingGuestOutfits = () => {
         <div className="border-b border-border/30 bg-background sticky top-[90px] lg:top-[132px] z-30">
           <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              {isLoading ? 'Loading…' : `${sortedProducts.length} styles`}
+              {isLoading
+                ? 'Loading…'
+                : error
+                  ? 'Current inventory is temporarily unavailable'
+                  : `${visibleProducts.length} of ${sortedProducts.length} styles shown`}
             </p>
-            <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" size="sm" className="gap-2 text-sm font-light">
-                  Sort: {currentSort} <ChevronDown className="w-4 h-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent align="end">
-                {sortOptions.map(opt => (
-                  <DropdownMenuItem key={opt.value} onClick={() => setSortBy(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
-                    {opt.label}
-                  </DropdownMenuItem>
-                ))}
-              </DropdownMenuContent>
-            </DropdownMenu>
+            {!error ? (
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="sm" className="gap-2 text-sm font-light">
+                    Sort: {currentSort} <ChevronDown className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  {sortOptions.map(opt => (
+                    <DropdownMenuItem key={opt.value} onClick={() => handleSortChange(opt.value)} className={sortBy === opt.value ? 'font-medium' : ''}>
+                      {opt.label}
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            ) : null}
           </div>
         </div>
 
@@ -121,17 +154,33 @@ const WeddingGuestOutfits = () => {
                 </div>
               ))}
             </div>
-          ) : (
+          ) : error ? (
+            <CatalogLoadError retryHref="/collections/wedding-guest-outfits" />
+          ) : sortedProducts.length > 0 ? (
             <motion.div
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}
             >
-              {sortedProducts.map((product, index) => (
+              {visibleProducts.map((product, index) => (
                 <ProductCard key={product.node.id} product={product} index={index} />
               ))}
             </motion.div>
+          ) : (
+            <div className="rounded-sm border border-border p-8 text-center">
+              <h2 className="font-serif text-xl">No current wedding-guest products available</h2>
+              <p className="mt-2 text-sm text-muted-foreground">Check back for confirmed catalog availability.</p>
+            </div>
           )}
+          {hasMore && !isLoading && !error ? (
+            <div className="mt-10 flex justify-center">
+              <Button type="button" variant="outline" onClick={handleLoadMore}>
+                Load more ({sortedProducts.length - visibleProducts.length} remaining)
+              </Button>
+            </div>
+          ) : null}
         </section>
+
+        {!error ? <CollectionDecisionSupport path="/collections/wedding-guest-outfits" products={sortedProducts} isLoading={isLoading} showFaqs={false} /> : null}
 
         {/* Ceremony-by-ceremony guide */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">
@@ -171,7 +220,7 @@ const WeddingGuestOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Indian Wedding Guest Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, with tracking after dispatch.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. When tracking is issued, carrier scans can appear after label creation.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">
@@ -191,12 +240,14 @@ const WeddingGuestOutfits = () => {
           <div className="container mx-auto px-4 lg:px-8 max-w-4xl text-center">
             <h2 className="font-serif text-xl mb-6">Shop by Wedding Ceremony</h2>
             <div className="flex flex-wrap justify-center gap-3">
-              <Link to="/lehengas"><Button variant="outline" size="sm">Bridal Lehengas</Button></Link>
-              <Link to="/sarees"><Button variant="outline" size="sm">Silk Sarees</Button></Link>
-              <Link to="/suits"><Button variant="outline" size="sm">Anarkali Suits</Button></Link>
-              <Link to="/indowestern"><Button variant="outline" size="sm">Indo-Western</Button></Link>
-              <Link to="/collections/mehendi-outfits"><Button variant="outline" size="sm">Mehendi Outfits</Button></Link>
-              <Link to="/menswear"><Button variant="outline" size="sm">Menswear</Button></Link>
+              <Button asChild variant="outline" size="sm"><Link to="/collections/wedding-guest-lehengas">Wedding-Guest Lehengas</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/collections/wedding-guest-kurta-sets">Wedding-Guest Kurta Sets</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/lehengas">Bridal Lehengas</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/sarees">Silk Sarees</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/suits">Anarkali Suits</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/indowestern">Indo-Western</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/collections/mehendi-outfits">Mehendi Outfits</Link></Button>
+              <Button asChild variant="outline" size="sm"><Link to="/menswear">Menswear</Link></Button>
             </div>
           </div>
         </section>

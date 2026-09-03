@@ -1,135 +1,79 @@
-import Header from "@/components/layout/Header";
-import Footer from "@/components/layout/Footer";
-import SEOHead from "@/components/seo/SEOHead";
-import { motion } from "framer-motion";
+import { Link } from 'react-router-dom';
+import { FileCheck2, MapPinOff, SearchCheck } from 'lucide-react';
+import Header from '@/components/layout/Header';
+import Footer from '@/components/layout/Footer';
+import SEOHead from '@/components/seo/SEOHead';
 
-const Artisans = () => {
-  const regions = [
-    {
-      name: "Lucknow, Uttar Pradesh",
-      specialty: "Zardozi & Chikankari Embroidery",
-      description: "Known for its refined embroidery traditions, Lucknow produces some of India's most sought-after zardozi and chikankari work, featuring intricate thread patterns that add elegance to any outfit."
-    },
-    {
-      name: "Varanasi, Uttar Pradesh",
-      specialty: "Silk Brocade Weaving",
-      description: "Varanasi is famous for its silk brocades and Banarasi sarees. The city's weaving tradition produces beautiful silk fabrics with rich zari patterns that are popular across India and abroad."
-    },
-    {
-      name: "Kanchipuram, Tamil Nadu",
-      specialty: "Temple Border Silk Sarees",
-      description: "Kanchipuram is renowned for its distinctive silk sarees with bold temple borders. These sarees are a staple of South Indian weddings and celebrations, known for their durability and rich colors."
-    },
-    {
-      name: "Jaipur, Rajasthan",
-      specialty: "Gota Patti & Block Printing",
-      description: "Jaipur is a hub for vibrant gota patti appliqué and block printing. The city's colorful aesthetic brings a festive, eye-catching quality to ethnic wear that's perfect for celebrations."
-    },
-    {
-      name: "Surat, Gujarat",
-      specialty: "Synthetic & Art Silk Fabrics",
-      description: "Surat is India's textile capital, producing a wide range of affordable fabrics from art silk to georgette. The city's mills supply quality materials that make beautiful ethnic wear accessible to everyone."
-    },
-    {
-      name: "Sanganer, Rajasthan",
-      specialty: "Textile Printing & Dyeing",
-      description: "Sanganer is known for its fine textile printing and dyeing traditions. The town produces colorful printed fabrics used in kurtas, suits, and home textiles, blending traditional motifs with modern designs."
-    }
-  ];
+const standards = [
+  {
+    icon: FileCheck2,
+    title: 'Use the exact listing',
+    description: 'A product page may state a fabric, decorative work, included pieces or other details when the current catalog supplies them. Those statements apply only to that product.',
+  },
+  {
+    icon: MapPinOff,
+    title: 'Do not infer origin',
+    description: 'A style name such as Banarasi, Kanjivaram, chikankari or zardozi does not by itself verify where an item was made, who made it, whether work was done by hand or whether a protected-origin standard applies.',
+  },
+  {
+    icon: SearchCheck,
+    title: 'Ask when a fact matters',
+    description: 'If artisan participation, manufacturing location, technique, fiber composition or certification is not stated on the selected listing, treat it as not supplied and contact LuxeMia before ordering.',
+  },
+];
 
-  return (
-    <div className="min-h-screen bg-background">
-      <SEOHead
-        title="Our Sourcing Regions — LuxeMia"
-        description="Discover the regions across India where LuxeMia sources its Indian ethnic wear. From Lucknow embroidery to Banarasi silk, learn about the textile traditions behind our collections."
-        canonical="https://luxemia.shop/artisans"
-      />
-      <Header />
-      
-      <main className="pt-[90px] lg:pt-[132px]">
-        {/* Hero Section */}
-        <section className="relative py-20 bg-gradient-to-b from-primary/5 to-background">
-          <div className="container mx-auto px-4 text-center">
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="font-display text-4xl md:text-5xl lg:text-6xl text-foreground mb-6"
-            >
-              Where Our Products Come From
-            </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.1 }}
-              className="text-muted-foreground text-lg md:text-xl max-w-3xl mx-auto"
-            >
-              Our collections are sourced from India's most renowned textile regions, 
-              bringing you authentic designs and quality fabrics at affordable prices.
-            </motion.p>
-          </div>
-        </section>
+const Artisans = () => (
+  <div className="min-h-screen bg-background">
+    <SEOHead
+      title="Product Origin and Craft Claims | LuxeMia"
+      description="How LuxeMia handles product-origin, artisan, technique and authenticity claims without inferring facts from style names or photographs."
+      canonical="https://luxemia.shop/artisans"
+    />
+    <Header />
 
-        {/* Philosophy Section */}
-        <section className="py-16 bg-secondary/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center">
-              <h2 className="font-display text-3xl md:text-4xl text-foreground mb-6">
-                Sourced from India's Best Textile Regions
-              </h2>
-              <p className="text-muted-foreground text-lg leading-relaxed mb-8">
-                We source our products from established suppliers and manufacturers across India's 
-                famous textile hubs. Our goal is to bring you beautiful, well-made Indian ethnic wear 
-                at prices that work for everyone.
-              </p>
-            </div>
-          </div>
-        </section>
+    <main className="pt-[90px] lg:pt-[132px]">
+      <section className="bg-gradient-to-b from-primary/5 to-background py-20">
+        <div className="container mx-auto max-w-4xl px-4 text-center">
+          <p className="mb-4 text-sm uppercase tracking-widest text-muted-foreground">Product-fact standard</p>
+          <h1 className="font-display text-4xl text-foreground md:text-5xl">Origin and Craft Claims Require Evidence</h1>
+          <p className="mx-auto mt-6 max-w-3xl text-lg leading-8 text-muted-foreground">
+            LuxeMia does not make a store-wide claim that products come from particular textile regions,
+            are artisan-made, handmade, authentic or certified. The exact product record controls, and a
+            missing provenance or technique detail is not guessed.
+          </p>
+        </div>
+      </section>
 
-        {/* Artisans Grid */}
-        <section className="py-20">
-          <div className="container mx-auto px-4">
-            <h2 className="font-display text-3xl md:text-4xl text-foreground text-center mb-12">
-              Textile Regions We Source From
-            </h2>
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {regions.map((region, index) => (
-                <motion.div
-                  key={region.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ delay: index * 0.1 }}
-                  viewport={{ once: true }}
-                  className="bg-card rounded-lg p-6 border border-border hover:shadow-lg transition-shadow"
-                >
-                  <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                    <span className="text-2xl">🧵</span>
-                  </div>
-                  <h3 className="font-display text-xl text-foreground mb-2">{region.name}</h3>
-                  <p className="text-primary text-sm mb-3">{region.specialty}</p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">{region.description}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
+      <section className="py-16">
+        <div className="container mx-auto grid max-w-5xl gap-6 px-4 md:grid-cols-3">
+          {standards.map(({ icon: Icon, title, description }) => (
+            <article key={title} className="rounded-lg border border-border bg-card p-6">
+              <Icon className="h-6 w-6 text-primary" />
+              <h2 className="mt-5 font-display text-xl text-foreground">{title}</h2>
+              <p className="mt-3 text-sm leading-7 text-muted-foreground">{description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
 
-        {/* Call to Action */}
-        <section className="py-16 bg-primary/5">
-          <div className="container mx-auto px-4 text-center">
-            <h2 className="font-display text-2xl md:text-3xl text-foreground mb-4">
-              Explore Our Collections
-            </h2>
-            <p className="text-muted-foreground mb-8 max-w-2xl mx-auto">
-              Browse our curated selection of Indian ethnic wear sourced from the country's best textile regions. 
-              Beautiful designs, quality fabrics, and affordable prices.
-            </p>
-          </div>
-        </section>
-      </main>
+      <section className="bg-secondary/30 py-14">
+        <div className="container mx-auto max-w-3xl px-4 text-center">
+          <h2 className="font-display text-2xl text-foreground">Where to verify a claim</h2>
+          <p className="mt-4 leading-7 text-muted-foreground">
+            Review the selected product page first. For the rules LuxeMia uses when presenting catalog and
+            educational information, see the editorial policy. Send a product link and the exact fact you need
+            confirmed when the listing is incomplete.
+          </p>
+          <nav className="mt-6 flex flex-wrap justify-center gap-5 text-sm">
+            <Link className="text-primary underline underline-offset-4" to="/editorial-policy">Editorial and product-fact policy</Link>
+            <Link className="text-primary underline underline-offset-4" to="/contact">Ask a listing-specific question</Link>
+          </nav>
+        </div>
+      </section>
+    </main>
 
-      <Footer />
-    </div>
-  );
-};
+    <Footer />
+  </div>
+);
 
 export default Artisans;

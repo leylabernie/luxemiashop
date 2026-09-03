@@ -2,6 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
+const esbuild = require('esbuild');
 
 const root = path.resolve(__dirname, '..');
 const middlewarePath = path.join(root, 'middleware.ts');
@@ -9,12 +10,54 @@ const robotsPath = path.join(root, 'public', 'robots.txt');
 const productHookPath = path.join(root, 'src', 'hooks', 'useShopifyProducts.ts');
 const prerenderPath = path.join(root, 'scripts', 'prerender.js');
 const shopifyProxyPath = path.join(root, 'src', 'middleware', 'shopifyProxy.ts');
+const htmlGeneratorPath = path.join(root, 'src', 'middleware', 'htmlGenerator.ts');
+const dynamicSitemapPath = path.join(root, 'src', 'lib', 'dynamicSitemap.ts');
+const sitemapPagePath = path.join(root, 'src', 'pages', 'Sitemap.tsx');
+const appPath = path.join(root, 'src', 'App.tsx');
+const autoRoutesPath = path.join(root, 'src', 'lib', 'autoRoutes.ts');
+const prerenderManifestPath = path.join(root, 'src', 'lib', 'prerenderManifest.ts');
+const approvedInventoryPath = path.join(root, 'scripts', 'approved-sitemap-inventory.json');
+const sitemapGeneratorPath = path.join(root, 'scripts', 'generate-sitemap.cjs');
+const indexNowBuilderPath = path.join(root, 'scripts', 'submit-indexnow.cjs');
+const indexNowNotifierPath = path.join(root, 'scripts', 'notify-indexnow.cjs');
+const indexNowWorkflowPath = path.join(root, '.github', 'workflows', 'indexnow-after-production.yml');
 
 const middleware = fs.readFileSync(middlewarePath, 'utf8');
 const robots = fs.readFileSync(robotsPath, 'utf8');
 const productHook = fs.readFileSync(productHookPath, 'utf8');
 const prerender = fs.readFileSync(prerenderPath, 'utf8');
 const shopifyProxy = fs.readFileSync(shopifyProxyPath, 'utf8');
+const htmlGenerator = fs.readFileSync(htmlGeneratorPath, 'utf8');
+const dynamicSitemap = fs.readFileSync(dynamicSitemapPath, 'utf8');
+const sitemapPage = fs.readFileSync(sitemapPagePath, 'utf8');
+const app = fs.readFileSync(appPath, 'utf8');
+const autoRoutes = fs.readFileSync(autoRoutesPath, 'utf8');
+const prerenderManifest = fs.readFileSync(prerenderManifestPath, 'utf8');
+const approvedInventory = JSON.parse(fs.readFileSync(approvedInventoryPath, 'utf8'));
+const sitemapGenerator = fs.readFileSync(sitemapGeneratorPath, 'utf8');
+const indexNowBuilder = fs.readFileSync(indexNowBuilderPath, 'utf8');
+const indexNowNotifier = fs.readFileSync(indexNowNotifierPath, 'utf8');
+const indexNowWorkflow = fs.readFileSync(indexNowWorkflowPath, 'utf8');
+
+const machineReadablePaths = [
+  '/robots.txt',
+  '/sitemap.xml',
+  '/sitemap-products.xml',
+  '/sitemap-collections.xml',
+  '/sitemap-guides.xml',
+  '/sitemap-pages.xml',
+  '/sitemap-images.xml',
+  '/merchant-feed.xml',
+  '/google-shopping-feed.xml',
+  '/openai-search-products.jsonl.gz',
+  '/llms.txt',
+  '/llms-full.txt',
+  '/indexnow-manifest.json',
+  '/8e3d7c9415b24a5f9c81e62d1a0374bf.txt',
+  '/3c4a52b9-542f-4bfe-a61b-9afb42f4312c.txt',
+  '/e6b81aa0325a277cfb7c764e603dd9cd.txt',
+  '/google4e3f332d00afc8ba.html',
+];
 
 const failures = [];
 const requireText = (source, needle, label) => {
@@ -41,6 +84,24 @@ requireText(shopifyProxy, 'payload?.errors !== undefined', 'Shopify GraphQL erro
 requireText(shopifyProxy, "product === null\n      ? { status: 'not_found' }\n      : { status: 'found', product }", 'definitive Shopify lookup classification');
 requireText(middleware, "productLookup.status === 'found'", 'found-product middleware branch');
 requireText(middleware, "productLookup.status === 'unavailable'", 'unavailable-product middleware branch');
+requireText(middleware, 'returnProductDeploymentPending()', 'deployment-pending product response');
+
+if (middleware.includes('generateProductHtml') || htmlGenerator.includes('generateProductHtml')) {
+  failures.push('The retired standalone product HTML renderer must not remain reachable or defined.');
+}
+
+for (const forbidden of ['generateXmlSitemap', 'window.location.origin', 'Download Dynamic Sitemap']) {
+  if (dynamicSitemap.includes(forbidden) || sitemapPage.includes(forbidden)) {
+    failures.push(`The human sitemap page still exposes a divergent client-generated XML artifact: ${forbidden}`);
+  }
+}
+for (const routePath of machineReadablePaths.filter((value) => value.startsWith('/sitemap'))) {
+  requireText(
+    sitemapPage,
+    `https://luxemia.shop${routePath}`,
+    `canonical human-page link to ${routePath}`,
+  );
+}
 
 if (shopifyProxy.includes('Promise<ShopifyProduct | null>')) {
   failures.push('The Shopify proxy still exposes null as an ambiguous lookup result.');
@@ -70,19 +131,23 @@ const productRoute = productRouteStart >= 0 && productRouteEnd > productRouteSta
   : '';
 const lookupIndex = productRoute.indexOf('const productLookup = await fetchProductByHandle(handle);');
 const foundIndex = productRoute.indexOf("productLookup.status === 'found'", lookupIndex);
-const jewelryIndex = productRoute.indexOf('getJewelryProductByHandle(handle)', foundIndex);
-const unavailableIndex = productRoute.indexOf("productLookup.status === 'unavailable'", jewelryIndex);
+const unavailableIndex = productRoute.indexOf("productLookup.status === 'unavailable'", foundIndex);
 const unavailableResponseIndex = productRoute.indexOf('return returnShopifyUnavailable();', unavailableIndex);
 const final404Index = productRoute.indexOf('return return404(request);', unavailableResponseIndex);
+const deploymentPendingIndex = productRoute.indexOf('return returnProductDeploymentPending();', foundIndex);
 if (!(
   lookupIndex >= 0
   && lookupIndex < foundIndex
-  && foundIndex < jewelryIndex
-  && jewelryIndex < unavailableIndex
+  && foundIndex < deploymentPendingIndex
+  && deploymentPendingIndex < unavailableIndex
+  && foundIndex < unavailableIndex
   && unavailableIndex < unavailableResponseIndex
   && unavailableResponseIndex < final404Index
 )) {
-  failures.push('Product routing must serve found/local products, return 503 for upstream failure, and reserve 404 for definitive misses.');
+  failures.push('Product routing must serve Shopify-backed products, return 503 for upstream failure, and reserve 404 for definitive misses.');
+}
+if (/jewelryFallback|getJewelryProductByHandle|generateJewelryProductHtml/.test(productRoute)) {
+  failures.push('Product routing must not publish a non-Shopify product fallback.');
 }
 
 const requiredNoiseParameters = [
@@ -136,6 +201,76 @@ requireText(prerender, 'const MAX_COLLECTION_PRODUCTS = 50;', 'bounded first-pai
 requireText(prerender, 'generateApprovedProductDirectoryHtml', 'complete product directory generator');
 requireText(prerender, 'aria-label="Complete product directory"', 'crawlable complete product directory');
 
+// Every approved sitemap/IndexNow product must have a committed prerender.
+// The build then compares the approved set to fresh Shopify evidence and fails
+// on either an ineligible approved product or an eligible omission. The reverse
+// is deliberately not a source invariant: an unavailable but still useful
+// product page may remain prerendered while being excluded from the sitemap.
+const parseSetValues = (source, exportName) => {
+  const block = source.match(new RegExp(`${exportName}[^=]*=\\s*new Set\\(\\[([\\s\\S]*?)\\]\\);`))?.[1] || '';
+  return [...block.matchAll(/['"]([^'"]+)['"]/g)].map((match) => match[1]);
+};
+const productManifestHandles = parseSetValues(prerenderManifest, 'PRERENDERED_PRODUCT_HANDLES');
+const routeManifestPaths = new Set(parseSetValues(autoRoutes, 'PRERENDERED_ROUTES'));
+const approvedPaths = Array.isArray(approvedInventory.paths) ? approvedInventory.paths : [];
+const approvedProductHandles = approvedPaths
+  .filter((routePath) => routePath.startsWith('/product/'))
+  .map((routePath) => routePath.slice('/product/'.length));
+const productManifestSet = new Set(productManifestHandles);
+const approvedProductSet = new Set(approvedProductHandles);
+if (
+  approvedInventory.urlCount !== approvedPaths.length
+  || new Set(approvedPaths).size !== approvedPaths.length
+  || productManifestSet.size !== productManifestHandles.length
+  || approvedProductSet.size !== approvedProductHandles.length
+) {
+  failures.push('Approved sitemap and committed product-prerender inventories must declare exact, duplicate-free counts.');
+}
+const unprerenderedApprovedProducts = approvedProductHandles.filter((handle) => !productManifestSet.has(handle));
+if (unprerenderedApprovedProducts.length > 0) {
+  failures.push(
+    `Approved sitemap/IndexNow products have no committed prerender: ${unprerenderedApprovedProducts.join(', ')}.`,
+  );
+}
+for (const routePath of approvedPaths.filter((value) => !value.startsWith('/product/'))) {
+  if (!routeManifestPaths.has(routePath)) failures.push(`Approved non-product sitemap route is absent from the prerender manifest: ${routePath}`);
+}
+if (!approvedInventory.source?.includes(`${approvedProductHandles.length} live, orderable products`)) {
+  failures.push('Approved sitemap provenance does not state its exact gated product count.');
+}
+
+for (const [needle, label] of [
+  ['getSitemapProductEvidenceFailures', 'Shopify product-evidence gate'],
+  ["product?.availableForSale !== true", 'product availability gate'],
+  ['availableVariants.length === 0', 'available-variant gate'],
+  ['isPositiveUsdMoney', 'positive USD price gate'],
+  ['product?.variants?.pageInfo?.hasNextPage', 'complete-variant-set gate'],
+  ['duplicatePrimaryImages', 'primary-image collision gate'],
+  ['RETIRED_PRODUCT_HANDLES', 'retired-product exclusion gate'],
+  ['HIDDEN_BILLING_PRODUCT_HANDLES', 'hidden billing-product exclusion gate'],
+  ['unapprovedEligibleProducts', 'eligible-product omission gate'],
+  ['validatePrerenderedRoute', 'built canonical/indexability gate'],
+  ['hasSubstantiveCopy', 'built substantive-copy gate'],
+  ['hasPurchasableOffer', 'built orderability gate'],
+  ["const names = ['products', 'collections', 'guides', 'pages', 'images'];", 'five-file sitemap index'],
+  ['lastmodByName', 'scoped meaningful lastmod aggregation'],
+]) requireText(sitemapGenerator, needle, label);
+
+for (const agent of ['*', 'Googlebot', 'Bingbot', 'OAI-SearchBot', 'PerplexityBot']) {
+  requireText(robots, `User-agent: ${agent}`, `${agent} robots group`);
+}
+for (const privatePath of ['/admin', '/account', '/auth', '/wishlist', '/cart', '/checkout', '/api/', '/order-confirmation', '/_prerender/']) {
+  requireText(robots, `Disallow: ${privatePath}`, `private robots exclusion ${privatePath}`);
+}
+
+for (const [source, checks] of [
+  [indexNowBuilder, ['semanticPayload', "const SITEMAPS = ['products', 'collections', 'guides', 'pages'];", 'retiredCount', 'redirectChangedCount']],
+  [indexNowNotifier, ["INDEXNOW_POST_DEPLOY !== '1'", "['initial-baseline', 'ready-after-deploy']", 'IndexNow is a discovery notification, not an indexing guarantee']],
+  [indexNowWorkflow, ['deployment_status:', "state == 'success'", 'INDEXNOW_POST_DEPLOY:']],
+]) {
+  for (const check of checks) requireText(source, check, `IndexNow staged-delivery guard ${check}`);
+}
+
 const initialIndex = productHook.indexOf('if (initial) {');
 const firstPaintIndex = productHook.indexOf('applyProducts(initial);', initialIndex);
 const loadingCompleteIndex = productHook.indexOf('setIsLoading(false);', firstPaintIndex);
@@ -166,12 +301,219 @@ requireText(productHook, 'window.__INITIAL_DATA__ = undefined;', 'route-scoped h
 requireText(productHook, 'let cancelled = false;', 'unmounted-request cancellation guard');
 requireText(productHook, 'Unable to refresh the complete Shopify catalog', 'non-blocking background refresh fallback');
 
-if (failures.length > 0) {
-  console.error('Indexation recovery validation failed:');
-  for (const failure of failures) console.error(`- ${failure}`);
-  process.exit(1);
+async function validateCanonicalHostAndFeedAliases() {
+  const middlewareBundle = esbuild.buildSync({
+    entryPoints: [middlewarePath],
+    bundle: true,
+    format: 'cjs',
+    platform: 'node',
+    write: false,
+    logLevel: 'silent',
+  }).outputFiles[0].text;
+  const middlewareModule = { exports: {} };
+  new Function('module', 'exports', 'require', middlewareBundle)(
+    middlewareModule,
+    middlewareModule.exports,
+    require,
+  );
+  const builtMiddleware = middlewareModule.exports;
+  const configuredMatchers = new Set(builtMiddleware.config?.matcher || []);
+
+  for (const routePath of machineReadablePaths) {
+    if (!configuredMatchers.has(routePath)) {
+      failures.push(`Machine-readable route bypasses canonical-host middleware: ${routePath}`);
+      continue;
+    }
+    const response = await builtMiddleware.default(
+      new Request(`https://www.luxemia.shop${routePath}`),
+    );
+    const expectedLocation = `https://luxemia.shop${routePath}`;
+    if (response.status !== 301 || response.headers.get('location') !== expectedLocation) {
+      failures.push(
+        `www machine-readable route must 301 directly to ${expectedLocation}: ${routePath} `
+        + `(received ${response.status} ${response.headers.get('location') || '(no location)'})`,
+      );
+    }
+  }
+
+  for (const [source, destination] of [
+    ['http://luxemia.shop/lehengas?color=red', 'https://luxemia.shop/lehengas?color=red'],
+    ['http://www.luxemia.shop/sarees', 'https://luxemia.shop/sarees'],
+    ['https://www.luxemia.shop/shipping/canada', 'https://luxemia.shop/shipping/canada'],
+  ]) {
+    const response = await builtMiddleware.default(new Request(source));
+    if (response.status !== 301 || response.headers.get('location') !== destination) {
+      failures.push(`Canonical host redirect must be one 301 hop from ${source} to ${destination}.`);
+    }
+  }
+
+  const vercelConfig = JSON.parse(fs.readFileSync(path.join(root, 'vercel.json'), 'utf8'));
+  const canonicalFeedUrl = 'https://luxemia.shop/merchant-feed.xml';
+  const feedAliases = [
+    '/feed.xml',
+    '/shopping-feed.xml',
+    '/products.xml',
+    '/google-shopping.xml',
+    '/feed.tsv',
+    '/api/merchant-feed',
+    '/google-shopping-feed.xml',
+  ];
+  for (const alias of feedAliases) {
+    const redirect = (vercelConfig.redirects || []).find((entry) => entry.source === alias);
+    if (!redirect || redirect.statusCode !== 301 || redirect.destination !== canonicalFeedUrl) {
+      failures.push(`${alias} must 301 directly to the canonical apex Merchant feed URL`);
+    }
+    if ((vercelConfig.rewrites || []).some((entry) => entry.source === alias)) {
+      failures.push(`${alias} must not remain a duplicate 200 rewrite of the Merchant feed`);
+    }
+  }
+
+  const originalFetch = global.fetch;
+  try {
+    global.fetch = async (input) => {
+      const requestUrl = String(input instanceof Request ? input.url : input);
+      if (requestUrl.endsWith('/_prerender/lehengas.html')) {
+        return new Response('<!doctype html><html><head><title>Lehengas</title></head><body><h1>Lehengas</h1></body></html>', {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      }
+      if (requestUrl.endsWith('/_prerender/404.html')) {
+        return new Response('<!doctype html><html><head><meta name="robots" content="noindex,nofollow"><title>Not Found</title></head><body><h1>Not Found</h1></body></html>', {
+          status: 200,
+          headers: { 'Content-Type': 'text/html; charset=utf-8' },
+        });
+      }
+      if (!requestUrl.startsWith('https://lovable-project-zlh0w.myshopify.com/')) {
+        throw new Error(`Unexpected validator fetch: ${requestUrl}`);
+      }
+      return new Response(JSON.stringify({
+        data: {
+          product: {
+            handle: 'validator-new-live-product',
+            title: 'Validator Live Product',
+            priceRange: { minVariantPrice: { amount: '999.99', currencyCode: 'USD' } },
+            images: { edges: [] },
+            variants: { edges: [] },
+            options: [],
+          },
+        },
+      }), {
+        status: 200,
+        headers: { 'Content-Type': 'application/json' },
+      });
+    };
+
+    const pendingResponse = await builtMiddleware.default(
+      new Request('https://luxemia.shop/product/validator-new-live-product'),
+    );
+    const pendingBody = await pendingResponse.text();
+    if (
+      pendingResponse.status !== 503
+      || pendingResponse.headers.get('x-robots-tag') !== 'noindex, nofollow'
+      || pendingResponse.headers.get('cache-control') !== 'no-store'
+      || !pendingBody.includes('next storefront deployment')
+      || /Validator Live Product|999\.99|InStock|OutOfStock|application\/ld\+json/i.test(pendingBody)
+    ) {
+      failures.push('A live Shopify product absent from the prerender manifest must return a fact-free, noindex, no-store 503 deployment-pending response.');
+    }
+
+    const facetResponse = await builtMiddleware.default(
+      new Request('https://luxemia.shop/lehengas?color=red&sort_by=price-ascending'),
+    );
+    if (
+      facetResponse.status !== 200
+      || facetResponse.headers.get('x-robots-tag') !== 'noindex, follow'
+      || facetResponse.headers.get('link') !== '<https://luxemia.shop/lehengas>; rel="canonical"'
+    ) {
+      failures.push('Uncontrolled facet/sort URLs must return clean-parent canonical and HTTP noindex,follow signals.');
+    }
+
+    const goneResponse = await builtMiddleware.default(
+      new Request('https://luxemia.shop/blog/jj-valaya-royal-couture-house-of-valaya'),
+    );
+    if (goneResponse.status !== 410 || goneResponse.headers.get('x-robots-tag') !== 'noindex, nofollow') {
+      failures.push('A verified retired editorial URL without an exact replacement must return 410 noindex,nofollow.');
+    }
+
+    const missingResponse = await builtMiddleware.default(
+      new Request('https://luxemia.shop/validator-definitive-missing-page'),
+    );
+    if (missingResponse.status !== 404 || missingResponse.headers.get('x-robots-tag') !== 'noindex, follow') {
+      failures.push('An unmatched public URL must return a real 404 with an HTTP noindex directive.');
+    }
+
+    const previewResponse = await builtMiddleware.default(
+      new Request('https://validator-preview.vercel.app/robots.txt'),
+    );
+    if (previewResponse.headers.get('x-robots-tag') !== 'noindex, nofollow') {
+      failures.push('Preview-host responses must be protected by HTTP noindex,nofollow.');
+    }
+  } finally {
+    global.fetch = originalFetch;
+  }
+
+  const { buildNotificationPlan, collectRedirectInventory } = require('./submit-indexnow.cjs');
+  const fixtureSource = 'https://luxemia.shop/validator-new-redirect-source';
+  const fixtureRedirects = {
+    [fixtureSource]: {
+      destination: 'https://luxemia.shop/validator-final-destination',
+      statusCode: 301,
+      hash: 'fixture-hash',
+    },
+  };
+  const fixturePlan = buildNotificationPlan(
+    {},
+    fixtureRedirects,
+    { entries: {}, redirects: {} },
+    'compared',
+  );
+  if (
+    fixturePlan.redirectChangedCount !== 1
+    || fixturePlan.redirectRemovedCount !== 0
+    || fixturePlan.urls.length !== 1
+    || fixturePlan.urls[0] !== fixtureSource
+  ) {
+    failures.push('IndexNow planning does not notify a newly introduced redirect source.');
+  }
+
+  const redirectInventory = collectRedirectInventory();
+  for (const match of app.matchAll(/<Route\s+path="([^"]+)"\s+element=\{<Navigate\s+to="([^"]+)"/g)) {
+    const source = new URL(match[1], 'https://luxemia.shop').toString();
+    const expectedDestination = new URL(match[2], 'https://luxemia.shop').toString();
+    const redirect = redirectInventory[source];
+    if (!redirect || redirect.statusCode !== 301 || redirect.destination !== expectedDestination) {
+      failures.push(`SPA redirect ${match[1]} -> ${match[2]} lacks the same direct server-side 301.`);
+    }
+  }
+  for (const source of [
+    'https://luxemia.shop/bestsellers',
+    'https://luxemia.shop/nri/uk',
+    'https://luxemia.shop/product/green-net-sequins-occasion-lehenga-choli',
+    'https://luxemia.shop/collections/earrings',
+    'https://luxemia.shop/blog/how-to-measure-yourself-for-a-saree-or-lehenga',
+    'https://luxemia.shop/feed.xml',
+  ]) {
+    if (!redirectInventory[source]) failures.push(`IndexNow redirect inventory is missing ${source}`);
+  }
 }
 
-console.log(
-  'Indexation recovery validation passed: public query duplicates expose clean canonicals, transient Shopify failures stay out of the 404/cache path, variant URLs stay crawlable, the first 50 collection products paint immediately, the full catalog refreshes after hydration, and the complete crawlable product directory remains available.',
-);
+async function main() {
+  await validateCanonicalHostAndFeedAliases();
+
+  if (failures.length > 0) {
+    console.error('Indexation recovery validation failed:');
+    for (const failure of failures) console.error(`- ${failure}`);
+    process.exitCode = 1;
+    return;
+  }
+
+  console.log(
+    `Indexation recovery validation passed: ${approvedProductHandles.length} approved product URLs exactly match the committed prerender and sitemap/IndexNow inventories; public query duplicates expose clean canonicals; 410/404 and preview responses fail closed; all SPA redirects have direct server 301s; transient Shopify failures stay out of the 404/cache path; live products outside the deployed prerender fail closed; variant URLs stay crawlable; the first 50 collection products paint immediately; the full catalog refreshes after hydration; the complete crawlable product directory remains available; the human sitemap links only deployment-generated XML; redirect sources enter post-deploy IndexNow planning; and ${machineReadablePaths.length} machine-readable routes plus all feed aliases enforce the apex host.`,
+  );
+}
+
+main().catch((error) => {
+  console.error(`Indexation recovery validation failed: ${error.message}`);
+  process.exitCode = 1;
+});

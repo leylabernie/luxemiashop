@@ -2,7 +2,6 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 
 import {
-  inferIncludedPiecesFromTitle,
   isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
   resolveIncludedPieces,
@@ -13,6 +12,10 @@ import {
   getCustomerFacingProductOptionName,
   hasNativeProductSizeOption,
 } from '../src/lib/productOptionNames.ts';
+import {
+  getDirectCardVariant,
+  requiresProductPageSelection,
+} from '../src/lib/purchaseOptions.ts';
 
 const variants = [
   {
@@ -44,6 +47,13 @@ const variants = [
     availableForSale: false,
     selectedOptions: [
       { name: 'Size', value: 'XL' },
+      { name: 'Stitching', value: 'Standard' },
+    ],
+  },
+  {
+    id: 'unknown-xxl',
+    selectedOptions: [
+      { name: 'Size', value: 'XXL' },
       { name: 'Stitching', value: 'Standard' },
     ],
   },
@@ -87,6 +97,19 @@ test('sold-out option values cannot create an unavailable combination', () => {
       { Size: 'M', Stitching: 'Standard' },
       'Size',
       'XL',
+    ),
+    null,
+  );
+});
+
+test('missing Shopify availability cannot create an orderable combination', () => {
+  assert.equal(isVariantOptionValueAvailable(variants, 'Size', 'XXL'), false);
+  assert.equal(
+    resolveAvailableVariantForOption(
+      variants,
+      { Size: 'M', Stitching: 'Standard' },
+      'Size',
+      'XXL',
     ),
     null,
   );
@@ -143,7 +166,6 @@ test('included pieces prefer normalized metadata and retain exact included tags'
     resolveIncludedPieces(
       ['Lehenga skirt', 'Blouse', 'Dupatta'],
       ['Included: generic set'],
-      'Pink Bridal Lehenga',
     ),
     'Lehenga skirt, Blouse, Dupatta',
   );
@@ -151,57 +173,11 @@ test('included pieces prefer normalized metadata and retain exact included tags'
     resolveIncludedPieces(
       null,
       ['Included: Blouse / lehenga skirt / matching dupatta'],
-      'Pink Bridal Lehenga',
     ),
     'Blouse / lehenga skirt / matching dupatta',
   );
-  assert.equal(resolveIncludedPieces(null, [], 'Pink Bridal Lehenga'), undefined);
-});
-
-
-test('title-backed included pieces require explicit garment evidence', () => {
-  assert.equal(
-    inferIncludedPiecesFromTitle(
-      'Cream Chinnon Beaded Palazzo Suit with Butti Dupatta',
-      ['three piece suit'],
-    ),
-    'Tunic, palazzo pants, and dupatta',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Embroidered Three-Piece Sharara Suit with Dupatta'),
-    'Tunic, sharara pants, and dupatta',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Silk Three Piece Gharara Suit with Matching Dupatta'),
-    'Tunic, gharara pants, and dupatta',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Cotton Salwar Kameez with Printed Dupatta'),
-    'Kameez, salwar pants, and dupatta',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Pink Net Lehenga Choli with Dupatta'),
-    'Lehenga, choli, and dupatta',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Banarasi Saree with Unstitched Blouse Piece'),
-    'Saree and blouse fabric',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Ivory Groom Sherwani with Embroidered Stole'),
-    'Sherwani and stole',
-  );
-  assert.equal(
-    inferIncludedPiecesFromTitle('Kurta Pajama with Nehru Vest'),
-    'Kurta, pajama pants, and vest',
-  );
-});
-
-test('title inference remains conservative for ambiguous listings', () => {
-  assert.equal(inferIncludedPiecesFromTitle('Pink Bridal Lehenga'), undefined);
-  assert.equal(inferIncludedPiecesFromTitle('Blue Palazzo Suit with Dupatta'), undefined);
-  assert.equal(inferIncludedPiecesFromTitle('Silk Saree with Dupatta'), undefined);
-  assert.equal(inferIncludedPiecesFromTitle('Groom Sherwani'), undefined);
+  assert.equal(resolveIncludedPieces(null, []), undefined);
+  assert.equal(resolveIncludedPieces(null, ['three piece suit', 'with dupatta']), undefined);
 });
 
 test('normalized metadata and exact included tags still outrank title inference', () => {
@@ -221,4 +197,37 @@ test('normalized metadata and exact included tags still outrank title inference'
     ),
     'Kurta, churidar, and stole',
   );
+});
+
+const cardProduct = (options, variantsForProduct, availableForSale = true) => ({
+  availableForSale,
+  options,
+  variants: {
+    edges: variantsForProduct.map((variant) => ({ node: variant })),
+  },
+});
+
+test('card checkout never guesses a selectable or Custom Shopify option', () => {
+  const directVariant = {
+    id: 'direct',
+    availableForSale: true,
+    selectedOptions: [{ name: 'Title', value: 'Default Title' }],
+  };
+  const customVariant = {
+    id: 'custom',
+    availableForSale: true,
+    selectedOptions: [{ name: 'Size', value: 'Custom' }],
+  };
+  const sizedVariants = [
+    { id: 'small', availableForSale: true, selectedOptions: [{ name: 'Size', value: 'S' }] },
+    { id: 'medium', availableForSale: true, selectedOptions: [{ name: 'Size', value: 'M' }] },
+  ];
+
+  assert.equal(requiresProductPageSelection(cardProduct([{ name: 'Title', values: ['Default Title'] }], [directVariant])), false);
+  assert.equal(getDirectCardVariant(cardProduct([{ name: 'Title', values: ['Default Title'] }], [directVariant]))?.id, 'direct');
+  assert.equal(requiresProductPageSelection(cardProduct([{ name: 'Size', values: ['Custom'] }], [customVariant])), true);
+  assert.equal(getDirectCardVariant(cardProduct([{ name: 'Size', values: ['Custom'] }], [customVariant])), null);
+  assert.equal(requiresProductPageSelection(cardProduct([{ name: 'Size', values: ['S', 'M'] }], sizedVariants)), true);
+  assert.equal(getDirectCardVariant(cardProduct([{ name: 'Size', values: ['S', 'M'] }], sizedVariants)), null);
+  assert.equal(getDirectCardVariant(cardProduct([{ name: 'Title', values: ['Default Title'] }], [directVariant], false)), null);
 });

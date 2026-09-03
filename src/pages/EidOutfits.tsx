@@ -11,6 +11,9 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import CollectionDecisionSupport from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 import { sortProducts } from '@/lib/productFilters';
 
 const sortOptions = [
@@ -35,7 +38,7 @@ const eidOutfitFaqs = [
   },
   {
     question: 'Do you ship Eid outfits to the United States?',
-    answer: 'LuxeMia ships Eid outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $199 and above and $14.99 below $199. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Eid outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is free at $199 and above and $14.99 below $199; the other destinations use the rates and thresholds on the Shipping page. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'How do I confirm what comes with an outfit?',
@@ -44,10 +47,11 @@ const eidOutfitFaqs = [
 ];
 
 const EidOutfits = () => {
-  const { products, isLoading } = useShopifyProducts('occasion:eid');
+  const { products, isLoading, error } = useShopifyProducts('occasion:eid');
   const [sortBy, setSortBy] = useState('featured');
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
+  const collectionItems = toCollectionSchemaItems(sortedProducts);
 
   return (
     <div className="min-h-screen bg-background">
@@ -55,6 +59,10 @@ const EidOutfits = () => {
         title="Eid Outfits — Indian Ethnic Wear for Eid | LuxeMia"
         description="Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms."
         canonical="https://luxemia.shop/collections/eid-outfits"
+        type="collection"
+        collection={!isLoading && !error && collectionItems.length > 0
+          ? { name: 'Eid Outfits', description: 'Current LuxeMia products explicitly marked for Eid, Ramadan, or chikankari.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Occasions', url: '/collections' },
@@ -89,7 +97,7 @@ const EidOutfits = () => {
         <div className="border-b border-border/30 bg-background sticky top-[90px] lg:top-[132px] z-30">
           <div className="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
             <p className="text-sm text-muted-foreground">
-              {isLoading ? 'Loading…' : `${sortedProducts.length} styles`}
+              {isLoading ? 'Loading…' : error ? 'Inventory unavailable' : `${sortedProducts.length} styles`}
             </p>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -121,7 +129,9 @@ const EidOutfits = () => {
                 </div>
               ))}
             </div>
-          ) : (
+          ) : error ? (
+            <CatalogLoadError retryHref="/collections/eid-outfits" />
+          ) : sortedProducts.length > 0 ? (
             <motion.div
               className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
               initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.4 }}
@@ -130,8 +140,17 @@ const EidOutfits = () => {
                 <ProductCard key={product.node.id} product={product} index={index} />
               ))}
             </motion.div>
+          ) : (
+            <div className="rounded-sm border border-border p-8 text-center">
+              <h2 className="font-serif text-xl">No current Eid-specific products</h2>
+              <p className="mx-auto mt-2 max-w-xl text-sm text-muted-foreground">
+                No available catalog records currently match this collection’s explicit Eid, Ramadan, or chikankari signals.
+              </p>
+            </div>
           )}
         </section>
+
+        {!error ? <CollectionDecisionSupport path="/collections/eid-outfits" products={sortedProducts} isLoading={isLoading} showFaqs={false} /> : null}
 
         {/* About section */}
         <section className="border-t border-border/30 bg-secondary/20 py-12">
@@ -158,7 +177,7 @@ const EidOutfits = () => {
 
               <div className="border-t border-border/30 pt-5 mt-6">
                 <h3 className="font-medium text-foreground mb-2">When to Order Your Eid Outfit</h3>
-                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, with tracking after dispatch.</p>
+                <p>For a fixed event or festival date, review the selected product and options, then contact LuxeMia before ordering to confirm timing. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. When tracking is issued, carrier scans can appear after label creation.</p>
               </div>
 
               <div className="border-t border-border/30 pt-5 mt-6">

@@ -11,12 +11,17 @@ import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { getDirectCardVariant } from '@/lib/purchaseOptions';
+import { hasExplicitReadyToShipEvidence } from '@/lib/readyToShipEvidence';
+import { isMadeToOrderProduct } from '@/lib/customizableProducts';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
 
 type TabType = 'new' | 'ready';
 
 const ShopByCategory = () => {
   const [activeTab, setActiveTab] = useState<TabType>('new');
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading, error } = useShopifyProducts();
   const navigate = useNavigate();
   const addToCart = useCartStore((state) => state.addItem);
   const { items: wishlistItems, addItem: addToWishlist, removeItem: removeFromWishlist } = useWishlistStore();
@@ -27,7 +32,10 @@ const ShopByCategory = () => {
     if (!products) return [];
 
     // Exclude menswear from all tabs to avoid confusion
-    const womensProducts = products.filter(p => p.node.productType !== 'Menswear');
+    const womensProducts = products.filter((product) => (
+      product.node.productType !== 'Menswear'
+      && isProductExplicitlyOrderable(product.node)
+    ));
 
     switch (activeTab) {
       case 'new':
@@ -36,9 +44,15 @@ const ShopByCategory = () => {
           .sort((a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime())
           .slice(0, 8);
       case 'ready':
-        // Available Online — products that are in stock and can ship quickly (sarees & suits)
+        // Ready-to-ship is a positive Shopify classification. Availability or
+        // the absence of a made-to-order tag is not enough evidence.
         return womensProducts
-          .filter(p => p.node.productType === 'Sarees' || p.node.productType === 'Salwar Kameez')
+          .filter((product) => (
+            product.node.availableForSale === true
+            && product.node.variants.edges.some((edge) => edge.node.availableForSale === true)
+            && !isMadeToOrderProduct(product.node.handle, product.node.tags)
+            && hasExplicitReadyToShipEvidence(product.node)
+          ))
           .slice(0, 8);
       default:
         return [...womensProducts]
@@ -49,12 +63,9 @@ const ShopByCategory = () => {
 
   const displayProducts = getProductsForTab();
 
-  const formatPrice = (price: string) => {
-    return `$${parseFloat(price).toFixed(0)}`;
-  };
-
   const handleQuickAdd = (product: ShopifyProduct) => {
     const node = product.node;
+    if (!isProductExplicitlyOrderable(node)) return;
     const variant = getDirectCardVariant(node);
 
     if (!variant) {
@@ -90,8 +101,8 @@ const ShopByCategory = () => {
   };
 
   const tabs = [
-    { id: 'new' as TabType, label: 'New Arrivals' },
-    { id: 'ready' as TabType, label: 'Available Online' },
+    { id: 'new' as TabType, label: 'Recently Added' },
+    { id: 'ready' as TabType, label: 'Ready to Ship' },
   ];
 
   return (
@@ -126,6 +137,8 @@ const ShopByCategory = () => {
               <ProductPlaceholder key={i} />
             ))}
           </div>
+        ) : error ? (
+          <CatalogLoadError retryHref="/" />
         ) : (
           <motion.div 
             key={activeTab}
@@ -134,9 +147,16 @@ const ShopByCategory = () => {
             transition={{ duration: 0.4 }}
             className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6"
           >
-            {displayProducts.map((product, index) => {
+            {displayProducts.length === 0 ? (
+              <p className="col-span-full py-10 text-center text-sm text-muted-foreground" role="status">
+                {activeTab === 'ready'
+                  ? 'No products with explicit ready-to-ship evidence are available in this view right now.'
+                  : 'No current products were returned for this view.'}
+              </p>
+            ) : displayProducts.map((product, index) => {
               const node = product.node;
               const imageUrl = node.images.edges[0]?.node.url || '';
+              const isOrderable = isProductExplicitlyOrderable(node);
               const directCardVariant = getDirectCardVariant(node);
               
               return (
@@ -184,15 +204,16 @@ const ShopByCategory = () => {
                           handleQuickAdd(product);
                         }}
                         className="absolute bottom-3 left-3 right-3 py-2.5 bg-background/95 backdrop-blur-sm text-foreground text-sm font-medium rounded-sm opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 flex items-center justify-center gap-2"
+                        disabled={!isOrderable}
                       >
                         <ShoppingBag className="w-4 h-4" />
-                        {directCardVariant ? 'Add to Bag' : 'Choose Options'}
+                        {!isOrderable ? 'Sold Out' : directCardVariant ? 'Add to Bag' : 'Choose Options'}
                       </button>
 
                       {/* Badge */}
                       {activeTab === 'new' && (
                         <span className="absolute top-3 left-3 px-2 py-1 bg-foreground text-background text-xs font-medium rounded-sm">
-                          New
+                          Recently Added
                         </span>
                       )}
                     </div>
@@ -208,12 +229,18 @@ const ShopByCategory = () => {
                     </h3>
                     <div className="flex items-center gap-2">
                       <p className="text-sm font-semibold">
-                        {formatPrice(node.priceRange.minVariantPrice.amount)}
+                        {formatCurrencyAmount(
+                          node.priceRange.minVariantPrice.amount,
+                          node.priceRange.minVariantPrice.currencyCode,
+                        )}
                       </p>
                       {node.compareAtPriceRange?.minVariantPrice?.amount &&
                         parseFloat(node.compareAtPriceRange.minVariantPrice.amount) > parseFloat(node.priceRange.minVariantPrice.amount) && (
                         <span className="text-xs text-muted-foreground line-through">
-                          {formatPrice(node.compareAtPriceRange.minVariantPrice.amount)}
+                          {formatCurrencyAmount(
+                            node.compareAtPriceRange.minVariantPrice.amount,
+                            node.compareAtPriceRange.minVariantPrice.currencyCode,
+                          )}
                         </span>
                       )}
                       {node.compareAtPriceRange?.minVariantPrice?.amount &&

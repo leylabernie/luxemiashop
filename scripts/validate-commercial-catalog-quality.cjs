@@ -9,6 +9,12 @@ const path = require('path');
 const PRODUCT_ROOT = path.resolve(__dirname, '../dist/_prerender/product');
 const COMMERCIAL_LINK_MARKER = 'aria-label="Shop purchase-intent collections"';
 const GENERIC_INCLUDED_COPY = /see the product description and images|review the product images|review the listing images|exact set contents/i;
+const REQUIRED_PRODUCT_SUPPORT_LINKS = [
+  '/sizing-measurements-guide',
+  '/shipping',
+  '/returns',
+  '/contact',
+];
 
 function walk(directory) {
   if (!fs.existsSync(directory)) return [];
@@ -103,6 +109,12 @@ for (const filePath of files) {
 
   if (html.includes(COMMERCIAL_LINK_MARKER)) withCommercialLinks += 1;
   else failures.push(`missing purchase-intent navigation: ${relativePath}`);
+
+  for (const href of REQUIRED_PRODUCT_SUPPORT_LINKS) {
+    if (!html.includes(`href="${href}"`)) {
+      failures.push(`missing ${href} support link: ${relativePath}`);
+    }
+  }
 
   if (included) {
     withIncludedPieces += 1;

@@ -360,7 +360,7 @@ function parseCommercialCollectionHtml(route, category) {
   if (!itemList) return `${route}: missing valid ItemList JSON-LD`;
 
   const itemListHandles = (itemList.itemListElement || [])
-    .map((entry) => entry?.item?.url?.match(/\/product\/([^/?#]+)$/)?.[1])
+    .map((entry) => (entry?.url || entry?.item?.url)?.match(/\/product\/([^/?#]+)$/)?.[1])
     .filter(Boolean);
   const expected = JSON.stringify(payloadHandles);
   const cardHandles = linkedHandles.slice(0, payloadHandles.length);
@@ -572,8 +572,8 @@ function main() {
     seoArchitectureFailures.push('/: homepage still advertises a search action without an indexable search route');
   }
   const homepageLogoCount = (homepageHtml.match(/"logo"\s*:\s*"https:\/\/luxemia\.shop\/og-image\.jpg"/g) || []).length;
-  if (homepageLogoCount !== 2) {
-    seoArchitectureFailures.push(`/: expected two branded Organization/OnlineStore logo references, found ${homepageLogoCount}`);
+  if (homepageLogoCount !== 1) {
+    seoArchitectureFailures.push(`/: expected one consolidated Organization/OnlineStore logo reference, found ${homepageLogoCount}`);
   }
 
   if (seoArchitectureFailures.length > 0) {

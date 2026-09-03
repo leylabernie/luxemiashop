@@ -96,6 +96,17 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
   const titleLower = (p.title || '').toLowerCase();
   const productTypeLower = (p.productType || '').toLowerCase();
 
+  // A groom-sherwani landing must require both garment and role evidence.
+  // Matching either "groom" or "sherwani" alone would leak groom kurtas or
+  // wedding-guest sherwanis into a more specific canonical collection.
+  if (sub.slug === 'groom-sherwani') {
+    const evidence = [titleLower, productTypeLower, ...tags];
+    const hasSherwani = evidence.some((value) => /\bsherwani\b/i.test(value));
+    const hasGroom = tags.some((tag) => /^(?:role|occasion):groom$/i.test(tag))
+      || evidence.some((value) => /\bgroom(?:'s)?\b/i.test(value));
+    return hasSherwani && hasGroom;
+  }
+
   // ─── Occasion subcategories ───────────────────────────────────────────────
   // CRITICAL: For occasion subcategories, ONLY match prefixed tags (occasion:bridal)
   // and title words — NOT bare tags or description (with controlled exceptions).
@@ -254,16 +265,17 @@ export function applyProductFiltersV2(
       filtered = filtered.filter(p => {
         return values.some(value => {
           const valueLower = value.toLowerCase();
-          const tags = getTags(p.node);
           const variants = p.node.variants?.edges || [];
 
           if (valueLower.includes('ready')) {
-            const hasAvailable = variants.some(v => v.node.availableForSale !== false);
+            const hasAvailable = p.node.availableForSale === true
+              && variants.some(v => v.node.availableForSale === true);
             return hasAvailable && !isMadeToOrderProduct(p.node.handle, p.node.tags);
           }
 
           if (valueLower.includes('available online')) {
-            return variants.some(v => v.node.availableForSale);
+            return p.node.availableForSale === true
+              && variants.some(v => v.node.availableForSale === true);
           }
 
           if (valueLower.includes('made to order') || valueLower.includes('custom')) {

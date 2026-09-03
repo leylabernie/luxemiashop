@@ -8,6 +8,8 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
+import { requiresProductPageSelection } from '@/lib/purchaseOptions';
 
 interface QuickViewModalProps {
   product: ShopifyProduct | null;
@@ -21,7 +23,10 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
 
   const productId = product?.node.id;
   const variants = product?.node.variants.edges ?? [];
-  const firstAvailableIdx = variants.findIndex((variant) => variant.node.availableForSale !== false);
+  const productIsOrderable = product?.node.availableForSale === true;
+  const firstAvailableIdx = productIsOrderable
+    ? variants.findIndex((variant) => variant.node.availableForSale === true)
+    : -1;
 
   useEffect(() => {
     setSelectedVariantIdx(firstAvailableIdx >= 0 ? firstAvailableIdx : 0);
@@ -36,9 +41,12 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
   const inWishlist = isInWishlist(product.node.id);
 
   const hasMultipleVariants = variants.length > 1 && !(variants.length === 1 && variants[0].node.title === 'Default Title');
+  const needsFullProductControls = requiresProductPageSelection(product.node);
+  const selectedVariantIsOrderable = product.node.availableForSale === true
+    && selectedVariant?.availableForSale === true;
 
   const handleAddToBag = () => {
-    if (!selectedVariant) return;
+    if (!selectedVariant || !selectedVariantIsOrderable) return;
     addItem({
       product,
       variantId: selectedVariant.id,
@@ -114,15 +122,23 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
               <h2 className="font-serif text-xl lg:text-2xl mb-2 leading-snug">{title}</h2>
               <div className="flex items-baseline gap-2 mb-4">
                 <p className="text-lg font-medium">
-                  ${price.toFixed(2)}
+                  {formatCurrencyAmount(
+                    selectedVariant?.price?.amount || product.node.priceRange.minVariantPrice.amount,
+                    selectedVariant?.price?.currencyCode || product.node.priceRange.minVariantPrice.currencyCode,
+                  )}
                 </p>
                 {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                  product.node.compareAtPriceRange.minVariantPrice.currencyCode === (selectedVariant?.price?.currencyCode || product.node.priceRange.minVariantPrice.currencyCode) &&
                   parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > price && (
                   <p className="text-sm text-muted-foreground line-through">
-                    ${parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount).toFixed(2)}
+                    {formatCurrencyAmount(
+                      product.node.compareAtPriceRange.minVariantPrice.amount,
+                      product.node.compareAtPriceRange.minVariantPrice.currencyCode,
+                    )}
                   </p>
                 )}
                 {product.node.compareAtPriceRange?.minVariantPrice?.amount &&
+                  product.node.compareAtPriceRange.minVariantPrice.currencyCode === (selectedVariant?.price?.currencyCode || product.node.priceRange.minVariantPrice.currencyCode) &&
                   parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount) > price && (
                   <p className="text-xs text-primary font-medium">
                     {Math.round((1 - price / parseFloat(product.node.compareAtPriceRange.minVariantPrice.amount)) * 100)}% off
@@ -141,13 +157,13 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
                       <button
                         key={v.node.id}
                         data-testid={`quick-view-variant-${idx}`}
-                        onClick={() => v.node.availableForSale !== false && setSelectedVariantIdx(idx)}
-                        disabled={v.node.availableForSale === false}
-                        aria-label={`${v.node.selectedOptions?.[0]?.value || v.node.title}${v.node.availableForSale === false ? ' — unavailable' : ''}`}
+                        onClick={() => product.node.availableForSale === true && v.node.availableForSale === true && setSelectedVariantIdx(idx)}
+                        disabled={product.node.availableForSale !== true || v.node.availableForSale !== true}
+                        aria-label={`${v.node.selectedOptions?.[0]?.value || v.node.title}${product.node.availableForSale !== true || v.node.availableForSale !== true ? ' — unavailable' : ''}`}
                         className={`px-3 py-1.5 text-xs border rounded-sm transition-colors ${
                           selectedVariantIdx === idx
                             ? 'border-foreground bg-foreground text-background'
-                            : v.node.availableForSale === false
+                            : product.node.availableForSale !== true || v.node.availableForSale !== true
                               ? 'border-border/50 text-muted-foreground/50 line-through cursor-not-allowed'
                               : 'border-border hover:border-foreground/50'
                         }`}
@@ -171,10 +187,12 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
                   onClick={handleAddToBag}
                   data-testid="quick-view-add-to-bag"
                   className="w-full"
-                  disabled={!selectedVariant?.availableForSale}
+                  disabled={!selectedVariantIsOrderable || needsFullProductControls}
                 >
                   <Plus className="w-4 h-4 mr-2" />
-                  {selectedVariant?.availableForSale !== false ? 'Add to Bag' : 'Sold Out'}
+                  {!selectedVariantIsOrderable
+                    ? 'Sold Out'
+                    : needsFullProductControls ? 'Choose on Product Page' : 'Add to Bag'}
                 </Button>
 
                 <div className="flex gap-2">

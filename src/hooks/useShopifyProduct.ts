@@ -23,6 +23,32 @@ function getInitialProduct(handle: string | undefined): ShopifyProduct['node'] |
   return initial.product;
 }
 
+interface ShopifyProductLoadState {
+  handle: string | undefined;
+  product: ShopifyProduct['node'] | null;
+  isLoading: boolean;
+  error: string | null;
+}
+
+/**
+ * Never expose data that was resolved for a previous route parameter. Effects
+ * run after render, so relying on an effect reset alone can briefly publish
+ * product A's content and schema under product B's URL during SPA navigation.
+ */
+export function resolveProductLoadStateForHandle(
+  state: ShopifyProductLoadState,
+  handle: string | undefined,
+): ShopifyProductLoadState {
+  if (state.handle === handle) return state;
+
+  return {
+    handle,
+    product: null,
+    isLoading: true,
+    error: null,
+  };
+}
+
 /**
  * useShopifyProduct — renders a route-scoped build-time record immediately
  * when it exists, then refreshes from Shopify. On client-only product visits
@@ -33,51 +59,62 @@ export const useShopifyProduct = (
   handle: string | undefined,
   options: { allowHiddenBillingProduct?: boolean } = {},
 ) => {
-  const preloadedProduct = getInitialProduct(handle);
-  const [product, setProduct] = useState<ShopifyProduct['node'] | null>(preloadedProduct);
-  const [isLoading, setIsLoading] = useState(!preloadedProduct);
-  const [error, setError] = useState<string | null>(null);
+  const allowHiddenBillingProduct = options.allowHiddenBillingProduct === true;
+  const [loadState, setLoadState] = useState<ShopifyProductLoadState>(() => {
+    const preloadedProduct = getInitialProduct(handle);
+    return {
+      handle,
+      product: preloadedProduct,
+      isLoading: !preloadedProduct,
+      error: null,
+    };
+  });
 
   useEffect(() => {
     let cancelled = false;
     let retryCount = 0;
+    let retryTimer: number | undefined;
     const MAX_RETRIES = 2;
     const RETRY_DELAYS = [500, 1500];
     const initial = getInitialProduct(handle);
 
     const fetchProduct = async () => {
+      let retryScheduled = false;
+
       if (!handle) {
-        setProduct(null);
-        setError('Product not found');
-        setIsLoading(false);
+        setLoadState({
+          handle,
+          product: null,
+          error: 'Product not found',
+          isLoading: false,
+        });
         return;
       }
 
       // Keep an already-rendered product interactive while the live record
       // refreshes. Direct client-only routes still show the loading UI.
       if (initial) {
-        setProduct(initial);
-        setError(null);
-        setIsLoading(false);
+        setLoadState({ handle, product: initial, error: null, isLoading: false });
         if (typeof window !== 'undefined') {
           window.__INITIAL_PRODUCT_DATA__ = undefined;
         }
       } else {
-        setProduct(null);
-        setIsLoading(true);
-        setError(null);
+        setLoadState({ handle, product: null, error: null, isLoading: true });
       }
 
       try {
-        const data = await fetchProductByHandle(handle, options);
+        const data = await fetchProductByHandle(handle, { allowHiddenBillingProduct });
         if (cancelled) return;
 
         if (data) {
-          setProduct(data);
-          setError(null);
-        } else if (!initial) {
-          setProduct(null);
-          setError('Product not found');
+          setLoadState({ handle, product: data, error: null, isLoading: false });
+        } else {
+          setLoadState({
+            handle,
+            product: null,
+            error: 'Product not found',
+            isLoading: false,
+          });
         }
       } catch (err) {
         if (cancelled) return;
@@ -86,19 +123,26 @@ export const useShopifyProduct = (
         if (retryCount < MAX_RETRIES) {
           const delay = RETRY_DELAYS[retryCount];
           retryCount++;
-          window.setTimeout(fetchProduct, delay);
+          retryScheduled = true;
+          retryTimer = window.setTimeout(fetchProduct, delay);
           return;
         }
 
         // A valid build-time record remains usable if a transient refresh
         // fails. Only show a blocking error when no product is available.
         if (!initial) {
-          setProduct(null);
-          setError('Failed to load product. Please refresh the page.');
+          setLoadState({
+            handle,
+            product: null,
+            error: 'Failed to load product. Please refresh the page.',
+            isLoading: false,
+          });
         }
       } finally {
-        if (!cancelled) {
-          setIsLoading(false);
+        if (!cancelled && !retryScheduled) {
+          setLoadState((current) => current.handle === handle
+            ? { ...current, isLoading: false }
+            : current);
         }
       }
     };
@@ -107,8 +151,16 @@ export const useShopifyProduct = (
 
     return () => {
       cancelled = true;
+      if (retryTimer !== undefined) {
+        window.clearTimeout(retryTimer);
+      }
     };
-  }, [handle, options.allowHiddenBillingProduct]);
+  }, [allowHiddenBillingProduct, handle]);
 
-  return { product, isLoading, error };
+  const visibleState = resolveProductLoadStateForHandle(loadState, handle);
+  return {
+    product: visibleState.product,
+    isLoading: visibleState.isLoading,
+    error: visibleState.error,
+  };
 };

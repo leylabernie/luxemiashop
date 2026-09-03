@@ -10,6 +10,7 @@ import { usePageTracking } from "./hooks/useAnalytics";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
 import NewVisitorPopup from "./components/home/NewVisitorPopup";
+import AnalyticsConsent from "./components/privacy/AnalyticsConsent";
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
 
@@ -113,12 +114,14 @@ const App = () => (
         <TooltipProvider>
           <Toaster />
           <Sonner position="top-center" />
+          <AnalyticsConsent />
           <BrowserRouter>
             <PageTracker>
               <Routes>
                 <Route path="/" element={<Index />} />
-                {/* Verified retired product URL: preserve the shopper journey to the live menswear edit. */}
-                <Route path="/product/ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809" element={<Navigate to="/menswear" replace />} />
+                {/* Verified retired product with no exact replacement. Full requests receive
+                    a 410 from middleware; SPA navigation must not soft-redirect to a category. */}
+                <Route path="/product/ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 {/* Internal billing support: never expose a standalone customer product page. */}
                 <Route path="/product/luxemia-tailoring-saree-finishing-add-ons" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 <Route path="/product/:handle" element={<Suspense fallback={<PageLoader />}><ProductDetail /></Suspense>} />
@@ -163,8 +166,13 @@ const App = () => (
                 <Route path="/faq" element={<Suspense fallback={<PageLoader />}><FAQ /></Suspense>} />
                 {/* Redirects for /collections/* URLs — keeps SEO equity & prevents 404s */}
                 <Route path="/collections/wedding-sarees" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="wedding-sarees" /></Suspense>} />
+                <Route path="/collections/banarasi-sarees" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="banarasi-sarees" /></Suspense>} />
                 <Route path="/collections/bridal-lehengas" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="bridal-lehengas" /></Suspense>} />
                 <Route path="/collections/reception-outfits" element={<Suspense fallback={<PageLoader />}><InventoryBackedCollection landing="reception-outfits" /></Suspense>} />
+                <Route path="/collections/wedding-guest-lehengas" element={<Suspense fallback={<PageLoader />}><InventoryBackedCollection landing="wedding-guest-lehengas" /></Suspense>} />
+                <Route path="/collections/wedding-guest-kurta-sets" element={<Suspense fallback={<PageLoader />}><InventoryBackedCollection landing="wedding-guest-kurta-sets" /></Suspense>} />
+                <Route path="/collections/diwali-womenswear" element={<Suspense fallback={<PageLoader />}><InventoryBackedCollection landing="diwali-womenswear" /></Suspense>} />
+                <Route path="/collections/diwali-menswear" element={<Suspense fallback={<PageLoader />}><InventoryBackedCollection landing="diwali-menswear" /></Suspense>} />
                 <Route path="/collections/festive-wear" element={<Navigate to="/collections" replace />} />
                 <Route path="/collections/sarees" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/salwar-kameez" element={<Navigate to="/suits" replace />} />
@@ -174,6 +182,8 @@ const App = () => (
                 <Route path="/collections/sharara-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="sharara-suits" /></Suspense>} />
                 <Route path="/collections/gharara-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="gharara-suits" /></Suspense>} />
                 <Route path="/collections/anarkali-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="anarkali-suits" /></Suspense>} />
+                <Route path="/collections/palazzo-suits" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="palazzo-suits" /></Suspense>} />
+                <Route path="/collections/sherwani-for-groom" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="sherwani-for-groom" /></Suspense>} />
                 <Route path="/collections/pakistani-suits" element={<Navigate to="/suits" replace />} />
                 <Route path="/collections/party-wear-lehengas" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="party-wear-lehengas" /></Suspense>} />
                 <Route path="/collections/wedding-lehengas" element={<Navigate to="/lehengas" replace />} />
@@ -188,7 +198,7 @@ const App = () => (
                 <Route path="/collections/navratri-garba-outfits-2026" element={<Navigate to="/collections/navratri-outfits" replace />} />
                 <Route path="/collections/:handle" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
                 <Route path="/collections/designer-sarees" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="designer-sarees" /></Suspense>} />
-                <Route path="/blog/designer-wedding-dress-under-50000" element={<Navigate to="/blog/designer-wedding-dress-under-500" replace />} />
+                <Route path="/blog/designer-wedding-dress-under-50000" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 <Route path="/collections/indo-western" element={<Navigate to="/indowestern" replace />} />
                 <Route path="/collections/bridesmaid-dresses" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/groomsman-outfits" element={<Navigate to="/menswear" replace />} />
@@ -218,12 +228,12 @@ const App = () => (
                 <Route path="/style-consultation" element={<Navigate to="/contact" replace />} />
                 <Route path="/wedding-party-orders" element={<Suspense fallback={<PageLoader />}><WeddingPartyOrders /></Suspense>} />
                 <Route path="/style-quiz" element={<Suspense fallback={<PageLoader />}><StyleQuiz /></Suspense>} />
-                {/* Order Confirmation — Google Customer Reviews opt-in */}
+                {/* Public post-checkout return page; no unverified order or review-survey data */}
                 <Route path="/order-confirmation" element={<Suspense fallback={<PageLoader />}><OrderConfirmation /></Suspense>} />
                 {/* NRI Landing Pages for SEO */}
                 <Route path="/nri" element={<Suspense fallback={<PageLoader />}><NRIGeneral /></Suspense>} />
                 <Route path="/nri/usa" element={<Navigate to="/indian-ethnic-wear-usa" replace />} />
-                <Route path="/nri/canada" element={<Navigate to="/indian-ethnic-wear-canada" replace />} />
+                <Route path="/nri/canada" element={<Navigate to="/nri" replace />} />
                 <Route path="/indian-ethnic-wear-usa" element={<Suspense fallback={<PageLoader />}><USA /></Suspense>} />
                 <Route path="/indian-ethnic-wear-canada" element={<Navigate to="/nri" replace />} />
                 {/* Legacy regional pages redirect to /nri (no longer targeted) */}
@@ -245,7 +255,7 @@ const App = () => (
                 <Route path="/blog/designer-profiles" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 <Route path="/blog/cultural-context" element={<Suspense fallback={<PageLoader />}><BlogCategory /></Suspense>} />
                 {/* Verified retired designer-profile URL: redirect to the live designer category. */}
-                <Route path="/blog/jj-valaya-royal-couture-house-of-valaya" element={<Navigate to="/blog/designer-profiles" replace />} />
+                <Route path="/blog/jj-valaya-royal-couture-house-of-valaya" element={<Suspense fallback={<PageLoader />}><NotFound /></Suspense>} />
                 <Route path="/blog/:slug" element={<Suspense fallback={<PageLoader />}><BlogPost /></Suspense>} />
                 {/* Public author information is organizational and verifiable. */}
                 <Route path="/authors/:slug" element={<Suspense fallback={<PageLoader />}><AuthorBio /></Suspense>} />

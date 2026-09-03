@@ -14,9 +14,8 @@ const requireAll = (relative, snippets) => {
 };
 
 requireAll('package.json', [
-  'node scripts/apply-route-based-shipping-growth.cjs',
-  'node scripts/apply-route-shipping-seo-fix.cjs',
-  'node scripts/validate-route-based-shipping.cjs',
+  '"validate:route-shipping": "node scripts/validate-route-based-shipping.cjs"',
+  'npm run validate:route-shipping',
 ]);
 requireAll('src/config/shippingPolicy.ts', [
   'US_FREE_SHIPPING_THRESHOLD = 199',
@@ -35,8 +34,11 @@ requireAll('src/pages/ShippingCustoms.tsx', [
   'Do not assume an international parcel is duty paid',
 ]);
 requireAll('src/pages/ReadyToShip.tsx', [
-  'processingDays <= 3',
-  'Processing is the time before dispatch',
+  'isMadeToOrderProduct(product.node.handle, product.node.tags)',
+  'CollectionDirectAnswer path="/ready-to-ship"',
+]);
+requireAll('src/config/collectionStandards.ts', [
+  'Processing and carrier transit remain separate',
 ]);
 requireAll('src/pages/Index.tsx', [
   'id="shop-by-need-heading"',
@@ -48,11 +50,11 @@ requireAll('src/components/cart/CartDrawer.tsx', [
   'Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.',
 ]);
 requireAll('src/config/seoArchitecture.ts', [
-  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
-  'tracked shipping to the USA, Canada, UK and other supported markets',
+  'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia',
+  'tracked shipping to seven supported countries',
 ]);
 requireAll('src/config/seoArchitecture.json', [
-  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia',
 ]);
 requireAll('src/lib/schema.ts', [
   "SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU']",
@@ -69,7 +71,7 @@ requireAll('scripts/prerender.js', [
   "...create('MU', 59.99)",
 ]);
 requireAll('index.html', [
-  'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia',
   'https://luxemia.shop/#canada-uk-standard-shipping',
   'https://luxemia.shop/#australia-nz-standard-shipping',
   'https://luxemia.shop/#south-africa-standard-shipping',
@@ -78,8 +80,8 @@ requireAll('index.html', [
 ]);
 
 const blocked = [
-  /MerchantReturnPolicy/i,
-  /MerchantReturnNotPermitted/i,
+  /['"]@type['"]\s*:\s*['"]MerchantReturnPolicy['"]/i,
+  /['"]merchantReturnCategory['"]\s*:\s*['"]https:\/\/schema\.org\/MerchantReturnNotPermitted['"]/i,
   /Glamour Indian Wear/i,
   /United States addresses only/i,
   /U\.S\. delivery only/i,

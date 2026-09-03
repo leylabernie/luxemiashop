@@ -10,30 +10,34 @@ import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { getDirectCardVariant } from '@/lib/purchaseOptions';
+import { isProductExplicitlyOrderable } from '@/lib/orderability';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
 
 const FeaturedProducts = () => {
-  const { products, isLoading } = useShopifyProducts();
+  const { products, isLoading, error } = useShopifyProducts();
   const navigate = useNavigate();
   const addItem = useCartStore(state => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
-  // Get a curated mix: 2 sarees, 2 suits, 2 lehengas, 2 menswear
+  // Show up to two current records from each main Shopify product type.
   const featuredProducts = useMemo(() => {
-    const sarees = products.filter(p => p.node.productType === 'Sarees').slice(0, 2);
-    const suits = products.filter(p => p.node.productType === 'Salwar Kameez').slice(0, 2);
-    const lehengas = products.filter(p => p.node.productType === 'Lehengas').slice(0, 2);
-    const menswear = products.filter(p => p.node.productType === 'Menswear').slice(0, 2);
+    const orderableProducts = products.filter(({ node }) => isProductExplicitlyOrderable(node));
+    const sarees = orderableProducts.filter(p => p.node.productType === 'Sarees').slice(0, 2);
+    const suits = orderableProducts.filter(p => p.node.productType === 'Salwar Kameez').slice(0, 2);
+    const lehengas = orderableProducts.filter(p => p.node.productType === 'Lehengas').slice(0, 2);
+    const menswear = orderableProducts.filter(p => p.node.productType === 'Menswear').slice(0, 2);
     const mixed = [...sarees, ...suits, ...lehengas, ...menswear];
     if (mixed.length >= 8) return mixed.slice(0, 8);
     // Fallback: fill with remaining products
     const usedIds = new Set(mixed.map(p => p.node.id));
-    return [...mixed, ...products.filter(p => !usedIds.has(p.node.id))].slice(0, 8);
+    return [...mixed, ...orderableProducts.filter(p => !usedIds.has(p.node.id))].slice(0, 8);
   }, [products]);
 
   const handleCardPurchase = (e: React.MouseEvent, product: ShopifyProduct) => {
     e.preventDefault();
     e.stopPropagation();
 
+    if (!isProductExplicitlyOrderable(product.node)) return;
     const variant = getDirectCardVariant(product.node);
     if (!variant) {
       navigate(`/product/${product.node.handle}#product-purchase`);
@@ -91,7 +95,7 @@ const FeaturedProducts = () => {
             <div className="flex items-center gap-2 mb-3">
               <Sparkles className="h-4 w-4 text-primary" />
               <p className="text-xs tracking-luxury uppercase text-foreground/60">
-                Hand-Picked For You
+                Current Catalog Mix
               </p>
             </div>
             <h2 className="font-serif text-3xl lg:text-4xl">Featured Pieces</h2>
@@ -116,6 +120,8 @@ const FeaturedProducts = () => {
               </div>
             ))}
           </div>
+        ) : error ? (
+          <CatalogLoadError retryHref="/" />
         ) : featuredProducts.length === 0 ? (
           <div className="text-center py-16">
             <p className="text-foreground/60 mb-2">No products found</p>
@@ -128,6 +134,7 @@ const FeaturedProducts = () => {
             {featuredProducts.map((product, index) => {
               const image = product.node.images.edges[0]?.node;
               const price = product.node.priceRange.minVariantPrice;
+              const isOrderable = isProductExplicitlyOrderable(product.node);
               const directCardVariant = getDirectCardVariant(product.node);
 
               return (
@@ -172,9 +179,10 @@ const FeaturedProducts = () => {
                         <button 
                           className="w-full bg-background/95 backdrop-blur-sm py-3 text-xs tracking-editorial uppercase hover:bg-background transition-colors flex items-center justify-center gap-2"
                           onClick={(e) => handleCardPurchase(e, product)}
+                          disabled={!isOrderable}
                         >
                           <ShoppingBag className="w-4 h-4" />
-                          {directCardVariant ? 'Add to Bag' : 'Choose Options'}
+                          {!isOrderable ? 'Sold Out' : directCardVariant ? 'Add to Bag' : 'Choose Options'}
                         </button>
                       </div>
                     </div>

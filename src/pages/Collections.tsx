@@ -7,6 +7,8 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { ProductFilters, ActiveFilterTags } from '@/components/collections/ProductFilters';
 import { ProductGrid } from '@/components/collections/ProductGrid';
+import CollectionDecisionSupport, { CollectionDirectAnswer } from '@/components/collections/CollectionDecisionSupport';
+import CatalogLoadError from '@/components/collections/CatalogLoadError';
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -24,6 +26,7 @@ import {
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { filterAndSortProducts } from '@/lib/productFilters';
 import { FEATURED_CATEGORY_PRODUCT_LIST } from '@/config/featuredCategoryProducts';
+import { toCollectionSchemaItems } from '@/lib/collectionSchema';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -34,7 +37,7 @@ const sortOptions = [
 ];
 
 const Collections = () => {
-  const { products, isLoading, isLoadingMore, hasMore, loadMore } = useShopifyProducts();
+  const { products, isLoading, isLoadingMore, error, hasMore, loadMore } = useShopifyProducts();
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
   const [sortBy, setSortBy] = useState('featured');
@@ -43,6 +46,7 @@ const Collections = () => {
   const filteredProducts = useMemo(() => {
     return filterAndSortProducts(products, activeFilters, priceRange, sortBy);
   }, [products, activeFilters, priceRange, sortBy]);
+  const collectionItems = toCollectionSchemaItems(filteredProducts);
 
   const handleFilterChange = (filters: Record<string, string[]>) => {
     setActiveFilters(filters);
@@ -62,6 +66,10 @@ const Collections = () => {
         title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia"
         description="Buy Indian ethnic wear online at LuxeMia. Shop bridal lehengas, sarees, salwar kameez, jewelry, menswear and indo-western outfits."
         canonical="https://luxemia.shop/collections"
+        type="collection"
+        collection={!isLoading && !error && collectionItems.length > 0
+          ? { name: 'All Indian Ethnic Wear Collections', description: 'Current LuxeMia lehengas, sarees, salwar suits, jewelry, menswear and Indo-Western outfits.', items: collectionItems }
+          : undefined}
         breadcrumbs={[
           { name: 'Home', url: '/' },
           { name: 'Collections', url: '/collections' },
@@ -101,9 +109,7 @@ const Collections = () => {
               Explore Our
             </p>
             <h1 className="text-3xl md:text-4xl font-serif mb-4">All Indian Ethnic Wear Collections</h1>
-            <p className="mx-auto max-w-2xl text-sm leading-relaxed text-white/85 md:text-base">
-              Shop bridal lehengas, silk sarees, salwar kameez, sherwanis, and Indo-Western outfits. Review each listing for exact fabric, work, included pieces, sizing, stitching options, price, and availability. Free U.S. standard shipping at $199 and above.
-            </p>
+            <CollectionDirectAnswer path="/collections" className="mx-auto max-w-3xl text-sm leading-relaxed text-white/85 md:text-base" />
           </motion.div>
         </section>
 
@@ -116,11 +122,11 @@ const Collections = () => {
           </nav>
           <div className="mt-6 flex flex-col gap-3 rounded-sm border border-primary/25 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="font-serif text-xl">Need a custom color and made-to-order fit?</h2>
-              <p className="mt-1 text-sm text-muted-foreground">Browse designs verified for a custom color and tailoring from confirmed measurements.</p>
+              <h2 className="font-serif text-xl">Need to ask about a custom option?</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Review the inquiry process, then verify every available color, measurement, tailoring, and timing detail on the exact listing and in writing.</p>
             </div>
             <Link to="/collections/customizable-indian-outfits" className="shrink-0 text-sm font-medium text-primary underline underline-offset-4">
-              Shop customizable outfits
+              Review customization inquiries
             </Link>
           </div>
         </div>
@@ -143,7 +149,11 @@ const Collections = () => {
               {/* Toolbar */}
               <div className="flex items-center justify-between mb-6 pb-6 border-b border-border">
                 <p className="text-sm text-muted-foreground">
-                  Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products
+                  {isLoading
+                    ? 'Loading current inventory…'
+                    : error
+                      ? 'Current inventory is temporarily unavailable'
+                      : <>Showing <span className="text-foreground font-medium">{filteredProducts.length}</span> products</>}
                 </p>
 
                 <div className="flex items-center gap-3">
@@ -197,10 +207,14 @@ const Collections = () => {
               <ActiveFilterTags filters={activeFilters} onRemove={handleRemoveFilter} />
 
               {/* Product Grid */}
-              <ProductGrid products={filteredProducts} isLoading={isLoading} />
+              {error ? (
+                <CatalogLoadError retryHref="/collections" />
+              ) : isLoading || filteredProducts.length > 0 ? (
+                <ProductGrid products={filteredProducts} isLoading={isLoading} />
+              ) : null}
 
               {/* Load More */}
-              {hasMore && !isLoading && filteredProducts.length > 0 && (
+              {hasMore && !isLoading && !error && filteredProducts.length > 0 && (
                 <div className="flex justify-center mt-12">
                   <Button
                     variant="outline"
@@ -221,7 +235,7 @@ const Collections = () => {
               )}
 
               {/* Empty state */}
-              {!isLoading && filteredProducts.length === 0 && (
+              {!isLoading && !error && filteredProducts.length === 0 && (
                 <div className="text-center py-16">
                   <p className="text-muted-foreground mb-4">No products found matching your criteria.</p>
                   <Button
@@ -238,6 +252,7 @@ const Collections = () => {
             </div>
           </div>
         </div>
+        {!error ? <CollectionDecisionSupport path="/collections" products={filteredProducts} isLoading={isLoading} /> : null}
       </main>
 
       {/* SEO editorial footer — keyword-rich content for crawlers */}
@@ -246,16 +261,16 @@ const Collections = () => {
           <h2 className="font-serif text-xl mb-4 text-center">Buy Indian Ethnic Wear Online</h2>
           <div className="prose prose-sm max-w-none text-muted-foreground space-y-3 text-sm leading-relaxed text-center">
             <p>
-              LuxeMia is an online Indian ethnic-wear store for shoppers in seven countries. Browse <strong>bridal and party-wear lehengas</strong>, <strong>silk and wedding sarees</strong>, <strong>Anarkali, sharara and gharara suits</strong>, sherwanis, and Indo-Western outfits.
+              LuxeMia is an online Indian ethnic-wear store for shoppers in seven countries. Browse <strong>bridal and party-wear lehengas</strong>, <strong>Banarasi, silk and wedding sarees</strong>, <strong>Anarkali, sharara, gharara and palazzo suits</strong>, groom sherwanis, and Indo-Western outfits.
             </p>
             <p>
-              Explore dedicated collections for <Link to="/collections/sharara-suits" className="underline underline-offset-2 hover:text-foreground">sharara suits</Link>, <Link to="/collections/anarkali-suits" className="underline underline-offset-2 hover:text-foreground">Anarkali suits</Link>, <Link to="/collections/bridal-lehengas" className="underline underline-offset-2 hover:text-foreground">bridal lehengas</Link>, <Link to="/collections/navratri-chaniya-choli" className="underline underline-offset-2 hover:text-foreground">Navratri chaniya choli</Link>, <Link to="/collections/groomsmen-outfits" className="underline underline-offset-2 hover:text-foreground">groomsmen outfits</Link>, <Link to="/collections/sangeet-outfits" className="underline underline-offset-2 hover:text-foreground">Sangeet outfits</Link>, and <Link to="/collections/reception-outfits" className="underline underline-offset-2 hover:text-foreground">reception outfits</Link>.
+              Explore dedicated collections for <Link to="/collections/sharara-suits" className="underline underline-offset-2 hover:text-foreground">sharara suits</Link>, <Link to="/collections/palazzo-suits" className="underline underline-offset-2 hover:text-foreground">palazzo suits</Link>, <Link to="/collections/anarkali-suits" className="underline underline-offset-2 hover:text-foreground">Anarkali suits</Link>, <Link to="/collections/banarasi-sarees" className="underline underline-offset-2 hover:text-foreground">Banarasi sarees</Link>, <Link to="/collections/bridal-lehengas" className="underline underline-offset-2 hover:text-foreground">bridal lehengas</Link>, <Link to="/collections/wedding-guest-lehengas" className="underline underline-offset-2 hover:text-foreground">wedding-guest lehengas</Link>, <Link to="/collections/wedding-guest-kurta-sets" className="underline underline-offset-2 hover:text-foreground">wedding-guest kurta sets</Link>, <Link to="/collections/sherwani-for-groom" className="underline underline-offset-2 hover:text-foreground">groom sherwanis</Link>, <Link to="/collections/diwali-womenswear" className="underline underline-offset-2 hover:text-foreground">Diwali womenswear</Link>, <Link to="/collections/diwali-menswear" className="underline underline-offset-2 hover:text-foreground">Diwali menswear</Link>, <Link to="/collections/navratri-chaniya-choli" className="underline underline-offset-2 hover:text-foreground">Navratri chaniya choli</Link>, <Link to="/collections/groomsmen-outfits" className="underline underline-offset-2 hover:text-foreground">groomsmen outfits</Link>, <Link to="/collections/sangeet-outfits" className="underline underline-offset-2 hover:text-foreground">Sangeet outfits</Link>, and <Link to="/collections/reception-outfits" className="underline underline-offset-2 hover:text-foreground">reception outfits</Link>.
             </p>
             <p>
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.
             </p>
             <p>
-              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius, with <strong>free U.S. standard shipping at $199 and above</strong> and a $14.99 rate below $199.
+              Compare the available product images, selected options, measurements, current price, and delivery information. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the current destination-specific rates and thresholds on the shipping page; checkout is the final source of truth.
             </p>
           </div>
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">

@@ -140,13 +140,13 @@ const LookbookSection = ({
                 {/* Editorial Overlay */}
                 <div className="absolute top-8 right-8 pointer-events-none">
                   <div className="bg-background/90 backdrop-blur-md p-4 shadow-lg border border-border/50 transform rotate-3 group-hover:rotate-0 transition-transform duration-500">
-                    <p className="text-[10px] tracking-widest uppercase text-muted-foreground mb-1">Featured Look</p>
+                    <p className="text-[10px] tracking-widest uppercase text-muted-foreground mb-1">Current Product</p>
                     <p className="font-serif text-sm italic">The {featuredProduct.node.productType || 'Ensemble'}</p>
                   </div>
                 </div>
               </div>
 
-              {/* Shop the Look CTA */}
+              {/* Product CTA */}
               <motion.div 
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -158,7 +158,7 @@ const LookbookSection = ({
                   to={`/product/${featuredProduct.node.handle}`}
                   className="flex items-center gap-4 bg-foreground text-background px-8 py-6 rounded-full hover:bg-primary transition-colors group shadow-xl"
                 >
-                  <span className="text-sm uppercase tracking-[0.2em] font-medium">Shop This Look</span>
+                  <span className="text-sm uppercase tracking-[0.2em] font-medium">View This Product</span>
                   <ArrowRight className="w-5 h-5 group-hover:translate-x-2 transition-transform" />
                 </Link>
               </motion.div>

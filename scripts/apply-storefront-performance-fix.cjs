@@ -1,12 +1,9 @@
 #!/usr/bin/env node
 
 /**
- * Keep the storefront's critical path aligned with the current homepage hero
- * and prevent small merchandising sections from downloading the complete
- * Shopify catalog. The same script runs before Vite and after prerendering:
- * source patches are idempotent, and built homepage product schema is reduced
- * to a compact discovery list instead of repeating full shipping policy data
- * for every featured product.
+ * Postprocess the built homepage only. Source fixes are authored and reviewed
+ * before commit. The command refuses to run without --built-only so its
+ * historical source-patch helpers cannot rewrite the checkout.
  */
 const fs = require('fs');
 const path = require('path');
@@ -143,8 +140,9 @@ function compactHomepageProductSchema(html) {
           url,
           name,
         };
-        if (typeof product.image === 'string' && product.image.startsWith('https://')) {
-          item.image = product.image;
+        const image = product.image || entry?.image;
+        if (typeof image === 'string' && image.startsWith('https://')) {
+          item.image = image;
         }
         return item;
       })
@@ -195,7 +193,10 @@ function patchBuiltHomepage() {
   return results;
 }
 
-const sourceChanges = patchSource();
+const builtOnly = process.argv.includes('--built-only');
+if (!builtOnly) {
+  throw new Error('[storefront-performance] Refusing to run without --built-only; tracked source is never rewritten during release processing.');
+}
 const builtResults = patchBuiltHomepage();
 
 for (const result of builtResults) {
@@ -205,6 +206,5 @@ for (const result of builtResults) {
 }
 
 console.log(
-  `[storefront-performance] OK — ${sourceChanges} source patch(es) applied; ` +
-  `${builtResults.length} built homepage file(s) inspected.`,
+  `[storefront-performance] OK — source left untouched; ${builtResults.length} built homepage file(s) inspected.`,
 );

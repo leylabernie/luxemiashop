@@ -6,6 +6,7 @@ import {
   generateWebPageSchema,
   generateSiteNavigationSchema,
   forceJpegForGmc,
+  normalizeProductCondition,
   SITE_URL,
 } from '@/lib/schema';
 import type { FAQItem as SchemaFAQItem } from '@/lib/schema';
@@ -36,11 +37,13 @@ interface SEOHeadProps {
   type?: 'website' | 'product' | 'article' | 'collection';
   product?: {
     name: string;
+    offerUrl?: string;
     price: string;
     currency: string;
     image: string;
     description: string;
     availability?: 'InStock' | 'OutOfStock' | 'PreOrder';
+    condition?: string;
     sku?: string;
     gtin?: string;
     mpn?: string;
@@ -77,17 +80,14 @@ interface SEOHeadProps {
 }
 
 const SEOHead = ({
-  title = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
-  description = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.',
+  title = 'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia',
+  description = 'Shop South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to seven supported countries.',
   canonical,
   image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
   type = 'website',
   product,
   structuredProduct,
-  // `collection` prop is intentionally not destructured here. It remains in the
-  // SEOHeadProps interface for backwards compatibility (callers still pass it),
-  // but the ItemList schema is now generated server-side by scripts/prerender.js
-  // to avoid a duplicate-ItemList critical error in Google Rich Results.
+  collection,
   breadcrumbs,
   faqs,
   noIndex = false,
@@ -110,51 +110,67 @@ const SEOHead = ({
     .replace(/\/+$/, '') || '/';
   const canonicalUrl = `${siteUrl}${canonicalPath}`;
 
-  // The current default locale and shipping market remain en-US.
+  // This is one English storefront serving seven countries, not separate
+  // regional URL variants. Advertise the page as generic English and keep the
+  // same canonical URL as x-default; do not imply U.S.-only targeting.
   const hreflangAlternates = hreflang || [
-    { lang: 'en-US', href: canonicalUrl },
+    { lang: 'en', href: canonicalUrl },
     { lang: 'x-default', href: canonicalUrl },
   ];
   
   // Convert relative image paths to absolute URLs
   const absoluteImage = image.startsWith('http') ? image : `${siteUrl}${image}`;
 
-  // Use shared forceJpegForGmc from schema.ts for GMC-safe image URLs
-  const gmcSafeImage = forceJpegForGmc(absoluteImage);
+  const hasVerifiedProductEvidence = Boolean(
+    product
+    && product.name.trim()
+    && product.description.trim()
+    && product.image.trim()
+    && Number.isFinite(Number(product.price))
+    && Number(product.price) > 0
+    && /^[A-Z]{3}$/i.test(product.currency.trim())
+    && ['InStock', 'OutOfStock', 'PreOrder'].includes(product.availability || ''),
+  );
+  const verifiedProduct = hasVerifiedProductEvidence ? product : undefined;
+  const productImage = verifiedProduct
+    ? forceJpegForGmc(verifiedProduct.image.startsWith('http') ? verifiedProduct.image : `${siteUrl}${verifiedProduct.image}`)
+    : undefined;
+  const socialImage = type === 'product' ? productImage : absoluteImage;
 
-  // Product Schema — uses shared generateProductSchema from schema.ts
-  // Fallbacks ensure required Merchant Listings fields (image, description,
-  // offers.price) are always present even when Shopify data is incomplete.
-  const productSchema = structuredProduct || (product
-    ? generateProductSchema({
-        name: product.name,
-        image: [forceJpegForGmc(product.image || absoluteImage)],
-        description:
-          (product.description && product.description.trim().length > 0)
-            ? product.description
-            : `Shop the ${product.name} at LuxeMia — Indian ethnic wear online with tracked shipping to seven supported countries.`,
-        sku: product.sku || '',
-        gtin: product.gtin,
-        mpn: product.mpn,
+  // Product markup is emitted only for a complete current commerce record.
+  // Missing required facts suppress markup instead of manufacturing fallbacks.
+  const productSchema = verifiedProduct
+    ? structuredProduct || generateProductSchema({
+        name: verifiedProduct.name,
+        image: [productImage!],
+        description: verifiedProduct.description,
+        offerUrl: verifiedProduct.offerUrl,
+        sku: verifiedProduct.sku || '',
+        gtin: verifiedProduct.gtin,
+        mpn: verifiedProduct.mpn,
         url: canonicalUrl,
-        brand: product.brand,
-        category: product.category,
-        googleProductCategory: product.googleProductCategory,
-        color: product.color,
-        material: product.material,
-        sizes: product.sizes,
-        additionalProperties: product.additionalProperties,
-        price: product.price,
-        compareAtPrice: product.originalPrice || null,
-        currency: product.currency || 'USD',
-        availability: product.availability === 'InStock' ? 'InStock' : 'OutOfStock',
-        shipsWithinDays: product.shipsWithinDays,
+        brand: verifiedProduct.brand,
+        category: verifiedProduct.category,
+        googleProductCategory: verifiedProduct.googleProductCategory,
+        color: verifiedProduct.color,
+        material: verifiedProduct.material,
+        sizes: verifiedProduct.sizes,
+        additionalProperties: verifiedProduct.additionalProperties,
+        price: verifiedProduct.price,
+        compareAtPrice: verifiedProduct.originalPrice || null,
+        currency: verifiedProduct.currency,
+        availability: verifiedProduct.availability!,
+        condition: verifiedProduct.condition,
+        shipsWithinDays: verifiedProduct.shipsWithinDays,
       })
-    : null);
+    : null;
 
   // Breadcrumb Schema — uses shared generateBreadcrumbSchema from schema.ts
   const breadcrumbSchema = breadcrumbs
-    ? generateBreadcrumbSchema(breadcrumbs)
+    ? {
+        ...generateBreadcrumbSchema(breadcrumbs),
+        '@id': `${canonicalUrl}#breadcrumb`,
+      }
     : null;
 
   // FAQ Schema — uses shared generateFaqSchema from schema.ts
@@ -172,12 +188,41 @@ const SEOHead = ({
   // SiteNavigationElement Schema — helps Google understand site structure for sitelinks
   const siteNavSchema = generateSiteNavigationSchema();
 
-  // NOTE: ItemList schema for collection pages is now generated server-side
-  // by scripts/prerender.js and injected into the prerendered HTML at build
-  // time. This client-side injection was removed because it produced a
-  // DUPLICATE ItemList on every collection page (one server-rendered, one
-  // client-injected via react-helmet-async), which Google Rich Results flags
-  // as a critical error: "Multiple ListItem elements defined on page".
+  // main.tsx removes the server-rendered route schemas before Helmet mounts.
+  // Recreate the collection graph here so hydrated pages retain exactly one
+  // CollectionPage and one broad ItemList without page-level Product markup.
+  const collectionItemListSchema = collection
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        '@id': `${canonicalUrl}#itemlist`,
+        name: collection.name,
+        numberOfItems: collection.items.length,
+        itemListElement: collection.items.map((item, index) => ({
+          '@type': 'ListItem',
+          position: index + 1,
+          name: item.name,
+          url: item.url.startsWith('http')
+            ? item.url
+            : new URL(item.url.startsWith('/') ? item.url : `/product/${item.url}`, `${siteUrl}/`).toString(),
+          ...(item.image && { image: forceJpegForGmc(item.image.startsWith('http') ? item.image : `${siteUrl}${item.image}`) }),
+        })),
+      }
+    : null;
+  const collectionPageSchema = collection
+    ? {
+        '@context': 'https://schema.org',
+        '@type': 'CollectionPage',
+        '@id': `${canonicalUrl}#collection`,
+        name: collection.name,
+        description: collection.description,
+        url: canonicalUrl,
+        inLanguage: 'en',
+        isPartOf: { '@id': `${siteUrl}/#website` },
+        mainEntity: { '@id': `${canonicalUrl}#itemlist` },
+        ...(breadcrumbSchema && { breadcrumb: { '@id': `${canonicalUrl}#breadcrumb` } }),
+      }
+    : null;
 
   return (
     <Helmet>
@@ -202,7 +247,7 @@ const SEOHead = ({
       <meta property="og:url" content={canonicalUrl} />
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={seoDescription} />
-      <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
+      {socialImage && <meta property="og:image" content={socialImage} />}
       {/* og:image dimensions — declared as 1600x900 to match the evergreen
           campaign image used as the non-product social fallback. This
           fixes WhatsApp/LinkedIn/Twitter share card rendering and removes
@@ -210,30 +255,30 @@ const SEOHead = ({
           validators. Product pages may serve a product image; the dimensions
           meta is a hint, not a constraint, so crawlers will fall back to
           the actual image if it differs. */}
-      <meta property="og:image:width" content="1600" />
-      <meta property="og:image:height" content="900" />
+      {type !== 'product' && <meta property="og:image:width" content="1600" />}
+      {type !== 'product' && <meta property="og:image:height" content="900" />}
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
       {/* Product-specific Open Graph */}
-      {product && (
+      {verifiedProduct && (
         <>
-          <meta property="product:price:amount" content={product.price} />
-          <meta property="product:price:currency" content={product.currency} />
-          {product.originalPrice && product.originalPrice !== product.price && (
-            <meta property="product:sale_price:amount" content={product.price} />
+          <meta property="product:price:amount" content={verifiedProduct.price} />
+          <meta property="product:price:currency" content={verifiedProduct.currency} />
+          {verifiedProduct.originalPrice && verifiedProduct.originalPrice !== verifiedProduct.price && (
+            <meta property="product:sale_price:amount" content={verifiedProduct.price} />
           )}
-          {product.originalPrice && product.originalPrice !== product.price && (
-            <meta property="product:sale_price:currency" content={product.currency} />
+          {verifiedProduct.originalPrice && verifiedProduct.originalPrice !== verifiedProduct.price && (
+            <meta property="product:sale_price:currency" content={verifiedProduct.currency} />
           )}
-          <meta property="product:original_price:amount" content={product.originalPrice || product.price} />
-          <meta property="product:original_price:currency" content={product.currency} />
-          <meta property="product:availability" content={product.availability === 'InStock' ? 'in stock' : 'out of stock'} />
-          <meta property="product:brand" content={product.brand || 'LuxeMia'} />
-          <meta property="product:condition" content="new" />
-          {product.category && <meta property="product:category" content={product.category} />}
-          {product.color && <meta property="product:color" content={product.color} />}
-          {product.material && <meta property="product:material" content={product.material} />}
+          <meta property="product:original_price:amount" content={verifiedProduct.originalPrice || verifiedProduct.price} />
+          <meta property="product:original_price:currency" content={verifiedProduct.currency} />
+          <meta property="product:availability" content={verifiedProduct.availability === 'InStock' ? 'in stock' : verifiedProduct.availability === 'PreOrder' ? 'preorder' : 'out of stock'} />
+          {verifiedProduct.brand && <meta property="product:brand" content={verifiedProduct.brand} />}
+          {normalizeProductCondition(verifiedProduct.condition) && <meta property="product:condition" content={normalizeProductCondition(verifiedProduct.condition)} />}
+          {verifiedProduct.category && <meta property="product:category" content={verifiedProduct.category} />}
+          {verifiedProduct.color && <meta property="product:color" content={verifiedProduct.color} />}
+          {verifiedProduct.material && <meta property="product:material" content={verifiedProduct.material} />}
         </>
       )}
 
@@ -242,10 +287,10 @@ const SEOHead = ({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={seoTitle} />
       <meta name="twitter:description" content={seoDescription} />
-      <meta name="twitter:image" content={product ? gmcSafeImage : absoluteImage} />
+      {socialImage && <meta name="twitter:image" content={socialImage} />}
       <meta name="twitter:site" content="@LuxeMia" />
-      {product && <meta name="twitter:label1" content="Price" />}
-      {product && <meta name="twitter:data1" content={`${product.currency} ${product.price}`} />}
+      {verifiedProduct && <meta name="twitter:label1" content="Price" />}
+      {verifiedProduct && <meta name="twitter:data1" content={`${verifiedProduct.currency} ${verifiedProduct.price}`} />}
 
       {/* Additional Meta */}
       <meta name="author" content="LuxeMia" />
@@ -264,6 +309,16 @@ const SEOHead = ({
       {productSchema && (
         <script type="application/ld+json">
           {JSON.stringify(productSchema)}
+        </script>
+      )}
+      {collectionPageSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(collectionPageSchema)}
+        </script>
+      )}
+      {collectionItemListSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(collectionItemListSchema)}
         </script>
       )}
       {breadcrumbSchema && (

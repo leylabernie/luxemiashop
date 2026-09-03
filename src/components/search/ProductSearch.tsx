@@ -4,8 +4,8 @@ import { Search, X, ArrowRight, SlidersHorizontal } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { getOptimizedImage } from '@/lib/imageUtils';
-import { Slider } from '@/components/ui/slider';
 import { fetchAllProducts } from '@/lib/shopify';
+import { formatCurrencyAmount } from '@/lib/formatCurrency';
 
 interface SearchResult {
   id: string;
@@ -13,8 +13,9 @@ interface SearchResult {
   title: string;
   category: string;
   price: string;
+  currencyCode: string;
   image: string;
-  fabric: string;
+  fabric: string | null;
 }
 
 interface ProductSearchProps {
@@ -23,7 +24,6 @@ interface ProductSearchProps {
 }
 
 const quickFilterOptions = {
-  size: ['S', 'M', 'L', 'XL', '36', '38', '40', '42', '44'],
   fabric: ['Silk', 'Velvet', 'Georgette', 'Cotton', 'Chiffon'],
 };
 
@@ -31,8 +31,6 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState<SearchResult[]>([]);
   const [showFilters, setShowFilters] = useState(false);
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
-  const [selectedSizes, setSelectedSizes] = useState<string[]>([]);
   const [selectedFabrics, setSelectedFabrics] = useState<string[]>([]);
   const [allProducts, setAllProducts] = useState<SearchResult[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -48,33 +46,19 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
       try {
         const shopifyProducts = await fetchAllProducts();
         if (cancelled) return;
-        const products: SearchResult[] = shopifyProducts.map(({ node }) => {
-          const desc = (node.description || '').toLowerCase();
-          const title = (node.title || '').toLowerCase();
-
-          // Determine category
-          let category = 'Suits';
-          if (desc.includes('saree') || title.includes('saree')) category = 'Sarees';
-          else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
-          else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
-
-          // Extract fabric
-          let fabric = 'Silk';
-          if (desc.includes('velvet')) fabric = 'Velvet';
-          else if (desc.includes('georgette')) fabric = 'Georgette';
-          else if (desc.includes('cotton')) fabric = 'Cotton';
-          else if (desc.includes('chiffon')) fabric = 'Chiffon';
-
-          return {
+        const products: SearchResult[] = shopifyProducts.map(({ node }) => ({
             id: node.id,
             handle: node.handle,
             title: node.title,
-            category,
+            category: node.productType?.trim() || 'Product',
             price: node.priceRange.minVariantPrice.amount,
+            currencyCode: node.priceRange.minVariantPrice.currencyCode,
             image: node.images.edges[0]?.node.url || '',
-            fabric,
-          };
-        });
+            // A fabric filter is offered only from the explicit Shopify
+            // metafield/normalized metadata. Description keywords are not
+            // treated as structured catalog evidence.
+            fabric: node.metadata?.fabric?.trim() || null,
+          }));
         if (!cancelled) setAllProducts(products);
       } catch (err) {
         console.error('ProductSearch: Failed to fetch products from Shopify:', err);
@@ -93,34 +77,25 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
       filtered = filtered.filter(product =>
         product.title.toLowerCase().includes(searchTerm) ||
         product.category.toLowerCase().includes(searchTerm) ||
-        product.fabric.toLowerCase().includes(searchTerm)
+        (product.fabric?.toLowerCase().includes(searchTerm) ?? false)
       );
     }
-    
-    // Price filter
-    filtered = filtered.filter(product => {
-      const price = parseFloat(product.price);
-      return price >= priceRange[0] && price <= priceRange[1];
-    });
-    
-    // Size filter - note: we can't filter by size in search since we don't have variant data in the simplified search results
-    // This would require fetching full product data
-    
-    
+
     // Fabric filter
     if (selectedFabrics.length > 0) {
       filtered = filtered.filter(product =>
-        selectedFabrics.some(f => product.fabric.toLowerCase() === f.toLowerCase())
+        product.fabric !== null
+        && selectedFabrics.some(f => product.fabric?.toLowerCase() === f.toLowerCase())
       );
     }
     
     // Show results if query or filters are active
-    if (query.length >= 2 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 1000) {
+    if (query.length >= 2 || selectedFabrics.length > 0) {
       setResults(filtered.slice(0, 12));
     } else {
       setResults([]);
     }
-  }, [query, allProducts, priceRange, selectedFabrics]);
+  }, [query, allProducts, selectedFabrics]);
 
   // Focus input when opened
   useEffect(() => {
@@ -146,17 +121,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
   };
 
   const clearFilters = () => {
-    setPriceRange([0, 1000]);
-    setSelectedSizes([]);
     setSelectedFabrics([]);
-  };
-
-  const toggleSize = (size: string) => {
-    setSelectedSizes(prev =>
-      prev.includes(size)
-        ? prev.filter(s => s !== size)
-        : [...prev, size]
-    );
   };
 
   const toggleFabric = (fabric: string) => {
@@ -167,14 +132,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
     );
   };
 
-  const hasActiveFilters = selectedSizes.length > 0 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 1000;
-
-  const formatPrice = (amount: string) => {
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    }).format(parseFloat(amount));
-  };
+  const hasActiveFilters = selectedFabrics.length > 0;
 
   // Get popular categories
   const popularCategories = [
@@ -255,43 +213,6 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                         )}
                       </div>
                       
-                      {/* Price Range */}
-                      <div className="space-y-2">
-                        <p className="text-sm text-muted-foreground">Price Range</p>
-                        <Slider
-                          value={priceRange}
-                          onValueChange={(value) => setPriceRange(value as [number, number])}
-                          min={0}
-                          max={1000}
-                          step={50}
-                          className="py-2"
-                        />
-                        <div className="flex justify-between text-xs text-muted-foreground">
-                          <span>${priceRange[0]}</span>
-                          <span>${priceRange[1]}</span>
-                        </div>
-                      </div>
-
-                      {/* Size */}
-                      <div className="space-y-2">
-                        <p className="text-sm text-muted-foreground">Size</p>
-                        <div className="flex flex-wrap gap-2">
-                          {quickFilterOptions.size.map((size) => (
-                            <button
-                              key={size}
-                              onClick={() => toggleSize(size)}
-                              className={`px-3 py-1.5 text-xs rounded-full border transition-colors ${
-                                selectedSizes.includes(size)
-                                  ? 'bg-primary text-primary-foreground border-primary'
-                                  : 'border-border hover:bg-muted'
-                              }`}
-                            >
-                              {size}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-
                       {/* Fabric */}
                       <div className="space-y-2">
                         <p className="text-sm text-muted-foreground">Fabric</p>
@@ -346,7 +267,7 @@ const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
                           </p>
                           <p className="text-xs text-muted-foreground">{product.category}</p>
                           <p className="text-sm font-medium text-primary mt-1">
-                            {formatPrice(product.price)}
+                            {formatCurrencyAmount(product.price, product.currencyCode)}
                           </p>
                         </motion.button>
                       ))}

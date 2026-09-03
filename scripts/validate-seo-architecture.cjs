@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '..');
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8');
 const architecture = JSON.parse(read('src/config/seoArchitecture.json'));
 const failures = [];
-const APPROVED_HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
+const APPROVED_HOME_TITLE = 'Indian Wedding Sarees, Lehengas & Ethnic Wear | LuxeMia';
 
 const runtimeArchitectureSource = read('src/config/seoArchitecture.ts');
 const runtimeArchitectureMatch = runtimeArchitectureSource.match(
@@ -53,10 +53,13 @@ const requiredSharedRoutes = [
   '/collections/bridal-lehengas',
   '/collections/party-wear-lehengas',
   '/collections/wedding-sarees',
+  '/collections/banarasi-sarees',
   '/collections/designer-sarees',
   '/collections/sharara-suits',
   '/collections/gharara-suits',
   '/collections/anarkali-suits',
+  '/collections/palazzo-suits',
+  '/collections/sherwani-for-groom',
 ];
 
 for (const route of requiredSharedRoutes) {
@@ -70,6 +73,9 @@ for (const route of requiredSharedRoutes) {
   }
   if (seo?.description?.length > 155) {
     failures.push(`Shared SEO description exceeds the emitted 155-character limit: ${route}`);
+  }
+  if (/\b(?:USA|U\.S\.|United States)\b/i.test(`${seo?.title} ${seo?.description} ${seo?.h1}`)) {
+    failures.push(`Generic shared SEO route must not imply U.S.-only service: ${route}`);
   }
 }
 
@@ -117,7 +123,7 @@ requireText(filterSidebar, 'onSelectSubcategory(sub.slug)', 'non-crawlable inter
 
 const categoryListing = read('src/components/collections/CategoryListing.tsx');
 requireText(categoryListing, 'noIndexFollow={hasListingQueryState}', 'hydrated noindex for filter query states');
-requireText(categoryListing, 'activeSubcategory?.landingPath', 'clean hydrated facet canonical');
+requireText(categoryListing, 'activeSubcategory?.seoCanonical || config.canonical', 'clean hydrated facet canonical');
 
 const middleware = read('middleware.ts');
 requireText(middleware, 'getLegacyFacetRedirectPath(url)', 'legacy mapped facet redirect');
@@ -149,8 +155,8 @@ if (
   failures.push(`Missing shared approved homepage title in index.html: ${rawHomepageTitle}`);
 }
 const brandedLogoCount = (indexHtml.match(/"logo": "https:\/\/luxemia\.shop\/og-image\.jpg"/g) || []).length;
-if (brandedLogoCount !== 2) {
-  failures.push(`Expected Organization and OnlineStore to use the existing branded og-image.jpg asset; found ${brandedLogoCount} logo references.`);
+if (brandedLogoCount !== 1) {
+  failures.push(`Expected the consolidated Organization/OnlineStore node to use the existing branded og-image.jpg asset exactly once; found ${brandedLogoCount} logo references.`);
 }
 
 const schema = read('src/lib/schema.ts');

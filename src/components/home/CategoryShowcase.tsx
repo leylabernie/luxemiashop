@@ -6,8 +6,8 @@ import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 const categories = [
   {
     name: 'Lehengas',
-    subtitle: 'Bridal & Festive',
-    description: 'Bridal, wedding guest and festive lehengas for current celebrations.',
+    subtitle: 'Current Listings',
+    description: 'Browse the current lehenga catalog and verify details on each product page.',
     href: '/lehengas',
     image: FEATURED_CATEGORY_PRODUCTS.lehengas.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
@@ -15,8 +15,8 @@ const categories = [
   },
   {
     name: 'Sarees',
-    subtitle: 'Timeless Elegance',
-    description: 'Kanjivaram, Banarasi, wedding and festive sarees available online.',
+    subtitle: 'Current Listings',
+    description: 'Browse the current saree catalog and verify details on each product page.',
     href: '/sarees',
     image: FEATURED_CATEGORY_PRODUCTS.sarees.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
@@ -24,8 +24,8 @@ const categories = [
   },
   {
     name: 'Salwar Kameez',
-    subtitle: 'Classic Grace',
-    description: 'Anarkali, sharara, palazzo and salwar kameez styles.',
+    subtitle: 'Current Listings',
+    description: 'Browse the current suit catalog and verify details on each product page.',
     href: '/suits',
     image: FEATURED_CATEGORY_PRODUCTS.suits.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.suits.imageWebp,
@@ -33,8 +33,8 @@ const categories = [
   },
   {
     name: 'Menswear',
-    subtitle: 'Classic Style',
-    description: 'Sherwanis, kurta pajama sets and wedding menswear.',
+    subtitle: 'Current Listings',
+    description: 'Browse the current menswear catalog and verify details on each product page.',
     href: '/menswear',
     image: FEATURED_CATEGORY_PRODUCTS.menswear.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.menswear.imageWebp,
@@ -42,8 +42,8 @@ const categories = [
   },
   {
     name: 'Indo-Western',
-    subtitle: 'Modern Fusion',
-    description: 'Contemporary Indian silhouettes for weddings and parties.',
+    subtitle: 'Current Listings',
+    description: 'Browse the current Indo-Western catalog and verify details on each product page.',
     href: '/indowestern',
     image: FEATURED_CATEGORY_PRODUCTS.indowestern.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.indowestern.imageWebp,
@@ -51,8 +51,8 @@ const categories = [
   },
   {
     name: 'Bridal Jewelry',
-    subtitle: 'Finishing Touches',
-    description: 'Kundan-style, polki-style and bridal necklace sets.',
+    subtitle: 'Current Listings',
+    description: 'Browse the current jewelry catalog and verify details on each product page.',
     href: '/jewelry',
     image: FEATURED_CATEGORY_PRODUCTS.jewelry.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.jewelry.imageWebp,

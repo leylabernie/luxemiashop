@@ -3,11 +3,12 @@
 /**
  * Release gate for the complete live Shopify catalog.
  *
- * Owner-approved fulfillment rule:
- * - every purchasable product is Ready to Ship unless Shopify identifies it as
- *   Made to Order / Made to Measure;
- * - a stocked product may also offer an optional custom-size or custom-stitching
- *   variant, but the custom selection must be described separately;
+ * Evidence-gated fulfillment rule:
+ * - Ready to Ship requires a positive catalog tag or `custom.ships_within`
+ *   value; it is never inferred from sale availability or the absence of a
+ *   Made-to-Order marker;
+ * - a purchasable product with neither classification is reported as unknown;
+ * - a product must not carry contradictory classifications;
  * - processing and carrier transit must never be presented as the same promise.
  */
 
@@ -23,8 +24,6 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
 const MIN_EXPECTED_ACTIVE_PRODUCTS = 800;
-const MIN_EXPECTED_READY_PRODUCTS = 750;
-const MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS = 40;
 
 const REMOVED_HANDLES = new Set([
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
@@ -138,11 +137,7 @@ const MADE_TO_ORDER_TAGS = new Set([
   'availability:made to order',
   'custom-made',
 ]);
-const READY_TO_SHIP_TAGS = new Set([
-  'ready to ship',
-  'ready-to-ship',
-  'availability:ready to ship',
-]);
+const READY_TO_SHIP_TAG = /^(?:(?:availability|fulfillment|shipping|status)\s*[:=]\s*)?ready[\s_-]*to[\s_-]*ship$/i;
 
 function normalize(value) {
   return String(value || '').replace(/\s+/g, ' ').trim();
@@ -167,12 +162,18 @@ function isMadeToOrder(product) {
 }
 
 function hasReadyToShipTag(product) {
-  return lowerTags(product).some((tag) => READY_TO_SHIP_TAGS.has(tag));
+  return (product.tags || []).some((tag) => READY_TO_SHIP_TAG.test(String(tag).trim()));
+}
+
+function hasReadyToShipEvidence(product) {
+  if (hasReadyToShipTag(product)) return true;
+  const match = String(product.shipsWithin?.value || '').match(/\d+/);
+  return Boolean(match && Number.parseInt(match[0], 10) > 0);
 }
 
 function isPurchasable(product) {
-  if (product.availableForSale === true) return true;
-  return (product.variants?.edges || []).some((edge) => edge.node.availableForSale !== false);
+  return product.availableForSale === true
+    && (product.variants?.edges || []).some((edge) => edge.node.availableForSale === true);
 }
 
 function hasOnlyCustomSizeChoices(product) {
@@ -341,6 +342,7 @@ async function main() {
   let purchasableProducts = 0;
   let readyToShipProducts = 0;
   let madeToOrderProducts = 0;
+  let unknownFulfillmentProducts = 0;
   let mixedCustomOptionProducts = 0;
 
   for (const product of products) {
@@ -357,21 +359,23 @@ async function main() {
 
     const purchasable = isPurchasable(product);
     const madeToOrder = isMadeToOrder(product);
+    const readyToShip = hasReadyToShipEvidence(product);
     const onlyCustomSize = hasOnlyCustomSizeChoices(product);
     const hasCustomOption = (product.options || []).some((option) =>
       (option.values || []).some((value) => /custom|made[- ]to[- ]measure/i.test(String(value))),
     );
 
     if (purchasable) purchasableProducts += 1;
-    if (madeToOrder) madeToOrderProducts += 1;
-    else if (purchasable) readyToShipProducts += 1;
-    if (!madeToOrder && hasCustomOption) mixedCustomOptionProducts += 1;
+    if (purchasable && madeToOrder) madeToOrderProducts += 1;
+    else if (purchasable && readyToShip) readyToShipProducts += 1;
+    else if (purchasable) unknownFulfillmentProducts += 1;
+    if (purchasable && !madeToOrder && hasCustomOption) mixedCustomOptionProducts += 1;
 
     if (onlyCustomSize && !madeToOrder) {
       classificationErrors.push(`${product.handle}: only custom-size choices are offered but the product is not tagged Made to Order`);
     }
-    if (madeToOrder && hasReadyToShipTag(product)) {
-      classificationErrors.push(`${product.handle}: Made-to-Order product still carries a Ready-to-Ship tag`);
+    if (madeToOrder && readyToShip) {
+      classificationErrors.push(`${product.handle}: Made-to-Order product also carries positive Ready-to-Ship evidence`);
     }
     if (madeToOrder && /\bready[- ]to[- ]ship\b/i.test(`${product.title} ${product.description}`)) {
       classificationErrors.push(`${product.handle}: Made-to-Order product still makes a Ready-to-Ship customer claim`);
@@ -382,14 +386,8 @@ async function main() {
     .filter(([, count]) => count > 1)
     .map(([handle, count]) => ({ handle, count }));
 
-  if (readyToShipProducts < MIN_EXPECTED_READY_PRODUCTS) {
-    classificationErrors.push(`only ${readyToShipProducts} purchasable non-custom products resolved as Ready to Ship; expected at least ${MIN_EXPECTED_READY_PRODUCTS}`);
-  }
-  if (madeToOrderProducts < MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS) {
-    classificationErrors.push(`only ${madeToOrderProducts} products resolved as Made to Order; expected at least ${MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS}`);
-  }
-  if (readyToShipProducts + madeToOrderProducts !== purchasableProducts) {
-    classificationErrors.push('Ready-to-Ship plus Made-to-Order counts do not equal the purchasable catalog count');
+  if (readyToShipProducts + madeToOrderProducts + unknownFulfillmentProducts !== purchasableProducts) {
+    classificationErrors.push('Ready-to-Ship, Made-to-Order and unknown-fulfillment counts do not equal the purchasable catalog count');
   }
 
   if (
@@ -419,6 +417,7 @@ async function main() {
     purchasableProducts,
     readyToShipProducts,
     madeToOrderProducts,
+    unknownFulfillmentProducts,
     mixedCustomOptionProducts,
     staleCopyProducts: staleProducts.length,
     removedProductsPresent: removedProducts.length,
@@ -427,14 +426,16 @@ async function main() {
     completeness,
   };
 
+  const reportDirectory = path.resolve(__dirname, '..', 'dist');
+  fs.mkdirSync(reportDirectory, { recursive: true });
   fs.writeFileSync(
-    path.resolve(__dirname, '..', 'catalog-hygiene-report.json'),
+    path.join(reportDirectory, 'catalog-hygiene-report.json'),
     `${JSON.stringify(report, null, 2)}\n`,
     'utf8',
   );
 
   console.log(
-    `[shopify-catalog] OK — checked ${products.length} active products; ${readyToShipProducts} Ready to Ship, ${madeToOrderProducts} Made to Order, ${mixedCustomOptionProducts} stocked products with an optional custom selection, 0 stale-copy products, 0 removed-product regressions, and 0 duplicate handles.`,
+    `[shopify-catalog] OK — checked ${products.length} active products; ${readyToShipProducts} Ready to Ship with positive evidence, ${madeToOrderProducts} Made to Order, ${unknownFulfillmentProducts} purchasable with unknown fulfillment, ${mixedCustomOptionProducts} purchasable products with an optional custom selection, 0 fulfillment contradictions, 0 stale-copy products, 0 removed-product regressions, and 0 duplicate handles.`,
   );
   console.log(
     `[shopify-catalog] Completeness warnings — missing description ${completeness.missingDescription}; thin description ${completeness.thinDescription}; missing product type ${completeness.missingProductType}; missing image ${completeness.missingImage}; image-alt gaps ${completeness.missingImageAltText}; missing variant ${completeness.missingVariant}; SKU gaps ${completeness.missingSku}; SEO-title gaps ${completeness.missingSeoTitle}; SEO-description gaps ${completeness.missingSeoDescription}.`,

@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { HelpCircle, Package, Truck, Ruler, Sparkles, CreditCard, RotateCcw, Mail, Search, Phone, MessageCircle, ChevronRight, Home } from 'lucide-react';
-import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
+import { CANCELLATION_POLICY_ANSWER, COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 
 const FAQ = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -28,7 +28,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
-          answer: 'Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.',
+          answer: `${CANCELLATION_POLICY_ANSWER} Email hello@luxemia.shop immediately with your order number.`,
         },
         {
           question: 'How do I apply a discount code?',
@@ -36,7 +36,7 @@ const FAQ = () => {
         },
         {
           question: 'Will I receive an order confirmation?',
-          answer: 'After checkout accepts the order, an order confirmation is sent to the email address provided. Check your spam folder and contact hello@luxemia.shop if it does not arrive.',
+          answer: 'If Shopify sends an order confirmation, it uses the email address provided at checkout. Use Shopify\'s protected order-status page for verified order details, or contact hello@luxemia.shop with the order number if available.',
         },
       ],
     },
@@ -50,11 +50,11 @@ const FAQ = () => {
         },
         {
           question: 'How long does shipping take?',
-          answer: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch and depends on the service shown at checkout.',
+          answer: 'When tracking is issued, carrier scans can appear after label creation. Carrier transit time begins after dispatch and depends on the service shown at checkout.',
         },
         {
           question: 'How can I track my order?',
-          answer: 'Tracking details are sent by email when the shipping label is created for dispatch. If you cannot find the message, contact hello@luxemia.shop with your order number.',
+          answer: 'Tracking availability depends on the fulfilled order. When tracking is issued, label creation may precede the carrier’s first scan. Contact hello@luxemia.shop with your order number if you need the current shipment status.',
         },
         {
           question: 'Do I have to pay taxes?',
@@ -110,11 +110,11 @@ const FAQ = () => {
         },
         {
           question: 'Why do I need an unboxing video?',
-          answer: 'The continuous unboxing/opening video is required to verify genuine shipping damage, an incorrect item, or a missing item. It must show the unopened package, shipping label, opening process, contents, and item condition.',
+          answer: 'When available, a continuous unboxing/opening video can help document damage, defects, an incorrect item, or missing pieces. It should show the unopened package, shipping label, opening process, contents, and item condition. A missing video does not by itself remove rights that cannot legally be excluded.',
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'Under LuxeMia’s voluntary policy, change-of-mind, fit and preference returns are not accepted except where applicable law provides otherwise. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours using the covered-order-issue process.',
+          answer: 'Change-of-mind, fit and preference purchases are final sale under LuxeMia’s voluntary policy. Damage, defects, material misdescription, an incorrect item, or missing pieces should be reported promptly—preferably within 48 hours of delivery—using the covered-order-issue process. This does not limit rights that cannot legally be excluded.',
         },
         {
           question: 'What if my order arrives damaged, incorrect, or incomplete?',
@@ -182,7 +182,7 @@ const FAQ = () => {
         },
         {
           question: 'How can I contact customer service?',
-          answer: 'Email us at hello@luxemia.shop, call +1-215-341-9990 (Mon-Sat 10AM-7PM EST, Sun 11AM-5PM EST), or use the contact form on our Contact page. Contact details and current support hours are listed below.',
+          answer: 'Email hello@luxemia.shop, call +1-215-341-9990, or use the contact form. Response times vary and same-day replies are not guaranteed.',
         },
       ],
     },
@@ -222,7 +222,7 @@ const FAQ = () => {
       faqs: [
         {
           question: 'Can I buy Indian ethnic wear online from the USA?',
-          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free U.S. standard shipping applies at $199 and above, a flat $14.99 rate applies below $199, and online orders ship with tracking after dispatch.',
+          answer: 'Yes. LuxeMia specializes in Indian ethnic wear online for customers in the United States. Free U.S. standard shipping applies at $199 and above, and a flat $14.99 rate applies below $199.',
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
@@ -242,7 +242,7 @@ const FAQ = () => {
         },
         {
           question: 'How long does US delivery take?',
-          answer: 'Online orders ship with tracking after dispatch. Carrier transit time begins after dispatch, and tracking is sent by email once the label is created.',
+          answer: 'When tracking is issued, carrier scans can appear after label creation. Carrier transit time begins after dispatch.',
         },
       ],
     },
@@ -322,7 +322,7 @@ const FAQ = () => {
               <h1 className="text-4xl md:text-5xl font-serif mb-4">Frequently Asked Questions</h1>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-2">
                 Find answers to common questions about orders, shipping, sizing, returns, and more. 
-                Can't find what you're looking for? Contact our support team.
+                Can't find what you're looking for? Use one of the contact options below.
               </p>
               <p className="text-sm text-primary font-medium">
                 {totalFaqCount} questions answered
@@ -494,8 +494,8 @@ const FAQ = () => {
                 </div>
                 <h2 className="text-2xl font-serif mb-4">Still Have Questions?</h2>
                 <p className="text-muted-foreground max-w-lg mx-auto">
-                  Our customer care team is here to help. Reach out through any of the channels below 
-                  and include your order number when asking about an existing order.
+                  Contact LuxeMia through any of the channels below, and include your order number
+                  when asking about an existing order.
                 </p>
               </motion.div>
 
@@ -516,7 +516,7 @@ const FAQ = () => {
                     <p className="font-semibold text-sm">WhatsApp</p>
                     <p className="text-xs text-muted-foreground">+1-215-341-9990</p>
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">Quick responses during business hours</p>
+                  <p className="text-xs text-muted-foreground text-center">Online support; response times vary and same-day replies are not guaranteed</p>
                 </a>
 
                 {/* Email */}
@@ -546,7 +546,7 @@ const FAQ = () => {
                     <p className="font-semibold text-sm">Phone</p>
                     <p className="text-xs text-muted-foreground">+1-215-341-9990</p>
                   </div>
-                  <p className="text-xs text-muted-foreground text-center">Mon-Sat 10AM-7PM EST</p>
+                  <p className="text-xs text-muted-foreground text-center">Phone contact option; response times vary</p>
                 </a>
               </div>
 

@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import ProductCard from '@/components/ui/ProductCard';
+import CollectionDecisionSupport, { CollectionDirectAnswer } from '@/components/collections/CollectionDecisionSupport';
 import { Button } from '@/components/ui/button';
 import {
   Accordion,
@@ -16,6 +17,18 @@ import { useShopifyCollection } from '@/hooks/useShopifyCollection';
 
 const PRODUCTS_PER_PAGE = 24;
 
+const CatalogLoadError = ({ retryHref }: { retryHref: string }) => (
+  <div className="rounded-lg border border-destructive/30 bg-destructive/5 px-6 py-14 text-center" role="alert">
+    <h2 className="font-serif text-2xl">Current products could not be loaded</h2>
+    <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
+      Product availability is temporarily unavailable. Try this page again, or contact LuxeMia before relying on a specific option.
+    </p>
+    <Button asChild className="mt-5" variant="outline">
+      <a href={retryHref}>Try again</a>
+    </Button>
+  </div>
+);
+
 const ShopifyCollectionPage = () => {
   const { handle = '' } = useParams();
   const config = getShopifyCollectionConfig(handle);
@@ -25,8 +38,8 @@ const ShopifyCollectionPage = () => {
   const purchasableProducts = useMemo(
     () => products.filter((product) => {
       const variants = product.node.variants?.edges || [];
-      return product.node.availableForSale !== false &&
-        variants.some((variant) => variant.node.availableForSale !== false);
+      return product.node.availableForSale === true &&
+        variants.some((variant) => variant.node.availableForSale === true);
     }),
     [products],
   );
@@ -34,7 +47,8 @@ const ShopifyCollectionPage = () => {
   if (!config) return <Navigate to="/collections" replace />;
 
   const visibleProducts = purchasableProducts.slice(0, visibleCount);
-  const noIndexFollow = !isLoading && purchasableProducts.length === 0;
+  const collectionPath = `/collections/${handle}`;
+  const noIndexFollow = !isLoading && !error && purchasableProducts.length === 0;
   const collectionItems = purchasableProducts.slice(0, 30).map((product) => ({
     id: product.node.id,
     name: product.node.title,
@@ -57,11 +71,13 @@ const ShopifyCollectionPage = () => {
           { name: 'Collections', url: '/collections' },
           { name: config.name, url: `/collections/${config.handle}` },
         ]}
-        collection={{
-          name: config.name,
-          description: config.description,
-          items: collectionItems,
-        }}
+        collection={!isLoading && !error
+          ? {
+              name: config.name,
+              description: config.description,
+              items: collectionItems,
+            }
+          : undefined}
         faqs={config.faqs}
       />
       <Header />
@@ -71,7 +87,7 @@ const ShopifyCollectionPage = () => {
           <div className="container mx-auto max-w-4xl px-4 text-center">
             <p className="mb-4 text-xs uppercase tracking-[0.24em] text-muted-foreground">{config.eyebrow}</p>
             <h1 className="mb-5 font-serif text-4xl md:text-5xl">{config.name}</h1>
-            <p className="mx-auto max-w-3xl text-sm leading-7 text-muted-foreground md:text-base">{config.intro}</p>
+            <CollectionDirectAnswer path={collectionPath} className="mx-auto max-w-3xl text-sm leading-7 text-muted-foreground md:text-base" />
           </div>
         </section>
 
@@ -89,7 +105,7 @@ const ShopifyCollectionPage = () => {
           <div className="mb-6 flex items-end justify-between border-b border-border pb-5">
             <div>
               <h2 className="font-serif text-2xl">Shop {config.name}</h2>
-              {!isLoading && purchasableProducts.length > 0 && (
+              {!isLoading && !error && purchasableProducts.length > 0 && (
                 <p className="mt-1 text-sm text-muted-foreground">{purchasableProducts.length} available styles</p>
               )}
             </div>
@@ -105,6 +121,8 @@ const ShopifyCollectionPage = () => {
                 </div>
               ))}
             </div>
+          ) : error ? (
+            <CatalogLoadError retryHref={collectionPath} />
           ) : visibleProducts.length > 0 ? (
             <>
               <div className="grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 lg:gap-6">
@@ -132,10 +150,11 @@ const ShopifyCollectionPage = () => {
                   <a href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20am%20looking%20for%20a%20wedding%20saree." target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
                 </Button>
               </div>
-              {error && <p className="mt-4 text-xs text-muted-foreground">The live collection could not be refreshed. Please try again shortly.</p>}
             </div>
           )}
         </section>
+
+        {!error ? <CollectionDecisionSupport path={collectionPath} products={purchasableProducts} isLoading={isLoading} showFaqs={false} /> : null}
 
         <section className="container mx-auto max-w-5xl px-4 pt-14 lg:px-8">
           <div className="grid gap-8 lg:grid-cols-[1fr_280px]">

@@ -43,16 +43,17 @@ const BlogCategory = () => {
   const structuredData = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
+    "@id": `https://luxemia.shop/blog/${categoryGroup.slug}#collection`,
     "name": categoryGroup.metaTitle,
     "description": categoryGroup.metaDescription,
     "url": `https://luxemia.shop/blog/${categoryGroup.slug}`,
+    "inLanguage": "en",
     "isPartOf": {
-      "@type": "WebSite",
-      "name": "LuxeMia Blog",
-      "url": "https://luxemia.shop/blog"
+      "@id": "https://luxemia.shop/#website"
     },
     "mainEntity": {
       "@type": "ItemList",
+      "@id": `https://luxemia.shop/blog/${categoryGroup.slug}#itemlist`,
       "numberOfItems": sortedPosts.length,
       "itemListElement": sortedPosts.slice(0, 20).map((post, index) => ({
         "@type": "ListItem",
@@ -66,9 +67,10 @@ const BlogCategory = () => {
   const breadcrumb = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
+    "@id": `https://luxemia.shop/blog/${categoryGroup.slug}#breadcrumb`,
     "itemListElement": [
       { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://luxemia.shop" },
-      { "@type": "ListItem", "position": 2, "name": "Blog", "item": "https://luxemia.shop/blog" },
+      { "@type": "ListItem", "position": 2, "name": "Guides", "item": "https://luxemia.shop/blog" },
       { "@type": "ListItem", "position": 3, "name": categoryGroup.name, "item": `https://luxemia.shop/blog/${categoryGroup.slug}` },
     ],
   };
@@ -96,7 +98,7 @@ const BlogCategory = () => {
               <Home className="w-3 h-3" /> Home
             </Link>
             <ChevronRight className="w-3 h-3" />
-            <Link to="/blog" className="hover:text-foreground">Blog</Link>
+            <Link to="/blog" className="hover:text-foreground">Guides</Link>
             <ChevronRight className="w-3 h-3" />
             <span className="text-foreground font-medium">{categoryGroup.name}</span>
           </nav>
@@ -141,7 +143,7 @@ const BlogCategory = () => {
               <BookOpen className="w-12 h-12 mx-auto text-muted-foreground mb-4" />
               <h2 className="text-2xl font-display font-semibold mb-2">No articles yet</h2>
               <p className="text-muted-foreground mb-6">
-                We're working on articles for this category. Check back soon, or explore our other categories.
+                No articles are currently published in this category. Explore the other categories instead.
               </p>
               <Link to="/blog" className="inline-flex items-center gap-2 text-primary hover:underline">
                 <ArrowRight className="w-4 h-4" /> Back to all articles

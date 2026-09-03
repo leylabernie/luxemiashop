@@ -3,7 +3,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { Link } from 'react-router-dom';
-import { fetchAllSitemapProducts, staticPages, generateXmlSitemap } from '@/lib/dynamicSitemap';
+import { fetchAllSitemapProducts, guidePages, staticPages } from '@/lib/dynamicSitemap';
 
 interface SitemapProduct {
   handle: string;
@@ -16,8 +16,6 @@ interface SitemapProduct {
 const Sitemap = () => {
   const [products, setProducts] = useState<SitemapProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const baseUrl = typeof window !== 'undefined' ? window.location.origin : 'https://luxemia.shop';
-  const currentDate = new Date().toISOString().split('T')[0];
 
   useEffect(() => {
     const loadProducts = async () => {
@@ -35,11 +33,13 @@ const Sitemap = () => {
 
   // Group pages by category for display
   const pageCategories = {
-    'Main Pages': staticPages.filter(p => ['/', '/collections', '/about', '/new-arrivals'].includes(p.loc)),
-    'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/jewelry', '/indowestern'].includes(p.loc)),
-    'Shop by Occasion': staticPages.filter(p => p.loc.startsWith('/collections/')),
-    'Customer Service': staticPages.filter(p => ['/contact', '/faq', '/shipping', '/returns', '/size-guide', '/care-guide'].includes(p.loc)),
-    'About Us': staticPages.filter(p => ['/blog', '/authors/luxemia-editorial-team'].includes(p.loc)),
+    'Main Pages': staticPages.filter(p => ['/', '/collections', '/about', '/new-arrivals', '/sitemap', '/lookbook'].includes(p.loc)),
+    'Shop Categories': staticPages.filter(p => ['/lehengas', '/sarees', '/suits', '/menswear', '/jewelry', '/indowestern', '/ready-to-ship'].includes(p.loc)),
+    'Collection Pages': staticPages.filter(p => p.loc.startsWith('/collections/')),
+    'Shop by Need': staticPages.filter(p => ['/festive-wear', '/indian-wedding-guest-outfits', '/wedding-events', '/shop-by-fulfillment'].includes(p.loc) || p.loc.startsWith('/shop-by-fulfillment/')),
+    'Shipping & Customer Service': staticPages.filter(p => ['/contact', '/faq', '/shipping', '/returns', '/size-guide', '/sizing-measurements-guide', '/care-guide', '/us-support', '/wedding-party-orders', '/pages/shipping-customs'].includes(p.loc) || p.loc.startsWith('/shipping/')),
+    'Guides & Editorial': staticPages.filter(p => p.loc === '/blog' || p.loc.startsWith('/blog/') || p.loc.startsWith('/authors/') || ['/press', '/editorial-policy', '/review-policy'].includes(p.loc)),
+    'Regional Pages': staticPages.filter(p => ['/nri', '/indian-ethnic-wear-usa'].includes(p.loc)),
     'Legal': staticPages.filter(p => ['/privacy', '/terms'].includes(p.loc)),
   };
 
@@ -67,25 +67,13 @@ const Sitemap = () => {
   const filteredCategories = Object.entries(productsByCategory)
     .filter(([, items]) => items.length > 0);
 
-  // Handle XML download
-  const handleDownloadXml = async () => {
-    const xml = await generateXmlSitemap(baseUrl);
-    const blob = new Blob([xml], { type: 'application/xml' });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = 'sitemap.xml';
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-  };
-
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Sitemap | LuxeMia - All Pages & Products"
         description="Browse all pages and products on LuxeMia. Find designer sarees, bridal lehengas, suits, and menswear collections with easy navigation."
+        canonical="https://luxemia.shop/sitemap"
+        breadcrumbs={[{ name: 'Home', url: '/' }, { name: 'Sitemap', url: '/sitemap' }]}
       />
       <Header />
       
@@ -96,27 +84,31 @@ const Sitemap = () => {
             Browse all pages and products on LuxeMia. Use this page to find what you're looking for quickly.
           </p>
 
-          {/* XML Sitemap Download */}
+          {/* Canonical deployment-generated XML sitemaps */}
           <div className="bg-secondary/30 rounded-lg p-6 mb-12 text-center">
             <h2 className="font-serif text-lg mb-2">XML Sitemap for Search Engines</h2>
             <p className="text-sm text-muted-foreground mb-4">
-              Search engines can use our XML sitemap to discover and index all pages, including product images.
+              These canonical files are generated during deployment from the reviewed catalog and content inventory.
             </p>
             <div className="flex flex-wrap gap-3 justify-center">
-              <a 
-                href="/sitemap.xml" 
-                className="inline-block px-6 py-2 bg-foreground text-background text-sm hover:bg-foreground/90 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                View Static Sitemap
-              </a>
-              <button 
-                onClick={handleDownloadXml}
-                className="inline-block px-6 py-2 bg-primary text-primary-foreground text-sm hover:bg-primary/90 transition-colors"
-              >
-                Download Dynamic Sitemap (with Images)
-              </button>
+              {[
+                ['Sitemap Index', 'https://luxemia.shop/sitemap.xml'],
+                ['Products', 'https://luxemia.shop/sitemap-products.xml'],
+                ['Collections', 'https://luxemia.shop/sitemap-collections.xml'],
+                ['Guides', 'https://luxemia.shop/sitemap-guides.xml'],
+                ['Pages', 'https://luxemia.shop/sitemap-pages.xml'],
+                ['Images', 'https://luxemia.shop/sitemap-images.xml'],
+              ].map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  className="inline-block px-4 py-2 bg-foreground text-background text-sm hover:bg-foreground/90 transition-colors"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {label}
+                </a>
+              ))}
             </div>
           </div>
 
@@ -144,6 +136,19 @@ const Sitemap = () => {
                 </div>
               ))}
             </div>
+          </section>
+
+          <section className="mb-16">
+            <h2 className="font-serif text-2xl mb-8 border-b border-border pb-4">Indian Attire Guides</h2>
+            <ul className="grid gap-x-8 gap-y-3 md:grid-cols-2">
+              {guidePages.map(guidePage => (
+                <li key={guidePage.loc}>
+                  <Link to={guidePage.loc} className="text-foreground hover:text-primary transition-colors">
+                    {guidePage.title}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </section>
 
           {/* Products Section */}
@@ -189,8 +194,7 @@ const Sitemap = () => {
           {/* Stats */}
           <div className="mt-12 pt-8 border-t border-border text-center text-sm text-muted-foreground">
             <p>
-              Total Pages: {staticPages.length} | Total Products: {products.length} | 
-              Last Updated: {currentDate}
+              Directory Pages: {staticPages.length} | Live Shopify Products: {products.length}
             </p>
             <p className="mt-2 text-xs">
               ✓ Enhanced with image sitemaps for Google Image Search

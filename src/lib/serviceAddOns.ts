@@ -17,8 +17,7 @@ export type ServiceAddOnCode =
 export interface ServiceAddOnDefinition {
   code: ServiceAddOnCode;
   label: string;
-  checkoutOptionValue: string;
-  price: number;
+  checkoutOptionLabel: string;
   description: string;
 }
 
@@ -26,38 +25,38 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
   'blouse-stitching': {
     code: 'blouse-stitching',
     label: 'Blouse Stitching / Alteration',
-    checkoutOptionValue: 'Blouse Stitching / Alteration (+$10)',
-    price: 10,
+    checkoutOptionLabel: 'Blouse Stitching / Alteration',
     description: 'Available only where this listing includes blouse fabric or states an unstitched blouse piece.',
   },
   'pico-fall': {
     code: 'pico-fall',
     label: 'Pico & Fall',
-    checkoutOptionValue: 'Pico & Fall (+$8)',
-    price: 8,
+    checkoutOptionLabel: 'Pico & Fall',
     description: 'Combined pico and fall finishing for this saree listing.',
   },
   'matching-petticoat': {
     code: 'matching-petticoat',
     label: 'Matching Petticoat',
-    checkoutOptionValue: 'Matching Petticoat (+$8)',
-    price: 8,
+    checkoutOptionLabel: 'Matching Petticoat',
     description: 'An optional matching petticoat for this saree listing.',
   },
   'garment-alteration': {
     code: 'garment-alteration',
     label: 'Garment Alteration',
-    checkoutOptionValue: 'Blouse Stitching / Alteration (+$10)',
-    price: 10,
+    checkoutOptionLabel: 'Blouse Stitching / Alteration',
     description: 'An optional alteration request for eligible unstitched or semi-stitched garments.',
   },
 };
 
-const SAREE_PATTERN = /\b(?:saree|sari)\b/i;
-const READY_PATTERN = /\b(?:ready[-\s]?to[-\s]?wear|ready[-\s]?made|readymade|pre[-\s]?stitched|prestitched|pre[-\s]?draped)\b/i;
-const UNSTITCHED_PATTERN = /\b(?:unstitched|semi[-\s]?stitched)\b/i;
-const BLOUSE_PATTERN = /\b(?:blouse\s+fabric|unstitched\s+blouse|blouse\s+piece|blouse)\b/i;
-const APPAREL_PATTERN = /\b(?:lehenga|choli|suit|kurta|salwar|sharara|palazzo|anarkali|gown|sherwani|jacket|co-?ord|blouse|dress|kaftan|skirt|dhoti|pant|tunic)\b/i;
+/**
+ * Shopify's historical service option labels contain a display-price suffix.
+ * Strip that suffix only for identity matching; the live variant Money value
+ * remains the sole price shown and charged by the storefront.
+ */
+export const normalizeServiceOptionLabel = (value: string): string => value
+  .replace(/\s*\(\s*\+[^)]*\)\s*$/, '')
+  .trim()
+  .toLowerCase();
 
 export interface ServiceEligibleProduct {
   title: string;
@@ -71,44 +70,25 @@ export interface ServiceEligibleProduct {
   };
 }
 
-const productEvidence = (product: ServiceEligibleProduct) => [
-  product.title,
-  product.productType,
-  product.description,
-  ...(product.tags ?? []),
-  ...(product.options ?? []).flatMap((option) => [option.name, ...option.values]),
-  product.metadata?.blouseFabric,
-  ...(product.metadata?.includedComponents ?? []),
-].filter(Boolean).join(' ');
+const SERVICE_ADD_ON_CODES = new Set<ServiceAddOnCode>(Object.keys(SERVICE_ADD_ONS) as ServiceAddOnCode[]);
 
-/**
- * Returns direct purchase options for sarees and only evidence-supported
- * alteration options for other garments. Every saree receives the combined
- * Pico & Fall and matching petticoat selections; blouse stitching remains
- * conditional on stated blouse-fabric or blouse-piece evidence.
- */
-export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): ServiceAddOnCode[] => {
-  const evidence = productEvidence(product);
-  const isSaree = SAREE_PATTERN.test(`${product.title} ${product.productType}`);
-  const isReady = READY_PATTERN.test(evidence);
-  const hasListingStitchingOption = (product.options ?? []).some((option) =>
-    /stitch|alter/i.test(option.name),
-  );
-
-  if (isSaree) {
-    const services: ServiceAddOnCode[] = ['pico-fall', 'matching-petticoat'];
-    if (BLOUSE_PATTERN.test(evidence) && !hasListingStitchingOption) {
-      services.unshift('blouse-stitching');
-    }
-    return services;
-  }
-
-  const isApparel = APPAREL_PATTERN.test(`${product.title} ${product.productType}`);
-  const supportsAlteration = isApparel && !isReady && UNSTITCHED_PATTERN.test(evidence) && !hasListingStitchingOption;
-  return supportsAlteration ? ['garment-alteration'] : [];
+const serviceCodeFromExplicitTag = (tag: string): ServiceAddOnCode | null => {
+  const match = tag.trim().match(/^(?:service|service-add-on):\s*(.+)$/i);
+  if (!match) return null;
+  const code = match[1].trim().toLowerCase().replace(/[\s_]+/g, '-') as ServiceAddOnCode;
+  return SERVICE_ADD_ON_CODES.has(code) ? code : null;
 };
 
-export const serviceAddOnTotal = (codes: ServiceAddOnCode[]) => codes.reduce(
-  (total, code) => total + SERVICE_ADD_ONS[code].price,
-  0,
-);
+/**
+ * Returns only service add-ons declared by a product-specific `service:` or
+ * `service-add-on:` tag. Product type, construction language, description prose,
+ * and generic blouse evidence cannot imply that a paid service is compatible.
+ * ProductInfo separately requires a live, available, positive-price billing
+ * variant before any tagged service can be shown or selected.
+ */
+export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): ServiceAddOnCode[] => {
+  const declaredCodes = (product.tags ?? [])
+    .map(serviceCodeFromExplicitTag)
+    .filter((code): code is ServiceAddOnCode => code !== null);
+  return [...new Set(declaredCodes)];
+};

@@ -138,7 +138,7 @@ export function FilterSidebar({
 
         {/* Price Range */}
         <FilterSectionBlock
-          name="Price"
+          name="Price (USD)"
           isActive={priceRange[0] !== config.priceRange[0] || priceRange[1] !== config.priceRange[1]}
           isExpanded={expandedSections.includes('Price')}
           onToggle={() => toggleSection('Price')}
