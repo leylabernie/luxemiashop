@@ -122,7 +122,7 @@ function compactHomepageProductSchema(html) {
       return full;
     }
 
-    if (parsed?.['@id'] !== `${SITE_URL}/#products` || parsed?.['@type'] !== 'ItemList') {
+    if (parsed?.['@id'] !== `${SITE_URL}/#itemlist` || parsed?.['@type'] !== 'ItemList') {
       return full;
     }
 
@@ -151,7 +151,7 @@ function compactHomepageProductSchema(html) {
     const compactSchema = {
       '@context': 'https://schema.org',
       '@type': 'ItemList',
-      '@id': `${SITE_URL}/#products`,
+      '@id': `${SITE_URL}/#itemlist`,
       name: parsed.name || 'LuxeMia Collection',
       url: parsed.url || `${SITE_URL}/`,
       numberOfItems: compactItems.length,

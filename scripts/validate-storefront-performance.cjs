@@ -76,7 +76,7 @@ for (const relativePath of builtFiles) {
   while ((match = scriptPattern.exec(html))) {
     try {
       const parsed = JSON.parse(String(match[1]).trim());
-      if (parsed?.['@id'] === `${SITE_URL}/#products`) {
+      if (parsed?.['@id'] === `${SITE_URL}/#itemlist`) {
         productSchema = parsed;
         break;
       }
