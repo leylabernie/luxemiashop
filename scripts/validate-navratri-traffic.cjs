@@ -113,7 +113,7 @@ requireText(collectionHtml, '<link rel="canonical" href="https://luxemia.shop/co
 requireText(collectionHtml, '<h1>Navratri Outfits for Garba</h1>', 'collection H1');
 requirePattern(collectionHtml, /"@type"\s*:\s*"CollectionPage"/, 'CollectionPage schema');
 requirePattern(collectionHtml, /"@type"\s*:\s*"ItemList"/, 'ItemList schema');
-requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#products', 'linked collection product schema');
+requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#itemlist', 'linked collection product schema');
 requireText(collectionHtml, '/blog/navratri-9-day-color-guide-2026', 'collection-to-guide internal link');
 requireText(collectionHtml, 'LUXE10', 'collection first-order offer');
 
