@@ -261,6 +261,23 @@ function validatePrerenderedRoute(routePath, manifestRoutes, exactRedirectSource
   }
 }
 
+/**
+ * Non-throwing form of validatePrerenderedRoute.
+ *
+ * Approved routes must pass validation or the build fails (unchanged). Newly
+ * discovered Shopify products are different: a product added minutes before a
+ * build may legitimately have no prerendered output yet, and that must not
+ * break the deploy. Those candidates are skipped with a reason instead.
+ */
+function prerenderRouteFailure(routePath, manifestRoutes, exactRedirectSources) {
+  try {
+    validatePrerenderedRoute(routePath, manifestRoutes, exactRedirectSources);
+    return null;
+  } catch (error) {
+    return error.message;
+  }
+}
+
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
 async function fetchAllProducts() {
@@ -470,31 +487,89 @@ async function main() {
       (missingApprovedProducts.length > 20 ? ` (+${missingApprovedProducts.length - 20} more)` : '')
     );
   }
-  const liveProducts = approvedProductPaths.map((routePath) => productByPath.get(routePath));
-  const excludedCandidateCount = products.length - liveProducts.length;
-  console.log(
-    `[sitemap] Approved inventory retained ${liveProducts.length} products; ` +
-    `excluded ${excludedCandidateCount} Shopify candidate product(s) outside the approved/live sitemap scope.`
-  );
+  const approvedLiveProducts = approvedProductPaths.map((routePath) => productByPath.get(routePath));
+
+  // ─── Self-healing product enrollment ──────────────────────────────────────
+  // The approved inventory used to be a hand-maintained allowlist: the only way
+  // a product entered the sitemap was for someone to add its path to
+  // approved-sitemap-inventory.json. The merchant feed, by contrast, reads
+  // Shopify directly. Any product created after the last manual capture
+  // therefore shipped to Google Shopping while remaining absent from the
+  // sitemap and invisible to organic search. That silent drift reached 41
+  // products (834 in the feed vs 793 in the sitemap).
+  //
+  // Rather than re-capturing the list by hand after every catalog change, new
+  // Shopify products are now enrolled automatically — but only when they pass
+  // exactly the same safety checks already required of approved routes:
+  // present in this build's prerender manifest, one self-canonical, one
+  // indexable robots directive, and not an exact redirect source. A candidate
+  // that fails any check is skipped with a logged reason instead of being
+  // published or breaking the build.
+  //
+  // The approved inventory is retained as a regression floor: it still fails
+  // the build when a previously indexed product vanishes.
+  const candidateProductPaths = products
+    .map((product) => `/product/${product.handle}`)
+    .filter((routePath) => !approvedPathSet.has(routePath));
+
+  const enrolledProductPaths = [];
+  const skippedCandidates = [];
+  for (const routePath of candidateProductPaths) {
+    const failure = prerenderRouteFailure(routePath, manifestRoutes, exactRedirectSources);
+    if (failure) {
+      skippedCandidates.push({ routePath, failure });
+      continue;
+    }
+    enrolledProductPaths.push(routePath);
+  }
+
+  if (enrolledProductPaths.length > 0) {
+    console.log(
+      `[sitemap] Auto-enrolled ${enrolledProductPaths.length} new Shopify product(s) that passed ` +
+      `prerender, canonical, robots and redirect validation:`
+    );
+    for (const routePath of enrolledProductPaths.slice(0, 20)) console.log(`[sitemap]   + ${routePath}`);
+    if (enrolledProductPaths.length > 20) {
+      console.log(`[sitemap]   + (${enrolledProductPaths.length - 20} more)`);
+    }
+  }
+  if (skippedCandidates.length > 0) {
+    console.log(
+      `[sitemap] Skipped ${skippedCandidates.length} Shopify product(s) that are not yet safe to index:`
+    );
+    for (const { routePath, failure } of skippedCandidates.slice(0, 10)) {
+      console.log(`[sitemap]   - ${routePath}: ${failure}`);
+    }
+    if (skippedCandidates.length > 10) {
+      console.log(`[sitemap]   - (${skippedCandidates.length - 10} more)`);
+    }
+  }
+
+  const enrolledProducts = enrolledProductPaths.map((routePath) => productByPath.get(routePath));
+  const liveProducts = [...approvedLiveProducts, ...enrolledProducts];
+
   const sitemapPaths = [
     ...staticPages.map((page) => page.loc),
     ...blogPosts,
     ...liveProducts.map((product) => `/product/${product.handle}`),
   ];
   const sitemapPathSet = new Set(sitemapPaths);
+
+  // Regression floor: every approved path must still be present. This is the
+  // protection the exact-count assertion used to provide, without blocking
+  // legitimate catalog growth.
   const missingApprovedPaths = approvedPaths.filter((routePath) => !sitemapPathSet.has(routePath));
-  const unexpectedPaths = sitemapPaths.filter((routePath) => !approvedPathSet.has(routePath));
-  if (
-    sitemapPaths.length !== expectedSitemapUrlCount ||
-    sitemapPathSet.size !== expectedSitemapUrlCount ||
-    missingApprovedPaths.length > 0 ||
-    unexpectedPaths.length > 0
-  ) {
+  if (missingApprovedPaths.length > 0 || sitemapPaths.length !== sitemapPathSet.size) {
     throw new Error(
-      `Generated sitemap scope must exactly match the ${expectedSitemapUrlCount}-URL approved/live inventory. ` +
+      `Generated sitemap must contain every approved URL and no duplicates. ` +
       `Generated=${sitemapPaths.length}, unique=${sitemapPathSet.size}, ` +
-      `missing=${missingApprovedPaths.join(', ') || 'none'}, ` +
-      `unexpected=${unexpectedPaths.join(', ') || 'none'}.`
+      `missing=${missingApprovedPaths.join(', ') || 'none'}.`
+    );
+  }
+  if (sitemapPaths.length < expectedSitemapUrlCount) {
+    throw new Error(
+      `Generated sitemap shrank below the approved inventory floor ` +
+      `(generated=${sitemapPaths.length}, approved=${expectedSitemapUrlCount}).`
     );
   }
   for (const routePath of sitemapPaths) {
@@ -508,6 +583,37 @@ async function main() {
   // Active Storefront API products are never automatically converted to 410.
   const deadListPath = path.join(distDir, 'dead-product-handles.json');
   fs.writeFileSync(deadListPath, JSON.stringify([], null, 2));
+
+  // Persist the validated scope back to the approved inventory so the
+  // regression floor tracks the catalog. Without this the floor would stay
+  // frozen at the last manual capture and auto-enrolled products would be
+  // re-discovered on every build instead of being protected against silent
+  // removal. Only routes that already passed full validation are written.
+  if (enrolledProductPaths.length > 0) {
+    const refreshedPaths = [
+      ...sitemapPaths.filter((routePath) => !routePath.startsWith('/product/')),
+      ...sitemapPaths.filter((routePath) => routePath.startsWith('/product/')).sort(),
+    ];
+    fs.writeFileSync(
+      APPROVED_INVENTORY_PATH,
+      `${JSON.stringify(
+        {
+          ...approvedInventory,
+          source: 'Generated by scripts/generate-sitemap.cjs after prerender, canonical, robots and redirect validation.',
+          capturedOn: new Date().toISOString().split('T')[0],
+          urlCount: refreshedPaths.length,
+          paths: refreshedPaths,
+        },
+        null,
+        2,
+      )}\n`,
+      'utf8',
+    );
+    console.log(
+      `[sitemap] Approved inventory refreshed: ${expectedSitemapUrlCount} -> ${refreshedPaths.length} URLs. ` +
+      'Commit this file so the regression floor persists.'
+    );
+  }
 
   const combinedSitemap = generateSitemap(liveProducts);
   const splitSitemaps = splitSitemap(combinedSitemap);
