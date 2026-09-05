@@ -39,7 +39,8 @@ function cleanSchema(value) {
 
   const output = {};
   for (const [key, child] of Object.entries(value)) {
-    if (['hasMerchantReturnPolicy', 'legalName', 'sameAs', 'paymentAccepted', 'priceValidUntil'].includes(key)) continue;
+    // `sameAs` preserved: entity-identity signal, not a shopper-facing claim.
+    if (['hasMerchantReturnPolicy', 'legalName', 'paymentAccepted', 'priceValidUntil'].includes(key)) continue;
     const cleaned = cleanSchema(child);
     if (cleaned !== null && cleaned !== undefined) output[key] = cleaned;
   }

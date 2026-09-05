@@ -329,10 +329,12 @@ function patchSchema() {
     "export function generateReturnPolicySchema() {\n  // Country-specific statutory rights and voluntary return rules cannot be\n  // represented accurately by one global MerchantReturnPolicy object.\n  // Merchant Center remains the source of truth for country-level settings.\n  return null;\n}",
   );
   source = removeObjectProperty(source, 'hasMerchantReturnPolicy');
-  source = source.replace(
-    /\n\s*sameAs:\s*\[\s*'https:\/\/www\.instagram\.com\/[^\]]+\],?/m,
-    '',
-  );
+  // `sameAs` is intentionally preserved. Unlike shipping/return copy, it makes
+  // no factual promise to the shopper — it declares which external profiles
+  // belong to this business. Stripping it removed LuxeMia's entity-identity
+  // signal and left the brand undefended against similarly named businesses in
+  // search and AI results. Profiles are owner-verified in
+  // `BRAND_SOCIAL_PROFILES` (src/lib/schema.ts).
   write(relative, source);
 }
 
@@ -346,7 +348,9 @@ function cleanSchemaValue(value) {
 
   const cleaned = {};
   for (const [key, child] of Object.entries(value)) {
-    if (key === 'hasMerchantReturnPolicy' || key === 'legalName' || key === 'sameAs' || key === 'paymentAccepted') continue;
+    // `sameAs` deliberately excluded from this strip list: it is an entity
+    // identity signal, not an unverifiable trust claim. See patchSchema().
+    if (key === 'hasMerchantReturnPolicy' || key === 'legalName' || key === 'paymentAccepted') continue;
     if (key === 'priceValidUntil') continue;
     const next = cleanSchemaValue(child);
     if (next !== null && next !== undefined) cleaned[key] = next;

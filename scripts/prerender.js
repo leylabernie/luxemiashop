@@ -661,6 +661,28 @@ query GetAllProducts($first: Int!, $after: String) {
 }
 `;
 
+/**
+ * Build a responsive srcset for a Shopify CDN image.
+ *
+ * `forceJpegForGmc` pins width=1500 because Google Merchant Center and
+ * schema.org consume those URLs and require a large, stable JPEG. That is
+ * correct for structured data but wrong for visible markup: the prerendered
+ * grid cards render at 400-600 CSS px, so every card was downloading a
+ * 1500px asset (~275 KB) to paint a 400px image (~64 KB).
+ *
+ * This helper is display-only. It never touches the schema/feed URLs.
+ * Returns null for non-Shopify hosts so callers fall back to a plain src.
+ */
+function buildResponsiveImageAttrs(url, widths, sizes) {
+  if (!url) return null;
+  if (!url.includes('cdn.shopify.com') && !url.includes('myshopify.com')) return null;
+  const clean = url.replace(/[&?]format=\w+/g, '').replace(/[&?]width=\d+/g, '');
+  const sep = clean.includes('?') ? '&' : '?';
+  const at = (w) => `${clean}${sep}format=jpg&width=${w}`;
+  const srcset = widths.map((w) => `${at(w)} ${w}w`).join(', ');
+  return { src: at(widths[widths.length - 1]), srcset, sizes };
+}
+
 function forceJpegForGmc(url) {
   if (!url) return url;
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
@@ -1104,14 +1126,26 @@ function generateCollectionProductHtml(products) {
   if (!products || products.length === 0) {
     return '<p>New arrivals are being added to this collection. Please check back shortly.</p>';
   }
-  const cards = products.map(p => {
+  const cards = products.map((p, index) => {
     const price = p.priceRange?.minVariantPrice?.amount;
     const currency = p.priceRange?.minVariantPrice?.currencyCode || 'USD';
     const comparePrice = p.compareAtPriceRange?.maxVariantPrice?.amount;
     const isAvailable = p.availableForSale !== false;
     const firstImage = p.images?.edges?.[0]?.node;
+    // Grid cards paint at ~400 CSS px. Serve a responsive ladder instead of a
+    // single 1500px asset, and let the first row load eagerly so the LCP
+    // candidate is not deprioritised by lazy-loading.
+    const cardImage = firstImage
+      ? buildResponsiveImageAttrs(firstImage.url, [200, 400, 600, 800], '(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 400px')
+      : null;
+    const isAboveFold = index < 4;
+    const loadingAttrs = isAboveFold
+      ? 'loading="eager" fetchpriority="high" decoding="async"'
+      : 'loading="lazy" decoding="async"';
     const imgHtml = firstImage
-      ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || sanitizeProductTitle(p.title) || '')}" width="400" height="500" loading="lazy" style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`
+      ? (cardImage
+        ? `<img src="${escapeHtml(cardImage.src)}" srcset="${escapeHtml(cardImage.srcset)}" sizes="${escapeHtml(cardImage.sizes)}" alt="${escapeHtml(firstImage.altText || sanitizeProductTitle(p.title) || '')}" width="400" height="500" ${loadingAttrs} style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`
+        : `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || sanitizeProductTitle(p.title) || '')}" width="400" height="500" ${loadingAttrs} style="max-width:100%;height:auto;display:block;margin:0 0 8px 0">`)
       : '';
 
     let priceHtml = '';
@@ -2854,7 +2888,13 @@ function generateHtml(template, route, allShopifyProducts) {
 
     const firstImage = images[0];
     const imgHtml = firstImage
-      ? `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || route.h1)}" width="600" loading="lazy" style="max-width:100%;height:auto;display:block;margin:12px 0">`
+      ? (() => {
+          // Display-only responsive ladder; schema/feed URLs stay at 1500px.
+          const hero = buildResponsiveImageAttrs(firstImage.url, [400, 600, 900, 1200], '(max-width: 640px) 92vw, 600px');
+          return hero
+            ? `<img src="${escapeHtml(hero.src)}" srcset="${escapeHtml(hero.srcset)}" sizes="${escapeHtml(hero.sizes)}" alt="${escapeHtml(firstImage.altText || route.h1)}" width="600" height="750" loading="eager" fetchpriority="high" decoding="async" style="max-width:100%;height:auto;display:block;margin:12px 0">`
+            : `<img src="${escapeHtml(forceJpegForGmc(firstImage.url))}" alt="${escapeHtml(firstImage.altText || route.h1)}" width="600" loading="eager" fetchpriority="high" decoding="async" style="max-width:100%;height:auto;display:block;margin:12px 0">`;
+        })()
       : '';
 
     const descHtml = description

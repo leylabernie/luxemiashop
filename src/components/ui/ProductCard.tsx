@@ -9,7 +9,7 @@ import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
-import { getOptimizedImage } from '@/lib/imageUtils';
+import { getOptimizedImage, getResponsiveImage } from '@/lib/imageUtils';
 import { cn } from '@/lib/utils';
 import { getShipByLabel } from '@/lib/shipBy';
 import { isMadeToOrderProduct } from '@/lib/customizableProducts';
@@ -308,9 +308,13 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
           {isInView && imageUrl && !imageError ? (
             <div className="w-full h-full overflow-hidden">
               <img
-                src={getOptimizedImage(imageUrl, 'card')}
+                src={getResponsiveImage(imageUrl)?.src ?? getOptimizedImage(imageUrl, 'card')}
+                srcSet={getResponsiveImage(imageUrl)?.srcSet}
+                sizes={getResponsiveImage(imageUrl)?.sizes}
                 alt={product.node.images.edges[0]?.node.altText || buildSeoAltText(product.node.title, product.node.productType, product.node.tags)}
-                loading="lazy"
+                loading={index < 4 ? 'eager' : 'lazy'}
+                fetchPriority={index < 4 ? 'high' : 'auto'}
+                decoding="async"
                 width={300}
                 height={400}
                 draggable={false}

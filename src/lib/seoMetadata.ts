@@ -117,7 +117,7 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
   },
   '/pages/shipping-customs': {
     title: 'International Shipping, Duties & Customs | LuxeMia',
-    description: 'Review LuxeMia international shipping, duties, customs, brokerage and tracking guidance for all seven supported destination countries.',s United States shipping rates, tracking and tax guidance before ordering.",
+    description: 'Review LuxeMia international shipping, duties, customs, brokerage and tracking guidance for all seven supported destination countries.',
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {

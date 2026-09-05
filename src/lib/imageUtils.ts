@@ -151,3 +151,40 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
 export const getPlaceholderUrl = (): string => {
   return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAwIiBoZWlnaHQ9IjUzMyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSIjZjVmNWY0Ii8+PC9zdmc+';
 };
+
+/**
+ * Build a responsive srcset for a Shopify CDN image.
+ *
+ * `getOptimizedImage(url, 'card')` returns a single 1000px URL. Grid cards
+ * paint at roughly 300-400 CSS px, so every card downloaded far more image
+ * data than it could display. This helper emits a width ladder and lets the
+ * browser pick the right one.
+ *
+ * Display-only: it must not be used for schema.org, og:image or the merchant
+ * feed, which require a stable large JPEG for Google Merchant Center.
+ *
+ * Returns null for non-Shopify hosts so callers fall back to a plain `src`.
+ */
+export const getResponsiveImage = (
+  url: string,
+  widths: number[] = [200, 400, 600, 800],
+  sizes = '(max-width: 640px) 45vw, (max-width: 1024px) 30vw, 400px'
+): { src: string; srcSet: string; sizes: string } | null => {
+  if (!url) return null;
+  if (!url.includes('cdn.shopify.com') && !url.includes('myshopify.com')) return null;
+
+  const clean = fixMalformedUrl(url)
+    .replace(/[&?]width=\d+/g, '')
+    .replace(/[&?]height=\d+/g, '')
+    .replace(/[&?]crop=[^&]+/g, '')
+    .replace(/[&?]quality=\d+/g, '')
+    .replace(/[&?]format=\w+/g, '');
+  const sep = clean.includes('?') ? '&' : '?';
+  const at = (w: number) => `${clean}${sep}width=${w}&quality=90&crop=center&format=jpg`;
+
+  return {
+    src: at(widths[widths.length - 1]),
+    srcSet: widths.map((w) => `${at(w)} ${w}w`).join(', '),
+    sizes,
+  };
+};

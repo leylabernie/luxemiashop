@@ -19,6 +19,21 @@ export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 export const INTERNATIONAL_SHIPPING_COUNTRIES = ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 export const BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`;
 
+/**
+ * Owner-verified social profiles used for schema.org `sameAs`.
+ *
+ * Source of truth: these must match the profile links rendered in
+ * `src/components/layout/Footer.tsx`. A `sameAs` entry pointing at a dead or
+ * unowned profile weakens the entity signal instead of strengthening it, so
+ * only confirmed-live, owner-controlled URLs belong here.
+ */
+export const BRAND_SOCIAL_PROFILES = [
+  'https://www.instagram.com/luxemiausa',
+  'https://www.facebook.com/LuxeMia',
+  'https://www.pinterest.com/luxemiashop',
+  'https://www.tiktok.com/@shopluxemia',
+] as const;
+
 export function normalizeBrandName(value?: string | null): string {
   const raw = (value || '').trim();
   if (!raw) return BRAND_NAME;
@@ -382,6 +397,12 @@ export function generateOrganizationSchema() {
       availableLanguage: ['English'],
     },
     brand: { '@id': `${SITE_URL}/#brand` },
+    // Verified owner-operated profiles. `sameAs` is an entity-identity signal,
+    // not a marketing claim: it lets Google and AI engines resolve LuxeMia to a
+    // single real business and disambiguates the brand from similarly named
+    // entities (e.g. the unrelated "LUXEMIA INC" storefront in Miami, FL).
+    // Only add URLs confirmed to resolve to a live, owner-controlled profile.
+    sameAs: BRAND_SOCIAL_PROFILES,
     knowsAbout: [
       'Indian Ethnic Wear',
       'Bridal Lehengas',
