@@ -19,7 +19,25 @@ export type ProductCategory =
   | 'indo-western';
 
 const SHIPPING_POLICY =
-  'Shipping is available to seven countries. Standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch.';
+  'Ready to Ship from USA store. Tracked shipping to United States, Canada, United Kingdom, Australia, New Zealand, South Africa, Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch.';
+
+// GEO/AEO helper — answer-first sentence for AI search engines
+function buildAnswerFirstSentence(title: string, productType: string, material?: string, color?: string): string {
+  const safeTitle = sanitizeProductTitle(title);
+  const lowerTitle = safeTitle.toLowerCase();
+  const isNavratri = lowerTitle.includes('navratri') || lowerTitle.includes('garba') || lowerTitle.includes('chaniya') || lowerTitle.includes('gamthi') || lowerTitle.includes('mirror');
+  const isReadyWear = lowerTitle.includes('ready to wear') || lowerTitle.includes('pre-draped') || lowerTitle.includes('pre draped');
+  if (isNavratri) {
+    return `${safeTitle} is a ready-to-ship chaniya choli for Garba & Dandiya in the USA — ${material ? `${material} ` : ''}with ${lowerTitle.includes('8') ? '8-meter flare, ' : 'full flare, '}real mirror/gamthi work where noted.`;
+  }
+  if (isReadyWear) {
+    return `${safeTitle} is a ready-to-ship ready to wear saree with stitched blouse — no draping needed, ideal for wedding guests in the USA.`;
+  }
+  if (productType.toLowerCase().includes('saree')) {
+    return `${safeTitle} is a ready-to-ship ${color ? `${color} ` : ''}${material ? `${material} ` : ''}saree for wedding guests & receptions in the USA — includes saree with ${isReadyWear ? 'stitched blouse' : 'unstitched blouse piece'}.`;
+  }
+  return `${safeTitle} is a ready-to-ship ${material ? `${material} ` : ''}${productType || 'Indian ethnic wear'} for weddings & festivals in the USA.`;
+}
 
 function cleanText(value?: string): string {
   return (value || '')
@@ -101,15 +119,16 @@ export function enrichProductDescription(
   color?: string,
 ): string {
   const catalogDescription = cleanCatalogDescription(description);
+  const answerFirst = buildAnswerFirstSentence(title, productType, material, color);
   if (catalogDescription.length >= 40) {
-    return `${catalogDescription} ${SHIPPING_POLICY}`;
+    return `${answerFirst} ${catalogDescription} ${SHIPPING_POLICY}`;
   }
 
   const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
   const safeType = cleanAttribute(productType);
   const safeMaterial = cleanAttribute(material);
   const safeColor = cleanAttribute(color);
-  const details: string[] = [`${safeTitle}.`];
+  const details: string[] = [answerFirst];
 
   if (safeType) details.push(`Category: ${safeType}.`);
   if (safeColor) details.push(`Color: ${safeColor}.`);
@@ -136,9 +155,15 @@ export function generateMetaDescription(
   const safeColor = cleanAttribute(color);
   const safeMaterial = cleanAttribute(material);
   const attributes = [safeColor, safeMaterial, safeType].filter(Boolean).join(' ');
+  const lowerTitle = safeTitle.toLowerCase();
+  const isNavratri = lowerTitle.includes('navratri') || lowerTitle.includes('garba') || lowerTitle.includes('chaniya');
+  const isSaree = safeType.toLowerCase().includes('saree') || lowerTitle.includes('saree');
+  let suffix = 'Ready to Ship. Free US shipping $199+.';
+  if (isNavratri) suffix = 'Ready to Ship for Garba USA. Free US shipping $199+.';
+  else if (isSaree) suffix = 'Ready to Ship for wedding reception USA. Free US shipping $199+.';
   const core = attributes ? `${safeTitle} — ${attributes}.` : `${safeTitle}.`;
   return truncateAtWord(
-    `${core} Review exact options at LuxeMia. U.S. shipping is $14.99 below $199 and free at $199 and above.`,
+    `${core} ${suffix} Tracked to USA, UK, Canada.`,
     160,
   );
 }

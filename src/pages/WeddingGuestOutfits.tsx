@@ -52,8 +52,8 @@ const WeddingGuestOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia"
-        description="Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms."
+        title="Indian Wedding Guest Saree for Reception USA — Ready to Ship | LuxeMia"
+        description="Shop Indian wedding guest sarees & lehengas for reception USA — tissue silk, dola silk, georgette with embroidery from $101. Ready to Ship. Free US shipping $199+. Tracked to USA, UK, Canada. Perfect for wedding guests & bridesmaids."
         canonical="https://luxemia.shop/collections/wedding-guest-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -69,9 +69,9 @@ const WeddingGuestOutfits = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Wedding Season</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Outfits</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Saree for Reception — Ready to Ship USA</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Browse currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception. The exact product page is the source of truth for every item. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.
+              Shop Indian wedding guest sarees &amp; lehengas for reception, sangeet &amp; bridesmaid — tissue silk, dola silk &amp; georgette with embroidery. Ready to Ship from USA store, tracked to USA, UK, Canada, Australia. Free US shipping $199+.
             </p>
           </div>
         </div>

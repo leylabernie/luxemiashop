@@ -10,14 +10,14 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear"
     },
     "/lehengas": {
-      "title": "Bridal & Wedding Lehengas Online USA | LuxeMia",
-      "description": "Shop bridal and wedding-guest lehengas online. Compare fabric, included pieces, stitching, sizing, availability and processing details.",
-      "h1": "Bridal & Wedding Lehengas Online in the USA"
+      "title": "Affordable Bridal Lehenga Choli USA — Ready to Ship from $33.99 | LuxeMia",
+      "description": "Shop affordable bridal lehenga choli & wedding lehengas USA — mirror, gamthi, gota patti, 8-meter flare from $33.99. Ready to Ship. Free US shipping $199+. Tracked to USA, UK, Canada.",
+      "h1": "Affordable Bridal & Wedding Lehengas Online in the USA — Ready to Ship"
     },
     "/sarees": {
-      "title": "Buy Indian Wedding Sarees Online in the U.S. | LuxeMia",
-      "description": "Shop Indian wedding, silk and festive sarees online in the U.S. Compare stated fabric, work, blouse details, availability and tracked shipping.",
-      "h1": "Indian Wedding Sarees Online in the USA"
+      "title": "Ready to Wear Wedding Saree with Stitched Blouse USA | LuxeMia",
+      "description": "Shop ready to wear wedding saree with stitched blouse USA — tissue silk, dola silk, georgette with embroidery. Ready to Ship. Free US shipping $199+. Tracked to USA, UK, Canada.",
+      "h1": "Ready to Wear Indian Wedding Sarees Online in the USA"
     },
     "/suits": {
       "title": "Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia",
@@ -45,9 +45,9 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Party-Wear Lehengas Online in the USA"
     },
     "/collections/wedding-sarees": {
-      "title": "Wedding Sarees USA | Indian Bridal Styles | LuxeMia",
-      "description": "Shop wedding sarees online in the USA. Compare current bridal styles by stated fabric, work, blouse details, price and availability before ordering.",
-      "h1": "Wedding Sarees Online in the USA"
+      "title": "Indian Wedding Guest Saree for Reception USA — Ready to Ship | LuxeMia",
+      "description": "Shop Indian wedding guest saree for reception USA — tissue silk, dola silk, viscose with embroidery from $101. Ready to Ship. Free US shipping $199+. Yellow Haldi guest ready.",
+      "h1": "Indian Wedding Guest Sarees for Reception — Ready to Ship USA"
     },
     "/collections/designer-sarees": {
       "title": "Designer Sarees USA | Embroidered Party Styles | LuxeMia",
