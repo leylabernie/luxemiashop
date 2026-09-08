@@ -1,9 +1,11 @@
+import DOMPurify from 'dompurify';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Ruler, Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
 import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 
 interface ProductTabsProps {
   description?: string;
+  descriptionHtml?: string;
   productType?: string;
   /** Whether this product supports stitching (controls Tailoring Services tab visibility) */
   isStitchable?: boolean;
@@ -393,7 +395,10 @@ function getLabel(key: string): string {
   return labels[key] || titleCase(key);
 }
 
-export const ProductTabs = ({ description, productType, isStitchable, tags }: ProductTabsProps) => {
+export const ProductTabs = ({ description, descriptionHtml, productType, isStitchable, tags }: ProductTabsProps) => {
+  const verifiedHtml = tags?.includes('facts:source-verified') && descriptionHtml
+    ? DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'ul', 'li', 'a'], ALLOWED_ATTR: ['href'] })
+    : '';
   const showTailoringTab = isStitchable ?? isStitchableType(productType);
   const category = classifyProduct(productType);
   const detailBullets = DETAIL_BULLETS[category];
@@ -490,13 +495,13 @@ export const ProductTabs = ({ description, productType, isStitchable, tags }: Pr
       {/* ─── Details Tab ─── */}
       <TabsContent value="details" className="pt-6">
         <div className="prose prose-sm max-w-none text-muted-foreground">
-          <p className="leading-relaxed">
+          {verifiedHtml ? <div dangerouslySetInnerHTML={{ __html: verifiedHtml }} /> : <p className="leading-relaxed">
             {description || (
               isJewelry
                 ? 'Review the product images and listed details for the exact pieces, finish, colors, measurements, and closure.'
                 : 'Review the product images and listed details for the exact pieces, fabric, color, work, and available sizing.'
             )}
-          </p>
+          </p>}
           <ul className="mt-4 space-y-2">
             {detailBullets.map((bullet, i) => (
               <li key={i} className="flex items-start gap-2">

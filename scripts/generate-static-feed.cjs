@@ -57,7 +57,8 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.CF_PAGES === '1';
 // Verified retained catalog on 2026-09-08: 106 garments, 606 variants; service lines excluded.
 const MIN_EXPECTED_OFFER_COUNT = 606;
-const MIN_SIZE_COVERAGE_RATIO = 0.89;
+// Preserve known size facts without inventing finished sizes for new unstitched fabric sets.
+const MIN_SIZED_OFFER_COUNT = 540;
 const MIN_MATERIAL_COVERAGE_RATIO = 0.82;
 const MAX_LOCAL_SNAPSHOT_AGE_DAYS = 7;
 
@@ -652,8 +653,8 @@ function assertFeedSnapshotCoverage(xml, sourceLabel) {
   const maxAgeMs = MAX_LOCAL_SNAPSHOT_AGE_DAYS * 24 * 60 * 60 * 1000;
   const failures = [];
   if (stats.offers < MIN_EXPECTED_OFFER_COUNT) failures.push(`${stats.offers} offers (minimum ${MIN_EXPECTED_OFFER_COUNT})`);
-  if (stats.offers > 0 && stats.sizes / stats.offers < MIN_SIZE_COVERAGE_RATIO) {
-    failures.push(`${stats.sizes}/${stats.offers} sized offers (minimum ${(MIN_SIZE_COVERAGE_RATIO * 100).toFixed(0)}%)`);
+  if (stats.sizes < MIN_SIZED_OFFER_COUNT) {
+    failures.push(`${stats.sizes} sized offers (minimum ${MIN_SIZED_OFFER_COUNT} verified retained offers)`);
   }
   if (stats.offers > 0 && stats.materials / stats.offers < MIN_MATERIAL_COVERAGE_RATIO) {
     failures.push(`${stats.materials}/${stats.offers} material offers (minimum ${(MIN_MATERIAL_COVERAGE_RATIO * 100).toFixed(0)}%)`);

@@ -583,6 +583,8 @@ query GetAllProducts($first: Int!, $after: String) {
         title
         createdAt
         description
+        descriptionHtml
+        media(first: 20) { edges { node { id mediaContentType alt previewImage { url altText } ... on Video { sources { url mimeType format width height } } } } }
         handle
         vendor
         productType
@@ -1116,6 +1118,8 @@ function buildInitialProductPayload(product) {
   const slim = {
     ...buildHydrationProductNode(product),
     seo: product.seo || { title: null, description: null },
+    descriptionHtml: (product.tags || []).includes('facts:source-verified') ? sanitizeProductCopy(product.descriptionHtml || '') : undefined,
+    media: product.media,
   };
   return toSafeInlineJson({ handle: product.handle, product: slim });
 }
@@ -2899,7 +2903,7 @@ function generateHtml(template, route, allShopifyProducts) {
       : '';
 
     const descHtml = description
-      ? `<h2>Product Description</h2><p>${escapeHtml(description).slice(0, 2000)}</p>`
+      ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, (p.tags || []).includes('facts:source-verified') ? 6000 : 2000))}</p>`
       : '';
 
     const fabricDetails = productAttributes.material
@@ -3331,7 +3335,7 @@ async function main() {
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
-    const seoDescription = ''; // Ignore obsolete Shopify SEO copy; use field-backed copy below.
+    const seoDescription = (p.tags || []).includes('facts:source-verified') ? (p.seo?.description || '') : '';
 
     // ─── USP-enhanced title generation ──────────────────────────────────────
     // When no Shopify SEO title is set, inject fabric/color USP into the title
