@@ -253,6 +253,8 @@ const ProductDetail = () => {
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
   const sizeAnswer = madeToOrderProduct
     ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+    : product?.tags?.includes('construction:Saree with stitched blouse') && productSizeValues.length > 0
+    ? `Choose blouse size ${productSizeValues.join(', ')}. The size applies to the stitched blouse; the saree needs draping. These are blouse size labels, not complete bra sizes. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance.`
     : productSizeValues.length > 0
     ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
     : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
@@ -281,6 +283,8 @@ const ProductDetail = () => {
       question: `What is the delivery time for the ${product.title}?`,
       answer: madeToOrderProduct
         ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
+        : product?.tags?.includes('availability:Confirm before ordering')
+        ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
         : product?.tags?.includes('construction:Unstitched')
         ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
         : 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.'
@@ -491,6 +495,7 @@ const ProductDetail = () => {
                   productType={product.productType}
                   isStitchable={!madeToOrderProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
+                  blouseSizeValues={product.tags?.includes('construction:Saree with stitched blouse') ? productSizeValues : undefined}
                 />
               </div>
 

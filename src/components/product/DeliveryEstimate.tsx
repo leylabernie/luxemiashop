@@ -4,9 +4,11 @@ interface DeliveryEstimateProps {
   hasStitching: boolean;
   isMadeToOrder?: boolean;
   isUnstitched?: boolean;
+  hasStitchedBlouse?: boolean;
+  confirmAvailability?: boolean;
 }
 
-export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstitched = false }: DeliveryEstimateProps) => (
+export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false }: DeliveryEstimateProps) => (
   <div className="space-y-3 rounded-sm border border-border/50 bg-card/50 p-4">
     <div className="flex items-center gap-2 text-sm">
       <Truck className="h-4 w-4 text-primary" />
@@ -22,10 +24,12 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstit
         )}
         <div>
           <p className="font-medium text-foreground">
-            {isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : 'Ready to Ship'}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {isUnstitched
+            {confirmAvailability
+              ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+              : isUnstitched
               ? 'Supplied unstitched; tailoring is required before wearing. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
               : isMadeToOrder
               ? 'Use approximately 4–5 weeks as the total planning window. Production time and carrier transit are confirmed separately after the requested color, measurements, available design options and delivery address are known.'
@@ -46,7 +50,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstit
         </div>
       </div>
 
-      {hasStitching && !isMadeToOrder && !isUnstitched && (
+      {hasStitching && !isMadeToOrder && !isUnstitched && !confirmAvailability && (
         <div className="flex items-start gap-2">
           <Clock className="mt-0.5 h-3.5 w-3.5 text-amber-600" />
           <p className="text-muted-foreground">

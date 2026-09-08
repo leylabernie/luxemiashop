@@ -11,6 +11,7 @@ interface ProductTabsProps {
   isStitchable?: boolean;
   /** Product tags for fabric-specific care lookup (e.g. ['fabric:silk', 'color:red']) */
   tags?: string[];
+  blouseSizeValues?: string[];
 }
 
 // Product types that support stitching
@@ -395,7 +396,7 @@ function getLabel(key: string): string {
   return labels[key] || titleCase(key);
 }
 
-export const ProductTabs = ({ description, descriptionHtml, productType, isStitchable, tags }: ProductTabsProps) => {
+export const ProductTabs = ({ description, descriptionHtml, productType, isStitchable, tags, blouseSizeValues }: ProductTabsProps) => {
   const verifiedHtml = tags?.includes('facts:source-verified') && descriptionHtml
     ? DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'ul', 'li', 'a'], ALLOWED_ATTR: ['href'] })
     : '';
@@ -825,6 +826,13 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
       {/* ─── Size Guide Tab — apparel only ─── */}
       {!isJewelry && (
       <TabsContent value="sizing" className="pt-6">
+        {blouseSizeValues && blouseSizeValues.length > 0 ? (
+          <div className="space-y-4 text-sm">
+            <h3 className="font-medium">Choose the stitched blouse size</h3>
+            <p>Available blouse sizes: {blouseSizeValues.join(', ')}. The selected size applies to the blouse; the saree is draped separately.</p>
+            <p className="text-muted-foreground">These are blouse size labels, not complete bra sizes. Contact LuxeMia with your full-bust and underbust measurements before ordering if you need help confirming fit. No cup size, blouse length or garment measurement is implied by the number alone.</p>
+          </div>
+        ) : (
         <div className="space-y-6">
           <div className="flex items-center gap-2 text-sm text-muted-foreground">
             <Ruler className="h-4 w-4" />
@@ -884,6 +892,7 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
             Need help? Contact our team for personalized size recommendations.
           </p>
         </div>
+        )}
       </TabsContent>
       )}
 
