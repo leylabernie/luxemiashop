@@ -826,7 +826,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       </div>
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} />
+      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} />
       {shipByLabel && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />

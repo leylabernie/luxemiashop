@@ -281,6 +281,8 @@ const ProductDetail = () => {
       question: `What is the delivery time for the ${product.title}?`,
       answer: madeToOrderProduct
         ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
+        : product?.tags?.includes('construction:Unstitched')
+        ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
         : 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.'
     },
     ...(customizableProduct ? [{

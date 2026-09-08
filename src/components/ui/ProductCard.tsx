@@ -436,7 +436,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
           </div>
           <p className={`text-xs font-medium ${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-green-400'}`}>
-            {isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+            {product.node.tags?.includes('construction:Unstitched') ? 'Unstitched' : isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
           </p>
           {shipByLabel && !isMadeToOrder && (
             <p className="text-xs text-green-700 dark:text-green-400 font-medium">
