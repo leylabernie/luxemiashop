@@ -3,6 +3,12 @@
 // Regenerated on each build. Imported by middleware.ts to avoid self-HTTP HEAD requests.
 
 export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
+  'mauve-banarasi-silk-unstitched-reception-lehenga-set-10391',
+  'olive-gold-banarasi-silk-unstitched-reception-lehenga-set-10390',
+  'purple-banarasi-silk-unstitched-reception-lehenga-set-10389',
+  'fuchsia-pink-banarasi-silk-unstitched-reception-lehenga-set-10388',
+  'ivory-banarasi-silk-unstitched-reception-lehenga-set-10387',
+  'peach-banarasi-silk-unstitched-reception-lehenga-set-10386',
   'cream-thread-work-art-silk-wedding-sherwani-with-stole-design-ii',
   'cream-thread-work-art-silk-wedding-sherwani-with-stole-design-i',
   'beige-thread-work-art-silk-groom-sherwani-with-stole',

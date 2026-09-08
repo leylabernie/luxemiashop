@@ -191,7 +191,7 @@ export const CompleteTheLook = ({ currentProductId, productType }: CompleteTheLo
                       height={400}
                       loading="lazy"
                       decoding="async"
-                      className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                      className="w-full h-full object-contain transition-transform duration-700"
                     />
                   ) : (
                     <div className="w-full h-full flex items-center justify-center bg-muted">

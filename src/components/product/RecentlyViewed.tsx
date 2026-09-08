@@ -59,7 +59,7 @@ export const RecentlyViewed = ({ currentProductId }: RecentlyViewedProps) => {
                   loading="lazy"
                   decoding="async"
                   onError={() => handleImageError(product.id)}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                  className="w-full h-full object-contain transition-transform duration-500"
                 />
                 <div className="absolute inset-0 bg-foreground/0 group-hover:bg-foreground/5 transition-colors duration-300" />
               </div>

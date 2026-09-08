@@ -128,7 +128,7 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
     // format=jpg ensures Google Merchant Center gets JPEG (not WebP/AVIF which causes "unsupported image type")
     // quality=90 ensures sharp images without excessive file size
     const separator = optimizedUrl.includes('?') ? '&' : '?';
-    optimizedUrl = `${optimizedUrl}${separator}width=${size}&quality=90&crop=center&format=jpg`;
+    optimizedUrl = `${optimizedUrl}${separator}width=${size}&quality=90&format=jpg`;
   }
   
   // For kesimg CDN images, force JPEG format too
@@ -180,7 +180,7 @@ export const getResponsiveImage = (
     .replace(/[&?]quality=\d+/g, '')
     .replace(/[&?]format=\w+/g, '');
   const sep = clean.includes('?') ? '&' : '?';
-  const at = (w: number) => `${clean}${sep}width=${w}&quality=90&crop=center&format=jpg`;
+  const at = (w: number) => `${clean}${sep}width=${w}&quality=90&format=jpg`;
 
   return {
     src: at(widths[widths.length - 1]),

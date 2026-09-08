@@ -321,7 +321,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
                 onLoad={() => setIsLoaded(true)}
                 onError={() => setImageError(true)}
                 className={cn(
-                  'w-full h-full object-cover object-top select-none',
+                  'w-full h-full object-contain select-none',
                   isLoaded ? 'opacity-100' : 'opacity-0',
                   isPinching ? '' : 'transition-all duration-300'
                 )}

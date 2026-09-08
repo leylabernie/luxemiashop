@@ -117,6 +117,7 @@ function getListedProductAttributes(product: ShopifyProduct) {
   const rawMaterial = product.materialMetafield?.value
     || product.fabricMetafield?.value
     || optionValue('fabric', 'material')
+    || (product.tags || []).find(tag => /^(fabric|material):/i.test(tag))?.split(':').slice(1).join(':').trim()
     || getLabeledDescriptionValue(product.description, ['fabric', 'material', 'top fabric', 'bottom fabric']);
   const blouseFabric = product.blouseFabricMetafield?.value || undefined;
   const occasions = parseMetafieldList(product.occasionMetafield?.value);
@@ -170,6 +171,9 @@ function getListedProductAttributes(product: ShopifyProduct) {
 }
 
 function buildVerifiedProductDescription(product: ShopifyProduct): string {
+  if (product.tags?.includes('facts:source-verified') && product.description.length >= 80) {
+    return product.description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  }
   const title = sanitizeProductTitle(product.title || 'Indian ethnic wear');
   const attributes = getListedProductAttributes(product);
   const parts = [`${title}.`];
@@ -208,7 +212,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   const fallbackDescription = productAttributes.jewelry
     ? `Shop ${displayTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
     : `Shop ${displayTitle} at LuxeMia. Indian ethnic wear online with tracked U.S. shipping.`;
-  const description = (cleanProductDescription || fallbackDescription).slice(0, 160);
+  const description = ((product.tags?.includes('facts:source-verified') ? product.seo?.description : '') || cleanProductDescription || fallbackDescription).slice(0, 160);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;

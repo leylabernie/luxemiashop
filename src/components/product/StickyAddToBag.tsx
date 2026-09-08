@@ -49,7 +49,7 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
                 alt={product.title}
                 loading="lazy"
                 decoding="async"
-                className="w-12 h-14 object-cover rounded-sm flex-shrink-0"
+                className="w-12 h-14 object-contain rounded-sm flex-shrink-0"
               />
             )}
             <div className="flex-1 min-w-0">

@@ -185,17 +185,20 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
     
-    // Store container size for zoom calculation
-    setContainerSize({ width: rect.width, height: rect.height });
-    
-    // Calculate background position in pixels for proper magnification
-    // The magnifier shows a zoomed portion centered on cursor
-    const zoomedWidth = rect.width * ZOOM_LEVEL;
-    const zoomedHeight = rect.height * ZOOM_LEVEL;
-    
-    // Position: cursor position * zoom level - half magnifier size (to center)
-    const bgX = (x / rect.width) * zoomedWidth - MAGNIFIER_SIZE / 2;
-    const bgY = (y / rect.height) * zoomedHeight - MAGNIFIER_SIZE / 2;
+    // Match the contained image, including letterboxing, when positioning zoom.
+    const image = imageRef.current.querySelector('img');
+    if (!image?.naturalWidth || !image.naturalHeight) return;
+    const scale = Math.min(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+    const width = image.naturalWidth * scale;
+    const height = image.naturalHeight * scale;
+    const offsetX = (rect.width - width) / 2;
+    const offsetY = (rect.height - height) / 2;
+    const insideImage = x >= offsetX && x <= offsetX + width && y >= offsetY && y <= offsetY + height;
+    setShowMagnifier(insideImage);
+    if (!insideImage) return;
+    setContainerSize({ width, height });
+    const bgX = (x - offsetX) * ZOOM_LEVEL - MAGNIFIER_SIZE / 2;
+    const bgY = (y - offsetY) * ZOOM_LEVEL - MAGNIFIER_SIZE / 2;
     
     setCursorPosition({ x, y });
     setMagnifierPosition({ x: bgX, y: bgY });
@@ -335,7 +338,7 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
                 alt={image.node.altText || `${productTitle} - View ${index + 1}`}
                 width={100}
                 height={100}
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-contain"
                 loading="lazy"
                 draggable={false}
               />
@@ -371,7 +374,7 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
                 transition={{ duration: 0.3 }}
                 src={getOptimizedImage(currentImage.url, 'gallery')}
                 alt={currentImage.altText || productTitle}
-                className="w-full h-full object-cover object-top pointer-events-none"
+                className="w-full h-full object-contain pointer-events-none"
                 draggable={false}
               />
             </motion.div>
@@ -633,7 +636,7 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
                         alt={image.node.altText || `${productTitle} - View ${index + 1}`}
                         width={100}
                         height={100}
-                        className="w-full h-full object-cover object-top"
+                        className="w-full h-full object-contain"
                         draggable={false}
                       />
                     </motion.button>
@@ -673,7 +676,7 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
                     preload="metadata"
                     poster={media.node.previewImage?.url}
                     aria-label={media.node.alt || `${productTitle} product video`}
-                    className="aspect-[9/16] w-full bg-muted object-cover"
+                    className="aspect-[9/16] w-full bg-muted object-contain"
                   >
                     <source src={source.url} type={source.mimeType} />
                     Your browser does not support embedded product videos.

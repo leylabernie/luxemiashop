@@ -221,7 +221,7 @@ const ProductDetail = () => {
   })();
   // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
   // copy. The field-backed generator below is the crawler and shopper source.
-  const seoDescription = '';
+  const seoDescription = product?.tags?.includes('facts:source-verified') ? product.seo?.description || '' : '';
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
@@ -485,6 +485,7 @@ const ProductDetail = () => {
               <div className="mb-16">
                 <ProductTabs 
                   description={enrichedDescription || product.description}
+                  descriptionHtml={product.descriptionHtml}
                   productType={product.productType}
                   isStitchable={!madeToOrderProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
