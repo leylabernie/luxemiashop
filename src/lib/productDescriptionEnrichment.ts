@@ -19,24 +19,22 @@ export type ProductCategory =
   | 'indo-western';
 
 const SHIPPING_POLICY =
-  'Ready to Ship from USA store. Tracked shipping to United States, Canada, United Kingdom, Australia, New Zealand, South Africa, Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch.';
+  'Tracked shipping is available to the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch. Check the listing for processing and stitching options.';
 
 // GEO/AEO helper — answer-first sentence for AI search engines
 function buildAnswerFirstSentence(title: string, productType: string, material?: string, color?: string): string {
-  const safeTitle = sanitizeProductTitle(title);
+  const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
   const lowerTitle = safeTitle.toLowerCase();
-  const isNavratri = lowerTitle.includes('navratri') || lowerTitle.includes('garba') || lowerTitle.includes('chaniya') || lowerTitle.includes('gamthi') || lowerTitle.includes('mirror');
-  const isReadyWear = lowerTitle.includes('ready to wear') || lowerTitle.includes('pre-draped') || lowerTitle.includes('pre draped');
+  const isNavratri = /\b(?:navratri|garba|dandiya|chaniya)\b/i.test(lowerTitle);
+  const safeType = cleanAttribute(productType) || 'Indian ethnic wear';
+  const attributes = [cleanAttribute(color), cleanAttribute(material)].filter(Boolean).join(' ');
   if (isNavratri) {
-    return `${safeTitle} is a ready-to-ship chaniya choli for Garba & Dandiya in the USA — ${material ? `${material} ` : ''}with ${lowerTitle.includes('8') ? '8-meter flare, ' : 'full flare, '}real mirror/gamthi work where noted.`;
-  }
-  if (isReadyWear) {
-    return `${safeTitle} is a ready-to-ship ready to wear saree with stitched blouse — no draping needed, ideal for wedding guests in the USA.`;
+    return `${safeTitle} is available from LuxeMia for Navratri, Garba and Dandiya shopping in the USA. Compare the listed fabric, work, included pieces and size options below.`;
   }
   if (productType.toLowerCase().includes('saree')) {
-    return `${safeTitle} is a ready-to-ship ${color ? `${color} ` : ''}${material ? `${material} ` : ''}saree for wedding guests & receptions in the USA — includes saree with ${isReadyWear ? 'stitched blouse' : 'unstitched blouse piece'}.`;
+    return `${safeTitle} is a${attributes ? ` ${attributes}` : ''} saree available from LuxeMia online in the USA. Review the listing for blouse inclusion, stitching and draping details.`;
   }
-  return `${safeTitle} is a ready-to-ship ${material ? `${material} ` : ''}${productType || 'Indian ethnic wear'} for weddings & festivals in the USA.`;
+  return `${safeTitle} is available from LuxeMia online in the USA. Product category: ${safeType}.`;
 }
 
 function cleanText(value?: string): string {
@@ -124,7 +122,6 @@ export function enrichProductDescription(
     return `${answerFirst} ${catalogDescription} ${SHIPPING_POLICY}`;
   }
 
-  const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
   const safeType = cleanAttribute(productType);
   const safeMaterial = cleanAttribute(material);
   const safeColor = cleanAttribute(color);
@@ -158,9 +155,9 @@ export function generateMetaDescription(
   const lowerTitle = safeTitle.toLowerCase();
   const isNavratri = lowerTitle.includes('navratri') || lowerTitle.includes('garba') || lowerTitle.includes('chaniya');
   const isSaree = safeType.toLowerCase().includes('saree') || lowerTitle.includes('saree');
-  let suffix = 'Ready to Ship. Free US shipping $199+.';
-  if (isNavratri) suffix = 'Ready to Ship for Garba USA. Free US shipping $199+.';
-  else if (isSaree) suffix = 'Ready to Ship for wedding reception USA. Free US shipping $199+.';
+  let suffix = 'Shop online in the USA. Check sizes and availability.';
+  if (isNavratri) suffix = 'Shop for Garba in the USA. Check pieces, sizes and availability.';
+  else if (isSaree) suffix = 'Shop sarees online in the USA. Check blouse and stitching details.';
   const core = attributes ? `${safeTitle} — ${attributes}.` : `${safeTitle}.`;
   return truncateAtWord(
     `${core} ${suffix} Tracked to USA, UK, Canada.`,

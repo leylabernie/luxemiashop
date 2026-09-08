@@ -20,13 +20,48 @@ require('./apply-approved-sherwani-sitemap-additions.cjs');
 const ROOT = path.resolve(__dirname, '..');
 const GONE_HANDLES_FILE = path.join(ROOT, 'src/data/legacyGoneProductHandles.json');
 const APPROVED_SITEMAP_FILE = path.join(ROOT, 'scripts/approved-sitemap-inventory.json');
+const retirement = require('./product-retirement-20260908.json');
+for (const product of retirement.retired) {
+  if (!(product.createdAt < retirement.cutoff)) throw new Error('Retirement age check failed: ' + product.handle);
+}
 const REQUIRED_RETIRED_HANDLES = [
+  ...retirement.retired.map(product => product.handle),
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
   'lavender-blush-pink-georgette-lucknowi-chikankari-front-cut-top-palazzo-set',
 ];
 const REQUIRED_RETIRED_PATHS = new Set(
   REQUIRED_RETIRED_HANDLES.map((handle) => `/product/${handle}`),
 );
+
+// A legacy alias cannot keep redirecting into a product retired in this release.
+const middlewarePath = path.join(ROOT, 'middleware.ts');
+let middleware = fs.readFileSync(middlewarePath, 'utf8');
+middleware = middleware.replace(/(const PRODUCT_301_REDIRECTS: Record<string, string> = \{)([\s\S]*?)(\n\};)/, (_match, start, body, end) => {
+  const filtered = body.replace(/^[ \t]*['"]([^'"]+)['"]:[ \t]*['"]([^'"]+)['"],?[ \t]*(?:\n|$)/gm, (line, source, target) => {
+    if (!REQUIRED_RETIRED_PATHS.has(target)) return line;
+    REQUIRED_RETIRED_HANDLES.push(source.replace(/^\/product\//, ''));
+    REQUIRED_RETIRED_PATHS.add(source);
+    return '';
+  });
+  return start + filtered + end;
+});
+fs.writeFileSync(middlewarePath, middleware);
+
+const vercelPath = path.join(ROOT, 'vercel.json');
+const vercel = JSON.parse(fs.readFileSync(vercelPath, 'utf8'));
+let changed = true;
+while (changed) {
+  changed = false;
+  vercel.redirects = vercel.redirects.filter(redirect => {
+    if (!REQUIRED_RETIRED_PATHS.has(redirect.destination)) return true;
+    if (!redirect.source.startsWith('/product/')) throw new Error('Review non-product retirement alias: ' + redirect.source);
+    REQUIRED_RETIRED_HANDLES.push(redirect.source.slice('/product/'.length));
+    REQUIRED_RETIRED_PATHS.add(redirect.source);
+    changed = true;
+    return false;
+  });
+}
+fs.writeFileSync(vercelPath, JSON.stringify(vercel, null, 2) + '\n');
 
 const parsedHandles = JSON.parse(fs.readFileSync(GONE_HANDLES_FILE, 'utf8'));
 if (!Array.isArray(parsedHandles)) {
@@ -44,7 +79,8 @@ if (!Array.isArray(inventory.paths)) {
   throw new Error('[owner-retired-products] approved-sitemap-inventory.json must contain a paths array.');
 }
 
-inventory.paths = inventory.paths.filter((pathname) => !REQUIRED_RETIRED_PATHS.has(pathname));
+const emptyCatalogRoutes = new Set(require('../src/config/emptyCatalogRoutes.json'));
+inventory.paths = inventory.paths.filter((pathname) => !REQUIRED_RETIRED_PATHS.has(pathname) && !emptyCatalogRoutes.has(pathname));
 inventory.urlCount = inventory.paths.length;
 fs.writeFileSync(APPROVED_SITEMAP_FILE, `${JSON.stringify(inventory, null, 2)}\n`, 'utf8');
 

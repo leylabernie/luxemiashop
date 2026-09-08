@@ -10,7 +10,7 @@ const HOME_H1 = 'LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 
 const routeDescriptions = {
-  '/lehengas': 'Shop bridal and wedding-guest lehengas online. Compare fabric, included pieces, stitching, sizing, availability and processing details.',
+  '/lehengas': 'Shop wedding and festive lehenga choli online in the USA. Compare fabrics, included pieces, stitching, sizes and current prices.',
   '/suits': 'Shop salwar kameez, Anarkali, sharara and palazzo suits. Compare fabric, included pieces, stitching, sizing, availability and processing details.',
   '/menswear': 'Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and processing details.',
   '/jewelry': 'Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, included pieces, measurements and availability.',

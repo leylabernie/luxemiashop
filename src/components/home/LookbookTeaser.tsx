@@ -8,7 +8,7 @@ const featuredLooks = [
   FEATURED_CATEGORY_PRODUCTS.sarees,
   FEATURED_CATEGORY_PRODUCTS.lehengas,
   FEATURED_CATEGORY_PRODUCTS.suits,
-  FEATURED_CATEGORY_PRODUCTS.jewelry,
+  FEATURED_CATEGORY_PRODUCTS.menswear,
 ];
 
 const LookbookTeaser = () => {
@@ -81,7 +81,7 @@ const LookbookTeaser = () => {
               A closer look at the pieces made for your next celebration.
             </h2>
             <p className="mb-8 max-w-md font-light leading-relaxed text-[#765f5b]">
-              Explore real LuxeMia pieces across sarees, lehengas, occasion sets, and jewelry. Let colour, texture, and craft guide you toward a look that feels unmistakably yours.
+              Explore real LuxeMia pieces across sarees, lehengas, occasion sets, and sherwanis. Let colour, texture, and craft guide you toward a look that feels unmistakably yours.
             </p>
             <Button variant="outline" size="lg" asChild className="border-[#c99a94] bg-[#fffaf6] text-[#493235] hover:bg-[#f1dbd5]">
               <Link to="/collections" className="group">

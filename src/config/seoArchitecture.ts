@@ -10,14 +10,14 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear"
     },
     "/lehengas": {
-      "title": "Affordable Bridal Lehenga Choli USA — Ready to Ship from $33.99 | LuxeMia",
-      "description": "Shop affordable bridal lehenga choli & wedding lehengas USA — mirror, gamthi, gota patti, 8-meter flare from $33.99. Ready to Ship. Free US shipping $199+. Tracked to USA, UK, Canada.",
-      "h1": "Affordable Bridal & Wedding Lehengas Online in the USA — Ready to Ship"
+      "title": "Bridal & Wedding Lehengas Online USA | LuxeMia",
+      "description": "Shop wedding and festive lehenga choli online in the USA. Compare fabrics, included pieces, stitching, sizes and current prices.",
+      "h1": "Wedding & Festive Lehenga Choli Online in the USA"
     },
     "/sarees": {
-      "title": "Ready to Wear Wedding Saree with Stitched Blouse USA | LuxeMia",
-      "description": "Shop ready to wear wedding saree with stitched blouse USA — tissue silk, dola silk, georgette with embroidery. Ready to Ship. Free US shipping $199+. Tracked to USA, UK, Canada.",
-      "h1": "Ready to Wear Indian Wedding Sarees Online in the USA"
+      "title": "Indian Wedding Sarees Online USA | LuxeMia",
+      "description": "Shop Indian wedding sarees online in the USA. Compare fabrics, blouse inclusion, stitching options, current prices and availability.",
+      "h1": "Indian Wedding Sarees Online in the USA"
     },
     "/suits": {
       "title": "Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia",
@@ -45,9 +45,9 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Party-Wear Lehengas Online in the USA"
     },
     "/collections/wedding-sarees": {
-      "title": "Indian Wedding Guest Saree for Reception USA — Ready to Ship | LuxeMia",
-      "description": "Shop Indian wedding guest saree for reception USA — tissue silk, dola silk, viscose with embroidery from $101. Ready to Ship. Free US shipping $199+. Yellow Haldi guest ready.",
-      "h1": "Indian Wedding Guest Sarees for Reception — Ready to Ship USA"
+      "title": "Wedding Guest & Reception Sarees USA | LuxeMia",
+      "description": "Explore sarees for Indian wedding guests and receptions in the USA. Review listed fabric, blouse details, stitching, price and availability.",
+      "h1": "Indian Wedding Guest & Reception Sarees in the USA"
     },
     "/collections/designer-sarees": {
       "title": "Designer Sarees USA | Embroidered Party Styles | LuxeMia",
@@ -68,6 +68,16 @@ const architecture = /* seo-architecture-json:start */ {
       "title": "Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia",
       "description": "Shop Anarkali suits online in the USA. Compare colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.",
       "h1": "Anarkali Suits Online in the USA"
+    },
+    "/collections/navratri-outfits": {
+      "title": "Navratri Chaniya Choli for Garba USA | LuxeMia",
+      "description": "Shop Navratri chaniya choli for Garba and Dandiya in the USA. Compare listed fabrics, mirror work, included pieces, sizes and current availability.",
+      "h1": "Navratri Chaniya Choli for Garba in the USA"
+    },
+    "/collections/wedding-guest-outfits": {
+      "title": "Indian Wedding Guest Outfits USA | LuxeMia",
+      "description": "Shop Indian wedding guest sarees and lehengas for receptions and sangeet in the USA. Compare listed fabrics, pieces, sizes and availability.",
+      "h1": "Indian Wedding Guest Sarees & Lehengas in the USA"
     }
   },
   "subcategoryLandingPaths": {

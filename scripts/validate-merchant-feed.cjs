@@ -105,14 +105,19 @@ const feedBuildDateMs = Date.parse(feedBuildDateValue);
 const feedAgeMs = Date.now() - feedBuildDateMs;
 const maximumFeedAgeMs = 7 * 24 * 60 * 60 * 1000;
 const coverageFailures = [];
-// Allow small catalog churn while still rejecting the known degraded
-// 4,208-offer / 3,178-size / 0-material no-token artifact.
-if (itemBlocks.length < 4210) coverageFailures.push(`${itemBlocks.length} offers (minimum 4210)`);
-if (itemBlocks.length > 0 && sizeAttributeCount / itemBlocks.length < 0.92) {
-  coverageFailures.push(`${sizeAttributeCount}/${itemBlocks.length} sized offers (minimum 92%)`);
+// The approved retirement establishes a smaller, explicit catalog baseline.
+if (itemBlocks.length < 606) coverageFailures.push(`${itemBlocks.length} offers (minimum 606)`);
+// Preserve every retained offer and each field that was source-backed before retirement.
+const retainedBaseline = require('./product-retirement-20260908.json').feedBaseline;
+const itemsById = new Map(itemBlocks.map(item => [item.match(/<g:id>([^<]+)<\/g:id>/)?.[1], item]));
+for (const id of retainedBaseline.offerIds) {
+  if (!itemsById.has(id)) coverageFailures.push(`retained offer missing: ${id}`);
 }
-if (itemBlocks.length > 0 && materialAttributeCount / itemBlocks.length < 0.84) {
-  coverageFailures.push(`${materialAttributeCount}/${itemBlocks.length} material offers (minimum 84%)`);
+for (const id of retainedBaseline.sizeOfferIds) {
+  if (!/<g:size>[^<]+<\/g:size>/.test(itemsById.get(id) || '')) coverageFailures.push(`retained size missing: ${id}`);
+}
+for (const id of retainedBaseline.materialOfferIds) {
+  if (!/<g:material>[^<]+<\/g:material>/.test(itemsById.get(id) || '')) coverageFailures.push(`retained material missing: ${id}`);
 }
 if (!Number.isFinite(feedBuildDateMs)) coverageFailures.push('missing or invalid last_build_date');
 if (Number.isFinite(feedBuildDateMs) && (feedAgeMs < 0 || feedAgeMs > maximumFeedAgeMs)) {
@@ -213,7 +218,8 @@ if (
   throw new Error('ProductInfo must render Shopify numeric size variants through the selectedOptions-wired native option picker');
 }
 
-const VARIANT_PARITY_HANDLE = 'muslin-cotton-multi-color-navratri-wear-mirror-work-lehenga-choli-030';
+// Retained 36-variant size fixture; the former Navratri fixture was owner-retired.
+const VARIANT_PARITY_HANDLE = 'pistachio-green-lehenga-luxemia';
 const variantPrerenderPath = path.join(
   PROJECT_ROOT,
   'dist/_prerender/product',

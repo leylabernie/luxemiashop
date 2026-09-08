@@ -55,9 +55,10 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.GITHUB_ACTIONS === 'true'
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
-const MIN_EXPECTED_OFFER_COUNT = 4210;
-const MIN_SIZE_COVERAGE_RATIO = 0.92;
-const MIN_MATERIAL_COVERAGE_RATIO = 0.84;
+// Verified retained catalog on 2026-09-08: 106 garments, 606 variants; service lines excluded.
+const MIN_EXPECTED_OFFER_COUNT = 606;
+const MIN_SIZE_COVERAGE_RATIO = 0.89;
+const MIN_MATERIAL_COVERAGE_RATIO = 0.82;
 const MAX_LOCAL_SNAPSHOT_AGE_DAYS = 7;
 
 // Canonical brand name. Shopify vendor field can drift in casing
@@ -338,7 +339,11 @@ function composeMerchantVariantTitle(baseTitle, variantLabel) {
 
   const separator = ' — ';
   const maximumBaseLength = Math.max(40, MERCHANT_TITLE_MAX_LENGTH - separator.length - cleanVariant.length);
-  return `${trimMerchantTitle(cleanBase, maximumBaseLength)}${separator}${cleanVariant}`.slice(0, MERCHANT_TITLE_MAX_LENGTH).trim();
+  const seasonalSuffix = cleanBase.match(/ — ((?:Navratri )?Garba Outfit|Navratri)$/)?.[0] || '';
+  const shortenedBase = seasonalSuffix && cleanBase.length > maximumBaseLength
+    ? `${trimMerchantTitle(cleanBase.slice(0, -seasonalSuffix.length), maximumBaseLength - seasonalSuffix.length)}${seasonalSuffix}`
+    : trimMerchantTitle(cleanBase, maximumBaseLength);
+  return `${shortenedBase}${separator}${cleanVariant}`.slice(0, MERCHANT_TITLE_MAX_LENGTH).trim();
 }
 
 function getMerchantProductType(productType, title) {

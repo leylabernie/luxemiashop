@@ -209,15 +209,15 @@ const ProductDetail = () => {
     if (!product) return '';
     const t = sanitizeProductTitle(product.title);
     const lower = t.toLowerCase();
-    if (lower.includes('navratri') || lower.includes('garba') || lower.includes('chaniya') || lower.includes('gamthi') || lower.includes('mirror') || lower.includes('8') && lower.includes('flare')) {
-      return `${t} for Garba — Ready to Ship USA | LuxeMia`;
+    if (/\b(?:navratri|garba|dandiya|chaniya)\b/i.test(lower)) {
+      return `${t} for Garba USA | LuxeMia`;
     }
     if (lower.includes('saree') && (lower.includes('tissue') || lower.includes('wedding') || lower.includes('ready to wear') || lower.includes('pre-draped'))) {
-      return `${t} for Wedding Reception — Ready to Ship USA | LuxeMia`;
+      return `${t} for Weddings USA | LuxeMia`;
     }
-    if (lower.includes('saree')) return `${t} — Ready to Ship USA | LuxeMia`;
-    if (lower.includes('lehenga')) return `${t} — Ready to Ship USA | LuxeMia`;
-    return `${t} — Ready to Ship USA | LuxeMia`;
+    if (lower.includes('saree')) return `${t} | LuxeMia USA`;
+    if (lower.includes('lehenga')) return `${t} | LuxeMia USA`;
+    return `${t} | LuxeMia USA`;
   })();
   // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
   // copy. The field-backed generator below is the crawler and shopper source.

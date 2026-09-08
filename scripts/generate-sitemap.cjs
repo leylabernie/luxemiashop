@@ -21,7 +21,9 @@ const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const PRERENDER_DIR = path.resolve(__dirname, '../dist/_prerender');
 const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
-const MIN_APPROVED_SITEMAP_URL_COUNT = 786;
+const retirement = require('./product-retirement-20260908.json');
+const emptyCatalogRoutes = new Set(require('../src/config/emptyCatalogRoutes.json'));
+const MIN_APPROVED_SITEMAP_URL_COUNT = retirement.retained.filter(product => product.handle !== 'luxemia-tailoring-saree-finishing-add-ons').length;
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
 ]);
@@ -133,7 +135,7 @@ const staticPages = [
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
-];
+].filter(page => !emptyCatalogRoutes.has(page.loc));
 
 
 // Parse the compact published blogPosts.ts source for sitemap inclusion.

@@ -1,3 +1,4 @@
+import emptyCatalogRoutes from '@/config/emptyCatalogRoutes.json';
 import { Helmet } from 'react-helmet-async';
 import {
   generateProductSchema,
@@ -109,6 +110,7 @@ const SEOHead = ({
   const canonicalPath = new URL(canonicalSource, `${siteUrl}/`).pathname
     .replace(/\/+$/, '') || '/';
   const canonicalUrl = `${siteUrl}${canonicalPath}`;
+  const followWithoutIndex = noIndexFollow || emptyCatalogRoutes.includes(canonicalPath);
 
   // The current default locale and shipping market remain en-US.
   const hreflangAlternates = hreflang || [
@@ -186,8 +188,8 @@ const SEOHead = ({
       <meta name="title" content={seoTitle} />
       <meta name="description" content={seoDescription} />
       {noIndex && <meta name="robots" content="noindex, nofollow" />}
-      {!noIndex && noIndexFollow && <meta name="robots" content="noindex, follow" />}
-      {!noIndex && !noIndexFollow && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
+      {!noIndex && followWithoutIndex && <meta name="robots" content="noindex, follow" />}
+      {!noIndex && !followWithoutIndex && <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />}
 
       {/* Canonical URL */}
       <link rel="canonical" href={canonicalUrl} />

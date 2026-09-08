@@ -16,9 +16,9 @@ const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-invent
 const COMMERCIAL_LINKS = [
   ['/ready-to-ship', 'Ready-to-Ship Indian Outfits'],
   ['/collections/wedding-guest-outfits', 'Indian Wedding Guest Outfits'],
-  ['/collections/bridal-lehengas', 'Bridal Lehengas'],
-  ['/collections/wedding-sarees', 'Wedding Sarees'],
-  ['/collections/sharara-suits', 'Sharara Suits'],
+  ['/lehengas', 'Wedding & Festive Lehengas'],
+  ['/sarees', 'Wedding & Festive Sarees'],
+  ['/suits', 'Salwar Kameez & Suits'],
   ['/menswear', "Men's Wedding Wear"],
   ['/wedding-party-orders', 'Wedding Party & Group Orders'],
 ];

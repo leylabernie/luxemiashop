@@ -74,9 +74,9 @@ if (!reviewedAt) {
   throw new Error('[navratri-traffic] GROWTH_CONTENT_REVIEWED_AT is missing from src/data/blogPosts.ts');
 }
 
-requireText(collectionHtml, '<title>Navratri Outfits USA 2026 | Garba Styles | LuxeMia</title>', 'collection search title');
+requireText(collectionHtml, '<title>Navratri Chaniya Choli for Garba USA | LuxeMia</title>', 'collection search title');
 requireText(collectionHtml, '<link rel="canonical" href="https://luxemia.shop/collections/navratri-outfits"', 'collection canonical');
-requireText(collectionHtml, '<h1>Navratri Outfits for Garba in the USA</h1>', 'collection H1');
+requireText(collectionHtml, '<h1>Navratri Chaniya Choli for Garba in the USA</h1>', 'collection H1');
 requirePattern(collectionHtml, /"@type"\s*:\s*"CollectionPage"/, 'CollectionPage schema');
 requirePattern(collectionHtml, /"@type"\s*:\s*"ItemList"/, 'ItemList schema');
 requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#products', 'linked collection product schema');

@@ -20,7 +20,8 @@ const zlib = require('zlib');
 const PROJECT_ROOT = path.resolve(__dirname, '..');
 const MERCHANT_FEED_PATH = path.join(PROJECT_ROOT, 'dist', 'merchant-feed.xml');
 const OPENAI_SEARCH_FEED_PATH = path.join(PROJECT_ROOT, 'dist', 'openai-search-products.jsonl.gz');
-const MIN_EXPECTED_OFFER_COUNT = 4210;
+// Verified retained catalog on 2026-09-08: 106 garments, 606 variants; service lines excluded.
+const MIN_EXPECTED_OFFER_COUNT = 606;
 const MAX_SOURCE_FILE_AGE_MS = 30 * 60 * 1000;
 const MAX_SOURCE_BUILD_AGE_MS = 7 * 24 * 60 * 60 * 1000;
 const FUTURE_CLOCK_TOLERANCE_MS = 5 * 60 * 1000;
