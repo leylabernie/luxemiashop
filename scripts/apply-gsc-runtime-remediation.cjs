@@ -13,9 +13,11 @@ const path = require('path');
 
 const middlewarePath = path.resolve(__dirname, '..', 'middleware.ts');
 let source = fs.readFileSync(middlewarePath, 'utf8');
+const retiredProductPaths = new Set(JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8')).map(handle => '/product/' + handle));
+const isRetiredMarker = marker => retiredProductPaths.has(marker.replace(/^['"]|['"]$/g, ''));
 
 function insertOnce(marker, anchor, insertion) {
-  if (source.includes(marker)) return;
+  if (source.includes(marker) || isRetiredMarker(marker)) return;
   if (!source.includes(anchor)) {
     throw new Error(`[gsc-runtime-remediation] Required anchor not found for ${marker}`);
   }
@@ -81,7 +83,7 @@ const requiredFragments = [
   "'/blog/how-to-measure-yourself-for-a-saree-or-lehenga'",
 ];
 for (const fragment of requiredFragments) {
-  if (!source.includes(fragment)) {
+  if (!source.includes(fragment) && !isRetiredMarker(fragment)) {
     throw new Error(`[gsc-runtime-remediation] Patch validation failed: ${fragment}`);
   }
 }

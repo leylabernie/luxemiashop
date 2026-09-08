@@ -6,8 +6,8 @@ import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 const categories = [
   {
     name: 'Lehengas',
-    subtitle: 'Bridal & Festive',
-    description: 'Bridal, wedding guest and festive lehengas for current celebrations.',
+    subtitle: 'Wedding & Festive',
+    description: 'Wedding guest and festive lehengas for current celebrations.',
     href: '/lehengas',
     image: FEATURED_CATEGORY_PRODUCTS.lehengas.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.lehengas.imageWebp,
@@ -16,7 +16,7 @@ const categories = [
   {
     name: 'Sarees',
     subtitle: 'Timeless Elegance',
-    description: 'Kanjivaram, Banarasi, wedding and festive sarees available online.',
+    description: 'Wedding and festive sarees available online.',
     href: '/sarees',
     image: FEATURED_CATEGORY_PRODUCTS.sarees.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp,
@@ -34,29 +34,11 @@ const categories = [
   {
     name: 'Menswear',
     subtitle: 'Classic Style',
-    description: 'Sherwanis, kurta pajama sets and wedding menswear.',
+    description: 'Sherwanis for weddings and formal celebrations.',
     href: '/menswear',
     image: FEATURED_CATEGORY_PRODUCTS.menswear.image,
     imageWebp: FEATURED_CATEGORY_PRODUCTS.menswear.imageWebp,
     imageAlt: FEATURED_CATEGORY_PRODUCTS.menswear.alt,
-  },
-  {
-    name: 'Indo-Western',
-    subtitle: 'Modern Fusion',
-    description: 'Contemporary Indian silhouettes for weddings and parties.',
-    href: '/indowestern',
-    image: FEATURED_CATEGORY_PRODUCTS.indowestern.image,
-    imageWebp: FEATURED_CATEGORY_PRODUCTS.indowestern.imageWebp,
-    imageAlt: FEATURED_CATEGORY_PRODUCTS.indowestern.alt,
-  },
-  {
-    name: 'Bridal Jewelry',
-    subtitle: 'Finishing Touches',
-    description: 'Kundan-style, polki-style and bridal necklace sets.',
-    href: '/jewelry',
-    image: FEATURED_CATEGORY_PRODUCTS.jewelry.image,
-    imageWebp: FEATURED_CATEGORY_PRODUCTS.jewelry.imageWebp,
-    imageAlt: FEATURED_CATEGORY_PRODUCTS.jewelry.alt,
   },
 ];
 
@@ -81,8 +63,8 @@ const CategoryShowcase = () => {
           </p>
         </motion.div>
 
-        {/* Six verified category images — one current Shopify product per category. */}
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 lg:gap-6">
+        {/* Four verified category images — one current Shopify product per category. */}
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
           {categories.map((category, index) => (
             <motion.div
               key={category.name}

@@ -342,6 +342,13 @@ function parseCommercialCollectionHtml(route, category) {
   if (payload.category !== category) {
     return `${route}: hydration category is '${payload.category || '(missing)'}', expected '${category}'`;
   }
+  const pausedRoutes = new Set(require('../src/config/emptyCatalogRoutes.json'));
+  if (pausedRoutes.has(route)) {
+    if (payloadHandles.length !== 0) return `${route}: stock returned; refresh the paused collection inventory before release`;
+    if (!/<meta name="robots" content="noindex, follow"/.test(html)) return `${route}: empty collection must remain noindex, follow`;
+    if (/href="\/product\//.test(html) || /"@type"\s*:\s*"ItemList"/.test(html)) return `${route}: empty collection contains stale product discovery signals`;
+    return null;
+  }
   if (payloadHandles.length === 0) return `${route}: hydration payload has no products`;
 
   const linkedHandles = [...html.matchAll(/href="\/product\/([^"?#]+)"/g)].map((match) => match[1]);

@@ -202,9 +202,23 @@ const ProductDetail = () => {
   ].filter((entry): entry is { name: string; value: string } => Boolean(entry.value));
 
   // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
-  // Falls back to the existing title template + generated meta description.
+  // Falls back to long-tail buyer keywords for AI/organic discovery.
   // Note: `product.seo` is typed via ShopifyProduct['node'] in src/lib/shopify.ts.
-  const seoTitle = sanitizeProductTitle(sanitizeSeoTitle(product?.seo?.title));
+  const seoTitleRaw = sanitizeProductTitle(sanitizeSeoTitle(product?.seo?.title));
+  const seoTitle = seoTitleRaw || (() => {
+    if (!product) return '';
+    const t = sanitizeProductTitle(product.title);
+    const lower = t.toLowerCase();
+    if (/\b(?:navratri|garba|dandiya|chaniya)\b/i.test(lower)) {
+      return `${t} for Garba USA | LuxeMia`;
+    }
+    if (lower.includes('saree') && (lower.includes('tissue') || lower.includes('wedding') || lower.includes('ready to wear') || lower.includes('pre-draped'))) {
+      return `${t} for Weddings USA | LuxeMia`;
+    }
+    if (lower.includes('saree')) return `${t} | LuxeMia USA`;
+    if (lower.includes('lehenga')) return `${t} | LuxeMia USA`;
+    return `${t} | LuxeMia USA`;
+  })();
   // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
   // copy. The field-backed generator below is the crawler and shopper source.
   const seoDescription = '';

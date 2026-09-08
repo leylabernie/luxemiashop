@@ -64,8 +64,8 @@ const NavratriOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Navratri Outfits USA 2026 | Garba Styles | LuxeMia"
-        description="Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 for first orders."
+        title="Navratri Chaniya Choli for Garba USA | LuxeMia"
+        description="Shop Navratri chaniya choli for Garba and Dandiya in the USA. Compare listed fabrics, mirror work, included pieces, sizes and current availability."
         canonical="https://luxemia.shop/collections/navratri-outfits"
         image="/images/hero-carousel/navratri-lehenga-desktop.jpg"
         type="collection"
@@ -93,9 +93,9 @@ const NavratriOutfits = () => {
           <div className="container relative mx-auto px-4 py-14 lg:px-8 lg:py-20">
             <div className="max-w-2xl">
               <span className="mb-3 block text-xs font-semibold uppercase tracking-[0.22em] text-[#f7d9a7]">Navratri 2026 · U.S. Shopping Guide</span>
-              <h1 className="mb-4 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">Navratri Outfits for Garba in the USA</h1>
+              <h1 className="mb-4 font-serif text-4xl leading-tight sm:text-5xl lg:text-6xl">Navratri Chaniya Choli for Garba in the USA</h1>
               <p className="max-w-xl text-sm leading-relaxed text-[#fffaf3]/85 sm:text-base">
-                Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events. Review each listing for its exact pieces, measurements, stitching options, price and availability.
+                Shop current Navratri chaniya choli and lehenga sets for Garba and Dandiya. Compare each listing for fabric, mirror work or other decoration, flare, included pieces, stitching, sizes and availability.
               </p>
               <div className="mt-6 flex flex-wrap gap-2 text-xs text-[#fffaf3]/90">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><CalendarDays className="h-4 w-4" /> Begins October 11, 2026</span>

@@ -52,8 +52,8 @@ const WeddingGuestOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia"
-        description="Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms."
+        title="Indian Wedding Guest Outfits USA | LuxeMia"
+        description="Shop Indian wedding guest sarees and lehengas for receptions and sangeet in the USA. Compare listed fabrics, pieces, sizes and availability."
         canonical="https://luxemia.shop/collections/wedding-guest-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -69,10 +69,10 @@ const WeddingGuestOutfits = () => {
         <div className="bg-secondary/40 border-b border-border/30 py-10 lg:py-14">
           <div className="container mx-auto px-4 lg:px-8 text-center">
             <span className="text-xs uppercase tracking-widest text-muted-foreground block mb-3">Wedding Season</span>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Outfits</h1>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">Indian Wedding Guest Sarees &amp; Lehengas in the USA</h1>
             <p className="text-muted-foreground font-light max-w-2xl mx-auto text-sm lg:text-base leading-relaxed">
-              Browse currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception. The exact product page is the source of truth for every item. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.
-            </p>
+                Shop sarees and lehengas listed for Indian wedding guests, receptions and sangeet. Compare fabric, included pieces, blouse and stitching details, sizes and availability before ordering.
+              </p>
           </div>
         </div>
 

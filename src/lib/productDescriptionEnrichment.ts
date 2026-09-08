@@ -19,7 +19,23 @@ export type ProductCategory =
   | 'indo-western';
 
 const SHIPPING_POLICY =
-  'Shipping is available to seven countries. Standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch.';
+  'Tracked shipping is available to the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch. Check the listing for processing and stitching options.';
+
+// GEO/AEO helper — answer-first sentence for AI search engines
+function buildAnswerFirstSentence(title: string, productType: string, material?: string, color?: string): string {
+  const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
+  const lowerTitle = safeTitle.toLowerCase();
+  const isNavratri = /\b(?:navratri|garba|dandiya|chaniya)\b/i.test(lowerTitle);
+  const safeType = cleanAttribute(productType) || 'Indian ethnic wear';
+  const attributes = [cleanAttribute(color), cleanAttribute(material)].filter(Boolean).join(' ');
+  if (isNavratri) {
+    return `${safeTitle} is available from LuxeMia for Navratri, Garba and Dandiya shopping in the USA. Compare the listed fabric, work, included pieces and size options below.`;
+  }
+  if (productType.toLowerCase().includes('saree')) {
+    return `${safeTitle} is a${attributes ? ` ${attributes}` : ''} saree available from LuxeMia online in the USA. Review the listing for blouse inclusion, stitching and draping details.`;
+  }
+  return `${safeTitle} is available from LuxeMia online in the USA. Product category: ${safeType}.`;
+}
 
 function cleanText(value?: string): string {
   return (value || '')
@@ -101,15 +117,15 @@ export function enrichProductDescription(
   color?: string,
 ): string {
   const catalogDescription = cleanCatalogDescription(description);
+  const answerFirst = buildAnswerFirstSentence(title, productType, material, color);
   if (catalogDescription.length >= 40) {
-    return `${catalogDescription} ${SHIPPING_POLICY}`;
+    return `${answerFirst} ${catalogDescription} ${SHIPPING_POLICY}`;
   }
 
-  const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
   const safeType = cleanAttribute(productType);
   const safeMaterial = cleanAttribute(material);
   const safeColor = cleanAttribute(color);
-  const details: string[] = [`${safeTitle}.`];
+  const details: string[] = [answerFirst];
 
   if (safeType) details.push(`Category: ${safeType}.`);
   if (safeColor) details.push(`Color: ${safeColor}.`);
@@ -136,9 +152,15 @@ export function generateMetaDescription(
   const safeColor = cleanAttribute(color);
   const safeMaterial = cleanAttribute(material);
   const attributes = [safeColor, safeMaterial, safeType].filter(Boolean).join(' ');
+  const lowerTitle = safeTitle.toLowerCase();
+  const isNavratri = lowerTitle.includes('navratri') || lowerTitle.includes('garba') || lowerTitle.includes('chaniya');
+  const isSaree = safeType.toLowerCase().includes('saree') || lowerTitle.includes('saree');
+  let suffix = 'Shop online in the USA. Check sizes and availability.';
+  if (isNavratri) suffix = 'Shop for Garba in the USA. Check pieces, sizes and availability.';
+  else if (isSaree) suffix = 'Shop sarees online in the USA. Check blouse and stitching details.';
   const core = attributes ? `${safeTitle} — ${attributes}.` : `${safeTitle}.`;
   return truncateAtWord(
-    `${core} Review exact options at LuxeMia. U.S. shipping is $14.99 below $199 and free at $199 and above.`,
+    `${core} ${suffix} Tracked to USA, UK, Canada.`,
     160,
   );
 }

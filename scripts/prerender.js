@@ -2528,6 +2528,7 @@ const routes = [
  * product detail routes already receive their product via route.product.
  */
 function generateHtml(template, route, allShopifyProducts) {
+  route = { ...route, ...(INDEXABLE_ROUTE_SEO[route.path] || {}) };
   let html = template;
   const seoTitle = clampTitle(route.title);
   const seoDescription = clampDescription(route.description);
@@ -3025,9 +3026,10 @@ function generateHtml(template, route, allShopifyProducts) {
 
       // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
       // and skips the client-side Shopify fetch entirely on first paint.
-      const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
-      html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
     }
+
+    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
+    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
     const productCardsHtml = generateCollectionProductHtml(collectionProducts);

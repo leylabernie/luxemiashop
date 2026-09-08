@@ -22,9 +22,10 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.GITHUB_ACTIONS === 'true'
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
-const MIN_EXPECTED_ACTIVE_PRODUCTS = 800;
-const MIN_EXPECTED_READY_PRODUCTS = 750;
-const MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS = 40;
+const retirement = require('./product-retirement-20260908.json');
+const MIN_EXPECTED_ACTIVE_PRODUCTS = retirement.retained.length;
+const MIN_EXPECTED_READY_PRODUCTS = 98;
+const MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS = 9;
 
 const REMOVED_HANDLES = new Set([
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
@@ -328,6 +329,10 @@ async function main() {
   }
 
   const products = await fetchAllProducts();
+  const handles = new Set(products.map(product => product.handle));
+  const missing = retirement.retained.filter(product => !handles.has(product.handle));
+  const resurfaced = retirement.retired.filter(product => handles.has(product.handle));
+  if (missing.length || resurfaced.length) throw new Error('Retirement catalog mismatch: missing=' + missing.map(p => p.handle).join(', ') + '; resurfaced=' + resurfaced.map(p => p.handle).join(', '));
   if (products.length < MIN_EXPECTED_ACTIVE_PRODUCTS) {
     throw new Error(
       `[shopify-catalog] Only ${products.length} active products were returned; expected at least ${MIN_EXPECTED_ACTIVE_PRODUCTS}. Refusing to validate a partial catalog.`,

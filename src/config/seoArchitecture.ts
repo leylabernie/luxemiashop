@@ -11,12 +11,12 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/lehengas": {
       "title": "Bridal & Wedding Lehengas Online USA | LuxeMia",
-      "description": "Shop bridal and wedding-guest lehengas online. Compare fabric, included pieces, stitching, sizing, availability and processing details.",
-      "h1": "Bridal & Wedding Lehengas Online in the USA"
+      "description": "Shop wedding and festive lehenga choli online in the USA. Compare fabrics, included pieces, stitching, sizes and current prices.",
+      "h1": "Wedding & Festive Lehenga Choli Online in the USA"
     },
     "/sarees": {
-      "title": "Buy Indian Wedding Sarees Online in the U.S. | LuxeMia",
-      "description": "Shop Indian wedding, silk and festive sarees online in the U.S. Compare stated fabric, work, blouse details, availability and tracked shipping.",
+      "title": "Indian Wedding Sarees Online USA | LuxeMia",
+      "description": "Shop Indian wedding sarees online in the USA. Compare fabrics, blouse inclusion, stitching options, current prices and availability.",
       "h1": "Indian Wedding Sarees Online in the USA"
     },
     "/suits": {
@@ -45,9 +45,9 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Party-Wear Lehengas Online in the USA"
     },
     "/collections/wedding-sarees": {
-      "title": "Wedding Sarees USA | Indian Bridal Styles | LuxeMia",
-      "description": "Shop wedding sarees online in the USA. Compare current bridal styles by stated fabric, work, blouse details, price and availability before ordering.",
-      "h1": "Wedding Sarees Online in the USA"
+      "title": "Wedding Guest & Reception Sarees USA | LuxeMia",
+      "description": "Explore sarees for Indian wedding guests and receptions in the USA. Review listed fabric, blouse details, stitching, price and availability.",
+      "h1": "Indian Wedding Guest & Reception Sarees in the USA"
     },
     "/collections/designer-sarees": {
       "title": "Designer Sarees USA | Embroidered Party Styles | LuxeMia",
@@ -68,6 +68,16 @@ const architecture = /* seo-architecture-json:start */ {
       "title": "Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia",
       "description": "Shop Anarkali suits online in the USA. Compare colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.",
       "h1": "Anarkali Suits Online in the USA"
+    },
+    "/collections/navratri-outfits": {
+      "title": "Navratri Chaniya Choli for Garba USA | LuxeMia",
+      "description": "Shop Navratri chaniya choli for Garba and Dandiya in the USA. Compare listed fabrics, mirror work, included pieces, sizes and current availability.",
+      "h1": "Navratri Chaniya Choli for Garba in the USA"
+    },
+    "/collections/wedding-guest-outfits": {
+      "title": "Indian Wedding Guest Outfits USA | LuxeMia",
+      "description": "Shop Indian wedding guest sarees and lehengas for receptions and sangeet in the USA. Compare listed fabrics, pieces, sizes and availability.",
+      "h1": "Indian Wedding Guest Sarees & Lehengas in the USA"
     }
   },
   "subcategoryLandingPaths": {
