@@ -20,13 +20,13 @@ interface HeroSlide {
 const heroSlides: HeroSlide[] = [
   {
     id: 1,
-    title: 'Bridal Lehengas',
-    subtitle: 'Silk Maroon Festival Wear Zari Work Lehenga Choli',
-    alt: 'Maroon silk bridal lehenga with zari work by LuxeMia - Indian wedding ethnic wear',
-    cta: 'Shop Lehengas',
-    link: '/lehengas',
-    image: '/images/banners/lehenga-banner.jpg',
-    tag: 'Wedding',
+    title: 'Navratri & Garba 2026',
+    subtitle: 'Shop chaniya choli and lehenga styles now for celebrations beginning October 11.',
+    alt: 'Woman wearing a bright pink lehenga for Navratri and Garba',
+    cta: 'Shop Navratri',
+    link: '/collections/navratri-outfits',
+    image: '/images/hero-carousel/navratri-lehenga-desktop.jpg',
+    tag: 'October 11 · Plan Ahead',
     bgColor: '#6b1026',
   },
   {
