@@ -121,7 +121,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               ) : (
                 items.map((item, index) => {
                   const isSareeService = isHiddenBillingProductHandle(item.product.node.handle);
-                  const image = isSareeService ? undefined : item.product.node.images?.edges?.[0]?.node;
+                  const variantImage = item.product.node.variants.edges.find(
+                    ({ node }) => node.id === item.variantId,
+                  )?.node.image;
+                  const image = isSareeService ? undefined : variantImage ?? item.product.node.images?.edges?.[0]?.node;
                   const serviceLabel = item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
                   const visibleAttributes = item.customAttributes;
                   
