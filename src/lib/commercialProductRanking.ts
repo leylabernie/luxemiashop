@@ -278,3 +278,22 @@ export function rankCommercialProducts<T extends ProductLike>(products: T[]): T[
 
   return ranked;
 }
+
+/**
+ * Remove exact-title catalog duplicates from customer-facing collection grids.
+ * Shopify can contain several active records for the same imported style. Those
+ * records should remain available by their direct product URLs, but repeating
+ * the same title in a collection makes comparison harder and dilutes stronger
+ * listings. The input order is preserved so shopper-selected sorting remains
+ * authoritative; callers can rank the list before deduplicating when desired.
+ */
+export function deduplicateCommercialProducts<T extends ProductLike>(products: T[]): T[] {
+  const seenTitles = new Set<string>();
+
+  return products.filter((product) => {
+    const key = normalizedTitle(getProductNode(product));
+    if (!key || seenTitles.has(key)) return false;
+    seenTitles.add(key);
+    return true;
+  });
+}
