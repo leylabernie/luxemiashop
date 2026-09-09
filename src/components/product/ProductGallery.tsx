@@ -137,10 +137,10 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
       (image) => image.node.url.split('?')[0] === normalizedSelectedUrl,
     );
 
-    if (matchingIndex >= 0 && matchingIndex !== selectedIndex) {
+    if (matchingIndex >= 0) {
       setSelectedIndex(matchingIndex);
     }
-  }, [displayImages, selectedImageUrl, selectedIndex]);
+  }, [displayImages, selectedImageUrl]);
 
   const highResUrl = currentImage ? getOptimizedImage(currentImage.url, 'hero') : ''; // 1920px for crisp zoom
 
