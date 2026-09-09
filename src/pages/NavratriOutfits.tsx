@@ -12,6 +12,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigge
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 import { sortProducts } from '@/lib/productFilters';
+import { deduplicateCommercialProducts } from '@/lib/commercialProductRanking';
 
 const sortOptions = [
   { label: 'Featured', value: 'featured' },
@@ -58,7 +59,10 @@ const navratriOutfitFaqs = [
 const NavratriOutfits = () => {
   const { products, isLoading } = useShopifyProducts('occasion:navratri');
   const [sortBy, setSortBy] = useState('featured');
-  const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
+  const sortedProducts = useMemo(
+    () => deduplicateCommercialProducts(sortProducts(products, sortBy)),
+    [products, sortBy],
+  );
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Featured';
 
   return (
