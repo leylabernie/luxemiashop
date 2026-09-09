@@ -304,6 +304,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const showBottomStyleOption = !madeToOrderProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
+  const hasStitchedBlouse = product.tags?.includes('construction:Saree with stitched blouse') ?? false;
   const isLaunchOfferActive = isRakshaBandhanCampaignActive();
 
   // Honor Merchant Center variant links while preserving the first available
@@ -826,7 +827,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       </div>
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} />
+      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} />
       {shipByLabel && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
@@ -1065,7 +1066,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             </h3>
             <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
               {isSareeListing
-                ? 'Choose finishing, petticoat, and blouse-stitching options for this saree before adding it to bag. Selected options are included with this saree order.'
+                ? 'Choose from the finishing and accessory options shown for this saree before adding it to bag. The selected options are included with this saree order.'
                 : 'Only services supported by this product’s stated construction are shown and included with this garment order.'}
             </p>
           </div>
@@ -1351,9 +1352,13 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             {currentSelectionIsMadeToOrder
               ? 'Made to order from measurements confirmed with LuxeMia. '
               : listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
-            <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
-              View the sizing chart
-            </Link>
+            {hasStitchedBlouse ? (
+              <span>The size applies to the stitched blouse. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance; these labels do not specify bra cup sizes.</span>
+            ) : (
+              <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
+                View the sizing chart
+              </Link>
+            )}
           </dd>
 
           <dt className="font-medium text-foreground">Shipping Estimate</dt>
