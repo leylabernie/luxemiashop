@@ -490,6 +490,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
+    // Supplied readymade construction is not a request for custom tailoring,
+    // even when color and size create several Shopify variants.
+    if (isReadyMadeOnly) return false;
     // For stitchable products, check the Utsav-style selector
     if (isStitchable) {
       const selectedOption = STITCHING_TYPE_OPTIONS.find(o => o.id === selectedStitchingType);
@@ -507,7 +510,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return Object.entries(selectedOptions).some(([key, val]) =>
       selectionRequiresSeparateMeasurements(key, val),
     );
-  }, [selectedOptions, selectedStitchingType, isStitchable, product.variants.edges.length]);
+  }, [selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
 
   // Determine the size mode based on stitching type
   const sizeMode: SizeMode = useMemo(() => {

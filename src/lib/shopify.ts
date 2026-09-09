@@ -375,7 +375,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
           currencyCode
         }
       }
-      images(first: 20) {
+      images(first: 100) {
         edges {
           node {
             url
@@ -383,7 +383,7 @@ const PRODUCT_BY_HANDLE_QUERY = `
           }
         }
       }
-      media(first: 20) {
+      media(first: 100) {
         edges {
           node {
             id
