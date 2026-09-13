@@ -38,7 +38,7 @@ const WeddingPartyOrders = () => {
         },
       });
       if (error) throw error;
-      trackConsultationSubmission({ name, email, phone, country, occasion: 'wedding_party_group_order', budget });
+      trackConsultationSubmission({ country, occasion: 'wedding_party_group_order' });
       setSubmitted(true);
       toast({ title: 'Enquiry received', description: 'LuxeMia will review your requirements and contact you shortly.' });
     } catch (error) {

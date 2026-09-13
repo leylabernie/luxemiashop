@@ -179,6 +179,20 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
     if (tags.includes(tagLower)) return true;
   }
 
+  // Match the stable category terms, not its presentation label. Dedicated
+  // landing pages rename "Sharara" to "Sharara Suits", while real products
+  // are also called "Sharara Set" or "Readymade Gharara Set". Title/type
+  // evidence must keep working after that label change. Do not search broad
+  // descriptive copy for these terms: it may compare unrelated silhouettes.
+  const identifyingText = `${titleLower} ${productTypeLower}`;
+  for (const term of sub.matchTags) {
+    if (term.includes(':')) continue;
+    if (new RegExp(`\\b${escapeRegex(term.toLowerCase())}\\b`, 'i').test(identifyingText)) {
+      return true;
+    }
+  }
+  if (sub.matchProductType?.some((type) => type.toLowerCase() === productTypeLower)) return true;
+
   // ─── Non-occasion subcategories: title + description matching ────────────
   // For color, style, fabric — it's safe to match in description too since
   // those are product attributes, not occasion-context words.
@@ -254,7 +268,6 @@ export function applyProductFiltersV2(
       filtered = filtered.filter(p => {
         return values.some(value => {
           const valueLower = value.toLowerCase();
-          const tags = getTags(p.node);
           const variants = p.node.variants?.edges || [];
 
           if (valueLower.includes('ready')) {

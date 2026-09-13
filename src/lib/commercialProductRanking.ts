@@ -88,7 +88,7 @@ function hasColor(product: ProductNode, tags: string[]): boolean {
     || hasText(product.colorMetafield?.value);
 }
 
-function hasFulfilmentClassification(product: ProductNode, tags: string[]): boolean {
+function hasFulfilmentClassification(tags: string[]): boolean {
   return tags.some((tag) =>
     /^(?:availability:)?(?:ready[- ]to[- ]ship|made[- ]to[- ]order|custom|pre[- ]order)$/.test(tag),
   );
@@ -175,7 +175,7 @@ export function getCommercialProductQualityScore(
   if (hasOccasion(node, tags)) score += 22;
   if (hasConstruction(node, tags)) score += 28;
   if (hasColor(node, tags)) score += 10;
-  if (hasFulfilmentClassification(node, tags)) score += 18;
+  if (hasFulfilmentClassification(tags)) score += 18;
   if (hasVerifiedTiming(node)) score += 18;
   if (hasText(node.productType)) score += 10;
   if (hasText(node.seo?.title)) score += 8;

@@ -350,6 +350,9 @@ function parseCommercialCollectionHtml(route, category) {
     return null;
   }
   if (payloadHandles.length === 0) return `${route}: hydration payload has no products`;
+  if (/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html)) {
+    return `${route}: stocked collection must allow indexing`;
+  }
 
   const linkedHandles = [...html.matchAll(/href="\/product\/([^"?#]+)"/g)].map((match) => match[1]);
   if (linkedHandles.length === 0) return `${route}: prerendered HTML has no product links`;

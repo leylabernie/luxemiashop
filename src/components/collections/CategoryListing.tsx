@@ -216,7 +216,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                 )}
               </span>
             ))}
-            {activeSubcategory && (
+            {activeSubcategory && !defaultSubcategory && (
               <>
                 <span>/</span>
                 <span className="text-foreground">{activeSubcategory.label}</span>

@@ -196,7 +196,7 @@ export const convertToShopifyFormat = (
         productType: getCorrectProductType(product),
         vendor: shopifyProduct.vendor,
         metadata: {
-          occasion: product.occasion,
+          occasion: product.occasion ? [product.occasion] : null,
           fabric: product.fabric,
           color: product.color,
           work: product.work,
@@ -261,7 +261,7 @@ export const convertToShopifyFormat = (
       productType: getCorrectProductType(product),
       // Include metadata for filtering
       metadata: {
-        occasion: product.occasion,
+        occasion: product.occasion ? [product.occasion] : null,
         fabric: product.fabric,
         color: product.color,
         work: product.work,
