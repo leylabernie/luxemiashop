@@ -12,7 +12,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
+const HOME_TITLE = 'Indian Ethnic Wear Online USA | LuxeMia';
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, wedding sarees, lehengas, salwar kameez and menswear with tracked shipping to the USA, Canada, UK and other supported markets.';
 const HOME_H1 = 'Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
 const SHIPPING_TITLE = 'Shipping Policy & International Rates | LuxeMia';

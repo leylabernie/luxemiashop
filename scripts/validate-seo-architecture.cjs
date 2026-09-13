@@ -8,7 +8,7 @@ const root = path.resolve(__dirname, '..');
 const read = (relativePath) => fs.readFileSync(path.join(root, relativePath), 'utf8');
 const architecture = JSON.parse(read('src/config/seoArchitecture.json'));
 const failures = [];
-const APPROVED_HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
+const APPROVED_HOME_TITLE = 'Indian Ethnic Wear Online USA | LuxeMia';
 
 const runtimeArchitectureSource = read('src/config/seoArchitecture.ts');
 const runtimeArchitectureMatch = runtimeArchitectureSource.match(
@@ -138,8 +138,18 @@ for (const relativePath of redirectFreeSources) {
 forbidText(read('src/components/seo/InternalLinkBlock.tsx'), '"/nri/usa"', 'redirecting NRI USA link');
 
 const indexHtml = read('index.html');
-forbidText(indexHtml, 'SearchAction', 'broken WebSite SearchAction');
-forbidText(indexHtml, 'urlTemplate', 'search URL template without an indexable search route');
+// SearchAction must point to the existing search UI, initialized from its URL.
+// Google retired the sitelinks search box; this is schema, not a rich-result promise.
+const siteGraphs = [...indexHtml.matchAll(/<script\s+type="application\/ld\+json">([\s\S]*?)<\/script>/g)]
+  .flatMap((match) => { const data = JSON.parse(match[1]); return data['@graph'] ?? [data]; });
+const websiteSearch = siteGraphs.find((node) => node['@type'] === 'WebSite')?.potentialAction;
+if (websiteSearch?.['@type'] !== 'SearchAction' ||
+    websiteSearch?.target?.urlTemplate !== 'https://luxemia.shop/?q={search_term_string}' ||
+    websiteSearch?.['query-input'] !== 'required name=search_term_string') {
+  failures.push('WebSite SearchAction must use the supported homepage q parameter');
+}
+requireText(read('src/components/layout/Header.tsx'), "searchParams.get('q')", 'URL-initialized search');
+requireText(read('src/components/search/ProductSearch.tsx'), 'useState(initialQuery)', 'search query initialization');
 const escapedHomepageTitle = homepage.title.replace(/&/g, '&amp;');
 const rawHomepageTitle = homepage.title;
 if (
@@ -202,5 +212,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `SEO architecture validation passed: ${requiredSharedRoutes.length} indexable routes share titles/H1s, navigation avoids crawlable noindex facets and redirects, brand schema uses the existing LuxeMia asset, SearchAction is absent, and handlingTime remains source-backed.`,
+  `SEO architecture validation passed: ${requiredSharedRoutes.length} indexable routes share titles/H1s, navigation avoids crawlable noindex facets and redirects, brand schema uses the existing LuxeMia asset, SearchAction targets URL-initialized search, and handlingTime remains source-backed.`,
 );

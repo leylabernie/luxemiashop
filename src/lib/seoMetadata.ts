@@ -13,6 +13,7 @@
 export const SITE_URL = 'https://luxemia.shop';
 export const SITE_NAME = 'LuxeMia';
 import { getIndexableRouteSeo } from '@/config/seoArchitecture';
+import usaLanding from '@/config/usaLandingPage.json';
 
 const homepageSeo = getIndexableRouteSeo('/');
 export const DEFAULT_TITLE = homepageSeo.title;
@@ -106,8 +107,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/nri/usa`,
   },
   '/indian-ethnic-wear-usa': {
-    title: "Indian Ethnic Wear Online in the USA | LuxeMia",
-    description: 'Browse Indian sarees, lehengas, suits, menswear and jewelry online for U.S. delivery. Standard shipping is $14.99 below $199 and free at $199 and above.',
+    title: usaLanding.title,
+    description: usaLanding.description,
     canonical: `${SITE_URL}/indian-ethnic-wear-usa`,
   },
   '/shipping': {

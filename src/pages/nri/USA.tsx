@@ -1,6 +1,7 @@
 import { Truck, Shield, Clock } from 'lucide-react';
 import NRILandingPage from './NRILandingPage';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
+import usaLanding from '@/config/usaLandingPage.json';
 
 const USA = () => (
   <NRILandingPage
@@ -8,9 +9,10 @@ const USA = () => (
       country: 'the United States',
       countryCode: 'US',
       slug: 'indian-ethnic-wear-usa',
-      seoTitle: 'Indian Ethnic Wear Online USA | LuxeMia',
-      seoDescription: 'Shop sarees, lehengas, salwar suits, menswear and jewelry online for U.S. delivery. Free shipping at $199 and above; $14.99 below. Tracking after dispatch.',
-      heroTitle: 'Indian Ethnic Wear Online for U.S. Shoppers',
+      seoTitle: usaLanding.title,
+      seoDescription: usaLanding.description,
+      heroTitle: usaLanding.heading,
+      heroIntro: usaLanding.intro,
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
       shippingTime: 'tracking provided after dispatch',
       shippingCost: '$14.99 per order; free at $199 and above',

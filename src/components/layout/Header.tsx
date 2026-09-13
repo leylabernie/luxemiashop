@@ -1,6 +1,6 @@
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate, useSearchParams } from 'react-router-dom';
 import CurrencySelector from './CurrencySelector';
 import CartDrawer from '../cart/CartDrawer';
 const ProductSearch = lazy(() => import('../search/ProductSearch'));
@@ -47,8 +47,10 @@ const weddingSareeLinks = [
 ];
 
 const Header = () => {
+  const [searchParams] = useSearchParams();
+  const initialSearchQuery = searchParams.get('q')?.trim() ?? '';
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(() => initialSearchQuery.length > 0);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
   const isRakhiSaleActive = isRakshaBandhanCampaignActive();
   // Keep the verified short-lived offer persistently visible while it is active.
@@ -256,7 +258,7 @@ const Header = () => {
       {/* Search loads only after a customer opens it, keeping Shopify catalog work off the initial route. */}
       {isSearchOpen && (
         <Suspense fallback={null}>
-          <ProductSearch isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+          <ProductSearch isOpen={isSearchOpen} initialQuery={initialSearchQuery} onClose={() => setIsSearchOpen(false)} />
         </Suspense>
       )}
 

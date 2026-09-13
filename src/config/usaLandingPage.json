@@ -1,0 +1,38 @@
+{
+  "title": "Indian Ethnic Wear USA | Sarees & Lehengas | LuxeMia",
+  "description": "Shop sarees, lehengas and sharara suits for USA delivery. Free U.S. shipping at $199+. Compare sizing, processing times, duties and final-sale terms.",
+  "heading": "Indian Ethnic Wear in USA — Sarees, Lehengas & Shararas",
+  "intro": "Dress for weddings, sangeet and festive celebrations with sarees, lehengas and sharara suits delivered to the United States. Compare each outfit’s included pieces, fit and current availability before choosing.",
+  "buyerDetails": [
+    {
+      "heading": "USA shipping costs",
+      "copy": "Standard U.S. shipping is $14.99 below $199 and free at $199 and above after discounts. Tracking is provided after dispatch.",
+      "href": "/shipping",
+      "linkText": "See USA shipping terms"
+    },
+    {
+      "heading": "Processing and delivery times",
+      "copy": "Selected semi-stitched options in the ready-to-ship edit have a verified 3–5 business-day processing window. This is not the arrival time: tailoring and carrier transit add time. Confirm your selected option and event date with LuxeMia before ordering.",
+      "href": "/ready-to-ship",
+      "linkText": "Compare shorter-processing options"
+    },
+    {
+      "heading": "Taxes and import duties",
+      "copy": "Taxes collected by LuxeMia, if applicable, are calculated at checkout. Do not assume import duties or carrier fees are included unless checkout explicitly confirms this. Contact LuxeMia before ordering if you need the total landed cost confirmed.",
+      "href": "/pages/shipping-customs",
+      "linkText": "Read duties and customs guidance"
+    },
+    {
+      "heading": "Returns and order issues",
+      "copy": "Change-of-mind returns and exchanges are not accepted, except where applicable law provides otherwise. Report genuine damage, defects, incorrect or missing items within 48 hours with clear photos and a continuous unboxing video. Read the full claim requirements before ordering.",
+      "href": "/returns",
+      "linkText": "Read Returns & Cancellations"
+    }
+  ],
+  "categories": [
+    { "label": "Sarees for USA delivery", "href": "/sarees" },
+    { "label": "Wedding and festive lehengas", "href": "/lehengas" },
+    { "label": "Sharara suits online", "href": "/collections/sharara-suits" },
+    { "label": "Gharara suit sets online", "href": "/collections/gharara-suits" }
+  ]
+}

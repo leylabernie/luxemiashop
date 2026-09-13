@@ -24,6 +24,7 @@ const SEO_ARCHITECTURE = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8')
 );
 const INDEXABLE_ROUTE_SEO = SEO_ARCHITECTURE.routes;
+const USA_LANDING = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/usaLandingPage.json'), 'utf8'));
 const SUBCATEGORY_LANDING_PATHS = SEO_ARCHITECTURE.subcategoryLandingPaths;
 
 function getIndexableRouteSeo(routePath) {
@@ -1562,6 +1563,7 @@ const routes = [
       <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Browse Indian wedding guest outfits with U.S.-based support.</p>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
+      <p><a href="/indian-ethnic-wear-usa">Indian ethnic wear in the USA — sarees, lehengas, shararas and USA delivery details</a></p>
       <nav>
         <ul>
           <li><a href="/collections/navratri-outfits">Navratri &amp; Garba Outfits 2026</a> — Current chaniya choli, lehenga and festive styles for U.S. celebrations</li>
@@ -2000,7 +2002,7 @@ const routes = [
     title: getIndexableRouteSeo('/collections/sharara-suits').title,
     description: getIndexableRouteSeo('/collections/sharara-suits').description,
     h1: getIndexableRouteSeo('/collections/sharara-suits').h1,
-    content: `<p>Browse current sharara suits for wedding events, festive celebrations and party wear. A sharara set can combine a kurti, flared bottoms and a dupatta, but the exact silhouette and included pieces vary by listing.</p>
+    content: `<p>Shop sharara suits online for mehendi, sangeet, wedding-guest looks and festive celebrations. Explore embroidered kurti-and-flared-bottom styles, compare colors and sizes, and check each listing for its exact included pieces. U.S. standard shipping is free at $199 and above.</p>
       <h2>Compare Sharara Suit Fabric, Work and Included Pieces</h2>
       <p>Use the current product grid to compare color, stated fabric, embroidery or work, price and available options. Open the exact listing to confirm the supplied kurti, bottoms, dupatta, lining, size and current availability rather than assuming every set includes the same pieces.</p>
       <h3>Size and Event Planning</h3>
@@ -2013,7 +2015,7 @@ const routes = [
     title: getIndexableRouteSeo('/collections/gharara-suits').title,
     description: getIndexableRouteSeo('/collections/gharara-suits').description,
     h1: getIndexableRouteSeo('/collections/gharara-suits').h1,
-    content: `<p>Browse current gharara suit listings for wedding celebrations and festive occasions. Gharara styling can vary by design, so use the product photography and supplied description to compare the exact kurti, flared bottoms, dupatta and embellishment details.</p>
+    content: `<p>Find a gharara suit set online for wedding celebrations, festive gatherings and evening events. Compare embellished styles by color, fabric and size, then confirm the kurti, bottoms and dupatta included in your chosen design. U.S. standard shipping is free at $199 and above.</p>
       <h2>Choose a Gharara Set by Color, Work and Included Pieces</h2>
       <p>Compare currently listed colors, fabrics, work and price, then confirm the supplied included pieces, size options and availability on the individual product page. Product details—not a style name alone—are the reliable specification for every outfit.</p>
       <h3>Size and Delivery Planning</h3>
@@ -2278,21 +2280,24 @@ const routes = [
     h1: 'Indian Ethnic Wear Online for U.S. Shoppers',
     content: `
       <p>Browse lehengas, sarees, salwar kameez, menswear and jewelry available online for delivery to United States addresses.</p>
+      <p><a href="/indian-ethnic-wear-usa">Shopping in the USA? Compare sarees, lehengas, shararas and USA delivery details.</a></p>
       <h2>Shipping to the United States</h2>
       <p>Shipping is free at $199 and above and costs $14.99 below $199. Tracking is provided after dispatch. Review each product page for exact sizing, tailoring options and availability.</p>
     `,
   },
   {
     path: '/indian-ethnic-wear-usa',
-    title: 'Indian Ethnic Wear Online in the USA | LuxeMia',
-    description: 'Shop lehengas, sarees, salwar kameez, menswear and jewelry online for U.S. delivery. U.S. standard shipping is free at $199 and above and $14.99 below $199. Tracking follows dispatch.',
-    h1: 'Indian Ethnic Wear Online in the USA',
+    category: 'all',
+    title: USA_LANDING.title,
+    description: USA_LANDING.description,
+    h1: USA_LANDING.heading,
     content: `
-      <p>LuxeMia is an online Indian ethnic wear store serving shoppers with United States delivery addresses.</p>
-      <h2>United States Shipping</h2>
-      <p>Shipping is free at $199 and above and costs $14.99 below $199. Tracking is provided after dispatch. Duties, taxes or carrier processing fees may apply unless checkout explicitly states otherwise.</p>
-      <h2>Shop by Category</h2>
-      <p>Browse <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a>, <a href="/suits">salwar kameez</a>, <a href="/menswear">menswear</a> and <a href="/jewelry">jewelry</a>. Review each listing for exact product details, sizing and availability.</p>
+      <p>${escapeHtml(USA_LANDING.intro)}</p>
+      <h2>Before you order for USA delivery</h2>
+      ${USA_LANDING.buyerDetails.map((detail) => `<h3>${escapeHtml(detail.heading)}</h3><p>${escapeHtml(detail.copy)}</p><p><a href="${detail.href}">${escapeHtml(detail.linkText)}</a></p>`).join('\n')}
+      <h2>Shop Indian outfits for USA delivery</h2>
+      <ul>${USA_LANDING.categories.map((category) => `<li><a href="${category.href}">${escapeHtml(category.label)}</a></li>`).join('')}</ul>
+      <p><a href="/nri">NRI shopping guide: sizing, tailoring and international shopping questions</a></p>
     `,
   },
 
