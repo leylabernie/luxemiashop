@@ -20,6 +20,7 @@ interface SearchResult {
 interface ProductSearchProps {
   isOpen: boolean;
   onClose: () => void;
+  initialQuery?: string;
 }
 
 const quickFilterOptions = {
@@ -27,8 +28,8 @@ const quickFilterOptions = {
   fabric: ['Silk', 'Velvet', 'Georgette', 'Cotton', 'Chiffon'],
 };
 
-const ProductSearch = ({ isOpen, onClose }: ProductSearchProps) => {
-  const [query, setQuery] = useState('');
+const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProps) => {
+  const [query, setQuery] = useState(initialQuery);
   const [results, setResults] = useState<SearchResult[]>([]);
   const [showFilters, setShowFilters] = useState(false);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);

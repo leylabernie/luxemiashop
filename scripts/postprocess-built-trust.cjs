@@ -5,7 +5,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const DIST = path.join(ROOT, 'dist');
-const HOME_TITLE = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA';
+const HOME_TITLE = 'Indian Ethnic Wear Online USA | LuxeMia';
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, wedding sarees, lehengas, salwar kameez and menswear with tracked shipping to the USA, Canada, UK and other supported markets.';
 const SHIPPING_TITLE = 'Shipping Policy & International Rates | LuxeMia';
 const SHIPPING_DESCRIPTION = 'Review LuxeMia tracked shipping rates for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius, plus processing, customs and tracking guidance.';

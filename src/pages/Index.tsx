@@ -106,7 +106,7 @@ const Index = () => {
                 { title: 'Need it sooner', copy: 'Products whose semi-stitched option has a verified 3–5 business-day processing window; stitched and made-to-measure options take longer.', href: '/ready-to-ship', cta: 'Shop ready to ship' },
                 { title: 'Shop the event', copy: 'Browse wedding, festive, reception, Navratri and guest-ready edits.', href: '/collections', cta: 'Explore collections' },
                 { title: 'Fit and customization', copy: 'See only the size, stitching or made-to-measure options stated on each listing.', href: '/collections/customizable-indian-outfits', cta: 'View custom options' },
-                { title: 'Know delivery costs', copy: 'Compare route-based rates, free-shipping thresholds, duties and timing.', href: '/shipping', cta: 'Review shipping' },
+                { title: 'Shopping in the USA?', copy: 'Shop sarees, lehengas and shararas with clear USA shipping costs, timing, duties and return terms.', href: '/indian-ethnic-wear-usa', cta: 'Explore USA shopping' },
               ].map((item) => (
                 <Link key={item.title} to={item.href} className="group rounded-sm border border-[#eaded6] bg-white p-6 transition-all hover:-translate-y-1 hover:border-[#c99591] hover:shadow-lg">
                   <h3 className="font-serif text-xl text-[#291f20]">{item.title}</h3>

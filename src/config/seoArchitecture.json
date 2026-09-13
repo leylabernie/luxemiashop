@@ -1,7 +1,7 @@
 {
   "routes": {
     "/": {
-      "title": "LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA",
+      "title": "Indian Ethnic Wear Online USA | LuxeMia",
       "description": "Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.",
       "h1": "LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear"
     },
@@ -51,14 +51,14 @@
       "h1": "Designer & Party-Wear Sarees Online in the USA"
     },
     "/collections/sharara-suits": {
-      "title": "Sharara Suits USA | Wedding & Festive | LuxeMia",
-      "description": "Shop sharara suits online in the USA. Compare colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.",
+      "title": "Sharara Suits Online USA | Wedding Sets | LuxeMia",
+      "description": "Shop sharara suits online for weddings and festive events. Compare embroidered sets, sizes and included pieces. Free U.S. standard shipping at $199+.",
       "h1": "Sharara Suits Online in the USA"
     },
     "/collections/gharara-suits": {
-      "title": "Gharara Suits USA | Wedding & Festive | LuxeMia",
-      "description": "Shop gharara suits online in the USA. Compare colors, stated fabric, embroidery, included pieces, sizes and availability for celebrations.",
-      "h1": "Gharara Suits Online in the USA"
+      "title": "Gharara Suit Sets Online USA | Wedding Wear | LuxeMia",
+      "description": "Find a gharara suit set online for weddings and celebrations. Compare colors, embroidery, sizes and included pieces. Free U.S. standard shipping at $199+.",
+      "h1": "Gharara Suit Sets Online in the USA"
     },
     "/collections/anarkali-suits": {
       "title": "Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia",

@@ -8,6 +8,7 @@ import SEOHead from '@/components/seo/SEOHead';
 import { Button } from '@/components/ui/button';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
+import usaLanding from '@/config/usaLandingPage.json';
 
 interface CountryConfig {
   country: string;
@@ -17,6 +18,7 @@ interface CountryConfig {
   seoDescription: string;
   heroTitle: string;
   heroSubtitle: string;
+  heroIntro?: string;
   shippingTime: string;
   shippingCost: string;
   customsNote: string;
@@ -66,15 +68,39 @@ const NRILandingPage = ({ config }: { config: CountryConfig }) => {
                 {config.heroTitle}
               </h1>
               <p className="text-muted-foreground max-w-2xl mx-auto mb-8">
-                Shop sarees, lehengas, salwar suits, jewelry, Indo-Western outfits and menswear online.
-                Review each product page for exact details, sizing and current availability.
+                {config.heroIntro ?? 'Shop sarees, lehengas, salwar suits, jewelry, Indo-Western outfits and menswear online. Review each product page for exact details, sizing and current availability.'}
               </p>
               <Button asChild size="lg" className="px-8">
                 <Link to="/collections">Shop Now</Link>
               </Button>
+              {config.slug === 'nri' && (
+                <p className="mt-6 text-sm"><Link className="underline" to="/indian-ethnic-wear-usa">Shopping in the USA? Compare sarees, lehengas, shararas and USA delivery details.</Link></p>
+              )}
             </motion.div>
           </div>
         </section>
+
+        {config.slug === 'indian-ethnic-wear-usa' && (
+          <section aria-labelledby="usa-buyer-details" className="py-10 border-b border-border">
+            <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
+              <h2 id="usa-buyer-details" className="text-2xl font-serif mb-6">Before you order for USA delivery</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {usaLanding.buyerDetails.map((detail) => (
+                  <div key={detail.heading} className="p-6 border border-border rounded-lg">
+                    <h3 className="font-medium mb-2">{detail.heading}</h3>
+                    <p className="text-sm text-muted-foreground mb-3">{detail.copy}</p>
+                    <Link className="text-sm underline" to={detail.href}>{detail.linkText}</Link>
+                  </div>
+                ))}
+              </div>
+              <h2 className="text-2xl font-serif mt-8 mb-4">Shop Indian outfits for USA delivery</h2>
+              <ul className="flex flex-wrap gap-x-6 gap-y-3 text-sm">
+                {usaLanding.categories.map((category) => <li key={category.href}><Link className="underline" to={category.href}>{category.label}</Link></li>)}
+              </ul>
+              <p className="mt-6 text-sm"><Link className="underline" to="/nri">NRI shopping guide: sizing, tailoring and international shopping questions</Link></p>
+            </div>
+          </section>
+        )}
 
         {/* Benefits */}
         <section className="py-12 border-b border-border">

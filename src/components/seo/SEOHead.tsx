@@ -78,7 +78,7 @@ interface SEOHeadProps {
 }
 
 const SEOHead = ({
-  title = 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',
+  title = 'Indian Ethnic Wear Online USA | LuxeMia',
   description = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.',
   canonical,
   image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',

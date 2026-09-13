@@ -578,8 +578,13 @@ function main() {
   if (!homepageHtml.includes(`<title>${escapeHtml(SEO_ARCHITECTURE.routes['/'].title)}</title>`)) {
     seoArchitectureFailures.push('/: prerendered title does not match the shared branded homepage title');
   }
-  if (/SearchAction|urlTemplate/.test(homepageHtml)) {
-    seoArchitectureFailures.push('/: homepage still advertises a search action without an indexable search route');
+  const homepageGraph = [...homepageHtml.matchAll(/<script[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/g)]
+    .flatMap((match) => { const data = JSON.parse(match[1]); return data['@graph'] ?? [data]; });
+  const homepageSearch = homepageGraph.find((node) => node['@type'] === 'WebSite')?.potentialAction;
+  if (homepageSearch?.['@type'] !== 'SearchAction' ||
+      homepageSearch?.target?.urlTemplate !== 'https://luxemia.shop/?q={search_term_string}' ||
+      homepageSearch?.['query-input'] !== 'required name=search_term_string') {
+    seoArchitectureFailures.push('/: homepage SearchAction does not match the supported URL-initialized search');
   }
   const homepageLogoCount = (homepageHtml.match(/"logo"\s*:\s*"https:\/\/luxemia\.shop\/og-image\.jpg"/g) || []).length;
   if (homepageLogoCount !== 2) {

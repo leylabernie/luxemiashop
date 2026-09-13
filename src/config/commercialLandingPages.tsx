@@ -36,13 +36,13 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     categorySlug: 'suits',
     subcategorySlug: 'sharara',
     name: 'Sharara Suits',
-    title: 'Sharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
+    title: 'Sharara Suits Online USA | Wedding Sets | LuxeMia',
     description: 'Shop sharara suits online in the USA. Compare current colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.',
     editorialTitle: 'Shop Sharara Suits Online for Weddings and Celebrations',
     editorialContent: (
       <>
         <p>
-          Browse LuxeMia sharara suits for wedding events, festive celebrations and party wear. A sharara set commonly combines a short or mid-length kurti with flared bottoms and a dupatta, but the exact silhouette and included pieces vary by listing.
+          Shop sharara suits online for mehendi, sangeet, wedding-guest looks and festive celebrations. Explore embroidered kurti-and-flared-bottom styles, compare colors and sizes, and check each listing for its exact included pieces. U.S. standard shipping is free at $199 and above.
         </p>
         <h3>Compare Sharara Suit Details Before Ordering</h3>
         <p>
@@ -65,13 +65,13 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     categorySlug: 'suits',
     subcategorySlug: 'gharara',
     name: 'Gharara Suits',
-    title: 'Gharara Suits Online USA | Wedding & Festive Sets | LuxeMia',
+    title: 'Gharara Suit Sets Online USA | Wedding Wear | LuxeMia',
     description: 'Shop gharara suits online in the USA. Compare current colors, stated fabric, embroidery, included pieces, sizes and product availability for weddings and celebrations.',
-    editorialTitle: 'Shop Gharara Suits Online for Weddings and Festive Events',
+    editorialTitle: 'Find Your Gharara Suit Set Online for Weddings and Celebrations',
     editorialContent: (
       <>
         <p>
-          Browse current LuxeMia gharara suit listings for wedding celebrations and festive occasions. Gharara styling can vary by design, so review the product photography and supplied description for the exact kurti, flared bottoms, dupatta and embellishment details.
+          Find a gharara suit set online for wedding celebrations, festive gatherings and evening events. Compare embellished styles by color, fabric and size, then confirm the kurti, bottoms and dupatta included in your chosen design. U.S. standard shipping is free at $199 and above.
         </p>
         <h3>Choose a Gharara Set by Color, Work and Included Pieces</h3>
         <p>
