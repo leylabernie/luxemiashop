@@ -54,5 +54,12 @@ export function clampDescription(
   raw: string,
   maxLength = DESCRIPTION_MAX_LENGTH,
 ): string {
-  return truncateAtWord(normalizeWhitespace(raw), maxLength);
+  const cleaned = normalizeWhitespace(raw).replace(/[.…]+$/, '').trim();
+  if (cleaned.length < maxLength) return /[!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
+  const endings = [...cleaned.matchAll(/[.!?](?=\s|$)/g)]
+    .map((match) => match.index + 1)
+    .filter((end) => end >= 60 && end <= maxLength
+      && !/\b(?:U\.S|U\.K|No)\.$/.test(cleaned.slice(0, end)));
+  if (endings.length) return cleaned.slice(0, endings[endings.length - 1]);
+  return truncateAtWord(cleaned, maxLength).replace(/…$/, '.');
 }

@@ -53,12 +53,6 @@ function cleanAttribute(value?: string): string {
   return cleaned;
 }
 
-function truncateAtWord(value: string, maxLength: number): string {
-  if (value.length <= maxLength) return value;
-  const clipped = value.slice(0, Math.max(1, maxLength - 1));
-  const lastSpace = clipped.lastIndexOf(' ');
-  return `${(lastSpace > 0 ? clipped.slice(0, lastSpace) : clipped).replace(/[\s,;:|–—-]+$/, '')}…`;
-}
 
 /**
  * Remove promotional or unverified fulfillment wording while preserving the
@@ -148,21 +142,21 @@ export function generateMetaDescription(
   material?: string,
 ): string {
   const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
-  const safeType = cleanAttribute(productType);
-  const safeColor = cleanAttribute(color);
-  const safeMaterial = cleanAttribute(material);
-  const attributes = [safeColor, safeMaterial, safeType].filter(Boolean).join(' ');
-  const lowerTitle = safeTitle.toLowerCase();
-  const isNavratri = lowerTitle.includes('navratri') || lowerTitle.includes('garba') || lowerTitle.includes('chaniya');
-  const isSaree = safeType.toLowerCase().includes('saree') || lowerTitle.includes('saree');
-  let suffix = 'Shop online in the USA. Check sizes and availability.';
-  if (isNavratri) suffix = 'Shop for Garba in the USA. Check pieces, sizes and availability.';
-  else if (isSaree) suffix = 'Shop sarees online in the USA. Check blouse and stitching details.';
-  const core = attributes ? `${safeTitle} — ${attributes}.` : `${safeTitle}.`;
-  return truncateAtWord(
-    `${core} ${suffix} Tracked to USA, UK, Canada.`,
-    160,
-  );
+  const maxLength = 155;
+  let lead = `Shop ${safeTitle} at LuxeMia.`;
+  if (lead.length > maxLength) {
+    const identifyingDetails = [cleanAttribute(color), cleanAttribute(material), cleanAttribute(productType)]
+      .filter(Boolean).join(' ') || 'Indian ethnic wear';
+    lead = `Shop ${identifyingDetails} at LuxeMia.`;
+  }
+  const detail = /\bsaree\b/i.test(`${productType} ${safeTitle}`)
+    ? 'Check blouse details and sizes.'
+    : 'Check included pieces and sizes.';
+  const sentences = [detail, 'Tracked U.S. shipping.'];
+  return sentences.reduce((copy, sentence) =>
+    `${copy} ${sentence}`.length <= maxLength ? `${copy} ${sentence}` : copy,
+  lead);
+
 }
 
 export function getProductCategoryDescription(productType: string): string {

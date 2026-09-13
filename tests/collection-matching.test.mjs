@@ -52,3 +52,20 @@ test('a gharara does not leak into sharara, including descriptive comparisons', 
   assert.equal(matchSubcategory(product('Fuchsia Gharara Set', 'Gharara Set', ['gharara set'], 'Compare the cut with a sharara.'), sub), false);
   assert.equal(matchSubcategory(product('Shararalike Embroidered Set', 'Suit'), sub), false);
 });
+
+
+const { generateMetaDescription } = await loadSource('src/lib/productDescriptionEnrichment.ts');
+const { clampDescription } = await loadSource('src/lib/meta/clamp.ts');
+test('product search descriptions preserve identity and end with complete copy', () => {
+  for (const [title, type] of [
+    ['Royal Purple Gharara Set in Georgette with Bead Embroidery', 'Readymade Gharara Set'],
+    ['Embroidered Silk Sharara Suit with Georgette Dupatta – MT-1079', 'Sharara Suit'],
+    ['Slate Grey Chiffon Sequin Border Saree with Stitched Blouse', 'Saree'],
+  ]) {
+    const description = clampDescription(generateMetaDescription('', type, title));
+    assert.ok(description.includes(title));
+    assert.ok(description.length <= 155);
+    assert.ok(description.endsWith('.'));
+    assert.ok(!description.includes('…'));
+  }
+});

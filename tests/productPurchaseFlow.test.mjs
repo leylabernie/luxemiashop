@@ -222,3 +222,11 @@ test('normalized metadata and exact included tags still outrank title inference'
     'Kurta, churidar, and stole',
   );
 });
+
+
+test('explicit set contents are shown without leaking the next listing field', () => {
+  const description = 'Fabric: Georgette Set Includes: Embroidered top, gharara bottom and coordinating dupatta Occasion: Weddings, festive evenings.';
+  assert.equal(resolveIncludedPieces(undefined, [], 'Royal Purple Gharara Set', description),
+    'Embroidered top, gharara bottom and coordinating dupatta');
+  assert.equal(resolveIncludedPieces(undefined, [], 'Silk Saree', 'Package Includes: blouse stitching service for $10.'), undefined);
+});
