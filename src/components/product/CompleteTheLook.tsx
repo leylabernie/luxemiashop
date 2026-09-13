@@ -14,7 +14,8 @@ interface CompleteTheLookProps {
 }
 
 const JEWELRY_TERMS = [
-  'jewel',
+  'jewelry',
+  'jewellery',
   'necklace',
   'choker',
   'earring',
@@ -43,7 +44,7 @@ const OUTFIT_TERMS = [
 ];
 
 const includesAny = (value: string, terms: string[]) =>
-  terms.some((term) => value.includes(term));
+  terms.some((term) => new RegExp(`\\b${term}s?\\b`, 'i').test(value));
 
 const searchableProductText = (product: ShopifyProduct) => [
   product.node.productType || '',

@@ -177,6 +177,7 @@ export function resolveIncludedPieces(
   metadataIncludedComponents: string[] | null | undefined,
   tags: string[] = [],
   productTitle = '',
+  productDescription = '',
 ): string | undefined {
   const metadataComponents = (metadataIncludedComponents ?? [])
     .map((component) => component.trim())
@@ -201,5 +202,12 @@ export function resolveIncludedPieces(
     if (includedPieces) return includedPieces;
   }
 
+  const listing = productDescription.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ');
+  const explicit = listing.match(/\b(?:set includes|included pieces|package includes)\s*:\s*(.{1,180}?)(?=\s+(?:occasion|fabric|material|work|color|care|sizing|shipping|returns?|faq)\s*:|[.!?]|$)/i)?.[1]?.trim();
+  if (explicit
+    && !/\$|\b(?:price|fee|charge|service|shipping|delivery|refund|tier)\b/i.test(explicit)
+    && /\b(?:blouse|choli|lehenga|skirt|dupatta|saree|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?)\b/i.test(explicit)) {
+    return explicit;
+  }
   return inferIncludedPiecesFromTitle(productTitle, tags);
 }

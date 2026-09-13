@@ -90,6 +90,7 @@ const extractProductSpecs = (
   productType?: string,
   productTitle?: string,
   metadataIncludedComponents?: string[] | null,
+  productDescription = '',
 ) => {
   const specs: Record<string, string> = {};
   const lowerProductType = productType?.toLowerCase() || '';
@@ -116,6 +117,7 @@ const extractProductSpecs = (
     metadataIncludedComponents,
     catalogTags,
     productTitle,
+    productDescription,
   );
   if (includedPieces) specs.includedPieces = includedPieces;
 
@@ -462,8 +464,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       product.productType,
       product.title,
       product.metadata?.includedComponents,
+      product.description,
     ),
-    [product.tags, product.productType, product.title, product.metadata?.includedComponents],
+    [product.tags, product.productType, product.title, product.metadata?.includedComponents, product.description],
   );
   const shipByLabel = getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {

@@ -155,6 +155,7 @@ async function loadTsModule(relativeSrcPath) {
   }
 }
 const FALLBACK_CURRENCY = 'USD';
+let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
 
 function normalizeWhitespace(value) {
@@ -283,7 +284,7 @@ function getExplicitIncludedPieces(product) {
 
   const listingText = textFromListing(product?.description);
   if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
-  const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
+  const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Occasion|Fabric|Material|Work|Color|Care|Sizing|Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
   const titleBackedPieces = inferIncludedPiecesFromTitle(product?.title, product?.tags || []);
   if (titleBackedPieces) return titleBackedPieces;
   const parsed = cleanVerifiedFact(explicit?.[1]);
@@ -551,7 +552,14 @@ function disambiguateDuplicateProductRouteTitles(routes) {
 }
 
 function clampDescription(raw, maxLength = 155) {
-  return truncateAtWord(normalizeWhitespace(raw), maxLength);
+  const cleaned = normalizeWhitespace(raw).replace(/[.…]+$/, '').trim();
+  if (cleaned.length < maxLength) return /[!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
+  const endings = [...cleaned.matchAll(/[.!?](?=\s|$)/g)]
+    .map((match) => match.index + 1)
+    .filter((end) => end >= 60 && end <= maxLength
+      && !/\b(?:U\.S|U\.K|No)\.$/.test(cleaned.slice(0, end)));
+  if (endings.length) return cleaned.slice(0, endings[endings.length - 1]);
+  return truncateAtWord(cleaned, maxLength).replace(/…$/, '.');
 }
 
 // ─── Shopify Storefront API (build-time product fetch) ──────────────────────
@@ -3136,6 +3144,8 @@ function escapeHtml(str) {
 }
 
 async function main() {
+  const metaModule = await loadTsModule('src/lib/productDescriptionEnrichment.ts');
+  generateProductMetaDescription = metaModule.generateMetaDescription;
   const rankingModule = await loadTsModule('src/lib/commercialProductRanking.ts');
   if (typeof rankingModule.rankCommercialProducts !== 'function') {
     throw new Error('[commercial-ranking] Shared ranking module did not export rankCommercialProducts.');
@@ -3379,7 +3389,7 @@ async function main() {
     const fallbackDesc = productIsJewelry
       ? `Shop ${baseTitle} at LuxeMia. Indian jewelry with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Review the listing for exact materials, finish, stones, and included pieces.`
       : `Shop the${colorPhrase}${fabricPhrase} ${baseTitle} at LuxeMia. Indian ethnic wear with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius; current rates are shown at checkout.`;
-    const description = (seoDescription || (desc.length >= 60 ? desc : fallbackDesc)).slice(0, 320);
+    const description = seoDescription || generateProductMetaDescription('', p.productType || '', baseTitle, undefined, foundColor, foundFabric);
     routes.push({
       path: `/product/${handle}`,
       title,
