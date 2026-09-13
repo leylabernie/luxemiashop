@@ -59,7 +59,6 @@ const homepageFaqs = [
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const homepageSeo = getIndexableRouteSeo('/');
-  const [homepageHeadingLead, homepageHeadingAccent] = homepageSeo.h1.split(' for ');
 
   return (
     <div className="min-h-screen bg-[#fcf8f4]">
@@ -90,6 +89,10 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        <LazySection rootMargin="200px" placeholderHeight={500}>
+          <Suspense fallback={null}><NewArrivals /></Suspense>
+        </LazySection>
 
         <section aria-labelledby="shop-by-need-heading" className="border-b border-[#eaded6] bg-[#fffaf6] py-12 sm:py-16">
           <div className="container mx-auto max-w-7xl px-5 sm:px-8">
@@ -123,8 +126,7 @@ const Index = () => {
                 A boutique collection, chosen with care
               </p>
               <h1 id="homepage-heading" className="font-serif text-[clamp(2.8rem,6vw,5.7rem)] leading-[0.9] tracking-[-0.035em] text-[#291f20]">
-                {homepageHeadingLead} for{' '}
-                <em className="font-normal text-[#a96f72]">{homepageHeadingAccent}</em>
+                {homepageSeo.h1}
               </h1>
               <p className="mt-7 max-w-xl text-base leading-8 text-[#665a59] sm:text-lg">
                 Discover expressive silhouettes, handpicked for weddings, festivals, evening celebrations and every entrance worth remembering.
@@ -247,9 +249,6 @@ const Index = () => {
             to defer JS execution for below-fold content. These components import
             framer-motion + lucide-react. Deferring removes their animation setup
             from the critical render path. */}
-        <LazySection rootMargin="200px" placeholderHeight={500}>
-          <Suspense fallback={null}><NewArrivals /></Suspense>
-        </LazySection>
         <LazySection rootMargin="200px" placeholderHeight={300}>
           <Suspense fallback={null}><ServiceHighlights /></Suspense>
         </LazySection>
