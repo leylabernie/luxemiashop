@@ -86,7 +86,7 @@ const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsIte
       : (item.variantTitle !== 'Default Title' ? item.variantTitle : undefined),
     productGroupId: item.product.node.id,
     tailoringOption: getTailoringOption(item),
-    occasion: item.product.node.metadata?.occasion || undefined,
+    occasion: item.product.node.metadata?.occasion?.join(', ') || undefined,
   };
 };
 
