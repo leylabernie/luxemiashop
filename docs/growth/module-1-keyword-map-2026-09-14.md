@@ -38,7 +38,7 @@ Existing URLs are retained. Product titles are the visible product heading; SEO 
 
 ### 1. Royal Purple Georgette Gharara Suit Set with Bead Embroidery
 
-Product: [View on LuxeMia](https://luxemia.shop/products/royal-purple-georgette-embroidered-gharara-set-003)
+Product: [View on LuxeMia](https://luxemia.shop/product/royal-purple-georgette-embroidered-gharara-set-003)
 
 Product title: Royal Purple Georgette Gharara Suit Set with Bead Embroidery
 
@@ -63,7 +63,7 @@ Description HTML:
 
 ### 2. Red & Ivory Faux Georgette Lehenga – Custom Stitching Option
 
-Product: [View on LuxeMia](https://luxemia.shop/products/red-ivory-faux-georgette-sequin-zari-embroidered-lehenga-choli-set)
+Product: [View on LuxeMia](https://luxemia.shop/product/red-ivory-faux-georgette-sequin-zari-embroidered-lehenga-choli-set)
 
 Product title: Red & Ivory Faux Georgette Lehenga – Custom Stitching Option
 
@@ -88,7 +88,7 @@ Description HTML:
 
 ### 3. Multicolor Muslin Cotton Mirror-Work Navratri Lehenga Choli Set
 
-Product: [View on LuxeMia](https://luxemia.shop/products/muslin-cotton-real-mirror-work-navratri-lehenga-choli-set)
+Product: [View on LuxeMia](https://luxemia.shop/product/muslin-cotton-real-mirror-work-navratri-lehenga-choli-set)
 
 Product title: Multicolor Muslin Cotton Mirror-Work Navratri Lehenga Choli Set
 
@@ -114,7 +114,7 @@ Description HTML:
 
 ### 4. Ready-to-Wear Lycra Saree with Stitched Beadwork Blouse
 
-Product: [View on LuxeMia](https://luxemia.shop/products/ready-to-wear-imported-lycra-saree-with-beadwork-blouse-luxemia)
+Product: [View on LuxeMia](https://luxemia.shop/product/ready-to-wear-imported-lycra-saree-with-beadwork-blouse-luxemia)
 
 Product title: Ready-to-Wear Lycra Saree with Stitched Beadwork Blouse
 
@@ -139,7 +139,7 @@ Description HTML:
 
 ### 5. Printed Gaji Silk Zari-Border Navratri Chaniya Choli Set
 
-Product: [View on LuxeMia](https://luxemia.shop/products/soft-gaji-silk-zari-border-navratri-lehenga-choli-set)
+Product: [View on LuxeMia](https://luxemia.shop/product/soft-gaji-silk-zari-border-navratri-lehenga-choli-set)
 
 Product title: Printed Gaji Silk Zari-Border Navratri Chaniya Choli Set
 
@@ -166,7 +166,7 @@ Description HTML:
 
 ### Existing relevant wedding page retained
 
-[Fuchsia Pink Banarasi Silk Unstitched Reception Lehenga Set](https://luxemia.shop/products/fuchsia-pink-banarasi-silk-unstitched-reception-lehenga-set-10388) already has specific fabric, embroidery, reception, inclusions and unstitched-construction copy. It is the relevant destination for the two wedding-embroidery intents above; it was not rewritten in this release.
+[Fuchsia Pink Banarasi Silk Unstitched Reception Lehenga Set](https://luxemia.shop/product/fuchsia-pink-banarasi-silk-unstitched-reception-lehenga-set-10388) already has specific fabric, embroidery, reception, inclusions and unstitched-construction copy. It is the relevant destination for the two wedding-embroidery intents above; it was not rewritten in this release.
 
 ## Validated Shopify Admin GraphQL operation
 
