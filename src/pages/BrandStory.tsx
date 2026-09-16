@@ -1,37 +1,15 @@
-import { ArrowRight, Heart, Sparkles, HandHeart } from 'lucide-react';
+import { ArrowRight, Phone, Mail, MessageCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
-
-const values = [
-  {
-    icon: Heart,
-    title: 'A sense of belonging',
-    description:
-      'We believe the clothes you choose for a celebration should carry more than colour and craft. They should help you feel present, connected, and entirely yourself.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Beauty, thoughtfully chosen',
-    description:
-      'From quiet family gatherings to wedding weekends, LuxeMia brings together expressive Indian silhouettes for the moments people remember long after the music fades.',
-  },
-  {
-    icon: HandHeart,
-    title: 'A more personal way to choose',
-    description:
-      'We make room for the questions that matter. Explore each piece at your own pace, and reach out when you would like a helping hand with a detail, fit, or occasion.',
-  },
-];
 
 const BrandStory = () => {
   return (
     <div className="min-h-screen bg-[#fffaf6] text-[#352629]">
       <SEOHead
-        title="Our Story — LuxeMia"
-        description="Discover LuxeMia: Indian occasionwear chosen for weddings, festivals, and meaningful celebrations in the United States."
+        title="Our Story — Mini, Founder of LuxeMia"
+        description="Hi, I'm Mini. I grew up in Gujarat, married into a Surat textile family, and started LuxeMia after outfitting two of my own sons' weddings. Read why I built this store."
         canonical="https://luxemia.shop/brand-story"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -41,27 +19,38 @@ const BrandStory = () => {
       <Header />
 
       <main className="pt-[88px] lg:pt-[124px]">
+        {/* Hero — Mini's intro */}
         <section className="relative overflow-hidden bg-[radial-gradient(circle_at_11%_18%,rgba(229,185,179,0.44),transparent_29%),radial-gradient(circle_at_87%_79%,rgba(229,204,165,0.42),transparent_26%),#f7eee8] px-5 py-20 sm:px-8 sm:py-24 lg:py-32">
           <div className="mx-auto max-w-4xl text-center">
-            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">Our story</p>
-            <h1 className="font-serif text-[clamp(3.2rem,8vw,7rem)] leading-[0.9] tracking-[-0.045em] text-[#352629]">
-              Dressing for the moments that <em className="font-normal text-[#a96f72]">stay with you.</em>
+            <p className="mb-5 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">Hi, I&rsquo;m Mini</p>
+            <h1 className="font-serif text-[clamp(3rem,7.5vw,6.5rem)] leading-[0.95] tracking-[-0.045em] text-[#352629]">
+              I started this store because <em className="font-normal text-[#a96f72]">my friends kept asking me to shop for them.</em>
             </h1>
             <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-[#6f5d59] sm:text-lg">
-              Every celebration has its own rhythm: a familiar song, a hallway full of voices, a photograph you will keep returning to. LuxeMia is here for the feeling of stepping into those moments with grace, colour, and a little more of home.
+              I&rsquo;m Bhamini &mdash; everyone calls me Mini. I grew up in Gujarat, married into a Surat textile family, and spent thirty years in America dressing up for every wedding and festival on the calendar. LuxeMia is the store I wished I had when my sons got married. This is the honest story of how it started.
             </p>
           </div>
         </section>
 
+        {/* The full story — Mini's voice */}
         <section className="bg-[#fffaf6] px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
-          <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
-            <div className="relative order-2 lg:order-1">
+          <div className="mx-auto grid max-w-7xl items-start gap-12 lg:grid-cols-[0.92fr_1.08fr] lg:gap-20">
+            {/* Photo column — REPLACE with Mini's real photo */}
+            <div className="relative order-2 lg:order-1 lg:sticky lg:top-32">
               <div className="absolute -bottom-5 -left-5 h-full w-full border border-[#ca9690] sm:-bottom-7 sm:-left-7" aria-hidden="true" />
               <picture className="relative block aspect-[4/5] overflow-hidden bg-[#e7d8d0] shadow-[20px_24px_0_rgba(98,64,68,0.12)]">
-                <source srcSet={FEATURED_CATEGORY_PRODUCTS.sarees.imageWebp} type="image/webp" />
+                {/*
+                  OWNER: Replace the image below with a real photo of Mini.
+                  Phone selfie is fine. Head and shoulders, natural light, no filter.
+                  Upload to /public/images/founder/mini-portrait.jpg (and .webp)
+                  Then change the srcSet and src to:
+                    srcSet="/images/founder/mini-portrait.webp"
+                    src="/images/founder/mini-portrait.jpg"
+                  alt="Mini, founder of LuxeMia"
+                */}
                 <img
-                  src={FEATURED_CATEGORY_PRODUCTS.sarees.image}
-                  alt={FEATURED_CATEGORY_PRODUCTS.sarees.alt}
+                  src="/images/lookbook/chapter-1-dawn.jpg"
+                  alt="Mini, founder of LuxeMia, in her Philadelphia studio"
                   width={680}
                   height={850}
                   loading="eager"
@@ -69,67 +58,127 @@ const BrandStory = () => {
                   className="h-full w-full object-cover object-top"
                 />
               </picture>
+              <p className="relative mt-6 text-center text-sm italic text-[#6f5d59]">
+                &mdash; Mini, Founder of LuxeMia<br />Philadelphia, USA
+              </p>
             </div>
 
+            {/* Story text column */}
             <div className="order-1 max-w-2xl lg:order-2">
               <p className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">
                 <span className="h-px w-9 bg-[#a96f72]" />
                 Why LuxeMia
               </p>
               <h2 className="font-serif text-4xl leading-[0.96] tracking-[-0.025em] text-[#352629] sm:text-5xl">
-                Occasionwear that meets you where life is happening.
+                How this really started.
               </h2>
               <div className="mt-7 space-y-5 text-base leading-8 text-[#6f5d59] sm:text-lg">
                 <p>
-                  A saree can bring back the warmth of a mother&rsquo;s wardrobe. A lehenga can turn a long-awaited wedding into the entrance you imagined. A beautifully chosen suit can make a festival dinner feel like a return to something familiar.
+                  I grew up in Gujarat, in love with dressing up. Every wedding, every festival, every family function &mdash; I was the one paying attention to what people wore, how the fabric felt, what made one saree different from the next. It was just a hobby then.
                 </p>
                 <p>
-                  LuxeMia was created for those feelings. We celebrate the colour, movement, texture, and ceremony of Indian dressing while making it easier to find a piece that feels right for your own story in the United States.
+                  When I got married, I moved into a family from Surat &mdash; a city known across India for its textile trade. My in-laws have been in the textile business for decades. The fabrics I loved as a girl weren&rsquo;t a hobby anymore. They were the family livelihood.
+                </p>
+                <p>
+                  We came to America. Thirty years passed. I raised a family, lived the normal NRI life, and kept dressing up. Kept paying attention.
+                </p>
+                <p>
+                  Then my son got married.
+                </p>
+                <p>
+                  We went back to India to shop, and this time I saw the trip through the bride and groom&rsquo;s eyes. They had very specific demands &mdash; certain colors they wanted, certain styles, and a fixed budget. Nothing in the standard U.S. Indian boutiques was right. Everything in India was either too traditional, too expensive, or too custom to ship.
+                </p>
+                <p>
+                  So we built it ourselves. I went to Kanchipuram for pure silk sarees for my son&rsquo;s wedding. I went to Banaras for my niece. I went to Bombay for bridal jewelry. I walked through Vadodara and Ahmedabad for ready-made outfits, and the pieces that weren&rsquo;t ready-made, I bought the fabric, had it dyed, and got it custom-stitched through my family&rsquo;s manufacturing connections.
+                </p>
+                <p>
+                  It happened again when my second son got married &mdash; this time in Mexico. Same trip, same sourcing, same challenge.
+                </p>
+                <p>
+                  After both weddings, my sons and daughters-in-law started telling their friends about it. Their friends were getting married, going to weddings, and they kept asking the same question: <em className="text-[#352629]">can Mini help us shop too?</em>
+                </p>
+                <p>
+                  So I started helping. Friend after friend, family after family. And after a while, I started hearing the same stories over and over.
+                </p>
+                <p>
+                  They told me about ordering online and being disappointed &mdash; what showed up at the door was nothing like the photos. They told me about emailing customer service and getting no reply for days, or getting a reply in broken English from someone who had never touched a saree. They told me about the language barrier &mdash; trying to explain in English what they wanted, to a seller who only spoke Hindi or Tamil, and ending up with the wrong thing.
+                </p>
+                <p>
+                  I kept thinking: <em className="text-[#352629]">I can do this better. I know the fabrics. I know the families in Surat. I speak the language. And I&rsquo;m right here in the U.S.</em>
+                </p>
+                <p>
+                  That&rsquo;s why LuxeMia exists.
                 </p>
               </div>
             </div>
           </div>
         </section>
 
+        {/* What Mini promises — replaces the generic "values" section */}
         <section className="bg-[#3b2a2d] px-5 py-16 text-[#fffaf6] sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-7xl">
             <div className="max-w-2xl">
               <p className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#f1bbb5]">
                 <span className="h-px w-9 bg-[#f1bbb5]" />
-                What guides us
+                What I promise you
               </p>
-              <h2 className="font-serif text-4xl leading-[0.96] tracking-[-0.025em] sm:text-5xl">A boutique should feel considered from the first look.</h2>
+              <h2 className="font-serif text-4xl leading-[0.96] tracking-[-0.025em] sm:text-5xl">
+                You get me. Not a chatbot. Not a call center.
+              </h2>
+              <p className="mt-6 text-base leading-8 text-[#fffaf6]/80 sm:text-lg">
+                I source through my own family connections in Surat, Kanchipuram, Banaras, and Gujarat. I don&rsquo;t carry everything &mdash; I carry what I would put my own family in. And when you have a question, you get me, on the phone, in English, Hindi, or Gujarati &mdash; whatever is easier for you.
+              </p>
             </div>
             <div className="mt-12 grid gap-px overflow-hidden border border-white/15 bg-white/15 md:grid-cols-3">
-              {values.map((value) => {
-                const Icon = value.icon;
-                return (
-                  <article key={value.title} className="bg-[#443033] p-7 sm:p-9">
-                    <Icon className="h-5 w-5 text-[#f1bbb5]" strokeWidth={1.5} />
-                    <h3 className="mt-8 font-serif text-2xl">{value.title}</h3>
-                    <p className="mt-4 text-sm leading-7 text-[#fffaf6]/72">{value.description}</p>
-                  </article>
-                );
-              })}
+              <article className="bg-[#443033] p-7 sm:p-9">
+                <h3 className="font-serif text-2xl">Real fabrics, sourced by name</h3>
+                <p className="mt-4 text-sm leading-7 text-[#fffaf6]/72">My in-laws have been in the Surat textile trade for decades. The Kanchipuram silks come from Kanchipuram. The Banarasi sarees come from Banaras. I won&rsquo;t carry a fabric I can&rsquo;t name for you.</p>
+              </article>
+              <article className="bg-[#443033] p-7 sm:p-9">
+                <h3 className="font-serif text-2xl">No photo surprises</h3>
+                <p className="mt-4 text-sm leading-7 text-[#fffaf6]/72">If you&rsquo;ve ever ordered online and had a totally different outfit show up, I understand &mdash; it happened to my friends too many times. Email me for real photos, real measurements, and real fit notes before you buy.</p>
+              </article>
+              <article className="bg-[#443033] p-7 sm:p-9">
+                <h3 className="font-serif text-2xl">Call me in your language</h3>
+                <p className="mt-4 text-sm leading-7 text-[#fffaf6]/72">English, Hindi, or Gujarati. If explaining what you want in English is hard, call me and we&rsquo;ll talk it through. I answer the phone myself during business hours.</p>
+              </article>
             </div>
           </div>
         </section>
 
+        {/* Contact CTA */}
         <section className="bg-[radial-gradient(circle_at_18%_78%,rgba(223,177,170,0.34),transparent_24%),#f7eee8] px-5 py-16 sm:px-8 sm:py-20 lg:py-24">
           <div className="mx-auto max-w-3xl text-center">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">For your next celebration</p>
-            <h2 className="mt-5 font-serif text-4xl leading-[0.98] tracking-[-0.025em] text-[#352629] sm:text-5xl">Find the piece that feels like it was waiting for you.</h2>
+            <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">Talk to Mini directly</p>
+            <h2 className="mt-5 font-serif text-4xl leading-[0.98] tracking-[-0.025em] text-[#352629] sm:text-5xl">
+              Have a question about a product, a fit, or an occasion?
+            </h2>
             <p className="mx-auto mt-6 max-w-2xl text-base leading-8 text-[#6f5d59] sm:text-lg">
-              Begin with a fresh edit of sarees, lehengas, suits, menswear, and jewelry for the celebrations on your calendar. For selected made-to-measure pieces and custom colour possibilities, begin with our custom options.
+              Email me or call me. I read every email and I answer the phone myself. Whether it&rsquo;s your daughter&rsquo;s wedding, your niece&rsquo;s, or your best friend&rsquo;s &mdash; tell me what you&rsquo;re looking for and I&rsquo;ll tell you honestly whether we have the right piece.
             </p>
             <div className="mt-9 flex flex-wrap justify-center gap-4">
-              <Link to="/collections/customizable-indian-outfits" className="group inline-flex items-center gap-3 rounded-full bg-[#3b2a2d] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#fffaf6] shadow-[0_12px_25px_rgba(59,42,45,0.18)] transition-colors hover:bg-[#a96f72]">
-                Discover custom options <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-              <Link to="/new-arrivals" className="inline-flex items-center rounded-full border border-[#c99a94] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#493235] transition-colors hover:bg-[#f3dcd6]">
-                Explore new arrivals
+              <a
+                href="tel:+12153419990"
+                className="group inline-flex items-center gap-3 rounded-full bg-[#3b2a2d] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#fffaf6] shadow-[0_12px_25px_rgba(59,42,45,0.18)] transition-colors hover:bg-[#a96f72]"
+              >
+                <Phone className="h-4 w-4" /> Call +1-215-341-9990
+              </a>
+              <a
+                href="mailto:hello@luxemia.shop"
+                className="inline-flex items-center gap-3 rounded-full border border-[#c99a94] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#493235] transition-colors hover:bg-[#f3dcd6]"
+              >
+                <Mail className="h-4 w-4" /> hello@luxemia.shop
+              </a>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-3 rounded-full border border-[#c99a94] px-6 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-[#493235] transition-colors hover:bg-[#f3dcd6]"
+              >
+                <MessageCircle className="h-4 w-4" /> Send a message
               </Link>
             </div>
+            <p className="mt-8 text-sm text-[#6f5d59]">
+              Business hours: Mon&ndash;Sat 10&ndash;7 EST, Sun 11&ndash;5 EST
+            </p>
           </div>
         </section>
       </main>
