@@ -1,134 +1,1713 @@
-# LuxeMia — Canonical Public Page Inventory
-# https://luxemia.shop/llms-full.txt
-#
-# These are direct public LuxeMia URLs. Redirect sources, account routes,
-# checkout routes and retired product URLs are intentionally excluded.
-# Product pages are represented by the sitemap and product feeds because the
-# live catalog changes more frequently than this editorial inventory.
-#
-# Tracked shipping is available to the United States, Canada, the United
-# Kingdom, Australia, New Zealand, South Africa and Mauritius. The current
-# route-based rates, thresholds, timing and customs guidance are published at
-# https://luxemia.shop/shipping. Product pages and checkout control the final
-# product, variant, price, availability and delivery information.
+# LuxeMia - Full Catalog for AI Search
 
-## Homepage
+> Complete product catalog. Each product includes title, price, color, fabric, occasion, URL, and a short description. AI search engines (ChatGPT, Perplexity, Claude, Gemini, Copilot) may use this to surface LuxeMia products when users search for Indian ethnic wear.
 
-- https://luxemia.shop/
+## Catalog summary
 
-## Product Collections
+- Total products: 186
+- Sarees: 70
+- Lehengas: 10
+- Suits: 23
+- Menswear: 25
+- Jewelry: 58
+- Price range: $18 - $903
 
-- https://luxemia.shop/collections
-- https://luxemia.shop/lehengas
-- https://luxemia.shop/sarees
-- https://luxemia.shop/suits
-- https://luxemia.shop/menswear
-- https://luxemia.shop/indowestern
-- https://luxemia.shop/jewelry
-- https://luxemia.shop/new-arrivals
-- https://luxemia.shop/collections/silk-sarees
-- https://luxemia.shop/collections/kanchipuram-sarees
-- https://luxemia.shop/collections/bridal-party-outfits
-- https://luxemia.shop/collections/bollywood-inspired-indian-outfits
-- https://luxemia.shop/collections/customizable-indian-outfits
-- https://luxemia.shop/collections/sharara-suits
-- https://luxemia.shop/collections/gharara-suits
-- https://luxemia.shop/collections/anarkali-suits
-- https://luxemia.shop/collections/bridal-lehengas
-- https://luxemia.shop/collections/wedding-sarees
-- https://luxemia.shop/collections/designer-sarees
-- https://luxemia.shop/collections/party-wear-lehengas
+## Products
 
-## Occasion Landing Pages
+### Yellow Kundan Ethnic Necklace Set
+- URL: https://luxemia.shop/products/jwl-001
+- Price: $56.00
+- Fabric: Kundan, Gold-plated brass, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Yellow kundan ethnic necklace set. Suited for general wear — weddings, sangeet, festivals, family functions. Adjustable fit. Email me at hello@luxemia.shop if you need exact dimensions. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59471/Yellow--Wedding-Wear-Kundan-Ethnic-Design-Necklace-Set-FNKN102YLW(1).jpg
 
-- https://luxemia.shop/collections/diwali-outfits
-- https://luxemia.shop/collections/wedding-guest-outfits
-- https://luxemia.shop/collections/mehendi-outfits
-- https://luxemia.shop/collections/eid-outfits
-- https://luxemia.shop/collections/navratri-outfits
-- https://luxemia.shop/collections/haldi-outfits
+### White Kundan Ethnic Necklace Set
+- URL: https://luxemia.shop/products/jwl-002
+- Price: $56.00
+- Fabric: Kundan, Gold-plated brass, Pearl
+- Category: Jewelry
+- Occasion: General
+- Description: White kundan ethnic necklace set. Suited for general wear — weddings, sangeet, festivals, family functions. Adjustable fit. Email me at hello@luxemia.shop if you need exact dimensions. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-2
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59471/White--Wedding-Wear-Kundan-Ethnic-Design-Necklace-Set-FNKN102WHT(1).jpg
 
-## Regional and Service Pages
+### Maroon Kundan Grand Necklace Set
+- URL: https://luxemia.shop/products/jwl-017
+- Price: $70.00
+- Fabric: Kundan, Maroon stones, Pearl, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Maroon kundan grand necklace set. Suited for general wear — weddings, sangeet, festivals, family functions. Adjustable fit. Email me at hello@luxemia.shop if you need exact dimensions. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-2
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Maroon--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN107MRN(1).jpg
 
-- https://luxemia.shop/nri
-- https://luxemia.shop/indian-ethnic-wear-usa
-- https://luxemia.shop/wedding-party-orders
-- https://luxemia.shop/sizing-measurements-guide
-- https://luxemia.shop/size-guide
-- https://luxemia.shop/care-guide
-- https://luxemia.shop/lookbook
-- https://luxemia.shop/style-quiz
+### Maroon Kundan Ethnic Necklace Set
+- URL: https://luxemia.shop/products/jwl-003
+- Price: $56.00
+- Fabric: Kundan, Maroon stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Maroon kundan ethnic necklace set. Suited for general wear — weddings, sangeet, festivals, family functions. Adjustable fit. Email me at hello@luxemia.shop if you need exact dimensions. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59471/Maroon--Wedding-Wear-Kundan-Ethnic-Design-Necklace-Set-FNKN102MRN(1).jpg
 
-## Brand, Editorial and Topic Hubs
+### Pink Georgette Occasion Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/pink-occasion-wear-georgette-lehenga-choli-with-dupatta-7082
+- Price: $91.99
+- Color: Pink
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Occasion
+- Description: Pink georgette lehenga. Suited for occasion wear — weddings, sangeet, festivals, family functions. Semi-stitched, sizes XS to 44". Your local U.S. tailor finishes it to your measurements, usually $15-$25. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxem
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_22-VOL-34%20By%20ZEEL%20COTHING%207082%20PINK.jpeg
 
-- https://luxemia.shop/about
-- https://luxemia.shop/blog
-- https://luxemia.shop/press
-- https://luxemia.shop/authors/luxemia-editorial-team
-- https://luxemia.shop/blog/attires
-- https://luxemia.shop/blog/motifs-embroideries
-- https://luxemia.shop/blog/weddings-festivals
-- https://luxemia.shop/blog/how-to-care
-- https://luxemia.shop/blog/designer-profiles
-- https://luxemia.shop/blog/cultural-context
+### Red Georgette Party Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/red-party-wear-georgette-lehenga-choli-with-dupatta-7088
+- Price: $83.99
+- Color: Red
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Party
+- Description: Red georgette lehenga. Suited for party wear — weddings, sangeet, festivals, family functions. Semi-stitched, sizes XS to 44". Your local U.S. tailor finishes it to your measurements, usually $15-$25. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.s
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_22-VOL-34%20By%20ZEEL%20COTHING%207088%20RED.jpeg
 
-## Customer Service and Policies
+### White Georgette Occasion Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/white-occasion-wear-georgette-lehenga-choli-with-dupatta-7079
+- Price: $97.99
+- Color: White
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Occasion
+- Description: White georgette lehenga. Suited for occasion wear — weddings, sangeet, festivals, family functions. Semi-stitched, sizes XS to 44". Your local U.S. tailor finishes it to your measurements, usually $15-$25. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxe
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_21-VOL-34%20By%20ZEEL%20COTHING%207079%20WHITE.jpeg
 
-- https://luxemia.shop/contact
-- https://luxemia.shop/faq
-- https://luxemia.shop/shipping
-- https://luxemia.shop/pages/shipping-customs
-- https://luxemia.shop/returns
-- https://luxemia.shop/privacy
-- https://luxemia.shop/terms
-- https://luxemia.shop/sitemap
+### Peach Georgette Occasion Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/peach-occasion-wear-georgette-lehenga-choli-with-dupatta-7083
+- Price: $91.99
+- Color: Peach
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Occasion
+- Description: Peach georgette lehenga. Suited for occasion wear — weddings, sangeet, festivals, family functions. Semi-stitched, sizes XS to 44". Your local U.S. tailor finishes it to your measurements, usually $15-$25. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxe
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_22-VOL-34%20By%20ZEEL%20COTHING%207083%20PEACH.jpeg
 
-## Blog Posts
+### Yellow Georgette Party Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/yellow-party-wear-georgette-lehenga-choli-with-dupatta-7088
+- Price: $83.99
+- Color: Yellow
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Party
+- Description: Yellow georgette lehenga. Suited for party wear — weddings, sangeet, festivals, family functions. Semi-stitched, sizes XS to 44". Your local U.S. tailor finishes it to your measurements, usually $15-$25. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemi
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_23-VOL-34%20By%20ZEEL%20COTHING%207088%20YELLOW.jpeg
 
-- https://luxemia.shop/blog/indian-to-us-clothing-size-conversion-guide
-- https://luxemia.shop/blog/wedding-saree-for-mother-of-bride
-- https://luxemia.shop/blog/wedding-guest-outfit-ideas
-- https://luxemia.shop/blog/accessorize-indian-ethnic-wear
-- https://luxemia.shop/blog/fabric-guide-indian-ethnic-wear-georgette-silk-chiffon
-- https://luxemia.shop/blog/styling-indian-ethnic-wear-festive-occasions-abroad
-- https://luxemia.shop/blog/lehenga-vs-sharara-vs-anarkali-comparison
-- https://luxemia.shop/blog/how-to-drape-saree-beginner-guide
-- https://luxemia.shop/blog/how-to-choose-salwar-kameez-body-type
-- https://luxemia.shop/blog/sherwani-vs-jodhpuri-vs-bandhgala-groom-guide
-- https://luxemia.shop/blog/anamika-khanna-designer-profile-kolkata-couture
-- https://luxemia.shop/blog/bindi-meaning-history-indian-women
-- https://luxemia.shop/blog/tarun-tahiliani-designer-profile-india-modern-couture
-- https://luxemia.shop/blog/rahul-mishra-designer-profile-paris-haute-couture-sustainable
-- https://luxemia.shop/blog/navratri-9-day-color-guide-2026
-- https://luxemia.shop/blog/sabyasachi-mukherjee-designer-profile-handloom-revival
-- https://luxemia.shop/blog/custom-bridesmaid-wedding-guest-lehenga-online-usa
-- https://luxemia.shop/blog/custom-deep-neckline-elbow-sleeve-saree-blouse-online-usa
-- https://luxemia.shop/blog/plus-size-indian-ethnic-wear-guide
-- https://luxemia.shop/blog/manish-malhotra-bollywood-bridal-designer-profile
-- https://luxemia.shop/blog/indian-wedding-terms-glossary-50-events-rituals-roles
-- https://luxemia.shop/blog/sharara-vs-gharara-difference
-- https://luxemia.shop/blog/ready-to-ship-vs-made-to-order-indian-outfits
-- https://luxemia.shop/blog/does-a-saree-come-with-a-blouse
-- https://luxemia.shop/blog/how-should-a-sherwani-fit-measurement-checklist
-- https://luxemia.shop/blog/how-to-buy-a-bridal-lehenga-online-checklist
+### Orange Georgette Occasion Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/orange-occasion-wear-georgette-lehenga-choli-with-dupatta-7081
+- Price: $91.99
+- Color: Orange
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Occasion
+- Description: Orange georgette lehenga. Suited for occasion wear — weddings, sangeet, festivals, family functions. Semi-stitched, sizes XS to 44". Your local U.S. tailor finishes it to your measurements, usually $15-$25. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@lux
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_21-VOL-34%20By%20ZEEL%20COTHING%207081%20ORANGE.jpeg
 
-## Structured Data and Discovery Files
+### Navy Silk Art Sherwani
+- URL: https://luxemia.shop/products/navy-silk-sherwani
+- Price: $296.85
+- Color: Navy
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Navy art silk menswear with embroidery. Suited for wedding wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-21
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/58974/Navy-Blue-Art-Silk-Wedding-Wear-Embroidery-Work-Readymade-Sherwani-4149(1).jpg
 
-- https://luxemia.shop/sitemap.xml
-- https://luxemia.shop/merchant-feed.xml
-- https://luxemia.shop/openai-search-products.jsonl.gz
-- https://luxemia.shop/robots.txt
-- https://luxemia.shop/llms.txt
-- https://luxemia.shop/manifest.json
+### Baby Pink Cotton Kurta Pajama Set
+- URL: https://luxemia.shop/products/baby-pink-cotton-kurta-pajama
+- Price: $98.85
+- Color: Baby Pink
+- Fabric: Cotton
+- Category: Menswear
+- Occasion: Occasional
+- Description: Baby pink cotton menswear with printed. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Baby-Pink-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1223(1).jpg
 
-The OpenAI-ready product export is organic-only: `is_eligible_search` is true,
-`is_eligible_checkout` is false and `is_ads_eligible` is false. It does not
-create or activate an advertising campaign, billing account or paid placement.
-The public file is not a submission or proof of ingestion; approved-partner
-onboarding and registered SFTP delivery remain required.
+### Blue Cotton Kurta Pajama Set
+- URL: https://luxemia.shop/products/blue-cotton-kurta-pajama
+- Price: $82.35
+- Color: Blue
+- Fabric: Cotton
+- Category: Menswear
+- Occasion: Occasional
+- Description: Blue cotton menswear with printed. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Blue-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1222(1).jpg
 
-## Contact
+### Black Art Silk Sherwani
+- URL: https://luxemia.shop/products/black-art-silk-sherwani
+- Price: $296.85
+- Color: Black
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Black art silk menswear with embroidery. Suited for wedding wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-2
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/58974/Black-Art-Silk-Wedding-Wear-Embroidery-Work-Readymade-Sherwani-4146(1).jpg
 
-- WhatsApp: +1-215-341-9990
-- Phone: +1-215-341-9990
-- Email: hello@luxemia.shop
+### White Viscose Kurta Pajama Set
+- URL: https://luxemia.shop/products/white-viscose-kurta-pajama
+- Price: $118.35
+- Color: White
+- Fabric: Viscose
+- Category: Menswear
+- Occasion: Occasional
+- Description: White viscose menswear with printed. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-21
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/White-Viscose-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1221(1).jpg
+
+### Silk Light Pink Occasional Wear Embroidery Saree
+- URL: https://luxemia.shop/products/silk-light-pink-occasional-embroidery-saree
+- Price: $121.35
+- Color: Light Pink
+- Fabric: Silk
+- Category: Saree
+- Occasion: Occasional
+- Description: Light pink silk saree with embroidery. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59800/Light-Pink-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-C(1).jpg
+
+### Silk Green Occasional Wear Embroidery Saree
+- URL: https://luxemia.shop/products/silk-green-occasional-embroidery-saree
+- Price: $121.35
+- Color: Green
+- Fabric: Silk
+- Category: Saree
+- Occasion: Occasional
+- Description: Green silk saree with embroidery. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990 — I 
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59800/Green-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-B(1).jpg
+
+### Magenta Art Silk Festive Saree
+- URL: https://luxemia.shop/products/magenta-art-silk-festive-saree
+- Price: $89.85
+- Color: Magenta
+- Fabric: Art Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Magenta art silk saree with weaving. Suited for festival wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990 — I
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59708/Magenta-Art-Silk-Festival-Wear-Weaving-Work-Saree-Nirmala-Vol-6-3665-K-4277(1).jpg
+
+### Silk Yellow Occasional Wear Embroidery Saree
+- URL: https://luxemia.shop/products/silk-yellow-occasional-embroidery-saree
+- Price: $121.35
+- Color: Yellow
+- Fabric: Silk
+- Category: Saree
+- Occasion: Occasional
+- Description: Yellow silk saree with embroidery. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990 — I
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59800/Yellow-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-D(1).jpg
+
+### Banarasi Silk Mint Green Festival Wear Weaving Saree
+- URL: https://luxemia.shop/products/banarasi-silk-mint-green-festival-weaving-saree
+- Price: $50.85
+- Color: Mint Green
+- Fabric: Banarasi Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Mint green banarasi silk saree with weaving. Suited for festival wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59780/Mint-Green-Banarasi-Silk-Festival-Wear-Weaving-Work-Saree-Lotus-B(1).jpg
+
+### Royal Blue Georgette Party Saree
+- URL: https://luxemia.shop/products/royal-blue-georgette-party-saree
+- Price: $104.85
+- Color: Royal Blue
+- Fabric: Georgette
+- Category: Saree
+- Occasion: Party
+- Description: Royal blue georgette saree with sequins. Suited for party wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990 — 
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59720/Blue-Georgette-Party-Wear-Sequins-Work-Saree-Nirmala-Vol-7-3668-K-4287(1).jpg
+
+### Wine Georgette Party Saree
+- URL: https://luxemia.shop/products/wine-georgette-party-saree
+- Price: $104.85
+- Color: Wine
+- Fabric: Georgette
+- Category: Saree
+- Occasion: Party
+- Description: Wine georgette saree with sequins. Suited for party wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990 — I answ
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59720/Wine-Georgette-Party-Wear-Sequins-Work-Saree-Nirmala-Vol-7-3668-K-4286(1).jpg
+
+### Emerald Green Georgette Party Saree
+- URL: https://luxemia.shop/products/emerald-green-georgette-party-saree
+- Price: $104.85
+- Color: Emerald Green
+- Fabric: Georgette
+- Category: Saree
+- Occasion: Party
+- Description: Emerald green georgette saree with sequins. Suited for party wear — weddings, sangeet, festivals, family functions. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341-9990
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59720/Green-Georgette-Party-Wear-Sequins-Work-Saree-Nirmala-Vol-7-3668-K-4285(1).jpg
+
+### Teal Green Chinnon Silk Sharara Set
+- URL: https://luxemia.shop/products/teal-green-chinnon-silk-sharara-set
+- Price: $104.97
+- Color: Teal Green
+- Fabric: Chinnon Silk
+- Category: Suit
+- Occasion: Festive
+- Description: Teal green chinnon silk suit with embroidery. Suited for festive wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call
+- Image: /images/products/kanchan-chinnon-10200.webp
+
+### Maroon Roman Silk Anarkali Suit
+- URL: https://luxemia.shop/products/maroon-roman-silk-anarkali
+- Price: $77.85
+- Color: Maroon
+- Fabric: Roman Silk
+- Category: Suit
+- Occasion: Occasional
+- Description: Maroon roman silk suit with zari. Suited for occasional wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-3
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59703/Maroon-Roman-Silk-Occasional-Wear-Zari-Work-Readymade-Anarkali-Suit-Mitali-Vol-4-5465-3154(1).jpg
+
+### Rust Orange Chinnon Silk Sharara Set
+- URL: https://luxemia.shop/products/rust-orange-chinnon-silk-sharara-set
+- Price: $104.97
+- Color: Rust Orange
+- Fabric: Chinnon Silk
+- Category: Suit
+- Occasion: Festive
+- Description: Rust orange chinnon silk suit with embroidery. Suited for festive wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or cal
+- Image: /images/products/kanchan-chinnon-10201.webp
+
+### Green Fendy Silk Casual Anarkali Suit
+- URL: https://luxemia.shop/products/green-fendy-silk-casual-anarkali
+- Price: $80.85
+- Color: Green
+- Fabric: Fendy Silk
+- Category: Suit
+- Occasion: Casual
+- Description: Green fendy silk suit with sequins. Suited for casual wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-215-341
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59743/Green-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-B(1).jpg
+
+### Yellow Faux Georgette Anarkali Gown
+- URL: https://luxemia.shop/products/yellow-georgette-anarkali-gown
+- Price: $100.35
+- Color: Yellow
+- Fabric: Faux Georgette
+- Category: Suit
+- Occasion: Casual
+- Description: Yellow faux georgette suit with embroidery. Suited for casual wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59679/Yellow-Faux-Georgette-Casual-Wear-Embroidery-Work-Anarkali-Gown-KB-3307-Colour
+
+### Dusty Pink Fendy Silk Casual Anarkali Suit
+- URL: https://luxemia.shop/products/dusty-pink-fendy-silk-casual-anarkali
+- Price: $80.85
+- Color: Dusty Pink
+- Fabric: Fendy Silk
+- Category: Suit
+- Occasion: Casual
+- Description: Dusty pink fendy silk suit with sequins. Suited for casual wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call +1-21
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59743/Dusty-Pink-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-A(1).jpg
+
+### Sky Blue Faux Georgette Anarkali Gown
+- URL: https://luxemia.shop/products/sky-blue-georgette-anarkali-gown
+- Price: $100.35
+- Color: Sky Blue
+- Fabric: Faux Georgette
+- Category: Suit
+- Occasion: Casual
+- Description: Sky blue faux georgette suit with embroidery. Suited for casual wear — weddings, sangeet, festivals, family functions. Free size, includes standard kurta/pajama or suit pieces where shown. Ships from India in 2-3 weeks. Questions about fit, color, or occasion? Email me at hello@luxemia.shop or call 
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59679/Sky-Blue-Faux-Georgette-Casual-Wear-Embroidery-Work-Anarkali-Gown-KB-3307-Colour
+
+### Maroon Kundan Beauty Necklace Set
+- URL: https://luxemia.shop/products/jwl-008
+- Price: $63.00
+- Fabric: Kundan, Maroon stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, maroon stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59472/Maroon--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103MRN(1).jpg
+
+### Dark Green Kundan Ethnic Necklace Set
+- URL: https://luxemia.shop/products/jwl-004
+- Price: $56.00
+- Fabric: Kundan, Emerald green stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, emerald green stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59471/Dark-Green--Wedding-Wear-Kundan-Ethnic-Design-Necklace-Set-FNKN102GRN(1).jpg
+
+### Yellow Kundan Beauty Necklace Set
+- URL: https://luxemia.shop/products/jwl-005
+- Price: $63.00
+- Fabric: Kundan, Yellow stones, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, yellow stones, pearl drops jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59472/Yellow--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103YLW(1).jpg
+
+### White Kundan Beauty Necklace Set
+- URL: https://luxemia.shop/products/jwl-006
+- Price: $63.00
+- Fabric: Kundan, White stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, white stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59472/White--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103WHT(1).jpg
+
+### Pista Green Kundan Beauty Necklace Set
+- URL: https://luxemia.shop/products/jwl-007
+- Price: $63.00
+- Fabric: Kundan, Pista green stones, Pearl
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, pista green stones, pearl jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59472/Pista-Green--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103PGRN(1).jpg
+
+### Multi Color Kundan Beauty Necklace Set
+- URL: https://luxemia.shop/products/jwl-009
+- Price: $63.00
+- Fabric: Kundan, Multi-color stones, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, multi-color stones, pearl drops jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59472/Multi-Color--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103MG(1).jpg
+
+### Dark Green Kundan Beauty Necklace Set
+- URL: https://luxemia.shop/products/jwl-010
+- Price: $63.00
+- Fabric: Kundan, Green stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, green stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59472/Dark-Green--Wedding-Wear-Kundan-Beauty-Necklace-Set-FNKN103GRN(1).jpg
+
+### Yellow Kundan Grand Necklace Set
+- URL: https://luxemia.shop/products/jwl-016
+- Price: $70.00
+- Fabric: Kundan, Yellow stones, Heavy gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, yellow stones, heavy gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Yellow--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN107YLW(1).jpg
+
+### White Kundan Fancy Necklace Set
+- URL: https://luxemia.shop/products/jwl-023
+- Price: $66.00
+- Fabric: Kundan, White stones, Heavy gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, white stones, heavy gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59478/White--Wedding-Wear-Kundan-Fancy-Necklace-Set-FNKN113WGLD(1).jpg
+
+### Dark Green Kundan Fancy Necklace Set
+- URL: https://luxemia.shop/products/jwl-024
+- Price: $66.00
+- Fabric: Kundan, Green stones, Pearl, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, green stones, pearl, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59478/Dark-Green--Wedding-Wear-Kundan-Fancy-Necklace-Set-FNKN113GRN(1).jpg
+
+### Red Kundan Royal Necklace Set
+- URL: https://luxemia.shop/products/jwl-014
+- Price: $26.00
+- Fabric: Kundan, Ruby red stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, ruby red stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Red--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN110RNI(1).jpg
+
+### Yellow Kundan Royal Necklace Set
+- URL: https://luxemia.shop/products/jwl-013
+- Price: $26.00
+- Fabric: Kundan, Yellow stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, yellow stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Yellow--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN110YLW(1).jpg
+
+### Red Diamond Work Party Earrings
+- URL: https://luxemia.shop/products/jwl-033
+- Price: $24.00
+- Fabric: Diamond Work, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59481/Red--Party-Wear-Diamond-Work-Pretty-Earrings-FNKDE126RNI(1).jpg
+
+### Red Kundan Festival Earrings
+- URL: https://luxemia.shop/products/jwl-035
+- Price: $18.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Red--Festival-Wear-Kundan-Shining-Earrings-FNKDE142RNI(1).jpg
+
+### Pink Kundan Festival Earrings
+- URL: https://luxemia.shop/products/jwl-037
+- Price: $18.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Pink--Festival-Wear-Kundan-Shining-Earrings-FNKDE142PNK(1).jpg
+
+### Sky Blue Kundan Festival Maang Tikka
+- URL: https://luxemia.shop/products/jwl-052
+- Price: $23.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59483/Sky-Blue--Festival-Wear-Kundan-Beautiful-Earrings-FNKDE144SBLU(1).jpg
+
+### Multi Color Kundan Royal Necklace Set
+- URL: https://luxemia.shop/products/jwl-011
+- Price: $46.00
+- Fabric: Kundan, Mixed stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, mixed stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Multi-Color--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN112PGPNK(1).jpg
+
+### Dark Green Kundan Royal Necklace Set
+- URL: https://luxemia.shop/products/jwl-012
+- Price: $46.00
+- Fabric: Kundan, Emerald stones, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, emerald stones, pearl drops jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Dark-Green--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN112GRN(1).jpg
+
+### Blue Kundan Royal Necklace Set
+- URL: https://luxemia.shop/products/jwl-015
+- Price: $26.00
+- Fabric: Kundan, Blue stones, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, blue stones, pearl drops jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Blue--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN110BLU(1).jpg
+
+### Dark Green Kundan Classic Necklace Set
+- URL: https://luxemia.shop/products/jwl-018
+- Price: $25.00
+- Fabric: Kundan, Green stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, green stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Dark-Green--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN105GRN(1).jpg
+
+### White Kundan Royal Choker Set
+- URL: https://luxemia.shop/products/jwl-019
+- Price: $46.00
+- Fabric: Kundan, White stones, Pearl, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, white stones, pearl, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/White--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN104WHT(1).jpg
+
+### Pista Green Kundan Royal Necklace Set
+- URL: https://luxemia.shop/products/jwl-020
+- Price: $46.00
+- Fabric: Kundan, Pista stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, pista stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Pista-Green--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN104PGRN(1).jpg
+
+### Maroon Kundan Designer Necklace Set
+- URL: https://luxemia.shop/products/jwl-021
+- Price: $46.00
+- Fabric: Kundan, Maroon stones, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, maroon stones, pearl drops jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Maroon--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN104MRN(1).jpg
+
+### Dark Green Kundan Designer Necklace Set
+- URL: https://luxemia.shop/products/jwl-022
+- Price: $46.00
+- Fabric: Kundan, Emerald stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, emerald stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59473/Dark-Green--Wedding-Wear-Kundan-Royal-Necklace-Set-FNKN104GRN(1).jpg
+
+### White Kundan Elegant Party Necklace
+- URL: https://luxemia.shop/products/jwl-025
+- Price: $42.00
+- Fabric: Kundan, White stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, white stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59479/White--Party-Wear-Kundan-Elegant-Necklace-Set-FNKN121WHT(1).jpg
+
+### Maroon Kundan Elegant Party Necklace
+- URL: https://luxemia.shop/products/jwl-026
+- Price: $42.00
+- Fabric: Kundan, Maroon stones, Pearl drops
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, maroon stones, pearl drops jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59479/Maroon--Party-Wear-Kundan-Elegant-Necklace-Set-FNKN121MRN(1).jpg
+
+### White Kundan Delicate Party Necklace
+- URL: https://luxemia.shop/products/jwl-027
+- Price: $40.00
+- Fabric: Kundan, White stones, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, white stones, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59479/White--Party-Wear-Kundan-Elegant-Necklace-Set-FNKN120WHT(1).jpg
+
+### Maroon Kundan Delicate Party Necklace
+- URL: https://luxemia.shop/products/jwl-028
+- Price: $40.00
+- Fabric: Kundan, Maroon stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, maroon stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59479/Maroon--Party-Wear-Kundan-Elegant-Necklace-Set-FNKN120MRN(1).jpg
+
+### Pink Kundan Elegant Party Necklace
+- URL: https://luxemia.shop/products/jwl-029
+- Price: $41.00
+- Fabric: Kundan, Pink stones, Pearl, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, pink stones, pearl, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59479/Pink--Party-Wear-Kundan-Elegant-Necklace-Set-FNKN119PNK(1).jpg
+
+### White Kundan Classic Party Necklace
+- URL: https://luxemia.shop/products/jwl-030
+- Price: $38.00
+- Fabric: Kundan, White stones, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, white stones, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59479/White--Party-Wear-Kundan-Elegant-Necklace-Set-FNKN116WHT(1).jpg
+
+### Multi Color Diamond Party Earrings
+- URL: https://luxemia.shop/products/jwl-031
+- Price: $18.00
+- Fabric: Diamond Work, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59481/Multi-Color--Party-Wear-Diamond-Work-Pretty-Earrings-FNKDE133MLT(1).jpg
+
+### White Diamond Work Earrings
+- URL: https://luxemia.shop/products/jwl-032
+- Price: $24.00
+- Fabric: Diamond Work, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59481/White--Party-Wear-Diamond-Work-Pretty-Earrings-FNKDE131WHT(1).jpg
+
+### Blue Diamond Work Party Earrings
+- URL: https://luxemia.shop/products/jwl-034
+- Price: $24.00
+- Fabric: Diamond Work, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59481/Blue--Party-Wear-Diamond-Work-Pretty-Earrings-FNKDE126BLU(1).jpg
+
+### Purple Kundan Festival Earrings
+- URL: https://luxemia.shop/products/jwl-036
+- Price: $18.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Purple--Festival-Wear-Kundan-Shining-Earrings-FNKDE142PRP(1).jpg
+
+### Green Kundan Festival Earrings
+- URL: https://luxemia.shop/products/jwl-038
+- Price: $18.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Green--Festival-Wear-Kundan-Shining-Earrings-FNKDE142GRN(1).jpg
+
+### Red Kundan Premium Earrings
+- URL: https://luxemia.shop/products/jwl-039
+- Price: $28.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Red--Festival-Wear-Kundan-Shining-Earrings-FNKDE140RNI(1).jpg
+
+### Pink Kundan Premium Earrings
+- URL: https://luxemia.shop/products/jwl-040
+- Price: $28.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Pink--Festival-Wear-Kundan-Shining-Earrings-FNKDE140PNK(1).jpg
+
+### Blue Kundan Traditional Long Jhumkas
+- URL: https://luxemia.shop/products/jwl-041
+- Price: $36.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59484/Blue--Party-Wear-Kundan-Traditional-Long-Jhumkas-FNKE104BLU(1).jpg
+
+### Maroon Kundan Traditional Long Jhumkas
+- URL: https://luxemia.shop/products/jwl-042
+- Price: $36.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59484/Maroon--Party-Wear-Kundan-Traditional-Long-Jhumkas-FNKE102MRN(1).jpg
+
+### Black Kundan Traditional Long Jhumkas
+- URL: https://luxemia.shop/products/jwl-043
+- Price: $36.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59484/Black--Party-Wear-Kundan-Traditional-Long-Jhumkas-FNKE102BLK(1).jpg
+
+### Red Party Kundan Stylish Earrings
+- URL: https://luxemia.shop/products/jwl-044
+- Price: $30.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59485/Red--Party-Wear-Kundan-Stylish-Earrings-FNKE111RED(1).jpg
+
+### Pista Green Party Kundan Earrings
+- URL: https://luxemia.shop/products/jwl-045
+- Price: $30.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59485/Pista-Green--Party-Wear-Kundan-Stylish-Earrings-FNKE111PG(1).jpg
+
+### Golden Diamond Work Party Bangles Set
+- URL: https://luxemia.shop/products/jwl-046
+- Price: $19.00
+- Fabric: Diamond Work, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59480/Golden--Party-Wear-Diamond-Work-Pretty-Bangles-FNADB116GLD(1).jpg
+
+### Golden Diamond Ornate Bangles
+- URL: https://luxemia.shop/products/jwl-047
+- Price: $19.00
+- Fabric: Diamond Work, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59480/Golden--Party-Wear-Diamond-Work-Pretty-Bangles-FNADB112GLD(1).jpg
+
+### Golden Diamond Classic Bangles
+- URL: https://luxemia.shop/products/jwl-048
+- Price: $19.00
+- Fabric: Diamond Work, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59480/Golden--Party-Wear-Diamond-Work-Pretty-Bangles-FNADB111GLD(1).jpg
+
+### Golden Diamond Statement Bangles
+- URL: https://luxemia.shop/products/jwl-049
+- Price: $19.00
+- Fabric: Diamond Work, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59480/Golden--Party-Wear-Diamond-Work-Pretty-Bangles-FNADB110GLD(1).jpg
+
+### Golden Diamond Delicate Bangles
+- URL: https://luxemia.shop/products/jwl-050
+- Price: $19.00
+- Fabric: Diamond Work, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59480/Golden--Party-Wear-Diamond-Work-Pretty-Bangles-FNADB109GLD(1).jpg
+
+### Golden Diamond Traditional Bangles
+- URL: https://luxemia.shop/products/jwl-051
+- Price: $19.00
+- Fabric: Diamond Work, Gold-plated brass
+- Category: Jewelry
+- Occasion: General
+- Description: Diamond work, gold-plated brass jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59480/Golden--Party-Wear-Diamond-Work-Pretty-Bangles-FNADB108GLD(1).jpg
+
+### Black Kundan Festival Maang Tikka
+- URL: https://luxemia.shop/products/jwl-053
+- Price: $23.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59483/Black--Festival-Wear-Kundan-Beautiful-Earrings-FNKDE144BLK(1).jpg
+
+### Dark Green Kundan Festival Maang Tikka
+- URL: https://luxemia.shop/products/jwl-054
+- Price: $18.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59483/Dark-Green--Festival-Wear-Kundan-Beautiful-Earrings-FNKDE143GRN(1).jpg
+
+### Green Kundan Shining Maang Tikka
+- URL: https://luxemia.shop/products/jwl-055
+- Price: $28.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59482/Green--Festival-Wear-Kundan-Shining-Earrings-FNKDE140GRN(1).jpg
+
+### Golden Party Maang Tikka
+- URL: https://luxemia.shop/products/jwl-056
+- Price: $30.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59485/Golden--Party-Wear-Kundan-Stylish-Earrings-FNKE111PCH(1).jpg
+
+### White Party Maang Tikka
+- URL: https://luxemia.shop/products/jwl-057
+- Price: $26.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59485/White--Party-Wear-Kundan-Stylish-Earrings-FNKE110WHT(1).jpg
+
+### Pink Party Maang Tikka
+- URL: https://luxemia.shop/products/jwl-058
+- Price: $26.00
+- Fabric: Kundan, Gold-plated
+- Category: Jewelry
+- Occasion: General
+- Description: Kundan, gold-plated jewelry. Includes necklace and matching earrings where shown. Suited for general wear with Indian ethnic outfits. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59485/Pink--Party-Wear-Kundan-Stylish-Earrings-FNKE110PNK(1).jpg
+
+### Pink Georgette Party Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/pink-party-wear-georgette-lehenga-choli-with-dupatta-7088
+- Price: $83.99
+- Color: Pink
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Party
+- Description: Pink georgette lehenga. Set includes lehenga, choli, and dupatta. Suited for party wear — weddings, sangeet, festivals. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_22-VOL-34%20By%20ZEEL%20COTHING%207088%20PINK.jpeg
+
+### Olive Georgette Occasion Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/olive-occasion-wear-georgette-lehenga-choli-with-dupatta-7084
+- Price: $91.99
+- Color: Olive
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Occasion
+- Description: Olive georgette lehenga. Set includes lehenga, choli, and dupatta. Suited for occasion wear — weddings, sangeet, festivals. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_22-VOL-34%20By%20ZEEL%20COTHING%207084%20OLIVE.jpeg
+
+### Blue Georgette Party Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/blue-party-wear-georgette-lehenga-choli-with-dupatta-7093
+- Price: $72.99
+- Color: Blue
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Party
+- Description: Blue georgette lehenga. Set includes lehenga, choli, and dupatta. Suited for party wear — weddings, sangeet, festivals. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_23-VOL-34%20By%20ZEEL%20COTHING%207093%20BLUE.jpeg
+
+### Green Georgette Party Wear Lehenga Choli with Dupatta
+- URL: https://luxemia.shop/products/green-party-wear-georgette-lehenga-choli-with-dupatta-7093
+- Price: $72.99
+- Color: Green
+- Fabric: Georgette
+- Category: Lehenga
+- Occasion: Party
+- Description: Green georgette lehenga. Set includes lehenga, choli, and dupatta. Suited for party wear — weddings, sangeet, festivals. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://fashidwholesale.in/images/product/sub_images/2026/05/2026-05-06_13_59_23-VOL-34%20By%20ZEEL%20COTHING%207093%20GREEN.jpeg
+
+### Beige Cotton Kurta Pajama Set
+- URL: https://luxemia.shop/products/beige-cotton-kurta-pajama
+- Price: $109.35
+- Color: Beige
+- Fabric: Cotton
+- Category: Menswear
+- Occasion: Occasional
+- Description: Beige cotton menswear with printed. Set includes kurta, pajama, and dupatta or vest where shown. Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Beige-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1220(1).jpg
+
+### Blue Banarasi Jacquard Sherwani
+- URL: https://luxemia.shop/products/blue-banarasi-jacquard-sherwani
+- Price: $350.85
+- Color: Blue
+- Fabric: Banarasi Jacquard
+- Category: Menswear
+- Occasion: Wedding
+- Description: Blue banarasi jacquard menswear with neck. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Blue-Banarasi-Jacquard-Wedding-Wear-Neck-Work-Readymade-Groom-Sherwani-4025(1).jpg
+
+### Teal Blue Cotton Kurta Pajama Set
+- URL: https://luxemia.shop/products/teal-blue-cotton-kurta-pajama
+- Price: $73.35
+- Color: Teal Blue
+- Fabric: Cotton
+- Category: Menswear
+- Occasion: Occasional
+- Description: Teal blue cotton menswear with printed. Set includes kurta, pajama, and dupatta or vest where shown. Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Teal-Blue-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1214(1).jpg
+
+### Black Banarasi Jacquard Sherwani
+- URL: https://luxemia.shop/products/black-banarasi-jacquard-sherwani
+- Price: $350.85
+- Color: Black
+- Fabric: Banarasi Jacquard
+- Category: Menswear
+- Occasion: Wedding
+- Description: Black banarasi jacquard menswear with neck. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Black-Banarasi-Jacquard-Wedding-Wear-Neck-Work-Readymade-Groom-Sherwani-4026(1).jpg
+
+### Black Cotton Kurta Pajama Set
+- URL: https://luxemia.shop/products/black-cotton-kurta-pajama
+- Price: $104.85
+- Color: Black
+- Fabric: Cotton
+- Category: Menswear
+- Occasion: Occasional
+- Description: Black cotton menswear with printed. Set includes kurta, pajama, and dupatta or vest where shown. Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Black-Mulberry-Butti-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1218(1).jpg
+
+### Yellow Cotton Kurta Pajama Set
+- URL: https://luxemia.shop/products/yellow-cotton-kurta-pajama
+- Price: $79.35
+- Color: Yellow
+- Fabric: Cotton
+- Category: Menswear
+- Occasion: Festival
+- Description: Yellow cotton menswear with printed. Set includes kurta, pajama, and dupatta or vest where shown. Suited for festival wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Yellow-Cotton-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1208(1).jpg
+
+### Light Pink Art Silk Groom Sherwani
+- URL: https://luxemia.shop/products/light-pink-art-silk-groom-sherwani
+- Price: $350.85
+- Color: Light Pink
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Light pink art silk menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Light-Pink-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4029(1).jpg
+
+### Navy Blue Velvet Sherwani
+- URL: https://luxemia.shop/products/navy-blue-velvet-sherwani
+- Price: $394.35
+- Color: Navy Blue
+- Fabric: Velvet
+- Category: Menswear
+- Occasion: Wedding
+- Description: Navy blue velvet menswear with embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/58974/Navy-Blue-Embosed-Velvet-Wedding-Wear-Embroidery-Work-Readymade-Sherwani-4151(1).jpg
+
+### Magenta Velvet Sherwani
+- URL: https://luxemia.shop/products/magenta-velvet-sherwani
+- Price: $394.35
+- Color: Magenta
+- Fabric: Velvet
+- Category: Menswear
+- Occasion: Wedding
+- Description: Magenta velvet menswear with embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/58974/Magenta-Embosed-Velvet-Wedding-Wear-Embroidery-Work-Readymade-Sherwani-4150(1).jpg
+
+### Wine Art Silk Sherwani
+- URL: https://luxemia.shop/products/wine-art-silk-sherwani
+- Price: $344.85
+- Color: Wine
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Wine art silk menswear with embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/58974/Wine-Art-Silk-Wedding-Wear-Embroidery-Work-Readymade-Sherwani-4147(1).jpg
+
+### Brown Silk Kurta Pajama Set
+- URL: https://luxemia.shop/products/brown-silk-kurta-pajama
+- Price: $76.35
+- Color: Brown
+- Fabric: Silk
+- Category: Menswear
+- Occasion: Occasional
+- Description: Brown silk menswear with printed. Set includes kurta, pajama, and dupatta or vest where shown. Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59783/Brown-Silk-Ocassional-Wear-Printed-Work-Readymade-Kurta-Pajama-Combo-Set-(32-to-52-Size-and-1-to-14-Size-1206(1).jpg
+
+### Black Velvet Sherwani
+- URL: https://luxemia.shop/products/black-velvet-sherwani
+- Price: $344.85
+- Color: Black
+- Fabric: Velvet
+- Category: Menswear
+- Occasion: Wedding
+- Description: Black velvet menswear with embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/58974/Black-Embosed-Velvet-Wedding-Wear-Embroidery-Work-Readymade-Sherwani-4148(1).jpg
+
+### White Art Silk Groom Sherwani
+- URL: https://luxemia.shop/products/white-art-silk-groom-sherwani
+- Price: $350.85
+- Color: White
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: White art silk menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/White-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4028(1).jpg
+
+### Purple Art Silk Groom Sherwani
+- URL: https://luxemia.shop/products/purple-art-silk-groom-sherwani
+- Price: $428.85
+- Color: Purple
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Purple art silk menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Purple-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4031(1).jpg
+
+### Off White Art Silk Groom Sherwani
+- URL: https://luxemia.shop/products/off-white-art-silk-groom-sherwani
+- Price: $428.85
+- Color: Off White
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Off white art silk menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Off-White-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4030(1).jpg
+
+### Grey Art Silk Groom Sherwani
+- URL: https://luxemia.shop/products/grey-art-silk-groom-sherwani
+- Price: $428.85
+- Color: Grey
+- Fabric: Art Silk
+- Category: Menswear
+- Occasion: Wedding
+- Description: Grey art silk menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Grey-Art-Silk-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4032(1).jpg
+
+### Maroon Banarasi Jacquard Sherwani
+- URL: https://luxemia.shop/products/maroon-banarasi-jacquard-sherwani
+- Price: $851.85
+- Color: Maroon
+- Fabric: Banarasi Jacquard
+- Category: Menswear
+- Occasion: Wedding
+- Description: Maroon banarasi jacquard menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Maroon-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4024(1).jpg
+
+### Pink Banarasi Jacquard Sherwani
+- URL: https://luxemia.shop/products/pink-banarasi-jacquard-sherwani
+- Price: $752.85
+- Color: Pink
+- Fabric: Banarasi Jacquard
+- Category: Menswear
+- Occasion: Wedding
+- Description: Pink banarasi jacquard menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Pink-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4021(1).jpg
+
+### Peach Banarasi Jacquard Sherwani
+- URL: https://luxemia.shop/products/peach-banarasi-jacquard-sherwani
+- Price: $851.85
+- Color: Peach
+- Fabric: Banarasi Jacquard
+- Category: Menswear
+- Occasion: Wedding
+- Description: Peach banarasi jacquard menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Peach-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4022(1).jpg
+
+### Mustard Banarasi Jacquard Sherwani
+- URL: https://luxemia.shop/products/mustard-banarasi-jacquard-sherwani
+- Price: $902.85
+- Color: Mustard
+- Fabric: Banarasi Jacquard
+- Category: Menswear
+- Occasion: Wedding
+- Description: Mustard banarasi jacquard menswear with hand embroidery. Set includes kurta, pajama, and dupatta or vest where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/October/59064/Mustard-Banarasi-Jacquard-Wedding-Wear-Hand-Embroidery-Readymade-Groom-Sherwani-4023(1).jpg
+
+### Maroon Art Silk Festive Saree
+- URL: https://luxemia.shop/products/maroon-art-silk-festive-saree
+- Price: $89.85
+- Color: Maroon
+- Fabric: Art Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Maroon art silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for festival wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59708/Maroon-Art-Silk-Festival-Wear-Weaving-Work-Saree-Nirmala-Vol-6-3665-K-4275(1).jpg
+
+### Silk Sea Green Occasional Wear Embroidery Saree
+- URL: https://luxemia.shop/products/silk-sea-green-occasional-embroidery-saree
+- Price: $121.35
+- Color: Sea Green
+- Fabric: Silk
+- Category: Saree
+- Occasion: Occasional
+- Description: Sea green silk saree with embroidery. Includes saree, blouse piece, and dupatta where shown. Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59800/Sea-Green-Silk-Occasional-Wear-Embroidery-Work-Saree-3689-6039-A(1).jpg
+
+### Dusty Rose Georgette Party Saree
+- URL: https://luxemia.shop/products/dusty-rose-georgette-party-saree
+- Price: $98.85
+- Color: Dusty Rose
+- Fabric: Georgette
+- Category: Saree
+- Occasion: Party
+- Description: Dusty rose georgette saree with sequins. Includes saree, blouse piece, and dupatta where shown. Suited for party wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59720/Dusty-Rose-Georgette-Party-Wear-Sequins-Work-Saree-Nirmala-Vol-7-3668-K-4284(1).jpg
+
+### Teal Green Art Silk Festive Saree
+- URL: https://luxemia.shop/products/teal-green-art-silk-festive-saree
+- Price: $89.85
+- Color: Teal Green
+- Fabric: Art Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Teal green art silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for festival wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59708/Teal-Green-Art-Silk-Festival-Wear-Weaving-Work-Saree-Nirmala-Vol-6-3665-K-4276(1).jpg
+
+### Mustard Yellow Art Silk Festive Saree
+- URL: https://luxemia.shop/products/mustard-yellow-art-silk-festive-saree
+- Price: $89.85
+- Color: Mustard Yellow
+- Fabric: Art Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Mustard yellow art silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for festival wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59708/Mustard-Yellow-Art-Silk-Festival-Wear-Weaving-Work-Saree-Nirmala-Vol-6-3665-K-4274(1).jpg
+
+### Royal Purple Art Silk Festive Saree
+- URL: https://luxemia.shop/products/royal-purple-art-silk-festive-saree
+- Price: $89.85
+- Color: Royal Purple
+- Fabric: Art Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Royal purple art silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for festival wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59708/Purple-Art-Silk-Festival-Wear-Weaving-Work-Saree-Nirmala-Vol-6-3665-K-4273(1).jpg
+
+### Pink Tissue Silk Wedding Saree
+- URL: https://luxemia.shop/products/pink-tissue-silk-wedding-saree
+- Price: $79.35
+- Color: Pink
+- Fabric: Tissue Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Pink tissue silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59728/Pink-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4297(1).jpg
+
+### Mint Green Kanchipuram Silk Wedding Saree
+- URL: https://luxemia.shop/products/mint-green-kanchipuram-silk-wedding-saree
+- Price: $365.85
+- Color: Mint Green
+- Fabric: Viscose Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Mint green viscose silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59744/Mint-Green-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176-B(1).jpg
+
+### Royal Pink Kanchipuram Silk Wedding Saree
+- URL: https://luxemia.shop/products/royal-pink-kanchipuram-silk-wedding-saree
+- Price: $365.85
+- Color: Pink
+- Fabric: Viscose Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Pink viscose silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59744/Pink-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3176(1).jpg
+
+### Antique Gold Kanchipuram Silk Wedding Saree
+- URL: https://luxemia.shop/products/antique-gold-kanchipuram-silk-wedding-saree
+- Price: $346.35
+- Color: Gold
+- Fabric: Viscose Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Gold viscose silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59744/Gold-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3131(1).jpg
+
+### Silk Rani Pink Casual Wear Sequins Saree
+- URL: https://luxemia.shop/products/silk-rani-pink-casual-sequins-saree
+- Price: $56.85
+- Color: Rani Pink
+- Fabric: Silk
+- Category: Saree
+- Occasion: Casual
+- Description: Rani pink silk saree with sequins. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59798/Rani-Pink-Silk-Casual-Wear-Sequins-Work--Saree-3687-7575-C(1).jpg
+
+### Silk Blue Casual Wear Sequins Saree
+- URL: https://luxemia.shop/products/silk-blue-casual-sequins-saree
+- Price: $56.85
+- Color: Blue
+- Fabric: Silk
+- Category: Saree
+- Occasion: Casual
+- Description: Blue silk saree with sequins. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59798/Blue-Silk-Casual-Wear-Sequins-Work--Saree-3687-7575-A(1).jpg
+
+### Sea Green Tissue Silk Wedding Saree
+- URL: https://luxemia.shop/products/sea-green-tissue-silk-wedding-saree
+- Price: $79.35
+- Color: Sea Green
+- Fabric: Tissue Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Sea green tissue silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59728/Sea-Green-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4296(1).jpg
+
+### Sunset Orange Tissue Silk Wedding Saree
+- URL: https://luxemia.shop/products/sunset-orange-tissue-silk-wedding-saree
+- Price: $79.35
+- Color: Orange
+- Fabric: Tissue Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Orange tissue silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59728/Orange-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4295(1).jpg
+
+### Black Georgette Party Saree
+- URL: https://luxemia.shop/products/black-georgette-party-saree
+- Price: $104.85
+- Color: Black
+- Fabric: Georgette
+- Category: Saree
+- Occasion: Party
+- Description: Black georgette saree with sequins. Includes saree, blouse piece, and dupatta where shown. Suited for party wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59720/Black-Georgette-Party-Wear-Sequins-Work-Saree-Nirmala-Vol-7-3668-K-4283(1).jpg
+
+### Sky Blue Cotton Casual Saree
+- URL: https://luxemia.shop/products/sky-blue-cotton-casual-saree
+- Price: $56.85
+- Color: Sky Blue
+- Fabric: Cotton
+- Category: Saree
+- Occasion: Casual
+- Description: Sky blue cotton saree with print. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59705/Sky-Blue-Cotton-Casual-Wear-Print-Work-Saree-Kreshva-Vol-2-3666-K-4270(1).jpg
+
+### Mint Green Cotton Casual Saree
+- URL: https://luxemia.shop/products/mint-green-cotton-casual-saree
+- Price: $56.85
+- Color: Mint Green
+- Fabric: Cotton
+- Category: Saree
+- Occasion: Casual
+- Description: Mint green cotton saree with print. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59705/Mint-Green-Cotton-Casual-Wear-Print-Work-Saree-Kreshva-Vol-2-3666-K-4268(1).jpg
+
+### Ivory Beige Kanchipuram Silk Wedding Saree
+- URL: https://luxemia.shop/products/ivory-beige-kanchipuram-silk-wedding-saree
+- Price: $346.35
+- Color: Beige
+- Fabric: Viscose Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Beige viscose silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59744/Beige-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3164(1).jpg
+
+### Beige Gold Tissue Silk Wedding Saree
+- URL: https://luxemia.shop/products/beige-gold-tissue-silk-wedding-saree
+- Price: $79.35
+- Color: Beige Gold
+- Fabric: Tissue Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Beige gold tissue silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59728/Beige-Gold-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4298(1).jpg
+
+### Peach Cotton Casual Saree
+- URL: https://luxemia.shop/products/peach-cotton-casual-saree
+- Price: $56.85
+- Color: Peach
+- Fabric: Cotton
+- Category: Saree
+- Occasion: Casual
+- Description: Peach cotton saree with print. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59705/Peach-Cotton-Casual-Wear-Print-Work-Saree-Kreshva-Vol-2-3666-K-4269(1).jpg
+
+### Multicolor Kanchipuram Silk Wedding Saree
+- URL: https://luxemia.shop/products/multicolor-kanchipuram-silk-wedding-saree
+- Price: $355.35
+- Color: Multi Color
+- Fabric: Viscose Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Multi color viscose silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59744/Multi-Color-Viscose-Silk-Wedding-Wear-Weaving-Work-Wedding-Saree-Kanchipuram-Couture-3133-B(1).jpg
+
+### Silk Rust Orange Casual Wear Sequins Saree
+- URL: https://luxemia.shop/products/silk-rust-orange-casual-sequins-saree
+- Price: $56.85
+- Color: Rust Orange
+- Fabric: Silk
+- Category: Saree
+- Occasion: Casual
+- Description: Rust orange silk saree with sequins. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59798/Rust-Orange-Silk-Casual-Wear-Sequins-Work--Saree-3687-7575-B(1).jpg
+
+### Fendy Satin Teal Green Occasional Wear Embroidery Saree
+- URL: https://luxemia.shop/products/fendy-satin-teal-green-occasional-embroidery-saree
+- Price: $59.85
+- Color: Teal Green
+- Fabric: Fendy Satin
+- Category: Saree
+- Occasion: Occasional
+- Description: Teal green fendy satin saree with embroidery. Includes saree, blouse piece, and dupatta where shown. Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59779/Teal-Green-Fendy-Satin-Ocassional-Wear-Embroidery-Work-Saree-VT-815-T-C(1).jpg
+
+### Lavender Tissue Silk Wedding Saree
+- URL: https://luxemia.shop/products/lavender-tissue-silk-wedding-saree
+- Price: $79.35
+- Color: Lavender
+- Fabric: Tissue Silk
+- Category: Saree
+- Occasion: Wedding
+- Description: Lavender tissue silk saree with weaving. Includes saree, blouse piece, and dupatta where shown. Suited for wedding wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59728/Lavender-PV-Tissue-Silk-Wedding-Wear-Weaving-Work-Saree-Kreshva-Mangalsutra--3667-K-4294(1).jpg
+
+### Coral Cotton Casual Saree
+- URL: https://luxemia.shop/products/coral-cotton-casual-saree
+- Price: $56.85
+- Color: Coral
+- Fabric: Cotton
+- Category: Saree
+- Occasion: Casual
+- Description: Coral cotton saree with print. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59705/Coral-Cotton-Casual-Wear-Print-Work-Saree-Kreshva-Vol-2-3666-K-4267(1).jpg
+
+### Lavender Cotton Casual Saree
+- URL: https://luxemia.shop/products/lavender-cotton-casual-saree
+- Price: $56.85
+- Color: Lavender
+- Fabric: Cotton
+- Category: Saree
+- Occasion: Casual
+- Description: Lavender cotton saree with print. Includes saree, blouse piece, and dupatta where shown. Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59705/Lavender-Cotton-Casual-Wear-Print-Work-Saree-Kreshva-Vol-2-3666-K-4266(1).jpg
+
+### Wine Georgette Sharara Suit
+- URL: https://luxemia.shop/products/wine-georgette-sharara-suit
+- Price: $98.85
+- Color: Wine
+- Fabric: Georgette
+- Category: Suit
+- Occasion: Party
+- Description: Wine georgette suit with embellished. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for party wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59625/Wine-Net-Wedding-Wear-Heavy-Work-Lehenga-Choli-Wedding-Wibe-Vol-2-3622-2945-B(1).jpg
+
+### Dusty Rose Silk Party Anarkali Suit
+- URL: https://luxemia.shop/products/dusty-rose-silk-party-anarkali
+- Price: $62.85
+- Color: Dusty Rose
+- Fabric: Silk
+- Category: Suit
+- Occasion: Party
+- Description: Dusty rose silk suit with sequins. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for party wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59793/Dusty-Rose-Silk-Party-Wear-Sequins-Work--Readymade-Anarkali-Suit-5964(1).jpg
+
+### Multicolor Quality Chinnon Party Anarkali
+- URL: https://luxemia.shop/products/multicolor-chinnon-party-anarkali
+- Price: $74.85
+- Color: Multi Color
+- Fabric: Quality Chinnon
+- Category: Suit
+- Occasion: Party
+- Description: Multi color quality chinnon suit with digital print. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for party wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59660/Multi-Color-Premium-Chinnon-Party-Wear-Digital-Print-Work-Readymade-Anarkali-Suit-Gulzar-Saawan--5397-3343(1).jpg
+
+### Peach Fendy Silk Casual Anarkali Suit
+- URL: https://luxemia.shop/products/peach-fendy-silk-casual-anarkali
+- Price: $80.85
+- Color: Peach
+- Fabric: Fendy Silk
+- Category: Suit
+- Occasion: Casual
+- Description: Peach fendy silk suit with sequins. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59743/Peach-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-D(1).jpg
+
+### Black Chinnon Silk Sharara Set
+- URL: https://luxemia.shop/products/black-chinnon-silk-sharara-set
+- Price: $104.97
+- Color: Black
+- Fabric: Chinnon Silk
+- Category: Suit
+- Occasion: Festive
+- Description: Black chinnon silk suit with embroidery. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for festive wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: /images/products/kanchan-chinnon-10202.webp
+
+### Red Silk Eid Anarkali Suit
+- URL: https://luxemia.shop/products/red-silk-eid-anarkali-suit
+- Price: $73.35
+- Color: Red
+- Fabric: Silk
+- Category: Suit
+- Occasion: Eid
+- Description: Red silk suit with embroidery. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for eid wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59797/RED-Silk-Eid-Wear-Embroidery-Work-Readymade-Anarkali-Suit-5554-681-B(1).jpg
+
+### Green Silk Eid Anarkali Suit
+- URL: https://luxemia.shop/products/green-silk-eid-anarkali-suit
+- Price: $73.35
+- Color: Green
+- Fabric: Silk
+- Category: Suit
+- Occasion: Eid
+- Description: Green silk suit with embroidery. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for eid wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2026y/January/59797/Green-Silk-Eid-Wear-Embroidery-Work-Readymade-Anarkali-Suit-5554-681-A(1).jpg
+
+### Baby Pink Roman Silk Festival Anarkali
+- URL: https://luxemia.shop/products/baby-pink-roman-silk-festival-anarkali
+- Price: $74.85
+- Color: Baby Pink
+- Fabric: Roman Silk
+- Category: Suit
+- Occasion: Festival
+- Description: Baby pink roman silk suit with sequins. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for festival wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59770/Baby-Pink-Roman-Silk-Festival-Wear-Sequins-Work-Readymade-Anarkali-Suit-Shalini-Vol-3-5546-3800-A(1).jpg
+
+### Lavender Viscose Casual Anarkali Suit
+- URL: https://luxemia.shop/products/lavender-viscose-casual-anarkali
+- Price: $64.35
+- Color: Lavender
+- Fabric: Viscose
+- Category: Suit
+- Occasion: Casual
+- Description: Lavender viscose suit with zari. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59715/Lavender-Viscose-Casual-Wear-Zari-Work-Readymade-Anarkali-Suit-Amisha-Vol-1-5489-555-A(1).jpg
+
+### Grey Fendy Silk Casual Anarkali Suit
+- URL: https://luxemia.shop/products/grey-fendy-silk-casual-anarkali
+- Price: $80.85
+- Color: Grey
+- Fabric: Fendy Silk
+- Category: Suit
+- Occasion: Casual
+- Description: Grey fendy silk suit with sequins. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59743/Grey-Fendy-Silk-Casual-Wear-Sequins-Work-Readymade-Anarkali-Suit-Anshika-Vol-2-5519-6101-C(1).jpg
+
+### Purple Roman Chanderi Silk Anarkali Suit
+- URL: https://luxemia.shop/products/purple-chanderi-silk-casual-anarkali
+- Price: $76.35
+- Color: Purple
+- Fabric: Chanderi Silk
+- Category: Suit
+- Occasion: Casual
+- Description: Purple chanderi silk suit with embroidery. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59714/Purple-Roman-Chanderi-Silk-Casual-Wear-Embroidery-Work-Readymade-Anarkali-Suit-BK-Vol-3-5487-290(1).jpg
+
+### Pista Viscose Casual Anarkali Suit
+- URL: https://luxemia.shop/products/pista-viscose-casual-anarkali
+- Price: $64.35
+- Color: Pista
+- Fabric: Viscose
+- Category: Suit
+- Occasion: Casual
+- Description: Pista viscose suit with zari. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59715/Pista-Viscose-Casual-Wear-Zari-Work-Readymade-Anarkali-Suit-Amisha-Vol-1-5489-555-B(1).jpg
+
+### Black Roman Silk Anarkali Suit
+- URL: https://luxemia.shop/products/black-roman-silk-anarkali
+- Price: $61.35
+- Color: Black
+- Fabric: Roman Silk
+- Category: Suit
+- Occasion: Occasional
+- Description: Black roman silk suit with dupatta. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for occasional wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59699/Black-Roman-Silk-Ocassional-Wear-Dupatta-Work-Reaadymade-Anarkali-Suit-Jiya-Vol-5-5456-3600-A(1).jpg
+
+### Red Chanderi Cotton Casual Anarkali Suit
+- URL: https://luxemia.shop/products/red-chanderi-cotton-casual-anarkali
+- Price: $47.85
+- Color: Red
+- Fabric: Chanderi Cotton
+- Category: Suit
+- Occasion: Casual
+- Description: Red chanderi cotton suit with border. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59774/Red-Chanderi-Cotton-Casual-Wear-Border-Work-Readymade-Anarkali-Suit-DN-539-B(1).jpg
+
+### Champagne Beige Chanderi Cotton Anarkali
+- URL: https://luxemia.shop/products/champagne-beige-chanderi-anarkali
+- Price: $47.85
+- Color: Champagne Beige
+- Fabric: Chanderi Cotton
+- Category: Suit
+- Occasion: Casual
+- Description: Champagne beige chanderi cotton suit with border. Includes kurta, bottoms, and dupatta (check the listing photo for what's included). Suited for casual wear. Ships from India in 2-3 weeks. Email me at hello@luxemia.shop for additional photos or to confirm fit before ordering.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59774/Champagne-Beige-Chanderi-Cotton-Casual-Wear-Border-Work-Readymade-Anarkali-Suit-DN-539-A(1).jpg
+
+### Banarasi Silk Mustard Festival Wear Weaving Saree
+- URL: https://luxemia.shop/products/banarasi-silk-mustard-festival-weaving-saree
+- Price: $50.85
+- Color: Mustard
+- Fabric: Banarasi Silk
+- Category: Saree
+- Occasion: Festival
+- Description: Banarasi Silk Mustard Festival Wear Weaving Saree. Banarasi Silk · mustard · for festival. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59780/Mustard-Banarasi-Silk-Festival-Wear-Weaving-Work-Saree-Lotus-F(1).jpg
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-026-free
+- Price: $121.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-027-free
+- Price: $121.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-028-free
+- Price: $121.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-029-free
+- Price: $121.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-011-free
+- Price: $104.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-012-free
+- Price: $104.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-013-free
+- Price: $104.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-014-free
+- Price: $98.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-015-free
+- Price: $104.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-021-free
+- Price: $89.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-022-free
+- Price: $89.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-023-free
+- Price: $89.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-024-free
+- Price: $89.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-025-free
+- Price: $89.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-030-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-031-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-032-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-033-free
+- Price: $50.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-034-free
+- Price: $50.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-035-free
+- Price: $59.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-006-free
+- Price: $79.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-007-free
+- Price: $79.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-008-free
+- Price: $79.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-009-free
+- Price: $79.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-010-free
+- Price: $79.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-016-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-017-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-018-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-019-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-020-free
+- Price: $56.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-001-free
+- Price: $365.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-002-free
+- Price: $365.85
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-003-free
+- Price: $346.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-004-free
+- Price: $355.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Free Size
+- URL: https://luxemia.shop/products/saree-005-free
+- Price: $346.35
+- Category: Saree
+- Occasion: General
+- Description: Free Size. Free size, includes blouse piece and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+
+### Teal Georgette Palazzo Suit
+- URL: https://luxemia.shop/products/teal-georgette-palazzo-suit
+- Price: $86.85
+- Color: Teal
+- Fabric: Georgette
+- Category: Suit
+- Occasion: Casual
+- Description: Teal Georgette Palazzo Suit. Georgette · teal · for casual. Includes kurta, bottoms, and dupatta where shown. Ships from India in 2-3 weeks. Questions? Email hello@luxemia.shop.
+- Image: https://kesimg.b-cdn.net/images/650/2025y/December/59679/Teal-Faux-Georgette-Casual-Wear-Embroidery-Work-Anarkali-Gown-KB-3307-Colour
+
