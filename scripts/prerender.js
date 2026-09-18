@@ -2932,27 +2932,27 @@ function generateHtml(template, route, allShopifyProducts) {
       : productAttributes.shipsWithinDays
       ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
       : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
+    // Specification rows render as a real <table> (th/td) so answer engines and
+    // AI crawlers can lift fabric, sizing, and shipping facts as structured
+    // key-value pairs instead of parsing prose.
     const detailRows = [
-      `<div><dt>Fabric Details</dt><dd>${escapeHtml(fabricDetails)}</dd></div>`,
-      includedPieces ? `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>` : '',
-      `<div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizingDetails)}</dd></div>`,
-      `<div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>`,
-      productType ? `<div><dt>Type</dt><dd>${escapeHtml(productType)}</dd></div>` : '',
-      styleReference ? `<div><dt>Style Reference</dt><dd>${escapeHtml(styleReference)}</dd></div>` : '',
-      `<div><dt>Brand</dt><dd>${escapeHtml(brandName)}</dd></div>`,
-      productAttributes.color ? `<div><dt>Color</dt><dd>${escapeHtml(productAttributes.color)}</dd></div>` : '',
-      `<div><dt>Availability</dt><dd>${isAvailable ? 'In Stock' : 'Currently Unavailable'}</dd></div>`,
-      `<div><dt>Ships to</dt><dd>United States</dd></div>`,
-    ].filter(Boolean).join('\n        ');
+      ['Fabric Details', fabricDetails],
+      ...(includedPieces ? [['Included Pieces', includedPieces]] : []),
+      ['Sizing & Chart', sizingDetails],
+      ['Shipping Estimate', shippingEstimate],
+      ...(productType ? [['Type', productType]] : []),
+      ...(styleReference ? [['Style Reference', styleReference]] : []),
+      ['Brand', brandName],
+      ...(productAttributes.color ? [['Color', productAttributes.color]] : []),
+      ['Availability', isAvailable ? 'In Stock' : 'Currently Unavailable'],
+      ['Ships to', 'United States'],
+    ];
 
     const sizeAnswer = isCustomizable
       ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
-      ? `Available choices shown for this listing are ${escapeHtml(productAttributes.sizes.join(', '))}. Review the Size Guide before ordering.`
+      ? `Available choices shown for this listing are ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
-    const firstQuestion = productAttributes.jewelry
-      ? `<h3>What is included with the ${escapeHtml(p.title || route.h1)}?</h3><p>The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.</p>`
-      : `<h3>What sizes are available?</h3><p>${sizeAnswer}</p>`;
     const careAnswer = productAttributes.jewelry
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
@@ -2961,16 +2961,50 @@ function generateHtml(template, route, allShopifyProducts) {
       : productAttributes.jewelry
       ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.'
       : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.';
+    // Questions/answers are plain strings so the same array feeds BOTH the
+    // visible HTML and the FAQPage JSON-LD — the markup always mirrors what
+    // shoppers can see, per Google's structured data guidelines.
+    const productQuestions = [
+      productAttributes.jewelry
+        ? {
+            question: `What is included with the ${p.title || route.h1}?`,
+            answer: 'The included pieces, finish, colors, and measurements are the ones stated in Product Details and shown in the product images. Contact LuxeMia before ordering if the set contents are unclear.',
+          }
+        : {
+            question: 'What sizes are available?',
+            answer: sizeAnswer,
+          },
+      ...(isCustomizable ? [{
+        question: 'Can I request another color?',
+        answer: 'Yes. A custom color is available for this verified design, subject to fabric availability. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.',
+      }] : []),
+      {
+        question: 'How is this product shipped?',
+        answer: deliveryAnswer,
+      },
+      {
+        question: 'What is the return policy?',
+        answer: 'All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.',
+      },
+      {
+        question: 'How should I care for this product?',
+        answer: careAnswer,
+      },
+    ];
     const productQuestionsHtml = `
       <h2>Product Questions</h2>
-      ${firstQuestion}
-      ${isCustomizable ? `<h3>Can I request another color?</h3><p>Yes. A custom color is available for this verified design, subject to fabric availability. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.</p>` : ''}
-      <h3>How is this product shipped?</h3>
-      <p>${deliveryAnswer}</p>
-      <h3>What is the return policy?</h3>
-      <p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.</p>
-      <h3>How should I care for this product?</h3>
-      <p>${careAnswer}</p>`;
+      ${productQuestions.map(({ question, answer }) => `<h3>${escapeHtml(question)}</h3>\n      <p>${escapeHtml(answer)}</p>`).join('\n      ')}`;
+    const faqPageSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': `${SITE_URL}${route.path}#faq`,
+      mainEntity: productQuestions.map(({ question, answer }) => ({
+        '@type': 'Question',
+        name: question,
+        acceptedAnswer: { '@type': 'Answer', text: answer },
+      })),
+    };
+    html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(faqPageSchema)}</script>\n</head>`);
     const siblingProductLinksHtml = generateApprovedSiblingProductLinks(p, allShopifyProducts);
 
     mainBodyContent = `
@@ -2979,9 +3013,11 @@ function generateHtml(template, route, allShopifyProducts) {
       ${imgHtml}
       ${descHtml}
       <h2>Product Specifications</h2>
-      <dl>
-        ${detailRows}
-      </dl>
+      <table>
+        <tbody>
+          ${detailRows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join('\n          ')}
+        </tbody>
+      </table>
       ${productQuestionsHtml}
       ${siblingProductLinksHtml}
       <h2>Shipping &amp; Delivery</h2>

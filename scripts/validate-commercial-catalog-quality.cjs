@@ -99,7 +99,12 @@ for (const filePath of files) {
   const relativePath = path.relative(PRODUCT_ROOT, filePath);
   const html = fs.readFileSync(filePath, 'utf8');
   const title = decode(html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i)?.[1]);
-  const included = decode(html.match(/<dt>Included Pieces<\/dt>\s*<dd>([\s\S]*?)<\/dd>/i)?.[1]);
+  // Specifications render as a semantic <table> (th scope="row" / td); the
+  // legacy <dl> <dt>/<dd> form is still accepted for rollback safety.
+  const included = decode(
+    html.match(/<th scope="row">Included Pieces<\/th>\s*<td>([\s\S]*?)<\/td>/i)?.[1] ||
+    html.match(/<dt>Included Pieces<\/dt>\s*<dd>([\s\S]*?)<\/dd>/i)?.[1],
+  );
 
   if (html.includes(COMMERCIAL_LINK_MARKER)) withCommercialLinks += 1;
   else failures.push(`missing purchase-intent navigation: ${relativePath}`);

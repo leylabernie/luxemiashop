@@ -5,6 +5,7 @@ import { X, Sparkles, Clock, Check } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { WELCOME_OFFER } from '@/config/welcomeOffer';
 
 // CRITICAL: Do NOT import supabase at the top level.
 // The supabase client chunk (~44KB / 37KB unused) was previously bundled
@@ -29,7 +30,10 @@ const emailSchema = z.object({
 const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
 const RATE_LIMIT_WINDOW = 60000; // 1 minute
 const MAX_ATTEMPTS = 3;
-const DISCOUNT_CODE = 'LUXE10';
+// Centralized so the popup, header announcements, and cart nudges always show
+// the same code. See src/config/welcomeOffer.ts for the Shopify discount
+// prerequisite.
+const DISCOUNT_CODE = WELCOME_OFFER.code;
 const NEWSLETTER_FUNCTION_URL =
   'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email';
 

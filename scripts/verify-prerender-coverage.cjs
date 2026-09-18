@@ -476,6 +476,7 @@ function verifyProductDiscoveryAndDuplicateSignals() {
       html.match(/<h2>Product Description<\/h2>\s*<p>([\s\S]*?)<\/p>/i)?.[1],
     );
     const styleReference = decodeHtmlText(
+      html.match(/<th scope="row">Style Reference<\/th>\s*<td>([\s\S]*?)<\/td>/i)?.[1] ||
       html.match(/<dt>Style Reference<\/dt>\s*<dd>([\s\S]*?)<\/dd>/i)?.[1],
     );
     productRecords.push({ route, title, h1, metaDescription, productDescription, styleReference });
