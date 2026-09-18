@@ -20,7 +20,10 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 
+// Evergreen first-order incentive. FIRST10 must exist as an active Shopify
+// discount before this copy ships — see src/config/welcomeOffer.ts.
 const shippingAnnouncements = [
+  'First order? Code FIRST10 takes 10% off — applied at checkout. One use per customer.',
   'Free U.S. standard shipping at $199 and above. $14.99 below that. Tracking provided after dispatch.',
   'Tracked U.S. shipping — $14.99 below $199 and free at $199+.',
 ];

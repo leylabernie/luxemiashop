@@ -149,17 +149,21 @@ function patchPurchaseFlowTests() {
   const relativePath = 'tests/productPurchaseFlow.test.mjs';
   let source = read(relativePath);
 
-  source = replaceOnce(
-    source,
-    String.raw`  isVariantOptionValueAvailable,
+  // Idempotency guard: the import is already present in the committed test
+  // file, and replaceOnce throws when its pre-patch pattern is not found.
+  if (!source.includes('inferIncludedPiecesFromTitle,')) {
+    source = replaceOnce(
+      source,
+      String.raw`  isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
   resolveIncludedPieces,`,
-    String.raw`  inferIncludedPiecesFromTitle,
+      String.raw`  inferIncludedPiecesFromTitle,
   isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
   resolveIncludedPieces,`,
-    'add helper test import',
-  );
+      'add helper test import',
+    );
+  }
 
   const testBlock = String.raw`
 

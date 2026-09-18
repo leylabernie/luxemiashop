@@ -287,7 +287,7 @@ const prerenderProductShippingFunction = `function generateUsProductShippingDeta
 
 function patchSchemaSource(source) {
   let output = source.replace(
-    /export const SHIPPING_COUNTRIES = \[[^\]]*\];(?:\nexport const INTERNATIONAL_SHIPPING_COUNTRIES = \[[^\]]*\];)?/,
+    /export const SHIPPING_COUNTRIES = \[[^\]]*\];(?:\r?\nexport const INTERNATIONAL_SHIPPING_COUNTRIES = \[[^\]]*\];)?/,
     `export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];\nexport const INTERNATIONAL_SHIPPING_COUNTRIES = ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];`,
   );
   output = output

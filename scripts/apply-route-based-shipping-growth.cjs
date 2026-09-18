@@ -218,7 +218,7 @@ const prerenderProductShippingFunction = `function generateUsProductShippingDeta
 function patchSchema() {
   let schema = read('src/lib/schema.ts');
   schema = schema.replace(
-    /export const SHIPPING_COUNTRIES = \[[^\]]*\];(?:\nexport const INTERNATIONAL_SHIPPING_COUNTRIES = \[[^\]]*\];)?/,
+    /export const SHIPPING_COUNTRIES = \[[^\]]*\];(?:\r?\nexport const INTERNATIONAL_SHIPPING_COUNTRIES = \[[^\]]*\];)?/,
     "export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];\nexport const INTERNATIONAL_SHIPPING_COUNTRIES = ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];",
   );
   schema = schema.replace("'@type': 'OnlineStore',", "'@type': ['OnlineStore', 'ClothingStore'],");

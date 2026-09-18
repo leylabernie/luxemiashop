@@ -146,6 +146,34 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
 
 // ─── Product Schema ────────────────────────────────────────────────────────
 
+/**
+ * Real review data only. No review-quantity source is wired into the storefront
+ * yet, so callers must leave this undefined unless they can pass genuine
+ * aggregates from a review provider (e.g. Judge.me / Shopify review metafields).
+ * Emitting invented ratings would violate Google's structured data policies.
+ */
+export interface AggregateRatingInput {
+  ratingValue: number | string;
+  reviewCount: number | string;
+  bestRating?: number | string;
+  worstRating?: number | string;
+}
+
+export function buildAggregateRating(rating?: AggregateRatingInput | null) {
+  if (!rating) return undefined;
+  const ratingValue = Number(rating.ratingValue);
+  const reviewCount = Number(rating.reviewCount);
+  if (!Number.isFinite(ratingValue) || ratingValue <= 0) return undefined;
+  if (!Number.isFinite(reviewCount) || reviewCount <= 0) return undefined;
+  return {
+    '@type': 'AggregateRating',
+    ratingValue: String(ratingValue),
+    reviewCount: String(reviewCount),
+    ...(rating.bestRating != null && Number.isFinite(Number(rating.bestRating)) && { bestRating: String(rating.bestRating) }),
+    ...(rating.worstRating != null && Number.isFinite(Number(rating.worstRating)) && { worstRating: String(rating.worstRating) }),
+  };
+}
+
 export interface ProductSchemaInput {
   name: string;
   description: string;
@@ -167,6 +195,7 @@ export interface ProductSchemaInput {
   availability: 'InStock' | 'OutOfStock';
   /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
   shipsWithinDays?: number | null;
+  aggregateRating?: AggregateRatingInput | null;
 }
 
 export interface ProductVariantSchemaInput {
@@ -184,6 +213,7 @@ export interface ProductVariantSchemaInput {
   price: string;
   currency: string;
   availability: 'InStock' | 'OutOfStock';
+  aggregateRating?: AggregateRatingInput | null;
 }
 
 function getGtinSchemaProperty(value?: string | null): Record<string, string> {
@@ -236,8 +266,10 @@ export function generateProductGroupSchema(input: {
   variants: ProductVariantSchemaInput[];
   /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
   shipsWithinDays?: number | null;
+  aggregateRating?: AggregateRatingInput | null;
 }) {
   const groupId = `${input.url}#productgroup`;
+  const groupAggregateRating = buildAggregateRating(input.aggregateRating);
   return {
     '@context': 'https://schema.org',
     '@type': 'ProductGroup',
@@ -259,6 +291,7 @@ export function generateProductGroupSchema(input: {
     }),
     productGroupID: input.productGroupId,
     variesBy: input.variesBy,
+    ...(groupAggregateRating && { aggregateRating: groupAggregateRating }),
     hasVariant: input.variants.map((variant) => ({
       '@type': 'Product',
       '@id': `${variant.url}#product`,
@@ -282,6 +315,7 @@ export function generateProductGroupSchema(input: {
         })),
       }),
       ...(variant.size && { size: variant.size }),
+      ...(buildAggregateRating(variant.aggregateRating) && { aggregateRating: buildAggregateRating(variant.aggregateRating) }),
       offers: generateOfferSchema({ ...variant, shipsWithinDays: input.shipsWithinDays }),
     })),
   };
@@ -318,6 +352,7 @@ export function generateProductSchema(input: ProductSchemaInput) {
       })),
     }),
     ...(input.sizes && input.sizes.length > 0 && { size: input.sizes.length === 1 ? input.sizes[0] : input.sizes.join('/') }),
+    ...(buildAggregateRating(input.aggregateRating) && { aggregateRating: buildAggregateRating(input.aggregateRating) }),
     // Always expose the current purchasable price. Do not manufacture sale
     // windows: terms are only valid when backed by a real promotion schedule.
     offers: generateOfferSchema({
