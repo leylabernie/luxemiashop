@@ -114,23 +114,11 @@ Because two validators consume the prerendered markup pattern, they were updated
 ### 4.1 P0 — Create the FIRST10 discount in Shopify Admin
 Admin → Discounts → Create discount → Amount off order → 10% → code `FIRST10` → Online Store channel → one use per customer → no minimum → active from deploy day. Without this step, do not push the FIRST10 copy live.
 
-### 4.2 P0 — Reconcile 9 sellable-but-retired products (build blocker)
-The live Shopify catalog (queried via the Storefront API) reports these handles as **available for sale**, while `src/data/legacyGoneProductHandles.json` marks them retired:
+### 4.2 ✅ RESOLVED — Reconcile 9 sellable-but-retired products (was a build blocker)
+Resolved on `main` by commit `c8e901d` ("Fix catalog retirement reconciliation…"): the 9 handles were removed from `src/data/legacyGoneProductHandles.json` and the retirement inventory reconciled. `validate:product-retirement-lifecycle` now passes on the merged build.
 
-```
-/product/dusty-rose-silk-party-anarkali        /product/pink-banarasi-jacquard-sherwani
-/product/sunset-orange-tissue-silk-wedding-saree  /product/magenta-velvet-sherwani
-/product/silk-rani-pink-casual-sequins-saree   /product/jwl-055
-/product/silk-sea-green-occasional-embroidery-saree  /product/navy-silk-sherwani
-/product/wine-georgette-party-saree
-```
-
-`validate:product-retirement-lifecycle` correctly fails until one of:
-- **If they should be live** (consistent with the Sept-13 inventory note about restored listings): remove the 9 handles from `legacyGoneProductHandles.json`, add them to `scripts/approved-sitemap-inventory.json`, and re-run the build — the retirement validator, prerender and sitemap will pick them up; or
-- **If they should stay dead**: set the 9 products to **Draft** in Shopify Admin so they stop reporting `availableForSale`.
-
-### 4.3 P1 — Merchant feed: 6 offers have no product image (build blocker, same family as 4.2)
-`validate:merchant-feed` rejects the generated Merchant Center feed because these products return the generic `og-image.jpg` fallback instead of a product photo — i.e. **they have no usable image in Shopify**:
+### 4.3 P0 — Merchant feed: 6 offers have no product image (the one remaining build blocker)
+`validate:merchant-feed` rejects the generated Merchant Center feed because these products return the generic `og-image.jpg` fallback instead of a product photo — i.e. **they have no usable image in Shopify** (the catalog hygiene report also counts 7 active products missing images):
 
 ```
 sky-blue-georgette-anarkali-gown   royal-blue-georgette-party-saree
@@ -138,7 +126,10 @@ yellow-georgette-anarkali-gown     magenta-art-silk-festive-saree
 emerald-green-georgette-party-saree  wine-georgette-party-saree
 ```
 
-Fix in Shopify Admin (Products → upload the missing photos), or set them to Draft if they should not be sellable. Note `wine-georgette-party-saree` also appears in the 4.2 retirement list — one decision can cover both.
+Fix in Shopify Admin (Products → upload the missing photos), or set them to Draft if they should not be sellable. This is data only Shopify Admin access can change — the Storefront API cannot upload media. Until then, `npm run build` (locally and on Vercel) stops at this gate.
+
+### 4.3a P0 — FIRST10 discount verification (Storefront API check)
+Verified 2026-09-18 via Storefront API cart test (temporary carts, deleted immediately; `LUXE10` control returned `applicable: true`, bogus-code control stayed `false`): **`FIRST10` is `applicable: false` — the discount does not exist as an active Shopify discount yet.** Create it (Admin → Discounts → 10% off order → code `FIRST10`, one use per customer, Online Store channel) before pushing any deploy that includes the FIRST10 popup/banner copy.
 
 ### 4.4 P1 — Reviews engine → AggregateRating
 1. Install a review app (Judge.me free tier or Shopify Product Reviews) and enable post-purchase review request emails.

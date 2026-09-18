@@ -91,7 +91,8 @@ const shippingBlock = `  {
 updateFile(PRERENDER, (source) => {
   let output = source;
 
-  const routeBlockPattern = /  \{\n    path: '\/shipping',[\s\S]*?\n  \},\n  \{\n    path: '\/pages\/shipping-customs',[\s\S]*?\n  \},\n(?=  \{\n    path: '\/returns')/;
+  // \r?\n keeps this codemod working on CRLF checkouts (Windows clones).
+  const routeBlockPattern = /  \{\r?\n    path: '\/shipping',[\s\S]*?\r?\n  \},\r?\n  \{\r?\n    path: '\/pages\/shipping-customs',[\s\S]*?\r?\n  \},\r?\n(?=  \{\r?\n    path: '\/returns')/;
   if (!routeBlockPattern.test(output)) {
     throw new Error('[prerender-routes] Shipping/static route block was not found');
   }
