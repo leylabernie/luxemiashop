@@ -541,9 +541,60 @@ function disambiguateDuplicateProductRouteTitles(routes) {
       return !reference || referenceCounts.get(reference.toLowerCase()) !== 1;
     });
     if (unresolved.length > 1) {
-      console.warn(
-        `[prerender] Unresolved duplicate product title '${finalTitle}' shares a missing or repeated style reference: ${unresolved.map((route) => route.path).join(', ')}`,
-      );
+      // Fallback disambiguation without style references: differentiate each
+      // member's title with words unique to its own full H1 (e.g. "Tissue
+      // Silk" vs "Chinon Silk"). Titles must stay unique per product or the
+      // prerender coverage validator (and Google) treats them as duplicates.
+      const stop = new Set([
+        'with', 'and', 'for', 'the', 'a', 'an', 'of', 'in', 'on', 'to', 'by',
+        'work', 'embroidery', 'embroidered', 'wear', 'readymade', 'ready',
+        'made', 'piece', 'set', 'sizes', 'size', 'free', 'style', 'latest',
+        'design', 'new', 'beautiful', 'gorgeous', 'stunning',
+      ]);
+      const h1Words = (route) =>
+        normalizeWhitespace(route.h1 || '')
+          .toLowerCase()
+          .replace(/[^a-z0-9\s-]/g, ' ')
+          .split(/\s+/)
+          .filter(Boolean);
+      const wordSets = new Map(unresolved.map((route) => [route, new Set(h1Words(route))]));
+      let fallbackCount = 0;
+      for (const route of unresolved) {
+        const others = unresolved.filter((other) => other !== route);
+        const otherWords = new Set(others.flatMap((other) => [...wordSets.get(other)]));
+        const distinctive = h1Words(route)
+          .filter((word) => !stop.has(word) && !otherWords.has(word))
+          .slice(0, 3);
+        let differentiator = distinctive.join(' ');
+        if (!differentiator) {
+          // H1s effectively identical apart from stopwords: fall back to the
+          // trailing catalog code in the handle so each listing stays unique.
+          const code = (route.path.match(/(\d{4,})$/) || [])[1];
+          if (!code) continue;
+          differentiator = `Style ${code}`;
+        }
+        if (differentiator.length > 24) differentiator = differentiator.slice(0, 24).trim();
+        // Build inside clampTitle's 80-char budget so the differentiator
+        // survives the render-time clamp untouched.
+        const brandPos = route.title.lastIndexOf('| LuxeMia');
+        const base = brandPos >= 0 ? route.title.slice(0, brandPos).trim() : route.title.trim();
+        const suffix = ' | LuxeMia';
+        const diffText = ` — ${differentiator}`;
+        const budget = Math.max(30, 80 - suffix.length - diffText.length);
+        const baseText = truncateAtWord(base, budget)
+          .replace(/…$/, '')
+          .replace(/\s+[—–-]\s*$/, '')
+          .trim();
+        route.title = `${baseText}${diffText}${suffix}`;
+        fallbackCount += 1;
+      }
+      if (fallbackCount > 0) {
+        disambiguatedCount += fallbackCount;
+      } else {
+        console.warn(
+          `[prerender] Unresolved duplicate product title '${finalTitle}' shares a missing or repeated style reference: ${unresolved.map((route) => route.path).join(', ')}`,
+        );
+      }
     }
   }
 
