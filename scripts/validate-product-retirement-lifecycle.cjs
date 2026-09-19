@@ -59,7 +59,7 @@ async function fetchCurrentProductPaths() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+        'Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
       },
       body: JSON.stringify({ query: PRODUCT_HANDLES_QUERY, variables }),
     });

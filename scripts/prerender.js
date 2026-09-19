@@ -722,7 +722,7 @@ async function fetchAllShopifyProducts() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+          'Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
         },
         body: JSON.stringify({
           query: ALL_PRODUCTS_QUERY,
@@ -2829,9 +2829,43 @@ function generateHtml(template, route, allShopifyProducts) {
       `<meta name="twitter:image" content="${escapeHtml(productOgImage)}" />`
     );
 
+    // Build FAQPage JSON-LD with product-specific Q&A for AI engine visibility
+    const productFaqs = [
+      {
+        '@type': 'Question',
+        name: `What sizes are available for the ${route.h1}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `Compare current body measurements with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear. ${SITE_URL}/size-guide`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `What is the return policy for the ${route.h1}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 7 days of delivery with clear photos. See ${SITE_URL}/returns for full policy.`,
+        },
+      },
+      {
+        '@type': 'Question',
+        name: `How should I care for the ${route.h1}?`,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: `Follow any care instructions stated in Product Details. Contact LuxeMia before ordering if care information is not listed.`,
+        },
+      },
+    ];
+    const faqSchema = {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: productFaqs,
+    };
+
     const structuredDataScripts = `
     <script type="application/ld+json" data-prerender-schema>${JSON.stringify(productSchema)}</script>
-    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(breadcrumbSchema)}</script>`;
+    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(breadcrumbSchema)}</script>
+    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(faqSchema)}</script>`;
 
     // Inject before </head>
     html = html.replace('</head>', `${structuredDataScripts}\n</head>`);
