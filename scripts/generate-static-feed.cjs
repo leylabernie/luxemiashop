@@ -167,8 +167,26 @@ function escapeXml(str) {
     .replace(/'/g, '&apos;');
 }
 
+// Google Merchant Center rejects image URLs whose path ends in .webp even
+// when Shopify's format=jpg transform serves real JPEG bytes. These source
+// files are committed as real JPEGs under public/images/gmc/ and substituted
+// here; a new .webp source must be converted and added to this map.
+const WEBP_SOURCE_LOCAL_JPG = {
+  '17708061151830169163': '/images/gmc/17708061151830169163.jpg',
+  '17708061181515555860': '/images/gmc/17708061181515555860.jpg',
+  '17708061281660913802': '/images/gmc/17708061281660913802.jpg',
+  '17708061311818557654': '/images/gmc/17708061311818557654.jpg',
+  '17708061321986578299': '/images/gmc/17708061321986578299.jpg',
+  '178704753992368782': '/images/gmc/178704753992368782.jpg',
+};
+
 function forceJpeg(url) {
   if (!url) return url;
+  if (/\.webp(\?|$)/i.test(url)) {
+    const basename = (url.match(/\/([^/?]+)\.webp/i) || [])[1] || '';
+    if (WEBP_SOURCE_LOCAL_JPG[basename]) return `${SITE_URL}${WEBP_SOURCE_LOCAL_JPG[basename]}`;
+    console.warn(`[merchant-feed] .webp image URL has no local JPG conversion: ${url}`);
+  }
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
     try {
       const parsed = new URL(url);
