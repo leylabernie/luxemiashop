@@ -90,6 +90,31 @@ const Index = () => {
           </div>
         </section>
 
+        <section aria-label="Statement Styles premium collection" className="bg-[#fcf8f4] py-6 sm:py-8">
+          <div className="container mx-auto max-w-7xl px-4 sm:px-8">
+            <Link
+              to="/collections/bridal-lehengas"
+              className="group block overflow-hidden rounded-lg shadow-sm"
+              aria-label="Shop Statement Styles — premium bridal lehengas"
+            >
+              <picture>
+                <source media="(min-width: 640px)" srcSet="/images/banners/statement-styles-wide.webp" type="image/webp" />
+                <source media="(min-width: 640px)" srcSet="/images/banners/statement-styles-wide.jpg" type="image/jpeg" />
+                <source srcSet="/images/banners/statement-styles-square.webp" type="image/webp" />
+                <img
+                  src="/images/banners/statement-styles-square.jpg"
+                  alt="Statement Styles — two embroidered bridal lehengas in maroon and teal from the LuxeMia premium collection"
+                  width="1600"
+                  height="500"
+                  loading="lazy"
+                  decoding="async"
+                  className="w-full h-auto object-cover transition-transform duration-500 group-hover:scale-[1.01]"
+                />
+              </picture>
+            </Link>
+          </div>
+        </section>
+
         <LazySection rootMargin="200px" placeholderHeight={500}>
           <Suspense fallback={null}><NewArrivals /></Suspense>
         </LazySection>

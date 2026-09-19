@@ -263,7 +263,7 @@ function hashCode(str) {
 }
 
 function sanitizeFeedTitle(text) {
-  return text
+  let clean = text
     .replace(/\s*\|\s*Ready to Ship/gi, '')
     .replace(/ready[- ]to[- ]ship/gi, 'available online')
     .replace(/\b(?:buy|shop now)\b/gi, '')
@@ -271,6 +271,14 @@ function sanitizeFeedTitle(text) {
     .replace(/\s+/g, ' ')
     .replace(/^[-–—|:;,\s]+|[-–—|:;,\s]+$/g, '')
     .trim();
+  // Supplier titles sometimes arrive truncated mid-phrase (e.g. "... Blouse
+  // And"). GMC listings that read "And" at the end look broken to shoppers.
+  for (let i = 0; i < 3; i += 1) {
+    const stripped = clean.replace(/\s+(?:and|with|for|the|in|on|of|&)\s*$/i, '').trim();
+    if (stripped === clean) break;
+    clean = stripped;
+  }
+  return clean;
 }
 
 const MERCHANT_TITLE_MAX_LENGTH = 150;
