@@ -148,7 +148,7 @@ async function fetchAllProductHandles() {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+          'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
         },
         body: JSON.stringify({
           query: GET_ALL_PRODUCT_HANDLES_QUERY,

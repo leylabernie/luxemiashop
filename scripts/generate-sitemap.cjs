@@ -297,7 +297,7 @@ async function fetchAllProducts() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
+        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
       },
       body: JSON.stringify({ query: ALL_PRODUCTS_QUERY, variables }),
     });

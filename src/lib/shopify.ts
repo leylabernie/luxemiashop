@@ -619,7 +619,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
-      'Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN
+      'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN
     },
     body: JSON.stringify({
       query,
