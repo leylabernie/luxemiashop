@@ -25,24 +25,30 @@ interface FeaturedSlide {
   imageFit?: 'cover' | 'contain';
   imagePosition?: string;
   mobileContentPosition?: 'top' | 'bottom';
+  /**
+   * Fully-designed banner artwork (headline/CTA baked into the image).
+   * Suppresses the dark gradient overlays and the component text so the
+   * artwork displays exactly as designed.
+   */
+  designed?: boolean;
 }
 
 const featuredSlides: FeaturedSlide[] = [
   {
-    id: 'navratri-2026',
-    eyebrow: 'Navratri 2026',
-    headline: 'Garba-ready color, movement, and mirror work.',
-    subline:
-      'Shop current chaniya choli, lehenga, and festive styles for Navratri, Garba, and Dandiya celebrations.',
-    cta: 'Shop Navratri',
-    link: '/collections/navratri-outfits',
-    image: '/images/hero-carousel/navratri-lehenga',
-    desktopImage: '/images/hero-carousel/navratri-lehenga-desktop',
-    alt: 'Woman wearing a bright pink lehenga suitable for a Navratri celebration',
-    width: 1672,
-    height: 941,
+    id: 'luxe-festive-arrivals',
+    eyebrow: 'LuxeMia',
+    headline: 'Luxe Festive Arrivals',
+    subline: 'Curated high-value styles for every celebration.',
+    cta: 'Shop Premium Styles',
+    link: '/collections/party-wear-lehengas',
+    image: '/images/banners/luxe-festive-arrivals-mobile',
+    desktopImage: '/images/banners/luxe-festive-arrivals-desktop',
+    alt: 'LuxeMia Luxe Festive Arrivals — curated premium lehengas for celebrations',
+    width: 1920,
+    height: 800,
     imageFit: 'cover',
-    imagePosition: 'center center',
+    imagePosition: 'center bottom',
+    designed: true,
   },
   {
     id: 'diwali-2026',
@@ -77,20 +83,20 @@ const featuredSlides: FeaturedSlide[] = [
     imagePosition: 'center center',
   },
   {
-    id: 'wedding-lehengas',
-    eyebrow: 'Wedding Lehengas',
-    headline: 'Statement lehengas for weddings and milestone moments.',
-    subline:
-      'Explore embroidered lehenga choli sets for ceremonies, receptions, sangeet celebrations, and wedding guests.',
-    cta: 'Shop Lehengas',
-    link: '/lehengas',
-    image: '/images/banners/organza-bridal-lehengas-2026-mobile',
-    desktopImage: '/images/banners/organza-bridal-lehengas-2026-desktop',
-    alt: 'Three heavy-work organza bridal lehengas in blue, rose pink, and ivory',
-    width: 1600,
-    height: 900,
+    id: 'bridal-elegance',
+    eyebrow: 'LuxeMia',
+    headline: 'Bridal Elegance',
+    subline: 'Elegant silhouettes for weddings and festive occasions.',
+    cta: 'Shop New Arrivals',
+    link: '/collections/bridal-lehengas',
+    image: '/images/banners/bridal-elegance-mobile',
+    desktopImage: '/images/banners/bridal-elegance-desktop',
+    alt: 'LuxeMia Bridal Elegance — elegant silhouettes for weddings and festive occasions',
+    width: 1920,
+    height: 800,
     imageFit: 'cover',
-    imagePosition: 'center center',
+    imagePosition: 'center bottom',
+    designed: true,
   },
 ];
 
@@ -252,20 +258,21 @@ const NewArrivalsBanner = () => {
         </picture>
 
         <div
-          className="absolute inset-0 sm:hidden"
+          className={`absolute inset-0 sm:hidden ${activeSlide.designed ? 'hidden' : ''}`}
           style={{
             background:
               'linear-gradient(180deg, rgba(20,16,14,0.28) 0%, rgba(20,16,14,0.46) 43%, rgba(20,16,14,0.94) 100%)',
           }}
         />
         <div
-          className="absolute inset-0 hidden sm:block"
+          className={`absolute inset-0 hidden sm:block ${activeSlide.designed ? 'sm:hidden' : ''}`}
           style={{
             background:
               'linear-gradient(90deg, rgba(20,16,14,0.88) 0%, rgba(20,16,14,0.58) 44%, rgba(20,16,14,0.12) 74%, rgba(20,16,14,0.32) 100%), linear-gradient(180deg, rgba(20,16,14,0.2) 0%, rgba(20,16,14,0) 32%, rgba(20,16,14,0) 66%, rgba(20,16,14,0.62) 100%)',
           }}
         />
 
+        {activeSlide.designed ? null : (
         <div
           className={`relative z-10 flex h-full px-6 sm:items-center sm:px-[6vw] sm:pb-0 sm:pt-0 ${
             activeSlide.mobileContentPosition === 'top'
@@ -312,6 +319,7 @@ const NewArrivalsBanner = () => {
             </Link>
           </div>
         </div>
+        )}
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-between px-[clamp(12px,2vw,28px)] sm:flex">
