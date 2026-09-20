@@ -38,6 +38,7 @@ const navLinks = [
 
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
+  { name: 'Ready to Ship', href: '/ready-to-ship' },
   { name: 'Customizable', href: '/collections/customizable-indian-outfits' },
   { name: 'Bridesmaids', href: '/collections/bridal-party-outfits' },
   { name: 'Bollywood-Inspired', href: '/collections/bollywood-inspired-indian-outfits' },
