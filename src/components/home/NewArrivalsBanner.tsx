@@ -58,13 +58,14 @@ const featuredSlides: FeaturedSlide[] = [
       'Handpicked bridal-weight lehengas for Diwali parties and photo nights. First order? Code FIRST10 takes 10% off at checkout.',
     cta: 'Shop Festive Lehengas',
     link: '/collections/party-wear-lehengas',
-    image: '/images/banners/diwali-festive-lehengas-2026-mobile',
-    desktopImage: '/images/banners/diwali-festive-lehengas-2026-desktop',
-    alt: 'Three embroidered bridal lehengas in red, rust orange, and lavender for Diwali festive wear',
-    width: 1600,
-    height: 900,
+    image: '/images/banners/diwali-edit-designed-mobile',
+    desktopImage: '/images/banners/diwali-edit-designed-desktop',
+    alt: 'LuxeMia Diwali 2026 Festive Edit — embroidered lehenga and gharara sets for Diwali night',
+    width: 1920,
+    height: 800,
     imageFit: 'cover',
-    imagePosition: 'center center',
+    imagePosition: 'left center',
+    designed: true,
   },
   {
     id: 'ready-to-ship',
@@ -74,13 +75,14 @@ const featuredSlides: FeaturedSlide[] = [
       'Browse in-stock outfits that can proceed to order handling and dispatch after payment and verification. Review each product for available sizes and options.',
     cta: 'Shop Ready to Ship',
     link: '/ready-to-ship',
-    image: '/images/banners/silk-festive-lehengas-2026-mobile',
-    desktopImage: '/images/banners/silk-festive-lehengas-2026-desktop',
-    alt: 'Three stocked silk mirror-work lehengas in yellow, sky blue, and dusty pink ready to ship',
-    width: 1600,
-    height: 900,
+    image: '/images/banners/ready-to-ship-designed-mobile',
+    desktopImage: '/images/banners/ready-to-ship-designed-desktop',
+    alt: 'LuxeMia Ready to Ship — in-stock sherwani, lehenga, and saree styles ready for dispatch',
+    width: 1920,
+    height: 800,
     imageFit: 'cover',
-    imagePosition: 'center center',
+    imagePosition: 'left center',
+    designed: true,
   },
   {
     id: 'bridal-elegance',
@@ -221,7 +223,13 @@ const NewArrivalsBanner = () => {
           </picture>
         )}
 
-        <picture className="absolute inset-0 block overflow-hidden">
+        {activeSlide.designed ? (
+          <Link
+            to={activeSlide.link}
+            aria-label={`${activeSlide.headline} - ${activeSlide.cta}`}
+            className="absolute inset-0 z-10 block cursor-pointer"
+          >
+<picture className="absolute inset-0 block overflow-hidden">
           {activeSlide.desktopImage && (
             <source
               media="(min-width: 640px)"
@@ -256,6 +264,44 @@ const NewArrivalsBanner = () => {
             style={{ objectPosition: activeSlide.imagePosition }}
           />
         </picture>
+          </Link>
+        ) : (
+<picture className="absolute inset-0 block overflow-hidden">
+          {activeSlide.desktopImage && (
+            <source
+              media="(min-width: 640px)"
+              srcSet={`${activeSlide.desktopImage}.webp`}
+              type="image/webp"
+            />
+          )}
+          {activeSlide.desktopImage && (
+            <source
+              media="(min-width: 640px)"
+              srcSet={`${activeSlide.desktopImage}.jpg`}
+              type="image/jpeg"
+            />
+          )}
+          <source srcSet={`${activeSlide.image}.webp`} type="image/webp" />
+          <img
+            data-hero-image
+            src={`${activeSlide.image}.jpg`}
+            alt={activeSlide.alt}
+            width={activeSlide.width}
+            height={activeSlide.height}
+            decoding="async"
+            loading="eager"
+            fetchPriority={index === 0 ? 'high' : 'low'}
+            className={`absolute inset-0 h-full w-full animate-in zoom-in-105 duration-[7000ms] ease-out ${
+              activeSlide.imageFit === 'cover'
+                ? 'object-cover'
+                : preservesFullImage
+                  ? 'object-contain object-top sm:object-center'
+                  : 'object-cover object-[center_15%] sm:object-[center_20%]'
+            }`}
+            style={{ objectPosition: activeSlide.imagePosition }}
+          />
+        </picture>
+        )}
 
         <div
           className={`absolute inset-0 sm:hidden ${activeSlide.designed ? 'hidden' : ''}`}
