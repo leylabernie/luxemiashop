@@ -477,10 +477,10 @@ function truncateAtWord(value, maxLength) {
   const truncated = (lastSpace > 0
     ? candidate.slice(0, lastSpace)
     : value.slice(0, available))
-    .replace(/\s+(?:&|and|or|of|for|the|with|in|on|at|to)$/i, '')
+    .replace(/\s+(?:&|and|an|a|or|of|for|the|with|in|on|at|to)$/i, '')
     .replace(/[|,:;\-/]+$/, '');
 
-  return `${truncated.trimEnd()}…`;
+  return truncated.trimEnd();
 }
 
 function clampTitle(raw, brand = 'LuxeMia', maxLength = 80) {
@@ -500,6 +500,31 @@ function clampTitle(raw, brand = 'LuxeMia', maxLength = 80) {
   if (title.length <= maxLength) return title;
 
   return `${truncateAtWord(withoutBrand, Math.max(1, maxLength - suffix.length))}${suffix}`;
+}
+
+// Clean supplier-title artifacts for display and SEO:
+// 1. Recover titles stored pre-truncated (trailing "…"/"...") by preferring
+//    the full product title when it is longer.
+// 2. Strip stale price suffixes ("- $146", "- $162 - $162").
+// 3. Strip dangling trailing conjunctions/prepositions ("... Blouse And",
+//    "... On The") left by supplier feed truncation.
+function cleanProductDisplayTitle(raw, fallback) {
+  let t = normalizeWhitespace(raw || '');
+  if (!t) return t;
+  const brandSplit = t.match(/^(.*?)\s*\|\s*(LuxeMia)$/i);
+  let base = brandSplit ? brandSplit[1] : t;
+  const suffix = brandSplit ? ` | ${brandSplit[2]}` : '';
+  if (/…$|\.\.\.$/.test(base) && fallback) {
+    const fb = normalizeWhitespace(fallback);
+    if (!/…$|\.\.\.$/.test(fb)) base = fb;
+  }
+  base = base.replace(/\s*[-–—]\s*\$\d+(?:\.\d{1,2})?(?:\s*[-–—]\s*\$\d+(?:\.\d{1,2})?)*\s*$/g, '').trim();
+  for (let i = 0; i < 3; i += 1) {
+    const s = base.replace(/\s+(?:and|with|for|the|a|an|in|on|of|&)\s*$/i, '').trim();
+    if (s === base) break;
+    base = s;
+  }
+  return base + suffix;
 }
 
 function disambiguateDuplicateProductRouteTitles(routes) {
@@ -2608,6 +2633,14 @@ function generateHtml(template, route, allShopifyProducts) {
     `<title>${escapeHtml(seoTitle)}</title>`
   );
 
+  // Keep the legacy meta name="title" in sync with the real title. Without
+  // this, product pages carry the homepage title in meta name="title" — a
+  // small conflicting signal flagged in the Sept 2026 SEO audit.
+  html = html.replace(
+    /<meta name="title" content="[^"]*" \/>/i,
+    `<meta name="title" content="${escapeHtml(seoTitle)}" />`
+  );
+
   // Replace meta description
   html = html.replace(
     /<meta name="description" content="[^"]*" \/>/,
@@ -3498,6 +3531,20 @@ async function main() {
     });
   }
   console.log(`[prerender] Total /product/* routes after Shopify merge: ${routes.filter(r => r.path.startsWith('/product/')).length}`);
+  // Clean supplier-title artifacts BEFORE duplicate-title handling: recover
+  // titles stored pre-truncated (trailing ellipsis) by falling back to the
+  // full product title, strip stale price suffixes ("- $146", "- $162 - $162")
+  // and dangling trailing conjunctions ("... Blouse And", "... On The").
+  for (const route of routes) {
+    if (!route.path.startsWith('/product/')) continue;
+    const fallback = (route.product && route.product.title) || route.h1 || '';
+    const cleanedTitle = cleanProductDisplayTitle(route.title, fallback);
+    if (cleanedTitle) route.title = cleanedTitle;
+    if (route.h1) {
+      const cleanedH1 = cleanProductDisplayTitle(route.h1, route.product && route.product.title);
+      if (cleanedH1) route.h1 = cleanedH1;
+    }
+  }
   disambiguateDuplicateProductRouteTitles(routes);
 
   let count = 0;
