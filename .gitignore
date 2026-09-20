@@ -62,3 +62,13 @@ scripts/*
 !scripts/validate-openai-search-feed.cjs
 !scripts/submit-indexnow.cjs
 !scripts/validate-semantic-completion.cjs
+
+banner-img-urls.json
+banner_products.json
+catalog-hygiene-report.json
+public/sitemap-collections.xml
+public/sitemap-guides.xml
+public/sitemap-images.xml
+public/sitemap-pages.xml
+public/sitemap-products.xml
+scripts/backups/
