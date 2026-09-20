@@ -47,7 +47,7 @@ const featuredSlides: FeaturedSlide[] = [
     width: 1920,
     height: 800,
     imageFit: 'cover',
-    imagePosition: 'center bottom',
+    imagePosition: 'left center',
     designed: true,
   },
   {
@@ -95,7 +95,7 @@ const featuredSlides: FeaturedSlide[] = [
     width: 1920,
     height: 800,
     imageFit: 'cover',
-    imagePosition: 'center bottom',
+    imagePosition: 'left center',
     designed: true,
   },
 ];
