@@ -5,7 +5,7 @@ const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
-const ROUTE_SUMMARY = 'U.S. standard shipping is $14.99 below $199 and free at $199+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
+const ROUTE_SUMMARY = 'U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
 const roots = ['index.html', 'api', 'public', 'src', 'supabase/functions', 'CREAO_AI_PROMPT.md', 'build_csv.py', 'build_boutique_csv.py'];
 const extensions = new Set(['.html', '.ts', '.tsx', '.js', '.cjs', '.py', '.txt', '.md', '.json']);
 const skipped = new Set([

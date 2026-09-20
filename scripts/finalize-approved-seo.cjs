@@ -64,7 +64,7 @@ function normalizeCustomerShippingCopy(relative) {
   let source = read(relative);
   source = source
     .split('$12').join('$14.99')
-    .split('$150').join('$199')
+    .split('$199').join('$150')
     .split('Free US shipping').join('Free U.S. standard shipping')
     .split('free US shipping').join('free U.S. standard shipping')
     .split('Free U.S. shipping').join('Free U.S. standard shipping')
@@ -104,10 +104,10 @@ function normalizeEditorialShippingCopy(relative) {
   const source = read(relative)
     .split('\n')
     .map((line) => {
-      const hasRetiredAmounts = line.includes('$12') && line.includes('$150');
+      const hasRetiredAmounts = line.includes('$12') || line.includes('$199');
       const isShippingContext = /shipping|delivery|free|orders?\s+(?:below|over|at)/i.test(line);
       if (!hasRetiredAmounts || !isShippingContext) return line;
-      return line.replace(/\$12/g, '$14.99').replace(/\$150/g, '$199');
+      return line.replace(/\$12/g, '$14.99').replace(/\$199/g, '$150');
     })
     .join('\n')
     .replace("title: 'United States Shipping Policy'", "title: 'Shipping Policy & International Rates'");
@@ -142,7 +142,7 @@ if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime
 for (const relative of ['src/pages/Index.tsx', 'src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts', 'src/data/seoGrowthBlogPosts.ts']) {
   if (!exists(relative)) continue;
   const source = read(relative);
-  if (/\$12[^\n]{0,160}(?:shipping|delivery|below \$150)/i.test(source) || /(?:shipping|delivery|free)[^\n]{0,160}\$150/i.test(source)) {
+  if (/\$12[^\n]{0,160}(?:shipping|delivery)/i.test(source) || /(?:shipping|delivery|free)[^\n]{0,160}\$199/i.test(source)) {
     throw new Error(`[approved-seo] Stale shipping copy remains in ${relative}`);
   }
   if (/published 1[–-]3 business-day processing/i.test(source) || /processing window of three business days or less/i.test(source)) {

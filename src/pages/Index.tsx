@@ -28,7 +28,7 @@ const LookbookTeaser = lazy(() => import('@/components/home/LookbookTeaser'));
 const homepageFaqs = [
   {
     question: "Where does LuxeMia ship Indian ethnic wear?",
-    answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order."
+    answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order."
   },
   {
     question: "What is your return policy?",
@@ -48,7 +48,7 @@ const homepageFaqs = [
   },
   {
     question: "How much is U.S. shipping?",
-    answer: "U.S. standard shipping is $14.99 below $199 and free at $199 and above after discounts. Other countries use route-based rates shown on the Shipping page."
+    answer: "U.S. standard shipping is $14.99 below $150 and free at $150 and above after discounts. Other countries use route-based rates shown on the Shipping page."
   },
   {
     question: "How can I get styling advice for a specific occasion?",

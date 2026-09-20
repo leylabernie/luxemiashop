@@ -15,7 +15,7 @@ const USA = () => (
       heroIntro: usaLanding.intro,
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
       shippingTime: 'tracking provided after dispatch',
-      shippingCost: '$14.99 per order; free at $199 and above',
+      shippingCost: '$14.99 per order; free at $150 and above',
       customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
       faqs: [
         {
@@ -24,7 +24,7 @@ const USA = () => (
         },
         {
           question: 'Is shipping free to the United States?',
-          answer: 'Shipping is free at $199 and above and costs $14.99 below that. The applicable rate is shown at checkout.',
+          answer: 'Shipping is free at $150 and above and costs $14.99 below that. The applicable rate is shown at checkout.',
         },
         {
           question: 'Will taxes be charged?',
@@ -40,7 +40,7 @@ const USA = () => (
         },
       ],
       benefits: [
-        { icon: Truck, title: 'U.S. Delivery', description: '$14.99 per order; free at $199 and above' },
+        { icon: Truck, title: 'U.S. Delivery', description: '$14.99 per order; free at $150 and above' },
         { icon: Shield, title: 'Clear Policies', description: 'Shipping and damage-claim terms online' },
         { icon: Clock, title: 'Tracked', description: 'Tracking provided after dispatch' },
       ],

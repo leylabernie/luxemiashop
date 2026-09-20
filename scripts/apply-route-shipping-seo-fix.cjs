@@ -12,7 +12,7 @@ const HOME_DESCRIPTION = 'Shop South Asian bridal wear, wedding sarees, lehengas
 const HOME_H1 = 'LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
 const MENSWEAR_DESCRIPTION = 'Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and U.S. shipping.';
 const DESTINATION_LIST = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
-const US_RATE_SUMMARY = 'U.S. standard shipping is $14.99 below $199 and free at $199 and above.';
+const US_RATE_SUMMARY = 'U.S. standard shipping is $14.99 below $150 and free at $150 and above.';
 const ROUTE_RATE_SUMMARY = `${US_RATE_SUMMARY} Canada and the UK are $24.99 below $299 and free at $299 and above. Australia and New Zealand are $29.99 below $349 and free at $349 and above. South Africa is $49.99 and Mauritius is $59.99 per order.`;
 
 const architecturePath = 'src/config/seoArchitecture.json';
@@ -83,31 +83,31 @@ function patchLegacyShippingSurface(relativePath) {
     ],
     [
       'U.S. standard shipping is $12 below $150 and free at $150 and above',
-      'U.S. standard shipping is $14.99 below $199 and free at $199 and above',
+      'U.S. standard shipping is $14.99 below $150 and free at $150 and above',
     ],
     [
       'Standard shipping is free at $150 and above and $12 below $150',
-      'U.S. standard shipping is free at $199 and above and $14.99 below $199',
+      'U.S. standard shipping is free at $150 and above and $14.99 below $150',
     ],
     [
       'U.S. standard shipping is free at $150 and above and $12 below $150',
-      'U.S. standard shipping is free at $199 and above and $14.99 below $199',
+      'U.S. standard shipping is free at $150 and above and $14.99 below $150',
     ],
     [
       '$12 USD below $150 USD; free at $150 USD and above',
-      '$14.99 USD below $199 USD; free at $199 USD and above',
+      '$14.99 USD below $150 USD; free at $150 USD and above',
     ],
     [
       'Free U.S. shipping at $150 and above',
-      'Free U.S. standard shipping at $199 and above',
+      'Free U.S. standard shipping at $150 and above',
     ],
     [
       'free US shipping at $150 and above',
-      'free U.S. standard shipping at $199 and above',
+      'free U.S. standard shipping at $150 and above',
     ],
     [
       '$12 flat below that',
-      '$14.99 below $199',
+      '$14.99 below $150',
     ],
   ];
 
@@ -120,12 +120,12 @@ function patchLegacyShippingSurface(relativePath) {
     .replace(/Checkout accepts United States addresses only\./g, `Checkout accepts addresses in ${DESTINATION_LIST}.`)
     .replace(/tracked shipping to United States addresses only/g, `tracked shipping to ${DESTINATION_LIST}`)
     .replace(/to United States addresses only/g, `to addresses in ${DESTINATION_LIST}`)
-    .replace(/costs \$12 below \$150/g, 'costs $14.99 below $199')
-    .replace(/costs \$12 below that/g, 'costs $14.99 below $199')
-    .replace(/free at \$150 and above/g, 'free at $199 and above')
-    .replace(/free at \$150\+/g, 'free at $199+')
-    .replace(/Free U\.S\. shipping at \$150\+/g, 'Free U.S. standard shipping at $199+')
-    .replace(/free U\.S\. shipping at \$150\+/g, 'free U.S. standard shipping at $199+');
+    .replace(/costs \$12 below \$150/g, 'costs $14.99 below $150')
+    .replace(/costs \$12 below that/g, 'costs $14.99 below $150')
+    .replace(/free at \$150 and above/g, 'free at $150 and above')
+    .replace(/free at \$150\+/g, 'free at $150+')
+    .replace(/Free U\.S\. shipping at \$150\+/g, 'Free U.S. standard shipping at $150+')
+    .replace(/free U\.S\. shipping at \$150\+/g, 'free U.S. standard shipping at $150+');
 
   if (relativePath === 'public/llms.txt') {
     source = source

@@ -35,7 +35,7 @@ const diwaliOutfitFaqs = [
   },
   {
     question: 'Do you ship Diwali outfits to the United States?',
-    answer: 'LuxeMia ships Diwali outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $199 and above and $14.99 below $199. Confirm timing before ordering for a fixed celebration date.',
+    answer: 'LuxeMia ships Diwali outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $150 and above and $14.99 below $150. Confirm timing before ordering for a fixed celebration date.',
   },
   {
     question: 'How do I check what is included?',

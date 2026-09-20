@@ -19,7 +19,7 @@ export type ProductCategory =
   | 'indo-western';
 
 const SHIPPING_POLICY =
-  'Tracked shipping is available to the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above; tracking is provided after dispatch. Check the listing for processing and stitching options.';
+  'Tracked shipping is available to the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above; tracking is provided after dispatch. Check the listing for processing and stitching options.';
 
 // GEO/AEO helper — answer-first sentence for AI search engines
 function buildAnswerFirstSentence(title: string, productType: string, material?: string, color?: string): string {

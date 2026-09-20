@@ -277,7 +277,7 @@ const ProductDetail = () => {
     }] : []),
     {
       question: `Where does LuxeMia ship the ${product.title}?`,
-      answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.',
+      answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.',
     },
     {
       question: `What is the delivery time for the ${product.title}?`,

@@ -39,7 +39,7 @@ const haldiOutfitFaqs = [
   },
   {
     question: 'Do you ship haldi ceremony outfits to the USA and the United States?',
-    answer: 'LuxeMia ships haldi ceremony outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $199 and above and $14.99 below $199. Confirm timing before ordering for a fixed wedding date.',
+    answer: 'LuxeMia ships haldi ceremony outfits to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard shipping is free at $150 and above and $14.99 below $150. Confirm timing before ordering for a fixed wedding date.',
   },
 ];
 

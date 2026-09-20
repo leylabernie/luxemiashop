@@ -45,7 +45,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstit
             Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.
+            U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.
           </p>
         </div>
       </div>

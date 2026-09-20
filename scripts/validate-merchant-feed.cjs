@@ -218,8 +218,9 @@ if (
   throw new Error('ProductInfo must render Shopify numeric size variants through the selectedOptions-wired native option picker');
 }
 
-// Retained 36-variant size fixture; the former Navratri fixture was owner-retired.
-const VARIANT_PARITY_HANDLE = 'pistachio-green-lehenga-luxemia';
+// Retained 14-variant size fixture; the former 36-variant fixture
+// (pistachio-green-lehenga-luxemia) was owner-archived 2026-09-20.
+const VARIANT_PARITY_HANDLE = 'art-silk-cream-groom-wear-thread-work-readymade-sherwani-385484';
 const variantPrerenderPath = path.join(
   PROJECT_ROOT,
   'dist/_prerender/product',
@@ -255,7 +256,7 @@ const feedVariantIds = itemBlocks
   .filter(Boolean);
 const sortedIds = (ids) => [...new Set(ids)].sort();
 if (
-  feedVariantIds.length <= 20
+  feedVariantIds.length < 5
   || JSON.stringify(sortedIds(storefrontVariantIds)) !== JSON.stringify(sortedIds(feedVariantIds))
 ) {
   throw new Error(

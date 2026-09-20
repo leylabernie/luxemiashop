@@ -23,7 +23,7 @@ const ROOT = path.resolve(__dirname, '..');
 const changed = [];
 
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
-const PRODUCT_SHIPPING_ANSWER = `LuxeMia ships to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.`;
+const PRODUCT_SHIPPING_ANSWER = `LuxeMia ships to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.`;
 const PRODUCT_READY_DELIVERY_ANSWER = 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.';
 const READY_PAGE_DESCRIPTION = 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.';
 const READY_ROUTE_CONTENT = `  {
@@ -376,7 +376,7 @@ function patchDeliveryEstimate() {
   source = source
     .replace(
       'United States shipping only. Standard shipping is free at $150 and above and $12 below.',
-      'Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above; other destinations use route-based rates.',
+      'Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $150 and free at $150 and above; other destinations use route-based rates.',
     )
     .replace(
       'Delivery timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.',
@@ -392,15 +392,15 @@ function patchRuntimeShopifySanitizer() {
 
   source = source
     .split('U.S. standard shipping is $12 below $150 and free at $150 and above')
-      .join('U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+      .join('U.S. standard shipping is $14.99 below $150 and free at $150 and above')
     .split('Standard shipping is free at $150 and above and $12 below $150')
-      .join('Tracked shipping is available to seven countries; U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+      .join('Tracked shipping is available to seven countries; U.S. standard shipping is $14.99 below $150 and free at $150 and above')
     .split('Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch.')
+      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch.')
     .split('Free U.S. shipping at $150 and above')
       .join('Tracked shipping to seven supported countries')
     .split('United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $150 and free at $150 and above')
     .split('United States shipping only')
       .join('Tracked shipping to seven supported countries')
     .split('Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
@@ -423,15 +423,15 @@ function patchMerchantFeedSource() {
 
   source = source
     .split('Tracked U.S. delivery and free shipping on orders $150+')
-      .join('Tracked shipping to seven countries; U.S. shipping is free at $199+')
+      .join('Tracked shipping to seven countries; U.S. shipping is free at $150+')
     .split('Free U.S. shipping on orders $150+')
-      .join('U.S. shipping is free at $199+')
+      .join('U.S. shipping is free at $150+')
     .split('Free U.S. shipping at $150 and above')
-      .join('U.S. shipping is free at $199 and above')
+      .join('U.S. shipping is free at $150 and above')
     .split('Tracked U.S. delivery')
       .join('Tracked shipping to seven supported countries')
     .split('United States shipping only. Standard shipping is $12 below $150 and free at $150 and above')
-      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $150 and free at $150 and above')
     .split('Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
       .join('Tracked shipping is available to seven countries; route-based rates are shown on the Shipping page and at checkout')
     .split('USA, Canada, and Australia')
@@ -474,11 +474,11 @@ function isMadeToOrderProduct(product) {
 
   source = source
     .split('U.S. standard shipping is $12 below $150 and free at $150 and above')
-      .join('U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+      .join('U.S. standard shipping is $14.99 below $150 and free at $150 and above')
     .split('Standard shipping is free at $150 and above and $12 below $150')
-      .join('Tracked shipping is available to seven countries; U.S. standard shipping is $14.99 below $199 and free at $199 and above')
+      .join('Tracked shipping is available to seven countries; U.S. standard shipping is $14.99 below $150 and free at $150 and above')
     .split('Free U.S. shipping at $150 and above. $12 flat below that. Tracking provided after dispatch.')
-      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch.')
+      .join('Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch.')
     .split('Free U.S. shipping at $150 and above')
       .join('Tracked shipping to seven supported countries')
     .split('Shipping is available to United States addresses only. Current U.S. rates and services are shown at checkout')
@@ -539,7 +539,7 @@ function isMadeToOrderProduct(product) {
 
   source = source.replace(
     /return `\$\{getCustomProductDescription\(matched\.title\)\} Checkout accepts [^`]*`;/,
-    `return \`\${getCustomProductDescription(matched.title)} Tracked shipping is available to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $199 and free at $199 and above; other destinations use route-based rates.\`;`,
+    `return \`\${getCustomProductDescription(matched.title)} Tracked shipping is available to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $150 and free at $150 and above; other destinations use route-based rates.\`;`,
   );
 
   write(relative, source);

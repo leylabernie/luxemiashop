@@ -102,7 +102,7 @@ export function generateUsShippingServiceSchema() {
   });
 
   return [
-    createService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 199),
+    createService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 150),
     createService('canada-uk-standard-shipping', 'LuxeMia Canada and UK Standard Shipping', ['CA', 'GB'], 24.99, 299),
     createService('australia-nz-standard-shipping', 'LuxeMia Australia and New Zealand Standard Shipping', ['AU', 'NZ'], 29.99, 349),
     createService('south-africa-standard-shipping', 'LuxeMia South Africa Standard Shipping', 'ZA', 49.99),
@@ -111,7 +111,7 @@ export function generateUsShippingServiceSchema() {
 }
 
 // Product-level shipping details mirror the public U.S. shipping terms:
-// $14.99 below $199 and free at $199+. A handling-time window is emitted only
+// $14.99 below $150 and free at $150+. A handling-time window is emitted only
 // when the product carries a valid custom.ships_within value. Carrier transit
 // remains omitted because it depends on the destination and selected service.
 export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
@@ -136,7 +136,7 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
     })] : []),
   ];
   return [
-    ...create('US', 14.99, 199),
+    ...create('US', 14.99, 150),
     ...create(['CA', 'GB'], 24.99, 299),
     ...create(['AU', 'NZ'], 29.99, 349),
     ...create('ZA', 49.99),

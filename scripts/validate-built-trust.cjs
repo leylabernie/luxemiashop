@@ -74,8 +74,8 @@ const blocked = [
   /Glamour Indian Wear/i,
   /United States addresses only/i,
   /U\.S\. delivery only/i,
-  /\$12[^\n]{0,100}(?:shipping|below \$150)/i,
-  /free[^\n]{0,60}\$150/i,
+  /\$12[^\n]{0,100}(?:shipping|below \$199)/i,
+  /free[^\n]{0,60}\$199/i,
   /International standard shipping is \$14\.99 below \$300/i,
   /Free worldwide shipping/i,
   /Free standard shipping on orders over \$350 to USA, Canada, and Australia/i,
@@ -107,7 +107,7 @@ inspectJsonLd('home', home, true);
 
 const shipping = readPrerender('/shipping');
 requireTitle('shipping', shipping, SHIPPING_TITLE);
-requireAll('shipping', shipping, ['$14.99', '$199', '$24.99', '$299', '$29.99', '$349', '$49.99', '$59.99', 'Canada', 'United Kingdom', 'South Africa', 'Mauritius']);
+requireAll('shipping', shipping, ['$14.99', '$150', '$24.99', '$299', '$29.99', '$349', '$49.99', '$59.99', 'Canada', 'United Kingdom', 'South Africa', 'Mauritius']);
 inspectJsonLd('shipping', shipping, true);
 
 const ready = readPrerender('/ready-to-ship');

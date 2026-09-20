@@ -517,7 +517,7 @@ function enrichDescription(
     "Review the product images and available options for exact pieces, measurements, stitching status, price, and current availability before ordering."
   );
   details.push(
-    "Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $199 and free at $199 and above. Tracking is provided after dispatch."
+    "Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch."
   );
 
   return details.join(" ").slice(0, 5000);

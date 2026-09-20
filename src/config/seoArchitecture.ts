@@ -56,12 +56,12 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/collections/sharara-suits": {
       "title": "Sharara Suits Online USA | Wedding Sets | LuxeMia",
-      "description": "Shop sharara suits online for weddings and festive events. Compare embroidered sets, sizes and included pieces. Free U.S. standard shipping at $199+.",
+      "description": "Shop sharara suits online for weddings and festive events. Compare embroidered sets, sizes and included pieces. Free U.S. standard shipping at $150+.",
       "h1": "Sharara Suits Online in the USA"
     },
     "/collections/gharara-suits": {
       "title": "Gharara Suit Sets Online USA | Wedding Wear | LuxeMia",
-      "description": "Find a gharara suit set online for weddings and celebrations. Compare colors, embroidery, sizes and included pieces. Free U.S. standard shipping at $199+.",
+      "description": "Find a gharara suit set online for weddings and celebrations. Compare colors, embroidery, sizes and included pieces. Free U.S. standard shipping at $150+.",
       "h1": "Gharara Suit Sets Online in the USA"
     },
     "/collections/anarkali-suits": {

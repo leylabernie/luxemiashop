@@ -19,7 +19,7 @@ requireAll('package.json', [
   'node scripts/validate-route-based-shipping.cjs',
 ]);
 requireAll('src/config/shippingPolicy.ts', [
-  'US_FREE_SHIPPING_THRESHOLD = 199',
+  'US_FREE_SHIPPING_THRESHOLD = 150',
   'standardRate: 24.99',
   'standardRate: 29.99',
   'standardRate: 49.99',

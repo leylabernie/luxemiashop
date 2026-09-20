@@ -909,11 +909,11 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
               <ul className="text-sm text-muted-foreground space-y-1.5">
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>Free U.S. standard shipping at $199 and above</span>
+                  <span>Free U.S. standard shipping at $150 and above</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                  <span>$14.99 below $199</span>
+                  <span>$14.99 below $150</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />

@@ -22,7 +22,7 @@ proposed = {
     '/': (
         'Indian Ethnic Wear Online USA | Sarees, Lehengas & More | LuxeMia',
         'Shop bridal lehengas, wedding sarees and salwar suits online in the USA. '
-        'Free US shipping over $199, custom stitching and a $30 fit guarantee.',
+        'Free US shipping over $150, custom stitching and a $30 fit guarantee.',
         'indian ethnic wear online usa; buy lehenga online usa',
         'bridal saree online; indian wedding outfits for women',
     ),

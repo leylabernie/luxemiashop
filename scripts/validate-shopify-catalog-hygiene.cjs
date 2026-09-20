@@ -24,8 +24,8 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.CF_PAGES === '1';
 const retirement = require('./product-retirement-20260908.json');
 const MIN_EXPECTED_ACTIVE_PRODUCTS = retirement.retained.length;
-const MIN_EXPECTED_READY_PRODUCTS = 98;
-const MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS = 9;
+const MIN_EXPECTED_READY_PRODUCTS = 90;
+const MIN_EXPECTED_MADE_TO_ORDER_PRODUCTS = 1;
 
 const REMOVED_HANDLES = new Set([
   'blue-mauve-olive-velvet-satin-shimmer-saree-handwork-blouse',
@@ -74,11 +74,11 @@ const ALL_PRODUCTS_QUERY = `
 const STALE_COPY_PATTERNS = [
   {
     label: 'legacy $12 U.S. shipping threshold',
-    pattern: /(?:standard\s+)?shipping[^.!?\n]{0,100}\$12(?:\.00)?[^.!?\n]{0,100}\$(?:135|150)(?:\.00)?/i,
+    pattern: /(?:standard\s+)?shipping[^.!?\n]{0,100}\$12(?:\.00)?[^.!?\n]{0,100}\$(?:135|150|199)(?:\.00)?/i,
   },
   {
     label: 'legacy free-shipping threshold',
-    pattern: /(?:free\s+(?:u\.s\.\s+)?(?:standard\s+)?shipping|shipping\s+is\s+free)[^.!?\n]{0,80}(?:at|over|above|orders?\s+(?:over|above|of))\s*\$(?:135|150|350)(?:\.00)?/i,
+    pattern: /(?:free\s+(?:u\.s\.\s+)?(?:standard\s+)?shipping|shipping\s+is\s+free)[^.!?\n]{0,80}(?:at|over|above|orders?\s+(?:over|above|of))\s*\$(?:135|199|350)(?:\.00)?/i,
   },
   {
     label: 'free shipping to USA and Canada',

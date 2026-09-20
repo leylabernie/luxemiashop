@@ -40,7 +40,7 @@ const shippingBlock = `  {
       <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius. Processing time happens before carrier transit, and checkout shows the final available service and converted amount where supported.</p>
       <h2>Standard shipping rates</h2>
       <h3>United States</h3>
-      <ul><li>$14.99 below $199</li><li>Free standard shipping at $199 and above</li></ul>
+      <ul><li>$14.99 below $150</li><li>Free standard shipping at $150 and above</li></ul>
       <h3>Canada and the United Kingdom</h3>
       <ul><li>$24.99 below $299</li><li>Free standard shipping at $299 and above</li></ul>
       <h3>Australia and New Zealand</h3>
@@ -111,7 +111,7 @@ updateFile(PRERENDER, (source) => {
   output = output
     .replace(
       "text: 'LuxeMia ships to United States addresses only. U.S. standard shipping is $12 below $150 and free at $150 and above.'",
-      "text: 'LuxeMia ships to seven supported countries. U.S. standard shipping is $14.99 below $199 and free at $199 and above; other destinations use route-based rates.'",
+      "text: 'LuxeMia ships to seven supported countries. U.S. standard shipping is $14.99 below $150 and free at $150 and above; other destinations use route-based rates.'",
     )
     .replace(
       "text: 'All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.'",

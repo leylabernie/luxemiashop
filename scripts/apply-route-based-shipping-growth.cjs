@@ -6,7 +6,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const ALL_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'];
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
-const ROUTE_SUMMARY = 'U.S. standard shipping is $14.99 below $199 and free at $199+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
+const ROUTE_SUMMARY = 'U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
 
 function read(relative) {
   return fs.readFileSync(path.join(ROOT, relative), 'utf8');
@@ -38,7 +38,7 @@ function patchSeoArchitecture() {
     ['Indian Ethnic Wear, Sarees & Lehengas USA | LuxeMia', 'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA'],
     ['Shop LuxeMia Indian ethnic wear for U.S. celebrations: bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping.', 'Shop South Asian bridal wear, wedding sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and other supported markets.'],
     ['LuxeMia Indian Ethnic Wear for U.S. Weddings & Celebrations', 'Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear'],
-    ['Free U.S. shipping at $150+.', 'U.S. shipping is free at $199+.'],
+    ['Free U.S. shipping at $150+.', 'U.S. shipping is free at $150+.'],
   ];
   for (const relative of ['src/config/seoArchitecture.ts', 'src/config/seoArchitecture.json']) {
     let source = read(relative);
@@ -57,7 +57,7 @@ function patchHomepage() {
     )
     .replace(
       /question: "How much is US shipping\?",\s*answer: "[^"]*"/,
-      'question: "How much is U.S. shipping?",\n    answer: "U.S. standard shipping is $14.99 below $199 and free at $199 and above after discounts. Other countries use route-based rates shown on the Shipping page."',
+      'question: "How much is U.S. shipping?",\n    answer: "U.S. standard shipping is $14.99 below $150 and free at $150 and above after discounts. Other countries use route-based rates shown on the Shipping page."',
     )
     .replace('Thoughtful U.S. delivery', 'Tracked delivery to 7 countries');
 
@@ -104,14 +104,14 @@ function patchTextSurfaces() {
   roots.forEach(walk);
 
   const replacements = [
-    ['U.S. standard shipping is $12 below $150 and free at $150 and above.', 'U.S. standard shipping is $14.99 below $199 and free at $199 and above.'],
-    ['U.S. standard shipping is $12 below $150 and free at $150 and above', 'U.S. standard shipping is $14.99 below $199 and free at $199 and above'],
-    ['Standard shipping is $12 below $150 and free at $150 and above.', 'U.S. standard shipping is $14.99 below $199 and free at $199 and above.'],
-    ['$12 standard shipping below $150', '$14.99 U.S. standard shipping below $199'],
-    ['Free U.S. shipping at $150 and above', 'Free U.S. standard shipping at $199 and above'],
-    ['free U.S. shipping at $150 and above', 'free U.S. standard shipping at $199 and above'],
-    ['Free U.S. shipping at $150+', 'Free U.S. standard shipping at $199+'],
-    ['free at $150+', 'free at $199+'],
+    ['U.S. standard shipping is $12 below $150 and free at $150 and above.', 'U.S. standard shipping is $14.99 below $150 and free at $150 and above.'],
+    ['U.S. standard shipping is $12 below $150 and free at $150 and above', 'U.S. standard shipping is $14.99 below $150 and free at $150 and above'],
+    ['Standard shipping is $12 below $150 and free at $150 and above.', 'U.S. standard shipping is $14.99 below $150 and free at $150 and above.'],
+    ['$12 standard shipping below $150', '$14.99 U.S. standard shipping below $150'],
+    ['Free U.S. shipping at $150 and above', 'Free U.S. standard shipping at $150 and above'],
+    ['free U.S. shipping at $150 and above', 'free U.S. standard shipping at $150 and above'],
+    ['Free U.S. shipping at $150+', 'Free U.S. standard shipping at $150+'],
+    ['free at $150+', 'free at $150+'],
     ['International standard shipping is $14.99 below $300 and free at $300 and above.', ROUTE_SUMMARY],
     ['International standard shipping is $14.99 below $300 and free at $300 and above', ROUTE_SUMMARY],
     ['$14.99 USD below $300 USD; free at $300 USD and above', 'Canada/UK: $24.99 below $299, free at $299+; Australia/New Zealand: $29.99 below $349, free at $349+; South Africa: $49.99; Mauritius: $59.99'],
@@ -147,7 +147,7 @@ const shippingServicesFunction = `export function generateUsShippingServiceSchem
   });
 
   return [
-    createService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 199),
+    createService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 150),
     createService('canada-uk-standard-shipping', 'LuxeMia Canada and UK Standard Shipping', ['CA', 'GB'], 24.99, 299),
     createService('australia-nz-standard-shipping', 'LuxeMia Australia and New Zealand Standard Shipping', ['AU', 'NZ'], 29.99, 349),
     createService('south-africa-standard-shipping', 'LuxeMia South Africa Standard Shipping', 'ZA', 49.99),
@@ -177,7 +177,7 @@ const productShippingFunction = `export function generateUsProductShippingDetail
     })] : []),
   ];
   return [
-    ...create('US', 14.99, 199),
+    ...create('US', 14.99, 150),
     ...create(['CA', 'GB'], 24.99, 299),
     ...create(['AU', 'NZ'], 29.99, 349),
     ...create('ZA', 49.99),
@@ -207,7 +207,7 @@ const prerenderProductShippingFunction = `function generateUsProductShippingDeta
     })] : []),
   ];
   return [
-    ...create('US', 14.99, 199),
+    ...create('US', 14.99, 150),
     ...create(['CA', 'GB'], 24.99, 299),
     ...create(['AU', 'NZ'], 29.99, 349),
     ...create('ZA', 49.99),
@@ -295,7 +295,7 @@ function patchHomepageJsonLd() {
 
   data['@graph'] = graph.filter((node) => node['@type'] !== 'ShippingService');
   data['@graph'].push(
-    makeService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 199),
+    makeService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 150),
     makeService('canada-uk-standard-shipping', 'LuxeMia Canada and UK Standard Shipping', ['CA', 'GB'], 24.99, 299),
     makeService('australia-nz-standard-shipping', 'LuxeMia Australia and New Zealand Standard Shipping', ['AU', 'NZ'], 29.99, 349),
     makeService('south-africa-standard-shipping', 'LuxeMia South Africa Standard Shipping', 'ZA', 49.99),

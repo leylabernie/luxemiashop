@@ -1,12 +1,12 @@
 {
   "title": "Indian Ethnic Wear USA | Sarees & Lehengas | LuxeMia",
-  "description": "Shop sarees, lehengas and sharara suits for USA delivery. Free U.S. shipping at $199+. Compare sizing, processing times, duties and final-sale terms.",
+  "description": "Shop sarees, lehengas and sharara suits for USA delivery. Free U.S. standard shipping at $150+. Compare sizing, duties and final-sale terms.",
   "heading": "Indian Ethnic Wear in USA — Sarees, Lehengas & Shararas",
   "intro": "Dress for weddings, sangeet and festive celebrations with sarees, lehengas and sharara suits delivered to the United States. Compare each outfit’s included pieces, fit and current availability before choosing.",
   "buyerDetails": [
     {
       "heading": "USA shipping costs",
-      "copy": "Standard U.S. shipping is $14.99 below $199 and free at $199 and above after discounts. Tracking is provided after dispatch.",
+      "copy": "Standard U.S. shipping is $14.99 below $150 and free at $150 and above after discounts. Tracking is provided after dispatch.",
       "href": "/shipping",
       "linkText": "See USA shipping terms"
     },
@@ -30,9 +30,21 @@
     }
   ],
   "categories": [
-    { "label": "Sarees for USA delivery", "href": "/sarees" },
-    { "label": "Wedding and festive lehengas", "href": "/lehengas" },
-    { "label": "Sharara suits online", "href": "/collections/sharara-suits" },
-    { "label": "Gharara suit sets online", "href": "/collections/gharara-suits" }
+    {
+      "label": "Sarees for USA delivery",
+      "href": "/sarees"
+    },
+    {
+      "label": "Wedding and festive lehengas",
+      "href": "/lehengas"
+    },
+    {
+      "label": "Sharara suits online",
+      "href": "/collections/sharara-suits"
+    },
+    {
+      "label": "Gharara suit sets online",
+      "href": "/collections/gharara-suits"
+    }
   ]
 }
