@@ -468,6 +468,24 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     ),
     [product.tags, product.productType, product.title, product.metadata?.includedComponents, product.description],
   );
+
+  // Utsav-style short lead: first two sentences of the listing description.
+  // The full description stays available in the Details tab below.
+  const shortDescription = useMemo(() => {
+    const raw = (product.description || '').trim();
+    if (!raw) {
+      return 'Review the product images and listed options for the exact color, materials, included pieces, and sizing. Contact LuxeMia before ordering if any detail is unclear.';
+    }
+    const sentences = raw.match(/[^.!?]+[.!?]+(\s|$)/g) || [raw];
+    let lead = sentences.slice(0, 2).join(' ').trim();
+    if (lead.length > 280) {
+      lead = sentences[0].trim();
+    }
+    if (lead.length > 280) {
+      lead = lead.slice(0, 277).replace(/[,;:\s]+\S*$/, '') + '.';
+    }
+    return lead;
+  }, [product.description]);
   const shipByLabel = getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
     const sizeOption = product.options.find((option) => isProductSizeOptionName(option.name));
@@ -1411,7 +1429,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       <section aria-labelledby="product-description-heading" className="space-y-2">
         <h2 id="product-description-heading" className="font-serif text-2xl">Product Description</h2>
         <p className="text-muted-foreground leading-relaxed text-sm">
-          {product.description || 'Review the product images and listed options for the exact color, materials, included pieces, and sizing. Contact LuxeMia before ordering if any detail is unclear.'}
+          {shortDescription}
+        </p>
+        <p className="text-xs text-muted-foreground">
+          Full specifications, set contents, shipping and care details are in the Product Details tabs below.
         </p>
       </section>
 

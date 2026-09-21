@@ -465,9 +465,10 @@ const ProductDetail = () => {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
             >
-              {/* Product Grid */}
-              <div className="grid lg:grid-cols-2 gap-8 lg:gap-16 mb-16">
+              {/* Product Grid — gallery left, buying details right (Utsav-style) */}
+              <div className="grid md:grid-cols-2 lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] gap-8 lg:gap-12 mb-16">
                 {/* Gallery */}
+                <div className="md:sticky md:top-24 md:self-start">
                 <ProductGallery 
                   images={product.images.edges}
                   videos={product.media?.edges}
@@ -485,6 +486,7 @@ const ProductDetail = () => {
                   }}
                   onSelectedVariantChange={(variant) => setSelectedVariantImageUrl(variant?.image?.url ?? null)}
                 />
+                </div>
               </div>
 
               {/* Product Tabs */}

@@ -311,7 +311,7 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
   }
 
   return (
-    <>
+    <div className="space-y-5">
       <div className={`flex flex-col-reverse lg:flex-row gap-4 ${!showThumbnails ? 'lg:block' : ''}`}>
       {/* Thumbnail Strip - only show if multiple validated images */}
       {showThumbnails && (
@@ -690,6 +690,6 @@ export const ProductGallery = ({ images, videos = [], productTitle, selectedImag
           </div>
         </section>
       )}
-    </>
+    </div>
   );
 };
