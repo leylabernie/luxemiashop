@@ -52,7 +52,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Can I return a Navratri outfit?',
-    answer: 'All sales are final. Damage, incorrect-item, or missing-item claims must be submitted within 48 hours of delivery with the evidence required by the LuxeMia return policy. Review sizing and product details before ordering.',
+    answer: 'Orders ship from India, so change-of-mind returns are not possible. Damage, incorrect-item, or missing-item claims are covered within 48 hours of delivery with the evidence required by the LuxeMia return policy. Message us on WhatsApp for sizing help before ordering.',
   },
 ];
 

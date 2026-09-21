@@ -177,7 +177,7 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
         </dl>
         <div class="shipping-info">
           <strong>Shipping:</strong> Free U.S. standard shipping at $150 and above. $14.99 below that. Tracking provided after dispatch.<br>
-          <strong>Returns:</strong> All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours with clear photos and a continuous unboxing/opening video.<br>
+          <strong>Returns:</strong> Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. Damaged, incorrect, or missing-item claims are covered within 48 hours of delivery with clear photos and a continuous unboxing/opening video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>
       </div>

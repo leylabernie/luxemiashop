@@ -633,7 +633,7 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
           {/* General tailoring note */}
           <div className="p-4 border border-primary/30 bg-primary/5 rounded-sm">
             <p className="text-sm text-foreground">
-              <strong>Note:</strong> All sales are final and exchanges are not accepted. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose.
+              <strong>Note:</strong> Orders ship from India, so change-of-mind returns aren't possible. Check measurements carefully and contact LuxeMia before ordering if you are unsure which tailoring option to choose — we would rather help you get it right the first time.
             </p>
           </div>
         </div>
@@ -960,7 +960,7 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
                     <Info className="h-4 w-4 text-amber-600 dark:text-amber-400" />
                   </div>
                   <div>
-                    <h5 className="font-medium text-foreground mb-1">Eligible U.S. Standard-Stock Returns</h5>
+                    <h5 className="font-medium text-foreground mb-1">Returns &amp; Order Protection</h5>
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       {RETURN_POLICY_SUMMARY} Review sizing, measurements, and product details before ordering, and see Returns &amp; Cancellations for complete return-start instructions.
                     </p>

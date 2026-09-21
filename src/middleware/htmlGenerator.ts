@@ -393,7 +393,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     },
     {
       question: `Can I return the ${displayTitle}?`,
-      answer: 'All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours of delivery with clear photos and a continuous unboxing/opening video. See Returns & Cancellations for complete instructions.',
+      answer: 'Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. If your item arrives damaged, defective, incorrect, or incomplete, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video, and LuxeMia will make it right. See Returns & Cancellations for complete claim instructions.',
     },
     {
       question: `How should I care for the ${displayTitle}?`,
@@ -549,7 +549,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         <div class="shipping-info">
           <strong>Shipping:</strong> the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard U.S. shipping is free at $150 and above and $14.99 below $150.<br>
           <strong>Tracking:</strong> Emailed when the shipping label is created for dispatch. Contact LuxeMia before ordering when an event date is time-sensitive.<br>
-          <strong>Returns:</strong> All sales are final and exchanges are not accepted. Genuine shipping damage or defect, an incorrect item, or a missing item must be reported within 48 hours with clear photos and a continuous unboxing/opening video.<br>
+          <strong>Returns:</strong> Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. Damaged, incorrect, or missing-item claims are covered within 48 hours of delivery with clear photos and a continuous unboxing/opening video.<br>
           <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
         </div>
       </div>

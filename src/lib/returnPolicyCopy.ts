@@ -3,10 +3,10 @@
  * Use these constants instead of restating return terms in individual pages.
  */
 export const RETURN_POLICY_SUMMARY =
-  'All sales are final and exchanges are not accepted. For genuine shipping damage or defect, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.';
+  'LuxeMia orders ship from India, so change-of-mind returns are not possible — except where applicable law provides otherwise. If an item arrives damaged, defective, incorrect, or incomplete, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition, and Mini will make it right. Not sure about sizing? Message us on WhatsApp before ordering.';
 
 export const RETURN_POLICY_FAQ_ANSWER =
-  'All sales are final and exchanges are not accepted. For genuine shipping damage or defect, an incorrect item, or a missing item, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video. See Returns & Cancellations for the complete claim instructions.';
+  'Can I return or exchange? Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. If your item arrives damaged, defective, incorrect, or incomplete, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video, and we will fix it. See Returns & Cancellations for the complete claim instructions.';
 
 export const COVERED_ORDER_ISSUE_ANSWER =
   'If an item arrives damaged or defective, is incorrect, or is missing, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition. Keep the item and packaging until LuxeMia reviews the claim.';

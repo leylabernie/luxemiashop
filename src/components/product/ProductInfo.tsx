@@ -1423,9 +1423,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           <BadgeCheck className="h-5 w-5 text-primary" />
         </div>
         <div>
-          <p className="text-sm font-medium">Check your measurements before ordering</p>
+          <p className="text-sm font-medium">Order with sizing confidence</p>
           <p className="text-xs text-muted-foreground">
-            All sales are final. Damaged, incorrect, or missing-item reports follow the covered-order-issue process. Contact LuxeMia before purchase if you need sizing help.{' '}
+            Message Mini on WhatsApp for personal sizing help before you order — garments ship from India, so change-of-mind returns aren't possible. If anything arrives damaged, incorrect, or incomplete, the covered-order-issue process has you covered.{' '}
             <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
               Review the return policy and reporting steps
             </Link>
