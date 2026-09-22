@@ -475,7 +475,10 @@ function isValidGtin(value) {
 
 const requiredTagFailures = [];
 const identifierFailures = [];
-for (const item of itemBlocks) {
+for (const rawItem of itemBlocks) {
+  // g:shipping wraps its own g:price/g:country/g:service children; attribute
+  // counting and value checks must consider the item's own tags only.
+  const item = rawItem.replace(/<g:shipping>[\s\S]*?<\/g:shipping>/gi, '');
   const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
   for (const tag of ['g:id', 'g:title', 'g:description', 'g:link', 'g:image_link', 'g:availability', 'g:price', 'g:condition', 'g:brand', 'g:google_product_category']) {
     const count = tagCount(item, tag);
