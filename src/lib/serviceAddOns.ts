@@ -105,7 +105,10 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
   }
 
   const isApparel = APPAREL_PATTERN.test(`${product.title} ${product.productType}`);
-  return isApparel && !hasListingStitchingOption ? ['garment-alteration'] : [];
+  // Ready-to-wear garments keep the alteration offer even when the listing has
+  // a construction/stitching selector: altering a purchased garment is a
+  // distinct service from stitching an unstitched one.
+  return isApparel ? ['garment-alteration'] : [];
 };
 
 export const serviceAddOnTotal = (codes: ServiceAddOnCode[]) => codes.reduce(
