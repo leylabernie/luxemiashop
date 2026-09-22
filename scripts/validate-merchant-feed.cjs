@@ -555,13 +555,48 @@ if (imageAttributeFailures.length > 0) {
   );
 }
 
-// Country, language, tax, and threshold-based shipping are configured at
-// Merchant Center's data-source/account level. Item shipping would override
-// the accurate "$12 below $150, free at $150+" account rule.
-for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:tax', 'g:shipping']) {
+// Target country, language, and tax stay account-managed at Merchant Center.
+// Item-level g:shipping is required instead: GMC flagged "Missing shipping
+// info in some countries" on most offers because the account does not declare
+// services for all seven feed destinations. Rates must mirror
+// src/config/shippingPolicy.ts; if account-level services are configured for
+// every destination later, the generator can drop these again.
+for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:tax']) {
   if (xml.includes(`<${accountManagedTag}>`)) {
     throw new Error(`Merchant feed contains account-managed attribute <${accountManagedTag}>`);
   }
+}
+const FEED_SHIPPING_RATES = {
+  US: '14.99 USD',
+  CA: '24.99 USD',
+  GB: '24.99 USD',
+  AU: '29.99 USD',
+  NZ: '29.99 USD',
+  ZA: '49.99 USD',
+  MU: '59.99 USD',
+};
+const expectedShippingCountries = Object.keys(FEED_SHIPPING_RATES).sort().join(',');
+const shippingFailures = [];
+for (const block of itemBlocks) {
+  const itemId = block.match(/<g:id>([^<]+)<\/g:id>/)?.[1] || 'unknown-item';
+  const entries = [
+    ...block.matchAll(/<g:shipping><g:country>([A-Z]{2})<\/g:country><g:service>([^<]*)<\/g:service><g:price>([^<]*)<\/g:price><\/g:shipping>/g),
+  ];
+  const entryCountries = entries.map((entry) => entry[1]).sort().join(',');
+  if (entryCountries !== expectedShippingCountries) {
+    shippingFailures.push(`${itemId}: shipping countries [${entryCountries || 'none'}] != [${expectedShippingCountries}]`);
+    continue;
+  }
+  for (const entry of entries) {
+    if (entry[2] !== 'Standard' || entry[3] !== FEED_SHIPPING_RATES[entry[1]]) {
+      shippingFailures.push(`${itemId}: ${entry[1]} ${entry[2] || 'missing service'} ${entry[3] || 'missing price'} != Standard ${FEED_SHIPPING_RATES[entry[1]]}`);
+    }
+  }
+}
+if (shippingFailures.length > 0) {
+  throw new Error(
+    `Merchant feed item shipping must cover all seven destinations at shippingPolicy.ts rates: ${shippingFailures.slice(0, 10).join('; ')}`
+  );
 }
 if (/<g:returns>/i.test(xml)) {
   throw new Error('Merchant feed contains item-level returns that can conflict with the Merchant Center account policy');
