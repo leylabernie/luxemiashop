@@ -1434,6 +1434,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         <p className="text-xs text-muted-foreground">
           Full specifications, set contents, shipping and care details are in the Product Details tabs below.
         </p>
+        <p className="text-xs text-muted-foreground">
+          On-screen colors can vary slightly between devices and finished fabric. Decorative items shown for styling are not part of this listing unless listed in Product Details.
+        </p>
       </section>
 
       <Separator />

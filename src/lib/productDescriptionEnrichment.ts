@@ -149,10 +149,17 @@ export function generateMetaDescription(
       .filter(Boolean).join(' ') || 'Indian ethnic wear';
     lead = `Shop ${identifyingDetails} at LuxeMia.`;
   }
+  // Explicit facet sentences (color, fabric) mirror the way established
+  // ethnic-wear listings expose attributes in snippets; only facts carried by
+  // the listing are used, and long titles fall back to the facet-only lead.
+  const facetParts = [
+    cleanAttribute(color) ? `Color: ${cleanAttribute(color)}.` : '',
+    cleanAttribute(material) ? `Fabric: ${cleanAttribute(material)}.` : '',
+  ].filter(Boolean);
   const detail = /\bsaree\b/i.test(`${productType} ${safeTitle}`)
     ? 'Check blouse details and sizes.'
     : 'Check included pieces and sizes.';
-  const sentences = [detail, 'Tracked U.S. shipping.'];
+  const sentences = [...facetParts, detail, 'Tracked U.S. shipping.'];
   return sentences.reduce((copy, sentence) =>
     `${copy} ${sentence}`.length <= maxLength ? `${copy} ${sentence}` : copy,
   lead);
