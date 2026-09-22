@@ -49,7 +49,7 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
     label: 'Garment Alteration',
     checkoutOptionValue: 'Blouse Stitching / Alteration (+$10)',
     price: 10,
-    description: 'An optional alteration request for eligible unstitched or semi-stitched garments.',
+    description: 'An optional alteration request for this garment, including ready-to-wear. LuxeMia confirms the alteration scope and timing before work starts.',
   },
 };
 
@@ -82,15 +82,16 @@ const productEvidence = (product: ServiceEligibleProduct) => [
 ].filter(Boolean).join(' ');
 
 /**
- * Returns direct purchase options for sarees and only evidence-supported
- * alteration options for other garments. Every saree receives the combined
- * Pico & Fall and matching petticoat selections; blouse stitching remains
- * conditional on stated blouse-fabric or blouse-piece evidence.
+ * Returns direct purchase options for sarees and an alteration option for
+ * other garments — including ready-to-wear, per the owner's services
+ * directive (2026-09-22). Every saree receives the combined Pico & Fall and
+ * matching petticoat selections; blouse stitching remains conditional on
+ * stated blouse-fabric or blouse-piece evidence. Garments that already expose
+ * a stitching/alteration option skip the duplicate alteration line.
  */
 export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): ServiceAddOnCode[] => {
   const evidence = productEvidence(product);
   const isSaree = SAREE_PATTERN.test(`${product.title} ${product.productType}`);
-  const isReady = READY_PATTERN.test(evidence);
   const hasListingStitchingOption = (product.options ?? []).some((option) =>
     /stitch|alter/i.test(option.name),
   );
@@ -104,8 +105,7 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
   }
 
   const isApparel = APPAREL_PATTERN.test(`${product.title} ${product.productType}`);
-  const supportsAlteration = isApparel && !isReady && UNSTITCHED_PATTERN.test(evidence) && !hasListingStitchingOption;
-  return supportsAlteration ? ['garment-alteration'] : [];
+  return isApparel && !hasListingStitchingOption ? ['garment-alteration'] : [];
 };
 
 export const serviceAddOnTotal = (codes: ServiceAddOnCode[]) => codes.reduce(

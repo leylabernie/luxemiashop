@@ -368,9 +368,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
     for (const code of eligibleServiceAddOnCodes) {
       const definition = SERVICE_ADD_ONS[code];
+      // Match on the option VALUE, not its name: the live service product's
+      // option is named "Stitching", and a name requirement silently hid
+      // every add-on from every listing. Values are the stable contract.
       const variant = serviceAddOnProduct.variants.edges.find(({ node }) =>
         node.availableForSale && node.selectedOptions.some((option) =>
-          option.name === 'Service' && option.value === definition.checkoutOptionValue,
+          option.value === definition.checkoutOptionValue,
         ),
       )?.node;
       if (variant) variants.set(code, variant);
