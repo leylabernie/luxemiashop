@@ -469,14 +469,15 @@ const ProductDetail = () => {
               <div className="grid md:grid-cols-2 lg:grid-cols-[minmax(0,58fr)_minmax(0,42fr)] gap-8 lg:gap-12 mb-16">
                 {/* Gallery */}
                 <div className="md:sticky md:top-24 md:self-start">
-                <ProductGallery 
-                  images={product.images.edges}
-                  videos={product.media?.edges}
-                  productTitle={sanitizeProductTitle(product.title)}
-                  selectedImageUrl={selectedVariantImageUrl}
-                />
-                
-                {/* Product Info */}
+                  <ProductGallery
+                    images={product.images.edges}
+                    videos={product.media?.edges}
+                    productTitle={sanitizeProductTitle(product.title)}
+                    selectedImageUrl={selectedVariantImageUrl}
+                  />
+                </div>
+
+                {/* Product Info — its own grid cell so the buy box fills the right column */}
                 <ProductInfo
                   key={product.id}
                   product={{
@@ -486,7 +487,6 @@ const ProductDetail = () => {
                   }}
                   onSelectedVariantChange={(variant) => setSelectedVariantImageUrl(variant?.image?.url ?? null)}
                 />
-                </div>
               </div>
 
               {/* Product Tabs */}
