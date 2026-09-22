@@ -46,6 +46,19 @@ const {
 } = loadTsModule('src/lib/merchantTaxonomy.ts');
 
 const SITE_URL = 'https://luxemia.shop';
+// Per-item shipping for every supported destination — mirrors src/config/shippingPolicy.ts.
+// Google Merchant Center disapproves items missing shipping info ("Missing shipping info in
+// some countries"), so every item must carry rates for all seven countries we serve.
+// Rates are the standard per-order rates; free-shipping thresholds are enforced at checkout.
+const SHIPPING_FEED_XML = [
+  ['US', '14.99 USD'],
+  ['CA', '24.99 USD'],
+  ['GB', '24.99 USD'],
+  ['AU', '29.99 USD'],
+  ['NZ', '29.99 USD'],
+  ['ZA', '49.99 USD'],
+  ['MU', '59.99 USD'],
+].map(([country, price]) => `<g:shipping><g:country>${country}</g:country><g:service>Standard</g:service><g:price>${price}</g:price></g:shipping>`).join('\n    ');
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 const MERCHANT_FEED_REFRESH_SOURCE = process.env.MERCHANT_FEED_REFRESH_SOURCE || '';
@@ -989,6 +1002,7 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
     ${hasDiscount ? `<g:sale_price>${price.toFixed(2)} ${currency}</g:sale_price>` : ''}
     <g:condition>new</g:condition>
     <g:brand>${escapeXml(brand)}</g:brand>
+    ${SHIPPING_FEED_XML}
     <g:google_product_category>${googleProductCategory}</g:google_product_category>
     <g:product_type>${escapeXml(productType)}</g:product_type>
     ${generateProductHighlights(product, color, material, productType, displayTitle, size)}
