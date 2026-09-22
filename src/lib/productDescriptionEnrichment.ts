@@ -152,9 +152,11 @@ export function generateMetaDescription(
   // Explicit facet sentences (color, fabric) mirror the way established
   // ethnic-wear listings expose attributes in snippets; only facts carried by
   // the listing are used, and long titles fall back to the facet-only lead.
+  const titleCaseValue = (value: string) =>
+    value.replace(/\b[a-z]/g, (ch) => ch.toUpperCase());
   const facetParts = [
-    cleanAttribute(color) ? `Color: ${cleanAttribute(color)}.` : '',
-    cleanAttribute(material) ? `Fabric: ${cleanAttribute(material)}.` : '',
+    cleanAttribute(color) ? `Color: ${titleCaseValue(cleanAttribute(color))}.` : '',
+    cleanAttribute(material) ? `Fabric: ${titleCaseValue(cleanAttribute(material))}.` : '',
   ].filter(Boolean);
   const detail = /\bsaree\b/i.test(`${productType} ${safeTitle}`)
     ? 'Check blouse details and sizes.'
