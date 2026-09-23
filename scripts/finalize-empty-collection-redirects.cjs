@@ -13,6 +13,7 @@ const expected = {
   '/collections/frontpage': '/',
   '/collections/indo-western': '/indowestern',
   '/collections/jacket-sets': '/suits',
+  '/collections/anarkali-suits': '/suits',
   '/collections/kurta-pajama-vest': '/menswear',
   '/collections/manthrakodi-sarees': '/sarees',
   '/collections/saree-gowns': '/sarees',

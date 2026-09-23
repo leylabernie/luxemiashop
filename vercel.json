@@ -259,6 +259,11 @@
       "statusCode": 301
     },
     {
+      "source": "/collections/anarkali-suits",
+      "destination": "/suits",
+      "statusCode": 301
+    },
+    {
       "source": "/collections/kurta-pajama-vest",
       "destination": "/menswear",
       "statusCode": 301

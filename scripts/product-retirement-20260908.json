@@ -1,8 +1,8 @@
 {
-  "asOf": "2026-09-08",
-  "cutoff": "2026-08-04T04:00:00Z",
+  "asOf": "2026-09-22",
+  "cutoff": "2026-09-22T00:00:00.000Z",
   "ageField": "createdAt",
-  "reason": "Owner requested reversible archive of products more than five weeks old.",
+  "reason": "Owner-directed reversible draft of every product with fewer than two images (2026-09-22), superseding the 2026-09-08 five-week-age archive. Retained list mirrors the live web catalog (merchant feed product set) after that removal.",
   "retired": [
     {
       "id": "gid://shopify/Product/8774384287915",
@@ -3643,304 +3643,3613 @@
       "id": "gid://shopify/Product/8908207095979",
       "handle": "turmeric-yellow-mirror-work-lehenga-choli-custom-haldi-bridesmaid-outfit-made-to-measure-indian-wedding-dress",
       "createdAt": "2026-08-03T23:25:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026586837163",
+      "handle": "grey-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026586968235",
+      "handle": "pink-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587001003",
+      "handle": "multi-vichitra-silk-embroidery-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587066539",
+      "handle": "blue-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587164843",
+      "handle": "sky-blue-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587197611",
+      "handle": "olive-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587295915",
+      "handle": "pista-green-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587361451",
+      "handle": "peach-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587426987",
+      "handle": "yellow-georgette-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587459755",
+      "handle": "yellow-georgette-sequin-lehenga-choli-0011",
+      "createdAt": "2026-09-20T23:35:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587525291",
+      "handle": "multi-net-lehenga-choli-0012",
+      "createdAt": "2026-09-20T23:35:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587590827",
+      "handle": "multi-net-mirror-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587656363",
+      "handle": "multi-silk-mirror-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587721899",
+      "handle": "multi-silk-embroidery-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587787435",
+      "handle": "multi-net-mirror-lehenga-choli-0016",
+      "createdAt": "2026-09-20T23:35:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587820203",
+      "handle": "multi-silk-embroidery-lehenga-choli-0017",
+      "createdAt": "2026-09-20T23:35:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587885739",
+      "handle": "multi-silk-mirror-lehenga-choli-0018",
+      "createdAt": "2026-09-20T23:36:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587984043",
+      "handle": "multi-faux-georgette-embroidery-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763748712619",
+      "handle": "beige-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:18:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763748810923",
+      "handle": "wine-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:18:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763748876459",
+      "handle": "dusty-pink-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:18:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763748974763",
+      "handle": "blue-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:18:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749171371",
+      "handle": "cream-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:18:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749269675",
+      "handle": "teal-blue-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:18:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749335211",
+      "handle": "wine-georgette-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749433515",
+      "handle": "purple-silk-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749499051",
+      "handle": "pink-silk-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749564587",
+      "handle": "teal-green-net-sequins-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749630123",
+      "handle": "green-silk-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749728427",
+      "handle": "blue-silk-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749826731",
+      "handle": "green-net-sequins-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749859499",
+      "handle": "rani-pink-net-sequins-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763749957803",
+      "handle": "blue-net-sequins-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750023339",
+      "handle": "light-pink-net-beads-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750088875",
+      "handle": "beige-net-beads-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750154411",
+      "handle": "wine-pure-vichitra-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750219947",
+      "handle": "dark-blue-pure-vichitra-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750285483",
+      "handle": "rust-orange-georgette-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750383787",
+      "handle": "turquoise-georgette-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750449323",
+      "handle": "purple-georgette-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750514859",
+      "handle": "green-georgette-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:19:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750580395",
+      "handle": "wine-silk-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750645931",
+      "handle": "maroon-silk-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750711467",
+      "handle": "golden-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750777003",
+      "handle": "bottle-green-net-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750842539",
+      "handle": "cream-silk-embroidery-festive-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750908075",
+      "handle": "blue-georgette-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8763750973611",
+      "handle": "yellow-georgette-embroidery-occasion-lehenga-choli",
+      "createdAt": "2026-05-08T23:20:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378324139",
+      "handle": "embroidery-work-designer-saree-in-silk-light-yellow",
+      "createdAt": "2026-05-15T18:59:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378356907",
+      "handle": "embroidery-work-designer-saree-in-organza-pink",
+      "createdAt": "2026-05-15T18:59:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378389675",
+      "handle": "embroidery-work-designer-saree-in-silk-red",
+      "createdAt": "2026-05-15T18:59:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378422443",
+      "handle": "embroidery-work-ready-to-wear-saree-in-crepe-silk-peach",
+      "createdAt": "2026-05-15T18:59:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378487979",
+      "handle": "embroidery-work-designer-saree-in-georgette-off-white",
+      "createdAt": "2026-05-15T19:00:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378520747",
+      "handle": "embroidery-work-designer-saree-in-silk-sky-blue-2",
+      "createdAt": "2026-05-15T19:00:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378651819",
+      "handle": "embroidery-work40-42-anarkali-suit-in-chinon-sky-blue",
+      "createdAt": "2026-05-15T19:00:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378684587",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-silk-grey",
+      "createdAt": "2026-05-15T19:00:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378717355",
+      "handle": "embroidery-work-anarkali-suit-in-georgette-green-2",
+      "createdAt": "2026-05-15T19:00:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378750123",
+      "handle": "embroidery-work-anarkali-suit-in-georgette-pink",
+      "createdAt": "2026-05-15T19:00:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378782891",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-silk-teal-blue",
+      "createdAt": "2026-05-15T19:00:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378815659",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-silk-purple",
+      "createdAt": "2026-05-15T19:00:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378881195",
+      "handle": "embroidery-work-designer-salwar-suit-in-chinon-silk-yellow",
+      "createdAt": "2026-05-15T19:00:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378913963",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-silk-mustard",
+      "createdAt": "2026-05-15T19:00:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774378946731",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-silk-rani-pink",
+      "createdAt": "2026-05-15T19:00:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379012267",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-peach",
+      "createdAt": "2026-05-15T19:00:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379045035",
+      "handle": "digital-print-work-anarkali-suit-in-cotton-silk-pista-green",
+      "createdAt": "2026-05-15T19:00:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379077803",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-mustard",
+      "createdAt": "2026-05-15T19:00:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379143339",
+      "handle": "embroidery-work-designer-salwar-suit-in-georgette-silk-sky-blue",
+      "createdAt": "2026-05-15T19:00:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379208875",
+      "handle": "embroidery-work-designer-salwar-suit-in-chinon-silk-green",
+      "createdAt": "2026-05-15T19:00:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379274411",
+      "handle": "embroidery-work-designer-salwar-suit-in-tora-silk-yellow",
+      "createdAt": "2026-05-15T19:00:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379339947",
+      "handle": "embroidery-work-lehenga-choli-in-tissue-silk-sky-blue",
+      "createdAt": "2026-05-15T19:01:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379372715",
+      "handle": "embroidery-work-lehenga-choli-in-net-peach",
+      "createdAt": "2026-05-15T19:01:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379471019",
+      "handle": "sequins-work-designer-saree-in-satin-silk-green",
+      "createdAt": "2026-05-15T19:01:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379536555",
+      "handle": "embroidery-work-lehenga-choli-in-crepe-multicolor",
+      "createdAt": "2026-05-15T19:01:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379569323",
+      "handle": "embroidery-work-lehenga-choli-in-crepe-purple",
+      "createdAt": "2026-05-15T19:01:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379602091",
+      "handle": "embroidery-work-lehenga-choli-in-tissue-silk-teal-green",
+      "createdAt": "2026-05-15T19:01:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379634859",
+      "handle": "embroidery-work-lehenga-choli-in-pure-banarasi-green",
+      "createdAt": "2026-05-15T19:01:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379700395",
+      "handle": "sequins-work-lehenga-choli-in-georgette-multicolor",
+      "createdAt": "2026-05-15T19:01:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379733163",
+      "handle": "sequins-work-designer-saree-in-net-purple",
+      "createdAt": "2026-05-15T19:01:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379765931",
+      "handle": "embroidery-work-ready-to-wear-saree-in-georgette-silk-maroon",
+      "createdAt": "2026-05-15T19:01:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774379962539",
+      "handle": "embroidery-work-designer-salwar-suit-in-tora-silk-teal-green",
+      "createdAt": "2026-05-15T19:01:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380093611",
+      "handle": "embroidery-work-designer-salwar-suit-in-tora-silk-off-white",
+      "createdAt": "2026-05-15T19:01:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380126379",
+      "handle": "embroidery-work-ready-to-wear-saree-in-georgette-silk-wine",
+      "createdAt": "2026-05-15T19:01:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380257451",
+      "handle": "digital-print-work-anarkali-suit-in-cotton-silk-green",
+      "createdAt": "2026-05-15T19:02:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380290219",
+      "handle": "digital-print-work-anarkali-suit-in-cotton-silk-rust-orange",
+      "createdAt": "2026-05-15T19:02:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380355755",
+      "handle": "embroidery-work-sharara-set-in-georgette-red",
+      "createdAt": "2026-05-15T19:02:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380454059",
+      "handle": "embroidery-work-sharara-set-in-chinon-hot-pink",
+      "createdAt": "2026-05-15T19:02:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380552363",
+      "handle": "embroidery-work-sharara-set-in-pure-chinon-pink",
+      "createdAt": "2026-05-15T19:02:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380716203",
+      "handle": "embroidery-work-lehenga-choli-in-net-sky",
+      "createdAt": "2026-05-15T19:02:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380814507",
+      "handle": "embroidery-work-anarkali-suit-in-georgette-peach",
+      "createdAt": "2026-05-15T19:02:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774380880043",
+      "handle": "embroidery-work-anarkali-suit-in-georgette-mustard",
+      "createdAt": "2026-05-15T19:02:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381043883",
+      "handle": "plain-work-anarkali-suit-in-chinon-silk-purple",
+      "createdAt": "2026-05-15T19:02:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381109419",
+      "handle": "embroidery-work-anarkali-suit-in-georgette-red",
+      "createdAt": "2026-05-15T19:02:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381207723",
+      "handle": "embroidery-work-anarkali-suit-in-georgette-grey",
+      "createdAt": "2026-05-15T19:02:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381437099",
+      "handle": "embroidery-work-anarkali-suit-in-faux-satin-satin-violet",
+      "createdAt": "2026-05-15T19:03:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381502635",
+      "handle": "embroidery-work-anarkali-suit-in-faux-satin-satin-rani-pink",
+      "createdAt": "2026-05-15T19:03:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381666475",
+      "handle": "digital-print-work-anarkali-suit-in-cotton-silk-teal-green",
+      "createdAt": "2026-05-15T19:03:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381732011",
+      "handle": "embroidery-work-anarkali-suit-in-faux-satin-satin-sky-blue",
+      "createdAt": "2026-05-15T19:03:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381830315",
+      "handle": "embroidery-work-anarkali-suit-in-faux-satin-satin-peach",
+      "createdAt": "2026-05-15T19:03:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381961387",
+      "handle": "embroidery-work-men-s-kurta-in-cotton-pink",
+      "createdAt": "2026-05-15T19:03:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774381994155",
+      "handle": "embroidery-work-anarkali-suit-in-faux-satin-satin-rust-orange",
+      "createdAt": "2026-05-15T19:03:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382059691",
+      "handle": "sequins-work-sharara-set-in-faux-georgette-rani-pink",
+      "createdAt": "2026-05-15T19:03:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382125227",
+      "handle": "zari-work-anarkali-suit-in-crunchy-silk-yellow",
+      "createdAt": "2026-05-15T19:03:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382256299",
+      "handle": "embroidery-work-sharara-set-in-chinon-silk-rama",
+      "createdAt": "2026-05-15T19:03:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382518443",
+      "handle": "embroidery-work-sharara-set-in-net-orange",
+      "createdAt": "2026-05-15T19:03:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382583979",
+      "handle": "embroidery-work-sharara-set-in-net-pink",
+      "createdAt": "2026-05-15T19:03:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382649515",
+      "handle": "embroidery-work-lehenga-choli-in-net-green-2",
+      "createdAt": "2026-05-15T19:04:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382878891",
+      "handle": "embroidery-work-sharara-set-in-silk-green",
+      "createdAt": "2026-05-15T19:04:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774382944427",
+      "handle": "embroidery-work-lehenga-choli-in-pure-banarasi-pink",
+      "createdAt": "2026-05-15T19:04:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383009963",
+      "handle": "embroidery-work-lehenga-choli-in-tissue-silk-navy-blue",
+      "createdAt": "2026-05-15T19:04:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383075499",
+      "handle": "embroidery-work-lehenga-choli-in-net-mehendi-green",
+      "createdAt": "2026-05-15T19:04:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383141035",
+      "handle": "embroidery-work-sharara-set-in-silk-rani-pink",
+      "createdAt": "2026-05-15T19:04:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383206571",
+      "handle": "zari-work-anarkali-suit-in-crunchy-silk-teal-green",
+      "createdAt": "2026-05-15T19:04:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383272107",
+      "handle": "embroidery-work-designer-salwar-suit-in-chinon-silk-purple",
+      "createdAt": "2026-05-15T19:04:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383337643",
+      "handle": "embroidery-work38-40-42-44-sharara-set-in-faux-satin-silk-baby-pink",
+      "createdAt": "2026-05-15T19:04:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383435947",
+      "handle": "sequins-work-sharara-set-in-faux-georgette-wine",
+      "createdAt": "2026-05-15T19:04:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383501483",
+      "handle": "embroidery-work-sharara-set-in-chinon-silk-pink",
+      "createdAt": "2026-05-15T19:04:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383698091",
+      "handle": "embroidery-work-sharara-set-in-satin-silk-yellow",
+      "createdAt": "2026-05-15T19:04:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383861931",
+      "handle": "sequins-work-sharara-set-in-faux-georgette-white",
+      "createdAt": "2026-05-15T19:04:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383927467",
+      "handle": "embroidery-work-lehenga-choli-in-faux-georgette-red",
+      "createdAt": "2026-05-15T19:04:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774383993003",
+      "handle": "embroidery-work-sharara-set-in-chinon-silk-yellow",
+      "createdAt": "2026-05-15T19:04:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384091307",
+      "handle": "embroidery-work-sharara-set-in-net-purple",
+      "createdAt": "2026-05-15T19:04:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384189611",
+      "handle": "sequins-work-sharara-set-in-faux-georgette-sky-blue",
+      "createdAt": "2026-05-15T19:04:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384386219",
+      "handle": "sequins-work-sharara-set-in-faux-georgette-mint-green",
+      "createdAt": "2026-05-15T19:05:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384517291",
+      "handle": "sequins-work-sharara-set-in-faux-georgette-yellow",
+      "createdAt": "2026-05-15T19:05:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384648363",
+      "handle": "plain-work36-38-40-42-44-men-s-kurta-in-roman-silk-navy-blue",
+      "createdAt": "2026-05-15T19:05:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384713899",
+      "handle": "embroidery-work-lehenga-choli-in-net-mehendi",
+      "createdAt": "2026-05-15T19:05:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774384943275",
+      "handle": "embroidery-work-sharara-set-in-pure-chinon-yellow",
+      "createdAt": "2026-05-15T19:05:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385008811",
+      "handle": "embroidery-work-lehenga-choli-in-net-green",
+      "createdAt": "2026-05-15T19:05:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385074347",
+      "handle": "embroidery-work-sharara-set-in-net-turquoise",
+      "createdAt": "2026-05-15T19:05:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385172651",
+      "handle": "embroidery-work-lehenga-choli-in-pure-viscose-off-white",
+      "createdAt": "2026-05-15T19:05:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385238187",
+      "handle": "embroidery-work-lehenga-choli-in-tissue-silk-multicolor",
+      "createdAt": "2026-05-15T19:05:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385369259",
+      "handle": "embroidery-work-sharara-set-in-pure-chinon-purple",
+      "createdAt": "2026-05-15T19:05:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385434795",
+      "handle": "embroidery-work-lehenga-choli-in-net-white",
+      "createdAt": "2026-05-15T19:05:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385598635",
+      "handle": "sequins-work-designer-saree-in-net-rani-pink",
+      "createdAt": "2026-05-15T19:05:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385664171",
+      "handle": "sequins-work-designer-saree-in-satin-silk-turquise",
+      "createdAt": "2026-05-15T19:05:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385729707",
+      "handle": "sequins-work-designer-saree-in-satin-silk-light-pink",
+      "createdAt": "2026-05-15T19:06:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774385860779",
+      "handle": "beads-work-lehenga-choli-in-satin-off-white",
+      "createdAt": "2026-05-15T19:06:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386090155",
+      "handle": "embroidery-work-designer-saree-in-silk-wine",
+      "createdAt": "2026-05-15T19:06:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386221227",
+      "handle": "luxemia-purple-pure-chinon-embroidery-work-occasional-wear-sharara-suit",
+      "createdAt": "2026-05-15T19:06:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386319531",
+      "handle": "luxemia-yellow-pure-chinon-embroidery-work-occasional-wear-sharara-suit",
+      "createdAt": "2026-05-15T19:06:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386385067",
+      "handle": "luxemia-pink-pure-chinon-embroidery-work-occasional-wear-sharara-suit",
+      "createdAt": "2026-05-15T19:06:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386483371",
+      "handle": "faux-georgette-white-party-wear-sequins-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:06:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386548907",
+      "handle": "luxemia-mint-green-faux-georgette-sequins-work-party-wear-sharara-suit",
+      "createdAt": "2026-05-15T19:06:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386614443",
+      "handle": "luxemia-sky-blue-faux-georgette-sequins-work-party-wear-sharara-suit",
+      "createdAt": "2026-05-15T19:06:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386679979",
+      "handle": "faux-georgette-sky-blue-party-wear-sequins-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:06:45Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774386745515",
+      "handle": "pure-chinon-yellow-occasional-wear-embroidery-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:06:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774389792939",
+      "handle": "viscose-jacquard-purple-festival-wear-jacquard-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:08:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774389858475",
+      "handle": "net-orange-festival-wear-embroidery-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:08:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774389956779",
+      "handle": "net-turquoise-festival-wear-embroidery-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:08:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774390022315",
+      "handle": "net-pink-festival-wear-embroidery-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:08:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774390153387",
+      "handle": "chinon-silk-yellow-occasional-wear-embroidery-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:08:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774390251691",
+      "handle": "faux-satin-silk-rani-pink-casual-wear-embroidery-work-readymade-sharara-suit-2",
+      "createdAt": "2026-05-15T19:09:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8774391201963",
+      "handle": "chinon-silk-pink-occasional-wear-embroidery-work-readymade-sharara-suit",
+      "createdAt": "2026-05-15T19:09:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779220648107",
+      "handle": "fuchsia-satin-saree-paisley-border",
+      "createdAt": "2026-05-19T18:39:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779220713643",
+      "handle": "cobalt-blue-satin-saree-paisley-border",
+      "createdAt": "2026-05-19T18:39:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779220779179",
+      "handle": "black-satin-saree-paisley-border",
+      "createdAt": "2026-05-19T18:39:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779220844715",
+      "handle": "magenta-satin-saree-paisley-border",
+      "createdAt": "2026-05-19T18:39:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779220943019",
+      "handle": "olive-green-georgette-saree-woven-border",
+      "createdAt": "2026-05-19T18:39:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221008555",
+      "handle": "charcoal-grey-georgette-saree-woven-border",
+      "createdAt": "2026-05-19T18:39:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221106859",
+      "handle": "coral-orange-georgette-saree-woven-border",
+      "createdAt": "2026-05-19T18:39:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221172395",
+      "handle": "emerald-green-georgette-saree-floral-border",
+      "createdAt": "2026-05-19T18:39:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221270699",
+      "handle": "fuchsia-georgette-saree-woven-border",
+      "createdAt": "2026-05-19T18:39:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221369003",
+      "handle": "saffron-yellow-georgette-saree-floral-border",
+      "createdAt": "2026-05-19T18:39:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221434539",
+      "handle": "rose-pink-georgette-saree-woven-border",
+      "createdAt": "2026-05-19T18:39:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221500075",
+      "handle": "plum-purple-georgette-saree-woven-border",
+      "createdAt": "2026-05-19T18:39:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221532843",
+      "handle": "royal-blue-satin-ready-to-wear-saree-sequins",
+      "createdAt": "2026-05-19T18:39:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221598379",
+      "handle": "black-satin-ready-to-wear-saree-sequins",
+      "createdAt": "2026-05-19T18:39:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8779221663915",
+      "handle": "antique-gold-net-lehenga-zari-sequins",
+      "createdAt": "2026-05-19T18:39:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799636914347",
+      "handle": "luxemia-tissue-silk-top-with-divider-pants",
+      "createdAt": "2026-06-01T16:37:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799637405867",
+      "handle": "luxemia-pre-draped-saree",
+      "createdAt": "2026-06-01T16:38:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799637438635",
+      "handle": "luxemia-front-cut-top-with-skirt-and-dupatta-set",
+      "createdAt": "2026-06-01T16:38:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799637504171",
+      "handle": "luxemia-pre-draped-saree-with-multi-sequence-detailing",
+      "createdAt": "2026-06-01T16:38:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799637536939",
+      "handle": "luxemia-embroidered-shimmer-lehenga-set",
+      "createdAt": "2026-06-01T16:38:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799637995691",
+      "handle": "luxemia-net-lehenga-set-with-sequence-and-mirror-embroidery",
+      "createdAt": "2026-06-01T16:38:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638257835",
+      "handle": "luxemia-orange-beads-work-pre-draped-saree",
+      "createdAt": "2026-06-01T16:38:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638323371",
+      "handle": "luxemia-top-and-palazzo-set-with-neck-dupatta",
+      "createdAt": "2026-06-01T16:39:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638388907",
+      "handle": "luxemia-embroidered-silk-lehenga-with-net-dupatta",
+      "createdAt": "2026-06-01T16:39:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638421675",
+      "handle": "luxemia-multi-thread-pre-draped-saree-with-moti-work",
+      "createdAt": "2026-06-01T16:39:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638454443",
+      "handle": "luxemia-multi-thread-sequence-peplum-with-divider-set-and-neck-dupatta",
+      "createdAt": "2026-06-01T16:39:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638585515",
+      "handle": "luxemia-embroidered-divider-set-with-short-jacket",
+      "createdAt": "2026-06-01T16:39:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638618283",
+      "handle": "luxemia-crop-top-and-skirt-outfit-with-shrug",
+      "createdAt": "2026-06-01T16:39:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638683819",
+      "handle": "luxemia-palazzo-set-with-dupatta",
+      "createdAt": "2026-06-01T16:39:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638749355",
+      "handle": "luxemia-crepe-pre-draped-saree",
+      "createdAt": "2026-06-01T16:39:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638782123",
+      "handle": "luxemia-three-piece-set",
+      "createdAt": "2026-06-01T16:39:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799638814891",
+      "handle": "luxemia-cape-set",
+      "createdAt": "2026-06-01T16:39:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799784960171",
+      "handle": "luxemia-pink-beaded-pre-draped-saree-with-blouse",
+      "createdAt": "2026-06-01T20:30:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785058475",
+      "handle": "luxemia-pink-beaded-skirt-set-with-dupatta",
+      "createdAt": "2026-06-01T20:30:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785156779",
+      "handle": "luxemia-turquoise-mirror-work-pre-draped-saree-with-blouse",
+      "createdAt": "2026-06-01T20:30:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785222315",
+      "handle": "luxemia-wine-mirror-work-pre-draped-saree-with-blouse",
+      "createdAt": "2026-06-01T20:30:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785386155",
+      "handle": "luxemia-pistachio-embroidered-lehenga-choli-with-dupatta",
+      "createdAt": "2026-06-01T20:30:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785484459",
+      "handle": "luxemia-wine-beaded-party-wear-pre-draped-saree-with-blouse",
+      "createdAt": "2026-06-01T20:30:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785549995",
+      "handle": "luxemia-teal-mirror-work-skirt-set",
+      "createdAt": "2026-06-01T20:31:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785615531",
+      "handle": "luxemia-wine-crepe-pre-draped-saree-with-blouse",
+      "createdAt": "2026-06-01T20:31:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785681067",
+      "handle": "luxemia-navy-crepe-pre-draped-saree-with-blouse",
+      "createdAt": "2026-06-01T20:31:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8799785779371",
+      "handle": "luxemia-mustard-embroidered-cape-set",
+      "createdAt": "2026-06-01T20:31:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804725850283",
+      "handle": "luxemia-green-mirror-pre-draped-saree-with-blouse-for-weddings",
+      "createdAt": "2026-06-02T19:54:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804726014123",
+      "handle": "luxemia-grey-moti-sharara-suit-for-festive-events",
+      "createdAt": "2026-06-02T19:54:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804726243499",
+      "handle": "luxemia-yellow-stone-palazzo-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804726472875",
+      "handle": "luxemia-rust-handwork-anarkali-suit-for-festive-events",
+      "createdAt": "2026-06-02T19:54:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804726571179",
+      "handle": "luxemia-pink-sequined-gown-for-festive-events",
+      "createdAt": "2026-06-02T19:54:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804726997163",
+      "handle": "luxemia-pink-beaded-skirt-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804727128235",
+      "handle": "luxemia-pink-embroidered-lehenga-choli-with-dupatta-for-weddings",
+      "createdAt": "2026-06-02T19:54:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804727226539",
+      "handle": "luxemia-pistachio-rust-brown-mirror-palazzo-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804727455915",
+      "handle": "luxemia-green-stone-skirt-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804727554219",
+      "handle": "luxemia-orange-turquoise-rani-mirror-lehenga-choli-with-dupatta-for-weddings",
+      "createdAt": "2026-06-02T19:54:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804727685291",
+      "handle": "luxemia-orange-green-magenta-mirror-skirt-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804728078507",
+      "handle": "luxemia-elegant-solid-tone-mirror-palazzo-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804728144043",
+      "handle": "luxemia-pink-mirror-lehenga-choli-with-dupatta-for-weddings",
+      "createdAt": "2026-06-02T19:54:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804728471723",
+      "handle": "luxemia-orange-mirror-pre-draped-saree-with-blouse-for-receptions",
+      "createdAt": "2026-06-02T19:54:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804728668331",
+      "handle": "luxemia-green-mirror-palazzo-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804728963243",
+      "handle": "luxemia-pink-and-pistachio-mirror-skirt-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804729028779",
+      "handle": "luxemia-rani-moti-pre-draped-saree-with-blouse-for-weddings",
+      "createdAt": "2026-06-02T19:54:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804729159851",
+      "handle": "luxemia-rani-blue-moti-sharara-suit-for-festive-events",
+      "createdAt": "2026-06-02T19:54:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804729389227",
+      "handle": "luxemia-purple-grey-mirror-anarkali-suit-for-festive-events",
+      "createdAt": "2026-06-02T19:54:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804730699947",
+      "handle": "luxemia-mustard-mirror-cape-set-for-festive-events",
+      "createdAt": "2026-06-02T19:54:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804732698795",
+      "handle": "luxemia-orange-moti-pre-draped-saree-with-blouse-for-receptions",
+      "createdAt": "2026-06-02T19:55:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804733517995",
+      "handle": "luxemia-wine-moti-pre-draped-saree-with-blouse-for-receptions",
+      "createdAt": "2026-06-02T19:55:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804733943979",
+      "handle": "luxemia-pink-mirror-cape-set-for-festive-events",
+      "createdAt": "2026-06-02T19:55:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8804734435499",
+      "handle": "luxemia-multicolor-stone-cape-set-for-festive-events",
+      "createdAt": "2026-06-02T19:55:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810838786219",
+      "handle": "rose-pink-silk-embroidered-designer-salwar-suit-with-dupatta-395896",
+      "createdAt": "2026-06-04T19:59:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810838818987",
+      "handle": "brown-silk-embroidered-designer-salwar-suit-with-dupatta-395895",
+      "createdAt": "2026-06-04T19:59:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810838851755",
+      "handle": "purple-silk-embroidered-designer-salwar-suit-with-dupatta-395894",
+      "createdAt": "2026-06-04T19:59:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810961862827",
+      "handle": "blue-lycra-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:42:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810961928363",
+      "handle": "blue-satin-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:42:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810961961131",
+      "handle": "black-satin-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810961993899",
+      "handle": "wine-satin-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962026667",
+      "handle": "turquoise-satin-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962059435",
+      "handle": "baby-pink-satin-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962092203",
+      "handle": "brown-lycra-sequin-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962157739",
+      "handle": "blue-fendy-silk-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962190507",
+      "handle": "rani-pink-fendy-silk-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962256043",
+      "handle": "wine-fendy-silk-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962288811",
+      "handle": "black-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962321579",
+      "handle": "off-white-georgette-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962354347",
+      "handle": "rani-pink-georgette-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962387115",
+      "handle": "teal-blue-georgette-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962452651",
+      "handle": "pink-georgette-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962485419",
+      "handle": "brown-fendy-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962518187",
+      "handle": "pink-fendy-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962550955",
+      "handle": "pistachio-green-fendy-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962583723",
+      "handle": "teal-blue-satin-beaded-occasion-wear-indo-western-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962616491",
+      "handle": "black-satin-beaded-occasion-wear-indo-western-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962649259",
+      "handle": "wine-satin-beaded-occasion-wear-indo-western-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962682027",
+      "handle": "black-satin-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962714795",
+      "handle": "navy-blue-satin-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962747563",
+      "handle": "black-satin-beaded-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962780331",
+      "handle": "navy-blue-satin-beaded-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962845867",
+      "handle": "pink-satin-beaded-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962878635",
+      "handle": "copper-satin-beaded-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962911403",
+      "handle": "onion-tissue-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810962944171",
+      "handle": "grey-tissue-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963009707",
+      "handle": "dusty-pink-tissue-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963042475",
+      "handle": "pistachio-green-tissue-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963075243",
+      "handle": "purple-crepe-silk-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963108011",
+      "handle": "rani-pink-crepe-silk-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963140779",
+      "handle": "blue-crepe-silk-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963173547",
+      "handle": "purple-fendy-silk-beaded-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963206315",
+      "handle": "peach-fendy-silk-beaded-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963239083",
+      "handle": "purple-lycra-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963271851",
+      "handle": "pink-lycra-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963304619",
+      "handle": "pink-chocolate-beaded-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963337387",
+      "handle": "lilac-chocolate-beaded-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963370155",
+      "handle": "powder-blue-chocolate-beaded-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963435691",
+      "handle": "wine-fendi-silk-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963468459",
+      "handle": "blue-fendi-silk-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:43:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963566763",
+      "handle": "brown-lycra-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963599531",
+      "handle": "peach-crepe-silk-embroidered-occasion-wear-ready-to-wear-saree-with-jacket",
+      "createdAt": "2026-06-05T00:44:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963632299",
+      "handle": "purple-crepe-silk-embroidered-occasion-wear-ready-to-wear-saree-with-jacket",
+      "createdAt": "2026-06-05T00:44:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963665067",
+      "handle": "maroon-fendi-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963697835",
+      "handle": "purple-fendi-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963730603",
+      "handle": "blue-fendi-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963763371",
+      "handle": "pink-fendi-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963796139",
+      "handle": "purple-satin-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963828907",
+      "handle": "cream-satin-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963861675",
+      "handle": "sky-blue-satin-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963894443",
+      "handle": "rani-pink-lycra-plain-work-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963927211",
+      "handle": "brown-lycra-plain-work-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810963992747",
+      "handle": "green-lycra-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810964025515",
+      "handle": "purple-lycra-embroidered-occasion-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T00:44:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978246827",
+      "handle": "blue-lycra-embroidered-occasionwear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978312363",
+      "handle": "turquoise-satin-embroidered-occasionwear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978345131",
+      "handle": "baby-pink-satin-embroidered-occasionwear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978410667",
+      "handle": "brown-lycra-sequins-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978443435",
+      "handle": "blue-silk-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978476203",
+      "handle": "rani-pink-silk-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978541739",
+      "handle": "wine-silk-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978574507",
+      "handle": "black-premium-fabric-beaded-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:01:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978640043",
+      "handle": "brown-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978672811",
+      "handle": "pink-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978705579",
+      "handle": "pistachio-green-silk-embroidered-festive-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978738347",
+      "handle": "teal-blue-satin-beaded-indo-western-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978771115",
+      "handle": "black-satin-beaded-indo-western-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978803883",
+      "handle": "wine-satin-beaded-indo-western-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978836651",
+      "handle": "dusty-mauve-tissue-embroidered-party-wear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8810978934955",
+      "handle": "purple-crepe-silk-embroidered-occasionwear-ready-to-wear-saree",
+      "createdAt": "2026-06-05T01:02:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/8856124096683",
+      "handle": "royal-crimson-gadhwal-silk-bridal-lehenga-choli-with-heavy-zari-work-for-wedding",
+      "createdAt": "2026-07-01T16:52:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/8856124129451",
+      "handle": "vibrant-saffron-gadhwal-silk-bridal-lehenga-choli-for-traditional-indian-wedding-ceremony",
+      "createdAt": "2026-07-01T16:52:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/8856124162219",
+      "handle": "radiant-rani-pink-gadhwal-silk-bridal-lehenga-choli-for-your-wedding",
+      "createdAt": "2026-07-01T16:52:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/8856124194987",
+      "handle": "elegant-ivory-gadhwal-silk-bridal-lehenga-choli-for-wedding-celebration",
+      "createdAt": "2026-07-01T16:52:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/8930615197867",
+      "handle": "fuchsia-georgette-embroidered-gharara-set-001",
+      "createdAt": "2026-08-12T19:51:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8930615230635",
+      "handle": "dusty-rose-georgette-embroidered-gharara-set-002",
+      "createdAt": "2026-08-12T19:51:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8930615296171",
+      "handle": "royal-purple-georgette-embroidered-gharara-set-003",
+      "createdAt": "2026-08-12T19:51:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8939559616683",
+      "handle": "fuchsia-olive-purple-black-kora-cotton-frill-navratri-lehenga-kurti-set",
+      "createdAt": "2026-08-18T19:26:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/8939562139819",
+      "handle": "red-ivory-faux-georgette-sequin-zari-embroidered-lehenga-choli-set",
+      "createdAt": "2026-08-18T19:27:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/8939562336427",
+      "handle": "multicolor-georgette-mirror-work-navratri-lehenga-choli",
+      "createdAt": "2026-08-18T19:27:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/8939562467499",
+      "handle": "fuchsia-black-blue-faux-georgette-embroidered-navratri-lehenga-choli",
+      "createdAt": "2026-08-18T19:27:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8939562533035",
+      "handle": "olive-brown-marble-sequin-thread-work-lehenga-choli-set",
+      "createdAt": "2026-08-18T19:27:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8942873804971",
+      "handle": "3d-peacock-mirror-work-italian-silk-ready-made-blouse",
+      "createdAt": "2026-08-19T16:47:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944010395819",
+      "handle": "peach-pistachio-green-embellished-lehenga-set",
+      "createdAt": "2026-08-20T15:07:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944084091051",
+      "handle": "rayon-cotton-mirror-work-navratri-chaniya-choli",
+      "createdAt": "2026-08-20T16:53:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944143368363",
+      "handle": "peach-warm-gold-lehenga-luxemia",
+      "createdAt": "2026-08-20T18:15:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944143499435",
+      "handle": "pistachio-green-lehenga-luxemia",
+      "createdAt": "2026-08-20T18:16:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944143663275",
+      "handle": "fuchsia-red-chaniya-luxemia",
+      "createdAt": "2026-08-20T18:16:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944144318635",
+      "handle": "peach-coral-saree-luxemia",
+      "createdAt": "2026-08-20T18:17:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944146120875",
+      "handle": "cream-gold-saree-luxemia",
+      "createdAt": "2026-08-20T18:18:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944146219179",
+      "handle": "soft-pink-saree-luxemia",
+      "createdAt": "2026-08-20T18:18:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944146317483",
+      "handle": "pistachio-green-saree-luxemia",
+      "createdAt": "2026-08-20T18:18:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944146383019",
+      "handle": "mint-seafoam-saree-luxemia",
+      "createdAt": "2026-08-20T18:18:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944168698027",
+      "handle": "fuchsia-pink-georgette-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:21:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944168763563",
+      "handle": "electric-blue-satin-silk-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:21:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944168796331",
+      "handle": "antique-gold-georgette-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:21:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944168894635",
+      "handle": "shimmer-pink-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:22:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944168927403",
+      "handle": "electric-wine-satin-silk-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:22:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169091243",
+      "handle": "rose-gold-georgette-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:22:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169189547",
+      "handle": "rich-yellow-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:22:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169255083",
+      "handle": "pista-green-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:22:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169287851",
+      "handle": "silver-white-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:22:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169320619",
+      "handle": "teal-blue-satin-georgette-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169386155",
+      "handle": "olive-yellow-georgette-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169484459",
+      "handle": "peach-pink-crushed-tissue-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169517227",
+      "handle": "blood-red-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169549995",
+      "handle": "mulberry-georgette-silk-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169582763",
+      "handle": "dusty-rose-georgette-tissue-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169681067",
+      "handle": "jet-black-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:23:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169713835",
+      "handle": "shimmer-gold-chiffon-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:24:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944169844907",
+      "handle": "parrot-green-satin-saree-with-embroidered-blouse-luxemia",
+      "createdAt": "2026-08-20T19:24:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944298590379",
+      "handle": "ready-to-wear-imported-lycra-saree-with-beadwork-blouse-luxemia",
+      "createdAt": "2026-08-21T00:02:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944309469355",
+      "handle": "dusty-lavender-co-ord-silk-embroidered-farshi-salwar-suit-set-luxemia",
+      "createdAt": "2026-08-21T00:23:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944326508715",
+      "handle": "olive-green-premium-georgette-embroidered-palazzo-suit-set",
+      "createdAt": "2026-08-21T01:01:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/8944336240811",
+      "handle": "real-chinon-embroidered-sharara-suit-set",
+      "createdAt": "2026-08-21T01:16:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945184211115",
+      "handle": "berry-magenta-zari-tissue-silk-saree",
+      "createdAt": "2026-08-21T14:52:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945185095851",
+      "handle": "antique-gold-zari-tissue-silk-saree",
+      "createdAt": "2026-08-21T14:53:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945185456299",
+      "handle": "vermilion-red-zari-tissue-silk-saree",
+      "createdAt": "2026-08-21T14:53:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945185783979",
+      "handle": "rose-gold-zari-tissue-silk-saree",
+      "createdAt": "2026-08-21T14:53:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945186406571",
+      "handle": "mint-green-zari-tissue-silk-saree",
+      "createdAt": "2026-08-21T14:54:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945187127467",
+      "handle": "mustard-yellow-zari-tissue-silk-saree",
+      "createdAt": "2026-08-21T14:54:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945562943659",
+      "handle": "magenta-butterfly-net-embroidered-lehenga-set",
+      "createdAt": "2026-08-21T22:45:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945563599019",
+      "handle": "rust-orange-butterfly-net-embroidered-lehenga-set",
+      "createdAt": "2026-08-21T22:47:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945563795627",
+      "handle": "champagne-ivory-butterfly-net-embroidered-lehenga-set",
+      "createdAt": "2026-08-21T22:48:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945563861163",
+      "handle": "deep-teal-butterfly-net-embroidered-lehenga-set",
+      "createdAt": "2026-08-21T22:48:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945606099115",
+      "handle": "dusty-rose-viscose-crepe-embroidered-palazzo-suit",
+      "createdAt": "2026-08-22T00:21:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945606197419",
+      "handle": "mustard-yellow-viscose-crepe-embroidered-palazzo-suit",
+      "createdAt": "2026-08-22T00:21:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/8945606295723",
+      "handle": "powder-blue-viscose-crepe-embroidered-palazzo-suit",
+      "createdAt": "2026-08-22T00:21:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8946979963051",
+      "handle": "ivory-white-beaded-embroidered-silk-lehenga-choli-set",
+      "createdAt": "2026-08-22T21:40:45Z"
+    },
+    {
+      "id": "gid://shopify/Product/8946980749483",
+      "handle": "black-beaded-embroidered-silk-lehenga-choli-set",
+      "createdAt": "2026-08-22T21:42:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948242022571",
+      "handle": "pure-cotton-gamthi-work-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:29:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948242350251",
+      "handle": "pink-pure-rayon-gamthi-gota-patti-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:29:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948242481323",
+      "handle": "red-pure-cotton-gamthi-mirror-work-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:30:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948242514091",
+      "handle": "blue-white-muslin-kutchi-mirror-digital-print-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:30:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948243726507",
+      "handle": "maroon-pure-cotton-gamthi-mirror-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:30:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948243955883",
+      "handle": "blue-cora-cotton-bandhej-gamthi-navratri-lehenga-top-set",
+      "createdAt": "2026-08-24T00:31:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948244218027",
+      "handle": "lime-white-pure-cotton-mirror-gota-patti-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:31:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948244938923",
+      "handle": "red-pure-cotton-mirror-work-navratri-lehenga-set-with-purse",
+      "createdAt": "2026-08-24T00:31:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948245364907",
+      "handle": "muslin-cotton-real-mirror-work-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:31:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948245528747",
+      "handle": "butter-silk-digital-print-mirror-work-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:31:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948245627051",
+      "handle": "butter-silk-real-mirror-work-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:32:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948245823659",
+      "handle": "black-butter-silk-real-mirror-gota-patti-navratri-lehenga-choli",
+      "createdAt": "2026-08-24T00:32:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948246872235",
+      "handle": "dola-silk-bandhani-ajrakh-navratri-chaniya-choli-set",
+      "createdAt": "2026-08-24T00:32:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948246937771",
+      "handle": "soft-gaji-silk-zari-border-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:32:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948247199915",
+      "handle": "black-jam-cotton-8-meter-flare-navratri-lehenga-set",
+      "createdAt": "2026-08-24T00:33:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948247330987",
+      "handle": "black-maroon-rayon-kodi-lace-navratri-lehenga-choli-set",
+      "createdAt": "2026-08-24T00:33:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8948265648299",
+      "handle": "__connector_schema_probe_do_not_save__",
+      "createdAt": "2026-08-24T01:15:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951098474667",
+      "handle": "premium-chinnon-embroidered-sharara-palazzo-suit-set-with-dupatta",
+      "createdAt": "2026-08-25T19:19:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951099916459",
+      "handle": "womens-embroidered-chinnon-sharara-set-with-dupatta",
+      "createdAt": "2026-08-25T19:29:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104045227",
+      "handle": "purple-heavy-chinnon-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104110763",
+      "handle": "olive-green-heavy-chinnon-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104143531",
+      "handle": "sky-blue-simar-silk-mirror-work-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104176299",
+      "handle": "cream-simar-silk-mirror-work-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104209067",
+      "handle": "purple-simar-silk-mirror-work-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104241835",
+      "handle": "purple-moch-beaded-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T19:47:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104274603",
+      "handle": "orange-heavy-chinnon-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104307371",
+      "handle": "teal-blue-heavy-chinnon-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104340139",
+      "handle": "teal-moch-beaded-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T19:47:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104372907",
+      "handle": "mauve-moch-beaded-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T19:47:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104405675",
+      "handle": "blue-printed-lawn-three-piece-suit-with-cotton-dupatta",
+      "createdAt": "2026-08-25T19:47:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104438443",
+      "handle": "white-crush-satin-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104471211",
+      "handle": "peach-crush-satin-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104503979",
+      "handle": "yellow-crush-satin-embroidered-palazzo-suit",
+      "createdAt": "2026-08-25T19:47:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951104536747",
+      "handle": "red-printed-lawn-three-piece-suit-with-cotton-dupatta",
+      "createdAt": "2026-08-25T19:47:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251075243",
+      "handle": "green-crush-satin-beaded-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T23:37:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251140779",
+      "handle": "hot-pink-premium-silk-embroidered-palazzo-suit-set",
+      "createdAt": "2026-08-25T23:37:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251271851",
+      "handle": "pink-chinnon-beaded-palazzo-suit-with-butti-dupatta",
+      "createdAt": "2026-08-25T23:37:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251337387",
+      "handle": "lemon-yellow-chinnon-beaded-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T23:37:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251370155",
+      "handle": "orange-premium-silk-embroidered-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T23:37:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251435691",
+      "handle": "white-premium-silk-embroidered-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T23:37:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251501227",
+      "handle": "teal-premium-silk-embroidered-anarkali-palazzo-suit",
+      "createdAt": "2026-08-25T23:37:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251599531",
+      "handle": "cream-chinnon-beaded-palazzo-suit-with-butti-dupatta",
+      "createdAt": "2026-08-25T23:37:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/8951251665067",
+      "handle": "white-crush-satin-mirror-work-palazzo-suit-with-dupatta",
+      "createdAt": "2026-08-25T23:37:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959756402859",
+      "handle": "cream-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:31:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959757811883",
+      "handle": "teal-blue-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:32:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959759024299",
+      "handle": "pista-green-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:32:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959760433323",
+      "handle": "dark-peach-fancy-work-art-silk-groom-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:33:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959760990379",
+      "handle": "grey-fancy-work-art-silk-wedding-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:33:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959761711275",
+      "handle": "beige-thread-work-art-silk-groom-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:33:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959763087531",
+      "handle": "cream-thread-work-art-silk-wedding-sherwani-with-stole-design-i",
+      "createdAt": "2026-08-28T00:34:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/8959763775659",
+      "handle": "cream-thread-work-art-silk-wedding-sherwani-with-stole-design-ii",
+      "createdAt": "2026-08-28T00:34:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982908600491",
+      "handle": "chinon-silk-sequin-pearl-sharara-suit-set",
+      "createdAt": "2026-09-09T19:05:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982908698795",
+      "handle": "art-silk-thread-sequin-pearl-sharara-suit-set",
+      "createdAt": "2026-09-09T19:05:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982913712299",
+      "handle": "red-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982913777835",
+      "handle": "green-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982913810603",
+      "handle": "teal-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982914105515",
+      "handle": "purple-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982914269355",
+      "handle": "royal-blue-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982914334891",
+      "handle": "rani-pink-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982914367659",
+      "handle": "maroon-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:08:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915088555",
+      "handle": "black-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:08:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915252395",
+      "handle": "ivory-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:08:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915350699",
+      "handle": "rani-pink-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:08:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915481771",
+      "handle": "brown-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915547307",
+      "handle": "navy-blue-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915580075",
+      "handle": "black-chinon-silk-pearl-sharara-suit-for-weddings",
+      "createdAt": "2026-09-09T19:08:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915612843",
+      "handle": "olive-green-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:08:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915645611",
+      "handle": "rust-orange-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:08:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915678379",
+      "handle": "lavender-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:09:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982915711147",
+      "handle": "teal-blue-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "createdAt": "2026-09-09T19:09:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982919545003",
+      "handle": "turquoise-chinon-silk-indo-western-dress-for-mehndi",
+      "createdAt": "2026-09-09T19:24:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982919643307",
+      "handle": "lavender-chinon-silk-indo-western-dress-for-reception",
+      "createdAt": "2026-09-09T19:24:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982919676075",
+      "handle": "dusty-rose-chinon-silk-indo-western-dress-for-sangeet",
+      "createdAt": "2026-09-09T19:24:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017391644843",
+      "handle": "jwl-001",
+      "createdAt": "2026-09-17T20:07:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017391743147",
+      "handle": "jwl-002",
+      "createdAt": "2026-09-17T20:07:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017391808683",
+      "handle": "jwl-017",
+      "createdAt": "2026-09-17T20:07:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017391874219",
+      "handle": "jwl-003",
+      "createdAt": "2026-09-17T20:07:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392038059",
+      "handle": "navy-silk-sherwani",
+      "createdAt": "2026-09-17T20:07:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392136363",
+      "handle": "baby-pink-cotton-kurta-pajama",
+      "createdAt": "2026-09-17T20:07:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392169131",
+      "handle": "blue-cotton-kurta-pajama",
+      "createdAt": "2026-09-17T20:08:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392234667",
+      "handle": "black-art-silk-sherwani",
+      "createdAt": "2026-09-17T20:08:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392300203",
+      "handle": "white-viscose-kurta-pajama",
+      "createdAt": "2026-09-17T20:08:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392365739",
+      "handle": "silk-light-pink-occasional-embroidery-saree",
+      "createdAt": "2026-09-17T20:08:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392464043",
+      "handle": "silk-green-occasional-embroidery-saree",
+      "createdAt": "2026-09-17T20:08:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392529579",
+      "handle": "magenta-art-silk-festive-saree",
+      "createdAt": "2026-09-17T20:08:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392562347",
+      "handle": "silk-yellow-occasional-embroidery-saree",
+      "createdAt": "2026-09-17T20:08:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392627883",
+      "handle": "banarasi-silk-mint-green-festival-weaving-saree",
+      "createdAt": "2026-09-17T20:08:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392726187",
+      "handle": "royal-blue-georgette-party-saree",
+      "createdAt": "2026-09-17T20:08:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392791723",
+      "handle": "wine-georgette-party-saree",
+      "createdAt": "2026-09-17T20:08:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392824491",
+      "handle": "emerald-green-georgette-party-saree",
+      "createdAt": "2026-09-17T20:08:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392890027",
+      "handle": "maroon-roman-silk-anarkali",
+      "createdAt": "2026-09-17T20:08:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017392955563",
+      "handle": "green-fendy-silk-casual-anarkali",
+      "createdAt": "2026-09-17T20:08:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393021099",
+      "handle": "yellow-georgette-anarkali-gown",
+      "createdAt": "2026-09-17T20:08:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393086635",
+      "handle": "dusty-pink-fendy-silk-casual-anarkali",
+      "createdAt": "2026-09-17T20:08:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393184939",
+      "handle": "sky-blue-georgette-anarkali-gown",
+      "createdAt": "2026-09-17T20:08:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393250475",
+      "handle": "jwl-008",
+      "createdAt": "2026-09-17T20:08:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393316011",
+      "handle": "jwl-004",
+      "createdAt": "2026-09-17T20:08:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393381547",
+      "handle": "jwl-005",
+      "createdAt": "2026-09-17T20:08:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393447083",
+      "handle": "jwl-006",
+      "createdAt": "2026-09-17T20:08:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393479851",
+      "handle": "jwl-007",
+      "createdAt": "2026-09-17T20:08:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393578155",
+      "handle": "jwl-009",
+      "createdAt": "2026-09-17T20:08:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393676459",
+      "handle": "jwl-010",
+      "createdAt": "2026-09-17T20:08:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393741995",
+      "handle": "jwl-016",
+      "createdAt": "2026-09-17T20:08:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393807531",
+      "handle": "jwl-023",
+      "createdAt": "2026-09-17T20:08:45Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393873067",
+      "handle": "jwl-024",
+      "createdAt": "2026-09-17T20:08:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017393938603",
+      "handle": "jwl-014",
+      "createdAt": "2026-09-17T20:08:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394004139",
+      "handle": "jwl-013",
+      "createdAt": "2026-09-17T20:08:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394069675",
+      "handle": "jwl-033",
+      "createdAt": "2026-09-17T20:08:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394135211",
+      "handle": "jwl-035",
+      "createdAt": "2026-09-17T20:08:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394233515",
+      "handle": "jwl-037",
+      "createdAt": "2026-09-17T20:08:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394299051",
+      "handle": "jwl-052",
+      "createdAt": "2026-09-17T20:08:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394364587",
+      "handle": "jwl-011",
+      "createdAt": "2026-09-17T20:09:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394430123",
+      "handle": "jwl-012",
+      "createdAt": "2026-09-17T20:09:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394495659",
+      "handle": "jwl-015",
+      "createdAt": "2026-09-17T20:09:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394561195",
+      "handle": "jwl-018",
+      "createdAt": "2026-09-17T20:09:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394626731",
+      "handle": "jwl-019",
+      "createdAt": "2026-09-17T20:09:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394692267",
+      "handle": "jwl-020",
+      "createdAt": "2026-09-17T20:09:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394757803",
+      "handle": "jwl-021",
+      "createdAt": "2026-09-17T20:09:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394823339",
+      "handle": "jwl-022",
+      "createdAt": "2026-09-17T20:09:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394888875",
+      "handle": "jwl-025",
+      "createdAt": "2026-09-17T20:09:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017394987179",
+      "handle": "jwl-026",
+      "createdAt": "2026-09-17T20:09:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395052715",
+      "handle": "jwl-027",
+      "createdAt": "2026-09-17T20:09:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395118251",
+      "handle": "jwl-028",
+      "createdAt": "2026-09-17T20:09:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395183787",
+      "handle": "jwl-029",
+      "createdAt": "2026-09-17T20:09:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395249323",
+      "handle": "jwl-030",
+      "createdAt": "2026-09-17T20:09:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395314859",
+      "handle": "jwl-031",
+      "createdAt": "2026-09-17T20:09:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395380395",
+      "handle": "jwl-032",
+      "createdAt": "2026-09-17T20:09:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395413163",
+      "handle": "jwl-034",
+      "createdAt": "2026-09-17T20:09:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395478699",
+      "handle": "jwl-036",
+      "createdAt": "2026-09-17T20:09:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395511467",
+      "handle": "jwl-038",
+      "createdAt": "2026-09-17T20:09:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395577003",
+      "handle": "jwl-039",
+      "createdAt": "2026-09-17T20:09:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395642539",
+      "handle": "jwl-040",
+      "createdAt": "2026-09-17T20:09:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395740843",
+      "handle": "jwl-041",
+      "createdAt": "2026-09-17T20:09:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395773611",
+      "handle": "jwl-042",
+      "createdAt": "2026-09-17T20:09:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395839147",
+      "handle": "jwl-043",
+      "createdAt": "2026-09-17T20:09:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017395937451",
+      "handle": "jwl-044",
+      "createdAt": "2026-09-17T20:09:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396068523",
+      "handle": "jwl-045",
+      "createdAt": "2026-09-17T20:09:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396134059",
+      "handle": "jwl-046",
+      "createdAt": "2026-09-17T20:09:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396199595",
+      "handle": "jwl-047",
+      "createdAt": "2026-09-17T20:09:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396265131",
+      "handle": "jwl-048",
+      "createdAt": "2026-09-17T20:09:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396330667",
+      "handle": "jwl-049",
+      "createdAt": "2026-09-17T20:09:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396428971",
+      "handle": "jwl-050",
+      "createdAt": "2026-09-17T20:09:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396461739",
+      "handle": "jwl-051",
+      "createdAt": "2026-09-17T20:09:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396527275",
+      "handle": "jwl-053",
+      "createdAt": "2026-09-17T20:09:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396592811",
+      "handle": "jwl-054",
+      "createdAt": "2026-09-17T20:10:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396691115",
+      "handle": "jwl-055",
+      "createdAt": "2026-09-17T20:10:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396756651",
+      "handle": "jwl-056",
+      "createdAt": "2026-09-17T20:10:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396822187",
+      "handle": "jwl-057",
+      "createdAt": "2026-09-17T20:10:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396887723",
+      "handle": "jwl-058",
+      "createdAt": "2026-09-17T20:10:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396920491",
+      "handle": "beige-cotton-kurta-pajama",
+      "createdAt": "2026-09-17T20:10:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017396986027",
+      "handle": "blue-banarasi-jacquard-sherwani",
+      "createdAt": "2026-09-17T20:10:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397084331",
+      "handle": "teal-blue-cotton-kurta-pajama",
+      "createdAt": "2026-09-17T20:10:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397117099",
+      "handle": "black-banarasi-jacquard-sherwani",
+      "createdAt": "2026-09-17T20:10:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397149867",
+      "handle": "black-cotton-kurta-pajama",
+      "createdAt": "2026-09-17T20:10:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397182635",
+      "handle": "yellow-cotton-kurta-pajama",
+      "createdAt": "2026-09-17T20:10:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397215403",
+      "handle": "light-pink-art-silk-groom-sherwani",
+      "createdAt": "2026-09-17T20:10:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397280939",
+      "handle": "navy-blue-velvet-sherwani",
+      "createdAt": "2026-09-17T20:10:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397346475",
+      "handle": "magenta-velvet-sherwani",
+      "createdAt": "2026-09-17T20:10:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397379243",
+      "handle": "wine-art-silk-sherwani",
+      "createdAt": "2026-09-17T20:10:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397444779",
+      "handle": "brown-silk-kurta-pajama",
+      "createdAt": "2026-09-17T20:10:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397510315",
+      "handle": "black-velvet-sherwani",
+      "createdAt": "2026-09-17T20:10:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397608619",
+      "handle": "white-art-silk-groom-sherwani",
+      "createdAt": "2026-09-17T20:10:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397674155",
+      "handle": "purple-art-silk-groom-sherwani",
+      "createdAt": "2026-09-17T20:10:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397739691",
+      "handle": "off-white-art-silk-groom-sherwani",
+      "createdAt": "2026-09-17T20:10:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397805227",
+      "handle": "grey-art-silk-groom-sherwani",
+      "createdAt": "2026-09-17T20:10:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397870763",
+      "handle": "maroon-banarasi-jacquard-sherwani",
+      "createdAt": "2026-09-17T20:10:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017397936299",
+      "handle": "pink-banarasi-jacquard-sherwani",
+      "createdAt": "2026-09-17T20:10:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398034603",
+      "handle": "peach-banarasi-jacquard-sherwani",
+      "createdAt": "2026-09-17T20:10:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398100139",
+      "handle": "mustard-banarasi-jacquard-sherwani",
+      "createdAt": "2026-09-17T20:10:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398198443",
+      "handle": "silk-sea-green-occasional-embroidery-saree",
+      "createdAt": "2026-09-17T20:10:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398526123",
+      "handle": "pink-tissue-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:10:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398591659",
+      "handle": "mint-green-kanchipuram-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:10:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398657195",
+      "handle": "royal-pink-kanchipuram-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:10:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398722731",
+      "handle": "antique-gold-kanchipuram-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:10:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398788267",
+      "handle": "silk-rani-pink-casual-sequins-saree",
+      "createdAt": "2026-09-17T20:10:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398821035",
+      "handle": "silk-blue-casual-sequins-saree",
+      "createdAt": "2026-09-17T20:11:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398919339",
+      "handle": "sea-green-tissue-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:11:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017398984875",
+      "handle": "sunset-orange-tissue-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:11:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399214251",
+      "handle": "ivory-beige-kanchipuram-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:11:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399279787",
+      "handle": "beige-gold-tissue-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:11:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399410859",
+      "handle": "multicolor-kanchipuram-silk-wedding-saree",
+      "createdAt": "2026-09-17T20:11:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399443627",
+      "handle": "silk-rust-orange-casual-sequins-saree",
+      "createdAt": "2026-09-17T20:11:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399509163",
+      "handle": "fendy-satin-teal-green-occasional-embroidery-saree",
+      "createdAt": "2026-09-17T20:11:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399771307",
+      "handle": "wine-georgette-sharara-suit",
+      "createdAt": "2026-09-17T20:11:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399804075",
+      "handle": "dusty-rose-silk-party-anarkali",
+      "createdAt": "2026-09-17T20:11:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399935147",
+      "handle": "peach-fendy-silk-casual-anarkali",
+      "createdAt": "2026-09-17T20:11:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017399967915",
+      "handle": "red-silk-eid-anarkali-suit",
+      "createdAt": "2026-09-17T20:11:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400033451",
+      "handle": "green-silk-eid-anarkali-suit",
+      "createdAt": "2026-09-17T20:11:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400098987",
+      "handle": "baby-pink-roman-silk-festival-anarkali",
+      "createdAt": "2026-09-17T20:11:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400164523",
+      "handle": "lavender-viscose-casual-anarkali",
+      "createdAt": "2026-09-17T20:11:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400230059",
+      "handle": "grey-fendy-silk-casual-anarkali",
+      "createdAt": "2026-09-17T20:11:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400262827",
+      "handle": "purple-chanderi-silk-casual-anarkali",
+      "createdAt": "2026-09-17T20:11:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400328363",
+      "handle": "pista-viscose-casual-anarkali",
+      "createdAt": "2026-09-17T20:11:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400361131",
+      "handle": "black-roman-silk-anarkali",
+      "createdAt": "2026-09-17T20:11:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400426667",
+      "handle": "red-chanderi-cotton-casual-anarkali",
+      "createdAt": "2026-09-17T20:11:45Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400492203",
+      "handle": "champagne-beige-chanderi-anarkali",
+      "createdAt": "2026-09-17T20:11:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9017400557739",
+      "handle": "banarasi-silk-mustard-festival-weaving-saree",
+      "createdAt": "2026-09-17T20:11:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852628651",
+      "handle": "chanderi-silk-cream-casual-wear-embroidery-work-readymade-palazzo-suit-404571",
+      "createdAt": "2026-09-19T02:18:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852759723",
+      "handle": "chanderi-silk-teal-blue-casual-wear-embroidery-work-readymade-palazzo-suit-404570",
+      "createdAt": "2026-09-19T02:18:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852923563",
+      "handle": "chanderi-silk-sea-green-casual-wear-embroidery-work-readymade-palazzo-suit-404569",
+      "createdAt": "2026-09-19T02:18:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853021867",
+      "handle": "chanderi-silk-orange-casual-wear-embroidery-work-readymade-palazzo-suit-404568",
+      "createdAt": "2026-09-19T02:18:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853152939",
+      "handle": "chanderi-silk-lavender-casual-wear-embroidery-work-readymade-palazzo-suit-404567",
+      "createdAt": "2026-09-19T02:18:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853316779",
+      "handle": "chanderi-silk-dark-marron-casual-wear-embroidery-work-readymade-palazzo-suit-404566",
+      "createdAt": "2026-09-19T02:18:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853447851",
+      "handle": "chanderi-silk-pink-casual-wear-embroidery-work-readymade-palazzo-suit-404565",
+      "createdAt": "2026-09-19T02:18:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853546155",
+      "handle": "chanderi-silk-peach-casual-wear-embroidery-work-readymade-palazzo-suit-404564",
+      "createdAt": "2026-09-19T02:18:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587263147",
+      "handle": "multi-cotton-lehenga-choli",
+      "createdAt": "2026-09-20T23:35:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026587918507",
+      "handle": "multi-net-lehenga-choli-0019",
+      "createdAt": "2026-09-20T23:36:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588049579",
+      "handle": "multi-faux-georgette-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588115115",
+      "handle": "green-silk-lehenga-choli-0022",
+      "createdAt": "2026-09-20T23:36:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588147883",
+      "handle": "blue-georgette-sequin-lehenga-choli-0023",
+      "createdAt": "2026-09-20T23:36:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588180651",
+      "handle": "pink-georgette-sequin-lehenga-choli-0024",
+      "createdAt": "2026-09-20T23:36:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588278955",
+      "handle": "yellow-dola-silk-jacquard-sequin-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588311723",
+      "handle": "multi-rayon-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588377259",
+      "handle": "multi-kanchipuram-silk-zari-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588410027",
+      "handle": "multi-tussar-silk-embroidery-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588508331",
+      "handle": "multi-tussar-silk-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9026588541099",
+      "handle": "multi-rayon-cotton-lehenga-choli",
+      "createdAt": "2026-09-20T23:36:17Z"
     }
   ],
   "retained": [
     {
-      "id": "gid://shopify/Product/8945285660843",
-      "handle": "luxemia-tailoring-saree-finishing-add-ons"
+      "id": "gid://shopify/Product/9022859935915",
+      "handle": "art-silk-cream-groom-wear-thread-work-readymade-sherwani-385484",
+      "createdAt": "2026-09-19T02:20:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859804843",
+      "handle": "art-silk-beige-groom-wear-thread-work-readymade-sherwani-385485",
+      "createdAt": "2026-09-19T02:20:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859706539",
+      "handle": "art-silk-onion-groom-wear-thread-work-readymade-sherwani-385486",
+      "createdAt": "2026-09-19T02:20:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859542699",
+      "handle": "art-silk-firozi-green-groom-wear-thread-work-readymade-sherwani-385487",
+      "createdAt": "2026-09-19T02:20:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859411627",
+      "handle": "art-silk-onion-groom-wear-thread-work-readymade-sherwani-385488",
+      "createdAt": "2026-09-19T02:20:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859280555",
+      "handle": "art-silk-light-pink-wedding-wear-embroidery-work-readymade-sherwani-385503",
+      "createdAt": "2026-09-19T02:20:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859182251",
+      "handle": "art-silk-beige-wedding-wear-embroidery-work-readymade-sherwani-385505",
+      "createdAt": "2026-09-19T02:20:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022859051179",
+      "handle": "art-silk-pista-green-wedding-wear-embroidery-work-readymade-sherwani-385506",
+      "createdAt": "2026-09-19T02:20:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858952875",
+      "handle": "art-silk-teal-blue-wedding-wear-embroidery-work-readymade-sherwani-385507",
+      "createdAt": "2026-09-19T02:20:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858854571",
+      "handle": "art-silk-black-wedding-wear-embroidery-work-readymade-sherwani-385508",
+      "createdAt": "2026-09-19T02:20:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858723499",
+      "handle": "art-silk-wine-wedding-wear-embroidery-work-readymade-sherwani-385509",
+      "createdAt": "2026-09-19T02:20:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858625195",
+      "handle": "embosed-velvet-black-wedding-wear-embroidery-work-readymade-sherwani-385510",
+      "createdAt": "2026-09-19T02:20:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858494123",
+      "handle": "art-silk-navy-blue-wedding-wear-embroidery-work-readymade-sherwani-385511",
+      "createdAt": "2026-09-19T02:19:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858363051",
+      "handle": "embosed-velvet-magenta-wedding-wear-embroidery-work-readymade-sherwani-385512",
+      "createdAt": "2026-09-19T02:19:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858231979",
+      "handle": "embosed-velvet-navy-blue-wedding-wear-embroidery-work-readymade-sherwani-385513",
+      "createdAt": "2026-09-19T02:19:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858133675",
+      "handle": "art-silk-pink-party-wear-computer-thread-work-readymade-sherwani-389315",
+      "createdAt": "2026-09-19T02:19:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022858002603",
+      "handle": "art-silk-onion-party-wear-computer-thread-work-readymade-sherwani-389316",
+      "createdAt": "2026-09-19T02:19:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857871531",
+      "handle": "art-silk-light-pista-party-wear-computer-thread-work-readymade-sherwani-389317",
+      "createdAt": "2026-09-19T02:19:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857773227",
+      "handle": "art-silk-onion-party-wear-computer-thread-work-readymade-sherwani-389318",
+      "createdAt": "2026-09-19T02:19:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857707691",
+      "handle": "art-silk-cream-party-wear-computer-thread-work-readymade-sherwani-389319",
+      "createdAt": "2026-09-19T02:19:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857576619",
+      "handle": "art-silk-powder-blue-party-wear-computer-thread-work-readymade-sherwani-389320",
+      "createdAt": "2026-09-19T02:19:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857511083",
+      "handle": "art-silk-cream-party-wear-computer-thread-work-readymade-sherwani-389321",
+      "createdAt": "2026-09-19T02:19:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857347243",
+      "handle": "art-silk-cream-party-wear-computer-thread-work-readymade-sherwani-389322",
+      "createdAt": "2026-09-19T02:19:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857216171",
+      "handle": "art-silk-onion-party-wear-computer-thread-work-readymade-sherwani-389323",
+      "createdAt": "2026-09-19T02:19:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022857117867",
+      "handle": "jacquard-silk-gold-festival-wear-pintux-readymade-dhoti-suit-with-stole-403975",
+      "createdAt": "2026-09-19T02:19:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856986795",
+      "handle": "jacquard-silk-beige-festival-wear-pintux-readymade-dhoti-suit-with-stole-403976",
+      "createdAt": "2026-09-19T02:19:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856888491",
+      "handle": "jacquard-silk-beige-festival-wear-pintux-readymade-dhoti-suit-with-stole-403977",
+      "createdAt": "2026-09-19T02:19:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856757419",
+      "handle": "jacquard-silk-beige-festival-wear-pintux-readymade-dhoti-suit-with-stole-403978",
+      "createdAt": "2026-09-19T02:19:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856626347",
+      "handle": "jacquard-silk-beige-festival-wear-pintux-readymade-dhoti-suit-with-stole-403979",
+      "createdAt": "2026-09-19T02:19:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856495275",
+      "handle": "jacquard-silk-beige-festival-wear-pintux-readymade-dhoti-suit-with-stole-403980",
+      "createdAt": "2026-09-19T02:19:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856396971",
+      "handle": "nc-moss-purple-festival-wear-embroidery-work-readymade-palazzo-suit-404453",
+      "createdAt": "2026-09-19T02:19:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856233131",
+      "handle": "nc-moss-rust-orange-festival-wear-embroidery-work-readymade-palazzo-suit-404454",
+      "createdAt": "2026-09-19T02:19:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856134827",
+      "handle": "tissue-silk-multicolor-occasional-wear-embroidery-work-readymade-palazzo-suit-404455",
+      "createdAt": "2026-09-19T02:19:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022856069291",
+      "handle": "tissue-silk-multicolor-occasional-wear-embroidery-work-readymade-palazzo-suit-404456",
+      "createdAt": "2026-09-19T02:19:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022855872683",
+      "handle": "crunchy-silk-pink-festival-wear-embroidery-work-readymade-palazzo-suit-404468",
+      "createdAt": "2026-09-19T02:19:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022855708843",
+      "handle": "crunchy-silk-beige-festival-wear-embroidery-work-readymade-palazzo-suit-404469",
+      "createdAt": "2026-09-19T02:19:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022855545003",
+      "handle": "crepe-silk-navy-blue-casual-wear-embroidery-work-readymade-palazzo-suit-404492",
+      "createdAt": "2026-09-19T02:19:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022855446699",
+      "handle": "cotton-silk-yellow-casual-wear-embroidery-work-salwar-suit-404529",
+      "createdAt": "2026-09-19T02:19:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022855250091",
+      "handle": "cotton-silk-pink-casual-wear-embroidery-work-salwar-suit-404530",
+      "createdAt": "2026-09-19T02:19:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022855119019",
+      "handle": "cotton-silk-grey-casual-wear-embroidery-work-salwar-suit-404531",
+      "createdAt": "2026-09-19T02:19:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854987947",
+      "handle": "cotton-silk-pista-green-casual-wear-embroidery-work-salwar-suit-404532",
+      "createdAt": "2026-09-19T02:19:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854889643",
+      "handle": "chinon-silk-dusty-pink-festival-wear-embroidery-work-readymade-palazzo-suit-404533",
+      "createdAt": "2026-09-19T02:19:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854725803",
+      "handle": "tissue-silk-rust-orange-festival-wear-embroidery-work-readymade-palazzo-suit-404541",
+      "createdAt": "2026-09-19T02:19:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854594731",
+      "handle": "tissue-silk-olive-green-festival-wear-embroidery-work-readymade-palazzo-suit-404542",
+      "createdAt": "2026-09-19T02:18:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854496427",
+      "handle": "chinon-silk-pink-occasional-wear-embroidery-work-readymade-sharara-suit-404546",
+      "createdAt": "2026-09-19T02:18:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854365355",
+      "handle": "roman-silk-black-casual-wear-embroidery-work-readymade-sharara-suit-404547",
+      "createdAt": "2026-09-19T02:18:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854201515",
+      "handle": "chinon-purple-casual-wear-embroidery-work-readymade-sharara-suit-404550",
+      "createdAt": "2026-09-19T02:18:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022854070443",
+      "handle": "chinon-silk-rani-pink-festival-wear-embroidery-work-readymade-3-piece-kurti-palazzo-with-dupatta-404559",
+      "createdAt": "2026-09-19T02:18:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853939371",
+      "handle": "chinon-silk-black-festival-wear-embroidery-work-readymade-3-piece-kurti-palazzo-with-dupatta-404560",
+      "createdAt": "2026-09-19T02:18:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853808299",
+      "handle": "chinon-silk-orange-festival-wear-embroidery-work-readymade-3-piece-kurti-palazzo-with-dupatta-404562",
+      "createdAt": "2026-09-19T02:18:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022853677227",
+      "handle": "chinon-silk-olive-green-festival-wear-embroidery-work-readymade-3-piece-kurti-palazzo-with-dupatta-404563",
+      "createdAt": "2026-09-19T02:18:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852497579",
+      "handle": "chinon-silk-maroon-casual-wear-embroidery-work-readymade-sharara-suit-404614",
+      "createdAt": "2026-09-19T02:18:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852333739",
+      "handle": "net-pink-occasional-wear-beads-work-readymade-lehenga-choli-403807",
+      "createdAt": "2026-09-19T02:18:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852137131",
+      "handle": "net-off-white-occasional-wear-beads-work-readymade-lehenga-choli-403808",
+      "createdAt": "2026-09-19T02:18:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022852038827",
+      "handle": "net-peach-occasional-wear-beads-work-readymade-lehenga-choli-403809",
+      "createdAt": "2026-09-19T02:18:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851973291",
+      "handle": "net-rani-pink-festival-wear-embroidery-work-readymade-lehenga-choli-403815",
+      "createdAt": "2026-09-19T02:18:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851842219",
+      "handle": "net-beige-festival-wear-embroidery-work-readymade-lehenga-choli-403816",
+      "createdAt": "2026-09-19T02:18:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851711147",
+      "handle": "net-green-festival-wear-embroidery-work-readymade-lehenga-choli-403817",
+      "createdAt": "2026-09-19T02:18:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851612843",
+      "handle": "silk-rani-pink-festival-wear-beads-work-lehenga-choli-403871",
+      "createdAt": "2026-09-19T02:18:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851481771",
+      "handle": "silk-rani-pink-festival-wear-beads-work-lehenga-choli-403873",
+      "createdAt": "2026-09-19T02:18:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851350699",
+      "handle": "imported-fabric-cream-festival-wear-embroidery-work-readymade-indo-western-suit-404067",
+      "createdAt": "2026-09-19T02:18:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851186859",
+      "handle": "imported-fabric-beige-festival-wear-embroidery-work-readymade-indo-western-suit-404068",
+      "createdAt": "2026-09-19T02:18:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022851088555",
+      "handle": "imported-fabric-wine-festival-wear-embroidery-work-readymade-indo-western-suit-404069",
+      "createdAt": "2026-09-19T02:18:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850957483",
+      "handle": "imported-fabric-blue-festival-wear-embroidery-work-readymade-indo-western-suit-404070",
+      "createdAt": "2026-09-19T02:18:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850793643",
+      "handle": "imported-fabric-dark-grey-festival-wear-embroidery-work-readymade-indo-western-suit-404071",
+      "createdAt": "2026-09-19T02:18:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850629803",
+      "handle": "imported-fabric-pink-festival-wear-embroidery-work-readymade-indo-western-suit-404072",
+      "createdAt": "2026-09-19T02:18:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850531499",
+      "handle": "imported-fabric-grey-festival-wear-embroidery-work-readymade-indo-western-suit-404073",
+      "createdAt": "2026-09-19T02:18:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850400427",
+      "handle": "silk-red-festival-wear-embroidery-work-lehenga-choli-404132",
+      "createdAt": "2026-09-19T02:18:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850269355",
+      "handle": "silk-rani-pink-festival-wear-embroidery-work-lehenga-choli-404133",
+      "createdAt": "2026-09-19T02:17:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850203819",
+      "handle": "silk-red-occasional-wear-thread-work-lehenga-choli-404134",
+      "createdAt": "2026-09-19T02:17:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022850072747",
+      "handle": "silk-rani-pink-occasional-wear-thread-work-lehenga-choli-404135",
+      "createdAt": "2026-09-19T02:17:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022849941675",
+      "handle": "silk-maroon-occasional-wear-thread-work-lehenga-choli-404136",
+      "createdAt": "2026-09-19T02:17:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022849843371",
+      "handle": "tissue-silk-multicolor-occasional-wear-embroidery-work-readymade-lehenga-choli-404221",
+      "createdAt": "2026-09-19T02:17:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022849777835",
+      "handle": "tissue-silk-multicolor-occasional-wear-embroidery-work-readymade-lehenga-choli-404222",
+      "createdAt": "2026-09-19T02:17:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848827563",
+      "handle": "net-sky-blue-occasional-wear-beads-work-readymade-lehenga-choli-400562",
+      "createdAt": "2026-09-19T02:17:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848729259",
+      "handle": "net-pink-occasional-wear-beads-work-readymade-lehenga-choli-400563",
+      "createdAt": "2026-09-19T02:17:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848630955",
+      "handle": "net-beige-festival-wear-beads-work-readymade-lehenga-choli-400564",
+      "createdAt": "2026-09-19T02:17:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848499883",
+      "handle": "net-powder-blue-festival-wear-beads-work-readymade-lehenga-choli-400565",
+      "createdAt": "2026-09-19T02:17:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848368811",
+      "handle": "velvet-maroon-occasional-wear-embroidery-work-bridal-lehenga-with-top-and-dupatta-400622",
+      "createdAt": "2026-09-19T02:17:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848270507",
+      "handle": "velvet-black-occasional-wear-embroidery-work-bridal-lehenga-with-top-and-dupatta-400623",
+      "createdAt": "2026-09-19T02:17:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848106667",
+      "handle": "silk-maroon-occasional-wear-thread-work-lehenga-choli-400930",
+      "createdAt": "2026-09-19T02:17:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022848008363",
+      "handle": "silk-rani-pink-occasional-wear-thread-work-lehenga-choli-400931",
+      "createdAt": "2026-09-19T02:17:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847877291",
+      "handle": "net-beige-festival-wear-embroidery-work-readymade-lehenga-choli-400934",
+      "createdAt": "2026-09-19T02:17:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847778987",
+      "handle": "net-beige-festival-wear-embroidery-work-readymade-lehenga-choli-400935",
+      "createdAt": "2026-09-19T02:17:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847647915",
+      "handle": "silk-maroon-festival-wear-embroidery-work-lehenga-choli-401014",
+      "createdAt": "2026-09-19T02:17:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847484075",
+      "handle": "silk-rani-pink-festival-wear-embroidery-work-lehenga-choli-401015",
+      "createdAt": "2026-09-19T02:17:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847353003",
+      "handle": "net-purple-occasional-wear-embroidery-work-lehenga-choli-401016",
+      "createdAt": "2026-09-19T02:17:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847221931",
+      "handle": "net-black-occasional-wear-embroidery-work-lehenga-choli-401017",
+      "createdAt": "2026-09-19T02:17:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022847123627",
+      "handle": "net-dusty-pink-festival-wear-embroidery-work-lehenga-choli-401018",
+      "createdAt": "2026-09-19T02:17:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846959787",
+      "handle": "silk-multicolor-occasional-wear-embroidery-work-lehenga-choli-401019",
+      "createdAt": "2026-09-19T02:17:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846861483",
+      "handle": "silk-multicolor-festival-wear-mirror-work-lehenga-choli-401020",
+      "createdAt": "2026-09-19T02:17:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846795947",
+      "handle": "silk-multicolor-festival-wear-mirror-work-lehenga-choli-401021",
+      "createdAt": "2026-09-19T02:17:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846697643",
+      "handle": "georgette-maroon-wedding-wear-embroidery-work-lehenga-choli-402988",
+      "createdAt": "2026-09-19T02:16:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846566571",
+      "handle": "satin-red-wedding-wear-sequins-work-lehenga-choli-403002",
+      "createdAt": "2026-09-19T02:16:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846402731",
+      "handle": "banarasi-silk-multi-color-wedding-wear-embroidery-work-lehenga-choli-403046",
+      "createdAt": "2026-09-19T02:16:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846304427",
+      "handle": "banarasi-silk-multi-color-wedding-wear-embroidery-work-lehenga-choli-403047",
+      "createdAt": "2026-09-19T02:16:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846206123",
+      "handle": "banarasi-silk-multi-color-wedding-wear-embroidery-work-lehenga-choli-403048",
+      "createdAt": "2026-09-19T02:16:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022846042283",
+      "handle": "banarasi-silk-multi-color-wedding-wear-embroidery-work-lehenga-choli-403049",
+      "createdAt": "2026-09-19T02:16:50Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022845911211",
+      "handle": "banarasi-silk-multi-color-wedding-wear-embroidery-work-lehenga-choli-403050",
+      "createdAt": "2026-09-19T02:16:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022845812907",
+      "handle": "banarasi-silk-multi-color-wedding-wear-embroidery-work-lehenga-choli-403051",
+      "createdAt": "2026-09-19T02:16:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022845681835",
+      "handle": "silk-maroon-wedding-wear-thread-work-lehenga-choli-403443",
+      "createdAt": "2026-09-19T02:16:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022845550763",
+      "handle": "silk-red-festival-wear-beads-work-lehenga-choli-403870",
+      "createdAt": "2026-09-19T02:16:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022845452459",
+      "handle": "silk-red-festival-wear-beads-work-lehenga-choli-403872",
+      "createdAt": "2026-09-19T02:16:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9022845354155",
+      "handle": "silk-red-occasional-wear-embroidery-work-readymade-lehenga-choli-404608",
+      "createdAt": "2026-09-19T02:16:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200598699",
+      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404367",
+      "createdAt": "2026-09-17T01:54:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200565931",
+      "handle": "cotton-blue-occasional-wear-mirror-work-navratri-lehenga-choli-404369",
+      "createdAt": "2026-09-17T01:54:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200533163",
+      "handle": "net-maroon-festival-wear-embroidery-work-lehenga-choli-404370",
+      "createdAt": "2026-09-17T01:54:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200500395",
+      "handle": "chinon-silk-blue-casual-wear-sequins-work-readymade-lehenga-suit-404432",
+      "createdAt": "2026-09-17T01:54:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200434859",
+      "handle": "chinon-silk-off-white-casual-wear-sequins-work-readymade-lehenga-suit-404433",
+      "createdAt": "2026-09-17T01:54:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200402091",
+      "handle": "silk-multicolor-casual-wear-printed-work-lehenga-choli-404438",
+      "createdAt": "2026-09-17T01:54:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200336555",
+      "handle": "cotton-multicolor-festival-wear-mirror-work-navratri-lehenga-choli-404439",
+      "createdAt": "2026-09-17T01:54:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200303787",
+      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404440",
+      "createdAt": "2026-09-17T01:54:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200271019",
+      "handle": "cotton-multicolor-festival-wear-mirror-work-navratri-lehenga-choli-404441",
+      "createdAt": "2026-09-17T01:54:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200238251",
+      "handle": "fendi-silk-olive-green-festival-wear-embroidery-work-readymade-lehenga-choli-404449",
+      "createdAt": "2026-09-17T01:54:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200205483",
+      "handle": "banarasi-silk-peach-occasional-wear-embroidery-work-lehenga-choli-404482",
+      "createdAt": "2026-09-17T01:54:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200172715",
+      "handle": "banarasi-silk-cream-occasional-wear-embroidery-work-lehenga-choli-404483",
+      "createdAt": "2026-09-17T01:54:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200139947",
+      "handle": "banarasi-silk-rani-pink-occasional-wear-embroidery-work-lehenga-choli-404484",
+      "createdAt": "2026-09-17T01:54:21Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200107179",
+      "handle": "banarasi-silk-purple-occasional-wear-embroidery-work-lehenga-choli-404485",
+      "createdAt": "2026-09-17T01:54:19Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200074411",
+      "handle": "banarasi-silk-olive-green-occasional-wear-embroidery-work-lehenga-choli-404486",
+      "createdAt": "2026-09-17T01:54:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014200008875",
+      "handle": "banarasi-silk-lilac-occasional-wear-embroidery-work-lehenga-choli-404487",
+      "createdAt": "2026-09-17T01:54:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199976107",
+      "handle": "pure-cotton-black-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404493",
+      "createdAt": "2026-09-17T01:54:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199943339",
+      "handle": "pure-cotton-purple-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404494",
+      "createdAt": "2026-09-17T01:54:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199910571",
+      "handle": "pure-cotton-rust-orange-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404495",
+      "createdAt": "2026-09-17T01:54:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199877803",
+      "handle": "pure-cotton-rani-pink-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404496",
+      "createdAt": "2026-09-17T01:54:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199845035",
+      "handle": "pure-cotton-off-white-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404497",
+      "createdAt": "2026-09-17T01:54:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199812267",
+      "handle": "cotton-teal-blue-party-wear-mirror-work-readymade-navrayri-lehenga-choli-with-purse-404506",
+      "createdAt": "2026-09-17T01:54:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199779499",
+      "handle": "chinon-silk-rust-orange-occasional-wear-embroidery-work-readymade-lehenga-choli-404507",
+      "createdAt": "2026-09-17T01:54:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199746731",
+      "handle": "chinon-silk-navy-blue-occasional-wear-embroidery-work-readymade-lehenga-choli-404508",
+      "createdAt": "2026-09-17T01:54:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199713963",
+      "handle": "cotton-off-white-festival-wear-digital-print-work-navratri-lehenga-choli-404543",
+      "createdAt": "2026-09-17T01:54:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199648427",
+      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404544",
+      "createdAt": "2026-09-17T01:54:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199615659",
+      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404545",
+      "createdAt": "2026-09-17T01:53:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199582891",
+      "handle": "satin-silk-off-white-festival-wear-digital-print-work-navratri-lehenga-choli-404551",
+      "createdAt": "2026-09-17T01:53:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199550123",
+      "handle": "rayon-multicolor-festival-wear-mirror-work-readymade-navratri-lehenga-choli-404552",
+      "createdAt": "2026-09-17T01:53:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9014199517355",
+      "handle": "rayon-orange-festival-wear-mirror-work-readymade-lehenga-choli-with-koti-404554",
+      "createdAt": "2026-09-17T01:53:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982919577771",
+      "handle": "slate-blue-chinon-silk-indo-western-wedding-outfit",
+      "createdAt": "2026-09-09T19:24:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/8982916726955",
+      "handle": "ivory-satin-beaded-palazzo-suit-with-embroidered-dupatta",
+      "createdAt": "2026-09-09T19:13:13Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981294743723",
+      "handle": "embroidered-silk-sharara-suit-georgette-dupatta-mt1079",
+      "createdAt": "2026-09-09T00:05:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981293990059",
+      "handle": "cora-cotton-navratri-lehenga-gamthi-embroidered-long-top",
+      "createdAt": "2026-09-09T00:03:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981292712107",
+      "handle": "rayon-mirror-work-readymade-navratri-lehenga-choli",
+      "createdAt": "2026-09-09T00:01:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981288845483",
+      "handle": "slate-grey-chiffon-sequin-border-saree-stitched-blouse",
+      "createdAt": "2026-09-08T23:43:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981288812715",
+      "handle": "sage-green-chiffon-sequin-border-saree-stitched-blouse",
+      "createdAt": "2026-09-08T23:43:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981288779947",
+      "handle": "rose-mauve-chiffon-sequin-border-saree-stitched-blouse",
+      "createdAt": "2026-09-08T23:43:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981197553835",
+      "handle": "mauve-banarasi-silk-unstitched-reception-lehenga-set-10391",
+      "createdAt": "2026-09-08T19:22:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981197521067",
+      "handle": "olive-gold-banarasi-silk-unstitched-reception-lehenga-set-10390",
+      "createdAt": "2026-09-08T19:22:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981197488299",
+      "handle": "purple-banarasi-silk-unstitched-reception-lehenga-set-10389",
+      "createdAt": "2026-09-08T19:21:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981197455531",
+      "handle": "fuchsia-pink-banarasi-silk-unstitched-reception-lehenga-set-10388",
+      "createdAt": "2026-09-08T19:21:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981197422763",
+      "handle": "ivory-banarasi-silk-unstitched-reception-lehenga-set-10387",
+      "createdAt": "2026-09-08T19:21:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/8981197324459",
+      "handle": "peach-banarasi-silk-unstitched-reception-lehenga-set-10386",
+      "createdAt": "2026-09-08T19:21:36Z"
     },
     {
       "id": "gid://shopify/Product/8959758434475",
-      "handle": "beige-fancy-work-art-silk-groom-sherwani-with-stole"
-    },
-    {
-      "id": "gid://shopify/Product/imported_banarasi-silk-cream-",
-      "handle": "banarasi-silk-cream-occasional-wear-embroidery-work-lehenga-choli-404483"
-    },
-    {
-      "id": "gid://shopify/Product/imported_banarasi-silk-lilac-",
-      "handle": "banarasi-silk-lilac-occasional-wear-embroidery-work-lehenga-choli-404487"
-    },
-    {
-      "id": "gid://shopify/Product/imported_banarasi-silk-olive-",
-      "handle": "banarasi-silk-olive-green-occasional-wear-embroidery-work-lehenga-choli-404486"
-    },
-    {
-      "id": "gid://shopify/Product/imported_banarasi-silk-peach-",
-      "handle": "banarasi-silk-peach-occasional-wear-embroidery-work-lehenga-choli-404482"
-    },
-    {
-      "id": "gid://shopify/Product/imported_banarasi-silk-purple",
-      "handle": "banarasi-silk-purple-occasional-wear-embroidery-work-lehenga-choli-404485"
-    },
-    {
-      "id": "gid://shopify/Product/imported_banarasi-silk-rani-p",
-      "handle": "banarasi-silk-rani-pink-occasional-wear-embroidery-work-lehenga-choli-404484"
-    },
-    {
-      "id": "gid://shopify/Product/imported_black-art-silk-pearl",
-      "handle": "black-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_black-chinon-silk-pe",
-      "handle": "black-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_brown-chinon-silk-pe",
-      "handle": "brown-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_chinon-silk-blue-cas",
-      "handle": "chinon-silk-blue-casual-wear-sequins-work-readymade-lehenga-suit-404432"
-    },
-    {
-      "id": "gid://shopify/Product/imported_chinon-silk-navy-blu",
-      "handle": "chinon-silk-navy-blue-occasional-wear-embroidery-work-readymade-lehenga-choli-404508"
-    },
-    {
-      "id": "gid://shopify/Product/imported_chinon-silk-off-whit",
-      "handle": "chinon-silk-off-white-casual-wear-sequins-work-readymade-lehenga-suit-404433"
-    },
-    {
-      "id": "gid://shopify/Product/imported_chinon-silk-rust-ora",
-      "handle": "chinon-silk-rust-orange-occasional-wear-embroidery-work-readymade-lehenga-choli-404507"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cora-cotton-navratri",
-      "handle": "cora-cotton-navratri-lehenga-gamthi-embroidered-long-top"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-blue-occasion",
-      "handle": "cotton-blue-occasional-wear-mirror-work-navratri-lehenga-choli-404369"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-multicolor-fe",
-      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404367"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-multicolor-fe",
-      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404440"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-multicolor-fe",
-      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404544"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-multicolor-fe",
-      "handle": "cotton-multicolor-festival-wear-digital-print-work-navratri-lehenga-choli-404545"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-multicolor-fe",
-      "handle": "cotton-multicolor-festival-wear-mirror-work-navratri-lehenga-choli-404439"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-multicolor-fe",
-      "handle": "cotton-multicolor-festival-wear-mirror-work-navratri-lehenga-choli-404441"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-off-white-fes",
-      "handle": "cotton-off-white-festival-wear-digital-print-work-navratri-lehenga-choli-404543"
-    },
-    {
-      "id": "gid://shopify/Product/imported_cotton-teal-blue-par",
-      "handle": "cotton-teal-blue-party-wear-mirror-work-readymade-navrayri-lehenga-choli-with-purse-404506"
-    },
-    {
-      "id": "gid://shopify/Product/imported_dusty-rose-chinon-si",
-      "handle": "dusty-rose-chinon-silk-indo-western-dress-for-sangeet"
-    },
-    {
-      "id": "gid://shopify/Product/imported_embroidered-silk-sha",
-      "handle": "embroidered-silk-sharara-suit-georgette-dupatta-mt1079"
-    },
-    {
-      "id": "gid://shopify/Product/imported_fendi-silk-olive-gre",
-      "handle": "fendi-silk-olive-green-festival-wear-embroidery-work-readymade-lehenga-choli-404449"
-    },
-    {
-      "id": "gid://shopify/Product/imported_fuchsia-pink-banaras",
-      "handle": "fuchsia-pink-banarasi-silk-unstitched-reception-lehenga-set-10388"
-    },
-    {
-      "id": "gid://shopify/Product/imported_green-chinon-silk-pe",
-      "handle": "green-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_ivory-art-silk-pearl",
-      "handle": "ivory-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_ivory-banarasi-silk-",
-      "handle": "ivory-banarasi-silk-unstitched-reception-lehenga-set-10387"
-    },
-    {
-      "id": "gid://shopify/Product/imported_ivory-satin-beaded-p",
-      "handle": "ivory-satin-beaded-palazzo-suit-with-embroidered-dupatta"
-    },
-    {
-      "id": "gid://shopify/Product/imported_lavender-art-silk-pe",
-      "handle": "lavender-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_lavender-chinon-silk",
-      "handle": "lavender-chinon-silk-indo-western-dress-for-reception"
-    },
-    {
-      "id": "gid://shopify/Product/imported_maroon-art-silk-pear",
-      "handle": "maroon-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_mauve-banarasi-silk-",
-      "handle": "mauve-banarasi-silk-unstitched-reception-lehenga-set-10391"
-    },
-    {
-      "id": "gid://shopify/Product/imported_navy-blue-chinon-sil",
-      "handle": "navy-blue-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_net-maroon-festival-",
-      "handle": "net-maroon-festival-wear-embroidery-work-lehenga-choli-404370"
-    },
-    {
-      "id": "gid://shopify/Product/imported_olive-gold-banarasi-",
-      "handle": "olive-gold-banarasi-silk-unstitched-reception-lehenga-set-10390"
-    },
-    {
-      "id": "gid://shopify/Product/imported_olive-green-art-silk",
-      "handle": "olive-green-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_peach-banarasi-silk-",
-      "handle": "peach-banarasi-silk-unstitched-reception-lehenga-set-10386"
-    },
-    {
-      "id": "gid://shopify/Product/imported_pure-cotton-black-fe",
-      "handle": "pure-cotton-black-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404493"
-    },
-    {
-      "id": "gid://shopify/Product/imported_pure-cotton-off-whit",
-      "handle": "pure-cotton-off-white-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404497"
-    },
-    {
-      "id": "gid://shopify/Product/imported_pure-cotton-purple-f",
-      "handle": "pure-cotton-purple-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404494"
-    },
-    {
-      "id": "gid://shopify/Product/imported_pure-cotton-rani-pin",
-      "handle": "pure-cotton-rani-pink-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404496"
-    },
-    {
-      "id": "gid://shopify/Product/imported_pure-cotton-rust-ora",
-      "handle": "pure-cotton-rust-orange-festival-wear-ribbon-work-readymade-navratri-lehenga-choli-with-koti-404495"
-    },
-    {
-      "id": "gid://shopify/Product/imported_purple-banarasi-silk",
-      "handle": "purple-banarasi-silk-unstitched-reception-lehenga-set-10389"
-    },
-    {
-      "id": "gid://shopify/Product/imported_purple-chinon-silk-p",
-      "handle": "purple-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rani-pink-art-silk-p",
-      "handle": "rani-pink-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rani-pink-chinon-sil",
-      "handle": "rani-pink-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rayon-mirror-work-re",
-      "handle": "rayon-mirror-work-readymade-navratri-lehenga-choli"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rayon-multicolor-fes",
-      "handle": "rayon-multicolor-festival-wear-mirror-work-readymade-navratri-lehenga-choli-404552"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rayon-orange-festiva",
-      "handle": "rayon-orange-festival-wear-mirror-work-readymade-lehenga-choli-with-koti-404554"
-    },
-    {
-      "id": "gid://shopify/Product/imported_red-chinon-silk-pear",
-      "handle": "red-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rose-mauve-chiffon-s",
-      "handle": "rose-mauve-chiffon-sequin-border-saree-stitched-blouse"
-    },
-    {
-      "id": "gid://shopify/Product/imported_royal-blue-chinon-si",
-      "handle": "royal-blue-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_rust-orange-art-silk",
-      "handle": "rust-orange-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_sage-green-chiffon-s",
-      "handle": "sage-green-chiffon-sequin-border-saree-stitched-blouse"
-    },
-    {
-      "id": "gid://shopify/Product/imported_satin-silk-off-white",
-      "handle": "satin-silk-off-white-festival-wear-digital-print-work-navratri-lehenga-choli-404551"
-    },
-    {
-      "id": "gid://shopify/Product/imported_silk-multicolor-casu",
-      "handle": "silk-multicolor-casual-wear-printed-work-lehenga-choli-404438"
-    },
-    {
-      "id": "gid://shopify/Product/imported_slate-blue-chinon-si",
-      "handle": "slate-blue-chinon-silk-indo-western-wedding-outfit"
-    },
-    {
-      "id": "gid://shopify/Product/imported_slate-grey-chiffon-s",
-      "handle": "slate-grey-chiffon-sequin-border-saree-stitched-blouse"
-    },
-    {
-      "id": "gid://shopify/Product/imported_teal-blue-art-silk-p",
-      "handle": "teal-blue-art-silk-pearl-sharara-suit-for-indian-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_teal-chinon-silk-pea",
-      "handle": "teal-chinon-silk-pearl-sharara-suit-for-weddings"
-    },
-    {
-      "id": "gid://shopify/Product/imported_turquoise-chinon-sil",
-      "handle": "turquoise-chinon-silk-indo-western-dress-for-mehndi"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_dusty-rose-silk-part",
-      "handle": "dusty-rose-silk-party-anarkali"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_sunset-orange-tissue",
-      "handle": "sunset-orange-tissue-silk-wedding-saree"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_silk-rani-pink-casua",
-      "handle": "silk-rani-pink-casual-sequins-saree"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_silk-sea-green-occas",
-      "handle": "silk-sea-green-occasional-embroidery-saree"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_pink-banarasi-jacqua",
-      "handle": "pink-banarasi-jacquard-sherwani"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_magenta-velvet-sherw",
-      "handle": "magenta-velvet-sherwani"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_jwl-055",
-      "handle": "jwl-055"
-    },
-    {
-      "id": "gid://shopify/Product/sellable_navy-silk-sherwani",
-      "handle": "navy-silk-sherwani"
+      "handle": "beige-fancy-work-art-silk-groom-sherwani-with-stole",
+      "createdAt": "2026-08-28T00:32:32Z"
     }
   ],
   "feedBaseline": {
@@ -4555,62 +7864,6 @@
       "p9022853677227-v47895133094059",
       "p9022853677227-v47895133126827",
       "p9022853677227-v47895133159595",
-      "p9022853546155-v47895132537003",
-      "p9022853546155-v47895132569771",
-      "p9022853546155-v47895132602539",
-      "p9022853546155-v47895132635307",
-      "p9022853546155-v47895132668075",
-      "p9022853546155-v47895132700843",
-      "p9022853546155-v47895132733611",
-      "p9022853447851-v47895131750571",
-      "p9022853447851-v47895131783339",
-      "p9022853447851-v47895131816107",
-      "p9022853447851-v47895131848875",
-      "p9022853447851-v47895131881643",
-      "p9022853447851-v47895131914411",
-      "p9022853447851-v47895131947179",
-      "p9022853316779-v47895131193515",
-      "p9022853316779-v47895131226283",
-      "p9022853316779-v47895131259051",
-      "p9022853316779-v47895131291819",
-      "p9022853316779-v47895131324587",
-      "p9022853316779-v47895131357355",
-      "p9022853316779-v47895131390123",
-      "p9022853152939-v47895130374315",
-      "p9022853152939-v47895130407083",
-      "p9022853152939-v47895130439851",
-      "p9022853152939-v47895130472619",
-      "p9022853152939-v47895130505387",
-      "p9022853152939-v47895130538155",
-      "p9022853152939-v47895130570923",
-      "p9022853021867-v47895129817259",
-      "p9022853021867-v47895129850027",
-      "p9022853021867-v47895129882795",
-      "p9022853021867-v47895129915563",
-      "p9022853021867-v47895129948331",
-      "p9022853021867-v47895129981099",
-      "p9022853021867-v47895130013867",
-      "p9022852923563-v47895129292971",
-      "p9022852923563-v47895129325739",
-      "p9022852923563-v47895129358507",
-      "p9022852923563-v47895129391275",
-      "p9022852923563-v47895129424043",
-      "p9022852923563-v47895129456811",
-      "p9022852923563-v47895129489579",
-      "p9022852759723-v47895128735915",
-      "p9022852759723-v47895128768683",
-      "p9022852759723-v47895128801451",
-      "p9022852759723-v47895128834219",
-      "p9022852759723-v47895128866987",
-      "p9022852759723-v47895128899755",
-      "p9022852759723-v47895128932523",
-      "p9022852628651-v47895127916715",
-      "p9022852628651-v47895127949483",
-      "p9022852628651-v47895127982251",
-      "p9022852628651-v47895128015019",
-      "p9022852628651-v47895128047787",
-      "p9022852628651-v47895128080555",
-      "p9022852628651-v47895128113323",
       "p9022852497579-v47895127457963",
       "p9022852497579-v47895581720747",
       "p9022852497579-v47895581753515",
@@ -5090,124 +8343,6 @@
       "p9022845452459-v47895091511467",
       "p9022845452459-v47895091544235",
       "p9022845354155",
-      "banarasi-silk-mustard-festival-weaving-saree",
-      "champagne-beige-chanderi-anarkali",
-      "red-chanderi-cotton-casual-anarkali",
-      "black-roman-silk-anarkali",
-      "pista-viscose-casual-anarkali",
-      "purple-chanderi-silk-casual-anarkali",
-      "grey-fendy-silk-casual-anarkali",
-      "lavender-viscose-casual-anarkali",
-      "baby-pink-roman-silk-festival-anarkali",
-      "green-silk-eid-anarkali-suit",
-      "red-silk-eid-anarkali-suit",
-      "peach-fendy-silk-casual-anarkali",
-      "dusty-rose-silk-party-anarkali",
-      "wine-georgette-sharara-suit",
-      "fendy-satin-teal-green-occasional-embroidery-saree",
-      "silk-rust-orange-casual-sequins-saree",
-      "multicolor-kanchipuram-silk-wedding-saree",
-      "beige-gold-tissue-silk-wedding-saree",
-      "ivory-beige-kanchipuram-silk-wedding-saree",
-      "sunset-orange-tissue-silk-wedding-saree",
-      "sea-green-tissue-silk-wedding-saree",
-      "silk-blue-casual-sequins-saree",
-      "silk-rani-pink-casual-sequins-saree",
-      "antique-gold-kanchipuram-silk-wedding-saree",
-      "royal-pink-kanchipuram-silk-wedding-saree",
-      "mint-green-kanchipuram-silk-wedding-saree",
-      "pink-tissue-silk-wedding-saree",
-      "silk-sea-green-occasional-embroidery-saree",
-      "mustard-banarasi-jacquard-sherwani",
-      "peach-banarasi-jacquard-sherwani",
-      "pink-banarasi-jacquard-sherwani",
-      "maroon-banarasi-jacquard-sherwani",
-      "grey-art-silk-groom-sherwani",
-      "off-white-art-silk-groom-sherwani",
-      "purple-art-silk-groom-sherwani",
-      "white-art-silk-groom-sherwani",
-      "black-velvet-sherwani",
-      "brown-silk-kurta-pajama",
-      "wine-art-silk-sherwani",
-      "magenta-velvet-sherwani",
-      "navy-blue-velvet-sherwani",
-      "light-pink-art-silk-groom-sherwani",
-      "yellow-cotton-kurta-pajama",
-      "black-cotton-kurta-pajama",
-      "black-banarasi-jacquard-sherwani",
-      "teal-blue-cotton-kurta-pajama",
-      "blue-banarasi-jacquard-sherwani",
-      "beige-cotton-kurta-pajama",
-      "jwl-058",
-      "jwl-057",
-      "jwl-056",
-      "jwl-055",
-      "jwl-054",
-      "jwl-053",
-      "jwl-051",
-      "jwl-050",
-      "jwl-049",
-      "jwl-048",
-      "jwl-047",
-      "jwl-046",
-      "jwl-045",
-      "jwl-044",
-      "jwl-043",
-      "jwl-042",
-      "jwl-041",
-      "jwl-040",
-      "jwl-039",
-      "jwl-038",
-      "jwl-036",
-      "jwl-034",
-      "jwl-032",
-      "jwl-031",
-      "jwl-030",
-      "jwl-029",
-      "jwl-028",
-      "jwl-027",
-      "jwl-026",
-      "jwl-025",
-      "jwl-022",
-      "jwl-021",
-      "jwl-020",
-      "jwl-019",
-      "jwl-018",
-      "jwl-015",
-      "jwl-012",
-      "jwl-011",
-      "jwl-052",
-      "jwl-037",
-      "jwl-035",
-      "jwl-033",
-      "jwl-013",
-      "jwl-014",
-      "jwl-024",
-      "jwl-023",
-      "jwl-016",
-      "jwl-010",
-      "jwl-009",
-      "jwl-007",
-      "jwl-006",
-      "jwl-005",
-      "jwl-004",
-      "jwl-008",
-      "dusty-pink-fendy-silk-casual-anarkali",
-      "green-fendy-silk-casual-anarkali",
-      "maroon-roman-silk-anarkali",
-      "banarasi-silk-mint-green-festival-weaving-saree",
-      "silk-yellow-occasional-embroidery-saree",
-      "silk-green-occasional-embroidery-saree",
-      "silk-light-pink-occasional-embroidery-saree",
-      "white-viscose-kurta-pajama",
-      "black-art-silk-sherwani",
-      "blue-cotton-kurta-pajama",
-      "baby-pink-cotton-kurta-pajama",
-      "navy-silk-sherwani",
-      "jwl-003",
-      "jwl-017",
-      "jwl-002",
-      "jwl-001",
       "p9014200598699-v47869387636907",
       "p9014200598699-v47869387669675",
       "p9014200598699-v47869387702443",
@@ -5391,143 +8526,12 @@
       "p9014199582891-v47869382951083",
       "p9014199550123",
       "p9014199517355",
-      "p8982919676075",
-      "p8982919643307",
       "slate-blue-chinon-silk-indo-western-wedding-outfit",
-      "p8982919545003",
       "p8982916726955-v47773343482027",
       "p8982916726955-v47773343514795",
       "p8982916726955-v47773343547563",
       "p8982916726955-v47773343580331",
       "p8982916726955-v47773343613099",
-      "p8982915711147-v47773341253803",
-      "p8982915711147-v47773341286571",
-      "p8982915711147-v47773341319339",
-      "p8982915711147-v47773341352107",
-      "p8982915678379-v47773341122731",
-      "p8982915678379-v47773341155499",
-      "p8982915678379-v47773341188267",
-      "p8982915678379-v47773341221035",
-      "p8982915645611-v47773340991659",
-      "p8982915645611-v47773341024427",
-      "p8982915645611-v47773341057195",
-      "p8982915645611-v47773341089963",
-      "p8982915612843-v47773340860587",
-      "p8982915612843-v47773340893355",
-      "p8982915612843-v47773340926123",
-      "p8982915612843-v47773340958891",
-      "p8982915580075-v47773340729515",
-      "p8982915580075-v47773340762283",
-      "p8982915580075-v47773340795051",
-      "p8982915580075-v47773340827819",
-      "p8982915547307-v47773340598443",
-      "p8982915547307-v47773340631211",
-      "p8982915547307-v47773340663979",
-      "p8982915547307-v47773340696747",
-      "p8982915481771-v47773340434603",
-      "p8982915481771-v47773340467371",
-      "p8982915481771-v47773340500139",
-      "p8982915481771-v47773340532907",
-      "p8982915350699-v47773339779243",
-      "p8982915350699-v47773339812011",
-      "p8982915350699-v47773339844779",
-      "p8982915350699-v47773339877547",
-      "p8982915252395-v47773339418795",
-      "p8982915252395-v47773339451563",
-      "p8982915252395-v47773339484331",
-      "p8982915252395-v47773339517099",
-      "p8982915088555-v47773338763435",
-      "p8982915088555-v47773338796203",
-      "p8982915088555-v47773338828971",
-      "p8982915088555-v47773338861739",
-      "p8982914367659-v47773335683243",
-      "p8982914367659-v47773335716011",
-      "p8982914367659-v47773335748779",
-      "p8982914367659-v47773335781547",
-      "p8982914334891-v47773335552171",
-      "p8982914334891-v47773335584939",
-      "p8982914334891-v47773335617707",
-      "p8982914334891-v47773335650475",
-      "p8982914269355-v47773335388331",
-      "p8982914269355-v47773335421099",
-      "p8982914269355-v47773335453867",
-      "p8982914269355-v47773335486635",
-      "p8982914105515-v47773334241451",
-      "p8982914105515-v47773334274219",
-      "p8982914105515-v47773334306987",
-      "p8982914105515-v47773334339755",
-      "p8982913810603-v47773333455019",
-      "p8982913810603-v47773333487787",
-      "p8982913810603-v47773333520555",
-      "p8982913810603-v47773333553323",
-      "p8982913777835-v47773333323947",
-      "p8982913777835-v47773333356715",
-      "p8982913777835-v47773333389483",
-      "p8982913777835-v47773333422251",
-      "p8982913712299-v47773333192875",
-      "p8982913712299-v47773333225643",
-      "p8982913712299-v47773333258411",
-      "p8982913712299-v47773333291179",
-      "p8981294743723-v47767705583787",
-      "p8981294743723-v47767705616555",
-      "p8981294743723-v47767705649323",
-      "p8981294743723-v47767705682091",
-      "p8981294743723-v47767705714859",
-      "p8981294743723-v47767705747627",
-      "p8981294743723-v47767705780395",
-      "p8981294743723-v47767705813163",
-      "p8981294743723-v47767705845931",
-      "p8981294743723-v47767705878699",
-      "p8981294743723-v47767705911467",
-      "p8981294743723-v47767705944235",
-      "p8981294743723-v47767705977003",
-      "p8981294743723-v47767706009771",
-      "p8981294743723-v47767706042539",
-      "p8981294743723-v47767706075307",
-      "p8981293990059-v47767703453867",
-      "p8981293990059-v47767703486635",
-      "p8981292712107-v47767694278827",
-      "p8981292712107-v47767694311595",
-      "p8981292712107-v47767694344363",
-      "p8981292712107-v47767694377131",
-      "p8981292712107-v47767694409899",
-      "p8981292712107-v47767694442667",
-      "p8981288845483-v47767683465387",
-      "p8981288845483-v47767683498155",
-      "p8981288845483-v47767683530923",
-      "p8981288845483-v47767683563691",
-      "p8981288812715-v47767683334315",
-      "p8981288812715-v47767683367083",
-      "p8981288812715-v47767683399851",
-      "p8981288812715-v47767683432619",
-      "p8981288779947-v47767683203243",
-      "p8981288779947-v47767683236011",
-      "p8981288779947-v47767683268779",
-      "p8981288779947-v47767683301547",
-      "p8981197553835",
-      "p8981197521067-v47767156424875",
-      "p8981197521067-v47913374777515",
-      "p8981197521067-v47913374810283",
-      "p8981197488299",
-      "p8981197455531",
-      "p8981197422763",
-      "p8981197324459",
-      "p8959758434475-v47707594358955",
-      "p8959758434475-v47707594391723",
-      "p8959758434475-v47707594424491",
-      "p8959758434475-v47707594457259",
-      "p8959758434475-v47707594490027",
-      "p8959758434475-v47707594522795",
-      "p8959758434475-v47707594555563",
-      "p8959758434475-v47707594588331",
-      "p8959758434475-v47707594621099",
-      "p8959758434475-v47707594653867",
-      "p8959758434475-v47707594686635",
-      "p8959758434475-v47707594719403",
-      "p8959758434475-v47707594752171",
-      "p8959758434475-v47707594784939"
-    ],
-    "materialOfferIds": [
       "p8981294743723-v47767705583787",
       "p8981294743723-v47767705616555",
       "p8981294743723-v47767705649323",
@@ -6198,62 +9202,6 @@
       "p9022853677227-v47895133094059",
       "p9022853677227-v47895133126827",
       "p9022853677227-v47895133159595",
-      "p9022853546155-v47895132537003",
-      "p9022853546155-v47895132569771",
-      "p9022853546155-v47895132602539",
-      "p9022853546155-v47895132635307",
-      "p9022853546155-v47895132668075",
-      "p9022853546155-v47895132700843",
-      "p9022853546155-v47895132733611",
-      "p9022853447851-v47895131750571",
-      "p9022853447851-v47895131783339",
-      "p9022853447851-v47895131816107",
-      "p9022853447851-v47895131848875",
-      "p9022853447851-v47895131881643",
-      "p9022853447851-v47895131914411",
-      "p9022853447851-v47895131947179",
-      "p9022853316779-v47895131193515",
-      "p9022853316779-v47895131226283",
-      "p9022853316779-v47895131259051",
-      "p9022853316779-v47895131291819",
-      "p9022853316779-v47895131324587",
-      "p9022853316779-v47895131357355",
-      "p9022853316779-v47895131390123",
-      "p9022853152939-v47895130374315",
-      "p9022853152939-v47895130407083",
-      "p9022853152939-v47895130439851",
-      "p9022853152939-v47895130472619",
-      "p9022853152939-v47895130505387",
-      "p9022853152939-v47895130538155",
-      "p9022853152939-v47895130570923",
-      "p9022853021867-v47895129817259",
-      "p9022853021867-v47895129850027",
-      "p9022853021867-v47895129882795",
-      "p9022853021867-v47895129915563",
-      "p9022853021867-v47895129948331",
-      "p9022853021867-v47895129981099",
-      "p9022853021867-v47895130013867",
-      "p9022852923563-v47895129292971",
-      "p9022852923563-v47895129325739",
-      "p9022852923563-v47895129358507",
-      "p9022852923563-v47895129391275",
-      "p9022852923563-v47895129424043",
-      "p9022852923563-v47895129456811",
-      "p9022852923563-v47895129489579",
-      "p9022852759723-v47895128735915",
-      "p9022852759723-v47895128768683",
-      "p9022852759723-v47895128801451",
-      "p9022852759723-v47895128834219",
-      "p9022852759723-v47895128866987",
-      "p9022852759723-v47895128899755",
-      "p9022852759723-v47895128932523",
-      "p9022852628651-v47895127916715",
-      "p9022852628651-v47895127949483",
-      "p9022852628651-v47895127982251",
-      "p9022852628651-v47895128015019",
-      "p9022852628651-v47895128047787",
-      "p9022852628651-v47895128080555",
-      "p9022852628651-v47895128113323",
       "p9022852497579-v47895127457963",
       "p9022852497579-v47895581720747",
       "p9022852497579-v47895581753515",
@@ -6916,83 +9864,12 @@
       "p9014199582891-v47869382951083",
       "p9014199550123",
       "p9014199517355",
-      "p8982919676075",
-      "p8982919643307",
       "slate-blue-chinon-silk-indo-western-wedding-outfit",
-      "p8982919545003",
       "p8982916726955-v47773343482027",
       "p8982916726955-v47773343514795",
       "p8982916726955-v47773343547563",
       "p8982916726955-v47773343580331",
       "p8982916726955-v47773343613099",
-      "p8982915711147-v47773341253803",
-      "p8982915711147-v47773341286571",
-      "p8982915711147-v47773341319339",
-      "p8982915711147-v47773341352107",
-      "p8982915678379-v47773341122731",
-      "p8982915678379-v47773341155499",
-      "p8982915678379-v47773341188267",
-      "p8982915678379-v47773341221035",
-      "p8982915645611-v47773340991659",
-      "p8982915645611-v47773341024427",
-      "p8982915645611-v47773341057195",
-      "p8982915645611-v47773341089963",
-      "p8982915612843-v47773340860587",
-      "p8982915612843-v47773340893355",
-      "p8982915612843-v47773340926123",
-      "p8982915612843-v47773340958891",
-      "p8982915580075-v47773340729515",
-      "p8982915580075-v47773340762283",
-      "p8982915580075-v47773340795051",
-      "p8982915580075-v47773340827819",
-      "p8982915547307-v47773340598443",
-      "p8982915547307-v47773340631211",
-      "p8982915547307-v47773340663979",
-      "p8982915547307-v47773340696747",
-      "p8982915481771-v47773340434603",
-      "p8982915481771-v47773340467371",
-      "p8982915481771-v47773340500139",
-      "p8982915481771-v47773340532907",
-      "p8982915350699-v47773339779243",
-      "p8982915350699-v47773339812011",
-      "p8982915350699-v47773339844779",
-      "p8982915350699-v47773339877547",
-      "p8982915252395-v47773339418795",
-      "p8982915252395-v47773339451563",
-      "p8982915252395-v47773339484331",
-      "p8982915252395-v47773339517099",
-      "p8982915088555-v47773338763435",
-      "p8982915088555-v47773338796203",
-      "p8982915088555-v47773338828971",
-      "p8982915088555-v47773338861739",
-      "p8982914367659-v47773335683243",
-      "p8982914367659-v47773335716011",
-      "p8982914367659-v47773335748779",
-      "p8982914367659-v47773335781547",
-      "p8982914334891-v47773335552171",
-      "p8982914334891-v47773335584939",
-      "p8982914334891-v47773335617707",
-      "p8982914334891-v47773335650475",
-      "p8982914269355-v47773335388331",
-      "p8982914269355-v47773335421099",
-      "p8982914269355-v47773335453867",
-      "p8982914269355-v47773335486635",
-      "p8982914105515-v47773334241451",
-      "p8982914105515-v47773334274219",
-      "p8982914105515-v47773334306987",
-      "p8982914105515-v47773334339755",
-      "p8982913810603-v47773333455019",
-      "p8982913810603-v47773333487787",
-      "p8982913810603-v47773333520555",
-      "p8982913810603-v47773333553323",
-      "p8982913777835-v47773333323947",
-      "p8982913777835-v47773333356715",
-      "p8982913777835-v47773333389483",
-      "p8982913777835-v47773333422251",
-      "p8982913712299-v47773333192875",
-      "p8982913712299-v47773333225643",
-      "p8982913712299-v47773333258411",
-      "p8982913712299-v47773333291179",
       "p8981294743723-v47767705583787",
       "p8981294743723-v47767705616555",
       "p8981294743723-v47767705649323",
@@ -7029,6 +9906,66 @@
       "p8981288779947-v47767683236011",
       "p8981288779947-v47767683268779",
       "p8981288779947-v47767683301547",
+      "p8959758434475-v47707594358955",
+      "p8959758434475-v47707594391723",
+      "p8959758434475-v47707594424491",
+      "p8959758434475-v47707594457259",
+      "p8959758434475-v47707594490027",
+      "p8959758434475-v47707594522795",
+      "p8959758434475-v47707594555563",
+      "p8959758434475-v47707594588331",
+      "p8959758434475-v47707594621099",
+      "p8959758434475-v47707594653867",
+      "p8959758434475-v47707594686635",
+      "p8959758434475-v47707594719403",
+      "p8959758434475-v47707594752171",
+      "p8959758434475-v47707594784939"
+    ],
+    "materialOfferIds": [
+      "p8981294743723-v47767705583787",
+      "p8981294743723-v47767705616555",
+      "p8981294743723-v47767705649323",
+      "p8981294743723-v47767705682091",
+      "p8981294743723-v47767705714859",
+      "p8981294743723-v47767705747627",
+      "p8981294743723-v47767705780395",
+      "p8981294743723-v47767705813163",
+      "p8981294743723-v47767705845931",
+      "p8981294743723-v47767705878699",
+      "p8981294743723-v47767705911467",
+      "p8981294743723-v47767705944235",
+      "p8981294743723-v47767705977003",
+      "p8981294743723-v47767706009771",
+      "p8981294743723-v47767706042539",
+      "p8981294743723-v47767706075307",
+      "p8981293990059-v47767703453867",
+      "p8981293990059-v47767703486635",
+      "p8981292712107-v47767694278827",
+      "p8981292712107-v47767694311595",
+      "p8981292712107-v47767694344363",
+      "p8981292712107-v47767694377131",
+      "p8981292712107-v47767694409899",
+      "p8981292712107-v47767694442667",
+      "p8981288845483-v47767683465387",
+      "p8981288845483-v47767683498155",
+      "p8981288845483-v47767683530923",
+      "p8981288845483-v47767683563691",
+      "p8981288812715-v47767683334315",
+      "p8981288812715-v47767683367083",
+      "p8981288812715-v47767683399851",
+      "p8981288812715-v47767683432619",
+      "p8981288779947-v47767683203243",
+      "p8981288779947-v47767683236011",
+      "p8981288779947-v47767683268779",
+      "p8981288779947-v47767683301547",
+      "p8981197553835",
+      "p8981197521067-v47767156424875",
+      "p8981197521067-v47913374777515",
+      "p8981197521067-v47913374810283",
+      "p8981197488299",
+      "p8981197455531",
+      "p8981197422763",
+      "p8981197324459",
       "p8959758434475-v47707594358955",
       "p8959758434475-v47707594391723",
       "p8959758434475-v47707594424491",

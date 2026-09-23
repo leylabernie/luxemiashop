@@ -72,18 +72,15 @@ const staticPages = [
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/jewelry', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/kanchipuram-sarees', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/bridal-party-outfits', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/bollywood-inspired-indian-outfits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
-  // Restored high-intent commercial collection pages
+  // High-intent commercial collection pages. Emptied by the 2026-09-22
+  // single-image removal and excluded here until new stock lands: anarkali-suits,
+  // bollywood-inspired-indian-outfits, bridal-party-outfits, designer-sarees,
+  // eid-outfits, gharara-suits, haldi-outfits, kanchipuram-sarees, mehendi-outfits,
+  // silk-sarees, wedding-sarees (all noindexed empty prerenders, see ops doc).
   { loc: '/collections/sharara-suits', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/gharara-suits', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/anarkali-suits', changefreq: 'daily', priority: '0.9' },
+  // /collections/anarkali-suits retired 2026-09-22: all matching products drafted (single-image cleanup); Vercel 301 to /suits.
   { loc: '/collections/bridal-lehengas', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/wedding-sarees', changefreq: 'daily', priority: '0.9' },
-  { loc: '/collections/designer-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/menswear', changefreq: 'daily', priority: '0.9' },
@@ -131,10 +128,7 @@ const staticPages = [
   // Occasion landing pages
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
-  { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
 ].filter(page => !emptyCatalogRoutes.has(page.loc));
 
 

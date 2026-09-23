@@ -59,6 +59,9 @@ const BLOG_TOPIC_HUBS = [
   '/blog/designer-profiles',
   '/blog/cultural-context',
 ];
+const SEO_ARCHITECTURE = JSON.parse(
+  fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8'),
+);
 const LEGACY_AUTHOR_ROUTES = [
   '/authors/ananya-iyer',
   '/authors/meera-kapoor',
@@ -66,9 +69,6 @@ const LEGACY_AUTHOR_ROUTES = [
   '/authors/priya-nair',
 ];
 const LEGACY_AUTHOR_NAMES = ['Ananya Iyer', 'Meera Kapoor', 'Rajesh Sharma', 'Priya Nair'];
-const SEO_ARCHITECTURE = JSON.parse(
-  fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8'),
-);
 const COMMERCIAL_COLLECTIONS = [
   { route: '/collections/bridal-lehengas', category: 'lehengas' },
   { route: '/collections/party-wear-lehengas', category: 'lehengas' },
@@ -78,6 +78,15 @@ const COMMERCIAL_COLLECTIONS = [
   { route: '/collections/gharara-suits', category: 'suits' },
   { route: '/collections/anarkali-suits', category: 'suits' },
 ];
+// Routes with a committed Vercel 301 redirect are intentionally not
+// prerendered or coverage-checked (e.g. collections emptied by the owner's
+// single-image product removal).
+const vercelRedirectSources = new Set(
+  (JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'vercel.json'), 'utf8')).redirects || [])
+    .map((redirect) => redirect.source)
+    .filter((source) => !source.includes(':') && !source.includes('('))
+);
+const commercialCollectionTargets = COMMERCIAL_COLLECTIONS.filter((entry) => !vercelRedirectSources.has(entry.route));
 
 function routeToFilePath(routePath) {
   if (routePath === '/') {
@@ -598,7 +607,7 @@ function main() {
     process.exit(1);
   }
 
-  const invalidCommercialCollections = COMMERCIAL_COLLECTIONS
+  const invalidCommercialCollections = commercialCollectionTargets
     .map(({ route, category }) => parseCommercialCollectionHtml(route, category))
     .filter(Boolean);
   if (invalidCommercialCollections.length > 0) {
@@ -635,7 +644,7 @@ function main() {
     process.exit(1);
   }
 
-  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML; ${julyRegressionGuards.publishedCount} published articles, ${BLOG_TOPIC_HUBS.length} blog hubs, the factual author route, hydration-safe BlogPosting schema, and legacy-author redirects are aligned; all ${COMMERCIAL_COLLECTIONS.length} commercial collections have aligned product payloads, links, and ItemList schema; ${productDiscoverySignals.approvedProductCount} approved products have at least two crawlable inbound sources.`);
+  console.log(`[verify-prerender-coverage] OK — all ${routes.length} routes have clean HTML; ${julyRegressionGuards.publishedCount} published articles, ${BLOG_TOPIC_HUBS.length} blog hubs, the factual author route, hydration-safe BlogPosting schema, and legacy-author redirects are aligned; all ${commercialCollectionTargets.length} commercial collections have aligned product payloads, links, and ItemList schema; ${productDiscoverySignals.approvedProductCount} approved products have at least two crawlable inbound sources.`);
 }
 
 main();

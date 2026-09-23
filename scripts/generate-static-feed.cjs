@@ -68,10 +68,11 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.GITHUB_ACTIONS === 'true'
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
-// Verified retained catalog on 2026-09-08: 106 garments, 606 variants; service lines excluded.
-const MIN_EXPECTED_OFFER_COUNT = 606;
+// Verified retained catalog on 2026-09-22 after the owner-directed removal of
+// every product with fewer than two images: 168 garments, 1,357 variants.
+const MIN_EXPECTED_OFFER_COUNT = 1200;
 // Preserve known size facts without inventing finished sizes for new unstitched fabric sets.
-const MIN_SIZED_OFFER_COUNT = 540;
+const MIN_SIZED_OFFER_COUNT = 1000;
 const MIN_MATERIAL_COVERAGE_RATIO = 0.82;
 const MAX_LOCAL_SNAPSHOT_AGE_DAYS = 7;
 
