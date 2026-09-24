@@ -614,7 +614,21 @@ const CART_CREATE_MUTATION = `
   }
 `;
 
+const _shopifyCache = new Map<string, { at: number; data: any }>();
+const _shopifyInflight = new Map<string, Promise<any>>();
+const _SHOPIFY_CACHE_TTL = 5 * 60 * 1000;
+
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal) {
+  const isRead = !/mutation\s*[({]/i.test(query) && !signal;
+  const cacheKey = isRead ? JSON.stringify([query, variables]) : null;
+  if (cacheKey) {
+    const hit = _shopifyCache.get(cacheKey);
+    if (hit && Date.now() - hit.at < _SHOPIFY_CACHE_TTL) return hit.data as any;
+    const inflight = _shopifyInflight.get(cacheKey);
+    if (inflight) return inflight as any;
+  }
+  const exec = async (): Promise<any> => {
+
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: 'POST',
     headers: {
@@ -651,7 +665,14 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
     throw new Error(`Error calling Shopify: ${data.errors.map((e: { message: string }) => e.message).join(', ')}`);
   }
 
-  return data;
+    return data;
+  };
+  const promise = exec().then((data: any) => {
+    if (cacheKey && data) _shopifyCache.set(cacheKey, { at: Date.now(), data });
+    return data;
+  }).finally(() => { if (cacheKey) _shopifyInflight.delete(cacheKey); });
+  if (cacheKey) _shopifyInflight.set(cacheKey, promise);
+  return promise;
 }
 
 export async function fetchProducts(first: number = 12, query?: string): Promise<ShopifyProduct[]> {
