@@ -105,7 +105,7 @@ export const getOptimizedImage = (url: string, context: 'thumbnail' | 'card' | '
   
   const sizeMap = {
     thumbnail: 400,  // Small thumbnails, lists
-    card: 1000,       // Product cards - high-res for Retina displays
+    card: 640,       // Product cards - high-res for Retina displays
     gallery: 1200,   // Product gallery, detail pages
     hero: 1920,      // Hero banners, full-width images
   };
