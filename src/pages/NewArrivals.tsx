@@ -16,7 +16,7 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
-const MAX_PER_CATEGORY = 5;
+const MAX_PER_CATEGORY = 60;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
@@ -49,7 +49,6 @@ const NewArrivals = () => {
     const now = Date.now();
     const cutoff = now - NEW_ARRIVAL_WINDOW_DAYS * 86400000;
     const groups: Record<string, typeof products> = {};
-    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
 
     for (const product of products) {
       const created = new Date(product.node.createdAt).getTime();
@@ -64,7 +63,7 @@ const NewArrivals = () => {
       groups[cat].sort(
         (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
       );
-      const limit = mainCategories.includes(cat) ? MAX_PER_CATEGORY : 3;
+      const limit = MAX_PER_CATEGORY;
       groups[cat] = groups[cat].slice(0, limit);
     }
 

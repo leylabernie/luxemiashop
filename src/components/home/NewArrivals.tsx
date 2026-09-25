@@ -7,7 +7,7 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
-const MAX_PER_CATEGORY = 5;
+const MAX_PER_CATEGORY = 60;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
@@ -46,13 +46,12 @@ export const NewArrivals = () => {
     }
 
     // Sort each group newest-first and cap at MAX_PER_CATEGORY
-    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
     for (const cat of Object.keys(groups)) {
       groups[cat].sort(
         (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
       );
       // Give main categories a higher cap, others get 3
-      const limit = mainCategories.includes(cat) ? MAX_PER_CATEGORY : 3;
+      const limit = MAX_PER_CATEGORY;
       groups[cat] = groups[cat].slice(0, limit);
     }
 
@@ -71,7 +70,7 @@ export const NewArrivals = () => {
 
   // 3. Resolve displayed products based on active tab
   const displayedProducts = useMemo(() => {
-    if (activeCategory === 'all') return allOrdered.slice(0, 10);
+    if (activeCategory === 'all') return allOrdered.slice(0, 20);
     return recentByCategory[activeCategory] || [];
   }, [activeCategory, allOrdered, recentByCategory]);
 
