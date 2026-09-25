@@ -41,6 +41,7 @@ function loadTsModule(relativePath) {
 }
 
 const {
+  MERCHANT_GOOGLE_PRODUCT_CATEGORY,
   getMerchantGoogleProductCategory,
   isExplicitStandaloneOutfitSetTitle,
 } = loadTsModule('src/lib/merchantTaxonomy.ts');
@@ -426,6 +427,10 @@ function getMerchantProductType(productType, title) {
   if (/\b(?:indo.?western|fusion|co-?ords?|jumpsuits?|cape sets?)\b/.test(text)) {
     return `${root} > Clothing > Indian Ethnic Wear > Indo-Western Clothing`;
   }
+  if (/(?:gowns?|dresses?)/.test(text)) {
+    return `${root} > Clothing > Traditional & Ceremonial Clothing`;
+  }
+  if (/gown/i.test(text)) console.error("[gown-debug] returning Traditional for: " + text);
   return `${root} > Clothing > Indian Ethnic Wear`;
 }
 
@@ -578,6 +583,7 @@ function sanitizeExistingFeedXml(xml) {
       || readItemTag(itemXml, 'g:product_type')
       || 'Ethnic Wear';
     const productType = getMerchantProductType(rawProductType, merchantBaseTitle);
+    if (/gown/i.test(rawProductType + ' ' + merchantBaseTitle)) console.error('[sanitize-gown] raw=' + rawProductType + ' || base=' + merchantBaseTitle + ' => productType=' + productType);
     const existingColor = readItemTag(itemXml, 'g:color');
     const existingDescription = readItemTag(itemXml, 'g:description');
     const inferredColor = inferColorFromText(originalBaseTitle);
@@ -943,8 +949,12 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   const availability = variant.availableForSale === false ? 'out_of_stock' : 'in_stock';
 
   const rawProductType = product.productType || 'Ethnic Wear';
-  const productType = getMerchantProductType(rawProductType, product.title);
   const googleProductCategory = getMerchantGoogleProductCategory(rawProductType, product.title);
+  let productType = getMerchantProductType(rawProductType, product.title);
+  if (googleProductCategory === MERCHANT_GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING
+    && !/Traditional & Ceremonial Clothing|Indo-Western Clothing/i.test(productType)) {
+    productType = 'Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing';
+  }
   const gender = getGender(rawProductType, product.title);
   const rawSku = variant.sku || variantId || '';
   const sku = rawSku.replace(/\s+/g, '-').replace(/[^a-zA-Z0-9_-]/g, '');

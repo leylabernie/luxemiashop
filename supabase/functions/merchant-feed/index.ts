@@ -607,8 +607,8 @@ function generateItem(
     <g:identifier_exists>no</g:identifier_exists>`;
   }
 
-  if (product.productType) xml += `
-    <g:custom_label_0>${escapeXml(product.productType)}</g:custom_label_0>`;
+  if (feedProductType) xml += `
+    <g:custom_label_0>${escapeXml(feedProductType)}</g:custom_label_0>`;
 
   xml += `
   </item>`;
