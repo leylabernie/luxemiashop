@@ -95,6 +95,11 @@ function patchSource() {
     'src/components/home/NewArrivals.tsx',
     'src/pages/NewArrivals.tsx',
   ]) {
+    // The RECENT_PRODUCT_QUERY insertion is satisfied as soon as the constant
+    // exists; files that legitimately customized the surrounding cap values
+    // are treated as already-patched so routine edits never break the prebuild.
+    if (read(relativePath).includes('RECENT_PRODUCT_QUERY')) continue;
+
     changes += Number(replaceOnce(
       relativePath,
       'const MAX_PER_CATEGORY = 5;',
