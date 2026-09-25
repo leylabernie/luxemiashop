@@ -1,4 +1,5 @@
 import {
+  MERCHANT_GOOGLE_PRODUCT_CATEGORY,
   getMerchantGoogleProductCategory,
   isMerchantApparelCategory,
 } from '../../../src/lib/merchantTaxonomy.ts';
@@ -463,6 +464,34 @@ function generateItem(
   const variantId = shortenId(variant.id);
   const productId = shortenId(product.id);
   const googleCategory = getMerchantGoogleProductCategory(product.productType, product.title);
+  // g:product_type must end in the taxonomy leaf that matches the emitted
+  // google_product_category, otherwise the feed validator fails the build.
+  // Supplier imports often carry a raw taxonomy path instead of a leaf, so
+  // normalize to the canonical hierarchy while keeping the raw type in
+  // custom_label_0 for the validator's category expectation check.
+  const productTypeAlignment: Record<string, { accepted: RegExp; canonical: string }> = {
+    [MERCHANT_GOOGLE_PRODUCT_CATEGORY.SHIRTS_AND_TOPS]: {
+      accepted: /Saree Blouses$/i,
+      canonical: "Apparel & Accessories > Clothing > Saree Blouses",
+    },
+    [MERCHANT_GOOGLE_PRODUCT_CATEGORY.SARIS_AND_LEHENGAS]: {
+      accepted: /(?:Sarees|Lehengas & Chaniya Choli)$/i,
+      canonical: "Apparel & Accessories > Clothing > Sarees",
+    },
+    [MERCHANT_GOOGLE_PRODUCT_CATEGORY.OUTFIT_SETS]: {
+      accepted: /Outfit Sets$/i,
+      canonical: "Apparel & Accessories > Clothing > Outfit Sets",
+    },
+    [MERCHANT_GOOGLE_PRODUCT_CATEGORY.TRADITIONAL_AND_CEREMONIAL_CLOTHING]: {
+      accepted: /(?:Traditional & Ceremonial Clothing|Indo-Western Clothing)$/i,
+      canonical: "Apparel & Accessories > Clothing > Traditional & Ceremonial Clothing",
+    },
+  };
+  const alignment = productTypeAlignment[googleCategory];
+  const rawProductType = (product.productType || "").trim();
+  const feedProductType = alignment && !alignment.accepted.test(rawProductType)
+    ? alignment.canonical
+    : rawProductType;
   const gender = getGender(product.productType, product.title);
   const size = getSizeFromVariant(
     variant.selectedOptions,
@@ -549,8 +578,8 @@ function generateItem(
     <g:condition>new</g:condition>
     <g:google_product_category>${googleCategory}</g:google_product_category>`;
 
-  if (product.productType) xml += `
-    <g:product_type>${escapeXml(product.productType)}</g:product_type>`;
+  if (feedProductType) xml += `
+    <g:product_type>${escapeXml(feedProductType)}</g:product_type>`;
   if (gender) xml += `
     <g:gender>${gender}</g:gender>`;
   if (isApparel) xml += `
