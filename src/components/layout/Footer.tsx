@@ -28,14 +28,10 @@ const footerLinks = {
     { name: 'Shop by Fulfillment', href: '/shop-by-fulfillment' },
   ],
   collections: [
-    { name: 'Customizable Indian Outfits', href: '/collections/customizable-indian-outfits' },
     { name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' },
-    { name: 'Wedding Sarees', href: '/collections/wedding-sarees' },
     { name: 'Designer Sarees', href: '/collections/designer-sarees' },
     { name: 'Silk Sarees', href: '/collections/silk-sarees' },
     { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-    { name: 'Bridesmaid & Maid of Honor', href: '/collections/bridal-party-outfits' },
-    { name: 'Bollywood-Inspired', href: '/collections/bollywood-inspired-indian-outfits' },
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
