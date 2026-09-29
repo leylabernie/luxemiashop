@@ -23,7 +23,7 @@ import {
 // Evergreen first-order incentive. FIRST10 must exist as an active Shopify
 // discount before this copy ships — see src/config/welcomeOffer.ts.
 const shippingAnnouncements = [
-  'NAVRATRI SPECIAL: Buy 1 Get 1 Free on Navratri outfits — automatically applied at checkout. Ends Oct 13.',
+  'BUY 1 GET 1 FREE on the entire New Arrivals drop — automatically applied at checkout. Ends Oct 13.',
   'First order? Code FIRST10 takes 10% off — applied at checkout. One use per customer.',
   'Free U.S. standard shipping at $150 and above. $14.99 below that. Tracking provided after dispatch.',
   'Tracked U.S. shipping — $14.99 below $150 and free at $150+.',
