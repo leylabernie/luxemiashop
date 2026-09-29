@@ -35,15 +35,15 @@ interface FeaturedSlide {
 
 const featuredSlides: FeaturedSlide[] = [
   {
-    id: 'bogo-sitewide',
-    eyebrow: 'Festive New Arrivals 2026',
+    id: 'navratri-bogo',
+    eyebrow: 'Navratri 2026 · Limited Time',
     headline: 'Buy 1 Get 1 Free',
-    subline: 'Mix & match lehengas, kurta sets & menswear — discount applied at checkout.',
-    cta: 'Shop New Arrivals',
-    link: '/new-arrivals',
+    subline: 'On Navratri outfits — discount applied automatically at checkout.',
+    cta: 'Shop Navratri Outfits',
+    link: '/collections/navratri-outfits',
     image: '/images/banners/bogo-mobile',
     desktopImage: '/images/banners/bogo-desktop',
-    alt: 'LuxeMia Buy 1 Get 1 Free festive offer — lehengas, kurta sets and menswear',
+    alt: 'LuxeMia Navratri Special — Buy 1 Get 1 Free on Navratri outfits',
     width: 1920,
     height: 800,
     imageFit: 'cover',
