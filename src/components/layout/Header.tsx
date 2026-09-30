@@ -29,8 +29,7 @@ const shippingAnnouncements = [
   'Tracked U.S. shipping — $14.99 below $150 and free at $150+.',
 ];
 
-// Categories without a mega-menu use plain links.
-// Indo-Western removed from top-level nav — will become a menswear subcategory later.
+// Categories without a mega-menu (groups: []) render as plain links.
 
 // Combined nav links for the mobile menu (mega-menu not used on mobile).
 const navLinks = [

@@ -1045,6 +1045,11 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     ],
   },
   {
+    label: 'Indo-Western',
+    href: '/indowestern',
+    groups: [],
+  },
+  {
     label: 'Salwar Kameez',
     href: '/suits',
     groups: [

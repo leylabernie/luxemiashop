@@ -853,6 +853,15 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         )}
       </div>
 
+      {!currentSelectionIsMadeToOrder &&
+        !product.tags?.includes('construction:Unstitched') &&
+        !product.tags?.includes('availability:Confirm before ordering') && (
+        <p className="flex items-center gap-2 text-sm font-medium text-green-800" role="status">
+          <Truck className="h-4 w-4 shrink-0" aria-hidden="true" />
+          Ships in 3–5 business days
+        </p>
+      )}
+
       {/* Shipping terms — timing is confirmed from the selected product and service */}
       <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} />
       {shipByLabel && (

@@ -3490,8 +3490,10 @@ async function main() {
     // Fabric + color detection arrays (shared by title + description generation)
     const fabrics = ['raw silk', 'banarasi silk', 'kanchipuram silk', 'kanjivaram', 'georgette', 'chiffon', 'velvet', 'organza', 'chinnon', 'chinon', 'crepe', 'net', 'cotton', 'satin', 'taffeta', 'jacquard', 'tussar', 'brocade', 'silk', 'art silk'];
     const colors = ['maroon', 'wine', 'burgundy', 'red', 'pink', 'rani pink', 'baby pink', 'dusty rose', 'blue', 'navy', 'royal blue', 'sky blue', 'teal', 'green', 'emerald', 'olive', 'mint', 'sage', 'yellow', 'gold', 'mustard', 'orange', 'peach', 'coral', 'rust', 'purple', 'lavender', 'plum', 'mauve', 'lilac', 'white', 'ivory', 'cream', 'beige', 'black', 'grey', 'gray', 'champagne', 'copper', 'bronze'];
-    const foundFabric = productIsJewelry ? undefined : fabrics.find(f => titleDescLower.includes(f));
-    const foundColor = colors.find(c => titleDescLower.includes(c));
+    const matchWord = (term) => new RegExp("\\b" + term.replace(/[^a-z0-9]/gi, "[^a-z0-9]") + "\\b", "i").test(titleDescLower);
+    const longestFirst = (list) => [...list].sort((a, b) => b.length - a.length);
+    const foundFabric = productIsJewelry ? undefined : longestFirst(fabrics).find(matchWord);
+    const foundColor = longestFirst(colors).find(matchWord);
 
     let title;
     if (seoTitle) {

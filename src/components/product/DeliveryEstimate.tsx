@@ -24,7 +24,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstit
         )}
         <div>
           <p className="font-medium text-foreground">
-            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : 'Ready to Ship'}
+            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : 'Ready to Ship — ships in 3–5 business days'}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             {confirmAvailability
