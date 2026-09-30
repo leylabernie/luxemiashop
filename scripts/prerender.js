@@ -3458,6 +3458,16 @@ async function main() {
         // Keep static H1, schema, breadcrumb, and hydrated title parity by
         // normalizing the current live title before HTML is rendered.
         route.h1 = sanitizeProductTitle(live.title || route.h1) || route.h1;
+        // Same for the bot-facing <title> and meta description: hardcoded
+        // entries go stale the moment Shopify SEO fields change, so prefer
+        // the live Search-engine listing whenever it is present and the
+        // listing carries the source-verified tag.
+        const liveSeoTitle = sanitizeProductTitle((live.seo?.title || '').trim());
+        const liveSeoDescription = (live.tags || []).includes('facts:source-verified')
+          ? (live.seo?.description || '')
+          : '';
+        if (liveSeoTitle) route.title = liveSeoTitle;
+        if (liveSeoDescription) route.description = liveSeoDescription;
       }
     }
   }
