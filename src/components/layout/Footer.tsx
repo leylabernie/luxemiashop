@@ -47,6 +47,7 @@ const footerLinks = {
     { name: 'Press', href: '/press' },
   ],
   help: [
+    { name: 'Review us on Google', href: 'https://search.google.com/local/writereview?placeid=ChIJw2TQgyx3_WgRbxjTw6E4KhY', external: true },
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
     { name: 'Shipping Info', href: '/shipping' },
@@ -252,9 +253,15 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <ul className="space-y-2.5">
               {footerLinks.help.map((link) => (
                 <li key={link.name}>
-                  <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
-                    {link.name}
-                  </Link>
+                  {'external' in link && link.external ? (
+                    <a href={link.href} target="_blank" rel="noopener noreferrer" className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
+                      {link.name}
+                    </a>
+                  ) : (
+                    <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
+                      {link.name}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
