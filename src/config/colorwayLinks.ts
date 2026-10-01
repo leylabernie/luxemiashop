@@ -11,11 +11,11 @@ export interface ColorwaySwatch {
   hex: string;
 }
 
-const COLORWAY_FAMILIES: Record<string, ColorwaySwatch[]> = {
-  'ivory-silk-lehenga-choli-al9028': 'family:mira',
-  'blush-pink-silk-lehenga-choli-al9030': 'family:mira',
-  'mint-green-silk-lehenga-choli-al9029': 'family:mira',
-  'yellow-silk-lehenga-choli-al9027': 'family:mira',
+const HANDLE_TO_FAMILY: Record<string, string> = {
+  'ivory-silk-lehenga-choli-al9028': 'mira',
+  'blush-pink-silk-lehenga-choli-al9030': 'mira',
+  'mint-green-silk-lehenga-choli-al9029': 'mira',
+  'yellow-silk-lehenga-choli-al9027': 'mira',
 };
 
 const FAMILIES: Record<string, ColorwaySwatch[]> = {
@@ -31,8 +31,8 @@ export function getColorwaysForHandle(handle: string): {
   swatches: ColorwaySwatch[];
   current: ColorwaySwatch | null;
 } {
-  const family = COLORWAY_FAMILIES[handle];
-  const swatches = family ? FAMILIES[family.replace('family:', '')] ?? [] : [];
+  const family = HANDLE_TO_FAMILY[handle];
+  const swatches = (family && FAMILIES[family]) || [];
   return {
     swatches,
     current: swatches.find((swatch) => swatch.handle === handle) ?? null,
