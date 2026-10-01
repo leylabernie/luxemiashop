@@ -308,7 +308,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           {/* Copyright + business info — bottom row, centered */}
           <div className="text-center text-xs text-foreground/50 space-y-1">
             <p>© 2026 LuxeMia. All rights reserved.</p>
-            <p>LuxeMia &middot; Online Indian ethnic wear &middot; USA-based support</p>
+            <p>LuxeMia &middot; Online Indian ethnic wear &middot; Philadelphia, PA &middot; USA-based support</p>
           </div>
         </div>
       </div>
