@@ -358,6 +358,28 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     [product.variants.edges],
   );
 
+  // Price deltas shown on option buttons are derived from real Shopify variant
+  // prices so the label always matches the amount charged at checkout.
+  const optionValuePriceDeltas = useMemo(() => {
+    const deltas = new Map<string, number>();
+    const purchasablePrices = variantNodes
+      .filter((variant) => variant.availableForSale !== false)
+      .map((variant) => parseFloat(variant.price.amount));
+    if (purchasablePrices.length === 0) return deltas;
+    const minPrice = Math.min(...purchasablePrices);
+    for (const variant of variantNodes) {
+      const delta = Math.round((parseFloat(variant.price.amount) - minPrice) * 100) / 100;
+      if (delta <= 0) continue;
+      for (const opt of variant.selectedOptions) {
+        const key = `${opt.name}::${opt.value}`;
+        if (!deltas.has(key) || delta < (deltas.get(key) ?? Infinity)) {
+          deltas.set(key, delta);
+        }
+      }
+    }
+    return deltas;
+  }, [variantNodes]);
+
   const eligibleServiceAddOnCodes = useMemo(
     () => getEligibleServiceAddOns(product),
     [product],
@@ -1067,13 +1089,17 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                   option.name,
                   value,
                 );
+                const priceDelta = optionValuePriceDeltas.get(`${option.name}::${value}`);
+                const deltaLabel = priceDelta
+                  ? ` +$${priceDelta % 1 === 0 ? priceDelta : priceDelta.toFixed(2)}`
+                  : '';
                 return (
                   <button
                     key={value}
                     type="button"
                     onClick={() => handleOptionSelect(option.name, value)}
                     disabled={!optionValueAvailable}
-                    aria-label={`${value}${optionValueAvailable ? '' : ' — unavailable'}`}
+                    aria-label={`${value}${deltaLabel}${optionValueAvailable ? '' : ' — unavailable'}`}
                     className={`px-4 py-2.5 text-sm border rounded-sm transition-all duration-300 ${
                       selectedOptions[option.name] === value
                         ? 'border-foreground bg-foreground text-background'
@@ -1083,6 +1109,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                     }`}
                   >
                     {value}
+                    {deltaLabel && (
+                      <span className="ml-1.5 text-xs opacity-75">{deltaLabel}</span>
+                    )}
                   </button>
                 );
               })}
