@@ -371,7 +371,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     const minPrice = Math.min(...purchasablePrices);
     for (const variant of variantNodes) {
       const delta = Math.round((parseFloat(variant.price.amount) - minPrice) * 100) / 100;
-      if (delta <= 0) continue;
+      if (delta < 0) continue;
       for (const opt of variant.selectedOptions) {
         const key = `${opt.name}::${opt.value}`;
         if (!deltas.has(key) || delta < (deltas.get(key) ?? Infinity)) {
