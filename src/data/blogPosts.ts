@@ -769,7 +769,7 @@ export const blogPosts: BlogPost[] = [
       <p>LuxeMia offers tracked shipping to seven countries; use the <a href="/shipping">current shipping page</a> for route-based rates and thresholds. Tracking is provided after dispatch. First-time shoppers can use <strong>LUXE10</strong> for 10% off their first order with no minimum purchase requirement.</p>
 
       <h2>Compare current Garba outfit listings</h2>
-      <p>For a skirt-and-top option, view the <a href="/product/rayon-mirror-work-readymade-navratri-lehenga-choli">rayon mirror-work readymade Navratri lehenga choli</a> or the <a href="/product/cora-cotton-navratri-lehenga-gamthi-embroidered-long-top">Cora cotton Navratri lehenga with a Gamthi embroidered long top</a>. Compare the listed measurements, set contents and selected variant before ordering; confirm timing with LuxeMia for a fixed event date.</p>
+      <p>For a skirt-and-top option, view the <a href="/product/rayon-mirror-work-readymade-navratri-lehenga-choli">rayon mirror-work readymade Navratri lehenga choli</a> or the <a href="/product/kora-cotton-navratri-lehenga-gamthi-embroidered-long-top">Cora cotton Navratri lehenga with a Gamthi embroidered long top</a>. Compare the listed measurements, set contents and selected variant before ordering; confirm timing with LuxeMia for a fixed event date.</p>
 
       <h2>Shop current Navratri outfits</h2>
       <p><a href="/collections/navratri-outfits"><strong>Shop current Navratri, Garba and chaniya choli listings</strong></a>, compare measurements with the <a href="/sizing-measurements-guide">LuxeMia sizing guide</a>, or <a href="/contact">contact LuxeMia</a> before ordering when a product detail or event deadline is unclear.</p>
