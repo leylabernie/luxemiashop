@@ -40,6 +40,8 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
   // Live 4xx recovery verified against the current Shopify catalog on 24 Aug 2026.
   // Same RANGHAT-1071 blue-net garment: archived legacy handles now resolve
   // to the current purchasable partywear listing instead of returning 404.
+  // Spelling correction: brand spelling is "Kora", not "Cora" (order #1001).
+  '/product/cora-cotton-navratri-lehenga-gamthi-embroidered-long-top': '/product/kora-cotton-navratri-lehenga-gamthi-embroidered-long-top',
 
 };
 
