@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
+import { getColorwaysForHandle } from '@/config/colorwayLinks';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
@@ -288,6 +289,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
   const madeToOrderProduct = isMadeToOrderProduct(product.handle, product.tags);
+  const colorways = getColorwaysForHandle(product.handle);
   const { product: serviceAddOnProduct } = useShopifyProduct(
     SERVICE_ADD_ON_PRODUCT_HANDLE,
     { allowHiddenBillingProduct: true },
@@ -1058,6 +1060,44 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           sizeMode="menswear"
           label="Select Size"
         />
+      )}
+
+      {/* ─── More Colors (same design, other color listings) ─── */}
+      {colorways.swatches.length > 1 && (
+        <div className="flex items-center gap-3">
+          <span className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+            More Colors
+          </span>
+          <div className="flex items-center gap-2">
+            {colorways.swatches.map((swatch) => {
+              const isCurrent = colorways.current?.handle === swatch.handle;
+              const circle = (
+                <span
+                  aria-hidden="true"
+                  className={`block h-7 w-7 rounded-full border border-black/10 shadow-sm transition-transform duration-200 ${
+                    isCurrent ? 'ring-2 ring-foreground ring-offset-2' : 'group-hover/link:scale-110'
+                  }`}
+                  style={{ backgroundColor: swatch.hex }}
+                />
+              );
+              return isCurrent ? (
+                <span key={swatch.handle} title={`${swatch.color} — current selection`}>
+                  {circle}
+                </span>
+              ) : (
+                <Link
+                  key={swatch.handle}
+                  to={`/product/${swatch.handle}`}
+                  className="group/link"
+                  title={`View ${swatch.color}`}
+                  aria-label={`View ${swatch.color} colorway`}
+                >
+                  {circle}
+                </Link>
+              );
+            })}
+          </div>
+        </div>
       )}
 
       {/* ─── Product Options (Color, Size from Shopify) ─── */}
