@@ -59,6 +59,16 @@
       "statusCode": 301
     },
     {
+      "source": "/product/designer-handwork-net-saree",
+      "destination": "/product/designer-embroidered-net-saree",
+      "statusCode": 301
+    },
+    {
+      "source": "/products/designer-handwork-net-saree",
+      "destination": "/product/designer-embroidered-net-saree",
+      "statusCode": 301
+    },
+    {
       "source": "/maroon-lehenga-for-reception",
       "destination": "/lehengas",
       "statusCode": 301
