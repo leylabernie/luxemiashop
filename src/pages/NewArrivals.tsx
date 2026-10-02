@@ -129,7 +129,7 @@ const NewArrivals = () => {
             />
             <img
               src="/images/campaigns/new-indian-ethnic-wear-2026-mobile.jpg"
-              alt="Woman wearing a blush pink embroidered co-ord set from LuxeMia's new Indian ethnic wear collection"
+              alt="Fully stitched white Navratri lehenga choli set with embroidered green blouse from LuxeMia's new arrivals"
               width={624}
               height={936}
               className="absolute inset-0 w-full h-full object-cover object-top"
