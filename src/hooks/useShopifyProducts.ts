@@ -280,12 +280,11 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
   // For all women's categories: exclude menswear + excluded titles first
   const filtered = allowed.filter(p => !isMenswear(p));
 
-  // For indowestern, show women's fusion styles
+  // For indowestern, show women's fusion styles only — sharara/anarkali/
+  // palazzo suits belong to /suits, so the fallback list must not re-admit
+  // them by product type.
   if (category === 'indowestern') {
-    const womensFusionTypes = [
-      ...types.map(t => t.toLowerCase()),
-      'sharara', 'anarkali', 'co-ords', 'coord set', 'jumpsuit', 'cape set', 'plazzo suit',
-    ];
+    const womensFusionTypes = types.map(t => t.toLowerCase());
     return filtered.filter(p => {
       const pt = (p.node.productType ?? '').toLowerCase();
       const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
