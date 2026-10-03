@@ -17,6 +17,7 @@ const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress'],
   jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
+  kids: ['Girls Ethnic Set', 'Kids Salwar Set', 'Kids Lehenga', 'Girls Salwar Suit', 'Kids Ethnic Wear', 'Girls Lehenga Set'],
 };
 
 const escapeRegex = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
@@ -47,6 +48,9 @@ export const getDisplayCategory = (productType: string | undefined): string => {
   // are WOMEN's products on Shopify — do NOT match them as menswear
   if (/kurta pajama|sherwani|jodhpuri|men.*ethnic|men.*indian|men.*suit|modi jacket|menswear|bandi|pathani|achkan/.test(pt)) return 'Menswear';
   if (/\bmen\b/.test(pt)) return 'Menswear';
+
+  // Kids — girls' ethnic sets get their own display category
+  if (/kids|girls ethnic|girls salwar|girls lehenga/.test(pt)) return 'Kids';
 
   // Women's categories — order matters (most specific first)
   if (/lehenga|lehnga|lehena/.test(pt)) return 'Lehengas';
@@ -328,6 +332,22 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
       if (/salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani\s+suit|kurti|churidar|patiala/.test(pt)) return true;
 
       return false;
+    });
+  }
+
+  // Kids — girls' ethnic sets matched by product type or kids/girls signals.
+  // Boys' wear is menswear and never lands here (isMenswear + boys tag guard).
+  if (category === 'kids') {
+    const kidsTypes = types.map(t => t.toLowerCase());
+    return filtered.filter(p => {
+      const pt = (p.node.productType ?? '').toLowerCase();
+      const tags = (p.node.tags ?? []).map(t => t.toLowerCase());
+      const title = (p.node.title ?? '').toLowerCase();
+      if (tags.some(t => t === 'boys' || t === 'boy' || t === 'mens' || t === 'menswear')) return false;
+      if (title.includes('for boys') || title.includes('boys ')) return false;
+      if (kidsTypes.some(t => pt === t)) return true;
+      return tags.some(t => t === 'kids' || t.startsWith('kids ') || t.includes('girls ethnic')) ||
+        /\b(kids|girls?)\b/.test(pt);
     });
   }
 

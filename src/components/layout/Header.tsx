@@ -39,6 +39,7 @@ const navLinks = [
 const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Ready to Ship', href: '/ready-to-ship' },
+  { name: 'Shop by Video', href: '/videos' },
   { name: 'Guides', href: '/blog' },
 ];
 

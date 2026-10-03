@@ -26,6 +26,8 @@ const Sarees = lazy(() => import("./pages/Sarees"));
 const Suits = lazy(() => import("./pages/Suits"));
 const Menswear = lazy(() => import("./pages/Menswear"));
 const Jewelry = lazy(() => import("./pages/Jewelry"));
+const Kids = lazy(() => import("./pages/Kids"));
+const Videos = lazy(() => import("./pages/Videos"));
 const Contact = lazy(() => import("./pages/Contact"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const ShippingCustoms = lazy(() => import("./pages/ShippingCustoms"));
@@ -127,6 +129,9 @@ const App = () => (
                 <Route path="/suits" element={<Suspense fallback={<PageLoader />}><Suits /></Suspense>} />
                 <Route path="/menswear" element={<Suspense fallback={<PageLoader />}><Menswear /></Suspense>} />
                 <Route path="/jewelry" element={<Suspense fallback={<PageLoader />}><Jewelry /></Suspense>} />
+                <Route path="/kids" element={<Suspense fallback={<PageLoader />}><Kids /></Suspense>} />
+                <Route path="/videos" element={<Suspense fallback={<PageLoader />}><Videos /></Suspense>} />
+                <Route path="/collections/kids" element={<Navigate to="/kids" replace />} />
                 <Route path="/our-story" element={<Navigate to="/about" replace />} />
                 <Route path="/about-us" element={<Navigate to="/about" replace />} />
                 <Route path="/about" element={<Suspense fallback={<PageLoader />}><About /></Suspense>} />

@@ -840,6 +840,7 @@ const CATEGORY_PRODUCT_TYPES = {
   menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set'],
   indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress'],
   jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
+  kids: ['Girls Ethnic Set', 'Kids Salwar Set', 'Kids Lehenga', 'Girls Salwar Suit', 'Kids Ethnic Wear', 'Girls Lehenga Set'],
 };
 
 const MENSWEAR_KEYWORDS_REGEX = /\b(sherwani|kurta\s?pajama|kurta\s?set|jodhpuri|modi\s?jacket|nehru\s?jacket|groom|menswear|men's|dhoti|bandi|pathani|achkan|angarakha|men\s?suit|men\s?kurta|men\s?shirt|men\s?trouser|men\s?jacket|\bmale\b|for\s?men|\bboys\b)\b/i;
@@ -1076,6 +1077,20 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
       }
       if (/salwar|kameez|anarkali|sharara|palazzo|plazzo|gharara|pakistani\s+suit|kurti|churidar|patiala/.test(pt)) return true;
       return false;
+    }).slice(0, maxProducts);
+  }
+
+  if (category === 'kids') {
+    const kidsTypes = types.map(t => t.toLowerCase());
+    return filtered.filter(p => {
+      const pt = (p.productType ?? '').toLowerCase();
+      const tags = (p.tags ?? []).map(t => t.toLowerCase());
+      const title = (p.title ?? '').toLowerCase();
+      if (tags.some(t => t === 'boys' || t === 'boy' || t === 'mens' || t === 'menswear')) return false;
+      if (title.includes('for boys') || title.includes('boys ')) return false;
+      if (kidsTypes.some(t => pt === t)) return true;
+      return tags.some(t => t === 'kids' || t.startsWith('kids ') || t.includes('girls ethnic')) ||
+        /\b(kids|girls?)\b/.test(pt);
     }).slice(0, maxProducts);
   }
 
@@ -1986,6 +2001,39 @@ const routes = [
       </ul>
       <h2>Why Choose Kundan Jewelry for Your Wedding?</h2>
       <p>Kundan and polki are design terms that may be used for different materials and finishes. Do not assume a listing contains diamonds, precious metal, hand-set stones or a particular technique unless the product page states it.</p>
+    `,
+  },
+  {
+    path: '/kids',
+    category: 'kids',
+    title: getIndexableRouteSeo('/kids').title,
+    description: getIndexableRouteSeo('/kids').description,
+    h1: getIndexableRouteSeo('/kids').h1,
+    content: `
+      <p>Festive Indian ethnic sets for girls, delivered in the USA. Every kids' listing states its fabric, included pieces and the sizes it is available in — review the exact product page before ordering.</p>
+      <h2>Shop Kids by Style</h2>
+      <ul>
+        <li><a href="/kids?sub=salwar-set">Salwar Sets</a> — Kurta, farshi and dupatta sets for festive events</li>
+        <li><a href="/kids?sub=lehenga-set">Lehenga Sets</a> — Occasion lehenga styles for girls</li>
+      </ul>
+      <h2>Shop Kids by Occasion</h2>
+      <ul>
+        <li><a href="/kids?sub=festive">Festive Outfits</a> — Navratri, Diwali and celebration wear</li>
+        <li><a href="/kids?sub=wedding">Wedding Outfits</a> — Ceremonies and wedding-guest looks for kids</li>
+      </ul>
+      <h2>Kids' Sizing and Fit</h2>
+      <p>Kids' sets list the chest sizes they are stocked in. Compare the listed sizes with your child's current measurements before ordering, and contact LuxeMia if you are between sizes.</p>
+    `,
+  },
+  {
+    path: '/videos',
+    title: getIndexableRouteSeo('/videos').title,
+    description: getIndexableRouteSeo('/videos').description,
+    h1: getIndexableRouteSeo('/videos').h1,
+    content: `
+      <p>Every LuxeMia listing with a video, in one place. Watch the drape, flair and embroidery in motion, then shop the exact piece from its product page.</p>
+      <h2>Why Shop by Video?</h2>
+      <p>Photos flatten drape and movement. Product videos show how a lehenga flares in a twirl, how a saree pallu falls, and how embroidery catches the light — the details that matter before you order.</p>
     `,
   },
   {

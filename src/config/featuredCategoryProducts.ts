@@ -49,6 +49,16 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/swKVNzOAAXsPGhOW.jpg?v=1787358107&width=900&format=webp",
     alt: "Powder Blue Premium Viscose Crepe Embroidered Palazzo Suit with Dupatta",
   },
+  kids: {
+    category: 'Kids',
+    title: "Embroidered Chinon Kids Salwar Set - Orange Yellow Pink",
+    handle: "embroidered-chinon-kids-salwar-set",
+    price: 49,
+    href: '/kids',
+    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-embroidered-chinon-kids-salwar-set-01.jpg?v=1791061322&width=900",
+    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-embroidered-chinon-kids-salwar-set-01.jpg?v=1791061322&width=900&format=webp",
+    alt: "Embroidered chinon kids salwar set in orange, yellow and pink",
+  },
   menswear: {
     category: 'Menswear',
     title: "Beige Fancy Work Art Silk Groom Sherwani with Stole",

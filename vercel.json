@@ -304,6 +304,11 @@
       "statusCode": 301
     },
     {
+      "source": "/collections/kids",
+      "destination": "/kids",
+      "statusCode": 301
+    },
+    {
       "source": "/collections/new-arrivals",
       "destination": "/new-arrivals",
       "statusCode": 301

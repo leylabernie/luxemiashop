@@ -977,6 +977,69 @@ const JEWELRY: CategoryConfig = {
   ],
 };
 
+// ─── Kids ──────────────────────────────────────────────────────────────────
+
+const KIDS: CategoryConfig = {
+  slug: 'kids',
+  name: 'Kids',
+  heroImage: FEATURED_CATEGORY_PRODUCTS.kids.image,
+  heroImageWebp: FEATURED_CATEGORY_PRODUCTS.kids.imageWebp,
+  heroAlt: FEATURED_CATEGORY_PRODUCTS.kids.alt,
+  heroTitle: getIndexableRouteSeo('/kids').h1,
+  heroSubtitle: 'Festive Indian ethnic sets for girls — salwar sets, lehenga sets and occasion wear for U.S. delivery. Review each listing for stated fabric, included pieces and available sizes.',
+  seoTitle: getIndexableRouteSeo('/kids').title,
+  seoDescription: getIndexableRouteSeo('/kids').description,
+  canonical: 'https://luxemia.shop/kids',
+  ogImage: '/og/og-kids.jpg',
+  breadcrumbs: [
+    { name: 'Home', url: '/' },
+    { name: 'Collections', url: '/collections' },
+    { name: 'Kids', url: '/kids' },
+  ],
+  subcategories: [
+    occasionSub('festive', 'Festive', ['festive', 'festival', 'occasion:festival']),
+    occasionSub('wedding', 'Wedding', ['wedding', 'wedding guest', 'occasion:wedding']),
+    styleSub('salwar-set', 'Salwar Sets', ['salwar set', 'salwar']),
+    styleSub('lehenga-set', 'Lehenga Sets', ['lehenga', 'kids lehenga']),
+    priceSub('under-100', 'Under $100', 0, 100),
+  ],
+  filters: [
+    {
+      name: 'Color',
+      tagPrefix: 'color',
+      renderAsSwatches: true,
+      defaultExpanded: true,
+      options: colors('Orange', 'Yellow', 'Pink', 'Green', 'Red', 'Purple', 'Blue', 'White'),
+    },
+    {
+      name: 'Fabric',
+      tagPrefix: 'fabric',
+      options: [
+        { value: 'chinon', label: 'Chinon' },
+        { value: 'silk', label: 'Silk' },
+        { value: 'cotton', label: 'Cotton' },
+        { value: 'georgette', label: 'Georgette' },
+      ],
+    },
+  ],
+  priceRange: [0, 200],
+  priceStep: 10,
+  faqs: [
+    {
+      question: "What kids' ethnic wear does LuxeMia sell?",
+      answer: "LuxeMia stocks festive Indian outfits for girls, including embroidered salwar sets and lehenga-style sets. Each listing states the fabric, included pieces and the sizes available."
+    },
+    {
+      question: "How do I choose a size for girls' ethnic wear?",
+      answer: "Check the size options on the product page and compare them to your child's current measurements. Salwar sets list the chest sizes each listing is available in; contact LuxeMia before ordering if you are between sizes."
+    },
+    {
+      question: "Do you ship kids' outfits to the United States?",
+      answer: "Yes. LuxeMia ships to United States addresses. Shipping is free at $150 and above and costs $14.99 below that. Tracking is provided after dispatch."
+    },
+  ],
+};
+
 // ─── Exported registry ─────────────────────────────────────────────────────
 
 export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
@@ -985,6 +1048,7 @@ export const CATEGORY_CONFIGS: Record<string, CategoryConfig> = {
   suits: SUITS,
   menswear: MENSWEAR,
   jewelry: JEWELRY,
+  kids: KIDS,
 };
 
 export function getCategoryConfig(slug: string): CategoryConfig | undefined {
@@ -1070,6 +1134,14 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     href: '/jewelry',
     groups: [
       { label: 'By Type', links: subcatLinks('jewelry', JEWELRY.subcategories, 'style').filter(l => ['Necklace Sets', 'Chokers', 'Bridal Sets'].includes(l.name)) },
+    ],
+  },
+  {
+    label: 'Kids',
+    href: '/kids',
+    groups: [
+      { label: 'By Style', links: [{ name: 'Salwar Sets', href: '/kids?sub=salwar-set' }, { name: 'Lehenga Sets', href: '/kids?sub=lehenga-set' }] },
+      { label: 'By Occasion', links: [{ name: 'Festive', href: '/kids?sub=festive' }, { name: 'Wedding', href: '/kids?sub=wedding' }] },
     ],
   },
 ];
