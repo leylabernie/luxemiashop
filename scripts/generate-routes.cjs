@@ -43,6 +43,8 @@ const STATIC_ROUTES = [
   '/sarees',
   '/menswear',
   '/jewelry',
+  '/kids',
+  '/videos',
   '/blog',
   '/collections',
   '/collections/silk-sarees',
