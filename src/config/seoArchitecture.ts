@@ -34,16 +34,6 @@ const architecture = /* seo-architecture-json:start */ {
       "description": "Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, included pieces, measurements and availability.",
       "h1": "Indian Bridal Jewelry Sets & Wedding Necklaces"
     },
-    "/kids": {
-      "title": "Kids Indian Ethnic Wear Online USA | Girls Salwar Sets | LuxeMia",
-      "description": "Shop kids' Indian ethnic wear online in the USA. Festive girls' salwar sets and occasion outfits with stated fabric, included pieces and sizes.",
-      "h1": "Kids' Indian Ethnic Wear & Girls' Festive Sets"
-    },
-    "/videos": {
-      "title": "Shop by Video | Lehenga, Saree & Suit Videos | LuxeMia",
-      "description": "Watch LuxeMia product videos — lehengas, sarees and festive sets in motion — then shop the exact listing. Real movement, real drape, no guesswork.",
-      "h1": "Shop LuxeMia by Video"
-    },
     "/collections/bridal-lehengas": {
       "title": "Bridal Lehengas USA | Indian Wedding Styles | LuxeMia",
       "description": "Shop bridal lehengas online in the USA. Compare current colors, stated fabric, embroidery, included choli and dupatta pieces, sizing and availability.",
@@ -88,6 +78,16 @@ const architecture = /* seo-architecture-json:start */ {
       "title": "Indian Wedding Guest Outfits USA | LuxeMia",
       "description": "Shop Indian wedding guest sarees and lehengas for receptions and sangeet in the USA. Compare listed fabrics, pieces, sizes and availability.",
       "h1": "Indian Wedding Guest Sarees & Lehengas in the USA"
+    },
+    "/kids": {
+      "title": "Kids Indian Ethnic Wear Online USA | LuxeMia",
+      "description": "Shop kids Indian ethnic wear online in the USA. Festive girls salwar sets and occasion outfits with stated fabric, included pieces and sizes.",
+      "h1": "Kids Indian Ethnic Wear & Girls Festive Sets"
+    },
+    "/videos": {
+      "title": "Shop by Video | Lehenga, Saree & Suit Videos | LuxeMia",
+      "description": "Watch LuxeMia product videos — lehengas, sarees and festive sets in motion — then shop the exact listing. Real movement, real drape, no guesswork.",
+      "h1": "Shop LuxeMia by Video"
     }
   },
   "subcategoryLandingPaths": {
