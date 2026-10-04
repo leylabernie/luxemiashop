@@ -72,6 +72,8 @@ const staticPages = [
   { loc: '/lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/jewelry', changefreq: 'daily', priority: '0.9' },
+  { loc: '/kids', changefreq: 'daily', priority: '0.8' },
+  { loc: '/videos', changefreq: 'daily', priority: '0.8' },
   { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
   // High-intent commercial collection pages. Emptied by the 2026-09-22
   // single-image removal and excluded here until new stock lands: anarkali-suits,
