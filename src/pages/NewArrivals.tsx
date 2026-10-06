@@ -115,36 +115,36 @@ const NewArrivals = () => {
           <picture className="absolute inset-0 w-full h-full">
             <source
               media="(min-width: 768px)"
-              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp"
+              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop-v2.webp"
               type="image/webp"
             />
             <source
               media="(min-width: 768px)"
-              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg"
+              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop-v2.jpg"
               type="image/jpeg"
             />
             <source
-              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp"
+              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-mobile-v2.webp"
               type="image/webp"
             />
             <img
-              src="/images/campaigns/new-indian-ethnic-wear-2026-mobile.jpg"
-              alt="Fully stitched white Navratri lehenga choli set with embroidered green blouse from LuxeMia's new arrivals"
-              width={624}
-              height={936}
-              className="absolute inset-0 w-full h-full object-cover object-top"
+              src="/images/campaigns/new-indian-ethnic-wear-2026-mobile-v2.jpg"
+              alt="New arrivals at LuxeMia — festive kediyu lehenga on a warm champagne backdrop"
+              width={1080}
+              height={512}
+              className="absolute inset-0 w-full h-full object-cover"
               fetchPriority="high"
               decoding="async"
             />
           </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-black/20" />
-          <div className="relative z-10 text-center px-4 text-white">
+          <div className="absolute inset-0 bg-gradient-to-t from-[#2f2023]/15 via-transparent to-transparent" />
+          <div className="relative z-10 text-center px-4 text-[#3a4d61]">
             <div className="flex items-center justify-center gap-2 mb-3">
-              <Sparkles className="w-5 h-5 text-white" />
-              <span className="text-xs uppercase tracking-widest text-white/70">New Indian Ethnic Wear</span>
+              <Sparkles className="w-5 h-5 text-[#a67c3c]" />
+              <span className="text-xs uppercase tracking-widest text-[#3a4d61]/70">New Indian Ethnic Wear</span>
             </div>
             <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
-            <p className="text-white/80 font-light max-w-md mx-auto text-sm lg:text-base">
+            <p className="text-[#3a4d61]/85 font-light max-w-md mx-auto text-sm lg:text-base">
               {isLoading
                 ? 'Explore recently added lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.'
                 : `Explore ${totalNew} recently added ${totalNew === 1 ? 'style' : 'styles'}, including lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.`
