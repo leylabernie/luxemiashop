@@ -11,6 +11,12 @@ import {
   RAKSHA_BANDHAN_CAMPAIGN,
 } from '@/config/rakshaBandhanCampaign';
 import { SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
+import {
+  bestFestiveTier,
+  FESTIVE_CAMPAIGN,
+  isFestiveCampaignActive,
+  nextFestiveTier,
+} from '@/config/festiveCampaign';
 
 const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
 const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
@@ -43,6 +49,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     0,
     RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal - subtotal,
   );
+  const festiveActive = isFestiveCampaignActive();
+  const festiveTier = festiveActive ? bestFestiveTier(subtotal) : null;
+  const festiveNext = festiveActive ? nextFestiveTier(subtotal) : null;
   // Persisted carts can outlive Shopify inventory changes. Block checkout when
   // the locally stored variant is explicitly unavailable instead of sending a
   // stale line to Shopify and giving the customer a confusing API error.
@@ -248,6 +257,28 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 </div>
 
                 <div className="space-y-3 px-5 pb-4 sm:px-6">
+                  {festiveActive && (
+                    <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
+                      {festiveTier ? (
+                        <p className="text-xs leading-relaxed text-foreground">
+                          Festive offer unlocked: <strong className="font-semibold">{festiveTier.percent}% off</strong>{' '}
+                          auto-applied at checkout.
+                          {festiveNext && (
+                            <> Add {formatPrice(festiveNext.minSubtotal - subtotal, currencyCode)} more for {festiveNext.percent}% off.</>
+                          )}
+                        </p>
+                      ) : (
+                        <p className="text-xs leading-relaxed text-foreground">
+                          {festiveNext && (
+                            <>Add {formatPrice(festiveNext.minSubtotal - subtotal, currencyCode)} more for {festiveNext.percent}% off — auto-applied at checkout.</>
+                          )}
+                        </p>
+                      )}
+                      <p className="mt-1 text-[11px] text-muted-foreground">
+                        Festive Sale ends {FESTIVE_CAMPAIGN.displayEndDate}. Cannot be combined with other discount codes.
+                      </p>
+                    </div>
+                  )}
                   {isRakhiSaleActive && (
                     <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
                       {amountUntilRakhiDiscount === 0 ? (

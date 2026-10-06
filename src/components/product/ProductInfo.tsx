@@ -1,7 +1,8 @@
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck, BadgePercent } from 'lucide-react';
+import { bestFestiveTier, isFestiveCampaignActive } from '@/config/festiveCampaign';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getColorwaysForHandle } from '@/config/colorwayLinks';
@@ -479,6 +480,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       currencyCode: basePrice.currencyCode,
     };
   }, [basePrice, selectedServiceAddOnCharge]);
+  // Festive Sale tier for the displayed price — shown only when a tier applies
+  // (orders below the $75 floor get no discount, same mechanic as Utsav's floor).
+  const festiveTier = isFestiveCampaignActive()
+    ? bestFestiveTier(parseFloat(currentPrice.amount))
+    : null;
   const hasAvailableVariant = product.variants.edges.some(
     (edge) => edge.node.availableForSale !== false
   );
@@ -873,6 +879,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
               (parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
               currentPrice.currencyCode
             )}
+          </p>
+        )}
+        {festiveTier && (
+          <p className="flex items-center gap-1.5 text-sm font-medium text-primary">
+            <BadgePercent className="h-4 w-4 shrink-0" aria-hidden="true" />
+            Festive Sale: {festiveTier.percent}% off auto-applied at checkout
           </p>
         )}
       </div>

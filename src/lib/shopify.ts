@@ -769,11 +769,14 @@ export async function fetchCollectionByHandle(
   }
 }
 
-export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>): Promise<string | null> {
+// discountCode: festive campaign tier code (LUXE10/15/20), auto-applied the way
+// Utsav applies its sitewide tiers. Shopify silently ignores a code the cart
+// does not qualify for, so passing the best tier is always safe.
+export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>, discountCode?: string | null): Promise<string | null> {
    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
   // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
   const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
-  
+
   if (hasFakeIds) {
     console.warn('Detected fake variant IDs — redirecting to store fallback');
     // Instead of throwing, we'll return null to trigger the fallback in the store
@@ -789,7 +792,10 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
   }));
 
    const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
-    input: { lines },
+    input: {
+      lines,
+      ...(discountCode ? { discountCodes: [discountCode] } : {}),
+    },
   });
   if (!cartData || !cartData.data) {
     console.error('Failed to create cart - no data from Shopify', cartData);

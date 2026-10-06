@@ -13,6 +13,7 @@ import {
   isRakshaBandhanCampaignActive,
   RAKSHA_BANDHAN_CAMPAIGN,
 } from '@/config/rakshaBandhanCampaign';
+import { FESTIVE_CAMPAIGN, isFestiveCampaignActive } from '@/config/festiveCampaign';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,10 +24,22 @@ import {
 // Evergreen first-order incentive. FIRST10 must exist as an active Shopify
 // discount before this copy ships — see src/config/welcomeOffer.ts.
 const shippingAnnouncements = [
-  'BUY 1 GET 1 FREE on the entire New Arrivals drop — automatically applied at checkout. Ends Oct 13.',
   'First order? Code FIRST10 takes 10% off — applied at checkout. One use per customer.',
   'Free U.S. standard shipping at $150 and above. $14.99 below that. Tracking provided after dispatch.',
   'Tracked U.S. shipping — $14.99 below $150 and free at $150+.',
+];
+
+// Festive Sale tiered offer — copy is generated from the campaign config so the
+// announcement can never drift from the active Shopify discount codes.
+const festiveMaxPercent = Math.max(...FESTIVE_CAMPAIGN.tiers.map((tier) => tier.percent));
+const festiveTierLine = FESTIVE_CAMPAIGN.tiers
+  .slice()
+  .sort((a, b) => a.minSubtotal - b.minSubtotal)
+  .map((tier) => `${tier.percent}% off $${tier.minSubtotal}+`)
+  .join(' · ');
+const festiveAnnouncements = [
+  `FESTIVE SALE — UP TO ${festiveMaxPercent}% OFF SITEWIDE: ${festiveTierLine} — auto-applied at checkout. Ends ${FESTIVE_CAMPAIGN.displayEndDate}.`,
+  'Free U.S. standard shipping at $150 and above. $14.99 below that. Tracking provided after dispatch.',
 ];
 
 // Categories without a mega-menu (groups: []) render as plain links.
@@ -55,13 +68,16 @@ const Header = () => {
   const [isSearchOpen, setIsSearchOpen] = useState(() => initialSearchQuery.length > 0);
   const [announcementIdx, setAnnouncementIdx] = useState(0);
   const isRakhiSaleActive = isRakshaBandhanCampaignActive();
+  const isFestiveSaleActive = isFestiveCampaignActive();
   // Keep the verified short-lived offer persistently visible while it is active.
   // Shipping details remain available on the shipping page and throughout checkout.
   const announcements = isRakhiSaleActive
     ? [
         `72-Hour Offer — ${RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off $${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ with code ${RAKSHA_BANDHAN_CAMPAIGN.code}. Ends ${RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.`,
       ]
-    : shippingAnnouncements;
+    : isFestiveSaleActive
+      ? festiveAnnouncements
+      : shippingAnnouncements;
   const displayedAnnouncement = announcements[announcementIdx % announcements.length];
 
   const wishlistItems = useWishlistStore(state => state.items);

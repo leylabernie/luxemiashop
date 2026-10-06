@@ -9,6 +9,7 @@ import {
 } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { isFestiveCampaignActive } from '@/config/festiveCampaign';
 
 interface FeaturedSlide {
   id: string;
@@ -33,21 +34,24 @@ interface FeaturedSlide {
   designed?: boolean;
 }
 
+const festiveSlide: FeaturedSlide = {
+  id: 'festive-sale',
+  eyebrow: 'Festive Sale · Navratri to Diwali',
+  headline: 'Up to 20% Off Sitewide',
+  subline: '10% off $75+ · 15% off $200+ · 20% off $400+ — auto-applied at checkout.',
+  cta: 'Shop the Festive Edit',
+  link: '/new-arrivals',
+  image: '/images/banners/bogo-actual',
+  desktopImage: '/images/banners/bogo-actual',
+  alt: 'Orange embroidered chinon silk jacket set from the LuxeMia festive collection',
+  width: 1257,
+  height: 1600,
+  imageFit: 'contain',
+};
+
+// The festive hero disappears automatically when the campaign ends (Nov 10).
 const featuredSlides: FeaturedSlide[] = [
-  {
-    id: 'bogo-new-arrivals',
-    eyebrow: 'Festive 2026 · Limited Time',
-    headline: 'Buy 1 Get 1 Free',
-    subline: 'New Arrivals · Auto-applied at checkout.',
-    cta: 'Shop New Arrivals',
-    link: '/new-arrivals',
-    image: '/images/banners/bogo-actual',
-    desktopImage: '/images/banners/bogo-actual',
-    alt: 'Orange embroidered chinon silk 4-piece jacket set from LuxeMia new arrivals',
-    width: 1257,
-    height: 1600,
-    imageFit: 'contain',
-  },
+  ...(isFestiveCampaignActive() ? [festiveSlide] : []),
   {
     id: 'new-arrivals-edit',
     eyebrow: 'Festive 2026 · New In',
