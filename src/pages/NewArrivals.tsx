@@ -16,17 +16,26 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
-const MAX_PER_CATEGORY = 60;
+// High enough that recent drops are never silently truncated out of their tab
+// (128 lehengas landed in the last 30 days; a 60-cap hid 68 of them).
+const MAX_PER_CATEGORY = 250;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
 
+// Keys must match getDisplayCategory output so every recent product lands in a
+// visible pill (previously Kids, Indo-Western, Blouses and Couple Sets were
+// grouped but unreachable — they only appeared in "All").
 const CATEGORIES = [
   { key: 'all', label: 'All' },
   { key: 'Lehengas', label: 'Lehengas' },
   { key: 'Sarees', label: 'Sarees' },
   { key: 'Salwar Kameez', label: 'Suits' },
   { key: 'Menswear', label: 'Menswear' },
+  { key: 'Kids', label: 'Kids' },
+  { key: 'Indo Western', label: 'Indo-Western' },
+  { key: 'Blouse', label: 'Blouses' },
+  { key: 'Couple Set', label: 'Couple Sets' },
   { key: 'Jewelry', label: 'Jewelry' },
 ] as const;
 
@@ -54,6 +63,7 @@ const NewArrivals = () => {
       const created = new Date(product.node.createdAt).getTime();
       if (created > cutoff) {
         const cat = product.node.productType || 'Other';
+        if (cat === 'Service Add-On') continue; // hidden billing line, not a product
         if (!groups[cat]) groups[cat] = [];
         groups[cat].push(product);
       }
@@ -73,7 +83,7 @@ const NewArrivals = () => {
   // 2. Build ordered flat list for "All" view
   const allOrdered = useMemo(() => {
     const ordered: typeof products = [];
-    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Jewelry'];
+    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Kids', 'Indo Western', 'Blouse', 'Couple Set', 'Jewelry'];
     for (const cat of mainCategories) {
       if (recentByCategory[cat]) ordered.push(...recentByCategory[cat]);
     }
