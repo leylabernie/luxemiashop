@@ -224,7 +224,7 @@ const NewArrivalsBanner = () => {
             decoding="async"
             loading="eager"
             fetchPriority={index === 0 ? 'high' : 'low'}
-            className={`absolute inset-0 h-full w-full animate-in zoom-in-105 duration-[7000ms] ease-out ${
+            className={`absolute inset-0 h-full w-full ${activeSlide.designed ? '' : 'animate-in zoom-in-105 duration-[7000ms] ease-out'} ${
               activeSlide.imageFit === 'cover'
                 ? 'object-cover'
                 : preservesFullImage
@@ -261,7 +261,7 @@ const NewArrivalsBanner = () => {
             decoding="async"
             loading="eager"
             fetchPriority={index === 0 ? 'high' : 'low'}
-            className={`absolute inset-0 h-full w-full animate-in zoom-in-105 duration-[7000ms] ease-out ${
+            className={`absolute inset-0 h-full w-full ${activeSlide.designed ? '' : 'animate-in zoom-in-105 duration-[7000ms] ease-out'} ${
               activeSlide.imageFit === 'cover'
                 ? 'object-cover'
                 : preservesFullImage
