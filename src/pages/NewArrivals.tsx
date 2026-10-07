@@ -16,9 +16,10 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
-// High enough that recent drops are never silently truncated out of their tab
-// (128 lehengas landed in the last 30 days; a 60-cap hid 68 of them).
-const MAX_PER_CATEGORY = 250;
+// New Arrivals is a rolling "latest drop": each view (All and every category)
+// shows only the newest 12, sorted by createdAt — new uploads push the oldest
+// out automatically. (Previously the page dumped the entire 30-day window.)
+const MAX_PER_CATEGORY = 12;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
@@ -80,17 +81,18 @@ const NewArrivals = () => {
     return groups;
   }, [products]);
 
-  // 2. Build ordered flat list for "All" view
+  // 2. "All" view = the newest 12 overall (across every category), newest first.
+  //    The newest 12 of each group are already kept above, so the global newest
+  //    12 are guaranteed to be in this flatten.
   const allOrdered = useMemo(() => {
-    const ordered: typeof products = [];
-    const mainCategories = ['Lehengas', 'Sarees', 'Salwar Kameez', 'Menswear', 'Kids', 'Indo Western', 'Blouse', 'Couple Set', 'Jewelry'];
-    for (const cat of mainCategories) {
-      if (recentByCategory[cat]) ordered.push(...recentByCategory[cat]);
-    }
+    const flat: typeof products = [];
     for (const cat of Object.keys(recentByCategory)) {
-      if (!mainCategories.includes(cat)) ordered.push(...recentByCategory[cat]);
+      flat.push(...recentByCategory[cat]);
     }
-    return ordered;
+    flat.sort(
+      (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
+    );
+    return flat.slice(0, MAX_PER_CATEGORY);
   }, [recentByCategory]);
 
   // 3. Apply category filter then sort
