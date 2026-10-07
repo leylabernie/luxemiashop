@@ -16,10 +16,10 @@ import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
-// New Arrivals is a rolling "latest drop": each view (All and every category)
-// shows only the newest 12, sorted by createdAt — new uploads push the oldest
-// out automatically. (Previously the page dumped the entire 30-day window.)
-const MAX_PER_CATEGORY = 12;
+// "All" is a rolling latest drop: the newest 12 overall, new uploads push the
+// oldest out. Category pills show the FULL recent list per category so nothing
+// new is ever hidden from its category.
+const MAX_PER_CATEGORY = 250;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
