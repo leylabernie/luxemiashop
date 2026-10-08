@@ -37,7 +37,7 @@ const Collections = () => {
   const { products, isLoading, isLoadingMore, hasMore, loadMore } = useShopifyProducts();
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState('newest');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   const filteredProducts = useMemo(() => {
@@ -70,6 +70,13 @@ const Collections = () => {
       <Header />
 
       <main className="pt-[90px] lg:pt-[132px] pb-16">
+        <nav aria-label="Shop by category" className="container mx-auto flex flex-wrap gap-4 px-4 py-5">
+          {[['Lehengas', '/lehengas'], ['Sarees', '/sarees'], ['Suits', '/suits'],
+            ['Menswear', '/menswear'], ['Kids', '/kids'], ['Indo-Western', '/indowestern'],
+            ['Blouses', '/collections/blouses'], ['Couple Sets', '/collections/couple-outfits'],
+            ['Jewelry', '/jewelry']].map(([name, href]) =>
+              <Link key={href} to={href} className="text-sm hover:underline">{name}</Link>)}
+        </nav>
         {/* Hero Banner */}
         <section className="relative flex h-72 items-center justify-center overflow-hidden bg-[#211410] md:h-96">
           <div

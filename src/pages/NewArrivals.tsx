@@ -12,6 +12,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { selectLatestArrivals } from '@/lib/catalogCategories.mjs';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import { sortProducts } from '@/lib/productFilters';
 
@@ -19,7 +20,6 @@ const NEW_ARRIVAL_WINDOW_DAYS = 30;
 // "All" is a rolling latest drop: the newest 12 overall, new uploads push the
 // oldest out. Category pills show the FULL recent list per category so nothing
 // new is ever hidden from its category.
-const MAX_PER_CATEGORY = 250;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
@@ -54,7 +54,7 @@ const NewArrivals = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryKey>('all');
   const [sortBy, setSortBy] = useState('newest');
 
-  // 1. Filter to 30-day window, group by category, cap at MAX_PER_CATEGORY
+  // 1. Keep the full recent catalog in each category.
   const recentByCategory = useMemo(() => {
     const now = Date.now();
     const cutoff = now - NEW_ARRIVAL_WINDOW_DAYS * 86400000;
@@ -74,16 +74,14 @@ const NewArrivals = () => {
       groups[cat].sort(
         (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
       );
-      const limit = MAX_PER_CATEGORY;
-      groups[cat] = groups[cat].slice(0, limit);
+
     }
 
     return groups;
   }, [products]);
 
   // 2. "All" view = the newest 12 overall (across every category), newest first.
-  //    The newest 12 of each group are already kept above, so the global newest
-  //    12 are guaranteed to be in this flatten.
+  //    Category tabs retain their full recent lists.
   const allOrdered = useMemo(() => {
     const flat: typeof products = [];
     for (const cat of Object.keys(recentByCategory)) {
@@ -92,7 +90,7 @@ const NewArrivals = () => {
     flat.sort(
       (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
     );
-    return flat.slice(0, MAX_PER_CATEGORY);
+    return selectLatestArrivals(flat);
   }, [recentByCategory]);
 
   // 3. Apply category filter then sort

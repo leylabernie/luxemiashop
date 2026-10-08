@@ -94,7 +94,7 @@ export function matchSubcategory(p: ProductNode, sub: Subcategory): boolean {
   // Tag matching — check structured tags (e.g. 'occasion:bridal', 'color:red')
   const tags = getTags(p);
   const titleLower = (p.title || '').toLowerCase();
-  const productTypeLower = (p.productType || '').toLowerCase();
+  const productTypeLower = (p._originalProductType || p.productType || '').toLowerCase();
 
   // ─── Occasion subcategories ───────────────────────────────────────────────
   // CRITICAL: For occasion subcategories, ONLY match prefixed tags (occasion:bridal)

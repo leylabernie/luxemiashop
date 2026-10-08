@@ -56,7 +56,7 @@ const sortOptions = [
 
 const Indowestern = () => {
   const { products, isLoading } = useShopifyProducts('indowestern');
-  const [sortBy, setSortBy] = useState('featured');
+  const [sortBy, setSortBy] = useState('newest');
 
   const sortedProducts = useMemo(() => sortProducts(products, sortBy), [products, sortBy]);
 

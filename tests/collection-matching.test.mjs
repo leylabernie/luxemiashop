@@ -10,7 +10,7 @@ const require = createRequire(import.meta.url);
 async function loadSource(entry) {
   const result = await esbuild.build({
     entryPoints: [path.join(root, entry)], bundle: true, write: false,
-    platform: 'node', format: 'cjs', packages: 'external',
+    platform: 'node', format: 'cjs', packages: 'external', define: { 'import.meta.env': '{}' },
     alias: { '@': path.join(root, 'src') }, jsx: 'automatic',
   });
   const module = { exports: {} };
@@ -68,4 +68,51 @@ test('product search descriptions preserve identity and end with complete copy',
     assert.ok(description.endsWith('.'));
     assert.ok(!description.includes('…'));
   }
+});
+
+const { getPrimaryCategory, getCatalogDisplayCategory, selectLatestArrivals } = await import('../src/lib/catalogCategories.mjs');
+const { filterByCategory } = await loadSource('src/hooks/useShopifyProducts.ts');
+test('all current merchandise types have an accessible primary category', () => {
+  const expected = {
+    'Sherwani': 'menswear', 'Mens Kurta Pajama Set': 'menswear',
+    'Lehenga Choli': 'lehengas', 'Bridal Lehenga': 'lehengas', 'Lehenga': 'lehengas', 'Navratri Lehenga': 'lehengas',
+    'Saree': 'sarees', 'Saree with Stitched Blouse': 'sarees',
+    'Sharara Suit': 'suits', 'Palazzo Suit': 'suits', 'Suit': 'suits', 'Salwar Suit': 'suits',
+    'Kurti Set': 'suits', 'Palazzo Set': 'suits', 'Gown': 'suits', 'Suit Set': 'suits', 'Anarkali': 'suits',
+    'Indo-Western Dress': 'indowestern', 'Indo-Western': 'indowestern', 'Jacket Set': 'indowestern', 'Skirt Set': 'indowestern',
+    'Girls Ethnic Set': 'kids', 'Kids Boy Set': 'kids', 'Blouse': 'blouses', 'Couple Set': 'couple-outfits',
+  };
+  const products = Object.keys(expected).map((productType, index) => ({node: {
+    ...product('Imported style', productType), id: String(index), createdAt: '2026-10-01T00:00:00Z',
+  }}));
+  for (const p of products) {
+    const category = expected[p.node.productType];
+    assert.equal(getPrimaryCategory(p.node), category);
+    assert.equal(filterByCategory(products, category).includes(p), true, p.node.productType);
+  }
+});
+test('boys and couple sets retain their category despite adult menswear words', () => {
+  const boy = {node: product('Kurta Pajama Set for Boys', 'Kids Boy Set', ['boys', 'male'])};
+  const couple = {node: product('Saree and Kurta Pajama Couple Set', 'Couple Set', ['men'])};
+  assert.deepEqual(filterByCategory([boy, couple], 'kids'), [boy]);
+  assert.deepEqual(filterByCategory([boy, couple], 'couple-outfits'), [couple]);
+  assert.deepEqual(filterByCategory([boy, couple], 'menswear'), []);
+  assert.equal(getCatalogDisplayCategory('Suit'), 'Salwar Kameez');
+  assert.equal(getCatalogDisplayCategory('Suit Set'), 'Salwar Kameez');
+});
+test('New Arrivals selects the global latest 12 without limiting the full category', () => {
+  const now = Date.parse('2026-10-08T12:00:00Z');
+  const products = Array.from({length: 30}, (_, index) => ({node: {
+    ...product('Suit', 'Suit'), id: String(index),
+    createdAt: new Date(now - index * 3600000).toISOString(),
+  }})).reverse();
+  const latest = selectLatestArrivals(products, now);
+  assert.deepEqual(latest.map(p => p.node.id), Array.from({length: 12}, (_, index) => String(index)));
+  assert.equal(filterByCategory(products, 'suits').length, 30);
+  assert.equal(selectLatestArrivals([{node: {...products[0].node, createdAt: '2026-01-01T00:00:00Z'}}], now).length, 0);
+});
+test('active sold-out products stay categorized and native types survive display enrichment', () => {
+  const node = {...product('Three-Piece Set', 'Salwar Kameez'), _originalProductType: 'Sharara Suit', availableForSale: false};
+  assert.equal(filterByCategory([{node}], 'suits').length, 1);
+  assert.equal(matchSubcategory(node, {slug: 'sharara', label: 'Sharara', group: 'style', matchTags: [], matchProductType: ['Sharara Suit']}), true);
 });

@@ -67,7 +67,7 @@ function parseUrlState(
 
   // Sort
   const sort = searchParams.get('sort');
-  const sortBy = sort && SORT_OPTIONS.some(option => option === sort) ? sort : 'featured';
+  const sortBy = sort && SORT_OPTIONS.some(option => option === sort) ? sort : 'newest';
 
   return { subcategory, filters, priceRange, sortBy };
 }
@@ -94,7 +94,7 @@ function serializeUrlState(state: ListingFilterState, config: CategoryConfig): U
     params.set('price', `${state.priceRange[0]}-${state.priceRange[1]}`);
   }
 
-  if (state.sortBy !== 'featured') {
+  if (state.sortBy !== 'newest') {
     params.set('sort', state.sortBy);
   }
 
@@ -176,7 +176,7 @@ export function useListingFilters(config: CategoryConfig, defaultSubcategory?: s
       subcategory: defaultSubcategory || null,
       filters: {},
       priceRange: [...config.priceRange] as [number, number],
-      sortBy: 'featured',
+      sortBy: 'newest',
     }));
   }, [updateState, config, defaultSubcategory]);
 

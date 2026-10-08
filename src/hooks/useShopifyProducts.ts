@@ -10,15 +10,7 @@ import {
 // Shopify productType values mapped to category page routes
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
 // which are women's suit products on Shopify (NOT men's suits)
-const CATEGORY_PRODUCT_TYPES: Record<string, string[]> = {
-  suits: ['Pakistani Suit', 'Salwar Suit', 'Sharara', 'Anarkali', 'Plazzo Suit', 'Palazzo Suit', 'Pakistani Readymade Suit', 'Salwar Kameez', 'Sharara Suit', 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown', 'Salwar', 'Kurti', 'Kurti Set', 'Palazzo', 'Readymade Suit', 'Churidar Suit', 'Patiala Suit', 'Straight Suit', 'Suit', 'Palazzo Set', 'Suit Set'],
-  sarees: ['Saree', 'Ready-to-Wear Saree', 'Wedding Saree', 'Sarees', 'Silk Saree', 'Banarasi Saree', 'Cotton Saree', 'Georgette Saree', 'Bridal Saree', 'Designer Saree', 'Fancy Saree', 'Party Wear Saree', 'Kanjivaram Saree', 'Kanchipuram Saree', 'Tissue Saree', 'Net Saree', 'Sari', 'Saree with Stitched Blouse', 'Blouse'],
-  lehengas: ['Lehenga', 'Lehenga Choli', 'Bridal Lehenga Choli', 'Lehnga', 'Lehnga Choli', 'Bridal Lehnga', 'Bridal Lehnga Choli', 'Lehenga Set', 'Lehenga Choli Set', 'Bridal Lehenga', 'Bridal Lehengas', 'Reception Lehengas', 'Mehendi Haldi Lehengas', 'Party Wear Lehenga', 'Wedding Lehenga', 'Designer Lehenga', 'Fancy Lehenga', 'Navratri Lehenga'],
-  menswear: ["Men's Ethnic Wear", 'Kurta Pajama', 'Sherwani', "Men's Indian Wear", 'Modi Jacket Kurta Pajama', 'Menswear', "Men's Suit", 'Kurta Set', 'Kurta', 'Dhoti Kurta', 'Nehru Jacket Set', 'Mens Kurta Pajama Set', 'Kurta Pajama Set'],
-  indowestern: ['Indo Western', 'Indo-Western', 'Fusion Wear', 'Fusion', 'Indo Western Dress', 'Indo-Western Set', 'Jumpsuit', 'Cape Set', 'Coord Set', 'Co-Ords', 'Co-ord Set', 'Indo-Western Dress', 'Skirt Set', 'Jacket Set'],
-  jewelry: ['Kundan Necklace Set', 'Kundan Jewelry', 'Bridal Jewelry', 'Necklace Set', 'Kundan', 'Polki', 'Uncut Polki', 'Jewelry', 'Jewelry Set', 'Jewellery Set', 'Kundan Set', 'Polki Set', 'Bridal Set', 'Full Bridal Set', 'Kundan Bridal Set', 'Kundan Necklace', 'Choker Necklace', 'Necklace', 'Earrings', 'Bangles', 'Maang Tikka', 'Bridal Jewelry Set', 'Kundan Earrings', 'Kundan Bangles'],
-  kids: ['Girls Ethnic Set', 'Kids Salwar Set', 'Kids Lehenga', 'Girls Salwar Suit', 'Kids Ethnic Wear', 'Girls Lehenga Set', 'Kids Boy Set', 'Boys Ethnic Set', 'Kids Kurta Set', 'Kids Onam Set'],
-};
+import { CATEGORY_PRODUCT_TYPES, getPrimaryCategory, getCatalogDisplayCategory } from '@/lib/catalogCategories.mjs';
 
 const escapeRegex = (value: string): string => value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
@@ -39,31 +31,7 @@ const matchesOccasion = (product: ShopifyProduct, occasion: string): boolean => 
 };
 
 // Map Shopify productType to display category names
-export const getDisplayCategory = (productType: string | undefined): string => {
-  if (!productType) return 'Designer Wear';
-  const pt = productType.toLowerCase();
-
-  // Menswear check MUST come first to prevent men's items appearing in women's categories
-  // NOTE: 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
-  // are WOMEN's products on Shopify — do NOT match them as menswear
-  if (/kurta pajama|sherwani|jodhpuri|men.*ethnic|men.*indian|men.*suit|modi jacket|menswear|bandi|pathani|achkan/.test(pt)) return 'Menswear';
-  if (/\bmen\b/.test(pt)) return 'Menswear';
-
-  // Kids — girls' ethnic sets get their own display category
-  if (/kids|girls ethnic|girls salwar|girls lehenga/.test(pt)) return 'Kids';
-
-  // Women's categories — order matters (most specific first)
-  if (/lehenga|lehnga|lehena/.test(pt)) return 'Lehengas';
-  if (/saree|sari/.test(pt)) return 'Sarees';
-  if (/pakistani|salwar|kameez|sharara|anarkali|plazzo|palazzo|gharara|gown|kurti|churidar|patiala/.test(pt)) return 'Salwar Kameez';
-  if (/indo.?western|fusion|jumpsuit|cape set|coord set|co.?ord|skirt set|jacket set/.test(pt)) return 'Indo Western';
-
-  // Jewelry — must come after clothing categories to avoid false positives
-  // (e.g., 'Kundan Necklace Set' shouldn't match 'necklace' inside a clothing title)
-  if (/kundan|polki|jewelry|jewellery|necklace set|bridal set|choker necklace|maang tikka/.test(pt)) return 'Jewelry';
-
-  return productType;
-};
+export const getDisplayCategory = getCatalogDisplayCategory;
 
 // ─── Persistent product cache ─────────────────────────────────────────────────
 // Two-tier cache: in-memory (instant within a session) + localStorage (persists
@@ -74,7 +42,7 @@ export const getDisplayCategory = (productType: string | undefined): string => {
 // OR when you need to force-invalidate every browser's cache (e.g. after a
 // known-stale deploy). v5 → v6 invalidates every browser's v5 cache instantly.
 const CACHE_VERSION = 'v13';
-const CACHE_KEY = `lux_products_${CACHE_VERSION}`;
+const CACHE_KEY = `lux_products_${CACHE_VERSION}_categories2`;
 const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes (was 30 — too stale after CSV imports)
 
 function getStoredProducts(): ShopifyProduct[] | null {
@@ -103,6 +71,7 @@ function storeProducts(products: ShopifyProduct[]): void {
 
 // In-memory cache (fastest — reused within the same JS session)
 let cachedProducts: ShopifyProduct[] | null = null;
+let cachedAt = 0;
 let cachePromise: Promise<ShopifyProduct[]> | null = null;
 
 // ─── Prerendered initial data ─────────────────────────────────────────────────
@@ -132,12 +101,13 @@ function getInitialData(category?: string): ShopifyProduct[] | null {
 
 const getAllProducts = async (): Promise<ShopifyProduct[]> => {
   // 1. In-memory: instant — same session, already fetched
-  if (cachedProducts) return cachedProducts;
+  if (cachedProducts && Date.now() - cachedAt < CACHE_TTL_MS) return cachedProducts;
 
   // 2. localStorage: fast — persists across page reloads and new tabs for 5 min
   const stored = getStoredProducts();
   if (stored) {
     cachedProducts = stored;
+    cachedAt = Date.now();
     return cachedProducts;
   }
 
@@ -160,6 +130,7 @@ const getAllProducts = async (): Promise<ShopifyProduct[]> => {
         products = await fetchAllProducts(undefined);
       }
       cachedProducts = products;
+      cachedAt = Date.now();
       storeProducts(products);
       return products;
     } finally {
@@ -242,7 +213,7 @@ function isMenswear(product: ShopifyProduct): boolean {
 }
 
 // Filter products by category client-side
-const filterByCategory = (products: ShopifyProduct[], category: string): ShopifyProduct[] => {
+export const filterByCategory = (products: ShopifyProduct[], category: string): ShopifyProduct[] => {
   // First, globally exclude old batch products (April 8 batch — hidden after May 7)
   // Then exclude products by title (turban, sunglasses, etc.)
   const allowed = products.filter(p => {
@@ -262,6 +233,15 @@ const filterByCategory = (products: ShopifyProduct[], category: string): Shopify
     return allowed.filter((product) => matchesOccasion(product, occasion));
   }
 
+  // Use the same primary category as New Arrivals and build-time rendering.
+  // Keep legacy signal matching only for unrecognized imported types.
+  const recognized = allowed.filter(p => getPrimaryCategory(p.node) !== null);
+  if (CATEGORY_PRODUCT_TYPES[category] && recognized.length > 0) {
+    return [
+      ...recognized.filter(p => getPrimaryCategory(p.node) === category),
+      ...filterByCategory(allowed.filter(p => getPrimaryCategory(p.node) === null), category),
+    ];
+  }
   const types = CATEGORY_PRODUCT_TYPES[category];
   if (!types) return allowed;
 

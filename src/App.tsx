@@ -62,6 +62,7 @@ const MehendiOutfits = lazy(() => import("./pages/MehendiOutfits"));
 const EidOutfits = lazy(() => import("./pages/EidOutfits"));
 const NavratriOutfits = lazy(() => import("./pages/NavratriOutfits"));
 const HaldiOutfits = lazy(() => import("./pages/HaldiOutfits"));
+const CatalogCategory = lazy(() => import("./pages/CatalogCategory"));
 const ShopifyCollection = lazy(() => import("./pages/ShopifyCollection"));
 const CustomizableOutfits = lazy(() => import("./pages/CustomizableOutfits"));
 const CommercialCollectionLanding = lazy(() => import("./pages/CommercialCollectionLanding"));
@@ -190,6 +191,8 @@ const App = () => (
                 <Route path="/collections/manthrakodi-sarees" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/saree-gowns" element={<Navigate to="/sarees" replace />} />
                 <Route path="/collections/navratri-garba-outfits-2026" element={<Navigate to="/collections/navratri-outfits" replace />} />
+                <Route path="/collections/blouses" element={<Suspense fallback={<PageLoader />}><CatalogCategory category="blouses" /></Suspense>} />
+                <Route path="/collections/couple-outfits" element={<Suspense fallback={<PageLoader />}><CatalogCategory category="couple-outfits" /></Suspense>} />
                 <Route path="/collections/:handle" element={<Suspense fallback={<PageLoader />}><ShopifyCollection /></Suspense>} />
                 <Route path="/collections/designer-sarees" element={<Suspense fallback={<PageLoader />}><CommercialCollectionLanding landing="designer-sarees" /></Suspense>} />
                 <Route path="/blog/designer-wedding-dress-under-50000" element={<Navigate to="/blog/designer-wedding-dress-under-500" replace />} />

@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowRight, Sparkles } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { selectLatestArrivals } from '@/lib/catalogCategories.mjs';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 
 const NEW_ARRIVAL_WINDOW_DAYS = 30;
-const MAX_PER_CATEGORY = 60;
 const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
   Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000,
 ).toISOString().slice(0, 10)}'`;
@@ -19,6 +19,10 @@ const CATEGORIES = [
   { key: 'Sarees', label: 'Sarees', href: '/sarees' },
   { key: 'Salwar Kameez', label: 'Suits', href: '/suits' },
   { key: 'Menswear', label: 'Menswear', href: '/menswear' },
+  { key: 'Kids', label: 'Kids', href: '/kids' },
+  { key: 'Indo Western', label: 'Indo-Western', href: '/indowestern' },
+  { key: 'Blouse', label: 'Blouses', href: '/collections/blouses' },
+  { key: 'Couple Set', label: 'Couple Sets', href: '/collections/couple-outfits' },
   { key: 'Jewelry', label: 'Jewelry', href: '/jewelry' },
 ] as const;
 
@@ -45,32 +49,26 @@ export const NewArrivals = () => {
       }
     }
 
-    // Sort each group newest-first and cap at MAX_PER_CATEGORY
+    // Keep every recent listing in its category.
     for (const cat of Object.keys(groups)) {
       groups[cat].sort(
         (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
       );
-      // Give main categories a higher cap, others get 3
-      const limit = MAX_PER_CATEGORY;
-      groups[cat] = groups[cat].slice(0, limit);
+
     }
 
     return groups;
   }, [products]);
 
   // 2. Build a genuinely newest-first list for the homepage. Limit the first
-  // view to ten products so the section stays focused and fast.
+  // view to twelve products so the section stays focused and fast.
   const allOrdered = useMemo(() => {
-    return Object.values(recentByCategory)
-      .flat()
-      .sort(
-        (a, b) => new Date(b.node.createdAt).getTime() - new Date(a.node.createdAt).getTime()
-      );
+    return selectLatestArrivals(Object.values(recentByCategory).flat());
   }, [recentByCategory]);
 
   // 3. Resolve displayed products based on active tab
   const displayedProducts = useMemo(() => {
-    if (activeCategory === 'all') return allOrdered.slice(0, 20);
+    if (activeCategory === 'all') return allOrdered;
     return recentByCategory[activeCategory] || [];
   }, [activeCategory, allOrdered, recentByCategory]);
 

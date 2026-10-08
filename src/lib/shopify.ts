@@ -134,6 +134,7 @@ export interface ShopifyProduct {
     handle: string;
     vendor?: string;
     productType?: string;
+    _originalProductType?: string;
     tags?: string[];
     availableForSale?: boolean;
     shipsWithin?: number | null;
