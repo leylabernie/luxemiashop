@@ -154,15 +154,8 @@ const Header = () => {
               <Menu className="w-5 h-5" />
             </button>
 
-            {/* Left Navigation - Desktop */}
-            <nav className="hidden lg:flex items-center gap-5 flex-1">
-              {MEGA_MENUS.slice(0, 3).map(menu => (
-                <MegaMenuNavItem key={menu.href} menu={menu} />
-              ))}
-            </nav>
-
             {/* Center Logo — CSS-only fade-in (PSI 2026-07-22: removed framer-motion) */}
-            <Link to="/" className="flex-shrink-0 mx-6 lg:mx-8">
+            <Link to="/" className="flex-shrink-0 mx-6 lg:ml-0 lg:mr-10">
               <div
                 className="font-serif text-2xl lg:text-3xl tracking-wide"
                 style={{
@@ -174,12 +167,14 @@ const Header = () => {
               </div>
             </Link>
 
-            {/* Right Navigation - Desktop */}
-            <nav className="hidden lg:flex items-center gap-5 flex-1 justify-end">
-              {MEGA_MENUS.slice(3).map(menu => (
-                <MegaMenuNavItem key={menu.href} menu={menu} />
-              ))}
-            </nav>
+            <button
+              onClick={() => setIsSearchOpen(true)}
+              className="hidden lg:flex flex-1 max-w-xl items-center gap-3 rounded-sm border border-border bg-secondary/30 px-4 py-2.5 text-sm text-muted-foreground hover:border-primary transition-colors"
+              aria-label="Search products"
+            >
+              <Search className="h-4 w-4" aria-hidden="true" />
+              Search sarees, lehengas, suits and more
+            </button>
 
             {/* Right Icons */}
             <div className="flex items-center gap-1 sm:gap-2 lg:gap-3 ml-auto lg:ml-6">
@@ -257,8 +252,9 @@ const Header = () => {
         {/* Secondary Nav — desktop only */}
         <div className="hidden lg:block border-t border-border/20 bg-secondary/20">
           <div className="container mx-auto px-8">
-            <div className="flex items-center justify-center gap-8 py-1.5">
-              {secondaryLinks.map(link => (
+            <div className="relative flex items-center justify-center gap-4 xl:gap-6 py-1.5">
+              {MEGA_MENUS.map(menu => <MegaMenuNavItem key={menu.href} menu={menu} />)}
+              {secondaryLinks.slice(0, 2).map(link => (
                 <Link
                   key={link.name}
                   to={link.href}

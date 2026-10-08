@@ -91,6 +91,10 @@ const Index = () => {
         </section>
 
         <LazySection rootMargin="200px" placeholderHeight={500}>
+          <Suspense fallback={null}><CategoryShowcase /></Suspense>
+        </LazySection>
+
+        <LazySection rootMargin="200px" placeholderHeight={500}>
           <Suspense fallback={null}><NewArrivals /></Suspense>
         </LazySection>
 
@@ -251,9 +255,6 @@ const Index = () => {
             from the critical render path. */}
         <LazySection rootMargin="200px" placeholderHeight={300}>
           <Suspense fallback={null}><ServiceHighlights /></Suspense>
-        </LazySection>
-        <LazySection rootMargin="200px" placeholderHeight={500}>
-          <Suspense fallback={null}><CategoryShowcase /></Suspense>
         </LazySection>
 
         {/* PSI 2026-07-22: Below-fold sections wrapped in LazySection (IntersectionObserver).
