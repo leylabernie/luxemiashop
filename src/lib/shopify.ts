@@ -1,4 +1,5 @@
 import { toast } from 'sonner';
+import { loadCatalogPages } from './catalogPagination';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
 
@@ -689,31 +690,29 @@ export async function fetchProducts(first: number = 12, query?: string): Promise
   }
 }
 
-export async function fetchAllProducts(query?: string): Promise<ShopifyProduct[]> {
-  const allProducts: ShopifyProduct[] = [];
-  let cursor: string | null = null;
-  let hasNextPage = true;
-
+export async function fetchAllProducts(
+  query?: string,
+  onPage?: (products: ShopifyProduct[]) => void,
+): Promise<ShopifyProduct[]> {
   try {
-    while (hasNextPage) {
-      const variables: Record<string, unknown> = { first: 250, query };
-      if (cursor) variables.after = cursor;
-
-      const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, variables);
-      if (!data) break;
-
-      const edges = data.data.products.edges || [];
-      allProducts.push(...edges.map(sanitizeProductEdge));
-
-      const pageInfo = data.data.products.pageInfo;
-      hasNextPage = pageInfo?.hasNextPage ?? false;
-      cursor = pageInfo?.endCursor ?? null;
-    }
+    return await loadCatalogPages(async (first, after) => {
+      const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query, ...(after ? { after } : {}) });
+      if (!data) throw new Error('Shopify catalog is unavailable');
+      const connection = data.data.products;
+      return {
+        products: (connection.edges || []).map(sanitizeProductEdge)
+          .filter((product: ShopifyProduct) => !isHiddenBillingProductHandle(product.node.handle)),
+        hasNextPage: connection.pageInfo?.hasNextPage ?? false,
+        endCursor: connection.pageInfo?.endCursor,
+      };
+    }, onPage);
   } catch (error) {
+    // Progressive callers must distinguish a failed refresh from a complete
+    // catalog; legacy callers retain their existing empty-result fallback.
+    if (onPage) throw error;
     console.error('Error fetching all products:', error);
+    return [];
   }
-
-  return allProducts.filter((product) => !isHiddenBillingProductHandle(product.node.handle));
 }
 
 export async function fetchProductByHandle(

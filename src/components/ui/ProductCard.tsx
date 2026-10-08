@@ -8,7 +8,7 @@ import QuickViewModal from '@/components/ui/QuickViewModal';
 import { useCartStore } from '@/stores/cartStore';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
-import type { ShopifyProduct } from '@/lib/shopify';
+import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage, getResponsiveImage } from '@/lib/imageUtils';
 import { cn } from '@/lib/utils';
 import { getShipByLabel } from '@/lib/shipBy';
@@ -91,7 +91,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 }, ref) => {
   const [isQuickViewOpen, setIsQuickViewOpen] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [isInView, setIsInView] = useState(false);
+  const [isInView, setIsInView] = useState(index < 4);
   const [pinchScale, setPinchScale] = useState(1);
   const [isPinching, setIsPinching] = useState(false);
   const [pinchOrigin, setPinchOrigin] = useState({ x: 50, y: 50 });
@@ -283,7 +283,13 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
       transition={{ duration: 0.4, delay: animationDelay }}
       className={`group rounded-[2px] ${className}`}
     >
-      <Link to={`/product/${product.node.handle}`}>
+      <Link
+        to={`/product/${product.node.handle}`}
+        onPointerEnter={(event) => {
+          if (event.pointerType === 'mouse') void fetchProductByHandle(product.node.handle);
+        }}
+        onFocus={() => { void fetchProductByHandle(product.node.handle); }}
+      >
         <div 
           ref={imageContainerRef}
           className="relative mb-3 aspect-[3/4] overflow-hidden rounded-[2px] bg-[#efe5df] shadow-[0_8px_20px_rgba(78,49,50,0.06)] touch-none sm:mb-4"

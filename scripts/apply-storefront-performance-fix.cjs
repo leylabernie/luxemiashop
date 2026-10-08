@@ -70,27 +70,6 @@ function patchSource() {
     'query-aware product hook signature',
   ));
 
-  changes += Number(replaceOnce(
-    'src/hooks/useShopifyProducts.ts',
-    '        const initial = getInitialData(category);',
-    '        const initial = storefrontQuery ? null : getInitialData(category);',
-    'query-scoped prerender handling',
-  ));
-
-  changes += Number(replaceOnce(
-    'src/hooks/useShopifyProducts.ts',
-    '        let allProducts = revalidate ? await fetchAllProducts() : await getAllProducts();',
-    `        let allProducts = storefrontQuery\n          ? await fetchAllProducts(storefrontQuery)\n          : revalidate\n            ? await fetchAllProducts()\n            : await getAllProducts();`,
-    'query-scoped Storefront fetch',
-  ));
-
-  changes += Number(replaceOnce(
-    'src/hooks/useShopifyProducts.ts',
-    '  }, [category, revalidate]);',
-    '  }, [category, revalidate, storefrontQuery]);',
-    'query-aware hook dependency list',
-  ));
-
   for (const relativePath of [
     'src/components/home/NewArrivals.tsx',
     'src/pages/NewArrivals.tsx',

@@ -136,35 +136,15 @@ requireText(prerender, 'const MAX_COLLECTION_PRODUCTS = 50;', 'bounded first-pai
 requireText(prerender, 'generateApprovedProductDirectoryHtml', 'complete product directory generator');
 requireText(prerender, 'aria-label="Complete product directory"', 'crawlable complete product directory');
 
-const initialIndex = productHook.indexOf('if (initial) {');
-const firstPaintIndex = productHook.indexOf('applyProducts(initial);', initialIndex);
-const loadingCompleteIndex = productHook.indexOf('setIsLoading(false);', firstPaintIndex);
-const fullCatalogIndex = productHook.indexOf('await getAllProducts()', loadingCompleteIndex);
-const fullCatalogApplyIndex = productHook.indexOf('applyProducts(fullCatalog);', fullCatalogIndex);
-const initialReturnIndex = productHook.indexOf('\n          return;', fullCatalogApplyIndex);
-
-if (
-  initialIndex < 0
-  || firstPaintIndex < 0
-  || loadingCompleteIndex < 0
-  || fullCatalogIndex < 0
-  || fullCatalogApplyIndex < 0
-  || initialReturnIndex < 0
-) {
-  failures.push('Could not verify the prerender-first/full-catalog-second hydration sequence.');
-} else if (!(
-  initialIndex < firstPaintIndex
-  && firstPaintIndex < loadingCompleteIndex
-  && loadingCompleteIndex < fullCatalogIndex
-  && fullCatalogIndex < fullCatalogApplyIndex
-  && fullCatalogApplyIndex < initialReturnIndex
-)) {
-  failures.push('Category hydration must paint prerendered products before fetching and applying the full catalog.');
+const firstPaintIndex = productHook.indexOf('if (initial) applyProducts(initial);');
+const fullCatalogIndex = productHook.indexOf('getAllProducts(storefrontQuery,', firstPaintIndex);
+const fullCatalogApplyIndex = productHook.indexOf('.then((complete) => applyProducts(complete))', fullCatalogIndex);
+if (firstPaintIndex < 0 || fullCatalogIndex < firstPaintIndex || fullCatalogApplyIndex < fullCatalogIndex) {
+  failures.push('Category hydration must paint prerendered products before fetching and applying the complete catalog.');
 }
-
-requireText(productHook, 'window.__INITIAL_DATA__ = undefined;', 'route-scoped hydration payload cleanup');
+requireText(productHook, 'data.path !== window.location.pathname', 'route-scoped hydration payload guard');
 requireText(productHook, 'let cancelled = false;', 'unmounted-request cancellation guard');
-requireText(productHook, 'Unable to refresh the complete Shopify catalog', 'non-blocking background refresh fallback');
+requireText(productHook, 'Unable to refresh the Shopify catalog', 'non-blocking background refresh fallback');
 
 if (failures.length > 0) {
   console.error('Indexation recovery validation failed:');

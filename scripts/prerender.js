@@ -1164,12 +1164,12 @@ function buildHydrationProductNode(product) {
   };
 }
 
-function buildInitialDataPayload(products, category) {
+function buildInitialDataPayload(products, category, routePath) {
   // Slim each product down to the fields the hook actually consumes.
   const slim = products.map((product) => ({
     node: buildHydrationProductNode(product),
   }));
-  return toSafeInlineJson({ category: category || 'all', products: slim });
+  return toSafeInlineJson({ category: category || 'all', path: routePath, products: slim });
 }
 
 // Product pages have materially higher purchase intent than category pages. Give
@@ -3203,7 +3203,7 @@ function generateHtml(template, route, allShopifyProducts) {
       // and skips the client-side Shopify fetch entirely on first paint.
     }
 
-    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category);
+    const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category, route.path);
     html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
@@ -3224,6 +3224,8 @@ function generateHtml(template, route, allShopifyProducts) {
       'all',
       true,
     ).slice(0, 12);
+    const homepagePayload = buildInitialDataPayload(homepageProducts, 'all', route.path);
+    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${homepagePayload};</script>\n</head>`);
     const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'all', route.path);
     html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `

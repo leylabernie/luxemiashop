@@ -116,3 +116,53 @@ test('active sold-out products stay categorized and native types survive display
   assert.equal(filterByCategory([{node}], 'suits').length, 1);
   assert.equal(matchSubcategory(node, {slug: 'sharara', label: 'Sharara', group: 'style', matchTags: [], matchProductType: ['Sharara Suit']}), true);
 });
+
+
+const { loadCatalogPages } = await loadSource('src/lib/catalogPagination.ts');
+test('catalog displays its first batch while later pages are still pending, then retains every item', async () => {
+  let release;
+  const laterPage = new Promise(resolve => { release = resolve; });
+  const requests = [];
+  const snapshots = [];
+  const complete = loadCatalogPages(async (first, after) => {
+    requests.push([first, after]);
+    return after ? laterPage : { products: [1, 2], hasNextPage: true, endCursor: 'next' };
+  }, page => snapshots.push(page));
+  await new Promise(resolve => setImmediate(resolve));
+  assert.deepEqual(snapshots, [[1, 2]]);
+  assert.deepEqual(requests, [[24, undefined], [250, 'next']]);
+  release({ products: [3, 4], hasNextPage: false });
+  assert.deepEqual(await complete, [1, 2, 3, 4]);
+  assert.deepEqual(snapshots[0], [1, 2]);
+});
+test('a failed later catalog page cannot be cached as a complete catalog', async () => {
+  await assert.rejects(loadCatalogPages(async (_, after) => {
+    if (after) throw new Error('network failed');
+    return { products: [1], hasNextPage: true, endCursor: 'next' };
+  }), /network failed/);
+});
+test('catalog stops safely when a pagination cursor fails to advance', async () => {
+  await assert.rejects(loadCatalogPages(async () => ({ products: [], hasNextPage: true, endCursor: null })), /did not advance/);
+});
+
+const { useShopifyProducts } = await loadSource('src/hooks/useShopifyProducts.ts');
+const React = require('react');
+const { renderToString } = require('react-dom/server');
+function HookSnapshot({ category, query }) {
+  const result = useShopifyProducts(category, false, query);
+  return React.createElement('div', null, `${result.products.length}:${result.isLoading}`);
+}
+test('New Arrivals renders its route snapshot on the first React render before a Shopify request', () => {
+  global.window = { location: { pathname: '/new-arrivals' }, __INITIAL_DATA__: {
+    path: '/new-arrivals', category: 'all', products: [{ node: {
+      ...product('Red Lehenga', 'Lehenga'), handle: 'red-lehenga', tags: [], createdAt: new Date().toISOString(),
+    } }],
+  } };
+  try {
+    assert.equal(renderToString(React.createElement(HookSnapshot, { query: "created_at:>='2026-09-08'" })), '<div>1:false</div>');
+    window.location.pathname = '/sarees';
+    assert.equal(renderToString(React.createElement(HookSnapshot, { category: 'sarees' })), '<div>0:true</div>');
+    window.location.pathname = '/new-arrivals';
+    assert.equal(renderToString(React.createElement(HookSnapshot, { query: 'tag:unrelated' })), '<div>0:true</div>');
+  } finally { delete global.window; }
+});

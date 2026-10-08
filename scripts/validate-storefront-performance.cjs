@@ -35,7 +35,7 @@ assert(
 
 const hook = read('src/hooks/useShopifyProducts.ts');
 assert(
-  hook.includes('storefrontQuery?: string') && hook.includes('fetchAllProducts(storefrontQuery)'),
+  hook.includes('storefrontQuery?: string') && hook.includes('getAllProducts(storefrontQuery,'),
   'The Shopify product hook does not support a scoped Storefront query.',
 );
 

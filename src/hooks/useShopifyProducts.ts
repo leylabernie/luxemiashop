@@ -69,76 +69,70 @@ function storeProducts(products: ShopifyProduct[]): void {
   }
 }
 
-// In-memory cache (fastest — reused within the same JS session)
-let cachedProducts: ShopifyProduct[] | null = null;
-let cachedAt = 0;
-let cachePromise: Promise<ShopifyProduct[]> | null = null;
+// Keep complete catalogs separate by query. Partial pages are display-only and
+// must never become a persistent catalog (which would hide later categories).
+const catalogCache = new Map<string, {
+  products?: ShopifyProduct[];
+  at: number;
+  pending?: Promise<ShopifyProduct[]>;
+  listeners: Set<(products: ShopifyProduct[]) => void>;
+}>();
 
-// ─── Prerendered initial data ─────────────────────────────────────────────────
-// Build-time prerender (scripts/prerender.js) injects a JSON payload as
-// window.__INITIAL_DATA__ on collection routes (/sarees, /lehengas, /suits,
-// /menswear, /indowestern, /collections, /new-arrivals).
-// Reading it on hydration lets React paint product cards without waiting for a
-// client-side Shopify fetch. The full catalog then refreshes in the background
-// so the build-time first page never becomes a permanent 50-product ceiling.
-// On routes without prerendered data (e.g. client-side navigations) this returns
-// null and the hook falls back to the existing cache + Shopify API path.
 declare global {
   interface Window {
-    __INITIAL_DATA__?: { category?: string; products: ShopifyProduct[] };
+    __INITIAL_DATA__?: { category?: string; path?: string; products: ShopifyProduct[] };
   }
 }
 
-function getInitialData(category?: string): ShopifyProduct[] | null {
+function getInitialData(category?: string, storefrontQuery?: string): ShopifyProduct[] | null {
   if (typeof window === 'undefined') return null;
   const data = window.__INITIAL_DATA__;
-  if (!data || !Array.isArray(data.products) || data.products.length === 0) return null;
-  // Only consume the payload if it matches the requested category — otherwise
-  // a stale payload from a previous collection page could leak in.
+  if (!data || !Array.isArray(data.products) || !data.products.length) return null;
+  if (data.path !== window.location.pathname) return null;
   if (category && data.category && data.category !== category) return null;
+  // A recent-product query may use the homepage/New Arrivals snapshot. Other
+  // arbitrary queries must not display unrelated prerendered products.
+  if (storefrontQuery && (!storefrontQuery.startsWith("created_at:>='") || data.category !== 'all')) return null;
   return data.products;
 }
 
-const getAllProducts = async (): Promise<ShopifyProduct[]> => {
-  // 1. In-memory: instant — same session, already fetched
-  if (cachedProducts && Date.now() - cachedAt < CACHE_TTL_MS) return cachedProducts;
+function getCachedProducts(query?: string): ShopifyProduct[] | null {
+  const entry = catalogCache.get(query || '');
+  if (entry?.products && Date.now() - entry.at < CACHE_TTL_MS) return entry.products;
+  if (!query) return getStoredProducts();
+  return null;
+}
 
-  // 2. localStorage: fast — persists across page reloads and new tabs for 5 min
-  const stored = getStoredProducts();
-  if (stored) {
-    cachedProducts = stored;
-    cachedAt = Date.now();
-    return cachedProducts;
+const getAllProducts = async (
+  query?: string,
+  onPartial?: (products: ShopifyProduct[]) => void,
+  revalidate = false,
+): Promise<ShopifyProduct[]> => {
+  const key = query || '';
+  let entry = catalogCache.get(key);
+  if (!entry) {
+    entry = { at: 0, listeners: new Set() };
+    catalogCache.set(key, entry);
   }
-
-  // 3. Shopify API: only on first visit or after cache expires
-  if (cachePromise) return cachePromise;
-
-  // Pass a server-side date filter when old products are hidden — reduces API
-  // response size by ~64% (from ~250 to ~90 products) and cuts latency noticeably.
-  // Safety: if the filter returns 0 products (unsupported syntax or edge case),
-  // automatically retry without the filter.
-  const shopifyQuery = HIDE_OLD_PRODUCTS
-    ? `created_at:>='${HIDE_PRODUCTS_BEFORE_DATE.toISOString().split('T')[0]}'`
-    : undefined;
-
-  cachePromise = (async () => {
-    try {
-      let products = await fetchAllProducts(shopifyQuery);
-      // Safety fallback: if the date filter returned nothing, retry without filter
-      if (products.length === 0 && shopifyQuery) {
-        products = await fetchAllProducts(undefined);
-      }
-      cachedProducts = products;
-      cachedAt = Date.now();
-      storeProducts(products);
-      return products;
-    } finally {
-      cachePromise = null;
+  const cached = !revalidate && getCachedProducts(query);
+  if (cached) return cached;
+  if (onPartial) entry.listeners.add(onPartial);
+  try {
+    if (!entry.pending) {
+      const target = entry;
+      target.pending = fetchAllProducts(query, (partial) => {
+        for (const listener of target.listeners) listener(partial);
+      }).then((products) => {
+        target.products = products;
+        target.at = Date.now();
+        if (!query) storeProducts(products);
+        return products;
+      }).finally(() => { target.pending = undefined; });
     }
-  })();
-
-  return cachePromise;
+    return await entry.pending!;
+  } finally {
+    if (onPartial) entry.listeners.delete(onPartial);
+  }
 };
 
 // =============================================================================
@@ -392,91 +386,43 @@ const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
   });
 
 export const useShopifyProducts = (category?: string, revalidate = false, storefrontQuery?: string) => {
-  const [products, setProducts] = useState<ShopifyProduct[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const prepareProducts = useCallback((source: ShopifyProduct[]): ShopifyProduct[] => {
+    const allowed = source.filter(p => !isOldBatchProduct(p) && !EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? ''));
+    return enrichProducts(category ? filterByCategory(allowed, category) : allowed);
+  }, [category]);
+  const [products, setProducts] = useState<ShopifyProduct[]>(() =>
+    prepareProducts(getCachedProducts(storefrontQuery) || getInitialData(category, storefrontQuery) || []));
+  const [isLoading, setIsLoading] = useState(products.length === 0);
   const [error, setError] = useState<string | null>(null);
   const [hasMore] = useState(false);
 
   useEffect(() => {
     let cancelled = false;
-
-    const applyProducts = (sourceProducts: ShopifyProduct[]) => {
-      const globallyFiltered = sourceProducts.filter(p => {
-        if (isOldBatchProduct(p)) return false;
-        if (EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? '')) return false;
-        return true;
-      });
-      const filtered = category ? filterByCategory(sourceProducts, category) : globallyFiltered;
-      if (!cancelled) setProducts(enrichProducts(filtered));
+    const applyProducts = (source: ShopifyProduct[], partial = false) => {
+      if (cancelled) return;
+      const next = prepareProducts(source);
+      // A partial global page might contain no items in this category yet.
+      // Keep its prerendered cards until that category arrives in a later page.
+      if (partial && !next.length) return;
+      setProducts(previous => partial && previous.length > next.length ? previous : next);
+      setIsLoading(false);
     };
-
-    const load = async () => {
+    const initial = getCachedProducts(storefrontQuery) || getInitialData(category, storefrontQuery);
+    if (initial) applyProducts(initial);
+    else {
+      setProducts([]);
       setIsLoading(true);
-      setError(null);
-      try {
-        // 1. Prerendered initial data — instant hydration. Set by scripts/prerender.js
-        //    for collection routes. This payload is route-scoped and must never be
-        //    stored as the full catalog: doing so makes the next category filter the
-        //    previous category's products and can render zero or mixed products.
-        const initial = storefrontQuery ? null : getInitialData(category);
-        if (initial) {
-          applyProducts(initial);
-
-          // Clear the payload so a stale one can't leak into a later category navigation.
-          if (typeof window !== 'undefined' && window.__INITIAL_DATA__) {
-            window.__INITIAL_DATA__ = undefined;
-          }
-
-          // The prerender payload is deliberately capped for a fast first paint. It
-          // is not the complete catalog, so every category must refresh from the
-          // shared full-catalog cache after hydration. Without this refresh the UI
-          // remains permanently frozen at the first 50 prerendered products.
-          if (!cancelled) setIsLoading(false);
-          try {
-            let fullCatalog = revalidate ? await fetchAllProducts() : await getAllProducts();
-            if (revalidate) {
-              if (fullCatalog.length > 0) {
-                cachedProducts = fullCatalog;
-                storeProducts(fullCatalog);
-              } else {
-                fullCatalog = await getAllProducts();
-              }
-            }
-            if (fullCatalog.length > 0) applyProducts(fullCatalog);
-          } catch (refreshError) {
-            // Retain the usable prerendered first page when a background refresh
-            // fails. A later navigation or cache expiry will retry automatically.
-            console.warn('Unable to refresh the complete Shopify catalog:', refreshError);
-          }
-          return;
-        }
-        // 2. Existing cache + API fallback (unchanged)
-        let allProducts = storefrontQuery
-          ? await fetchAllProducts(storefrontQuery)
-          : revalidate
-            ? await fetchAllProducts()
-            : await getAllProducts();
-        if (revalidate) {
-          if (allProducts.length > 0) {
-            cachedProducts = allProducts;
-            storeProducts(allProducts);
-          } else {
-            allProducts = await getAllProducts();
-          }
-        }
-        applyProducts(allProducts);
-      } catch (err) {
-        console.error('Error fetching Shopify products:', err);
-        if (!cancelled) setError('Failed to load products');
-      } finally {
-        if (!cancelled) setIsLoading(false);
-      }
-    };
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, [category, revalidate, storefrontQuery]);
+    }
+    setError(null);
+    getAllProducts(storefrontQuery, (partial) => applyProducts(partial, true), revalidate)
+      .then((complete) => applyProducts(complete))
+      .catch((err) => {
+        console.warn('Unable to refresh the Shopify catalog:', err);
+        if (!cancelled && !initial) setError('Failed to load products');
+      })
+      .finally(() => { if (!cancelled) setIsLoading(false); });
+    return () => { cancelled = true; };
+  }, [category, revalidate, storefrontQuery, prepareProducts]);
 
   // no-op loadMore since we fetch all at once
   const loadMore = useCallback(() => {}, []);
