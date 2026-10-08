@@ -70,7 +70,11 @@ const SemanticCommercePage = lazy(() => import("./pages/SemanticCommercePage"));
 
 // Minimal loading fallback — prevents CLS from layout shift during lazy load
 const PageLoader = () => (
-  <div className="min-h-[60vh] flex items-center justify-center">
+  <div
+    data-page-loading
+    style={{ display: document.getElementById('seo-prerender') ? 'none' : undefined }}
+    className="min-h-[60vh] flex items-center justify-center"
+  >
     <div className="animate-pulse text-muted-foreground text-sm">Loading…</div>
   </div>
 );

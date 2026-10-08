@@ -3250,19 +3250,15 @@ function generateHtml(template, route, allShopifyProducts) {
         var root = document.getElementById('root');
         var seo = document.getElementById('seo-prerender');
         if (!root || !seo) return;
-        // Remove once React has populated #root (MutationObserver fires on first child added)
+        // A Suspense fallback is not a usable page. Keep the server-rendered
+        // products until the route chunk has mounted its interactive content.
         var obs = new MutationObserver(function() {
+          if (!root.childElementCount || root.querySelector('[data-page-loading]')) return;
           obs.disconnect();
           var p = document.getElementById('seo-prerender');
           if (p) p.remove();
         });
-        obs.observe(root, { childList: true });
-        // Safety fallback in case observer misses the mutation
-        setTimeout(function() {
-          obs.disconnect();
-          var p = document.getElementById('seo-prerender');
-          if (p) p.remove();
-        }, 5000);
+        obs.observe(root, { childList: true, subtree: true });
       })();
     </script>`;
 

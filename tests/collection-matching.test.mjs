@@ -166,3 +166,29 @@ test('New Arrivals renders its route snapshot on the first React render before a
     assert.equal(renderToString(React.createElement(HookSnapshot, { query: 'tag:unrelated' })), '<div>0:true</div>');
   } finally { delete global.window; }
 });
+
+
+test('visible prerendered products remain while a page chunk is loading', () => {
+  const source = require('node:fs').readFileSync(path.join(root, 'scripts/prerender.js'), 'utf8');
+  const script = source.slice(source.indexOf('const hydrationCleanupScript')).match(/<script>([\s\S]*?)<\/script>/)[1];
+  let loading = true;
+  let removed = false;
+  let observeOptions;
+  let callback;
+  const rootElement = { childElementCount: 3, querySelector: () => loading ? {} : null };
+  const seo = { remove: () => { removed = true; } };
+  require('node:vm').runInNewContext(script, {
+    document: { getElementById: id => id === 'root' ? rootElement : seo },
+    MutationObserver: class {
+      constructor(handler) { callback = handler; }
+      disconnect() {}
+      observe(_, options) { observeOptions = options; }
+    },
+  });
+  callback();
+  assert.equal(removed, false);
+  assert.equal(observeOptions.subtree, true);
+  loading = false;
+  callback();
+  assert.equal(removed, true);
+});
