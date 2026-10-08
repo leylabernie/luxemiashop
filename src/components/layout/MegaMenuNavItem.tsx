@@ -38,11 +38,16 @@ export function MegaMenuNavItem({ menu }: MegaMenuNavItemProps) {
     closeTimer.current = setTimeout(() => setIsOpen(false), 150);
   };
 
+  if (!menu.groups.some(group => group.links.length)) return <PlainNavItem label={menu.label} href={menu.href} />;
+
   return (
     <div
-      className="relative"
+      className="group"
       onMouseEnter={open}
       onMouseLeave={close}
+      onFocus={open}
+      onBlur={(event) => { if (!event.currentTarget.contains(event.relatedTarget)) setIsOpen(false); }}
+      onKeyDown={(event) => { if (event.key === "Escape") setIsOpen(false); }}
     >
       <Link
         to={menu.href}
@@ -69,6 +74,7 @@ export function MegaMenuNavItem({ menu }: MegaMenuNavItemProps) {
         }
       `}</style>
       <div
+        hidden={!isOpen}
         className={`mega-menu-dropdown absolute top-full left-1/2 -translate-x-1/2 mt-2 z-50${isOpen ? ' is-open' : ''}`}
         onMouseEnter={open}
         onMouseLeave={close}

@@ -54,8 +54,6 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
 };
 
 const SAREE_PATTERN = /\b(?:saree|sari)\b/i;
-const READY_PATTERN = /\b(?:ready[-\s]?to[-\s]?wear|ready[-\s]?made|readymade|pre[-\s]?stitched|prestitched|pre[-\s]?draped)\b/i;
-const UNSTITCHED_PATTERN = /\b(?:unstitched|semi[-\s]?stitched)\b/i;
 const BLOUSE_PATTERN = /\b(?:blouse\s+fabric|unstitched\s+blouse|blouse\s+piece|blouse)\b/i;
 const APPAREL_PATTERN = /\b(?:lehenga|choli|suit|kurta|salwar|sharara|palazzo|anarkali|gown|sherwani|jacket|co-?ord|blouse|dress|kaftan|skirt|dhoti|pant|tunic)\b/i;
 

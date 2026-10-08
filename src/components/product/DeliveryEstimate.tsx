@@ -2,13 +2,14 @@ import { Truck, Clock, PackageCheck } from 'lucide-react';
 
 interface DeliveryEstimateProps {
   hasStitching: boolean;
+  shipsWithinDays?: number | null;
   isMadeToOrder?: boolean;
   isUnstitched?: boolean;
   hasStitchedBlouse?: boolean;
   confirmAvailability?: boolean;
 }
 
-export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false }: DeliveryEstimateProps) => (
+export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false }: DeliveryEstimateProps) => (
   <div className="space-y-3 rounded-sm border border-border/50 bg-card/50 p-4">
     <div className="flex items-center gap-2 text-sm">
       <Truck className="h-4 w-4 text-primary" />
@@ -24,7 +25,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstit
         )}
         <div>
           <p className="font-medium text-foreground">
-            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : 'Ready to Ship — ships in 3–5 business days'}
+            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days` : 'Dispatch timing: confirm before ordering'}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             {confirmAvailability
@@ -33,7 +34,7 @@ export const DeliveryEstimate = ({ hasStitching, isMadeToOrder = false, isUnstit
               ? 'Supplied unstitched; tailoring is required before wearing. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
               : isMadeToOrder
               ? 'Use approximately 4–5 weeks as the total planning window. Production time and carrier transit are confirmed separately after the requested color, measurements, available design options and delivery address are known.'
-              : 'The base item is stocked for normal order handling and dispatch. Carrier transit begins after dispatch; Ready to Ship does not mean same-day delivery.'}
+              : 'Dispatch is when your order leaves the supplier. Carrier transit starts afterward. Confirm the selected size and timing before ordering for an event date.'}
           </p>
         </div>
       </div>

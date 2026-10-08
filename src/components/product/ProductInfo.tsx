@@ -17,7 +17,7 @@ import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
 import type { ShopifyProduct } from '@/lib/shopify';
-import { getShipByLabel } from '@/lib/shipBy';
+import { getShipByLabel, getProductShipsWithin } from '@/lib/shipBy';
 import { getCustomizableProduct, isMadeToOrderProduct } from '@/lib/customizableProducts';
 import {
   getCustomerFacingProductOptionName,
@@ -519,6 +519,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     }
     return lead;
   }, [product.description]);
+  const shipsWithinDays = getProductShipsWithin(product);
   const shipByLabel = getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
     const sizeOption = product.options.find((option) => isProductSizeOptionName(option.name));
@@ -889,18 +890,17 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         )}
       </div>
 
-      {!currentSelectionIsMadeToOrder &&
-        !product.tags?.includes('construction:Unstitched') &&
-        !product.tags?.includes('availability:Confirm before ordering') && (
-        <p className="flex items-center gap-2 text-sm font-medium text-green-800" role="status">
-          <Truck className="h-4 w-4 shrink-0" aria-hidden="true" />
-          Ships in 3–5 business days
-        </p>
+      {(productSpecs.fabric || productSpecs.includedPieces || productSpecs.work) && (
+        <dl className="space-y-2 rounded-sm bg-secondary/30 p-4 text-sm">
+          {productSpecs.fabric && <div><dt className="font-medium">Fabric</dt><dd className="text-muted-foreground">{productSpecs.fabric}</dd></div>}
+          {productSpecs.includedPieces && <div><dt className="font-medium">Included pieces</dt><dd className="text-muted-foreground">{productSpecs.includedPieces}</dd></div>}
+          {productSpecs.work && <div><dt className="font-medium">Work &amp; embellishment</dt><dd className="text-muted-foreground">{productSpecs.work}</dd></div>}
+        </dl>
       )}
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} />
-      {shipByLabel && (
+      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} />
+      {shipByLabel && !currentSelectionIsMadeToOrder && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
           <span>{shipByLabel}. This is the estimated dispatch date; carrier transit time is separate.</span>
@@ -1337,7 +1337,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         </div>
       </div>
 
-      {shipByLabel && (
+      {shipByLabel && !currentSelectionIsMadeToOrder && (
         <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/30 dark:text-green-300">
           {shipByLabel}
         </div>
