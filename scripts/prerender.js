@@ -976,6 +976,10 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
 
   if (category === 'all') return allowed.slice(0, maxProducts);
 
+  if (category === 'blouses' || category === 'couple-outfits') {
+    return allowed.filter(p => getPrimaryCategory(p) === category).slice(0, maxProducts);
+  }
+
   if (Object.prototype.hasOwnProperty.call(CATEGORY_PRODUCT_TYPES, category) && allowed.every(p => getPrimaryCategory(p))) {
     return allowed.filter(p => getPrimaryCategory(p) === category).slice(0, maxProducts);
   }
@@ -1811,6 +1815,20 @@ const routes = [
         <li><a href="/sarees?sub=premium-300-plus">Premium Sarees $300+</a> — Higher-priced and embellished options</li>
       </ul>
     `,
+  },
+  {
+    path: '/collections/blouses', category: 'blouses', noIndexFollow: true,
+    title: 'Blouses | LuxeMia',
+    description: 'Browse current blouses at LuxeMia.',
+    h1: 'Blouses',
+    content: '<p>Browse current blouses and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
+  },
+  {
+    path: '/collections/couple-outfits', category: 'couple-outfits', noIndexFollow: true,
+    title: 'Couple Sets | LuxeMia',
+    description: 'Browse current couple sets at LuxeMia.',
+    h1: 'Couple Sets',
+    content: '<p>Browse current couple sets and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
   },
   {
     path: '/collections/silk-sarees',
@@ -2651,6 +2669,15 @@ function generateHtml(template, route, allShopifyProducts) {
     /<meta name="description" content="[^"]*" \/>/,
     `<meta name="description" content="${escapeHtml(seoDescription)}" />`
   );
+
+  // Match the hydrated category page's noindex/follow directive while serving
+  // a real page and retaining its canonical and product links.
+  if (route.noIndexFollow) {
+    html = html.replace(
+      /<meta name="(robots|googlebot|bingbot)" content="[^"]*" \/>/g,
+      '<meta name="$1" content="noindex, follow" />',
+    );
+  }
 
   // Handle noIndex for 404 pages
   if (route.noIndex) {

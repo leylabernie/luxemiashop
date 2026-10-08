@@ -332,7 +332,7 @@ function verifyJulyRegressionGuards(routes) {
   return { failures, publishedCount: publishedRoutes.length };
 }
 
-function parseCommercialCollectionHtml(route, category) {
+function parseCommercialCollectionHtml(route, category, allowNoIndex = false) {
   const filePath = routeToFilePath(route);
   const html = fs.readFileSync(filePath, 'utf8');
   const payloadMatch = html.match(/window\.__INITIAL_DATA__\s*=\s*([\s\S]*?);<\/script>/);
@@ -359,7 +359,7 @@ function parseCommercialCollectionHtml(route, category) {
     return null;
   }
   if (payloadHandles.length === 0) return `${route}: hydration payload has no products`;
-  if (/<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html)) {
+  if (!allowNoIndex && /<meta\b[^>]*name="robots"[^>]*content="[^"]*noindex/i.test(html)) {
     return `${route}: stocked collection must allow indexing`;
   }
 
@@ -605,6 +605,21 @@ function main() {
     console.error(`\n[verify-prerender-coverage] BUILD FAILURE: ${seoArchitectureFailures.length} SEO architecture check(s) failed.`);
     for (const failure of seoArchitectureFailures) console.error(`  ${failure}`);
     process.exit(1);
+  }
+
+  const catalogCategoryRoutes = [
+    { route: '/collections/blouses', category: 'blouses', pattern: /blouse|choli/i },
+    { route: '/collections/couple-outfits', category: 'couple-outfits', pattern: /couple/i },
+  ];
+  for (const { route, category, pattern } of catalogCategoryRoutes) {
+    if (!routes.includes(route)) throw new Error(`${route}: missing middleware route registration`);
+    const failure = parseCommercialCollectionHtml(route, category, true);
+    if (failure) throw new Error(failure);
+    const html = fs.readFileSync(routeToFilePath(route), 'utf8');
+    const payload = JSON.parse(html.match(/window\.__INITIAL_DATA__\s*=\s*([\s\S]*?);<\/script>/)[1]);
+    if (payload.products.some(({ node }) => !pattern.test(node._originalProductType || node.productType || ''))) {
+      throw new Error(`${route}: contains products from another category`);
+    }
   }
 
   const invalidCommercialCollections = commercialCollectionTargets
