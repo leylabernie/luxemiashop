@@ -2772,19 +2772,26 @@ function generateHtml(template, route, allShopifyProducts) {
     html = html.replace('</head>', `    ${routeSchemas}\n</head>`);
   }
 
-  // Every static collection route needs a BreadcrumbList in the initial HTML.
-  // Commercial landings use their own route records and may not enter the
-  // category-product branch below, so this must be applied before that split.
-  if (!route.noIndex && route.path.startsWith('/collections/')) {
+  // CollectionPage references below must resolve to this complete breadcrumb.
+  // Include top-level catalogs as well as collection landings; an unresolved
+  // #breadcrumb reference is reported by Google as missing itemListElement.
+  if (!route.noIndex && (route.category || route.path.startsWith('/collections/'))) {
     const collectionCanonical = `${SITE_URL}${route.path}`;
+    const collectionBreadcrumbItems = [
+      { '@type': 'ListItem', name: 'Home', item: `${SITE_URL}/` },
+      ...(route.path.startsWith('/collections/')
+        ? [{ '@type': 'ListItem', name: 'Collections', item: `${SITE_URL}/collections` }]
+        : []),
+      { '@type': 'ListItem', name: route.h1, item: collectionCanonical },
+    ];
     const collectionBreadcrumbSchema = {
       '@context': 'https://schema.org',
       '@type': 'BreadcrumbList',
-      itemListElement: [
-        { '@type': 'ListItem', position: 1, name: 'Home', item: `${SITE_URL}/` },
-        { '@type': 'ListItem', position: 2, name: 'Collections', item: `${SITE_URL}/collections` },
-        { '@type': 'ListItem', position: 3, name: route.h1, item: collectionCanonical },
-      ],
+      '@id': `${collectionCanonical}#breadcrumb`,
+      itemListElement: collectionBreadcrumbItems.map((item, index) => ({
+        ...item,
+        position: index + 1,
+      })),
     };
     html = html.replace(
       '</head>',
@@ -3197,7 +3204,9 @@ function generateHtml(template, route, allShopifyProducts) {
         isPartOf: { '@id': `${SITE_URL}/#website` },
         breadcrumb: { '@id': `${canonical}#breadcrumb` },
       };
-      html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(collectionPageJsonLd)}</script>\n</head>`);
+      // Remove the page reference with its prerendered breadcrumb at hydration;
+      // React then supplies its own route metadata without a dangling @id.
+      html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(collectionPageJsonLd)}</script>\n</head>`);
 
       // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
       // and skips the client-side Shopify fetch entirely on first paint.
