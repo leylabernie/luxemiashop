@@ -26,6 +26,7 @@ import {
 import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
 import { isProductSizeOptionName } from '@/lib/productOptionNames';
 import { getProductShipsWithin } from '@/lib/shipBy';
+import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -221,7 +222,7 @@ const ProductDetail = () => {
   })();
   // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
   // copy. The field-backed generator below is the crawler and shopper source.
-  const seoDescription = product?.tags?.includes('facts:source-verified') ? product.seo?.description || '' : '';
+  const seoDescription = hasReviewedProductCopy(product?.tags) ? product?.seo?.description || '' : '';
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
