@@ -176,6 +176,35 @@ function parseJsonLdScripts(html, route, failures) {
   return parsed;
 }
 
+function verifyCollectionBreadcrumbs(html, route, failures) {
+  const scripts = parseJsonLdScripts(html, route, failures);
+  const collections = scripts.flatMap(({ attributes, schema }) =>
+    collectSchemaNodesByType(schema, 'CollectionPage').map((node) => ({ node, attributes })),
+  );
+  const breadcrumbs = scripts.flatMap(({ schema }) => collectSchemaNodesByType(schema, 'BreadcrumbList'));
+  for (const { node: collection, attributes } of collections) {
+    const reference = collection.breadcrumb;
+    if (!reference) continue;
+    if (!/\bdata-prerender-schema(?:\s|=|$)/i.test(attributes)) {
+      failures.push(`${route}: CollectionPage breadcrumb reference must be removed with prerendered schema during hydration`);
+    }
+    const breadcrumb = reference.itemListElement
+      ? reference
+      : breadcrumbs.find((node) => node['@id'] === reference['@id']);
+    if (!breadcrumb || !Array.isArray(breadcrumb.itemListElement) || breadcrumb.itemListElement.length < 2) {
+      failures.push(`${route}: CollectionPage breadcrumb must resolve to a complete BreadcrumbList with at least two items`);
+      continue;
+    }
+    for (const [index, item] of breadcrumb.itemListElement.entries()) {
+      const itemUrl = typeof item.item === 'string' ? item.item : item.item?.['@id'];
+      if (item['@type'] !== 'ListItem' || item.position !== index + 1 || !item.name?.trim() ||
+          (index < breadcrumb.itemListElement.length - 1 && !/^https:\/\//.test(itemUrl || ''))) {
+        failures.push(`${route}: breadcrumb item ${index + 1} lacks a valid name, position or URL`);
+      }
+    }
+  }
+}
+
 function verifyJulyRegressionGuards(routes) {
   const failures = [];
   const routeSet = new Set(routes);
@@ -579,6 +608,7 @@ function main() {
 
   for (const route of routes) {
     const html = fs.readFileSync(routeToFilePath(route), 'utf8');
+    verifyCollectionBreadcrumbs(html, route, seoArchitectureFailures);
     if (/href=["']\/(?:lehengas|sarees|suits|menswear|jewelry)\?sub=/i.test(html)) {
       seoArchitectureFailures.push(`${route}: prerendered HTML links to a noindex facet URL`);
     }
