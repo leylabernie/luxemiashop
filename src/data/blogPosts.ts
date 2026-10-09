@@ -74,6 +74,10 @@ export const PUBLISHED_BLOG_SLUGS = [
   'does-a-saree-come-with-a-blouse',
   'how-should-a-sherwani-fit-measurement-checklist',
   'how-to-buy-a-bridal-lehenga-online-checklist',
+  'nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada',
+  'what-to-pack-indian-wedding-from-usa-nri-guide',
+  'haldi-vs-mehendi-outfits-complete-guide',
+  'diwali-outfit-ideas-nri-women-usa-canada-australia',
 ] as const;
 
 const FACT_CHECKED_AT = '2026-08-08';

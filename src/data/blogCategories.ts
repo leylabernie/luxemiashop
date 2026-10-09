@@ -112,6 +112,10 @@ export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
   'does-a-saree-come-with-a-blouse': 'fit-sizing-and-garment-care',
   'how-should-a-sherwani-fit-measurement-checklist': 'fit-sizing-and-garment-care',
   'how-to-buy-a-bridal-lehenga-online-checklist': 'weddings-festivals',
+  'nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada': 'fit-sizing-and-garment-care',
+  'what-to-pack-indian-wedding-from-usa-nri-guide': 'weddings-festivals',
+  'haldi-vs-mehendi-outfits-complete-guide': 'weddings-festivals',
+  'diwali-outfit-ideas-nri-women-usa-canada-australia': 'weddings-festivals',
 };
 
 export function getBlogCategoryGroup(slug: string): BlogCategoryGroup | undefined {

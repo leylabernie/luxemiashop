@@ -289,4 +289,160 @@ export const recoveredBlogPosts: BlogPost[] = [
       },
     ],
   },
+
+  // Restored at original URLs after editorial review; retired products stay retired.
+  {
+    slug: "nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada",
+    title: "Buying Indian Ethnic Wear Online from the USA, UK & Canada",
+    excerpt: "Compare measurements, included pieces, availability and delivery before ordering Indian occasionwear from abroad.",
+    publishedAt: "2026-04-11",
+    category: "Shopping Guide",
+    tags: ["Indian ethnic wear online", "USA UK Canada shopping", "occasionwear checklist"],
+    content: `
+<h2>Start with the event and the exact item</h2>
+<p>Buying an outfit from abroad is easier when you separate the decisions: what the occasion needs, what the garment includes, how it fits, and when it can arrive. This is a shopping checklist, not a promise that one size system or delivery window works for every order.</p>
+<p>Write down the event date, destination address and any dress instructions before browsing. Compare current <a href="/sarees">sarees</a>, <a href="/lehengas">lehengas</a> and <a href="/suits">suits</a> by the information on each listing rather than by the styling photograph alone.</p>
+<h2>Which size should you order?</h2>
+<p>Use current measurements and the exact item's size information. A familiar letter size does not establish the fit of a different garment. Ask whether a chart describes body measurements or finished clothing, which units it uses, and what room for movement the construction allows.</p>
+<p>Measure with the undergarments and footwear you intend to wear when those affect the fit or length. The <a href="/sizing-measurements-guide">measurement guide</a> is a starting point; follow the selected product's instructions. Read the <a href="/blog/indian-to-us-clothing-size-conversion-guide">Indian-to-US sizing guide</a> before treating a conversion as exact.</p>
+<h2>What is actually included?</h2>
+<table><thead><tr><th>Outfit</th><th>Confirm before checkout</th></tr></thead><tbody>
+<tr><td>Saree</td><td>Saree length, blouse or blouse piece, stitching and any petticoat inclusion</td></tr>
+<tr><td>Lehenga</td><td>Skirt, choli, dupatta, waistband, closures and stitching status</td></tr>
+<tr><td>Suit</td><td>Top, bottoms, dupatta, lining and size options</td></tr>
+</tbody></table>
+<p>Accessories in a photograph may be styling props. If the listing is unclear, ask about the exact variant. <a href="/blog/does-a-saree-come-with-a-blouse">Saree blouse inclusion</a> and <a href="/blog/what-does-semi-stitched-lehenga-mean">semi-stitched lehengas</a> have separate guides.</p>
+<h2>Check material and care information</h2>
+<p>The <a href="https://www.ftc.gov/business-guidance/industry/clothing-and-textiles">FTC's textile guidance</a> explains the importance of accurate fiber and care information. For your purchase, read the listing and label; do not infer pure silk, hand embroidery, stretch or washability from a photograph. Ask about lining and surface work if they matter to your plans.</p>
+<h2>Plan delivery before paying</h2>
+<p>Production or dispatch time and carrier transit are separate parts of the schedule. Review the current <a href="/shipping">shipping policy</a>, then confirm the selected item's availability and timing for your destination. Leave time to inspect the outfit and arrange any local alterations. The <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">fixed wedding date guide</a> helps organize those questions.</p>
+<p>Compare the complete checkout amount and read the current <a href="/returns">returns policy</a>. Do not assume a change-of-mind return is available. Save the selected size, variant and written answers with the order.</p>
+<h2>Final shopping checklist</h2>
+<ul><li>Event date and delivery destination recorded</li><li>Measurements and units checked</li><li>Included pieces and stitching confirmed</li><li>Current availability and dispatch estimate checked</li><li>Shipping and returns terms read before payment</li></ul>
+`,
+    id: "restored-20261009-nri-guide-buying-indian-ethnic-wear-online-usa-uk-canada",
+    author: "LuxeMia Editorial Team",
+    updatedAt: "2026-10-09",
+    factCheckedAt: "2026-10-09",
+    image: "",
+    imagePresentation: "editorial",
+    readTime: 5,
+    sources: [{"title": "Care Labeling of Textile Wearing Apparel", "url": "https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text", "publisher": "U.S. Federal Trade Commission"}, {"title": "Current Shipping Policy", "url": "https://luxemia.shop/shipping", "publisher": "LuxeMia"}, {"title": "Sizing and Measurement Guide", "url": "https://luxemia.shop/sizing-measurements-guide", "publisher": "LuxeMia"}, {"title": "Clothing and Textiles", "url": "https://www.ftc.gov/business-guidance/industry/clothing-and-textiles", "publisher": "U.S. Federal Trade Commission"}],
+  },
+  {
+    slug: "what-to-pack-indian-wedding-from-usa-nri-guide",
+    title: "What to Pack for an Indian Wedding When Traveling from the USA",
+    excerpt: "Build an event-by-event packing list for outfits, accessories and garment care without overpacking.",
+    publishedAt: "2026-07-22",
+    category: "Wedding Guide",
+    tags: ["Indian wedding packing list", "wedding travel outfits", "NRI wedding planning"],
+    content: `
+<h2>Build the list from the invitation</h2>
+<p>A wedding trip can involve several outfits, travel days and changes of venue. Start with the actual invitation and host instructions. There is no standard number of ceremonies, compulsory color palette or universal guest wardrobe for every Indian wedding.</p>
+<p>Make one row for each event: date, venue, dress guidance, outfit, shoes and accessories. Ask the hosts when the schedule or expected formality is unclear. Use the <a href="/blog/wedding-guest-outfit-ideas">wedding guest outfit guide</a> to compare options once you know the plan.</p>
+<h2>Pack complete outfits together</h2>
+<p>Try on each complete look before the trip. Check sitting, walking and reaching, and make sure the hem works with the intended shoes. A garment that looks right while standing may need a different fastening or adjustment for a long event.</p>
+<table><thead><tr><th>Look</th><th>Pieces to check</th></tr></thead><tbody>
+<tr><td>Saree</td><td>Saree, correct blouse, chosen underskirt or support, fastening supplies and footwear</td></tr>
+<tr><td>Lehenga</td><td>Skirt, choli, dupatta, closures, undergarments and shoes</td></tr>
+<tr><td>Suit or kurta set</td><td>Top, intended bottoms, dupatta if included, and footwear</td></tr>
+</tbody></table>
+<p>Put small accessories in labeled pouches with the corresponding look. Keep earrings and necklaces separated so they cannot easily catch on embroidered fabric. Choose a neutral shoe or bag for more than one event when it suits the outfits and your comfort.</p>
+<h2>Protect embellishments without guessing about care</h2>
+<p>Inspect the garment label before folding, ironing or steaming. The <a href="https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text">FTC care-label guidance</a> makes care instructions a useful starting point; it does not establish that every embellished outfit can be steamed or washed.</p>
+<p>Separate delicate surface work from hooks, zippers and jewelry. Use clean protective layers appropriate to the garment and avoid forcing a heavily decorated piece into a tightly compressed space. If a label is missing or unclear, ask the seller or a qualified cleaner rather than applying heat or a stain treatment experimentally.</p>
+<h2>What belongs on the travel checklist?</h2>
+<ul><li>The invitation, venue addresses and contact details</li><li>A complete outfit checklist, including undergarments</li><li>Comfortable shoes suited to the venue</li><li>Any garment fastening supplies you use confidently</li><li>A separate bag for worn clothing</li><li>Any personal essentials and medication you normally travel with</li></ul>
+<p>Check your own airline's current baggage limits and permitted items before deciding what goes in cabin or checked luggage. Do not assume a garment bag is an additional free allowance. Keep essential travel items accessible and choose how to carry an important outfit within those rules.</p>
+<h2>Buying something before departure?</h2>
+<p>Check the product-specific dispatch estimate and current <a href="/shipping">shipping information</a> against your departure date, not only the wedding date. Allow time to inspect and try on the order. Read <a href="/blog/how-early-to-order-for-a-fixed-wedding-date">how to plan an order for a fixed date</a> before relying on a narrow schedule.</p>
+<p>Browse current <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a> or <a href="/menswear">menswear</a> for any gap in your list. Pack for the events you will attend, rather than adding an outfit for every ceremony name you have heard.</p>
+`,
+    id: "restored-20261009-what-to-pack-indian-wedding-from-usa-nri-guide",
+    author: "LuxeMia Editorial Team",
+    updatedAt: "2026-10-09",
+    factCheckedAt: "2026-10-09",
+    image: "",
+    imagePresentation: "editorial",
+    readTime: 5,
+    sources: [{"title": "Care Labeling of Textile Wearing Apparel", "url": "https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text", "publisher": "U.S. Federal Trade Commission"}, {"title": "Current Shipping Policy", "url": "https://luxemia.shop/shipping", "publisher": "LuxeMia"}, {"title": "Sizing and Measurement Guide", "url": "https://luxemia.shop/sizing-measurements-guide", "publisher": "LuxeMia"}],
+  },
+  {
+    slug: "haldi-vs-mehendi-outfits-complete-guide",
+    title: "Haldi vs Mehendi Outfits: A Practical Guest Planning Guide",
+    excerpt: "Choose between ceremony outfits using the host instructions, planned activities, comfort and garment care.",
+    publishedAt: "2026-07-09",
+    category: "Wedding Guide",
+    tags: ["Haldi outfits", "Mehendi outfits", "Indian wedding guest planning"],
+    content: `
+<h2>Ask what the hosts have planned</h2>
+<p>The event name is a starting point, not a complete dress code. Ask whether the gathering is indoors or outdoors, whether guests will take part in any activities, and whether the invitation specifies colors or formality. This guide offers practical outfit planning; it does not prescribe one family's practices for everyone.</p>
+<p>For both events, choose something you can comfortably sit, walk and socialize in. If you will participate in turmeric application at a Haldi or have henna applied at a Mehendi, consider access to the relevant areas and how you will keep fabric away from the activity.</p>
+<h2>How do the practical priorities differ?</h2>
+<table><thead><tr><th>Planning question</th><th>Haldi</th><th>Mehendi</th></tr></thead><tbody>
+<tr><td>Will the outfit contact materials used in the activity?</td><td>Ask about participation and any splashes or staining exposure</td><td>Ask whether you will have henna applied and need hands free</td></tr>
+<tr><td>What sleeves and drape work?</td><td>Choose coverage and fastening that suit the planned activity</td><td>Consider sleeve access and a dupatta that stays in place</td></tr>
+<tr><td>What colors are expected?</td><td>Follow the invitation; yellow is an option if requested</td><td>Follow the invitation; green is an option if requested</td></tr>
+<tr><td>How dressy should it be?</td><td>Confirm venue and host expectations</td><td>Confirm venue and host expectations</td></tr>
+</tbody></table>
+<h2>Choosing a Haldi outfit</h2>
+<p>A suit, saree or lehenga can be an option when it fits the host's guidance and your role. For hands-on participation, consider a simpler outfit you are comfortable exposing to the activity. Do not assume a particular fiber or pale color will resist stains.</p>
+<p>Review the care label and the exact product construction. If you want to protect an important garment, ask whether participating in a different outfit is appropriate. Browse current <a href="/suits">suits</a> or <a href="/sarees">sarees</a>, checking lining, closures and included pieces on the selected listing.</p>
+<h2>Choosing a Mehendi outfit</h2>
+<p>If you plan to have henna applied, think through sleeves, bracelets, bags and fastening before the appointment. An outfit that needs repeated adjustment may be inconvenient when you are keeping your hands clear. This is a practical consideration, not a reason that everyone must wear the same silhouette.</p>
+<p>Compare a suit with a secured dupatta, a comfortably fitted lehenga, or a saree drape you already know how to manage. The <a href="/blog/what-should-guests-wear-to-a-mehendi">Mehendi guest guide</a> covers that event in more detail, while the <a href="/blog/saree-versus-lehenga-for-a-wedding-guest">saree versus lehenga guide</a> helps compare movement and preparation.</p>
+<h2>Check fit and care before the day</h2>
+<p>Try the entire outfit with shoes and undergarments. Confirm the top, bottoms and any dupatta are included rather than relying on photographs. Read the <a href="/blog/does-a-saree-come-with-a-blouse">saree blouse guide</a> if your look requires separate stitching.</p>
+<p>Follow the garment's care instructions. <a href="https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text">FTC care-label guidance</a> supports checking those instructions; a fabric name alone is not a stain-removal method. Ask a qualified cleaner about any accidental marks.</p>
+<h2>One final check with the hosts</h2>
+<p>Confirm any color request, expected participation and footwear needs. Then choose the outfit that meets those details and feels comfortable. For a multi-event trip, use the <a href="/blog/what-to-pack-indian-wedding-from-usa-nri-guide">wedding packing checklist</a> to keep each complete look together.</p>
+`,
+    id: "restored-20261009-haldi-vs-mehendi-outfits-complete-guide",
+    author: "LuxeMia Editorial Team",
+    updatedAt: "2026-10-09",
+    factCheckedAt: "2026-10-09",
+    image: "",
+    imagePresentation: "editorial",
+    readTime: 5,
+    sources: [{"title": "Care Labeling of Textile Wearing Apparel", "url": "https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text", "publisher": "U.S. Federal Trade Commission"}, {"title": "Current Shipping Policy", "url": "https://luxemia.shop/shipping", "publisher": "LuxeMia"}, {"title": "Sizing and Measurement Guide", "url": "https://luxemia.shop/sizing-measurements-guide", "publisher": "LuxeMia"}],
+  },
+  {
+    slug: "diwali-outfit-ideas-nri-women-usa-canada-australia",
+    title: "Diwali Outfit Ideas for Celebrations in the USA, Canada & Australia",
+    excerpt: "Plan a Diwali outfit around your invitation, local weather, venue and the pieces you already own.",
+    publishedAt: "2026-07-09",
+    category: "Festival Guide",
+    tags: ["Diwali outfits", "festive sarees", "Diwali abroad"],
+    content: `
+<h2>Choose for your celebration</h2>
+<p>Diwali is described by India's <a href="https://www.incredibleindia.gov.in/en/festivals-and-events/diwali">Ministry of Tourism</a> as a festival of lights. Your own gathering may be a family meal, community event, religious observance or evening party. The invitation and the hosts are the best guide to how to dress for that particular occasion.</p>
+<p>Start with the venue, any dress instructions and how you will spend the evening. A look that works for a seated dinner may need different shoes or an extra layer for outdoor travel. These are outfit ideas, not requirements for celebrating Diwali.</p>
+<h2>Three ways to build a festive look</h2>
+<table><thead><tr><th>Starting point</th><th>What to check</th><th>Styling idea</th></tr></thead><tbody>
+<tr><td>Saree</td><td>Blouse fit, drape familiarity and included pieces</td><td>Choose one accessory to complement the border or surface work</td></tr>
+<tr><td>Suit</td><td>Top and bottom fit, lining and dupatta inclusion</td><td>Use comfortable footwear and a securely arranged dupatta</td></tr>
+<tr><td>Lehenga</td><td>Waistband, hem length, choli and closures</td><td>Balance the skirt's detail with accessories you enjoy wearing</td></tr>
+</tbody></table>
+<p>Browse current <a href="/sarees">sarees</a>, <a href="/suits">suits</a> and <a href="/lehengas">lehengas</a> when you need a piece. If you already own a suitable outfit, try it with a different blouse, bag or jewelry before buying a complete new look. Check that separate pieces actually work together in fit and color.</p>
+<h2>Plan for local weather</h2>
+<p>Check the forecast for your own city and event date. USA, Canada and Australia each have varied climates; a country name does not tell you what layer you will need. Consider the journey from transport to the venue as well as the indoor setting.</p>
+<p>Try any wrap or outer layer with the full outfit. Check that it does not pull on embroidery or interfere with a dupatta. Choose shoes that work for the venue, walking distance and any host instructions about removing footwear.</p>
+<h2>Make accessories comfortable</h2>
+<p>Try earrings, necklaces and bracelets before the event, especially if you have not worn them for long periods. Check clasps and keep sharp edges away from delicate fabric. A small bag that holds your essentials can reduce the need to keep adjusting the outfit.</p>
+<p>The <a href="/blog/accessorize-indian-ethnic-wear">accessory guide</a> provides more ideas. Choose the amount of jewelry you like; there is no minimum needed for an outfit to feel festive.</p>
+<h2>Check garment details before ordering</h2>
+<p>A styled photograph does not confirm the blouse, petticoat, jewelry or every other piece is supplied. Read the selected listing and ask about anything missing. The <a href="/blog/does-a-saree-come-with-a-blouse">saree blouse inclusion guide</a> explains common questions, and the <a href="/sizing-measurements-guide">measurement guide</a> helps prepare fit information.</p>
+<p>Review the product-specific availability and dispatch estimate along with the current <a href="/shipping">shipping policy</a>. Plan for your local event date and allow time to inspect the order. For other festive gatherings abroad, see <a href="/blog/styling-indian-ethnic-wear-festive-occasions-abroad">the broader festive styling guide</a>.</p>
+<h2>A simple final checklist</h2>
+<ul><li>Host instructions checked</li><li>Complete outfit tried on</li><li>Local weather and travel layer considered</li><li>Footwear and accessories comfortable</li><li>Any new order's timing and included pieces confirmed</li></ul>
+`,
+    id: "restored-20261009-diwali-outfit-ideas-nri-women-usa-canada-australia",
+    author: "LuxeMia Editorial Team",
+    updatedAt: "2026-10-09",
+    factCheckedAt: "2026-10-09",
+    image: "",
+    imagePresentation: "editorial",
+    readTime: 5,
+    sources: [{"title": "Care Labeling of Textile Wearing Apparel", "url": "https://www.ftc.gov/legal-library/browse/rules/care-labeling-textile-wearing-apparel-certain-piece-goods-text", "publisher": "U.S. Federal Trade Commission"}, {"title": "Current Shipping Policy", "url": "https://luxemia.shop/shipping", "publisher": "LuxeMia"}, {"title": "Sizing and Measurement Guide", "url": "https://luxemia.shop/sizing-measurements-guide", "publisher": "LuxeMia"}, {"title": "Diwali: A Festival of Lights and Joy", "url": "https://www.incredibleindia.gov.in/en/festivals-and-events/diwali", "publisher": "Incredible India, Ministry of Tourism"}],
+  },
 ];
