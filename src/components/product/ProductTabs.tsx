@@ -1,4 +1,5 @@
 import DOMPurify from 'dompurify';
+import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Ruler, Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
 import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
@@ -397,8 +398,8 @@ function getLabel(key: string): string {
 }
 
 export const ProductTabs = ({ description, descriptionHtml, productType, isStitchable, tags, blouseSizeValues }: ProductTabsProps) => {
-  const verifiedHtml = tags?.includes('facts:source-verified') && descriptionHtml
-    ? DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'ul', 'li', 'a'], ALLOWED_ATTR: ['href'] })
+  const verifiedHtml = hasReviewedProductCopy(tags) && descriptionHtml
+    ? DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'em', 'b', 'ul', 'ol', 'li', 'br', 'table', 'tbody', 'tr', 'th', 'td', 'a'], ALLOWED_ATTR: ['href'] })
     : '';
   const showTailoringTab = isStitchable ?? isStitchableType(productType);
   const category = classifyProduct(productType);

@@ -14,6 +14,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
 import { getPrimaryCategory, getCatalogDisplayCategory, selectLatestArrivals } from '../src/lib/catalogCategories.mjs';
+import { hasReviewedProductCopy, renderReviewedProductHtml } from '../src/lib/reviewedProductCopy.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -408,11 +409,8 @@ function buildVerifiedProductCopy(product) {
     );
   }
 
-  const isSourceVerifiedListing = (product.tags || []).some(
-    (tag) => String(tag).trim().toLowerCase() === 'facts:source-verified',
-  );
-  const sourceVerifiedDescription = isSourceVerifiedListing
-    ? textFromListing(sanitizeProductCopy(product.description))
+  const sourceVerifiedDescription = hasReviewedProductCopy(product.tags)
+    ? textFromListing(sanitizeProductCopy(product.descriptionHtml || product.description))
     : '';
   if (sourceVerifiedDescription.length >= 80) {
     return normalizeWhitespace(
@@ -1179,7 +1177,7 @@ function buildInitialProductPayload(product) {
   const slim = {
     ...buildHydrationProductNode(product),
     seo: product.seo || { title: null, description: null },
-    descriptionHtml: (product.tags || []).includes('facts:source-verified') ? sanitizeProductCopy(product.descriptionHtml || '') : undefined,
+    descriptionHtml: hasReviewedProductCopy(product.tags) ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml || '')) : undefined,
     media: product.media,
   };
   return toSafeInlineJson({ handle: product.handle, product: slim });
@@ -3044,9 +3042,12 @@ function generateHtml(template, route, allShopifyProducts) {
         })()
       : '';
 
-    const descHtml = description
-      ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, (p.tags || []).includes('facts:source-verified') ? 6000 : 2000))}</p>`
+    const reviewedHtml = hasReviewedProductCopy(p.tags)
+      ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml || ''))
       : '';
+    const descHtml = reviewedHtml
+      ? `<h2>Product Description</h2>${reviewedHtml}`
+      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags) ? 6000 : 2000))}</p>` : '';
 
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';
@@ -3500,9 +3501,9 @@ async function main() {
         // Same for the bot-facing <title> and meta description: hardcoded
         // entries go stale the moment Shopify SEO fields change, so prefer
         // the live Search-engine listing whenever it is present and the
-        // listing carries the source-verified tag.
+        // listing carries a reviewed-copy or source-verified tag.
         const liveSeoTitle = sanitizeProductTitle((live.seo?.title || '').trim());
-        const liveSeoDescription = (live.tags || []).includes('facts:source-verified')
+        const liveSeoDescription = hasReviewedProductCopy(live.tags)
           ? (live.seo?.description || '')
           : '';
         if (liveSeoTitle) route.title = liveSeoTitle;
@@ -3525,7 +3526,7 @@ async function main() {
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
-    const seoDescription = (p.tags || []).includes('facts:source-verified') ? (p.seo?.description || '') : '';
+    const seoDescription = hasReviewedProductCopy(p.tags) ? (p.seo?.description || '') : '';
 
     // ─── USP-enhanced title generation ──────────────────────────────────────
     // When no Shopify SEO title is set, inject fabric/color USP into the title
