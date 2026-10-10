@@ -22,14 +22,6 @@ const lehengaSizes = [
   { size: 'XXL', bust: '40-42', waist: '34-36', hips: '44-46', length: '44' },
 ];
 
-const suitSizes = [
-  { size: 'S', bust: '32-34', waist: '26-28', hips: '36-38', kameezLength: '40', sleeveLength: '22' },
-  { size: 'M', bust: '34-36', waist: '28-30', hips: '38-40', kameezLength: '41', sleeveLength: '22.5' },
-  { size: 'L', bust: '36-38', waist: '30-32', hips: '40-42', kameezLength: '42', sleeveLength: '23' },
-  { size: 'XL', bust: '38-40', waist: '32-34', hips: '42-44', kameezLength: '43', sleeveLength: '23.5' },
-  { size: 'XXL', bust: '40-42', waist: '34-36', hips: '44-46', kameezLength: '44', sleeveLength: '24' },
-];
-
 const menswearSizes = [
   { size: 'S', chest: '36-38', waist: '30-32', shoulder: '16.5', length: '28' },
   { size: 'M', chest: '38-40', waist: '32-34', shoulder: '17', length: '29' },
@@ -153,44 +145,22 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
 
           <TabsContent value="suits" className="mt-6 space-y-6">
             <div className="space-y-4">
-              <h3 className="font-medium text-lg">Salwar Suits & Sharara Size Chart</h3>
-              <p className="text-sm text-muted-foreground">All measurements are in inches</p>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-3 px-2 font-medium">Size</th>
-                      <th className="text-left py-3 px-2 font-medium">Bust</th>
-                      <th className="text-left py-3 px-2 font-medium">Waist</th>
-                      <th className="text-left py-3 px-2 font-medium">Hips</th>
-                      <th className="text-left py-3 px-2 font-medium">Kameez</th>
-                      <th className="text-left py-3 px-2 font-medium">Sleeve</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {suitSizes.map((row) => (
-                      <tr key={row.size} className="border-b border-border/50">
-                        <td className="py-3 px-2 font-medium">{row.size}</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.bust}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.waist}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.hips}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.kameezLength}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.sleeveLength}"</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
+              <h3 className="font-medium text-lg">Salwar Suits, Sharara & Palazzo Fit Guide</h3>
+              <p className="text-sm text-muted-foreground">
+                Sizes and measurements vary by design. Use the sizes offered on this product page;
+                a label such as XS, S or M does not confirm a specific bust or waist measurement.
+              </p>
               <div className="bg-card/50 border border-border/50 rounded-sm p-4 space-y-3">
-                <h4 className="font-medium">Fitting Recommendations</h4>
+                <h4 className="font-medium">Confirm your fit before ordering</h4>
                 <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• Anarkalis: Consider sizing up if you prefer a flowy silhouette</li>
-                  <li>• Sharara pants typically have elastic waistbands for comfort</li>
-                  <li>• Most suits come semi-stitched with scope for alterations</li>
-                  <li>• Dupatta length is standard at 2.25-2.5 meters</li>
+                  <li>• Measure your bust, waist and hips, and note your preferred top and trouser lengths.</li>
+                  <li>• Ask LuxeMia for the design-specific size chart or garment measurements, including XS when offered.</li>
+                  <li>• Check the listing for ready-to-wear, semi-stitched or unstitched construction.</li>
+                  <li>• Waistband style, sleeve length, dupatta dimensions and alteration options vary by product.</li>
                 </ul>
+                <a href="https://wa.me/12153419990" className="inline-block text-sm text-primary underline underline-offset-2">
+                  Ask for sizing help on WhatsApp
+                </a>
               </div>
             </div>
           </TabsContent>
