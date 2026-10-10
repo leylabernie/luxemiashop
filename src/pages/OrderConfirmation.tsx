@@ -3,7 +3,6 @@ import { useSearchParams, Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { trackPurchase } from '@/hooks/useAnalytics';
 
 declare global {
   interface Window {
@@ -17,23 +16,6 @@ declare global {
   }
 }
 
-interface PersistedCartItem {
-  variantId?: string;
-  variantTitle?: string;
-  price?: { amount?: string; currencyCode?: string };
-  quantity?: number;
-  customAttributes?: Array<{ key?: string; value?: string }>;
-  product?: {
-    node?: {
-      id?: string;
-      handle?: string;
-      title?: string;
-      productType?: string;
-      metadata?: { occasion?: string[] | null };
-    };
-  };
-}
-
 /**
  * Order Confirmation Page
  *
@@ -41,7 +23,7 @@ interface PersistedCartItem {
  * with order details in URL parameters. This page:
  * 1. Displays the order confirmation message
  * 2. Triggers the Google Customer Reviews opt-in survey
- * 3. Tracks the purchase event in GA4
+ * Purchase tracking belongs to Shopify checkout events, not URL parameters.
  *
  * Shopify redirect URL format:
  * https://luxemia.shop/order-confirmation?order_id=xxx&email=xxx&country=US&delivery_date=2026-06-01
@@ -54,9 +36,6 @@ const OrderConfirmation = () => {
   const customerEmail = searchParams.get('email') || '';
   const deliveryCountry = searchParams.get('country') || 'US';
   const deliveryDate = searchParams.get('delivery_date') || '';
-  const deliveryState = searchParams.get('state') || '';
-  const orderTotal = searchParams.get('total_price') || '';
-  const orderCurrency = searchParams.get('currency') || '';
 
   // Trigger Google Customer Reviews opt-in
   useEffect(() => {
@@ -121,60 +100,9 @@ const OrderConfirmation = () => {
     };
   }, [orderId, customerEmail, deliveryCountry, deliveryDate, optInTriggered]);
 
-  // Track purchase in GA4 with the cart items that preceded checkout.
-  // Shopify's return URL does not reliably include line items, so recover the
-  // persisted Zustand cart. Deduplicate refreshes using sessionStorage.
-  useEffect(() => {
-    if (!orderId || !orderTotal || typeof window.gtag !== 'function') return;
-
-    const dedupeKey = `luxemia-purchase-tracked:${orderId}`;
-    if (sessionStorage.getItem(dedupeKey)) return;
-
-    let items: Array<{
-      id: string;
-      name: string;
-      price: number;
-      quantity: number;
-      category?: string;
-      variant?: string;
-      productGroupId?: string;
-      tailoringOption?: string;
-      occasion?: string;
-    }> = [];
-    let cartCurrency = '';
-    try {
-      const persisted = JSON.parse(localStorage.getItem('shopify-cart') || '{}') as {
-        state?: { items?: PersistedCartItem[] };
-      };
-      const cartItems = persisted.state?.items ?? [];
-      cartCurrency = cartItems[0]?.price?.currencyCode || '';
-      items = cartItems.map((item) => ({
-        id: item.variantId || item.product?.node?.id || item.product?.node?.handle || 'unknown',
-        name: item.product?.node?.title || item.variantTitle || 'LuxeMia product',
-        price: Number(item.price?.amount || 0),
-        quantity: Number(item.quantity || 1),
-        category: item.product?.node?.productType,
-        variant: item.variantTitle && item.variantTitle !== 'Default Title' ? item.variantTitle : undefined,
-        productGroupId: item.product?.node?.id,
-        tailoringOption: item.customAttributes
-          ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key || ''))
-          ?.value,
-        occasion: item.product?.node?.metadata?.occasion?.join(', ') || undefined,
-      }));
-    } catch {
-      // Purchase tracking should never block the confirmation page.
-    }
-
-    trackPurchase({
-      transactionId: orderId,
-      value: parseFloat(orderTotal),
-      currency: orderCurrency || cartCurrency || 'USD',
-      shippingCountry: deliveryCountry,
-      shippingState: deliveryState || undefined,
-      items,
-    });
-    sessionStorage.setItem(dedupeKey, '1');
-  }, [deliveryCountry, deliveryState, orderCurrency, orderId, orderTotal]);
+  // Query parameters and a persisted cart are not proof of a paid order.
+  // Purchase events must come from Shopify checkout tracking; this return page
+  // must not produce a second or fabricated purchase event.
 
   return (
     <div className="min-h-screen bg-background">

@@ -23,3 +23,13 @@ test('missing data stays missing and exact legacy fabric tags remain supported',
   assert.equal(getCatalogMaterial({ tags: ['Fabric: Art Silk'] }), 'Art Silk');
   assert.equal(getCatalogMaterial({ materialMetafield: { value: '  ' }, tags: ['material:Viscose'] }), 'Viscose');
 });
+
+
+test('explicit title fabrics preserve compounds and omit style or supplementary fabrics', () => {
+  assert.equal(getCatalogMaterial({ title: 'Dusty Pink Anarkali Suit, Chinon, Green Dupatta' }), 'Chinon');
+  assert.equal(getCatalogMaterial({ title: 'Art Silk Saree with Cotton Blouse' }), 'Art Silk');
+  assert.equal(getCatalogMaterial({ title: 'Cotton Silk Kurta' }), 'Cotton Silk');
+  assert.equal(getCatalogMaterial({ title: 'Banarasi Saree with Silk Blouse' }), '');
+  assert.equal(getCatalogMaterial({ title: 'Silk-inspired wedding outfit' }), '');
+  assert.equal(getCatalogMaterial({ title: 'Silk Lehenga, Net Blouse and Net Dupatta' }), 'Silk / Net');
+});
