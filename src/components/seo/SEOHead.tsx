@@ -81,7 +81,7 @@ const SEOHead = ({
   title = 'Indian Ethnic Wear Online USA | LuxeMia',
   description = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.',
   canonical,
-  image = 'https://luxemia.shop/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg',
+  image = 'https://luxemia.shop/images/social/luxemia-brand-preview-2026.jpg',
   type = 'website',
   product,
   structuredProduct,
@@ -205,15 +205,15 @@ const SEOHead = ({
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={seoDescription} />
       <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
-      {/* og:image dimensions — declared as 1600x900 to match the evergreen
-          campaign image used as the non-product social fallback. This
+      {/* og:image dimensions — declared as 1200x630 to match the evergreen
+          brand image used as the non-product social fallback. This
           fixes WhatsApp/LinkedIn/Twitter share card rendering and removes
           the "og:image dimensions missing" warning from social card
           validators. Product pages may serve a product image; the dimensions
           meta is a hint, not a constraint, so crawlers will fall back to
           the actual image if it differs. */}
-      <meta property="og:image:width" content="1600" />
-      <meta property="og:image:height" content="900" />
+      <meta property="og:image:width" content="1200" />
+      <meta property="og:image:height" content="630" />
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
