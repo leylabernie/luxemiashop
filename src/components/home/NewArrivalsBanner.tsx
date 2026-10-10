@@ -41,11 +41,11 @@ const festiveSlide: FeaturedSlide = {
   subline: '10% off $75+ · 15% off $200+ · 20% off $400+ — auto-applied at checkout.',
   cta: 'Shop the Festive Edit',
   link: '/new-arrivals',
-  image: '/images/banners/festive-hero-mobile-v2',
-  desktopImage: '/images/banners/festive-hero-desktop-v2',
-  alt: 'Festive Sale — up to 20% off sitewide, auto-applied at checkout. Model in a white lehenga with red embroidered dupatta.',
-  width: 1920,
-  height: 720,
+  image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-festive-mobile-sage-v3.webp?v=1791592746",
+  desktopImage: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-festive-desktop-sage-v3.webp?v=1791592732",
+  alt: 'Festive Sale — up to 20% off sitewide, auto-applied at checkout. Model in a dusty rose embroidered palazzo suit.',
+  width: 2172,
+  height: 724,
   imageFit: 'cover',
   imagePosition: 'left center',
   designed: true,
@@ -58,19 +58,22 @@ const featuredSlides: FeaturedSlide[] = [
     id: 'new-arrivals-edit',
     eyebrow: 'Festive 2026 · New In',
     headline: 'The New Arrivals Edit',
-    subline: 'Lehengas · Kurta Sets · Menswear.',
+    subline: 'Embroidered suits · Palazzo sets · Festive favourites.',
     cta: 'Explore Now',
     link: '/new-arrivals',
-    image: '/images/banners/arrivals-hero-mobile-v2',
-    desktopImage: '/images/banners/arrivals-hero-desktop-v2',
-    alt: 'The New Arrivals Edit — lehengas, kurta sets and menswear. Model in a green kediyu lehenga with mirror-work choli.',
-    width: 1920,
-    height: 720,
+    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-arrivals-mobile-sage-v3.webp?v=1791592753",
+    desktopImage: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-arrivals-desktop-sage-v3.webp?v=1791592739",
+    alt: 'New Arrivals — embroidered suits and palazzo sets. Model in a purple floral embroidered palazzo suit.',
+    width: 2172,
+    height: 724,
     imageFit: 'cover',
     imagePosition: 'left center',
     designed: true,
   },
 ];
+
+const bannerSource = (image: string, extension: 'webp' | 'jpg') =>
+  image.startsWith('https://') ? image : `${image}.${extension}`;
 
 const AUTO_PLAY_MS = 6500;
 const padSlideNumber = (value: number) => String(value).padStart(2, '0');
@@ -145,7 +148,7 @@ const NewArrivalsBanner = () => {
       data-home-hero
       aria-label="LuxeMia featured collections"
       aria-roledescription="carousel"
-      className="relative h-[620px] min-h-[620px] w-full overflow-hidden bg-[#0f0d0b] text-[#faf7f0] outline-none sm:h-[min(78vh,720px)] sm:min-h-[520px]"
+      className="relative mb-14 aspect-[2/3] w-full bg-[#f4f2e9] text-[#faf7f0] outline-none sm:aspect-[3/1]"
       style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
       tabIndex={0}
       onBlur={handleBlur}
@@ -161,7 +164,7 @@ const NewArrivalsBanner = () => {
         data-hero-slide
         aria-label={`${index + 1} of ${featuredSlides.length}`}
         aria-roledescription="slide"
-        className="absolute inset-0 animate-in fade-in duration-700"
+        className="absolute inset-0 overflow-hidden animate-in fade-in duration-700"
         role="group"
       >
         {preservesFullImage && (
@@ -169,20 +172,20 @@ const NewArrivalsBanner = () => {
             {activeSlide.desktopImage && (
               <source
                 media="(min-width: 640px)"
-                srcSet={`${activeSlide.desktopImage}.webp`}
+                srcSet={bannerSource(activeSlide.desktopImage, 'webp')}
                 type="image/webp"
               />
             )}
             {activeSlide.desktopImage && (
               <source
                 media="(min-width: 640px)"
-                srcSet={`${activeSlide.desktopImage}.jpg`}
+                srcSet={bannerSource(activeSlide.desktopImage, 'jpg')}
                 type="image/jpeg"
               />
             )}
-            <source srcSet={`${activeSlide.image}.webp`} type="image/webp" />
+            <source srcSet={bannerSource(activeSlide.image, 'webp')} type="image/webp" />
             <img
-              src={`${activeSlide.image}.jpg`}
+              src={bannerSource(activeSlide.image, 'jpg')}
               alt=""
               width={activeSlide.width}
               height={activeSlide.height}
@@ -203,21 +206,21 @@ const NewArrivalsBanner = () => {
           {activeSlide.desktopImage && (
             <source
               media="(min-width: 640px)"
-              srcSet={`${activeSlide.desktopImage}.webp`}
+              srcSet={bannerSource(activeSlide.desktopImage, 'webp')}
               type="image/webp"
             />
           )}
           {activeSlide.desktopImage && (
             <source
               media="(min-width: 640px)"
-              srcSet={`${activeSlide.desktopImage}.jpg`}
+              srcSet={bannerSource(activeSlide.desktopImage, 'jpg')}
               type="image/jpeg"
             />
           )}
-          <source srcSet={`${activeSlide.image}.webp`} type="image/webp" />
+          <source srcSet={bannerSource(activeSlide.image, 'webp')} type="image/webp" />
           <img
             data-hero-image
-            src={`${activeSlide.image}.jpg`}
+            src={bannerSource(activeSlide.image, 'jpg')}
             alt={activeSlide.alt}
             width={activeSlide.width}
             height={activeSlide.height}
@@ -240,21 +243,21 @@ const NewArrivalsBanner = () => {
           {activeSlide.desktopImage && (
             <source
               media="(min-width: 640px)"
-              srcSet={`${activeSlide.desktopImage}.webp`}
+              srcSet={bannerSource(activeSlide.desktopImage, 'webp')}
               type="image/webp"
             />
           )}
           {activeSlide.desktopImage && (
             <source
               media="(min-width: 640px)"
-              srcSet={`${activeSlide.desktopImage}.jpg`}
+              srcSet={bannerSource(activeSlide.desktopImage, 'jpg')}
               type="image/jpeg"
             />
           )}
-          <source srcSet={`${activeSlide.image}.webp`} type="image/webp" />
+          <source srcSet={bannerSource(activeSlide.image, 'webp')} type="image/webp" />
           <img
             data-hero-image
-            src={`${activeSlide.image}.jpg`}
+            src={bannerSource(activeSlide.image, 'jpg')}
             alt={activeSlide.alt}
             width={activeSlide.width}
             height={activeSlide.height}
@@ -357,7 +360,7 @@ const NewArrivalsBanner = () => {
         </button>
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-20 border-t border-[#f5f0e6]/12 bg-[#14100e]/35 backdrop-blur-md">
+      <div className="absolute inset-x-0 bottom-0 z-20 translate-y-full border-t border-[#f5f0e6]/12 bg-[#14100e]/35 backdrop-blur-md">
         <div className="mx-auto flex max-w-[1440px] items-center justify-between gap-6 px-6 py-5 sm:px-[6vw]">
           <div className="flex items-center gap-3" aria-label="Choose a featured banner">
             {featuredSlides.map((slide, slideIndex) => (
