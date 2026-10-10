@@ -149,7 +149,7 @@ const NewArrivalsBanner = () => {
       aria-label="LuxeMia featured collections"
       aria-roledescription="carousel"
       className="relative mb-14 aspect-[2/3] w-full bg-[#f4f2e9] text-[#faf7f0] outline-none sm:aspect-[3/1]"
-      style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
+      style={{ fontFamily: "'Manrope', system-ui, sans-serif", height: 'auto', minHeight: 0 }}
       tabIndex={0}
       onBlur={handleBlur}
       onFocus={() => setIsFocusWithin(true)}
