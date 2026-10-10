@@ -1,3 +1,4 @@
+import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -93,6 +94,7 @@ const extractProductSpecs = (
   productTitle?: string,
   metadataIncludedComponents?: string[] | null,
   productDescription = '',
+  catalogMaterial = '',
 ) => {
   const specs: Record<string, string> = {};
   const lowerProductType = productType?.toLowerCase() || '';
@@ -172,7 +174,9 @@ const extractProductSpecs = (
   const explicitFabrics = getExplicitTagValues(['fabric:', 'material:']);
   const foundFabric = fabricKeywords.find(f => lowerTags.some(t => t.includes(f)));
   const titleFabric = titleFabricLabels.find(([pattern]) => pattern.test(lowerTitle))?.[1];
-  if (explicitFabrics.length > 0) {
+  if (catalogMaterial) {
+    specs.fabric = catalogMaterial;
+  } else if (explicitFabrics.length > 0) {
     specs.fabric = explicitFabrics.join('; ');
   } else if (foundFabric || titleFabric) {
     specs.fabric = foundFabric
@@ -498,8 +502,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       product.title,
       product.metadata?.includedComponents,
       product.description,
+      getCatalogMaterial(product),
     ),
-    [product.tags, product.productType, product.title, product.metadata?.includedComponents, product.description],
+    [product.tags, product.productType, product.title, product.metadata, product.fabricMetafield, product.materialMetafield, product.description],
   );
 
   // Utsav-style short lead: first two sentences of the listing description.
