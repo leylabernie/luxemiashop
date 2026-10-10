@@ -52,6 +52,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const festiveActive = isFestiveCampaignActive();
   const festiveTier = festiveActive ? bestFestiveTier(subtotal) : null;
   const festiveNext = festiveActive ? nextFestiveTier(subtotal) : null;
+  // Checkout applies the festive code before checking shipping eligibility.
+  const subtotalCents = Math.round(subtotal * 100);
+  const festiveDiscountCents = Math.floor(subtotalCents * (festiveTier?.percent ?? 0) / 100);
+  const shippingSubtotal = (subtotalCents - festiveDiscountCents) / 100;
   // Persisted carts can outlive Shopify inventory changes. Block checkout when
   // the locally stored variant is explicitly unavailable instead of sending a
   // stale line to Shopify and giving the customer a confusing API error.
@@ -230,17 +234,17 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               <div className="border-t border-border/60 bg-card/70 backdrop-blur-sm">
                 {/* Free Shipping Progress */}
                 <div className="px-5 pb-3 pt-4 sm:px-6">
-                  {subtotal >= FREE_SHIPPING_THRESHOLD ? (
+                  {shippingSubtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
-                      Your current subtotal qualifies for free U.S. standard shipping
+                      Your estimated subtotal after discounts qualifies for free U.S. standard shipping
                     </div>
                   ) : (
                     <div className="mb-2">
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
                         <span className="flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5" />
-                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} away from free U.S. standard shipping
+                          {formatPrice(FREE_SHIPPING_THRESHOLD - shippingSubtotal, currencyCode)} below the free U.S. shipping threshold after discounts
                         </span>
                         <span className="font-medium">${FREE_SHIPPING_THRESHOLD}</span>
                       </div>
@@ -248,7 +252,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                         <motion.div
                           className="h-full bg-foreground rounded-full"
                           initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100)}%` }}
+                          animate={{ width: `${Math.min(100, (shippingSubtotal / FREE_SHIPPING_THRESHOLD) * 100)}%` }}
                           transition={{ duration: 0.5, ease: 'easeOut' }}
                         />
                       </div>
