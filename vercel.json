@@ -804,6 +804,10 @@
       "destination": "/merchant-feed.xml"
     },
     {
+      "source": "/api/meta-catalog",
+      "destination": "/api/meta-catalog"
+    },
+    {
       "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz|csv)).*)",
       "destination": "/index.html"
     }
