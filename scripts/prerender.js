@@ -157,6 +157,7 @@ async function loadTsModule(relativeSrcPath) {
     fs.unlinkSync(tmpFile);
   }
 }
+const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
@@ -319,9 +320,7 @@ function getListedProductAttributes(product) {
     ?.find(option => names.includes((option.name || '').toLowerCase()))
     ?.values?.[0];
   const rawColor = optionValue('color');
-  const rawMaterial = product?.fabricMetafield?.value
-    || product?.materialMetafield?.value
-    || optionValue('fabric', 'material');
+  const rawMaterial = getCatalogMaterial(product);
   const prefixedTagValue = (...prefixes) => {
     const matchedTag = (product?.tags || []).find((tag) => {
       const normalizedTag = String(tag).toLowerCase();

@@ -5,6 +5,7 @@
  * Used by middleware.ts for product page SSR and 404 responses.
  */
 
+import { getCatalogMaterial } from '../lib/catalogMaterial.js';
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
 import { isProductSizeOptionName } from '../lib/productOptionNames.js';
@@ -114,11 +115,8 @@ function getListedProductAttributes(product: ShopifyProduct) {
     ?.find((option: { name?: string }) => names.includes((option.name || '').toLowerCase()))
     ?.values?.[0];
   const rawColor = product.colorMetafield?.value || optionValue('color', 'colour');
-  const rawMaterial = product.materialMetafield?.value
-    || product.fabricMetafield?.value
-    || optionValue('fabric', 'material')
-    || (product.tags || []).find(tag => /^(fabric|material):/i.test(tag))?.split(':').slice(1).join(':').trim()
-    || getLabeledDescriptionValue(product.description, ['fabric', 'material', 'top fabric', 'bottom fabric']);
+  const rawMaterial = getCatalogMaterial(product)
+    || getLabeledDescriptionValue(product.description, ['fabric', 'material']);
   const blouseFabric = product.blouseFabricMetafield?.value || undefined;
   const occasions = parseMetafieldList(product.occasionMetafield?.value);
   const components = parseMetafieldList(product.includedComponentsMetafield?.value);
