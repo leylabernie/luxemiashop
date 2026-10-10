@@ -1,3 +1,4 @@
+import { getCatalogMaterial } from '../src/lib/catalogMaterial.js';
 import {
   getMerchantGoogleProductCategory,
   isMerchantApparelCategory,
@@ -51,6 +52,8 @@ interface ShopifyVariant {
 }
 
 interface ShopifyProduct {
+  fabricMetafield?: { value: string | null } | null;
+  materialMetafield?: { value: string | null } | null;
   id: string;
   title: string;
   description: string;
@@ -93,6 +96,8 @@ query FetchProducts($first: Int!, $after: String) {
         id
         title
         description
+        fabricMetafield: metafield(namespace: "custom", key: "fabric") { value }
+        materialMetafield: metafield(namespace: "custom", key: "material") { value }
         handle
         vendor
         productType
@@ -395,21 +400,7 @@ function getMaterialFromProduct(
   product: ShopifyProduct,
   selectedOptions: ShopifySelectedOption[] = []
 ): string {
-  const selectedMaterial = selectedOptions.find((option) =>
-    ["fabric", "material"].includes(normalizeOptionName(option.name))
-  )?.value?.trim();
-  if (selectedMaterial) return selectedMaterial;
-
-  const materialOption = product.options.find((option) =>
-    ["fabric", "material"].includes(normalizeOptionName(option.name))
-  );
-  if (materialOption?.values.length === 1 && materialOption.values[0]?.trim()) {
-    return materialOption.values[0].trim();
-  }
-
-  return getStructuredTagValues(product.tags, "material")[0]
-    || getStructuredTagValues(product.tags, "fabric")[0]
-    || "";
+  return getCatalogMaterial(product, selectedOptions);
 }
 
 // ─── Extract color from product options ──────────────────────────────

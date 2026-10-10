@@ -46,6 +46,8 @@ const {
   isExplicitStandaloneOutfitSetTitle,
 } = loadTsModule('src/lib/merchantTaxonomy.ts');
 
+const { getCatalogMaterial } = loadTsModule('src/lib/catalogMaterial.ts');
+
 const SITE_URL = 'https://luxemia.shop';
 // Per-item shipping for every supported destination — mirrors src/config/shippingPolicy.ts.
 // Google Merchant Center disapproves items missing shipping info ("Missing shipping info in
@@ -98,6 +100,8 @@ const ALL_PRODUCTS_QUERY = `
           id
           title
           description
+          fabricMetafield: metafield(namespace: "custom", key: "fabric") { value }
+          materialMetafield: metafield(namespace: "custom", key: "material") { value }
           handle
           vendor
           productType
@@ -913,21 +917,9 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   const variantLabel = [...new Set(meaningfulOptions.map((option) => option.value).filter(Boolean))].join(' / ');
 
   const sizeSelection = getSizeOption(selectedOptions);
-  const materialSelection = selectedOptions.find((option) =>
-    ['fabric', 'material'].includes(option.name?.toLowerCase())
-  );
-  const materialOption = product.options?.find((option) =>
-    ['fabric', 'material'].includes(option.name?.toLowerCase())
-  );
-
   const color = resolveProductColor(product, selectedOptions, variantLabel);
 
-  const structuredMaterial = getStructuredTagValues(product, 'material')[0]
-    || getStructuredTagValues(product, 'fabric')[0]
-    || '';
-  const material = materialSelection?.value
-    || (materialOption?.values?.length === 1 ? materialOption.values[0] : '')
-    || structuredMaterial;
+  const material = getCatalogMaterial(product, selectedOptions);
   const size = sizeSelection?.value || '';
   const link = `${SITE_URL}/product/${handle}${isVariantGroup && variantId ? `?variant=${encodeURIComponent(variantId)}` : ''}`;
   const primaryImage = variant.image?.url || product.images.edges[0]?.node.url;
