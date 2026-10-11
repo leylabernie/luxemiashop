@@ -36,6 +36,7 @@ export interface BlogPost {
  * included pieces, sizing and availability.
  */
 export const PUBLISHED_BLOG_SLUGS = [
+  'winter-indian-wedding-guest-outfits-layering-guide',
   'what-should-a-male-guest-wear-to-a-three-day-indian-wedding',
   'what-should-a-non-indian-guest-wear-to-an-indian-wedding',
   'what-saree-fabrics-work-for-an-outdoor-summer-wedding',
@@ -213,6 +214,54 @@ const editorialNote = editorialNoteFor('August 8, 2026');
 const growthEditorialNote = editorialNoteFor('August 28, 2026');
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: 'winter-wedding-guest-20261011',
+    slug: 'winter-indian-wedding-guest-outfits-layering-guide',
+    title: 'What to Wear to an Indian Wedding in Winter: Guest Outfit and Layering Guide',
+    excerpt: 'Plan a winter Indian wedding guest outfit around the venue, dress code and fit. Compare sarees, lehengas, suits and menswear, then check layers, included pieces and ordering time before buying.',
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-10-11',
+    updatedAt: '2026-10-11',
+    factCheckedAt: '2026-10-11',
+    category: 'Wedding Style',
+    tags: ['winter Indian wedding guest outfit', 'Indian wedding outfits USA', 'winter wedding saree', 'wedding guest lehenga', 'Indian outfit layering'],
+    image: '/images/blog/gdrive/bridesmaid-green-outfit.webp',
+    readTime: 4,
+    sources: [SOURCES.luxemiaSizing, SOURCES.luxemiaShipping],
+    content: `
+      <p><strong>Planning advice:</strong> Choose your outfit for the actual venue and invitation, then plan a removable outer layer for travel between locations. A winter wedding in a heated ballroom calls for different clothing from an outdoor ceremony. These are styling suggestions; check each product listing for its exact materials, lining, included pieces and fit.</p>
+      <h2>What should you check before choosing a winter wedding outfit?</h2>
+      <p>Ask the hosts about the dress code, indoor and outdoor portions, ceremony requirements and any requested colors. Check the weather closer to the event. Allow for walking from the car, waiting outdoors, photographs and travel between venues, even when the celebration itself is indoors. Family and religious expectations vary, so the invitation and hosts are better guides than a universal clothing rule.</p>
+      <h2>Should you wear a saree, lehenga or suit?</h2>
+      <p>Start with the silhouette you enjoy wearing, then check how it works with your coat, shoes and planned activities. Do not choose a garment only because its photograph looks seasonal.</p>
+      <table>
+        <thead><tr><th>Outfit</th><th>Practical check</th><th>Where to browse</th></tr></thead>
+        <tbody>
+          <tr><td>Saree</td><td>Try the blouse, petticoat, drape and outer layer together. Confirm whether the blouse is stitched, a fabric piece or purchased separately.</td><td><a href="/sarees">Sarees</a></td></tr>
+          <tr><td>Lehenga</td><td>Check the waistband, blouse fit and skirt length with your shoes. Make sure your coat does not pull on embellishments.</td><td><a href="/lehengas">Lehengas</a></td></tr>
+          <tr><td>Suit</td><td>Check the sleeves, trouser length, lining and room for movement. Confirm which pieces come with the set.</td><td><a href="/suits">Suits</a></td></tr>
+          <tr><td>Menswear</td><td>Compare the dress code with the specific kurta set, jacket or sherwani. Try the complete outfit with your outerwear.</td><td><a href="/menswear">Menswear</a></td></tr>
+        </tbody>
+      </table>
+      <h2>How can you layer without hiding the whole outfit?</h2>
+      <p>For travel, consider a coat that fits comfortably over the finished outfit. Indoors, a removable shawl can be a styling option when appropriate for the setting. Test it with your neckline and dupatta rather than assuming every combination will sit neatly. Keep a place to store the outer layer once you arrive.</p>
+      <p>A dupatta is not automatically a warm layer. Warmth depends on the actual fabric, construction and coverage. Likewise, a fabric name alone does not establish how warm a particular garment will feel. Read the listing and ask about unclear details before ordering.</p>
+      <h2>Which fit checks matter when you add layers?</h2>
+      <p>Try sitting, walking, raising your arms and wearing the outfit with your planned shoes. Check closures and any areas that rub under a coat. If you plan an underlayer, confirm it works with the neckline and silhouette before buying; do not automatically size up without checking the item's measurements.</p>
+      <p>Use the <a href="/sizing-measurements-guide">LuxeMia measurement guide</a>, then compare your measurements with the exact product and selected variant. For a floor-length outfit, measure the desired hem with the shoes you expect to wear. Styling photographs do not establish that tailoring or extra pieces are included.</p>
+      <h2>When should you order for a fixed wedding date?</h2>
+      <p>Work backward from the event and leave time to inspect the outfit and arrange any separately needed tailoring. Product processing happens before carrier transit. Read the current <a href="/shipping">shipping information</a> and contact LuxeMia before checkout if your event date is fixed. An estimate is not a guarantee of arrival for the celebration.</p>
+      <h2>Your final outfit checklist</h2>
+      <ul>
+        <li>Confirm the dress code and venue conditions with the hosts.</li>
+        <li>Check the listing's stitching status, fabric, lining and included pieces.</li>
+        <li>Compare measurements with the selected size or variant.</li>
+        <li>Try shoes and outer layers with the complete outfit.</li>
+        <li>Confirm processing and shipping before ordering for your event.</li>
+      </ul>
+      <p>Browse <a href="/collections">current LuxeMia collections</a> to build your shortlist. If you are unsure about a specific listing, <a href="/contact">contact LuxeMia</a> with the product link, size question and event date before placing the order.</p>
+    `,
+  },
   {
     id: '67',
     slug: 'indian-to-us-clothing-size-conversion-guide',
