@@ -788,6 +788,19 @@
           "value": "max-age=31536000; includeSubDomains; preload"
         }
       ]
+    },
+    {
+      "source": "/agents.md",
+      "headers": [
+        {
+          "key": "Content-Type",
+          "value": "text/markdown; charset=utf-8"
+        },
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=3600"
+        }
+      ]
     }
   ],
   "rewrites": [
@@ -808,7 +821,7 @@
       "destination": "/api/meta-catalog"
     },
     {
-      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz|csv)).*)",
+      "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:md|txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz|csv)).*)",
       "destination": "/index.html"
     }
   ]
