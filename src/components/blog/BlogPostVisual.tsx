@@ -18,7 +18,9 @@ const BlogPostVisual = ({ post, variant = 'card' }: BlogPostVisualProps) => {
         height={isHero ? 675 : 360}
         loading={isHero ? 'eager' : 'lazy'}
         decoding="async"
-        className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+        className={post.imageFit === 'contain'
+          ? 'h-full w-full object-contain bg-[#f7eee9]'
+          : 'h-full w-full object-cover transition-transform duration-500 group-hover:scale-105'}
       />
     );
   }
