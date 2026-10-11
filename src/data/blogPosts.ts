@@ -22,6 +22,7 @@ export interface BlogPost {
   tags: string[];
   image: string;
   imagePresentation?: 'photo' | 'editorial';
+  imageFit?: 'cover' | 'contain';
   readTime: number;
   sources: BlogSource[];
 }
@@ -216,6 +217,7 @@ const growthEditorialNote = editorialNoteFor('August 28, 2026');
 export const blogPosts: BlogPost[] = [
   {
     id: 'winter-wedding-guest-20261011',
+    imageFit: 'contain',
     slug: 'winter-indian-wedding-guest-outfits-layering-guide',
     title: 'What to Wear to an Indian Wedding in Winter: Guest Outfit and Layering Guide',
     excerpt: 'Plan a winter Indian wedding guest outfit around the venue, dress code and fit. Compare sarees, lehengas, suits and menswear, then check layers, included pieces and ordering time before buying.',
