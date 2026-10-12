@@ -17,7 +17,7 @@ async function loadSource(entry) {
   new Function('require', 'module', 'exports', result.outputFiles[0].text)(require, module, module.exports);
   return module.exports;
 }
-const { matchSubcategory, applySubcategory } = await loadSource('src/lib/productFilters.ts');
+const { matchSubcategory, applySubcategory, applyProductFiltersV2, listingPriceBounds } = await loadSource('src/lib/productFilters.ts');
 const { getCommercialLandingConfig, getCommercialLandingSubcategory } = await loadSource('src/config/commercialLandingPages.tsx');
 const { getCategoryConfig } = await loadSource('src/config/categoryConfig.tsx');
 const product = (title, productType, tags = [], description = '') => ({
@@ -191,4 +191,22 @@ test('visible prerendered products remain while a page chunk is loading', () => 
   loading = false;
   callback();
   assert.equal(removed, true);
+});
+
+
+test('size filters do not confuse S/XS or L/XL and do not infer sizes from prose', () => {
+  const sections = [{ name: 'Size', tagPrefix: 'size' }];
+  const make = (size) => ({ node: { ...product("Women's dress", 'Dress', [], 'Small and large styles'),
+    variants: { edges: [{ node: { selectedOptions: [{ name: 'Size', value: size }] } }] } } });
+  const items = ['XS', 'S', 'S (36)', 'XL', 'L', 'XXL'].map(make);
+  assert.deepEqual(applyProductFiltersV2(items, { Size: ['s'] }, [0, Infinity], sections), [items[1], items[2]]);
+  assert.deepEqual(applyProductFiltersV2(items, { Size: ['l'] }, [0, Infinity], sections), [items[4]]);
+});
+
+test('price ceiling marked plus remains open-ended when minimum is raised', () => {
+  assert.deepEqual(listingPriceBounds([100, 2000], [0, 2000]), [100, Infinity]);
+  assert.deepEqual(listingPriceBounds([100, 500], [0, 2000]), [100, 500]);
+  const items = ['50', '500', '2500'].map(amount => ({ node: { ...product('Lehenga', 'Lehenga'),
+    priceRange: { minVariantPrice: { amount, currencyCode: 'USD' } } } }));
+  assert.deepEqual(applyProductFiltersV2(items, {}, listingPriceBounds([100, 2000], [0, 2000]), []), items.slice(1));
 });

@@ -240,22 +240,26 @@ export function applyProductFiltersV2(
     if (section.name.toLowerCase() === 'size') {
       filtered = filtered.filter(p => {
         return values.some(value => {
-          const valueLower = value.toLowerCase();
-          // Check tag-prefix match
-          if (matchFilterValue(p.node, section.tagPrefix, value)) return true;
+          // Sizes must match complete tokens: S is not XS, L is not XL,
+          // and prose such as "women's" is not evidence of an S option.
+          const matchesSize = (candidate: string) =>
+            new RegExp(`(^|[^a-z0-9])${escapeRegex(value.trim())}($|[^a-z0-9])`, 'i').test(candidate);
+          const sizeTags = getTags(p.node);
+          if (sizeTags.some(tag => tag === value.toLowerCase()
+            || tag === `${section.tagPrefix || 'size'}:${value.toLowerCase()}`)) return true;
           // Check variant selectedOptions
           const variants = p.node.variants?.edges || [];
           const hasVariantSize = variants.some(v =>
             v.node.selectedOptions?.some(opt =>
               isProductSizeOptionName(opt.name) &&
-              opt.value.toLowerCase().includes(valueLower)
+              matchesSize(opt.value)
             )
           );
           if (hasVariantSize) return true;
           // Check product options
           const hasOptionSize = p.node.options?.some(opt =>
             isProductSizeOptionName(opt.name) &&
-            opt.values.some(val => val.toLowerCase().includes(valueLower))
+            opt.values.some(val => matchesSize(val))
           );
           return !!hasOptionSize;
         });
@@ -488,3 +492,8 @@ export const filterAndSortProducts = (
   const filtered = applyProductFiltersV2(products, activeFilters, priceRange, []);
   return sortProducts(filtered, sortBy);
 };
+
+/** The slider ceiling is displayed as "N+", so it has no upper price limit. */
+export function listingPriceBounds(range: [number, number], defaults: [number, number]): [number, number] {
+  return [range[0] === defaults[0] ? 0 : range[0], range[1] >= defaults[1] ? Infinity : range[1]];
+}
