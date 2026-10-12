@@ -107,7 +107,7 @@ const Index = () => {
             </div>
             <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { title: 'Need it sooner', copy: 'Products whose semi-stitched option has a verified 3–5 business-day processing window; stitched and made-to-measure options take longer.', href: '/ready-to-ship', cta: 'Shop ready to ship' },
+                { title: 'Need it sooner', copy: 'Ready-stock orders dispatch within 3–4 days. Optional stitching and made-to-measure selections take additional processing time.', href: '/ready-to-ship', cta: 'Shop ready to ship' },
                 { title: 'Shop the event', copy: 'Browse wedding, festive, reception, Navratri and guest-ready edits.', href: '/collections', cta: 'Explore collections' },
                 { title: 'Fit and customization', copy: 'See only the size, stitching or made-to-measure options stated on each listing.', href: '/collections/customizable-indian-outfits', cta: 'View custom options' },
                 { title: 'Shopping in the USA?', copy: 'Shop sarees, lehengas and shararas with clear USA shipping costs, timing, duties and return terms.', href: '/indian-ethnic-wear-usa', cta: 'Explore USA shopping' },

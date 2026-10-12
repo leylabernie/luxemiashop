@@ -62,7 +62,7 @@ export const SHIPPING_POLICY_SUMMARY =
   'Tracked shipping is available to seven countries. U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.';
 
 export const SHIPPING_TIMING_NOTICE =
-  'Ready to ship. Orders dispatch within 3–4 days. Standard shipping takes approximately 9–14 days after dispatch (12–18 days total). Express shipping takes approximately 3–6 days after dispatch (6–10 days total). These are estimates; delivery varies by destination and carrier or customs delays.';
+  'Ready to ship. Orders dispatch within 3–4 days. Standard shipping takes approximately 9–14 days after dispatch (12–18 days total). Express shipping, when separately quoted and confirmed before ordering, takes approximately 3–6 days after dispatch (6–10 days total). These are estimates; delivery varies by destination and carrier or customs delays.';
 
 export const SHIPPING_CONSOLIDATION_NOTICE =
   'Multi-item orders are normally consolidated into one shipment after every item is ready. Contact LuxeMia before ordering for a separately quoted split shipment or express option.';

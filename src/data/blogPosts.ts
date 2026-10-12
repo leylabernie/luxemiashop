@@ -279,10 +279,10 @@ export const blogPosts: BlogPost[] = [
       <table>
         <thead><tr><th>Garment</th><th>Measurements commonly needed</th><th>What else to verify</th></tr></thead>
         <tbody>
-          <tr><td>Saree blouse or choli</td><td>Bust, under-bust, shoulder, armhole, upper arm, sleeve and blouse length</td><td>Finished-garment measurements, margin and closure</td></tr>
-          <tr><td>Lehenga</td><td>Waist, hip and desired skirt length</td><td>Waistband type, drawstring or zip, and alteration margin</td></tr>
-          <tr><td>Kurta, salwar suit or anarkali</td><td>Bust, waist, hip, shoulder, sleeve and garment length</td><td>Ease, lining and the measurements of each included piece</td></tr>
-          <tr><td>Men's kurta, jacket or sherwani</td><td>Chest, waist, shoulder, sleeve and garment length</td><td>Whether the chart lists body or finished-garment measurements</td></tr>
+          <tr><td><a href="/sarees">Sarees with blouse options</a> or choli</td><td>Bust, under-bust, shoulder, armhole, upper arm, sleeve and blouse length</td><td>Finished-garment measurements, margin and closure</td></tr>
+          <tr><td><a href="/lehengas">Lehenga choli</a></td><td>Waist, hip and desired skirt length</td><td>Waistband type, drawstring or zip, and alteration margin</td></tr>
+          <tr><td><a href="/suits">Kurta, salwar suit or anarkali</a></td><td>Bust, waist, hip, shoulder, sleeve and garment length</td><td>Ease, lining and the measurements of each included piece</td></tr>
+          <tr><td><a href="/menswear">Men's kurta, jacket or sherwani</a></td><td>Chest, waist, shoulder, sleeve and garment length</td><td>Whether the chart lists body or finished-garment measurements</td></tr>
         </tbody>
       </table>
 
