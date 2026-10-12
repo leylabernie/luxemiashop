@@ -1,4 +1,5 @@
 import { Truck, Clock, PackageCheck } from 'lucide-react';
+import { SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
 
 interface DeliveryEstimateProps {
   hasStitching: boolean;
@@ -25,7 +26,7 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
         )}
         <div>
           <p className="font-medium text-foreground">
-            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days` : 'Dispatch timing: confirm before ordering'}
+            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days` : 'Ready to ship'}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             {confirmAvailability
@@ -34,7 +35,9 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
               ? 'Supplied unstitched; tailoring is required before wearing. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
               : isMadeToOrder
               ? 'Use approximately 4–5 weeks as the total planning window. Production time and carrier transit are confirmed separately after the requested color, measurements, available design options and delivery address are known.'
-              : 'Dispatch is when your order leaves the supplier. Carrier transit starts afterward. Confirm the selected size and timing before ordering for an event date.'}
+              : shipsWithinDays
+              ? 'Standard transit takes approximately 9–14 days after dispatch; express transit takes approximately 3–6 days. Delivery varies by destination and carrier or customs delays.'
+              : SHIPPING_TIMING_NOTICE}
           </p>
         </div>
       </div>
