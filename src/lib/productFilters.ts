@@ -487,9 +487,11 @@ export const filterAndSortProducts = (
   priceRange: [number, number],
   sortBy: string
 ): ShopifyProduct[] => {
-  // Use empty filterSections — matchFilterValue will fall back to bare-tag
-  // + title substring match (same behavior as the legacy code).
-  const filtered = applyProductFiltersV2(products, activeFilters, priceRange, []);
+  const sections = Object.keys(activeFilters).map(name => ({
+    name, tagPrefix: name.toLowerCase(), options: [],
+  }));
+  const filtered = applyProductFiltersV2(products, activeFilters,
+    listingPriceBounds(priceRange, [0, 1000]), sections);
   return sortProducts(filtered, sortBy);
 };
 

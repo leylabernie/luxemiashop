@@ -36,7 +36,7 @@ const sortOptions = [
 const Collections = () => {
   const { products, isLoading, isLoadingMore, hasMore, loadMore } = useShopifyProducts();
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [priceRange, setPriceRange] = useState<[number, number]>([0, 100000]);
+  const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
   const [sortBy, setSortBy] = useState('newest');
   const [showMobileFilters, setShowMobileFilters] = useState(false);
 
@@ -235,7 +235,7 @@ const Collections = () => {
                     variant="outline"
                     onClick={() => {
                       setActiveFilters({});
-                      setPriceRange([0, 100000]);
+                      setPriceRange([0, 1000]);
                     }}
                   >
                     Clear All Filters
