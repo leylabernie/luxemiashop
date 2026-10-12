@@ -57,7 +57,7 @@ import {
 } from '@/components/ui/sheet';
 import { useShopifyPaginatedProducts } from '@/hooks/useShopifyProducts';
 import { useListingFilters } from '@/hooks/useListingFilters';
-import { filterSortAndSubcategorize } from '@/lib/productFilters';
+import { filterSortAndSubcategorize, listingPriceBounds } from '@/lib/productFilters';
 import ProductCard from '@/components/ui/ProductCard';
 import ImageCategoryHero from '@/components/collections/ImageCategoryHero';
 import { FilterSidebar, ActiveFilterTags } from './FilterSidebar';
@@ -108,8 +108,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
     return filterSortAndSubcategorize(
       products,
       state.filters,
-      activeFilterCount > 0 && (state.priceRange[0] !== config.priceRange[0] || state.priceRange[1] !== config.priceRange[1])
-        ? state.priceRange : [0, Number.POSITIVE_INFINITY],
+      listingPriceBounds(state.priceRange, config.priceRange),
       state.sortBy,
       config.filters,
       activeSubcategory
@@ -254,7 +253,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
             </div>
 
             {/* Products Area */}
-            <div className="flex-1">
+            <div className="min-w-0 flex-1">
               {/* Toolbar */}
               <div className="mb-6 flex flex-wrap items-center justify-between gap-3 border-b border-[#e3cfca] pb-5">
                 <p className="text-sm leading-5 text-[#7f706d]">
@@ -336,7 +335,7 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
               />
 
               {/* Active subcategory indicator + clear chip */}
-              {activeSubcategory && (
+              {activeSubcategory && !defaultSubcategory && (
                 <div className="mb-4 flex items-center gap-2">
                   <button
                     onClick={() => setSubcategory(null)}

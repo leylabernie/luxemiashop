@@ -106,3 +106,13 @@ Connected tools and the cloud browser still expose no mobile viewport/device emu
 - The public `/order-confirmation` route has no authenticated order-data handoff. Replaced its unconditional purchase-confirmation claim with neutral guidance to the actual Shopify confirmation email. Removed the URL-parameter-based Google survey loader; Shopify's installed Thank you block remains the intended integration and was not removed.
 - Google & YouTube's instructions repeat the already-completed block placement/save/confirmation steps. The setup-completion loop remains unresolved; neither its preview nor the saved 18-day setting verifies a live survey.
 - Validation: existing 45 regression tests pass. Production verification is recorded in the follow-up pull request after deployment. Full mobile emulation remains unavailable in the supported browser surface.
+
+### Category filtering follow-up
+
+- Fixed size-filter substring matches (S matching XS, L matching XL) and removed generic product prose as size evidence. Explicit size tags and complete size-option tokens remain supported, including labels such as S (36).
+- Price slider ceilings displayed with + now remain open-ended when the minimum changes.
+- Removed fabricated sample product names, prices and badges from the all-collections empty state; shoppers now see a truthful no-results message.
+- Removed the nonfunctional remove-subcategory chip on dedicated landing pages (the route defines that subset); All-category navigation remains available. Added min-width protection to the category grid flex child.
+- Existing product-loading path already supports prerendered products, shared cache and progressive catalog pages; no speculative loader rewrite or category-title rewrite performed.
+- 47 regression tests pass. Production verification will be recorded in the associated PR. Full mobile interaction remains unverified because the current browser surface lacks device/viewport emulation.
+- Google support report was successfully sent through its Shopify App Support form on October 12, 2026, after user authorization. The page explicitly confirmed Your email has been sent; no case number was shown. Requested investigation of onboarding persistence and clarification of delivery-day units.
