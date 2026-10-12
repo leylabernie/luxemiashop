@@ -843,7 +843,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   };
 
   return (
-    <div id="product-purchase" className="space-y-6">
+    <div id="product-purchase" className="scroll-mt-28 lg:scroll-mt-36 space-y-6">
       {/* Style No / SKU */}
       {sku && (
         <p className="text-xs tracking-wider text-muted-foreground font-mono">
