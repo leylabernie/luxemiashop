@@ -1,5 +1,6 @@
 import { getCatalogMaterial } from '../src/lib/catalogMaterial.js';
 import { getTitleDesignDetails } from '../src/lib/merchantDesignDetails.js';
+import { selectMerchantImage } from '../src/lib/merchantImages.js';
 import {
   getMerchantGoogleProductCategory,
   isMerchantApparelCategory,
@@ -577,6 +578,8 @@ function generateItem(
   } else if (allImages.length > 0) {
     mainImageUrl = allImages[0].url;
   }
+  mainImageUrl = selectMerchantImage(product.handle, mainImageUrl, allImages.map(img => img.url));
+  const selectedPrimaryImage = mainImageUrl;
   mainImageUrl = forceJpeg(mainImageUrl);
   if (!mainImageUrl) {
     throw new Error(`No product image for variant ${variant.id}`);
@@ -584,12 +587,7 @@ function generateItem(
 
   // Additional images (exclude the main one)
   const additionalImages = allImages
-    .filter((img) => {
-      if (variant.image && variant.image.url) {
-        return img.url !== variant.image.url;
-      }
-      return img !== allImages[0];
-    })
+    .filter((img) => img.url !== selectedPrimaryImage)
     .slice(0, 10)
     .map((img) => forceJpeg(img.url));
 
