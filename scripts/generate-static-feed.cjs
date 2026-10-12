@@ -48,6 +48,7 @@ const {
 
 const { getCatalogMaterial } = loadTsModule('src/lib/catalogMaterial.ts');
 const { getTitleDesignDetails } = loadTsModule('src/lib/merchantDesignDetails.ts');
+const { selectMerchantImage } = loadTsModule('src/lib/merchantImages.ts');
 
 const SITE_URL = 'https://luxemia.shop';
 // Per-item shipping for every supported destination — mirrors src/config/shippingPolicy.ts.
@@ -923,7 +924,9 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   const material = getCatalogMaterial(product, selectedOptions);
   const size = sizeSelection?.value || '';
   const link = `${SITE_URL}/product/${handle}${isVariantGroup && variantId ? `?variant=${encodeURIComponent(variantId)}` : ''}`;
-  const primaryImage = variant.image?.url || product.images.edges[0]?.node.url;
+  const primaryImage = selectMerchantImage(handle,
+    variant.image?.url || product.images.edges[0]?.node.url || '',
+    product.images.edges.map(edge => edge.node.url));
   const imageUrl = primaryImage ? forceJpeg(primaryImage) : `${SITE_URL}/og-image.jpg`;
   const additionalImages = product.images.edges
     .map((edge) => edge.node.url)
