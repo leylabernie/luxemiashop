@@ -129,7 +129,7 @@ const Shipping = () => {
               {[
                 ['1', 'Processing', 'All items are ready to ship. Orders dispatch within 3–4 days.'],
                 ['2', 'Consolidation', 'When an order contains multiple items, the item with the longest processing time normally determines the dispatch date.'],
-                ['3', 'Tracked Transit', 'Delivery time after dispatch depends on your destination and selected standard or express shipping service. Tracking is sent when the parcel enters the shipping workflow.'],
+                ['3', 'Tracked Transit', 'Standard transit takes approximately 9–14 days after dispatch; express transit takes approximately 3–6 days. Delivery varies by destination and carrier or customs delays. Tracking is sent when the parcel enters the shipping workflow.'],
               ].map(([step, title, copy]) => (
                 <div key={step} className="rounded-lg border border-border bg-card p-6">
                   <p className="font-serif text-3xl text-primary">{step}</p>
