@@ -30,6 +30,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const {
     items,
     isLoading,
+    checkoutError,
     updateQuantity,
     removeItem,
     createCheckout,
@@ -320,6 +321,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       One or more items is no longer available. Remove it from your bag to continue.
                     </p>
                   )}
+                  {checkoutError && (
+                    <p id="cart-checkout-error" className="text-xs text-destructive text-center" role="alert">
+                      {checkoutError}
+                    </p>
+                  )}
                   <Button
                     variant="luxury"
                     size="lg"
@@ -327,6 +333,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     onClick={handleCheckoutClick}
                     disabled={isLoading || unavailableItems.length > 0}
                     data-testid="button-checkout"
+                    aria-describedby={checkoutError ? 'cart-checkout-error' : undefined}
                   >
                     {isLoading ? (
                       <>
