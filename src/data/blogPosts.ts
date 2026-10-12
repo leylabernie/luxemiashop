@@ -267,8 +267,8 @@ export const blogPosts: BlogPost[] = [
   {
     id: '67',
     slug: 'indian-to-us-clothing-size-conversion-guide',
-    title: 'Indian to U.S. Clothing Sizes: Why Measurements Matter More Than Conversion Charts',
-    excerpt: 'There is no universal Indian-to-U.S. clothing-size conversion. Compare your body measurements with the exact garment or variant chart instead of relying on XS, M, 38, or a U.S. dress-size label alone.',
+    title: 'Indian to US Clothing Size Guide: Measurements & Fit',
+    excerpt: 'Compare Indian and US clothing sizes using bust, waist, hip and length measurements. Learn what to check for saree blouses, lehengas, suits and kurtas.',
     content: `
       ${editorialNote}
       <h2>The factual answer: there is no universal conversion</h2>
