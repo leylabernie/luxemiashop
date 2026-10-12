@@ -36,7 +36,7 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
               : isMadeToOrder
               ? 'Use approximately 4–5 weeks as the total planning window. Production time and carrier transit are confirmed separately after the requested color, measurements, available design options and delivery address are known.'
               : shipsWithinDays
-              ? 'Standard transit takes approximately 9–14 days after dispatch; express transit takes approximately 3–6 days. Delivery varies by destination and carrier or customs delays.'
+              ? 'Standard transit takes approximately 9–14 business days after dispatch; express transit takes approximately 3–6 business days. Delivery varies by destination and carrier or customs delays.'
               : SHIPPING_TIMING_NOTICE}
           </p>
         </div>

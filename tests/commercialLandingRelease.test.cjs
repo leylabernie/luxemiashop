@@ -20,8 +20,8 @@ test('commercial titles retain target phrases without truncation', () => {
 
 test('USA buyer terms share one source across browser and prerender', () => {
   assert.equal(usa.buyerDetails.length, 4);
-  assert.match(usa.buyerDetails[1].copy, /dispatch within 3–4 days/);
-  assert.match(usa.buyerDetails[1].copy, /9–14 days after dispatch \(12–18 days total\)/);
+  assert.match(usa.buyerDetails[1].copy, /dispatch within 3–4 business days/);
+  assert.match(usa.buyerDetails[1].copy, /9–14 business days after dispatch \(12–18 business days total\)/);
   assert.match(usa.buyerDetails[3].copy, /48 hours/);
   for (const source of ['src/pages/nri/USA.tsx', 'src/pages/nri/NRILandingPage.tsx', 'src/lib/seoMetadata.ts', 'scripts/prerender.js']) {
     assert.ok(read(source).includes('usaLandingPage.json'), source);
