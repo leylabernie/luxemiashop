@@ -1,5 +1,6 @@
 import { toast } from 'sonner';
 import { loadCatalogPages } from './catalogPagination';
+import { assertCheckoutCartMatches, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
 
@@ -582,6 +583,7 @@ const CART_CREATE_MUTATION = `
           }
         }
         lines(first: 100) {
+          pageInfo { hasNextPage }
           edges {
             node {
               id
@@ -621,7 +623,7 @@ const _shopifyInflight = new Map<string, Promise<any>>();
 const _SHOPIFY_CACHE_TTL = 5 * 60 * 1000;
 
 export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal) {
-  const isRead = !/mutation\s*[({]/i.test(query) && !signal;
+  const isRead = isCacheableStorefrontOperation(query) && !signal;
   const cacheKey = isRead ? JSON.stringify([query, variables]) : null;
   if (cacheKey) {
     const hit = _shopifyCache.get(cacheKey);
@@ -814,6 +816,14 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     console.error('Cart response:', cart);
     throw new Error('No checkout URL returned from Shopify');
   }
+
+  // Shopify may silently reduce or omit unavailable cart lines without a
+  // userError. Never hand off a different basket or shipping total unnoticed.
+  assertCheckoutCartMatches(
+    items,
+    (cart.lines?.edges ?? []).map((edge: { node: any }) => edge.node),
+    cart.lines?.pageInfo?.hasNextPage === true,
+  );
 
   // Shopify can return the Vercel storefront hostname even though hosted
   // checkout must remain on Shopify. The permanent myshopify.com host is the

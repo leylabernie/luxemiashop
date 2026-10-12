@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
+import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
 import { bestFestiveTier, isFestiveCampaignActive } from '@/config/festiveCampaign';
 import {
   AnalyticsItem,
@@ -243,7 +244,9 @@ export const useCartStore = create<CartStore>()(
           return null;
         } catch (error) {
           console.error('Failed to create checkout:', error);
-          toast.error('Checkout is temporarily unavailable. Your bag is saved — please try again.');
+          toast.error(error instanceof CheckoutCartChangedError
+            ? error.message
+            : 'Checkout is temporarily unavailable. Your bag is saved — please try again.');
           return null;
         } finally {
           setLoading(false);
