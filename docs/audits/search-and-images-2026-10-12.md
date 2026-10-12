@@ -78,3 +78,24 @@ Completed the live product-selection/cart/checkout actions on the available desk
 Live raw HTML for /sarees, /lehengas and /collections/designer-sarees returned 200, index/follow directives, correct self-canonicals and product links (45, 115 and 6 unique links respectively in the fetched HTML, not asserted inventory totals). No immediate indexability fault was found in those checks. Added four contextual category links to the already-visible sizing article's garment measurement table. This helps readers reach relevant shopping categories without rewriting category titles or promising ranking gains.
 
 Validation before deployment: all 39 tests passed, blog and policy-copy validators passed, and Vite development build passed. Full local production build passed its pre-route gates and Vite compilation, then stopped because SHOPIFY_STOREFRONT_TOKEN is absent locally; verify the complete production build using Vercel's configured environment. Generated inventory/gone-route changes from that attempt were discarded.
+
+
+## Business-day clarification and checkout continuation — October 12, 2026
+
+The merchant explicitly confirmed business days. PR #217 (main 1096a809f5cdff24cd39aa142ce7248cbb17b853) is deployed READY as dpl_CM6vDiT1f2svmJ9iBESBE7vEomeM. Live shipping, homepage, USA landing and product purchase notices were verified. Shopify checkout shipping policy was saved and read back with business-day wording.
+
+All seven Merchant Center services now persist 3–4 handling plus 9–14 transit business days, Monday–Friday, totaling 12–18 business days. Existing international prices were retained. The U.S. advanced cost table initially failed with “Invalid location group reference: 12” (error 68). Replacing that broken regional table with the equivalent USD 14.99 flat rate and existing free-shipping-over-149.99 condition succeeded. All seven rows and expanded U.S. details were verified after saving. Shopify shipping sync remains On; product sync remains Off.
+
+### Checkout integrity defect found during shipping verification
+
+A bag containing two units of magenta kurti size 38 displayed USD 175.98 and estimated free shipping. Shopify checkout contained only one unit, USD 87.99 before LUXE10 / USD 79.20 after. Live Shopify inventory confirmed one unit per size. The storefront did not compare returned Shopify lines against the requested bag and therefore allowed this silent change.
+
+The scoped fix compares returned variant IDs, quantities and custom attributes before handing off to checkout, including merged identical lines. If Shopify reduces or drops an item, changes its options, or returns incomplete line pagination, the bag is preserved and a quantity/options warning is shown. Named mutations also no longer enter the five-minute read cache. No inventory was changed.
+
+A valid basket with one size 38 and one size 40 reached checkout with both lines intact: subtotal USD 175.98, LUXE10 discount USD 17.59, discounted subtotal USD 158.39, Free U.S. Standard Shipping USD 0. Rate lookup used only Philadelphia, PA, ZIP 19103, US. No contact, personal street address, payment or order was submitted.
+
+### Remaining limitations
+
+Google Reviews onboarding still returns to 1/2 complete after Confirm detects the block and Complete setup is clicked. Browser console exposed no specific Google app error explaining the persistence failure. Existing agreement remains marked complete; no new terms were accepted. Live survey activation remains unverified and requires Google app support investigation or observation of a genuine customer's post-purchase flow.
+
+Connected tools and the cloud browser still expose no mobile viewport/device emulation control. Static source inspection does not substitute for an end-to-end mobile test. No speculative responsive-layout edits were made.
