@@ -41,6 +41,7 @@ interface CartStore {
   checkoutUrl: string | null;
   isLoading: boolean;
   isCartOpen: boolean;
+  checkoutError: string | null;
 
   addItem: (item: CartItem) => void;
   updateQuantity: (variantId: string, quantity: number, customAttributes?: CartAttribute[]) => void;
@@ -100,6 +101,7 @@ export const useCartStore = create<CartStore>()(
       checkoutUrl: null,
       isLoading: false,
       isCartOpen: false,
+      checkoutError: null,
 
       addItem: (item) => {
         const { items } = get();
@@ -114,6 +116,7 @@ export const useCartStore = create<CartStore>()(
 
         if (existingItem) {
           set({
+            checkoutError: null,
             items: items.map((current) => (
               current.variantId === item.variantId
               && sameAttributes(current.customAttributes, item.customAttributes)
@@ -122,7 +125,7 @@ export const useCartStore = create<CartStore>()(
             )),
           });
         } else {
-          set({ items: [...items, item] });
+          set({ items: [...items, item], checkoutError: null });
         }
       },
 
@@ -149,6 +152,7 @@ export const useCartStore = create<CartStore>()(
         const shouldSyncServiceQuantities = !isServiceLine(current);
 
         set({
+          checkoutError: null,
           items: get().items.map((item) => {
             const isCurrentLine = item.variantId === variantId
               && sameAttributes(item.customAttributes, customAttributes);
@@ -180,12 +184,13 @@ export const useCartStore = create<CartStore>()(
 
         linesToRemove.forEach((item) => trackRemoveFromCart(toAnalyticsItem(item)));
         set({
+          checkoutError: null,
           items: get().items.filter((item) => !linesToRemove.includes(item)),
         });
       },
 
       clearCart: () => {
-        set({ items: [], cartId: null, checkoutUrl: null });
+        set({ items: [], cartId: null, checkoutUrl: null, checkoutError: null });
       },
 
       setCartId: (cartId) => set({ cartId }),
@@ -216,7 +221,7 @@ export const useCartStore = create<CartStore>()(
           items[0]?.price.currencyCode,
         );
 
-        setLoading(true);
+        set({ isLoading: true, checkoutError: null });
         try {
           const festiveTier = isFestiveCampaignActive() ? bestFestiveTier(totalValue) : null;
           const checkoutUrl = await createStorefrontCheckout(
@@ -240,13 +245,17 @@ export const useCartStore = create<CartStore>()(
           }
 
           console.error('Shopify returned no checkout URL; preserving the cart');
-          toast.error('Checkout could not be created. Your bag is saved — please try again.');
+          const message = 'Checkout could not be created. Your bag is saved — please try again.';
+          set({ checkoutError: message });
+          toast.error(message);
           return null;
         } catch (error) {
           console.error('Failed to create checkout:', error);
-          toast.error(error instanceof CheckoutCartChangedError
+          const message = error instanceof CheckoutCartChangedError
             ? error.message
-            : 'Checkout is temporarily unavailable. Your bag is saved — please try again.');
+            : 'Checkout is temporarily unavailable. Your bag is saved — please try again.';
+          set({ checkoutError: message });
+          toast.error(message);
           return null;
         } finally {
           setLoading(false);

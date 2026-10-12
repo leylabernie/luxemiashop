@@ -99,3 +99,10 @@ A valid basket with one size 38 and one size 40 reached checkout with both lines
 Google Reviews onboarding still returns to 1/2 complete after Confirm detects the block and Complete setup is clicked. Browser console exposed no specific Google app error explaining the persistence failure. Existing agreement remains marked complete; no new terms were accepted. Live survey activation remains unverified and requires Google app support investigation or observation of a genuine customer's post-purchase flow.
 
 Connected tools and the cloud browser still expose no mobile viewport/device emulation control. Static source inspection does not substitute for an end-to-end mobile test. No speculative responsive-layout edits were made.
+
+### Follow-up: persistent checkout feedback and truthful return page
+
+- Checkout failures now remain visible in the bag with an accessible alert and checkout-button description, in addition to the toast. Adding, removing or changing a line clears the old warning; the warning is not persisted in storage.
+- The public `/order-confirmation` route has no authenticated order-data handoff. Replaced its unconditional purchase-confirmation claim with neutral guidance to the actual Shopify confirmation email. Removed the URL-parameter-based Google survey loader; Shopify's installed Thank you block remains the intended integration and was not removed.
+- Google & YouTube's instructions repeat the already-completed block placement/save/confirmation steps. The setup-completion loop remains unresolved; neither its preview nor the saved 18-day setting verifies a live survey.
+- Validation: existing 45 regression tests pass. Production verification is recorded in the follow-up pull request after deployment. Full mobile emulation remains unavailable in the supported browser surface.
