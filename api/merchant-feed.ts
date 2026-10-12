@@ -1,4 +1,5 @@
 import { getCatalogMaterial } from '../src/lib/catalogMaterial.js';
+import { getTitleDesignDetails } from '../src/lib/merchantDesignDetails.js';
 import {
   getMerchantGoogleProductCategory,
   isMerchantApparelCategory,
@@ -487,7 +488,8 @@ function enrichDescription(
   selectedOptions: ShopifySelectedOption[]
 ): string {
   const fabric = getMaterialFromProduct(product, selectedOptions);
-  const work = getStructuredTagValues(product.tags, "work")[0] || getWorkFromTags(product.tags);
+  const work = getStructuredTagValues(product.tags, "work")[0] || getWorkFromTags(product.tags) || getTitleDesignDetails(product.title);
+  const color = getColorFromProduct(product, selectedOptions);
   const includedPieces = getStructuredTagValues(product.tags, "included");
   const size = getSizeFromVariant(selectedOptions);
   const optionDetails = [...new Map(selectedOptions
@@ -499,6 +501,7 @@ function enrichDescription(
 
   const details = [`${title} from LuxeMia.`];
   if (product.productType) details.push(`Style: ${product.productType}.`);
+  if (color) details.push(`Color: ${color}.`);
   if (fabric) details.push(`Material: ${fabric}.`);
   if (size) details.push(`Size: ${size}.`);
   if (work) details.push(`Design detail: ${work}.`);

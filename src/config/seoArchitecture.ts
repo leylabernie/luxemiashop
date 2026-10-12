@@ -16,7 +16,7 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/sarees": {
       "title": "Indian Wedding Sarees Online USA | LuxeMia",
-      "description": "Shop Indian wedding sarees online in the USA. Compare fabrics, blouse inclusion, stitching options, current prices and availability.",
+      "description": "Shop wedding and party sarees in silk, art silk and georgette. Explore blouse and stitching options. Free U.S. standard shipping on orders $150+.",
       "h1": "Indian Wedding Sarees Online in the USA"
     },
     "/suits": {

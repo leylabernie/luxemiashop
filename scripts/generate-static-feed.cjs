@@ -47,6 +47,7 @@ const {
 } = loadTsModule('src/lib/merchantTaxonomy.ts');
 
 const { getCatalogMaterial } = loadTsModule('src/lib/catalogMaterial.ts');
+const { getTitleDesignDetails } = loadTsModule('src/lib/merchantDesignDetails.ts');
 
 const SITE_URL = 'https://luxemia.shop';
 // Per-item shipping for every supported destination — mirrors src/config/shippingPolicy.ts.
@@ -767,7 +768,7 @@ function buildDescription(product, color, material, productType, displayTitle = 
     || getStructuredTagValues(product, 'material')[0]
     || getStructuredTagValues(product, 'fabric')[0]
     || '';
-  const work = getStructuredTagValues(product, 'work')[0] || '';
+  const work = getStructuredTagValues(product, 'work')[0] || getTitleDesignDetails(product.title);
   const includedPieces = getStructuredTagValues(product, 'included');
   const sizeSelection = getSizeOption(selectedOptions);
   const optionDetails = [...new Map((selectedOptions || [])
@@ -786,7 +787,7 @@ function buildDescription(product, color, material, productType, displayTitle = 
   if (sizeSelection?.value) detailsParts.push(`Size: ${sizeSelection.value}`);
   if (work) detailsParts.push(`Design detail: ${work}`);
   if (detailsParts.length > 0) {
-    parts.push(`${detailsParts.join(' | ')}.`);
+    parts.push(`${detailsParts.join('. ')}.`);
   }
   if (includedPieces.length > 0) {
     parts.push(`Included pieces: ${includedPieces.join('; ')}.`);
