@@ -73,7 +73,8 @@ export const ProductFilters = ({
     onPriceChange([0, 1000]);
   };
 
-  const totalActiveFilters = Object.values(activeFilters).flat().length;
+  const totalActiveFilters = Object.values(activeFilters).flat().length
+    + (priceRange[0] !== 0 || priceRange[1] !== 1000 ? 1 : 0);
 
   const formatPrice = (value: number) => {
     return new Intl.NumberFormat('en-US', {
@@ -133,7 +134,7 @@ export const ProductFilters = ({
                   />
                   <div className="flex items-center justify-between text-sm text-muted-foreground">
                     <span>{formatPrice(priceRange[0])}</span>
-                    <span>{formatPrice(priceRange[1])}</span>
+                    <span>{formatPrice(priceRange[1])}{priceRange[1] >= 1000 ? '+' : ''}</span>
                   </div>
                 </div>
               </motion.div>

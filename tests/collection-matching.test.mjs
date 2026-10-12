@@ -17,7 +17,7 @@ async function loadSource(entry) {
   new Function('require', 'module', 'exports', result.outputFiles[0].text)(require, module, module.exports);
   return module.exports;
 }
-const { matchSubcategory, applySubcategory, applyProductFiltersV2, listingPriceBounds } = await loadSource('src/lib/productFilters.ts');
+const { matchSubcategory, applySubcategory, applyProductFiltersV2, listingPriceBounds, filterAndSortProducts } = await loadSource('src/lib/productFilters.ts');
 const { getCommercialLandingConfig, getCommercialLandingSubcategory } = await loadSource('src/config/commercialLandingPages.tsx');
 const { getCategoryConfig } = await loadSource('src/config/categoryConfig.tsx');
 const product = (title, productType, tags = [], description = '') => ({
@@ -209,4 +209,12 @@ test('price ceiling marked plus remains open-ended when minimum is raised', () =
   const items = ['50', '500', '2500'].map(amount => ({ node: { ...product('Lehenga', 'Lehenga'),
     priceRange: { minVariantPrice: { amount, currencyCode: 'USD' } } } }));
   assert.deepEqual(applyProductFiltersV2(items, {}, listingPriceBounds([100, 2000], [0, 2000]), []), items.slice(1));
+});
+
+
+test('All Collections applies selected filters instead of silently ignoring them', () => {
+  const red = { node: product('Red silk saree', 'Saree', ['color:red', 'fabric:silk']) };
+  const blue = { node: product('Blue cotton saree', 'Saree', ['color:blue', 'fabric:cotton']) };
+  assert.deepEqual(filterAndSortProducts([red, blue], { Color: ['Red'] }, [0, 1000], 'price-asc'), [red]);
+  assert.deepEqual(filterAndSortProducts([red, blue], { Color: ['Red'], Fabric: ['Cotton'] }, [0, 1000], 'price-asc'), []);
 });
