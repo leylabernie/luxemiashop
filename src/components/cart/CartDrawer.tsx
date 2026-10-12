@@ -111,7 +111,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             aria-labelledby="cart-title"
           >
             {/* Header */}
-            <div className="flex items-center justify-between border-b border-border/70 bg-card/30 px-5 py-5 sm:px-6">
+            <div className="flex shrink-0 items-center justify-between border-b border-border/70 bg-card/30 px-5 py-5 sm:px-6">
               <div>
                 <p className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted-foreground">Your selection</p>
                 <h2 id="cart-title" className="mt-1 font-serif text-2xl leading-none">Your Bag <span className="text-base text-muted-foreground">({items.length})</span></h2>
@@ -126,7 +126,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             </div>
 
             {/* Cart Items */}
-            <div className="flex-1 space-y-5 overflow-y-auto p-5 sm:space-y-6 sm:p-6">
+            <div className="min-h-0 flex-1 space-y-5 overflow-y-auto overscroll-contain p-5 sm:space-y-6 sm:p-6">
               {items.length === 0 ? (
                 <div className="flex flex-col items-center justify-center h-full text-center">
                   <p className="text-foreground/60 mb-2">Your cart is empty</p>
@@ -232,7 +232,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
 
             {/* Footer */}
             {items.length > 0 && (
-              <div className="border-t border-border/60 bg-card/70 backdrop-blur-sm">
+              <div className="max-h-[60dvh] shrink-0 overflow-y-auto overscroll-contain border-t border-border/60 bg-card/70 backdrop-blur-sm safe-area-bottom">
                 {/* Free Shipping Progress */}
                 <div className="px-5 pb-3 pt-4 sm:px-6">
                   {shippingSubtotal >= FREE_SHIPPING_THRESHOLD ? (
