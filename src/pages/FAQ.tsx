@@ -8,6 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { HelpCircle, Package, Truck, Ruler, Sparkles, CreditCard, RotateCcw, Mail, Search, Phone, MessageCircle, ChevronRight, Home } from 'lucide-react';
+import { SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
 import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 
 const FAQ = () => {
@@ -50,7 +51,7 @@ const FAQ = () => {
         },
         {
           question: 'How long does shipping take?',
-          answer: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch and depends on the service shown at checkout.',
+          answer: SHIPPING_TIMING_NOTICE,
         },
         {
           question: 'How can I track my order?',
@@ -242,7 +243,7 @@ const FAQ = () => {
         },
         {
           question: 'How long does US delivery take?',
-          answer: 'Online orders ship with tracking after dispatch. Carrier transit time begins after dispatch, and tracking is sent by email once the label is created.',
+          answer: SHIPPING_TIMING_NOTICE + ' Tracking is sent by email once the label is created.',
         },
       ],
     },

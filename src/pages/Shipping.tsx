@@ -127,9 +127,9 @@ const Shipping = () => {
             </div>
             <div className="grid gap-6 md:grid-cols-3">
               {[
-                ['1', 'Processing', 'The product page shows the current processing or ship-by estimate when available. Tailoring, sourcing or made-to-order work occurs before dispatch.'],
+                ['1', 'Processing', 'All items are ready to ship. Orders dispatch within 3–4 days.'],
                 ['2', 'Consolidation', 'When an order contains multiple items, the item with the longest processing time normally determines the dispatch date.'],
-                ['3', 'Tracked Transit', 'Carrier transit starts after dispatch. Tracking is sent when the parcel enters the shipping workflow.'],
+                ['3', 'Tracked Transit', 'Delivery time after dispatch depends on your destination and selected standard or express shipping service. Tracking is sent when the parcel enters the shipping workflow.'],
               ].map(([step, title, copy]) => (
                 <div key={step} className="rounded-lg border border-border bg-card p-6">
                   <p className="font-serif text-3xl text-primary">{step}</p>
