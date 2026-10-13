@@ -1,3 +1,4 @@
+import './fabricOnlyServices.test.mjs';
 import './shoppingApp.test.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
