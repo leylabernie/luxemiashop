@@ -1,4 +1,5 @@
 import { rewrite, next } from '@vercel/functions';
+import { attachShoppingApp } from './src/middleware/shoppingApp.js';
 import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
 import { generateProductHtml, return404 } from './src/middleware/htmlGenerator.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
@@ -449,7 +450,13 @@ async function routeRequest(request: Request): Promise<Response> {
     const productLookup = await fetchProductByHandle(handle);
     if (productLookup.status === 'found') {
       const canonicalUrl = `https://luxemia.shop/product/${handle}`;
-      return new Response(generateProductHtml(productLookup.product, canonicalUrl), {
+      let html: string;
+      try {
+        html = await attachShoppingApp(generateProductHtml(productLookup.product, canonicalUrl), request);
+      } catch {
+        return returnShopifyUnavailable();
+      }
+      return new Response(html, {
         status: 200,
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
@@ -464,7 +471,13 @@ async function routeRequest(request: Request): Promise<Response> {
     const jewelryProduct = getJewelryProductByHandle(handle);
     if (jewelryProduct) {
       const canonicalUrl = `https://luxemia.shop/product/${handle}`;
-      return new Response(generateJewelryProductHtml(jewelryProduct, canonicalUrl), {
+      let html: string;
+      try {
+        html = await attachShoppingApp(generateJewelryProductHtml(jewelryProduct, canonicalUrl), request);
+      } catch {
+        return returnShopifyUnavailable();
+      }
+      return new Response(html, {
         status: 200,
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
