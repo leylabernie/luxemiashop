@@ -50,6 +50,7 @@ const ShopifyCollectionPage = () => {
         title={config.title}
         description={config.description}
         canonical={config.canonical}
+        image={config.image}
         type="collection"
         noIndexFollow={noIndexFollow}
         breadcrumbs={[

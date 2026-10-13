@@ -1832,6 +1832,7 @@ const routes = [
   },
   {
     path: '/collections/ready-to-wear-palazzo-suits',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-4584171319-1.jpg?v=1791590961',
     category: 'collection:ready-to-wear-palazzo-suits',
     title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece Sets | LuxeMia',
     description: 'Shop embroidered ready-to-wear palazzo suits with a stitched top, trousers and dupatta. Compare colors, current prices, size options and dispatch details.',
@@ -2751,6 +2752,18 @@ function generateHtml(template, route, allShopifyProducts) {
     /<meta name="twitter:description" content="[^"]*" \/>/,
     `<meta name="twitter:description" content="${escapeHtml(seoDescription)}" />`
   );
+
+  // Route-specific social imagery must also be present before React hydrates.
+  if (route.image) {
+    html = html.replace(
+      /<meta property="og:image" content="[^"]*" \/>/,
+      `<meta property="og:image" content="${escapeHtml(route.image)}" />`
+    );
+    html = html.replace(
+      /<meta name="twitter:image" content="[^"]*" \/>/,
+      `<meta name="twitter:image" content="${escapeHtml(route.image)}" />`
+    );
+  }
 
   // Every prerendered route gets one route-specific WebPage schema. The global
   // Organization/OnlineStore/WebSite graph remains in index.html; React removes

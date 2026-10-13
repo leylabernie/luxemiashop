@@ -7,6 +7,7 @@ export interface ShopifyCollectionPageConfig {
   title: string;
   description: string;
   canonical: string;
+  image?: string;
   intro: string;
   editorialTitle: string;
   editorial: string[];
@@ -16,6 +17,7 @@ export interface ShopifyCollectionPageConfig {
 const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
   'ready-to-wear-palazzo-suits': {
     handle: 'ready-to-wear-palazzo-suits',
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-4584171319-1.jpg?v=1791590961',
     name: 'Ready-to-Wear Palazzo Suits',
     eyebrow: 'Embroidered Three-Piece Sets',
     title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece Sets | LuxeMia',
