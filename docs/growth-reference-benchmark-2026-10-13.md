@@ -5,7 +5,9 @@ Checked October 13, 2026. Reference retailers: Utsav Fashion and Cbazaar only. T
 | Reference | Standard stitching | Made-to-measure | Timing scope |
 | --- | --- | --- | --- |
 | Utsav lehenga service table | USD 34 | USD 40 | Support says stitching adds 3 working days to item-specific dispatch; carrier transit follows. |
-| Cbazaar sampled red organza lehenga GHSCCRM01997B | USD 21 | USD 36 | General custom-wedding-outfit page says custom orders typically take 4–6 weeks; this is not an incremental stitching-only duration. |
+| Cbazaar sampled red organza lehenga GHSCCRM01997B | USD 21 | USD 33 in opened page; USD 36 in search snapshot | General custom-wedding-outfit page says custom orders typically take 4–6 weeks; this is not an incremental stitching-only duration. |
+
+The Cbazaar search snapshot and opened page disagree on made-to-measure pricing (USD 36 versus USD 33). Treat this as a variable observed range and recheck selected product, market and checkout before commercial use; neither figure is a LuxeMia price.
 
 Cbazaar Fit Trial is a separate USD 25 service on selected styles that adds approximately 7 days. It must not be interpreted as ordinary stitching time or as a LuxeMia service.
 
