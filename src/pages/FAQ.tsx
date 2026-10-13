@@ -80,6 +80,14 @@ const FAQ = () => {
           answer: 'Take your current body measurements and compare them with the size details on the exact product page. Use our printable measurement worksheet and contact LuxeMia before ordering if the listing is unclear.',
         },
         {
+          question: 'What is the difference between ready-made and made-to-measure?',
+          answer: 'Ready-made clothing is already stitched in the listed size. Standard-size stitching follows a size chart; made-to-measure uses individual body measurements. Neither term guarantees a particular dispatch date. Only the options shown for the selected LuxeMia product apply; contact us before ordering if you need a service that is not listed.',
+        },
+        {
+          question: 'Does the $10 alteration option include full lehenga and choli stitching?',
+          answer: 'No. Garment alteration is a request to adjust an existing stitched garment; it does not cover making a complete lehenga and choli from unstitched material. For an unstitched listing, ask LuxeMia to confirm whether full stitching is available for that design, the total charge and the additional processing time before ordering. Carrier transit is separate from stitching and dispatch.',
+        },
+        {
           question: 'Do you offer custom sizing?',
           answer: 'Sizing and tailoring options vary by garment. Review the product page and size selector, use the Size Guide for measurements, and contact LuxeMia before ordering if you need fit help.',
         },
