@@ -85,6 +85,7 @@ const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
 };
 
 const postShopCta: Record<string, { eyebrow: string; heading: string; href: string; label: string }> = {
+  'indian-to-us-clothing-size-conversion-guide': { eyebrow: 'Put your measurements to use', heading: 'Find an outfit with the fit options you need.', href: '/collections/customizable-indian-outfits', label: 'Shop Customizable Outfits' },
   'wedding-saree-for-mother-of-bride': { eyebrow: 'Shop the guide', heading: 'Compare sarees for the celebration.', href: '/sarees', label: 'Shop Sarees' },
   'wedding-guest-outfit-ideas': { eyebrow: 'Shop wedding guest looks', heading: 'Browse current outfits by ceremony and style.', href: '/collections/wedding-guest-outfits', label: 'Shop Wedding Guest Looks' },
   'accessorize-indian-ethnic-wear': { eyebrow: 'Complete the look', heading: 'Browse current jewelry styles.', href: '/jewelry', label: 'Shop Jewelry' },
