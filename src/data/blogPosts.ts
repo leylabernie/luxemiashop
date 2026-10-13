@@ -267,13 +267,28 @@ export const blogPosts: BlogPost[] = [
   {
     id: '67',
     slug: 'indian-to-us-clothing-size-conversion-guide',
-    title: 'Indian to US Clothing Size Guide: Measurements & Fit',
-    excerpt: 'Compare Indian and US clothing sizes using bust, waist, hip and length measurements. Learn what to check for saree blouses, lehengas, suits and kurtas.',
+    title: 'Indian to US Clothing Sizes: M, L & XL Fit Guide',
+    excerpt: 'What is Indian M, L or XL in US clothing sizes? Compare bust, chest, waist and hip measurements, with inch-to-cm examples and outfit-specific fit checks.',
     content: `
       ${editorialNote}
       <h2>The factual answer: there is no universal conversion</h2>
       <p>Indian and U.S. apparel labels are not one standardized system. Two brands can assign different measurements to the same letter or number. A label such as M, U.S. 8, or 38 is therefore not enough to predict fit across retailers or garments.</p>
       <p>NIST's apparel-sizing work describes sizing systems through body dimensions and measurement definitions. The practical conclusion for online shopping is simple: use inches or centimeters, not a country-to-country conversion claim.</p>
+
+      <h2>What is Indian medium, large or XL in US sizes?</h2>
+      <p>There is no dependable one-to-one conversion for Indian M, L or XL to a U.S. letter or dress size. The same applies when converting a U.S. medium, large or XL to Indian clothing. Compare your measurements with the chart for the exact design, including whether its numbers describe the body or the finished garment.</p>
+      <table>
+        <thead><tr><th>Your size question</th><th>What to compare before choosing</th></tr></thead>
+        <tbody>
+          <tr><td>Indian medium in US sizes</td><td>Compare the actual bust or chest, waist and hip measurements; do not automatically choose U.S. M.</td></tr>
+          <tr><td>US large or XL in Indian sizes</td><td>Use the Indian product's chart rather than shifting up or down one letter size.</td></tr>
+          <tr><td>Indian size 38 or 40</td><td>Ask what the number represents: a label, body measurement or finished-garment measurement.</td></tr>
+          <tr><td>Men's versus women's sizes</td><td>Use the chart for that garment's cut. Matching letter labels do not imply matching chest, bust, waist or hip dimensions.</td></tr>
+        </tbody>
+      </table>
+
+      <h2>Convert inches to centimeters before comparing charts</h2>
+      <p>Multiply inches by 2.54 to get centimeters. For example, 38 inches equals 96.52 cm, 40 inches equals 101.6 cm, and 42 inches equals 106.68 cm. These are measurement conversions, not U.S. dress-size equivalents.</p>
 
       <h2>Measurements to compare</h2>
       <table>
