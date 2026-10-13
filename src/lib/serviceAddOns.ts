@@ -102,6 +102,17 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
     return services;
   }
 
+  // Fabric-only selections cannot be altered as finished garments. Keep
+  // alteration available for ready-made products and mixed construction ranges.
+  const constructionValues = (product.options ?? [])
+    .filter(option => /stitch|construction/i.test(option.name))
+    .flatMap(option => option.values);
+  const isUnstitchedOnly = constructionValues.length > 0
+    ? constructionValues.every(value => /\bunstitched\b/i.test(value))
+    : /\bunstitched\b/i.test(product.title)
+      || (product.tags ?? []).some(tag => /^(?:construction:\s*)?unstitched$/i.test(tag.trim()));
+  if (isUnstitchedOnly) return [];
+
   const isApparel = APPAREL_PATTERN.test(`${product.title} ${product.productType}`);
   // Ready-to-wear garments keep the alteration offer even when the listing has
   // a construction/stitching selector: altering a purchased garment is a
