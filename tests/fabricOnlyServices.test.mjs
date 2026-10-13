@@ -27,3 +27,10 @@ test('saree finishing and blouse services remain available', () => {
     description: 'Includes an unstitched blouse piece.',
   }), ['blouse-stitching', 'pico-fall', 'matching-petticoat']);
 });
+
+test('mixed construction choices retain the alteration option', () => {
+  assert.deepEqual(getEligibleServiceAddOns({
+    title: 'Lehenga', productType: 'Lehenga Choli', description: '',
+    options: [{ name: 'Stitching', values: ['Unstitched', 'Ready-made'] }],
+  }), ['garment-alteration']);
+});
