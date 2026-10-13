@@ -939,6 +939,9 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
       const title = (product.title ?? '').toLowerCase();
       const tags = tagsFor(product);
 
+      if (handle === 'ready-to-wear-palazzo-suits') {
+        return ['gid://shopify/Product/9095467860139', 'gid://shopify/Product/9095467663531', 'gid://shopify/Product/9095467106475', 'gid://shopify/Product/9095468056747', 'gid://shopify/Product/9095465337003'].includes(product.id) && product.availableForSale !== false;
+      }
       if (handle === 'silk-sarees') {
         return productType.includes('saree') && title.includes('silk') && !isStandaloneBlouseProduct(product);
       }
@@ -1826,6 +1829,14 @@ const routes = [
     description: 'Browse current couple sets at LuxeMia.',
     h1: 'Couple Sets',
     content: '<p>Browse current couple sets and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
+  },
+  {
+    path: '/collections/ready-to-wear-palazzo-suits',
+    category: 'collection:ready-to-wear-palazzo-suits',
+    title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece Sets | LuxeMia',
+    description: 'Shop embroidered ready-to-wear palazzo suits with a stitched top, trousers and dupatta. Compare colors, current prices, size options and dispatch details.',
+    h1: 'Ready-to-Wear Palazzo Suits',
+    content: '<p>Explore embroidered three-piece sets in blush pink, aqua blue, lavender purple, green and rani pink. Each selected listing includes a stitched top, palazzo trousers and dupatta.</p><p>Compare current prices and listed sizes on each product page. Stocked, non-custom selections dispatch within 3–4 business days; carrier transit is additional.</p><p><a href="/size-guide">Check your measurements</a> · <a href="/shipping">Shipping rates and timing</a> · <a href="/ready-to-ship">All ready-to-ship outfits</a></p>',
   },
   {
     path: '/collections/silk-sarees',
