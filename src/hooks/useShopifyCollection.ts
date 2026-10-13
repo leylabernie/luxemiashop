@@ -21,6 +21,16 @@ function isBridalPartyProduct(product: ShopifyProduct): boolean {
 }
 
 function filterCollectionProducts(handle: string, products: ShopifyProduct[]): ShopifyProduct[] {
+  if (handle === 'ready-to-wear-palazzo-suits') {
+    const selectedIds = new Set([
+      'gid://shopify/Product/9095467860139',
+      'gid://shopify/Product/9095467663531',
+      'gid://shopify/Product/9095467106475',
+      'gid://shopify/Product/9095468056747',
+      'gid://shopify/Product/9095465337003',
+    ]);
+    return products.filter((product) => selectedIds.has(product.node.id));
+  }
   if (handle !== 'bridal-party-outfits') return products;
   return products.filter(isBridalPartyProduct);
 }
@@ -53,12 +63,12 @@ export function useShopifyCollection(handle: string) {
       setCollection(result);
       let liveProducts = filterCollectionProducts(handle, result?.products || []);
 
-      // The Bridesmaid page is a curated storefront view. On client-side
+      // These curated pages have explicit product membership. On client-side
       // navigation there is no route-specific prerender payload, and Shopify's
       // collection handle can temporarily return no products. Resolve that case
-      // from the live catalog, then apply the same strict attendant-title filter;
+      // from the live catalog, then apply the same strict membership filter;
       // never substitute the unfiltered catalog.
-      if (handle === 'bridal-party-outfits' && liveProducts.length === 0) {
+      if (['bridal-party-outfits', 'ready-to-wear-palazzo-suits'].includes(handle) && liveProducts.length === 0) {
         const catalogProducts = await fetchAllProducts();
         if (controller.signal.aborted) return;
         liveProducts = filterCollectionProducts(handle, catalogProducts);

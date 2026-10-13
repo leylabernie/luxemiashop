@@ -78,6 +78,9 @@ const ReadyToShip = () => {
               <strong className="font-medium text-foreground"> Made to Order</strong> or
               <strong className="font-medium text-foreground"> Made to Measure</strong>. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch. Order processing and carrier transit are separate.
             </p>
+            <p className="mt-4 text-sm">
+              <Link className="text-primary underline underline-offset-4" to="/collections/ready-to-wear-palazzo-suits">Shop ready-to-wear palazzo sets</Link>
+            </p>
             <p className="mt-4 text-xs text-muted-foreground">
               Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Those custom selections require additional processing and use the timing stated on the product page.{' '}
               <Link className="text-primary underline" to="/collections/customizable-indian-outfits">

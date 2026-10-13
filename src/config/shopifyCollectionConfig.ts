@@ -14,6 +14,26 @@ export interface ShopifyCollectionPageConfig {
 }
 
 const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
+  'ready-to-wear-palazzo-suits': {
+    handle: 'ready-to-wear-palazzo-suits',
+    name: 'Ready-to-Wear Palazzo Suits',
+    eyebrow: 'Embroidered Three-Piece Sets',
+    title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece Sets | LuxeMia',
+    description: 'Shop embroidered ready-to-wear palazzo suits with a stitched top, trousers and dupatta. Compare colors, current prices, size options and dispatch details.',
+    canonical: 'https://luxemia.shop/collections/ready-to-wear-palazzo-suits',
+    intro: 'Explore embroidered three-piece sets in blush pink, aqua blue, lavender purple, green and rani pink. Each reviewed listing includes a stitched top, palazzo trousers and dupatta. Open a product to compare its current price and size options.',
+    editorialTitle: 'A Complete Outfit, with Fit Details to Check',
+    editorial: [
+      'Choose your preferred color, then compare your measurements with the exact product size guide. These sets are supplied stitched; full garment construction is not an additional requirement. Any optional alteration is a separate request whose scope and timing must be confirmed.',
+      'Stocked, non-custom selections dispatch within 3–4 business days. Carrier transit is additional. Check the shipping page and checkout for destination-specific rates, and contact LuxeMia before ordering for a fixed event date.',
+    ],
+    faqs: [
+      { question: 'What is included in these palazzo sets?', answer: 'Each reviewed listing in this selection includes a stitched top, palazzo trousers and dupatta. Styling accessories are not included unless the product description says otherwise.' },
+      { question: 'Are these outfits unstitched?', answer: 'No. These selected sets are listed as stitched and ready to wear. Choose a listed size after checking the exact product measurements.' },
+      { question: 'Does ready to wear mean immediate delivery?', answer: 'No. Stocked, non-custom selections dispatch within 3–4 business days; carrier transit is additional. Alterations require separately confirmed processing time.' },
+    ],
+  },
+
   'silk-sarees': {
     handle: 'silk-sarees',
     name: 'Silk Sarees',

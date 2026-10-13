@@ -49,6 +49,7 @@ const STATIC_ROUTES = [
   '/collections',
   '/collections/blouses',
   '/collections/couple-outfits',
+  '/collections/ready-to-wear-palazzo-suits',
   '/collections/silk-sarees',
   '/collections/kanchipuram-sarees',
   '/collections/bridal-party-outfits',
