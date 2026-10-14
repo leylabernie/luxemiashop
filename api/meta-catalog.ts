@@ -1,6 +1,23 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { createHash } from 'node:crypto';
 
+interface CatalogPage {
+  nodes: Array<{
+    handle: string;
+    title: string;
+    description: string;
+    availableForSale: boolean;
+    images: { nodes: Array<{ url: string }> };
+    priceRange: { minVariantPrice: { amount: string; currencyCode: string } };
+  }>;
+  pageInfo: { hasNextPage: boolean; endCursor: string | null };
+}
+
+interface CatalogPayload {
+  errors?: unknown[];
+  data?: { products?: CatalogPage };
+}
+
 const query = `query($after:String){products(first:100,after:$after){nodes{id handle title description availableForSale images(first:1){nodes{url}} priceRange{minVariantPrice{amount currencyCode}}} pageInfo{hasNextPage endCursor}}}`;
 const fields = ['id','title','description','availability','condition','price','link','image_link','brand'];
 const quote = (value: string) => `"${value.replace(/"/g, '""')}"`;
@@ -13,16 +30,16 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const rows: string[][] = [];
     let after: string | null = null;
     for (let page = 0; page < 100; page++) {
-      const response = await fetch('https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json', {
+      const response: Response = await fetch('https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json', {
         method: 'POST',
         headers: {'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':token},
         body: JSON.stringify({query, variables:{after}}),
         signal: AbortSignal.timeout(20000),
       });
       if (!response.ok) throw new Error('Shopify catalog request failed');
-      const payload = await response.json();
+      const payload: CatalogPayload = await response.json();
       if (payload.errors || !payload.data?.products) throw new Error('Shopify catalog response invalid');
-      const products = payload.data.products;
+      const products: CatalogPage = payload.data.products;
       for (const product of products.nodes) {
         if (product.handle === 'luxemia-tailoring-saree-finishing-add-ons') continue;
         const image = product.images.nodes[0]?.url;

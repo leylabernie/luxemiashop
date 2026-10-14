@@ -481,24 +481,8 @@ function truncateAtWord(value, maxLength) {
   return truncated.trimEnd();
 }
 
-function clampTitle(raw, brand = 'LuxeMia', maxLength = 80) {
-  const cleaned = normalizeWhitespace(raw);
-  const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const brandAtStart = new RegExp(`^${escapedBrand}\\s*(?:[|—–:\\-]\\s*)?`, 'i');
-  const brandAtEnd = new RegExp(`\\s*(?:[|—–:\\-]\\s*)?${escapedBrand}$`, 'i');
-  const withoutBrand = cleaned
-    .replace(brandAtStart, '')
-    .replace(brandAtEnd, '')
-    .trim();
-
-  if (!withoutBrand) return brand.slice(0, maxLength);
-
-  const suffix = ` | ${brand}`;
-  const title = `${withoutBrand}${suffix}`;
-  if (title.length <= maxLength) return title;
-
-  return `${truncateAtWord(withoutBrand, Math.max(1, maxLength - suffix.length))}${suffix}`;
-}
+// Use the same limits, brand normalization and word boundaries as the client.
+const { clampTitle, clampDescription } = await loadTsModule('src/lib/meta/clamp.ts');
 
 // Clean supplier-title artifacts for display and SEO:
 // 1. Recover titles stored pre-truncated (trailing "…"/"...") by preferring
@@ -597,13 +581,13 @@ function disambiguateDuplicateProductRouteTitles(routes) {
           differentiator = `Style ${code}`;
         }
         if (differentiator.length > 24) differentiator = differentiator.slice(0, 24).trim();
-        // Build inside clampTitle's 80-char budget so the differentiator
+        // Build inside clampTitle's 58-character budget so the differentiator
         // survives the render-time clamp untouched.
         const brandPos = route.title.lastIndexOf('| LuxeMia');
         const base = brandPos >= 0 ? route.title.slice(0, brandPos).trim() : route.title.trim();
         const suffix = ' | LuxeMia';
         const diffText = ` — ${differentiator}`;
-        const budget = Math.max(30, 80 - suffix.length - diffText.length);
+        const budget = Math.max(1, 58 - suffix.length - diffText.length);
         const baseText = truncateAtWord(base, budget)
           .replace(/…$/, '')
           .replace(/\s+[—–-]\s*$/, '')
@@ -624,17 +608,6 @@ function disambiguateDuplicateProductRouteTitles(routes) {
   if (disambiguatedCount > 0) {
     console.log(`[prerender] Disambiguated ${disambiguatedCount} duplicate product title(s) with verified SKU/style references`);
   }
-}
-
-function clampDescription(raw, maxLength = 155) {
-  const cleaned = normalizeWhitespace(raw).replace(/[.…]+$/, '').trim();
-  if (cleaned.length < maxLength) return /[!?]$/.test(cleaned) ? cleaned : `${cleaned}.`;
-  const endings = [...cleaned.matchAll(/[.!?](?=\s|$)/g)]
-    .map((match) => match.index + 1)
-    .filter((end) => end >= 60 && end <= maxLength
-      && !/\b(?:U\.S|U\.K|No)\.$/.test(cleaned.slice(0, end)));
-  if (endings.length) return cleaned.slice(0, endings[endings.length - 1]);
-  return truncateAtWord(cleaned, maxLength).replace(/…$/, '.');
 }
 
 // ─── Shopify Storefront API (build-time product fetch) ──────────────────────

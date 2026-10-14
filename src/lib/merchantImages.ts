@@ -1,4 +1,4 @@
-import selections from '../data/merchantImageSelections.json';
+import selections from '../data/merchantImageSelections.json' with { type: 'json' };
 
 const reviewed = selections as Record<string, { original: string; replacement: string }>;
 const withoutQuery = (url: string) => url.split('?')[0];

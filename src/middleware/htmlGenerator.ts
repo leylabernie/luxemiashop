@@ -9,6 +9,7 @@ import { getCatalogMaterial } from '../lib/catalogMaterial.js';
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
 import { isProductSizeOptionName } from '../lib/productOptionNames.js';
+import { clampTitle, clampDescription } from '../lib/meta/clamp.js';
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -206,11 +207,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   // Do not republish historic SEO or supplier descriptions containing obsolete claims.
   const cleanProductDescription = buildVerifiedProductDescription(product);
   const productAttributes = getListedProductAttributes(product);
-  const title = seoTitle || `${displayTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`;
+  const title = clampTitle(seoTitle || `${displayTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`);
   const fallbackDescription = productAttributes.jewelry
     ? `Shop ${displayTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
     : `Shop ${displayTitle} at LuxeMia. Indian ethnic wear online with tracked U.S. shipping.`;
-  const description = ((product.tags?.includes('facts:source-verified') ? product.seo?.description : '') || cleanProductDescription || fallbackDescription).slice(0, 160);
+  const description = clampDescription((product.tags?.includes('facts:source-verified') ? product.seo?.description : '') || cleanProductDescription || fallbackDescription);
   const price = product.priceRange.minVariantPrice.amount;
   const currency = product.priceRange.minVariantPrice.currencyCode;
   const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
