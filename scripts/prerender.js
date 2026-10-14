@@ -524,7 +524,9 @@ function disambiguateDuplicateProductRouteTitles(routes) {
   for (const [finalTitle, group] of groups) {
     if (group.length < 2) continue;
 
-    // Use only descriptive catalog words; supplier references are not search keywords.\n    const unresolved = group;\n    if (unresolved.length > 1) {
+    // Use only descriptive catalog words; supplier references are not search keywords.
+    const unresolved = group;
+    if (unresolved.length > 1) {
       // Fallback disambiguation without style references: differentiate each
       // member's title with words unique to its own full H1 (e.g. "Tissue
       // Silk" vs "Chinon Silk"). Titles must stay unique per product or the
@@ -547,10 +549,12 @@ function disambiguateDuplicateProductRouteTitles(routes) {
         const others = unresolved.filter((other) => other !== route);
         const otherWords = new Set(others.flatMap((other) => [...wordSets.get(other)]));
         const distinctive = h1Words(route)
-          .filter((word) => !stop.has(word) && !/\\d/.test(word) && !otherWords.has(word))
+          .filter((word) => !stop.has(word) && !/\d/.test(word) && !otherWords.has(word))
           .slice(0, 3);
         let differentiator = distinctive.join(' ');
-        // Identical verified details may share a title. Do not invent a name or add a catalog code.\n        if (!differentiator) continue;\n        if (differentiator.length > 24) differentiator = differentiator.slice(0, 24).trim();
+        // Identical verified details may share a title. Do not invent a name or add a catalog code.
+        if (!differentiator) continue;
+        if (differentiator.length > 24) differentiator = differentiator.slice(0, 24).trim();
         // Build inside clampTitle's 58-character budget so the differentiator
         // survives the render-time clamp untouched.
         const brandPos = route.title.lastIndexOf('| LuxeMia');
