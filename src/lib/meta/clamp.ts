@@ -1,6 +1,6 @@
 const DEFAULT_BRAND = 'LuxeMia';
 const TITLE_MAX_LENGTH = 58;
-const DESCRIPTION_MAX_LENGTH = 155;
+const DESCRIPTION_MAX_LENGTH = 154;
 
 function normalizeWhitespace(value: string): string {
   return value.replace(/\s+/g, ' ').trim();
