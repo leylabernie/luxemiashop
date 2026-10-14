@@ -524,30 +524,7 @@ function disambiguateDuplicateProductRouteTitles(routes) {
   for (const [finalTitle, group] of groups) {
     if (group.length < 2) continue;
 
-    const referenceCounts = new Map();
-    for (const route of group) {
-      const reference = getVerifiedPrimaryStyleReference(route.product);
-      const referenceKey = reference.toLowerCase();
-      if (reference) referenceCounts.set(referenceKey, (referenceCounts.get(referenceKey) || 0) + 1);
-    }
-
-    for (const route of group) {
-      const reference = getVerifiedPrimaryStyleReference(route.product);
-      if (!reference || referenceCounts.get(reference.toLowerCase()) !== 1) continue;
-
-      const unbrandedTitle = normalizeWhitespace(route.title)
-        .replace(/^LuxeMia\s*(?:[|—–:\-]\s*)?/i, '')
-        .replace(/\s*(?:[|—–:\-]\s*)?LuxeMia$/i, '')
-        .trim();
-      route.title = `Style ${reference}: ${unbrandedTitle} | LuxeMia`;
-      disambiguatedCount += 1;
-    }
-
-    const unresolved = group.filter((route) => {
-      const reference = getVerifiedPrimaryStyleReference(route.product);
-      return !reference || referenceCounts.get(reference.toLowerCase()) !== 1;
-    });
-    if (unresolved.length > 1) {
+    // Use only descriptive catalog words; supplier references are not search keywords.\n    const unresolved = group;\n    if (unresolved.length > 1) {
       // Fallback disambiguation without style references: differentiate each
       // member's title with words unique to its own full H1 (e.g. "Tissue
       // Silk" vs "Chinon Silk"). Titles must stay unique per product or the
@@ -570,17 +547,10 @@ function disambiguateDuplicateProductRouteTitles(routes) {
         const others = unresolved.filter((other) => other !== route);
         const otherWords = new Set(others.flatMap((other) => [...wordSets.get(other)]));
         const distinctive = h1Words(route)
-          .filter((word) => !stop.has(word) && !otherWords.has(word))
+          .filter((word) => !stop.has(word) && !/\\d/.test(word) && !otherWords.has(word))
           .slice(0, 3);
         let differentiator = distinctive.join(' ');
-        if (!differentiator) {
-          // H1s effectively identical apart from stopwords: fall back to the
-          // trailing catalog code in the handle so each listing stays unique.
-          const code = (route.path.match(/(\d{4,})$/) || [])[1];
-          if (!code) continue;
-          differentiator = `Style ${code}`;
-        }
-        if (differentiator.length > 24) differentiator = differentiator.slice(0, 24).trim();
+        // Identical verified details may share a title. Do not invent a name or add a catalog code.\n        if (!differentiator) continue;\n        if (differentiator.length > 24) differentiator = differentiator.slice(0, 24).trim();
         // Build inside clampTitle's 58-character budget so the differentiator
         // survives the render-time clamp untouched.
         const brandPos = route.title.lastIndexOf('| LuxeMia');
@@ -606,7 +576,7 @@ function disambiguateDuplicateProductRouteTitles(routes) {
   }
 
   if (disambiguatedCount > 0) {
-    console.log(`[prerender] Disambiguated ${disambiguatedCount} duplicate product title(s) with verified SKU/style references`);
+    console.log(`[prerender] Disambiguated ${disambiguatedCount} duplicate product title(s) with descriptive catalog words`);
   }
 }
 
