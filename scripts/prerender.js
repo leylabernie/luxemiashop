@@ -2455,7 +2455,7 @@ const routes = [
     path: '/collections/navratri-outfits',
     category: 'occasion:navratri',
     title: 'Navratri Outfits USA 2026 | Garba Styles | LuxeMia',
-    description: 'Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 for first orders.',
+    description: 'Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 on eligible US$75+ orders.',
     h1: 'Navratri Outfits for Garba in the USA',
     content: `
       <p>Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events in the United States. This collection includes available products whose catalog details explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
@@ -2468,7 +2468,7 @@ const routes = [
         <li><a href="/suits">Shop Anarkali and Salwar Suits</a></li>
         <li><a href="/sizing-measurements-guide">Sizing and Measurement Guide</a></li>
       </ul>
-      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch. First-time shoppers can use LUXE10 for 10% off with no minimum purchase requirement.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch. Use LUXE10 for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.</p>
       <p>Contact LuxeMia before ordering when your celebration date is fixed. Delivery by a particular event is not guaranteed.</p>
     `,
   },

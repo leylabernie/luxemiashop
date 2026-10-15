@@ -47,8 +47,8 @@ const navratriOutfitFaqs = [
     answer: 'LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch.',
   },
   {
-    question: 'Is there a first-order discount?',
-    answer: 'First-time shoppers can use code LUXE10 for 10% off their first LuxeMia order. The code has no minimum purchase requirement.',
+    question: 'Is there a festive discount?',
+    answer: 'Use LUXE10 for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.',
   },
   {
     question: 'Can I return a Navratri outfit?',
@@ -104,7 +104,7 @@ const NavratriOutfits = () => {
               <div className="mt-6 flex flex-wrap gap-2 text-xs text-[#fffaf3]/90">
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><CalendarDays className="h-4 w-4" /> Begins October 11, 2026</span>
                 <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><Truck className="h-4 w-4" /> Tracked U.S. shipping</span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><Gift className="h-4 w-4" /> 10% off first order</span>
+                <span className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-black/20 px-3 py-2"><Gift className="h-4 w-4" /> 10% off eligible US$75+ orders</span>
               </div>
               <div className="mt-7 flex flex-wrap gap-3">
                 <a href="#navratri-styles" className="inline-flex items-center justify-center rounded-sm bg-[#fffaf3] px-5 py-3 text-sm font-semibold text-[#211311] transition-colors hover:bg-[#f7d9a7]">Shop Navratri Styles</a>
@@ -120,7 +120,7 @@ const NavratriOutfits = () => {
             <div className="grid gap-3 text-sm sm:grid-cols-3">
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><CheckCircle2 className="h-4 w-4 text-primary" /> Current catalog listings</p>
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><Truck className="h-4 w-4 text-primary" /> $14.99 below $150 · Free at $150+</p>
-              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use LUXE10 on your first order</p>
+              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use LUXE10 for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.</p>
             </div>
           </div>
         </div>
