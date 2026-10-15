@@ -77,12 +77,13 @@ const staticPages = [
   { loc: '/videos', changefreq: 'daily', priority: '0.8' },
   { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
   // High-intent commercial collection pages. Emptied by the 2026-09-22
-  // single-image removal and excluded here until new stock lands: anarkali-suits,
+  // single-image removal and excluded here until new stock lands:
   // bollywood-inspired-indian-outfits, bridal-party-outfits, designer-sarees,
   // eid-outfits, gharara-suits, haldi-outfits, kanchipuram-sarees, mehendi-outfits,
   // silk-sarees, wedding-sarees (all noindexed empty prerenders, see ops doc).
   { loc: '/collections/sharara-suits', changefreq: 'daily', priority: '0.9' },
-  // /collections/anarkali-suits retired 2026-09-22: all matching products drafted (single-image cleanup); Vercel 301 to /suits.
+  // Restocked 2026-10-15; existing prerender validation enforces indexability and self-canonical.
+  { loc: '/collections/anarkali-suits', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
@@ -480,11 +481,11 @@ async function main() {
   const approvedProductPaths = approvedPaths.filter((routePath) => routePath.startsWith('/product/'));
   const missingApprovedProducts = approvedProductPaths.filter((routePath) => !productByPath.has(routePath));
   if (missingApprovedProducts.length > 0) {
-    // Products newly created via Admin API can lag in the Storefront search
-    // index for 15-30 min. Log and skip rather than blocking the build.
+    // Absence can reflect publication lag, unpublishing, or catalog changes.
+    // Skip unavailable products; absence alone does not establish the cause.
     console.warn(
       `[sitemap] WARNING: ${missingApprovedProducts.length} approved product(s) not in current ` +
-      `Storefront response (likely Storefront index lag): ` +
+      `Storefront response; omitted pending reconciliation: ` +
       `${missingApprovedProducts.slice(0, 5).join(', ')}` +
       (missingApprovedProducts.length > 5 ? ` (+${missingApprovedProducts.length - 5} more)` : '')
     );
@@ -510,8 +511,8 @@ async function main() {
   // that fails any check is skipped with a logged reason instead of being
   // published or breaking the build.
   //
-  // The approved inventory is retained as a regression floor: it still fails
-  // the build when a previously indexed product vanishes.
+  // The approved inventory remains a count floor and reconciliation baseline.
+  // Missing paths are reported and must never be erased by automatic refresh.
   const candidateProductPaths = products
     .map((product) => `/product/${product.handle}`)
     .filter((routePath) => !approvedPathSet.has(routePath));
@@ -559,16 +560,16 @@ async function main() {
   ];
   const sitemapPathSet = new Set(sitemapPaths);
 
-  // Regression floor: every approved path must still be present. This is the
-  // protection the exact-count assertion used to provide, without blocking
-  // legitimate catalog growth.
+  // Report missing approved paths separately from the total-count floor.
+  // Catalog growth can offset missing paths, so preserve the baseline below
+  // until those omissions have been reconciled.
   const missingApprovedPaths = approvedPaths.filter((routePath) => !sitemapPathSet.has(routePath));
   if (missingApprovedPaths.length > 0) {
-    // Newly published products can lag in the Storefront API index.
-    // Log the gap but don't block the build — the next build will include them.
+    // Do not assume every omission is publication lag or restore absent routes.
+    // Preserve the approved inventory while valid sitemap output can proceed.
     console.warn(
       `[sitemap] WARNING: ${missingApprovedPaths.length} approved URL(s) missing from generated sitemap ` +
-      `(likely Storefront API index lag for newly published products): ` +
+      `(cause requires review; approved inventory refresh deferred): ` +
       `${missingApprovedPaths.slice(0, 5).join(', ')}` +
       (missingApprovedPaths.length > 5 ? ` (+${missingApprovedPaths.length - 5} more)` : '')
     );
@@ -597,12 +598,10 @@ async function main() {
   const deadListPath = path.join(distDir, 'dead-product-handles.json');
   fs.writeFileSync(deadListPath, JSON.stringify([], null, 2));
 
-  // Persist the validated scope back to the approved inventory so the
-  // regression floor tracks the catalog. Without this the floor would stay
-  // frozen at the last manual capture and auto-enrolled products would be
-  // re-discovered on every build instead of being protected against silent
-  // removal. Only routes that already passed full validation are written.
-  if (enrolledProductPaths.length > 0) {
+  // Refresh only when every approved path remains present. Otherwise, replacing
+  // the baseline with current output would erase unresolved omissions whenever
+  // new products offset them. Intentional removals need explicit reconciliation.
+  if (enrolledProductPaths.length > 0 && missingApprovedPaths.length === 0) {
     const refreshedPaths = [
       ...sitemapPaths.filter((routePath) => !routePath.startsWith('/product/')),
       ...sitemapPaths.filter((routePath) => routePath.startsWith('/product/')).sort(),

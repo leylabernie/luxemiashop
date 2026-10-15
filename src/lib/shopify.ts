@@ -618,20 +618,55 @@ const CART_CREATE_MUTATION = `
   }
 `;
 
-const _shopifyCache = new Map<string, { at: number; data: any }>();
-const _shopifyInflight = new Map<string, Promise<any>>();
+type StorefrontResponse<T> = {
+  data: T;
+  errors?: Array<{ message: string }>;
+};
+
+type StorefrontProductsData = {
+  products: {
+    edges: ShopifyProduct[];
+    pageInfo: { hasNextPage: boolean; endCursor: string | null };
+  };
+};
+
+type StorefrontProductData = {
+  product: ShopifyProduct['node'] | null;
+};
+
+type StorefrontCollectionData = {
+  collection: (Omit<ShopifyCollection, 'products'> & {
+    products: { edges: ShopifyProduct[] };
+  }) | null;
+};
+
+type StorefrontCartData = {
+  cartCreate: {
+    cart: {
+      checkoutUrl: string;
+      lines: {
+        edges: Array<{ node: Parameters<typeof assertCheckoutCartMatches>[1][number] }>;
+        pageInfo: { hasNextPage: boolean };
+      };
+    } | null;
+    userErrors: Array<{ field: string[] | null; message: string }>;
+  } | null;
+};
+
+const _shopifyCache = new Map<string, { at: number; data: StorefrontResponse<unknown> }>();
+const _shopifyInflight = new Map<string, Promise<StorefrontResponse<unknown> | null>>();
 const _SHOPIFY_CACHE_TTL = 5 * 60 * 1000;
 
-export async function storefrontApiRequest(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal) {
+export async function storefrontApiRequest<T = unknown>(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal): Promise<StorefrontResponse<T> | null> {
   const isRead = isCacheableStorefrontOperation(query) && !signal;
   const cacheKey = isRead ? JSON.stringify([query, variables]) : null;
   if (cacheKey) {
     const hit = _shopifyCache.get(cacheKey);
-    if (hit && Date.now() - hit.at < _SHOPIFY_CACHE_TTL) return hit.data as any;
+    if (hit && Date.now() - hit.at < _SHOPIFY_CACHE_TTL) return hit.data as StorefrontResponse<T>;
     const inflight = _shopifyInflight.get(cacheKey);
-    if (inflight) return inflight as any;
+    if (inflight) return inflight as Promise<StorefrontResponse<T> | null>;
   }
-  const exec = async (): Promise<any> => {
+  const exec = async (): Promise<StorefrontResponse<T> | null> => {
 
   const response = await fetch(SHOPIFY_STOREFRONT_URL, {
     method: 'POST',
@@ -663,7 +698,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
     throw new Error(`HTTP error! status: ${response.status}`);
   }
 
-  const data = await response.json();
+  const data = await response.json() as StorefrontResponse<T>;
   
   if (data.errors) {
     throw new Error(`Error calling Shopify: ${data.errors.map((e: { message: string }) => e.message).join(', ')}`);
@@ -671,7 +706,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 
     return data;
   };
-  const promise = exec().then((data: any) => {
+  const promise = exec().then((data) => {
     if (cacheKey && data) _shopifyCache.set(cacheKey, { at: Date.now(), data });
     return data;
   }).finally(() => { if (cacheKey) _shopifyInflight.delete(cacheKey); });
@@ -681,7 +716,7 @@ export async function storefrontApiRequest(query: string, variables: Record<stri
 
 export async function fetchProducts(first: number = 12, query?: string): Promise<ShopifyProduct[]> {
   try {
-    const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query });
+    const data = await storefrontApiRequest<StorefrontProductsData>(STOREFRONT_LISTING_QUERY, { first, query });
     if (!data) return [];
     return (data.data.products.edges || [])
       .map(sanitizeProductEdge)
@@ -698,7 +733,7 @@ export async function fetchAllProducts(
 ): Promise<ShopifyProduct[]> {
   try {
     return await loadCatalogPages(async (first, after) => {
-      const data = await storefrontApiRequest(STOREFRONT_LISTING_QUERY, { first, query, ...(after ? { after } : {}) });
+      const data = await storefrontApiRequest<StorefrontProductsData>(STOREFRONT_LISTING_QUERY, { first, query, ...(after ? { after } : {}) });
       if (!data) throw new Error('Shopify catalog is unavailable');
       const connection = data.data.products;
       return {
@@ -724,7 +759,7 @@ export async function fetchProductByHandle(
   if (isHiddenBillingProductHandle(handle) && !options.allowHiddenBillingProduct) return null;
 
   try {
-    const data = await storefrontApiRequest(PRODUCT_BY_HANDLE_QUERY, { handle });
+    const data = await storefrontApiRequest<StorefrontProductData>(PRODUCT_BY_HANDLE_QUERY, { handle });
     if (!data) return null;
     // The query now uses `product(handle:)` (replacing the deprecated
     // `productByHandle`) so the response shape is `data.product`, not
@@ -744,7 +779,7 @@ export async function fetchCollectionByHandle(
   signal?: AbortSignal,
 ): Promise<ShopifyCollection | null> {
   try {
-    const data = await storefrontApiRequest(
+    const data = await storefrontApiRequest<StorefrontCollectionData>(
       COLLECTION_BY_HANDLE_QUERY,
       { handle, first: 250 },
       signal,
@@ -793,7 +828,7 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     }),
   }));
 
-   const cartData = await storefrontApiRequest(CART_CREATE_MUTATION, {
+   const cartData = await storefrontApiRequest<StorefrontCartData>(CART_CREATE_MUTATION, {
     input: {
       lines,
       ...(discountCode ? { discountCodes: [discountCode] } : {}),
@@ -821,7 +856,7 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
   // userError. Never hand off a different basket or shipping total unnoticed.
   assertCheckoutCartMatches(
     items,
-    (cart.lines?.edges ?? []).map((edge: { node: any }) => edge.node),
+    (cart.lines?.edges ?? []).map((edge) => edge.node),
     cart.lines?.pageInfo?.hasNextPage === true,
   );
 
