@@ -13,7 +13,6 @@ const expected = {
   '/collections/frontpage': '/',
   '/collections/indo-western': '/indowestern',
   '/collections/jacket-sets': '/suits',
-  '/collections/anarkali-suits': '/suits',
   '/collections/kurta-pajama-vest': '/menswear',
   '/collections/manthrakodi-sarees': '/sarees',
   '/collections/saree-gowns': '/sarees',
@@ -21,6 +20,11 @@ const expected = {
 
 if (!Array.isArray(config.redirects)) {
   throw new Error('[empty-collection-redirects] vercel.json redirects array not found');
+}
+
+// Restocked and verified 2026-10-15: keep the dedicated landing reachable.
+if (config.redirects.some((entry) => entry.source === '/collections/anarkali-suits')) {
+  throw new Error('[empty-collection-redirects] Active Anarkali landing must not redirect');
 }
 
 for (const [source, destination] of Object.entries(expected)) {
