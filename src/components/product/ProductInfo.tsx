@@ -38,6 +38,8 @@ import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
   getEligibleServiceAddOns,
   hasNativeFullStitchingOptions,
+  requiresNativeStitchingTimingConfirmation,
+  NATIVE_STITCHING_TIMING_NOTICE,
   selectedEligibleServiceAddOns,
   SERVICE_ADD_ON_PRODUCT_HANDLE,
   SERVICE_ADD_ONS,
@@ -529,8 +531,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     }
     return lead;
   }, [product.description]);
-  const shipsWithinDays = getProductShipsWithin(product);
-  const shipByLabel = getShipByLabel(product);
+  const requiresNativeTimingConfirmation = requiresNativeStitchingTimingConfirmation(
+    product, purchasableVariant?.node.selectedOptions ?? [],
+  );
+  const shipsWithinDays = requiresNativeTimingConfirmation ? null : getProductShipsWithin(product);
+  const shipByLabel = requiresNativeTimingConfirmation ? null : getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
     const sizeOption = product.options.find((option) => isProductSizeOptionName(option.name));
     if (!sizeOption) return null;
@@ -730,19 +735,25 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     setIsAdding(true);
 
     const customAttributes: Array<{ key: string; value: string }> = [];
+    if (requiresNativeTimingConfirmation) {
+      customAttributes.push(
+        { key: 'Tailoring', value: 'Tailored to order' },
+        { key: 'Timing Confirmation', value: NATIVE_STITCHING_TIMING_NOTICE },
+      );
+    }
     if (customizableProduct) {
       customAttributes.push(
         { key: 'Made to Order', value: 'Yes — confirmation required' },
         { key: 'Requested Custom Color', value: `${requestedCustomColor.trim()} — pending LuxeMia confirmation` },
         { key: 'Measurements', value: 'Required after order' },
-        { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
+        ...(requiresNativeTimingConfirmation ? [] : [{ key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' }]),
       );
     }
     if (madeToOrderProduct && !customizableProduct) {
       customAttributes.push(
         { key: 'Made to Order', value: 'Yes — confirmation required' },
         { key: 'Measurements', value: 'Required after order' },
-        { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
+        ...(requiresNativeTimingConfirmation ? [] : [{ key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' }]),
       );
     }
     if (isCustomSizeSelected) {
@@ -751,7 +762,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         { key: 'Measurement Confirmation', value: 'Customer acknowledged before checkout' },
       );
     }
-    if (isCustomSizeSelected && !madeToOrderProduct) {
+    if (isCustomSizeSelected && !madeToOrderProduct && !requiresNativeTimingConfirmation) {
       customAttributes.push({
         key: 'Timing Estimate',
         value: 'Approximately 4–5 weeks total for the custom selection; production and transit confirmed separately',
@@ -912,7 +923,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       )}
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} />
+      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} />
       {shipByLabel && !currentSelectionIsMadeToOrder && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
@@ -1493,7 +1504,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
           <dt className="font-medium text-foreground">Shipping Estimate</dt>
           <dd className="text-muted-foreground">
-            {currentSelectionIsMadeToOrder
+            {requiresNativeTimingConfirmation
+              ? NATIVE_STITCHING_TIMING_NOTICE
+              : currentSelectionIsMadeToOrder
               ? 'Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the required details and delivery address are known.'
               : shipByLabel
               ? `${shipByLabel}. Tracking details are emailed when the shipping label is created for dispatch.`

@@ -121,6 +121,17 @@ export const hasNativeFullStitchingOptions = (product: ServiceEligibleProduct): 
   return groups.size > 0 && [...groups.values()].every(pairs => pairs.size === expectedPairs.size);
 };
 
+export const NATIVE_STITCHING_TIMING_NOTICE =
+  'Tailoring required; dispatch timing confirmed after measurements.';
+
+export const requiresNativeStitchingTimingConfirmation = (
+  product: ServiceEligibleProduct,
+  selectedOptions: Array<{ name: string; value: string }>,
+): boolean => hasNativeFullStitchingOptions(product) && selectedOptions.some(option =>
+  option.name.trim().toLowerCase() === 'stitching'
+  && /^(?:standard|custom) stitched$/i.test(option.value.trim()),
+);
+
 const productEvidence = (product: ServiceEligibleProduct) => [
   product.title,
   product.productType,

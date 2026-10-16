@@ -1,5 +1,6 @@
 import { Truck, Clock, PackageCheck } from 'lucide-react';
 import { SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
+import { NATIVE_STITCHING_TIMING_NOTICE } from '@/lib/serviceAddOns';
 
 interface DeliveryEstimateProps {
   hasStitching: boolean;
@@ -8,9 +9,10 @@ interface DeliveryEstimateProps {
   isUnstitched?: boolean;
   hasStitchedBlouse?: boolean;
   confirmAvailability?: boolean;
+  requiresTailoringTimingConfirmation?: boolean;
 }
 
-export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false }: DeliveryEstimateProps) => (
+export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false, requiresTailoringTimingConfirmation = false }: DeliveryEstimateProps) => (
   <div className="space-y-3 rounded-sm border border-border/50 bg-card/50 p-4">
     <div className="flex items-center gap-2 text-sm">
       <Truck className="h-4 w-4 text-primary" />
@@ -19,17 +21,19 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
 
     <div className="space-y-2 text-sm">
       <div className="flex items-start gap-2">
-        {isMadeToOrder ? (
+        {isMadeToOrder || requiresTailoringTimingConfirmation ? (
           <Clock className="mt-0.5 h-3.5 w-3.5 text-amber-600" />
         ) : (
           <PackageCheck className="mt-0.5 h-3.5 w-3.5 text-green-700" />
         )}
         <div>
           <p className="font-medium text-foreground">
-            {hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days` : 'Ready to ship'}
+            {requiresTailoringTimingConfirmation ? 'Tailored to order' : hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days` : 'Ready to ship'}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {confirmAvailability
+            {requiresTailoringTimingConfirmation
+              ? NATIVE_STITCHING_TIMING_NOTICE
+              : confirmAvailability
               ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
               : isUnstitched
               ? 'Supplied unstitched; tailoring is required before wearing. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
@@ -54,7 +58,7 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
         </div>
       </div>
 
-      {hasStitching && !isMadeToOrder && !isUnstitched && !confirmAvailability && (
+      {hasStitching && !isMadeToOrder && !isUnstitched && !confirmAvailability && !requiresTailoringTimingConfirmation && (
         <div className="flex items-start gap-2">
           <Clock className="mt-0.5 h-3.5 w-3.5 text-amber-600" />
           <p className="text-muted-foreground">

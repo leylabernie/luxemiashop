@@ -1,11 +1,18 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import { fileURLToPath } from 'node:url';
+import { buildSync } from 'esbuild';
+import { createElement } from 'react';
+import { renderToStaticMarkup } from 'react-dom/server';
 import {
   getEligibleServiceAddOns,
   hasNativeFullStitchingOptions,
   selectedEligibleServiceAddOns,
   serviceAddOnTotal,
+  requiresNativeStitchingTimingConfirmation,
+  NATIVE_STITCHING_TIMING_NOTICE,
 } from '../src/lib/serviceAddOns.ts';
 import { resolveAvailableVariantForOption } from '../src/lib/productPurchaseFlow.ts';
 
@@ -170,4 +177,64 @@ test('native UI guard preserves Custom Fit confirmation and blocks unsupported s
   assert.match(source, /serviceAddOnTotal\(selectedAvailableServiceAddOnCodes\)/);
   assert.match(source, /for \(const code of selectedAvailableServiceAddOnCodes\)/);
   assert.match('Custom Fit', /\bcustom(?:\s*size)?\b/i);
+});
+
+test('only native standard/custom stitched selections require confirmed timing', () => {
+  const product = nativeStitchingProduct();
+  for (const { node } of product.variants.edges) {
+    assert.equal(requiresNativeStitchingTimingConfirmation(product, node.selectedOptions), node.id !== '0');
+  }
+  assert.equal(requiresNativeStitchingTimingConfirmation(product, []), false);
+  const unrelated = { title: 'Ready-made Lehenga', productType: 'Lehenga', description: '' };
+  assert.equal(requiresNativeStitchingTimingConfirmation(unrelated, [
+    { name: 'Stitching', value: 'Standard Stitched' },
+  ]), false);
+});
+
+const require = createRequire(import.meta.url);
+const deliveryModule = { exports: {} };
+const deliveryBuild = buildSync({
+  entryPoints: [fileURLToPath(new URL('../src/components/product/DeliveryEstimate.tsx', import.meta.url))],
+  bundle: true, write: false, platform: 'node', format: 'cjs', jsx: 'automatic',
+  alias: { '@': fileURLToPath(new URL('../src', import.meta.url)) },
+  external: ['react', 'react/jsx-runtime'],
+});
+new Function('require', 'module', 'exports', deliveryBuild.outputFiles[0].text)(
+  require, deliveryModule, deliveryModule.exports,
+);
+const renderDelivery = props => renderToStaticMarkup(createElement(deliveryModule.exports.DeliveryEstimate, props));
+
+test('rendered native tailoring notice overrides inherited stock and custom ETAs', () => {
+  for (const inherited of [
+    { shipsWithinDays: 4 },
+    { isMadeToOrder: true },
+    { isUnstitched: true, shipsWithinDays: 4 },
+  ]) {
+    const html = renderDelivery({ hasStitching: false, ...inherited, requiresTailoringTimingConfirmation: true });
+    assert.match(html, /Tailored to order/);
+    assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE));
+    assert.doesNotMatch(html, /Ready to ship|Estimated dispatch|3–4|4–5|Unstitched fabric set/);
+  }
+});
+
+test('rendered fabric-only and unrelated ready-stock shipping behavior is unchanged', () => {
+  const fabric = renderDelivery({ hasStitching: false, isUnstitched: true });
+  assert.match(fabric, /Unstitched fabric set/);
+  assert.doesNotMatch(fabric, /Tailored to order/);
+  const readyStock = renderDelivery({ hasStitching: false });
+  assert.match(readyStock, /Ready to ship/);
+  assert.match(readyStock, /3–4 business days/);
+  const madeToOrder = renderDelivery({ hasStitching: false, isMadeToOrder: true });
+  assert.match(madeToOrder, /4–5 weeks/);
+});
+
+test('native timing guard also covers ship-by badges, specifications and cart attributes', () => {
+  const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
+  assert.match(source, /const shipByLabel = requiresNativeTimingConfirmation \? null : getShipByLabel\(product\)/);
+  assert.match(source, /const shipsWithinDays = requiresNativeTimingConfirmation \? null : getProductShipsWithin\(product\)/);
+  assert.match(source, /requiresTailoringTimingConfirmation=\{requiresNativeTimingConfirmation\}/);
+  assert.match(source, /requiresNativeTimingConfirmation\s*\? NATIVE_STITCHING_TIMING_NOTICE\s*: currentSelectionIsMadeToOrder/);
+  assert.match(source, /key: 'Timing Confirmation', value: NATIVE_STITCHING_TIMING_NOTICE/);
+  assert.match(source, /isCustomSizeSelected && !madeToOrderProduct && !requiresNativeTimingConfirmation/);
+  assert.match(source, /if \(isCustomSizeSelected && !customSizeConfirmed\)/);
 });
