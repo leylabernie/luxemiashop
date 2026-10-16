@@ -1,5 +1,3 @@
-import { hasNativeProductSizeOption } from './productOptionNames.ts';
-
 export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
 
 /**
@@ -78,7 +76,8 @@ export interface ServiceEligibleProduct {
 export const hasFixedStitchedLehengaOptions = (product: ServiceEligibleProduct): boolean => {
   const type = `${product.title} ${product.productType || ''}`;
   if (!/\blehenga\b/i.test(type) || SAREE_PATTERN.test(type)) return false;
-  if (!hasNativeProductSizeOption(product.options ?? [])) return false;
+  if (!product.options?.some(option => option.name.trim().toLowerCase() === 'size'
+    && option.values.length > 0)) return false;
   // Explicit tailoring services keep their existing, separate design controls.
   if (product.tags?.some(tag => /^(?:tailoring|stitching):/i.test(tag.trim()))) return false;
   const stitching = product.options?.find(option => option.name.trim().toLowerCase() === 'stitching');
