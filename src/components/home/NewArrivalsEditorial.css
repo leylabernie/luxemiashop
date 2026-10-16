@@ -1,0 +1,35 @@
+.arrivals-editorial { width:100%; height:100%; display:grid; grid-template-columns:44% 56%; background:#f2f1eb; color:#263e39; overflow:hidden; }
+.arrivals-editorial__copy { display:flex; flex-direction:column; justify-content:center; padding:5% 10% 5% 15%; }
+.arrivals-editorial__eyebrow { margin:0 0 18px; font-size:11px; letter-spacing:.22em; text-transform:uppercase; }
+.arrivals-editorial h1,.arrivals-editorial h2 { margin:0 0 14px; font-family:'Cormorant Garamond','Playfair Display',Georgia,serif; font-size:clamp(32px,4.3vw,66px); font-weight:400; line-height:1.05; }
+.arrivals-editorial__subline { margin:0 0 12px; font-family:Georgia,serif; font-size:clamp(17px,1.7vw,25px); line-height:1.35; }
+.arrivals-editorial__detail { margin:0 0 22px; font-size:13px; line-height:1.6; color:#53625c; }
+.arrivals-editorial__cta { display:inline-flex; width:fit-content; gap:24px; align-items:center; min-height:44px; padding:10px 20px; background:#263e39; color:#fff; text-transform:uppercase; letter-spacing:.12em; font-size:10px; text-decoration:none; }
+.arrivals-editorial__cta:hover { background:#405c50; }
+.arrivals-editorial__cta:focus-visible { outline:2px solid #263e39; outline-offset:4px; }
+.arrivals-editorial__note { margin:14px 0 0; max-width:270px; font-size:10px; line-height:1.5; color:#66716a; }
+.arrivals-editorial__photographs { display:grid; grid-template-columns:1fr 1fr; min-width:0; min-height:0; background:#302b25; gap:1px; }
+.arrivals-editorial__photographs img { display:block; width:100%; height:100%; min-height:0; object-fit:contain; }
+.arrivals-editorial--page { aspect-ratio:3/1; }
+#new-arrivals-products { scroll-margin-top:180px; }
+@media(max-width:639px) {
+ .arrivals-editorial { grid-template-columns:1fr; grid-template-rows:auto minmax(0,1fr); }
+ .arrivals-editorial__copy { align-items:center; text-align:center; padding:18px 20px; }
+ .arrivals-editorial__eyebrow { font-size:9px; margin-bottom:9px; }
+ .arrivals-editorial h1,.arrivals-editorial h2 { font-size:34px; margin-bottom:7px; }
+ .arrivals-editorial__subline { display:none; }
+ .arrivals-editorial__subline br { display:none; }
+ .arrivals-editorial__subline br::after { content:' '; }
+ .arrivals-editorial__detail { display:none; }
+ .arrivals-editorial__cta { min-height:44px; padding:8px 18px; font-size:14px; letter-spacing:.06em; }
+ .arrivals-editorial__note { font-size:12px; margin-top:8px; }
+ .arrivals-editorial--page { aspect-ratio:2/3; }
+}
+@media(min-width:640px) and (max-width:1000px) {
+ .arrivals-editorial__copy { padding-top:10px; padding-bottom:10px; }
+ .arrivals-editorial__eyebrow { font-size:8px; margin-bottom:8px; }
+ .arrivals-editorial h1,.arrivals-editorial h2 { font-size:30px; margin-bottom:8px; }
+ .arrivals-editorial__subline { font-size:15px; margin-bottom:10px; }
+ .arrivals-editorial__detail { display:none; }
+ .arrivals-editorial__note { font-size:8px; margin-top:8px; }
+}

@@ -1,3 +1,5 @@
+import DussehraEditorial from './DussehraEditorial';
+import NewArrivalsEditorial from './NewArrivalsEditorial';
 import {
   type FocusEvent,
   type KeyboardEvent,
@@ -9,7 +11,7 @@ import {
 } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { isFestiveCampaignActive } from '@/config/festiveCampaign';
+import { isDussehraBannerActive } from '@/config/dussehraBanner.mjs';
 
 interface FeaturedSlide {
   id: string;
@@ -36,14 +38,14 @@ interface FeaturedSlide {
 
 const festiveSlide: FeaturedSlide = {
   id: 'festive-sale',
-  eyebrow: 'Festive Sale · Navratri to Diwali',
-  headline: 'Up to 20% Off Sitewide',
-  subline: '10% off $75+ · 15% off $200+ · 20% off $400+ — auto-applied at checkout.',
-  cta: 'Shop the Festive Edit',
-  link: '/new-arrivals',
+  eyebrow: 'Dussehra · The festive edit',
+  headline: 'Celebrate Dussehra',
+  subline: 'A celebration of new beginnings.',
+  cta: 'Shop festive lehengas',
+  link: '/collections/lehengas',
   image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-festive-mobile-sage-v3.webp?v=1791592746",
   desktopImage: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-festive-desktop-sage-v3.webp?v=1791592732",
-  alt: 'Festive Sale — up to 20% off sitewide, auto-applied at checkout. Model in a dusty rose embroidered palazzo suit.',
+  alt: 'Celebrate Dussehra with LuxeMia festive lehengas',
   width: 2172,
   height: 724,
   imageFit: 'cover',
@@ -51,14 +53,14 @@ const festiveSlide: FeaturedSlide = {
   designed: true,
 };
 
-// The festive hero disappears automatically when the campaign ends (Nov 10).
+// The Dussehra creative ends after October 20 Eastern; New Arrivals remains.
 const featuredSlides: FeaturedSlide[] = [
-  ...(isFestiveCampaignActive() ? [festiveSlide] : []),
+  ...(isDussehraBannerActive() ? [festiveSlide] : []),
   {
     id: 'new-arrivals-edit',
     eyebrow: 'Festive 2026 · New In',
-    headline: 'The New Arrivals Edit',
-    subline: 'Embroidered suits · Palazzo sets · Festive favourites.',
+    headline: 'New Arrivals',
+    subline: 'Embroidered lehengas for your next celebration.',
     cta: 'Explore Now',
     link: '/new-arrivals',
     image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-arrivals-mobile-sage-v3.webp?v=1791592753",
@@ -167,6 +169,7 @@ const NewArrivalsBanner = () => {
         className="absolute inset-0 overflow-hidden animate-in fade-in duration-700"
         role="group"
       >
+        {activeSlide.id === 'festive-sale' ? <DussehraEditorial /> : activeSlide.id === 'new-arrivals-edit' ? <NewArrivalsEditorial /> : <>
         {preservesFullImage && (
           <picture aria-hidden="true" className="absolute inset-0 block overflow-hidden">
             {activeSlide.desktopImage && (
@@ -339,6 +342,7 @@ const NewArrivalsBanner = () => {
           </div>
         </div>
         )}
+        </>}
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-between px-[clamp(12px,2vw,28px)] sm:flex">
@@ -402,3 +406,4 @@ const NewArrivalsBanner = () => {
 };
 
 export default NewArrivalsBanner;
+

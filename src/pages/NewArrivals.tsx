@@ -1,6 +1,7 @@
+import NewArrivalsEditorial from '@/components/home/NewArrivalsEditorial';
 import { useState, useMemo } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronDown, Sparkles } from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -108,7 +109,6 @@ const NewArrivals = () => {
     return counts;
   }, [allOrdered, recentByCategory]);
 
-  const totalNew = allOrdered.length;
   const currentSort = sortOptions.find(o => o.value === sortBy)?.label || 'Newest First';
 
   return (
@@ -120,47 +120,8 @@ const NewArrivals = () => {
       />
       <Header />
       <main className="pt-[88px] lg:pt-[124px]">
-        {/* Hero Banner */}
-        <div className="relative h-64 md:h-96 flex items-center justify-center overflow-hidden">
-          <picture className="absolute inset-0 w-full h-full">
-            <source
-              media="(min-width: 768px)"
-              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop-v2.webp"
-              type="image/webp"
-            />
-            <source
-              media="(min-width: 768px)"
-              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-desktop-v2.jpg"
-              type="image/jpeg"
-            />
-            <source
-              srcSet="/images/campaigns/new-indian-ethnic-wear-2026-mobile-v2.webp"
-              type="image/webp"
-            />
-            <img
-              src="/images/campaigns/new-indian-ethnic-wear-2026-mobile-v2.jpg"
-              alt="New arrivals at LuxeMia — festive kediyu lehenga on a warm champagne backdrop"
-              width={1080}
-              height={512}
-              className="absolute inset-0 w-full h-full object-cover"
-              fetchPriority="high"
-              decoding="async"
-            />
-          </picture>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#2f2023]/15 via-transparent to-transparent" />
-          <div className="relative z-10 text-center px-4 text-[#3a4d61]">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <Sparkles className="w-5 h-5 text-[#a67c3c]" />
-              <span className="text-xs uppercase tracking-widest text-[#3a4d61]/70">New Indian Ethnic Wear</span>
-            </div>
-            <h1 className="font-serif text-3xl lg:text-5xl mb-3">New Arrivals</h1>
-            <p className="text-[#3a4d61]/85 font-light max-w-md mx-auto text-sm lg:text-base">
-              {isLoading
-                ? 'Explore recently added lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.'
-                : `Explore ${totalNew} recently added ${totalNew === 1 ? 'style' : 'styles'}, including lehengas, sarees, co-ord sets, menswear and jewelry for U.S. delivery.`
-              }
-            </p>
-          </div>
+        <div className="arrivals-editorial--page">
+          <NewArrivalsEditorial pageHero />
         </div>
 
         {/* Category Filter Pills */}
@@ -223,7 +184,7 @@ const NewArrivals = () => {
         </div>
 
         {/* Product Grid */}
-        <section className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
+        <section id="new-arrivals-products" className="container mx-auto px-4 lg:px-8 py-8 lg:py-12">
           {isLoading ? (
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 lg:gap-6">
               {Array.from({ length: 12 }).map((_, i) => (
