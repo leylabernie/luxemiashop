@@ -37,6 +37,8 @@ import { inferProductSpecColors } from '@/lib/productSpecColor';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
   getEligibleServiceAddOns,
+  hasNativeFullStitchingOptions,
+  selectedEligibleServiceAddOns,
   SERVICE_ADD_ON_PRODUCT_HANDLE,
   SERVICE_ADD_ONS,
   serviceAddOnTotal,
@@ -294,6 +296,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const requestedVariantId = searchParams.get('variant');
   const customizableProduct = getCustomizableProduct(product.handle);
   const madeToOrderProduct = isMadeToOrderProduct(product.handle, product.tags);
+  const hasNativeFullStitching = hasNativeFullStitchingOptions(product);
   const colorways = getColorwaysForHandle(product.handle);
   const { product: serviceAddOnProduct } = useShopifyProduct(
     SERVICE_ADD_ON_PRODUCT_HANDLE,
@@ -308,9 +311,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const isReadyMadeOnly = product.tags?.some((tag) =>
     /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
   ) ?? false;
-  const isStitchable = !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
-  const isMenswear = !madeToOrderProduct && isMenswearProduct(product.productType, product.tags);
-  const showBottomStyleOption = !madeToOrderProduct && shouldShowBottomStyle(product.productType, product.tags);
+  const isStitchable = !hasNativeFullStitching && !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
+  const isMenswear = !hasNativeFullStitching && !madeToOrderProduct && isMenswearProduct(product.productType, product.tags);
+  const showBottomStyleOption = !hasNativeFullStitching && !madeToOrderProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
   const hasStitchedBlouse = product.tags?.includes('construction:Saree with stitched blouse') ?? false;
@@ -410,7 +413,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return variants;
   }, [eligibleServiceAddOnCodes, serviceAddOnProduct]);
   const availableServiceAddOnCodes = eligibleServiceAddOnCodes.filter((code) => serviceVariants.has(code));
-  const selectedAvailableServiceAddOnCodes = selectedServiceAddOnCodes.filter((code) => serviceVariants.has(code));
+  const selectedAvailableServiceAddOnCodes = selectedEligibleServiceAddOns(
+    product, selectedServiceAddOnCodes, availableServiceAddOnCodes,
+  );
 
   // Find the matching variant based on selected options
   const selectedVariant = product.variants.edges.find((variant) => {
@@ -550,6 +555,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
+    // The native matrix supplies standard sizes and the existing Custom Fit
+    // acknowledgment. It does not promise neckline or other design changes.
+    if (hasNativeFullStitching) return false;
     // Supplied readymade construction is not a request for custom tailoring,
     // even when color and size create several Shopify variants.
     if (isReadyMadeOnly) return false;
@@ -570,7 +578,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return Object.entries(selectedOptions).some(([key, val]) =>
       selectionRequiresSeparateMeasurements(key, val),
     );
-  }, [selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
+  }, [hasNativeFullStitching, selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
 
   // Determine the size mode based on stitching type
   const sizeMode: SizeMode = useMemo(() => {
@@ -768,7 +776,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     if (showSleeveStyle && selectedSleeveStyle) {
       customAttributes.push({ key: 'Sleeve Style', value: selectedSleeveStyle });
     }
-    if (customAlteration.trim()) {
+    if (!hasNativeFullStitching && customAlteration.trim()) {
       customAttributes.push({ key: 'Custom Alteration Instructions', value: customAlteration.trim() });
     }
 

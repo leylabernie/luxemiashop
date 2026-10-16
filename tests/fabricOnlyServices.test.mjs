@@ -1,6 +1,13 @@
 import assert from 'node:assert/strict';
 import test from 'node:test';
-import { getEligibleServiceAddOns } from '../src/lib/serviceAddOns.ts';
+import { readFileSync } from 'node:fs';
+import {
+  getEligibleServiceAddOns,
+  hasNativeFullStitchingOptions,
+  selectedEligibleServiceAddOns,
+  serviceAddOnTotal,
+} from '../src/lib/serviceAddOns.ts';
+import { resolveAvailableVariantForOption } from '../src/lib/productPurchaseFlow.ts';
 
 test('fabric-only lehenga does not sell a garment alteration as stitching', () => {
   assert.deepEqual(getEligibleServiceAddOns({
@@ -33,4 +40,134 @@ test('mixed construction choices retain the alteration option', () => {
     title: 'Lehenga', productType: 'Lehenga Choli', description: '',
     options: [{ name: 'Stitching', values: ['Unstitched', 'Ready-made'] }],
   }), ['garment-alteration']);
+});
+
+const standardSizes = ['32', '34', '36', '38', '40', '42', '44', '46'];
+const nativeStitchingProduct = (fabricSize = 'Fabric Only') => {
+  const choices = [
+    ['Unstitched (Fabric Only)', fabricSize, 100],
+    ...standardSizes.map(size => ['Standard Stitched', size, 129]),
+    ['Custom Stitched', 'Custom Fit', 144],
+  ];
+  return {
+    title: 'Silk Lehenga Choli', productType: 'Lehenga Choli', description: '',
+    tags: ['construction:Unstitched', 'unstitched'],
+    options: [
+      { name: 'Stitching', values: ['Unstitched (Fabric Only)', 'Standard Stitched', 'Custom Stitched'] },
+      { name: 'Size', values: [fabricSize, ...standardSizes, 'Custom Fit'] },
+    ],
+    variants: { edges: choices.map(([stitching, size, amount], index) => ({ node: {
+      id: String(index), availableForSale: true, price: { amount: String(amount), currencyCode: 'USD' },
+      selectedOptions: [{ name: 'Stitching', value: stitching }, { name: 'Size', value: size }],
+    } })) },
+  };
+};
+
+test('the complete approved native stitching matrix never sells another alteration', () => {
+  for (const fabricSize of ['Fabric Only', 'Not Applicable']) {
+    const product = nativeStitchingProduct(fabricSize);
+    assert.equal(hasNativeFullStitchingOptions(product), true);
+    assert.deepEqual(getEligibleServiceAddOns(product), []);
+  }
+});
+
+test('unrelated garments and saree services retain their existing behavior', () => {
+  const suit = nativeStitchingProduct();
+  suit.title = 'Silk Suit';
+  suit.productType = 'Suit';
+  assert.equal(hasNativeFullStitchingOptions(suit), false);
+  assert.deepEqual(getEligibleServiceAddOns(suit), ['garment-alteration']);
+  const saree = { title: 'Silk Saree', productType: 'Saree', description: 'Unstitched blouse piece' };
+  assert.deepEqual(getEligibleServiceAddOns(saree), ['blouse-stitching', 'pico-fall', 'matching-petticoat']);
+});
+
+test('incomplete, duplicate, and Cartesian native matrices are not misclassified', () => {
+  const incomplete = nativeStitchingProduct();
+  incomplete.variants.edges.pop();
+  assert.equal(hasNativeFullStitchingOptions(incomplete), false);
+  const duplicate = nativeStitchingProduct();
+  duplicate.variants.edges.push(duplicate.variants.edges[0]);
+  assert.equal(hasNativeFullStitchingOptions(duplicate), false);
+  const invalid = nativeStitchingProduct();
+  invalid.variants.edges[0].node.selectedOptions[1].value = '32';
+  assert.equal(hasNativeFullStitchingOptions(invalid), false);
+  const noVariants = nativeStitchingProduct();
+  delete noVariants.variants;
+  assert.equal(hasNativeFullStitchingOptions(noVariants), false);
+});
+
+test('an unrelated ready-made choice and unspaced CustomFit do not match the contract', () => {
+  const readyMade = nativeStitchingProduct();
+  readyMade.options[0].values[1] = 'Ready-made';
+  assert.equal(hasNativeFullStitchingOptions(readyMade), false);
+  assert.deepEqual(getEligibleServiceAddOns(readyMade), ['garment-alteration']);
+  const customFit = nativeStitchingProduct();
+  customFit.options[1].values[9] = 'CustomFit';
+  assert.equal(hasNativeFullStitchingOptions(customFit), false);
+});
+
+test('sold-out native sizes retain included-stitching protection', () => {
+  const product = nativeStitchingProduct();
+  product.variants.edges[3].node.availableForSale = false;
+  assert.equal(hasNativeFullStitchingOptions(product), true);
+  assert.deepEqual(getEligibleServiceAddOns(product), []);
+});
+
+test('every color must contain its own complete valid matrix', () => {
+  const product = nativeStitchingProduct();
+  const base = product.variants.edges;
+  product.options.push({ name: 'Color', values: ['Blue', 'Red'] });
+  product.variants.edges = ['Blue', 'Red'].flatMap(color => base.map(({ node }) => ({
+    node: { ...node, selectedOptions: [...node.selectedOptions, { name: 'Color', value: color }] },
+  })));
+  assert.equal(hasNativeFullStitchingOptions(product), true);
+  product.variants.edges.pop();
+  assert.equal(hasNativeFullStitchingOptions(product), false);
+});
+
+test('stale selected alteration cannot affect native price or enter the service-line list', () => {
+  const selected = ['garment-alteration'];
+  const available = ['garment-alteration'];
+  const readyMade = { title: 'Ready-made Lehenga', productType: 'Lehenga', description: '' };
+  assert.deepEqual(selectedEligibleServiceAddOns(readyMade, selected, available), selected);
+  const safeSelection = selectedEligibleServiceAddOns(nativeStitchingProduct(), selected, available);
+  assert.deepEqual(safeSelection, []);
+  assert.equal(serviceAddOnTotal(safeSelection), 0);
+  assert.deepEqual(selectedEligibleServiceAddOns(readyMade, selected, []), []);
+  assert.deepEqual(selectedEligibleServiceAddOns(readyMade, [...selected, ...selected], available), selected);
+});
+
+test('all 130 native option transitions preserve a real sparse variant and its exact price', () => {
+  const product = nativeStitchingProduct();
+  const variants = product.variants.edges.map(edge => edge.node);
+  let checked = 0;
+  for (const current of variants) {
+    const selected = Object.fromEntries(current.selectedOptions.map(option => [option.name, option.value]));
+    for (const option of product.options) for (const value of option.values) {
+      const resolved = resolveAvailableVariantForOption(variants, selected, option.name, value);
+      assert.ok(variants.includes(resolved));
+      const next = Object.fromEntries(resolved.selectedOptions.map(choice => [choice.name, choice.value]));
+      assert.equal(next[option.name], value);
+      const price = next.Stitching === 'Standard Stitched' ? '129'
+        : next.Stitching === 'Custom Stitched' ? '144' : '100';
+      assert.equal(resolved.price.amount, price);
+      checked++;
+    }
+  }
+  assert.equal(checked, 130);
+});
+
+test('native UI guard preserves Custom Fit confirmation and blocks unsupported style attributes', () => {
+  const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
+  assert.match(source, /const isStitchable = !hasNativeFullStitching &&/);
+  assert.match(source, /const isMenswear = !hasNativeFullStitching &&/);
+  assert.match(source, /const showBottomStyleOption = !hasNativeFullStitching &&/);
+  assert.match(source, /const needsStitchingSize = useMemo\(\(\) => \{[\s\S]*?if \(hasNativeFullStitching\) return false;/);
+  assert.match(source, /if \(!hasNativeFullStitching && customAlteration\.trim\(\)\)/);
+  assert.match(source, /if \(isCustomSizeSelected && !customSizeConfirmed\)/);
+  assert.match(source, /Measurement Confirmation.*Customer acknowledged before checkout/);
+  assert.match(source, /const selectedAvailableServiceAddOnCodes = selectedEligibleServiceAddOns\(/);
+  assert.match(source, /serviceAddOnTotal\(selectedAvailableServiceAddOnCodes\)/);
+  assert.match(source, /for \(const code of selectedAvailableServiceAddOnCodes\)/);
+  assert.match('Custom Fit', /\bcustom(?:\s*size)?\b/i);
 });

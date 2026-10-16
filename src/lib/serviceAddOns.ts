@@ -63,11 +63,63 @@ export interface ServiceEligibleProduct {
   description: string;
   tags?: string[];
   options?: Array<{ name: string; values: string[] }>;
+  variants?: {
+    edges: Array<{ node: { selectedOptions: Array<{ name: string; value: string }> } }>;
+  };
   metadata?: {
     blouseFabric?: string | null;
     includedComponents?: string[] | null;
   };
 }
+
+/**
+ * Recognizes the approved fabric / standard / custom lehenga contract, with
+ * only its ten valid pairs per color (or other native option combination).
+ * Availability is deliberately ignored: a sold-out size does not turn an
+ * included stitching service into a separate alteration purchase.
+ */
+export const hasNativeFullStitchingOptions = (product: ServiceEligibleProduct): boolean => {
+  if (!/\blehenga\b/i.test(`${product.title} ${product.productType || ''}`)) return false;
+  const normalize = (value: string) => value.trim().replace(/\s+/g, ' ').toLowerCase();
+  const stitching = product.options?.find(option => normalize(option.name) === 'stitching');
+  const size = product.options?.find(option => normalize(option.name) === 'size');
+  if (!stitching || !size) return false;
+
+  const stitchingValues = stitching.values.map(normalize);
+  const sizes = size.values.map(normalize);
+  const fabricSize = sizes.find(value => value === 'fabric only' || value === 'not applicable');
+  const standardSizes = ['32', '34', '36', '38', '40', '42', '44', '46'];
+  if (stitchingValues.length !== 3 || ![
+    'unstitched (fabric only)', 'standard stitched', 'custom stitched',
+  ].every(value => stitchingValues.includes(value))) return false;
+  if (!fabricSize || sizes.length !== 10 || ![
+    ...standardSizes, 'custom fit',
+  ].every(value => sizes.includes(value))) return false;
+
+  const expectedPairs = new Set([
+    `unstitched (fabric only)::${fabricSize}`,
+    ...standardSizes.map(value => `standard stitched::${value}`),
+    'custom stitched::custom fit',
+  ]);
+  const groups = new Map<string, Set<string>>();
+  for (const { node } of product.variants?.edges ?? []) {
+    const selected = node.selectedOptions;
+    const construction = selected.find(option => option.name === stitching.name)?.value;
+    const selectedSize = selected.find(option => option.name === size.name)?.value;
+    if (!construction || !selectedSize) return false;
+    const pair = `${normalize(construction)}::${normalize(selectedSize)}`;
+    if (!expectedPairs.has(pair)) return false;
+    const groupKey = JSON.stringify(selected
+      .filter(option => option.name !== stitching.name && option.name !== size.name)
+      .map(option => [option.name, option.value])
+      .sort(([left], [right]) => left.localeCompare(right)));
+    const pairs = groups.get(groupKey) ?? new Set<string>();
+    if (pairs.has(pair)) return false;
+    pairs.add(pair);
+    groups.set(groupKey, pairs);
+  }
+  return groups.size > 0 && [...groups.values()].every(pairs => pairs.size === expectedPairs.size);
+};
 
 const productEvidence = (product: ServiceEligibleProduct) => [
   product.title,
@@ -102,6 +154,10 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
     return services;
   }
 
+  // These native variant prices already include the selected full-stitching
+  // service. Neither their fabric-only nor finished choices sell alterations.
+  if (hasNativeFullStitchingOptions(product)) return [];
+
   // Fabric-only selections cannot be altered as finished garments. Keep
   // alteration available for ready-made products and mixed construction ranges.
   const constructionValues = (product.options ?? [])
@@ -118,6 +174,16 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
   // a construction/stitching selector: altering a purchased garment is a
   // distinct service from stitching an unstitched one.
   return isApparel ? ['garment-alteration'] : [];
+};
+
+/** Revalidate saved UI selections before pricing or adding any service line. */
+export const selectedEligibleServiceAddOns = (
+  product: ServiceEligibleProduct,
+  selected: ServiceAddOnCode[],
+  available: ServiceAddOnCode[],
+): ServiceAddOnCode[] => {
+  const eligible = new Set(getEligibleServiceAddOns(product));
+  return [...new Set(selected)].filter(code => eligible.has(code) && available.includes(code));
 };
 
 export const serviceAddOnTotal = (codes: ServiceAddOnCode[]) => codes.reduce(
