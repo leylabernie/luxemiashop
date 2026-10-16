@@ -313,6 +313,21 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     <span className="text-foreground/70">Subtotal</span>
                     <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>
                   </div>
+                  {festiveTier && (
+                    <div className="flex justify-between gap-3 text-sm">
+                      <span className="text-foreground/70">Estimated festive discount ({festiveTier.percent}%)</span>
+                      <span className="font-medium">−{formatPrice(festiveDiscountCents / 100, currencyCode)}</span>
+                    </div>
+                  )}
+                  <div className="flex justify-between gap-3 text-sm">
+                    <span className="text-foreground/70">Estimated subtotal after discounts</span>
+                    <span className="font-medium">{formatPrice(shippingSubtotal, currencyCode)}</span>
+                  </div>
+                  <div className="flex justify-between gap-3 text-sm">
+                    <span className="text-foreground/70">Shipping</span>
+                    <span className="text-right">Calculated at checkout</span>
+                  </div>
+                  <p className="text-xs leading-relaxed text-muted-foreground">Estimates exclude shipping, taxes and duties. Discount eligibility and final amounts are confirmed at checkout.</p>
                   <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
                     <p>{SHIPPING_PROMISE}</p>
                     <p className="mt-1">Discounts are applied before shipping eligibility. Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.</p>
