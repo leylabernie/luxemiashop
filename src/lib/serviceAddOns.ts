@@ -132,6 +132,14 @@ export const requiresNativeStitchingTimingConfirmation = (
   && /^(?:standard|custom) stitched$/i.test(option.value.trim()),
 );
 
+export const isUnstitchedDeliverySelection = (
+  product: ServiceEligibleProduct,
+  selectedOptions: Array<{ name: string; value: string }>,
+): boolean => hasNativeFullStitchingOptions(product)
+  ? selectedOptions.some(option => option.name.trim().toLowerCase() === 'stitching'
+    && option.value.trim().toLowerCase() === 'unstitched (fabric only)')
+  : product.tags?.includes('construction:Unstitched') ?? false;
+
 const productEvidence = (product: ServiceEligibleProduct) => [
   product.title,
   product.productType,

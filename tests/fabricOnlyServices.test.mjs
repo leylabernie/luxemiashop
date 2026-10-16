@@ -12,6 +12,7 @@ import {
   selectedEligibleServiceAddOns,
   serviceAddOnTotal,
   requiresNativeStitchingTimingConfirmation,
+  isUnstitchedDeliverySelection,
   NATIVE_STITCHING_TIMING_NOTICE,
 } from '../src/lib/serviceAddOns.ts';
 import { resolveAvailableVariantForOption } from '../src/lib/productPurchaseFlow.ts';
@@ -226,6 +227,34 @@ test('rendered fabric-only and unrelated ready-stock shipping behavior is unchan
   assert.match(readyStock, /3–4 business days/);
   const madeToOrder = renderDelivery({ hasStitching: false, isMadeToOrder: true });
   assert.match(madeToOrder, /4–5 weeks/);
+});
+
+test('mixed-offer catalog tags use the actual selected Fabric Only variant in delivery', () => {
+  const product = nativeStitchingProduct();
+  product.tags = ['construction:Fabric Only or Stitched'];
+  for (const { node } of product.variants.edges) {
+    const isUnstitched = isUnstitchedDeliverySelection(product, node.selectedOptions);
+    assert.equal(isUnstitched, node.id === '0');
+    const html = renderDelivery({
+      hasStitching: false,
+      isUnstitched,
+      requiresTailoringTimingConfirmation: requiresNativeStitchingTimingConfirmation(product, node.selectedOptions),
+    });
+    if (node.id === '0') {
+      assert.match(html, /Unstitched fabric set/);
+      assert.match(html, /Supplied unstitched; tailoring is required before wearing/);
+      assert.doesNotMatch(html, /Ready to ship|3–4 business days|Tailored to order/);
+    } else {
+      assert.match(html, /Tailored to order/);
+      assert.doesNotMatch(html, /Unstitched fabric set/);
+    }
+  }
+  const unrelated = { title: 'Fabric suit', description: '', tags: ['construction:Unstitched'] };
+  assert.equal(isUnstitchedDeliverySelection(unrelated, []), true);
+  assert.equal(isUnstitchedDeliverySelection({ ...unrelated, tags: [] }, []), false);
+  const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
+  assert.match(source, /const isUnstitchedDelivery = isUnstitchedDeliverySelection\(\s*product, purchasableVariant\?\.node\.selectedOptions \?\? \[\]/);
+  assert.match(source, /isUnstitched=\{isUnstitchedDelivery\}/);
 });
 
 test('native timing guard also covers ship-by badges, specifications and cart attributes', () => {

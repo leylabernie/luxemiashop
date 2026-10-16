@@ -39,6 +39,7 @@ import {
   getEligibleServiceAddOns,
   hasNativeFullStitchingOptions,
   requiresNativeStitchingTimingConfirmation,
+  isUnstitchedDeliverySelection,
   NATIVE_STITCHING_TIMING_NOTICE,
   selectedEligibleServiceAddOns,
   SERVICE_ADD_ON_PRODUCT_HANDLE,
@@ -534,6 +535,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const requiresNativeTimingConfirmation = requiresNativeStitchingTimingConfirmation(
     product, purchasableVariant?.node.selectedOptions ?? [],
   );
+  const isUnstitchedDelivery = isUnstitchedDeliverySelection(
+    product, purchasableVariant?.node.selectedOptions ?? [],
+  );
   const shipsWithinDays = requiresNativeTimingConfirmation ? null : getProductShipsWithin(product);
   const shipByLabel = requiresNativeTimingConfirmation ? null : getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
@@ -923,7 +927,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       )}
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={product.tags?.includes('construction:Unstitched')} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} />
+      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} />
       {shipByLabel && !currentSelectionIsMadeToOrder && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
