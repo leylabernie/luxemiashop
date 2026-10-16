@@ -12,7 +12,7 @@ import {
   trackViewCart,
 } from '@/hooks/useAnalytics';
 import { toast } from 'sonner';
-import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
+import { isHiddenBillingProductHandle, type ServiceAddOnCode } from '@/lib/serviceAddOns';
 
 export interface CartAttribute {
   key: string;
@@ -21,6 +21,8 @@ export interface CartAttribute {
 
 export interface CartItem {
   product: ShopifyProduct;
+  // Display identity only: do not change Shopify attributes or cart-line equality.
+  serviceAddOnCode?: ServiceAddOnCode;
   variantId: string;
   variantTitle: string;
   price: {

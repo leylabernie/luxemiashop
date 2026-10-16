@@ -37,6 +37,7 @@ import { inferProductSpecColors } from '@/lib/productSpecColor';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
   getEligibleServiceAddOns,
+  hasFixedStitchedLehengaOptions,
   hasNativeFullStitchingOptions,
   requiresNativeStitchingTimingConfirmation,
   isUnstitchedDeliverySelection,
@@ -300,6 +301,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const customizableProduct = getCustomizableProduct(product.handle);
   const madeToOrderProduct = isMadeToOrderProduct(product.handle, product.tags);
   const hasNativeFullStitching = hasNativeFullStitchingOptions(product);
+  const hasFixedStitchedLehenga = hasFixedStitchedLehengaOptions(product);
   const colorways = getColorwaysForHandle(product.handle);
   const { product: serviceAddOnProduct } = useShopifyProduct(
     SERVICE_ADD_ON_PRODUCT_HANDLE,
@@ -614,6 +616,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
   // Whether blouse neckline selector should show
   const showNeckline = useMemo(() => {
+    // Native fit choices on a supplied stitched lehenga do not promise a redesign.
+    if (hasFixedStitchedLehenga) return false;
     // Always show for blouse products (lehenga/saree) when stitching is selected
     if (isBlouseProductType(product.productType, product.tags) && needsStitchingSize) {
       return true;
@@ -627,7 +631,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       return true;
     }
     return false;
-  }, [product.productType, product.tags, needsStitchingSize, selectedStitchingType, showBottomStyleOption]);
+  }, [hasFixedStitchedLehenga, product.productType, product.tags, needsStitchingSize, selectedStitchingType, showBottomStyleOption]);
 
   // Whether sleeve style selector should show (only for Made to Measure)
   const showSleeveStyle = useMemo(() => {
@@ -811,6 +815,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         if (!serviceVariant) continue;
         addItem({
           product: { node: serviceAddOnProduct },
+          serviceAddOnCode: code,
           variantId: serviceVariant.id,
           variantTitle: serviceVariant.title,
           price: serviceVariant.price,

@@ -1,3 +1,5 @@
+import { hasNativeProductSizeOption } from './productOptionNames.ts';
+
 export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
 
 /**
@@ -71,6 +73,49 @@ export interface ServiceEligibleProduct {
     includedComponents?: string[] | null;
   };
 }
+
+/** A supplied stitched lehenga with native sizes does not offer neckline changes. */
+export const hasFixedStitchedLehengaOptions = (product: ServiceEligibleProduct): boolean => {
+  const type = `${product.title} ${product.productType || ''}`;
+  if (!/\blehenga\b/i.test(type) || SAREE_PATTERN.test(type)) return false;
+  if (!hasNativeProductSizeOption(product.options ?? [])) return false;
+  // Explicit tailoring services keep their existing, separate design controls.
+  if (product.tags?.some(tag => /^(?:tailoring|stitching):/i.test(tag.trim()))) return false;
+  const stitching = product.options?.find(option => option.name.trim().toLowerCase() === 'stitching');
+  if (!stitching || stitching.values.length !== 1
+    || !/^(?:fully\s+)?stitched$/i.test(stitching.values[0].trim())) return false;
+  const variants = product.variants?.edges ?? [];
+  return variants.length > 0 && variants.every(({ node }) => node.selectedOptions.some(option =>
+    option.name === stitching.name
+    && option.value.trim().toLowerCase() === stitching.values[0].trim().toLowerCase(),
+  ));
+};
+
+interface ServiceCartLineLike {
+  product: { node: ServiceEligibleProduct & { handle?: string } };
+  variantTitle: string;
+  serviceAddOnCode?: ServiceAddOnCode;
+  customAttributes?: Array<{ key: string; value: string }>;
+}
+
+/** Shared billing variants need the selected service identity, not a saree assumption. */
+export const isGarmentAlterationCartLine = (
+  item: ServiceCartLineLike,
+  cartItems: ServiceCartLineLike[],
+): boolean => {
+  if (!isHiddenBillingProductHandle(item.product.node.handle)) return false;
+  if (item.serviceAddOnCode) return item.serviceAddOnCode === 'garment-alteration';
+  // Older carts have only Applies To. Infer only when the shared alteration
+  // variant is linked unambiguously to an eligible non-saree garment in this cart.
+  if (item.variantTitle !== SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue) return false;
+  const appliesTo = item.customAttributes?.find(attribute => attribute.key === 'Applies To')?.value;
+  if (!appliesTo) return false;
+  const linked = cartItems.filter(line => !isHiddenBillingProductHandle(line.product.node.handle)
+    && line.product.node.title === appliesTo);
+  return linked.length > 0 && linked.every(line =>
+    getEligibleServiceAddOns(line.product.node).includes('garment-alteration'),
+  );
+};
 
 /**
  * Recognizes the approved fabric / standard / custom lehenga contract, with

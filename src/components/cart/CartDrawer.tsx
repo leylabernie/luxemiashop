@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
-import { isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
+import { isGarmentAlterationCartLine, isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
 import {
   isRakshaBandhanCampaignActive,
   RAKSHA_BANDHAN_CAMPAIGN,
@@ -134,12 +134,13 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 </div>
               ) : (
                 items.map((item, index) => {
-                  const isSareeService = isHiddenBillingProductHandle(item.product.node.handle);
+                  const isService = isHiddenBillingProductHandle(item.product.node.handle);
+                  const isGarmentAlteration = isGarmentAlterationCartLine(item, items);
                   const variantImage = item.product.node.variants.edges.find(
                     ({ node }) => node.id === item.variantId,
                   )?.node.image;
-                  const image = isSareeService ? undefined : variantImage ?? item.product.node.images?.edges?.[0]?.node;
-                  const serviceLabel = item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
+                  const image = isService ? undefined : variantImage ?? item.product.node.images?.edges?.[0]?.node;
+                  const serviceLabel = isGarmentAlteration ? 'Garment Alteration' : item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
                   const visibleAttributes = item.customAttributes;
                   
                   return (
@@ -148,7 +149,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}
-                      className={`flex gap-3 sm:gap-4 ${isSareeService ? 'rounded-sm bg-card/60 p-3' : 'border-b border-border/50 pb-5'}`}
+                      className={`flex gap-3 sm:gap-4 ${isService ? 'rounded-sm bg-card/60 p-3' : 'border-b border-border/50 pb-5'}`}
                     >
                       <div className="h-24 w-20 shrink-0 overflow-hidden rounded-sm border border-border/50 bg-card">
                         {image ? (
@@ -160,9 +161,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                             className="w-full h-full object-cover object-top"
                           />
                         ) : (
-                          isSareeService ? (
+                          isService ? (
                             <div className="flex h-full w-full items-center justify-center bg-primary/5 px-2 text-center text-[10px] font-medium leading-tight text-primary">
-                              Saree service
+                              {isGarmentAlteration ? 'Garment alteration' : 'Saree service'}
                             </div>
                           ) : (
                             <ProductPlaceholder className="w-full h-full" />
@@ -171,11 +172,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       </div>
                       <div className="flex-1 min-w-0">
                           <h3 className="mb-1 pr-1 font-serif text-base leading-snug">
-                            {isSareeService ? serviceLabel : item.product.node.title}
+                            {isService ? serviceLabel : item.product.node.title}
                           </h3>
                         <p className="text-xs text-foreground/60 mb-1">
-                          {isSareeService
-                            ? 'Finishing service for your selected saree'
+                          {isService
+                            ? (isGarmentAlteration ? 'Alteration service for your selected garment' : 'Finishing service for your selected saree')
                             : (item.selectedOptions.map(o => o.value).join(' / ') || item.variantTitle)}
                         </p>
                         {visibleAttributes && visibleAttributes.length > 0 && (
@@ -192,9 +193,9 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                           </p>
                         
                         <div className="mt-3 flex items-center justify-between">
-                          {isSareeService ? (
+                          {isService ? (
                             <p className="text-xs leading-relaxed text-muted-foreground">
-                              Applied to {item.quantity} saree{item.quantity === 1 ? '' : 's'}
+                              Applied to {item.quantity} {isGarmentAlteration ? 'garment' : 'saree'}{item.quantity === 1 ? '' : 's'}
                             </p>
                           ) : (
                             <div className="flex items-center gap-3 rounded-sm border border-border/60 bg-background px-2 py-1">
@@ -217,7 +218,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                           )}
                           <button
                             className="rounded-full p-2 text-foreground/50 transition-colors hover:bg-destructive/10 hover:text-destructive"
-                            aria-label={isSareeService ? `Remove ${serviceLabel}` : 'Remove item'}
+                            aria-label={isService ? `Remove ${serviceLabel}` : 'Remove item'}
                             onClick={() => removeItem(item.variantId, item.customAttributes)}
                           >
                             <Trash2 className="w-4 h-4" />
