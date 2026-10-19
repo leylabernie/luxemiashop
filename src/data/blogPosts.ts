@@ -331,39 +331,53 @@ export const blogPosts: BlogPost[] = [
     id: '10',
     slug: 'wedding-guest-outfit-ideas',
     title: 'What to Wear to an Indian Wedding: A Fact-Checked Guest Guide',
-    excerpt: 'Indian and South Asian weddings are diverse. Use the invitation and the hosts as the authority on ceremony names, formality, color requests and religious-venue requirements.',
+    excerpt: 'Plan an Indian wedding guest outfit by event, then compare three lehengas with fabric-only, standard-stitched and custom-stitched prices explained.',
     content: `
-      ${editorialNote}
-      <h2>Start with the invitation, not an internet rule</h2>
-      <p>There is no single dress code shared by every Indian wedding. Families may follow different regional, religious and personal customs, and two events with the same name may have different levels of formality. The invitation, wedding website or host is the most reliable source for the event you are attending.</p>
-
-      <h2>Questions to confirm</h2>
+      <p><strong>Review note:</strong> Product details and prices were checked on October 19, 2026. The retained cultural and textile references were originally reviewed on August 8, 2026. Styling suggestions are optional; the invitation and hosts guide your event choices.</p>
+      <p>Choosing an Indian wedding guest outfit starts with the invitation: which events you are attending, the requested dress code and the venue. Once those are clear, compare the outfit’s fit, finishing and full price. Below are practical ways to narrow your search, plus three current LuxeMia lehengas with stitching costs explained.</p>
+      <p><a href="/collections/wedding-guest-outfits">Browse Indian wedding guest outfits</a>, or start with <a href="/lehengas">lehengas</a>, <a href="/sarees">sarees</a>, <a href="/suits">salwar suits</a> and <a href="/menswear">menswear</a>.</p>
+      <h2>Match your outfit to the invitation</h2>
+      <p>Ask the hosts about formality, requested or reserved colors and any religious-venue requirements. The same event name can mean different things to different families. Red, white and black are not universally forbidden, and a color recommendation online should never override the couple’s instructions.</p>
       <ul>
-        <li>Which events are you invited to, and are they indoors, outdoors or at a religious venue?</li>
-        <li>Does the couple specify formal, cocktail, traditional, fusion or another dress code?</li>
-        <li>Are any colors reserved or requested? Do not assume that red, black or white is universally forbidden.</li>
-        <li>Will the venue require covered shoulders, a head covering, removal of shoes or another practice?</li>
-        <li>How long will you be standing, sitting on the floor or dancing?</li>
+      <li><strong>For mehendi or a daytime gathering:</strong> think about the venue, weather and how long you will be sitting or standing. If you expect to have henna applied, consider sleeves and accessories that stay clear of your hands. Compare <a href="/blog/what-should-guests-wear-to-a-mehendi">mehendi guest outfit ideas</a>.</li>
+      <li><strong>For sangeet:</strong> if dancing is part of your plan, check waist fit, skirt length and how you will secure a dupatta. Try sitting, raising your arms and taking a full step when checking fit. See the <a href="/blog/what-should-guests-wear-to-a-sangeet">sangeet outfit guide</a>.</li>
+      <li><strong>For the ceremony:</strong> check any coverage, head-covering or footwear requirements with the hosts or venue. Choose a garment you can comfortably wear for the expected ceremony length.</li>
+      <li><strong>For a reception:</strong> use the stated dress code to decide how formal to go. Embroidery, color and accessories are personal styling choices; you do not need to buy a separate outfit unless the plans or your preferences call for one.</li>
       </ul>
-
-      <h2>Common outfit categories</h2>
-      <p>Sarees, lehengas, salwar suits, anarkalis, shararas, kurtas, bandhgala-style jackets and fusion outfits are all used for celebrations, but none is automatically correct for every event. Choose only after checking the host's guidance and the garment's comfort and movement.</p>
-
-      <h2>Practical shopping guidance</h2>
-      <p>Confirm the exact fabric or materials, lining, included pieces, stitching status, measurements and care instructions on the listing. If you need an outfit for a fixed date, contact LuxeMia before ordering; the site does not promise a universal delivery time or guaranteed event-date arrival.</p>
-
-      <h2>Respectful guest etiquette</h2>
-      <p>When a custom or garment term is unfamiliar, asking the hosts is more respectful than treating a generalized online checklist as a rule. A guest does not need to imitate a specific regional or religious tradition to participate thoughtfully.</p>
+      <h2>Which type of outfit should you shop?</h2>
+      <p>A <a href="/lehengas">lehenga</a> is a useful starting point if you want a skirt-and-choli look. Check which pieces are included and whether they arrive stitched. If you prefer a draped outfit, explore <a href="/sarees">sarees</a> and check the blouse and petticoat requirements. For a tunic-and-trouser option, browse <a href="/suits">salwar suits, anarkalis and shararas</a>. The <a href="/menswear">menswear collection</a> offers another starting point for the host’s requested look. Your comfort and the invitation matter more than a rule about which silhouette a guest should wear.</p>
+      <h2>Three lehengas to compare, with stitching prices</h2>
+      <p>These product details and USD prices were checked on October 19, 2026. Prices below include the stated stitching selection, but exclude shipping, tax and optional alterations. Follow each link to confirm current availability and the selected option before buying. Occasion suggestions are styling ideas, not guarantees that an outfit meets your event’s dress code.</p>
+      <h3>Yellow Georgette Embroidered Lehenga Choli</h3>
+      <p>If your invitation calls for yellow, start with this embroidered georgette design. <strong>Standard stitched is $68.92</strong>; custom stitched is $83.92. The $39.92 option is unstitched fabric and needs tailoring before wear. Standard stitched choices are 32, 34, 36, 38, 40, 42, 44 and 46. Custom stitched requires your measurements.</p>
+      <p><a href="/product/yellow-georgette-embroidered-lehenga-choli">Compare yellow georgette sizes and stitching</a>.</p>
+      <h3>Lilac Organza Embroidered Lehenga Choli</h3>
+      <p>Consider this lilac embroidered organza design if you want a softer color for a celebration. <strong>Standard stitched is $117.25</strong>; custom stitched is $132.25. The $88.25 option is unstitched fabric. Standard stitched choices are 32, 34, 36, 38, 40, 42, 44 and 46. Confirm your measurements and the listed components before ordering.</p>
+      <p><a href="/product/lilac-organza-embroidered-lehenga-choli">Compare lilac organza sizes and stitching</a>.</p>
+      <h3>Rust Orange Art Silk Embroidered Lehenga Choli</h3>
+      <p>This rust orange embroidered art silk design is listed as <strong>stitched at $79.08</strong>, with size choices from 32 to 46. Optional garment alteration carries a separate charge. If you need a custom fit, discuss the measurements and alteration service with LuxeMia before choosing it. Stitched construction does not establish a dispatch or arrival date.</p>
+      <p><a href="/product/rust-orange-art-silk-embroidered-lehenga-choli">View the stitched rust orange lehenga</a>.</p>
+      <h2>Check fit and timing before you order</h2>
+      <p>Compare your measurements with the exact garment requirements rather than choosing only by a familiar clothing size. Start with the <a href="/blog/how-to-measure-for-a-lehenga-ordered-online">lehenga measurement checklist</a>. Confirm included pieces, lining and any finishing needed; accessories in a photograph may be styling props.</p>
+      <p>For a fixed wedding date, <a href="/contact">contact LuxeMia</a> with the product, size or stitching option, destination and event date. Confirm availability, processing and carrier transit before ordering. Standard and custom stitching require tailoring; there is no universal arrival promise. Review the <a href="/shipping">shipping policy</a> and <a href="/returns">final-sale and issue-reporting policy</a> before checkout.</p>
+      <h2>Ready to shortlist your outfit?</h2>
+      <p><a href="/collections/wedding-guest-outfits">Shop the wedding guest collection</a> and save the designs that match your invitation, budget and measurements. If you are comparing unstitched and stitched options, use the price of the finish you will actually wear.</p>
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-01-02',
-    updatedAt: FACT_CHECKED_AT,
-    factCheckedAt: FACT_CHECKED_AT,
+    updatedAt: '2026-10-19',
+    factCheckedAt: '2026-10-19',
     category: 'Wedding Guide',
     tags: ['indian wedding guest', 'wedding guest outfit', 'south asian wedding', 'guest dress code', 'ethnic wear'],
     image: '/images/blog/gdrive/bridesmaid-green-outfit.webp',
-    readTime: 4,
-    sources: [SOURCES.vaIndianTextiles, SOURCES.ftcTextiles],
+    readTime: 5,
+    sources: [
+      SOURCES.vaIndianTextiles,
+      SOURCES.ftcTextiles,
+      source('Yellow Georgette Embroidered Lehenga Choli', 'https://luxemia.shop/product/yellow-georgette-embroidered-lehenga-choli', 'LuxeMia'),
+      source('Lilac Organza Embroidered Lehenga Choli', 'https://luxemia.shop/product/lilac-organza-embroidered-lehenga-choli', 'LuxeMia'),
+      source('Rust Orange Art Silk Embroidered Lehenga Choli — Stitched', 'https://luxemia.shop/product/rust-orange-art-silk-embroidered-lehenga-choli', 'LuxeMia'),
+    ],
   },
   {
     id: '6',

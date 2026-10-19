@@ -38,6 +38,7 @@ const {
 const {
   MERCHANT_GOOGLE_PRODUCT_CATEGORY,
   getMerchantGoogleProductCategory,
+  isMerchantApparelCategory,
 } = loadTsModule('src/lib/merchantTaxonomy.ts');
 const {
   forceJpegForGmc: forceSchemaJpegForGmc,
@@ -499,8 +500,15 @@ for (const rawItem of itemBlocks) {
   if (identifierExistsNo && (gtins.length > 0 || mpnCount > 0)) {
     identifierFailures.push(`${id}: identifier_exists=no conflicts with GTIN/MPN`);
   }
-  if (!identifierExistsNo && gtins.length === 0 && mpnCount === 0) {
-    identifierFailures.push(`${id}: missing GTIN, MPN, or identifier_exists=no`);
+  const brand = item.match(/<g:brand>([^<]*)<\/g:brand>/i)?.[1].trim() || '';
+  const category = item.match(/<g:google_product_category>([^<]+)<\/g:google_product_category>/i)?.[1].trim() || '';
+  const brandedClothing = Boolean(brand) && isMerchantApparelCategory(category);
+  if (!brand) identifierFailures.push(`${id}: missing verified brand`);
+  if (identifierExistsNo && brandedClothing) {
+    identifierFailures.push(`${id}: identifier_exists=no conflicts with branded clothing`);
+  }
+  if (!identifierExistsNo && gtins.length === 0 && mpnCount === 0 && !brandedClothing) {
+    identifierFailures.push(`${id}: missing verified GTIN/MPN for this category; do not infer identifier_exists=no`);
   }
 }
 if (requiredTagFailures.length > 0) {

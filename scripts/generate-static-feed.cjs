@@ -961,7 +961,9 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
     ? `<g:gtin>${gtin}</g:gtin>`
     : mpn
       ? `<g:mpn>${escapeXml(mpn)}</g:mpn>`
-      : '<g:identifier_exists>no</g:identifier_exists>';
+      // Missing catalog identifiers are unknown, not proof none were assigned.
+      // Branded clothing may omit GTIN/MPN; the validator checks category rules.
+      : '';
   const patternTag = product.tags?.find((tag) =>
     /embroider|work|print|woven/i.test(tag)
   ) || '';
