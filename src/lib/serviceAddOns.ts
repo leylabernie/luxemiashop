@@ -118,7 +118,7 @@ export const isGarmentAlterationCartLine = (
 
 /**
  * Recognizes the approved fabric / standard / custom lehenga contract, with
- * only its ten valid pairs per color (or other native option combination).
+ * only its listed, supported size pairs per color (or other native option combination).
  * Availability is deliberately ignored: a sold-out size does not turn an
  * included stitching service into a separate alteration purchase.
  */
@@ -132,13 +132,16 @@ export const hasNativeFullStitchingOptions = (product: ServiceEligibleProduct): 
   const stitchingValues = stitching.values.map(normalize);
   const sizes = size.values.map(normalize);
   const fabricSize = sizes.find(value => value === 'fabric only' || value === 'not applicable');
-  const standardSizes = ['32', '34', '36', '38', '40', '42', '44', '46'];
+  const supportedStandardSizes = new Set(['32', '34', '36', '38', '40', '42', '44', '46']);
+  const standardSizes = sizes.filter(value => supportedStandardSizes.has(value));
   if (stitchingValues.length !== 3 || ![
     'unstitched (fabric only)', 'standard stitched', 'custom stitched',
   ].every(value => stitchingValues.includes(value))) return false;
-  if (!fabricSize || sizes.length !== 10 || ![
-    ...standardSizes, 'custom fit',
-  ].every(value => sizes.includes(value))) return false;
+  // Listings may offer a smaller supported size range. Keep the exact contract:
+  // one fabric size, at least one standard size, and Custom Fit, with no extras.
+  if (!fabricSize || standardSizes.length === 0 || !sizes.includes('custom fit')
+    || new Set(sizes).size !== sizes.length
+    || sizes.length !== standardSizes.length + 2) return false;
 
   const expectedPairs = new Set([
     `unstitched (fabric only)::${fabricSize}`,

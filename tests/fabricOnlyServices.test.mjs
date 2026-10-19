@@ -51,10 +51,10 @@ test('mixed construction choices retain the alteration option', () => {
 });
 
 const standardSizes = ['32', '34', '36', '38', '40', '42', '44', '46'];
-const nativeStitchingProduct = (fabricSize = 'Fabric Only') => {
+const nativeStitchingProduct = (fabricSize = 'Fabric Only', offeredSizes = standardSizes) => {
   const choices = [
     ['Unstitched (Fabric Only)', fabricSize, 100],
-    ...standardSizes.map(size => ['Standard Stitched', size, 129]),
+    ...offeredSizes.map(size => ['Standard Stitched', size, 129]),
     ['Custom Stitched', 'Custom Fit', 144],
   ];
   return {
@@ -62,7 +62,7 @@ const nativeStitchingProduct = (fabricSize = 'Fabric Only') => {
     tags: ['construction:Unstitched', 'unstitched'],
     options: [
       { name: 'Stitching', values: ['Unstitched (Fabric Only)', 'Standard Stitched', 'Custom Stitched'] },
-      { name: 'Size', values: [fabricSize, ...standardSizes, 'Custom Fit'] },
+      { name: 'Size', values: [fabricSize, ...offeredSizes, 'Custom Fit'] },
     ],
     variants: { edges: choices.map(([stitching, size, amount], index) => ({ node: {
       id: String(index), availableForSale: true, price: { amount: String(amount), currencyCode: 'USD' },
@@ -266,4 +266,80 @@ test('native timing guard also covers ship-by badges, specifications and cart at
   assert.match(source, /key: 'Timing Confirmation', value: NATIVE_STITCHING_TIMING_NOTICE/);
   assert.match(source, /isCustomSizeSelected && !madeToOrderProduct && !requiresNativeTimingConfirmation/);
   assert.match(source, /if \(isCustomSizeSelected && !customSizeConfirmed\)/);
+});
+
+test('all nonempty supported size subsets preserve native billing and delivery guards', () => {
+  for (let mask = 1; mask < 1 << standardSizes.length; mask++) {
+    const sizes = standardSizes.filter((_, index) => mask & (1 << index));
+    for (const fabricSize of ['Fabric Only', 'Not Applicable']) {
+      const product = nativeStitchingProduct(fabricSize, sizes);
+      assert.equal(hasNativeFullStitchingOptions(product), true, sizes.join(','));
+      assert.deepEqual(getEligibleServiceAddOns(product), []);
+      const safe = selectedEligibleServiceAddOns(product, ['garment-alteration'], ['garment-alteration']);
+      assert.deepEqual(safe, []);
+      assert.equal(serviceAddOnTotal(safe), 0);
+      for (const { node } of product.variants.edges) {
+        assert.equal(requiresNativeStitchingTimingConfirmation(product, node.selectedOptions), node.id !== '0');
+        assert.equal(isUnstitchedDeliverySelection(product, node.selectedOptions), node.id === '0');
+      }
+    }
+  }
+});
+
+test('32–42 offers resolve every sparse transition at its unchanged native price', () => {
+  const product = nativeStitchingProduct('Fabric Only', standardSizes.slice(0, 6));
+  const variants = product.variants.edges.map(({ node }) => node);
+  let checked = 0;
+  for (const current of variants) {
+    const selected = Object.fromEntries(current.selectedOptions.map(option => [option.name, option.value]));
+    for (const option of product.options) for (const value of option.values) {
+      const resolved = resolveAvailableVariantForOption(variants, selected, option.name, value);
+      assert.ok(variants.includes(resolved));
+      const next = Object.fromEntries(resolved.selectedOptions.map(choice => [choice.name, choice.value]));
+      assert.equal(next[option.name], value);
+      assert.equal(resolved.price.amount, next.Stitching === 'Standard Stitched' ? '129'
+        : next.Stitching === 'Custom Stitched' ? '144' : '100');
+      checked++;
+    }
+    const html = renderDelivery({ hasStitching: false,
+      isUnstitched: isUnstitchedDeliverySelection(product, current.selectedOptions),
+      requiresTailoringTimingConfirmation: requiresNativeStitchingTimingConfirmation(product, current.selectedOptions),
+      shipsWithinDays: 4,
+    });
+    assert.match(html, current.id === '0' ? /Unstitched fabric set/ : /Tailored to order/);
+    assert.doesNotMatch(html, /Ready to ship|Estimated dispatch/);
+  }
+  assert.equal(checked, 88);
+});
+
+test('subset support rejects unsupported, duplicate and ambiguous size declarations', () => {
+  for (const sizes of [[], ['30'], ['48'], ['M'], ['32', '32'], ['32', 'Custom Fit'], ['32', 'Not Applicable']]) {
+    assert.equal(hasNativeFullStitchingOptions(nativeStitchingProduct('Fabric Only', sizes)), false, sizes.join(','));
+  }
+  for (const edit of [
+    product => product.options[1].values.push('48'),
+    product => product.options[1].values.pop(),
+    product => product.options[0].values.push('Ready-made'),
+    product => product.variants.edges.pop(),
+    product => product.variants.edges.push(product.variants.edges[1]),
+    product => { product.variants.edges[0].node.selectedOptions[1].value = '32'; },
+    product => { product.variants.edges[1].node.selectedOptions[1].value = '44'; },
+  ]) {
+    const product = nativeStitchingProduct('Fabric Only', standardSizes.slice(0, 6));
+    edit(product);
+    assert.equal(hasNativeFullStitchingOptions(product), false);
+  }
+});
+
+test('32–42 color matrices remain complete even when a size is sold out', () => {
+  const product = nativeStitchingProduct('Fabric Only', standardSizes.slice(0, 6));
+  const base = product.variants.edges;
+  product.options.push({ name: 'Color', values: ['Blue', 'Red'] });
+  product.variants.edges = ['Blue', 'Red'].flatMap(color => base.map(({ node }) => ({
+    node: { ...node, availableForSale: false,
+      selectedOptions: [...node.selectedOptions, { name: 'Color', value: color }] },
+  })));
+  assert.equal(hasNativeFullStitchingOptions(product), true);
+  product.variants.edges.pop();
+  assert.equal(hasNativeFullStitchingOptions(product), false);
 });
