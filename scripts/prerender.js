@@ -158,6 +158,7 @@ async function loadTsModule(relativeSrcPath) {
   }
 }
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
+const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
@@ -632,6 +633,7 @@ query GetAllProducts($first: Int!, $after: String) {
         materialMetafield: metafield(namespace: "custom", key: "material") {
           value
         }
+        careInstructionsMetafield: metafield(namespace: "custom", key: "care_instructions") { value }
         seo {
           title
           description
@@ -3027,7 +3029,10 @@ function generateHtml(template, route, allShopifyProducts) {
       : productAttributes.sizes.length > 0
       ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
-    const shippingEstimate = isCustomizable
+    const nativeStitching = hasNativeFullStitchingOptions(p);
+    const shippingEstimate = nativeStitching
+      ? 'Unstitched (Fabric Only) requires tailoring before wearing. Standard Stitched and Custom Stitched dispatch timing is confirmed after measurements. Confirm availability, processing and carrier transit before ordering.'
+      : isCustomizable
       ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
       : productAttributes.shipsWithinDays
       ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
@@ -3055,8 +3060,12 @@ function generateHtml(template, route, allShopifyProducts) {
       : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
     const careAnswer = productAttributes.jewelry
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
+      : nativeStitching
+      ? p.careInstructionsMetafield?.value || 'Care instructions are not specified for this design. Check the garment care label and contact LuxeMia before cleaning.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
-    const deliveryAnswer = isCustomizable
+    const deliveryAnswer = nativeStitching
+      ? 'Unstitched (Fabric Only) is supplied unstitched and requires tailoring before wearing. Standard Stitched and Custom Stitched selections require tailoring; dispatch timing is confirmed after measurements. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+      : isCustomizable
       ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
       : productAttributes.jewelry
       ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.'

@@ -13,6 +13,7 @@ import { getOptimizedImage, getResponsiveImage } from '@/lib/imageUtils';
 import { cn } from '@/lib/utils';
 import { getShipByLabel } from '@/lib/shipBy';
 import { isMadeToOrderProduct } from '@/lib/customizableProducts';
+import { hasNativeStitchingChoices } from '@/lib/serviceAddOns';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -255,9 +256,10 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
   const imageUrl = product.node.images.edges[0]?.node.url;
   const isMadeToOrder = isMadeToOrderProduct(product.node.handle, product.node.tags);
+  const hasStitchingChoices = hasNativeStitchingChoices(product.node);
   const isAvailable = product.node.variants.edges.some((edge) => edge.node.availableForSale !== false);
   const requiresOptionSelection = product.node.variants.edges.length > 1;
-  const shipByLabel = getShipByLabel(product.node);
+  const shipByLabel = hasStitchingChoices ? null : getShipByLabel(product.node);
 
   // "New" badge — products added within the last 30 days
   const NEW_ARRIVAL_WINDOW_DAYS = 30;
@@ -442,7 +444,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
           </div>
           <p className={`text-xs font-medium ${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-green-400'}`}>
-            {product.node.tags?.includes('construction:Saree with stitched blouse') ? 'Stitched blouse included' : product.node.tags?.includes('construction:Unstitched') ? 'Unstitched' : isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+            {hasStitchingChoices ? 'Stitching options available' : product.node.tags?.includes('construction:Saree with stitched blouse') ? 'Stitched blouse included' : product.node.tags?.includes('construction:Unstitched') ? 'Unstitched' : isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
           </p>
           {shipByLabel && !isMadeToOrder && (
             <p className="text-xs text-green-700 dark:text-green-400 font-medium">

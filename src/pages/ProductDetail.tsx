@@ -14,6 +14,7 @@ import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import { Skeleton } from '@/components/ui/skeleton';
 import { enrichProductDescription, generateMetaDescription, sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
+import { hasNativeFullStitchingOptions } from '@/lib/serviceAddOns';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
@@ -282,7 +283,9 @@ const ProductDetail = () => {
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: madeToOrderProduct
+      answer: hasNativeFullStitchingOptions(product)
+        ? 'Unstitched (Fabric Only) is supplied unstitched and requires tailoring before wearing. Standard Stitched and Custom Stitched selections require tailoring; dispatch timing is confirmed after measurements. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+        : madeToOrderProduct
         ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
         : product?.tags?.includes('availability:Confirm before ordering')
         ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
@@ -302,7 +305,9 @@ const ProductDetail = () => {
       question: `How should I care for my ${categoryName.toLowerCase()}?`,
       answer: isJewelryProduct
         ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe it gently after wear and store pieces separately in a soft pouch.'
-        : productCare || 'Follow any product-specific care instructions in Product Details. Dry cleaning is recommended for embroidered or embellished ethnic wear; avoid ironing directly over decoration.'
+        : productCare || (hasNativeFullStitchingOptions(product)
+        ? 'Care instructions are not specified for this design. Check the garment care label and contact LuxeMia before cleaning.'
+        : 'Follow any product-specific care instructions in Product Details. Dry cleaning is recommended for embroidered or embellished ethnic wear; avoid ironing directly over decoration.')
     }
   ] : [];
 

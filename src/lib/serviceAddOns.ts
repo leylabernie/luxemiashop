@@ -168,6 +168,17 @@ export const hasNativeFullStitchingOptions = (product: ServiceEligibleProduct): 
   return groups.size > 0 && [...groups.values()].every(pairs => pairs.size === expectedPairs.size);
 };
 
+/** Catalog cards fetch one variant only. This identifies choices for neutral
+ * copy, never for billing eligibility or full-matrix validation. */
+export const hasNativeStitchingChoices = (product: ServiceEligibleProduct): boolean => {
+  if (!/\blehenga\b/i.test(`${product.title} ${product.productType || ''}`)) return false;
+  const values = product.options?.find(option => option.name.trim().toLowerCase() === 'stitching')
+    ?.values.map(value => value.trim().replace(/\s+/g, ' ').toLowerCase());
+  return values?.length === 3 && [
+    'unstitched (fabric only)', 'standard stitched', 'custom stitched',
+  ].every(value => values.includes(value));
+};
+
 export const NATIVE_STITCHING_TIMING_NOTICE =
   'Tailoring required; dispatch timing confirmed after measurements.';
 
