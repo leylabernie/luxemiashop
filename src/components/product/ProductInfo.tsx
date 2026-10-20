@@ -46,6 +46,11 @@ import {
   SERVICE_ADD_ON_PRODUCT_HANDLE,
   SERVICE_ADD_ONS,
   serviceAddOnTotal,
+  isBanarasiSareeServiceProduct,
+  requiresBlouseServiceConfirmation,
+  isBlouseServiceSelectionConfirmed,
+  BLOUSE_SERVICE_CONFIRMATION_NOTICE,
+  blouseServiceConfirmationAttributes,
   type ServiceAddOnCode,
 } from '@/lib/serviceAddOns';
 import {
@@ -364,6 +369,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   );
   const [showStitchingInfo, setShowStitchingInfo] = useState<string | null>(null);
   const [selectedServiceAddOnCodes, setSelectedServiceAddOnCodes] = useState<ServiceAddOnCode[]>([]);
+  const [blouseServiceConfirmed, setBlouseServiceConfirmed] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
   const toggleWishlistItem = useWishlistStore((state) => state.toggleItem);
@@ -420,6 +426,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const availableServiceAddOnCodes = eligibleServiceAddOnCodes.filter((code) => serviceVariants.has(code));
   const selectedAvailableServiceAddOnCodes = selectedEligibleServiceAddOns(
     product, selectedServiceAddOnCodes, availableServiceAddOnCodes,
+  );
+  const needsBlouseServiceConfirmation = requiresBlouseServiceConfirmation(
+    product, selectedAvailableServiceAddOnCodes,
   );
 
   // Find the matching variant based on selected options
@@ -536,7 +545,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   }, [product.description]);
   const requiresNativeTimingConfirmation = requiresNativeStitchingTimingConfirmation(
     product, purchasableVariant?.node.selectedOptions ?? [],
-  );
+  ) || needsBlouseServiceConfirmation;
   const isUnstitchedDelivery = isUnstitchedDeliverySelection(
     product, purchasableVariant?.node.selectedOptions ?? [],
   );
@@ -710,6 +719,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       return;
     }
 
+    if (!isBlouseServiceSelectionConfirmed(product, selectedAvailableServiceAddOnCodes, blouseServiceConfirmed)) {
+      toast.error('Confirm the blouse measurement and fit requirements before adding to bag');
+      return;
+    }
+
     if (customizableProduct && !requestedCustomColor.trim()) {
       toast.error('Enter your requested custom color');
       return;
@@ -742,7 +756,16 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
     setIsAdding(true);
 
-    const customAttributes: Array<{ key: string; value: string }> = [];
+    const blouseConfirmationAttributes = blouseServiceConfirmationAttributes(
+      product, selectedAvailableServiceAddOnCodes, blouseServiceConfirmed,
+    );
+    const customAttributes: Array<{ key: string; value: string }> = [...blouseConfirmationAttributes];
+    if (isBanarasiSareeServiceProduct(product) && selectedAvailableServiceAddOnCodes.length > 0) {
+      customAttributes.push({
+        key: 'Selected Saree Services',
+        value: selectedAvailableServiceAddOnCodes.map(code => SERVICE_ADD_ONS[code].label).join('; '),
+      });
+    }
     if (requiresNativeTimingConfirmation) {
       customAttributes.push(
         { key: 'Tailoring', value: 'Tailored to order' },
@@ -823,6 +846,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           selectedOptions: serviceVariant.selectedOptions,
           customAttributes: [
             { key: 'Applies To', value: product.title },
+            ...(isBanarasiSareeServiceProduct(product)
+              ? [{ key: 'Selected Service', value: SERVICE_ADD_ONS[code].label }]
+              : []),
+            ...(code === 'blouse-stitching' ? blouseConfirmationAttributes : []),
           ],
         });
       }
@@ -1229,11 +1256,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                   key={code}
                   type="button"
                   aria-pressed={selected}
-                  onClick={() => setSelectedServiceAddOnCodes((current) =>
-                    current.includes(code)
-                      ? current.filter((currentCode) => currentCode !== code)
-                      : [...current, code],
-                  )}
+                  onClick={() => {
+                    if (code === 'blouse-stitching') setBlouseServiceConfirmed(false);
+                    setSelectedServiceAddOnCodes((current) =>
+                      current.includes(code)
+                        ? current.filter((currentCode) => currentCode !== code)
+                        : [...current, code],
+                    );
+                  }}
                   className={`flex w-full items-start justify-between gap-4 rounded-sm border p-3 text-left transition-colors ${
                     selected ? 'border-primary bg-background ring-1 ring-primary' : 'border-border bg-background hover:border-primary/60'
                   }`}
@@ -1254,6 +1284,25 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
               );
             })}
           </div>
+          {needsBlouseServiceConfirmation && (
+            <div className="space-y-2 rounded-sm border border-primary/30 bg-background p-3">
+              <p className="text-sm font-medium">Blouse measurements and design confirmation</p>
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                The included blouse piece is unstitched. No finished blouse size is guaranteed by this listing.
+                LuxeMia will confirm what can be made from the supplied fabric before stitching starts.
+                Contact us before ordering if you need to confirm a particular fit, design or event date.
+              </p>
+              <label className="flex items-start gap-3 text-sm">
+                <input
+                  type="checkbox"
+                  checked={blouseServiceConfirmed}
+                  onChange={(event) => setBlouseServiceConfirmed(event.target.checked)}
+                  className="mt-1 h-4 w-4 accent-primary"
+                />
+                <span>{BLOUSE_SERVICE_CONFIRMATION_NOTICE}</span>
+              </label>
+            </div>
+          )}
           {selectedAvailableServiceAddOnCodes.length > 0 && (
             <p className="text-sm font-medium text-foreground">
               Selected services: +{formatPrice(selectedServiceAddOnCharge.toFixed(2), basePrice.currencyCode)}

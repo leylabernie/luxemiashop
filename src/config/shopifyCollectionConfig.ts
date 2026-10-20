@@ -15,6 +15,25 @@ export interface ShopifyCollectionPageConfig {
 }
 
 const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
+  'banarasi-sarees': {
+    handle: 'banarasi-sarees',
+    name: 'Banarasi Sarees',
+    eyebrow: 'Zari Work & Woven Details',
+    title: 'Banarasi Sarees | Fabric & Blouse Details | LuxeMia',
+    description: 'Shop Banarasi sarees in satin silk blends, Mashru silk blends and other labelled fabrics. Compare colors, zari details and matching unstitched blouse pieces.',
+    canonical: 'https://luxemia.shop/collections/banarasi-sarees',
+    intro: 'Shop satin silk blends, Mashru silk blends and other clearly labelled fabrics, with zari work and matching unstitched blouse pieces. Open each design to compare its color, current price and woven details.',
+    editorialTitle: 'Choosing Your Banarasi Saree',
+    editorial: [
+      'Compare the drape, color and zari details across the collection, then review the stated fabric composition and weaving method on your chosen product page.',
+      'Each saree includes matching unstitched blouse fabric for separate tailoring. If you need blouse stitching, contact LuxeMia before ordering to confirm fabric suitability for your measurements and chosen design.',
+    ],
+    faqs: [
+      { question: 'Which fabrics are available?', answer: 'The selection includes satin silk blends, Mashru silk blends and other clearly labelled fabrics. Each listing gives its supplied fabric composition and weaving details.' },
+      { question: 'What is included with the saree?', answer: 'Each saree includes a matching unstitched blouse piece. Review the product page for the exact saree and blouse-fabric lengths; the blouse fabric needs separate tailoring.' },
+      { question: 'Can I request blouse stitching?', answer: 'Contact LuxeMia before ordering to confirm fabric suitability, your measurements, blouse design and timing.' },
+    ],
+  },
   'ready-to-wear-palazzo-suits': {
     handle: 'ready-to-wear-palazzo-suits',
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-4584171319-1.jpg?v=1791590961',

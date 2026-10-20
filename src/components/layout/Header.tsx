@@ -57,6 +57,7 @@ const secondaryLinks = [
 ];
 
 const weddingSareeLinks = [
+  { name: 'Banarasi Sarees', href: '/collections/banarasi-sarees' },
   { name: 'Silk Sarees', href: '/collections/silk-sarees' },
   { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
 ];

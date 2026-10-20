@@ -267,3 +267,33 @@ export const serviceAddOnTotal = (codes: ServiceAddOnCode[]) => codes.reduce(
   (total, code) => total + SERVICE_ADD_ONS[code].price,
   0,
 );
+
+/** The sourced Banarasi batch has blouse fabric, but no verified finished-size range. */
+export const isBanarasiSareeServiceProduct = (product: ServiceEligibleProduct): boolean =>
+  product.productType?.trim().toLowerCase() === 'saree'
+  && (product.tags?.includes('collection:banarasi-sarees') ?? false);
+
+export const requiresBlouseServiceConfirmation = (
+  product: ServiceEligibleProduct,
+  selected: ServiceAddOnCode[],
+): boolean => isBanarasiSareeServiceProduct(product) && selected.includes('blouse-stitching');
+
+export const isBlouseServiceSelectionConfirmed = (
+  product: ServiceEligibleProduct,
+  selected: ServiceAddOnCode[],
+  confirmed: boolean,
+): boolean => !requiresBlouseServiceConfirmation(product, selected) || confirmed;
+
+export const BLOUSE_SERVICE_CONFIRMATION_NOTICE =
+  'I will provide my blouse measurements after ordering. LuxeMia must confirm fabric suitability, design and fit feasibility, and dispatch timing with me before stitching begins.';
+
+export const blouseServiceConfirmationAttributes = (
+  product: ServiceEligibleProduct,
+  selected: ServiceAddOnCode[],
+  confirmed: boolean,
+): Array<{ key: string; value: string }> =>
+  requiresBlouseServiceConfirmation(product, selected) && confirmed ? [
+    { key: 'Blouse Measurements', value: 'Customer will provide measurements after ordering; confirm before stitching' },
+    { key: 'Blouse Confirmation', value: 'Fabric suitability, design and fit feasibility, and dispatch timing must be confirmed before stitching' },
+    { key: 'Measurement Acknowledgment', value: 'Customer acknowledged before adding to bag' },
+  ] : [];

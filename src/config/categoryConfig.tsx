@@ -1103,6 +1103,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
       {
         label: 'Wedding Traditions',
         links: [
+          { name: 'Banarasi Sarees', href: '/collections/banarasi-sarees' },
           { name: 'Silk Sarees', href: '/collections/silk-sarees' },
           { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
         ],

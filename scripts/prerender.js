@@ -888,6 +888,9 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
       const title = (product.title ?? '').toLowerCase();
       const tags = tagsFor(product);
 
+      if (handle === 'banarasi-sarees') {
+        return productType === 'saree' && tags.has('collection:banarasi-sarees') && product.availableForSale !== false;
+      }
       if (handle === 'ready-to-wear-palazzo-suits') {
         return ['gid://shopify/Product/9095467860139', 'gid://shopify/Product/9095467663531', 'gid://shopify/Product/9095467106475', 'gid://shopify/Product/9095468056747', 'gid://shopify/Product/9095465337003'].includes(product.id) && product.availableForSale !== false;
       }
@@ -1776,6 +1779,14 @@ const routes = [
     description: 'Browse current couple sets at LuxeMia.',
     h1: 'Couple Sets',
     content: '<p>Browse current couple sets and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
+  },
+  {
+    path: '/collections/banarasi-sarees',
+    category: 'collection:banarasi-sarees',
+    title: 'Banarasi Sarees | Fabric & Blouse Details | LuxeMia',
+    description: 'Shop Banarasi sarees in satin silk blends, Mashru silk blends and other labelled fabrics. Compare colors, zari details and matching unstitched blouse pieces.',
+    h1: 'Banarasi Sarees',
+    content: '<p>Shop satin silk blends, Mashru silk blends and other clearly labelled fabrics, with zari work and matching unstitched blouse pieces. Open each design to compare its color, current price and woven details.</p><h2>Choosing Your Banarasi Saree</h2><p>Compare the drape, color and zari details across the collection, then review the stated fabric composition and weaving method on your chosen product page.</p><p>Each saree includes matching unstitched blouse fabric for separate tailoring. If you need blouse stitching, contact LuxeMia before ordering to confirm fabric suitability for your measurements and chosen design.</p><p><a href="/sarees">Browse all sarees</a> · <a href="/contact">Ask about blouse tailoring</a> · <a href="/shipping">Shipping rates and timing</a></p>',
   },
   {
     path: '/collections/ready-to-wear-palazzo-suits',
