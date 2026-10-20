@@ -223,3 +223,44 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
     assert.ok(line.customAttributes.some(x => x.key === 'Selected Service'));
   }
 });
+
+test('mobile sticky price never renders a numeric zero for a missing or zero compare-at price', () => {
+  const React = require('react');
+  const { renderToStaticMarkup } = require('react-dom/server');
+  const code = transformSync(read('src/components/product/StickyAddToBag.tsx'), {
+    loader: 'tsx', format: 'cjs', jsx: 'automatic',
+  }).code;
+  const module = { exports: {} };
+  vm.runInNewContext(code, {
+    module, exports: module.exports,
+    require(name) {
+      if (name === 'react') return { ...React, useState: () => [true, () => {}], useEffect() {} };
+      if (name === 'react/jsx-runtime') return require(name);
+      if (name === 'framer-motion') return { motion: { div: 'div' }, AnimatePresence: React.Fragment };
+      if (name === 'lucide-react') return { ShoppingBag: () => null };
+      if (name === '@/components/ui/button') return { Button: 'button' };
+      if (name === '@/lib/imageUtils') return { getOptimizedImage: value => value };
+      throw new Error(`Unexpected sticky price dependency: ${name}`);
+    },
+  });
+  const product = {
+    title: 'Banarasi Saree',
+    variants: { edges: [{ node: { availableForSale: true } }] },
+    priceRange: { minVariantPrice: { amount: '85.87' } },
+    images: { edges: [] },
+  };
+  function renderedPrice(compareAtAmount) {
+    const value = {
+      ...product,
+      ...(compareAtAmount !== undefined
+        ? { compareAtPriceRange: { minVariantPrice: { amount: compareAtAmount } } }
+        : {}),
+    };
+    const html = renderToStaticMarkup(React.createElement(module.exports.default, { product: value }));
+    return html.match(/<p class="text-sm font-semibold">([\s\S]*?)<\/p>/)[1];
+  }
+  for (const amount of [undefined, '0.0', '85.87', '80.00']) {
+    assert.equal(renderedPrice(amount), '$85.87');
+  }
+  assert.match(renderedPrice('100.00'), /^\$85\.87<span[^>]+>\$100\.00<\/span>$/);
+});

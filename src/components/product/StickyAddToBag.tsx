@@ -55,7 +55,7 @@ const StickyAddToBag = ({ product }: StickyAddToBagProps) => {
               <p className="text-xs font-medium line-clamp-1">{product.title}</p>
               <p className="text-sm font-semibold">
                 ${price.toFixed(2)}
-                {compareAtPrice && compareAtPrice > price && (
+                {compareAtPrice !== null && compareAtPrice > price && (
                   <span className="text-xs text-muted-foreground line-through ml-1 font-normal">
                     ${compareAtPrice.toFixed(2)}
                   </span>
