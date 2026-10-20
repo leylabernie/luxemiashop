@@ -1720,8 +1720,6 @@ const routes = [
       <p>Explore wedding, silk and festive sarees for U.S. delivery. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
       <h2>Shop Sarees by Occasion</h2>
       <ul>
-        <li><a href="/sarees?sub=bridal">Bridal Sarees</a> — Heavily embellished sarees for the bride</li>
-        <li><a href="/sarees?sub=wedding">Wedding Sarees</a> — Elegant sarees for wedding ceremonies</li>
         <li><a href="/sarees?sub=reception">Reception Sarees</a> — Glamorous sarees for the reception</li>
         <li><a href="/sarees?sub=party-wear">Party Wear Sarees</a> — Statement sarees for parties</li>
         <li><a href="/sarees?sub=festive">Festive Sarees</a> — Vibrant sarees for Diwali, Eid & Navratri</li>
@@ -3258,7 +3256,6 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/">Home</a> |
         <a href="/lehengas">Lehengas</a> |
         <a href="/sarees">Sarees</a> |
-        <a href="/collections/wedding-sarees">Wedding Sarees</a> |
         <a href="/collections/designer-sarees">Designer Sarees</a> |
         <a href="/suits">Suits</a> |
         <a href="/menswear">Menswear</a> |

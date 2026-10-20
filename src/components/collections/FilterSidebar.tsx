@@ -15,6 +15,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronDown, X } from 'lucide-react';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Slider } from '@/components/ui/slider';
@@ -61,6 +62,9 @@ export function FilterSidebar({
   };
 
   const hasActiveFilters = activeFilterCount > 0;
+  const occasionSubcategories = config.subcategories.filter(
+    sub => sub.group === 'occasion' && canPromoteCollection(sub.landingPath),
+  );
 
   return (
     <aside className="w-full lg:w-64 flex-shrink-0">
@@ -88,7 +92,7 @@ export function FilterSidebar({
         </div>
 
         {/* Subcategory navigation — moved from horizontal chips to sidebar */}
-        {config.subcategories.filter(s => s.group === 'occasion').length > 0 && (
+        {occasionSubcategories.length > 0 && (
           <FilterSectionBlock
             name="Occasion"
             isActive={!!activeSubSlug}
@@ -107,8 +111,7 @@ export function FilterSidebar({
               >
                 All {config.name}
               </Link>
-              {config.subcategories
-                .filter(s => s.group === 'occasion')
+              {occasionSubcategories
                 .map(sub => {
                   const className = cn(
                     'text-left text-sm py-1.5 px-2 rounded transition-colors',

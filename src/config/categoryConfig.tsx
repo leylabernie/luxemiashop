@@ -12,6 +12,7 @@
  */
 
 import type { ReactNode } from 'react';
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 import {
   getDedicatedSubcategoryPath,
@@ -1081,7 +1082,7 @@ function subcatLinks(catSlug: string, subcats: Subcategory[], group: Subcategory
   const filtered = subcats.filter(s => s.group === group);
   const indexableLinks = filtered.flatMap((subcategory) => {
     const href = getDedicatedSubcategoryPath(catSlug, subcategory.slug);
-    return href ? [{ name: subcategory.label, href }] : [];
+    return href && canPromoteCollection(href) ? [{ name: subcategory.label, href }] : [];
   });
   return limit ? indexableLinks.slice(0, limit) : indexableLinks;
 }
