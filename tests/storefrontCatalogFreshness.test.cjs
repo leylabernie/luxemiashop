@@ -5,7 +5,14 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = require('../scripts/storefront-catalog.cjs');
 
-const archivedHandle = 'bead-embroidered-sharara-suit-mauve-maroon-divya';
+const archivedHandles = [
+  'bead-embroidered-sharara-suit-mauve-maroon-divya',
+  'embroidered-silk-sharara-suit-georgette-dupatta-mt1079',
+  'net-beige-festival-wear-beads-work-readymade-lehenga-choli-400564',
+  'premium-wedding-bridal-lehenga-collection-silk-zardozi-cutdana-pearl-embroidery-with-4-50m-flair',
+  'embroidered-bridal-lehenga-olive-green',
+  'patola-silk-saree-red-orange',
+];
 const response = (products, hasNextPage = false, endCursor = null) => ({
   ok: true,
   json: async () => ({ data: { products: { edges: products.map(node => ({ node })), pageInfo: { hasNextPage, endCursor } } } }),
@@ -29,7 +36,7 @@ test('only the complete current catalog authorizes product routes, retaining act
   const products = await fixture.promise;
   assert.deepEqual(products, [live, soldOut]);
   assert.equal(fixture.requests[1].variables.after, 'page-2');
-  const routes = ['/', '/sitemap', `/product/${archivedHandle}`, `/product/${live.handle}`, `/product/${soldOut.handle}`].map(path => ({ path }));
+  const routes = ['/', '/sitemap', ...archivedHandles.map(handle => `/product/${handle}`), `/product/${live.handle}`, `/product/${soldOut.handle}`].map(path => ({ path }));
   assert.deepEqual(retainLiveProductRoutes(routes, new Map(products.map(p => [p.handle, p]))).map(r => r.path),
     ['/', '/sitemap', `/product/${live.handle}`, `/product/${soldOut.handle}`]);
 });
@@ -87,8 +94,16 @@ test('explicit snapshot normalization cannot re-date stale catalog data as fresh
   assert.doesNotMatch(sanitizer, /last_build_date.*new Date/, 'Copy cleanup must preserve the original catalog date');
 });
 
-test('checked-in static Meta snapshot, prerender manifest, and approved sitemap inventory no longer list the confirmed archive', () => {
-  for (const filename of ['public/feeds/meta-catalog.csv', 'src/lib/prerenderManifest.ts', 'scripts/approved-sitemap-inventory.json']) {
-    assert.ok(!fs.readFileSync(path.join(__dirname, '..', filename), 'utf8').includes(archivedHandle), filename);
-  }
+for (const handle of archivedHandles) {
+  test(`confirmed archive is absent from checked-in catalog artifacts: ${handle}`, () => {
+    for (const filename of ['public/feeds/meta-catalog.csv', 'src/lib/prerenderManifest.ts', 'scripts/approved-sitemap-inventory.json']) {
+      assert.ok(!fs.readFileSync(path.join(__dirname, '..', filename), 'utf8').includes(handle), filename);
+    }
+  });
+}
+
+test('approved sitemap inventory count matches the reconciled paths', () => {
+  const inventory = JSON.parse(fs.readFileSync(path.join(__dirname, '../scripts/approved-sitemap-inventory.json'), 'utf8'));
+  assert.equal(inventory.urlCount, inventory.paths.length);
+  assert.equal(new Set(inventory.paths).size, inventory.paths.length);
 });
