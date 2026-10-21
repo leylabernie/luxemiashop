@@ -1,7 +1,7 @@
-import { forwardRef, useEffect, useState } from 'react';
+import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck, Check } from 'lucide-react';
-import { supabase } from '@/integrations/supabase/client';
+import { subscribeFooterNewsletter } from '@/lib/newsletter';
 import { toast } from 'sonner';
 import { WELCOME_OFFER } from '@/config/welcomeOffer';
 
@@ -66,17 +66,16 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [newsletterDiscountCode, setNewsletterDiscountCode] = useState<string | null>(null);
+  const newsletterRequestPending = useRef(false);
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!newsletterEmail.trim()) return;
+    if (!newsletterEmail.trim() || newsletterRequestPending.current) return;
 
+    newsletterRequestPending.current = true;
     setNewsletterSubmitting(true);
     try {
-      const { error } = await supabase.functions.invoke('submit-email', {
-        body: { email: newsletterEmail, type: 'newsletter', source: 'footer' },
-      });
-      if (error) throw error;
+      await subscribeFooterNewsletter(newsletterEmail);
       // Use the same verified first-order offer as the welcome popup and header.
       const discountCode = WELCOME_OFFER.enabled ? WELCOME_OFFER.code : null;
       setNewsletterDiscountCode(discountCode);
@@ -91,6 +90,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
         description: 'Please try again or contact us directly.',
       });
     } finally {
+      newsletterRequestPending.current = false;
       setNewsletterSubmitting(false);
     }
   };

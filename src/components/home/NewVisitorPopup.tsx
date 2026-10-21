@@ -168,33 +168,24 @@ const NewVisitorPopup = () => {
           source: 'welcome_popup',
         }),
       });
-      const data = (await response.json().catch(() => ({}))) as {
+      const payload: unknown = await response.json().catch(() => null);
+      const data = payload && typeof payload === 'object' ? payload as {
         success?: boolean;
         error?: string;
         retryAfter?: number;
-      };
+      } : null;
 
-      // The isolated service may legitimately return an empty 2xx response after
-      // recording a lead. Treat a 2xx result with no error payload as success;
-      // only reject explicit error payloads or unsuccessful HTTP responses.
-      if (!response.ok || data.success === false || Boolean(data.error)) {
-        if (data.retryAfter) {
+      // The verified service explicitly confirms both new and existing signups.
+      // An empty or malformed response is not evidence that a lead was saved.
+      if (!response.ok || data?.success !== true || Boolean(data?.error)) {
+        if (data?.retryAfter) {
           toast.error(`Too many attempts. Please try again in ${data.retryAfter} seconds.`);
           return;
         }
 
-        // The isolated function saves the lead before attempting email delivery.
-        // If the provider rejects delivery, reveal the verified code directly and
-        // state the limitation instead of leaving the shopper in a dead-end state.
-        if (response.status === 503) {
-          setDiscountCode(DISCOUNT_CODE);
-          setIsSuccess(true);
-          navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
-          toast.info('Your code is ready below. Email delivery is temporarily unavailable.');
-          return;
-        }
-
-        throw new Error(data.error || 'We could not process your request just now. Please try again.');
+        // A service error does not confirm that the subscription was saved.
+        // This function captures signups; it does not send a welcome email.
+        throw new Error(data?.error || 'We could not process your request just now. Please try again.');
       }
 
       toast.success('Welcome to LuxeMia! Your discount code is ready.');
