@@ -3,10 +3,10 @@
  * Generate STATIC Google Merchant Center XML Product Feed at build time.
  *
  * WHY: Build a validated feed artifact that is available as a fallback and can be
- * compared with the live Shopify-backed Vercel feed during release verification.
+ * validated against fresh Shopify catalog data during release verification.
  *
  * Feed URL: https://luxemia.shop/merchant-feed.xml
- * Live Shopify-backed route: https://luxemia.shop/api/merchant-feed
+ * Compatibility route: https://luxemia.shop/api/merchant-feed redirects to this artifact.
  *
  * Run: node scripts/generate-static-feed.cjs
  * Automatically run during: npm run build
@@ -14,6 +14,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { fetchCompleteStorefrontCatalog } = require('./storefront-catalog.cjs');
 const esbuild = require('esbuild');
 const {
   containsExactPhrase,
@@ -682,8 +683,7 @@ function sanitizeExistingFeedXml(xml) {
     .replace(
       /<description>[\s\S]*?<\/description>/i,
       '<description>Shop Indian ethnic wear online at LuxeMia with shipping to United States addresses only.</description>'
-    )
-    .replace(/<last_build_date>[\s\S]*?<\/last_build_date>/i, `<last_build_date>${new Date().toISOString()}</last_build_date>`);
+    );
 
   return normalizeFeedWhitespace(normalizeFeedDeliveryCopy(sanitized));
 }
@@ -699,10 +699,21 @@ function getFeedSnapshotStats(xml) {
   };
 }
 
-function assertFeedSnapshotCoverage(xml, sourceLabel) {
+function assertFeedSnapshotFreshness(xml, sourceLabel) {
   const stats = getFeedSnapshotStats(xml);
   const ageMs = Date.now() - stats.buildDateMs;
   const maxAgeMs = MAX_LOCAL_SNAPSHOT_AGE_DAYS * 24 * 60 * 60 * 1000;
+  if (!Number.isFinite(stats.buildDateMs)) {
+    throw new Error(`${sourceLabel} has a missing or invalid last_build_date`);
+  }
+  if (ageMs < 0 || ageMs > maxAgeMs) {
+    throw new Error(`${sourceLabel} last_build_date ${stats.buildDateValue} is outside the ${MAX_LOCAL_SNAPSHOT_AGE_DAYS}-day local fallback window`);
+  }
+  return stats;
+}
+
+function assertFeedSnapshotCoverage(xml, sourceLabel) {
+  const stats = assertFeedSnapshotFreshness(xml, sourceLabel);
   const failures = [];
   if (stats.offers < MIN_EXPECTED_OFFER_COUNT) failures.push(`${stats.offers} offers (minimum ${MIN_EXPECTED_OFFER_COUNT})`);
   if (stats.sizes < MIN_SIZED_OFFER_COUNT) {
@@ -710,10 +721,6 @@ function assertFeedSnapshotCoverage(xml, sourceLabel) {
   }
   if (stats.offers > 0 && stats.materials / stats.offers < MIN_MATERIAL_COVERAGE_RATIO) {
     failures.push(`${stats.materials}/${stats.offers} material offers (minimum ${(MIN_MATERIAL_COVERAGE_RATIO * 100).toFixed(0)}%)`);
-  }
-  if (!Number.isFinite(stats.buildDateMs)) failures.push('missing or invalid last_build_date');
-  if (Number.isFinite(stats.buildDateMs) && (ageMs < 0 || ageMs > maxAgeMs)) {
-    failures.push(`last_build_date ${stats.buildDateValue} is outside the ${MAX_LOCAL_SNAPSHOT_AGE_DAYS}-day local fallback window`);
   }
   if (failures.length > 0) {
     throw new Error(`${sourceLabel} is not a release-safe merchant snapshot: ${failures.join('; ')}`);
@@ -743,7 +750,10 @@ function refreshFeedFromExplicitSnapshot(sourcePath) {
     throw new Error(`Merchant feed refresh source does not exist: ${resolvedSource}`);
   }
   console.log(`[merchant-feed] Rebuilding the checked-in feed from explicit source ${resolvedSource}`);
-  const safeXml = sanitizeExistingFeedXml(fs.readFileSync(resolvedSource, 'utf8'));
+  const sourceXml = fs.readFileSync(resolvedSource, 'utf8');
+  // Normalizing copy must never make an old catalog snapshot look freshly fetched.
+  assertFeedSnapshotFreshness(sourceXml, `Refresh source ${resolvedSource}`);
+  const safeXml = sanitizeExistingFeedXml(sourceXml);
   const stats = assertFeedSnapshotCoverage(safeXml, `Refreshed snapshot from ${resolvedSource}`);
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
@@ -852,44 +862,13 @@ function generateProductHighlights(product, color, material, productType, title,
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
 async function fetchAllProducts() {
-  const allProducts = [];
-  let cursor = null;
-  let hasNextPage = true;
-
-  while (hasNextPage) {
-    const variables = { first: 250 };
-    if (cursor) variables.after = cursor;
-
-    console.log(`[merchant-feed] Fetching products page (cursor: ${cursor || 'start'})...`);
-
-    const response = await fetch(SHOPIFY_STOREFRONT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
-      },
-      body: JSON.stringify({ query: ALL_PRODUCTS_QUERY, variables }),
-    });
-
-    if (!response.ok) {
-      console.error(`[merchant-feed] Shopify API error: ${response.status} ${response.statusText}`);
-      break;
-    }
-
-    const data = await response.json();
-    const edges = data?.data?.products?.edges || [];
-    allProducts.push(...edges.map(e => e.node));
-
-    const pageInfo = data?.data?.products?.pageInfo;
-    hasNextPage = pageInfo?.hasNextPage ?? false;
-    cursor = pageInfo?.endCursor ?? null;
-  }
-
-  console.log(`[merchant-feed] Fetched ${allProducts.length} total products from Shopify`);
-  return allProducts.filter((product) =>
-    product.availableForSale !== false &&
-    !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle),
-  );
+  const products = await fetchCompleteStorefrontCatalog({
+    url: SHOPIFY_STOREFRONT_URL,
+    token: SHOPIFY_STOREFRONT_TOKEN,
+    query: ALL_PRODUCTS_QUERY,
+    fetchImpl: fetch,
+  });
+  return products.filter(product => product.availableForSale !== false && !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle));
 }
 
 // ─── XML Item Generation ────────────────────────────────────────────────────
@@ -1045,11 +1024,8 @@ async function main() {
 
   let products = [];
   if (SHOPIFY_STOREFRONT_TOKEN) {
-    try {
-      products = await fetchAllProducts();
-    } catch (error) {
-      console.error('[merchant-feed] Failed to fetch from Shopify API:', error);
-    }
+    // A failed live request must not silently become a successful stale feed.
+    products = await fetchAllProducts();
   } else {
     console.log('[merchant-feed] Storefront token is not available locally; validating and preserving the checked-in snapshot.');
   }

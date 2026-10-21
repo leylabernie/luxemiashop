@@ -850,7 +850,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>When should a U.S. shopper order?</h2>
       <p>Start with the exact product's current availability and options. If your event date is fixed, contact LuxeMia before ordering to discuss the selected listing and timing. Preparation and carrier transit can vary, and delivery by a particular event is not guaranteed.</p>
-      <p>LuxeMia offers tracked shipping to seven countries; use the <a href="/shipping">current shipping page</a> for route-based rates and thresholds. Tracking is provided after dispatch. Use <strong>LUXE10</strong> for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.</p>
+      <p>LuxeMia offers tracked shipping to seven countries; use the <a href="/shipping">current shipping page</a> for route-based rates and thresholds. Tracking is provided after dispatch. Use <strong>FIRST10</strong> for 10% off an eligible first order. One use per customer. Final eligibility is confirmed at checkout.</p>
 
       <h2>Compare current Garba outfit listings</h2>
       <p>For a skirt-and-top option, view the <a href="/product/rayon-mirror-work-readymade-navratri-lehenga-choli">rayon mirror-work readymade Navratri lehenga choli</a> or the <a href="/product/kora-cotton-navratri-lehenga-gamthi-embroidered-long-top">Cora cotton Navratri lehenga with a Gamthi embroidered long top</a>. Compare the listed measurements, set contents and selected variant before ordering; confirm timing with LuxeMia for a fixed event date.</p>

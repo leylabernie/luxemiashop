@@ -2,8 +2,7 @@ import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck, BadgePercent } from 'lucide-react';
-import { bestFestiveTier, isFestiveCampaignActive } from '@/config/festiveCampaign';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getColorwaysForHandle } from '@/config/colorwayLinks';
@@ -53,10 +52,6 @@ import {
   blouseServiceConfirmationAttributes,
   type ServiceAddOnCode,
 } from '@/lib/serviceAddOns';
-import {
-  isRakshaBandhanCampaignActive,
-  RAKSHA_BANDHAN_CAMPAIGN,
-} from '@/config/rakshaBandhanCampaign';
 
 // Listing-specific stitching choices. Any billable amount must come from an
 // actual Shopify variant or service add-on, never from this display config.
@@ -327,7 +322,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
   const hasStitchedBlouse = product.tags?.includes('construction:Saree with stitched blouse') ?? false;
-  const isLaunchOfferActive = isRakshaBandhanCampaignActive();
 
   // Honor Merchant Center variant links while preserving the first available
   // variant as the normal default when no variant query parameter is present.
@@ -503,11 +497,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       currencyCode: basePrice.currencyCode,
     };
   }, [basePrice, selectedServiceAddOnCharge]);
-  // Festive Sale tier for the displayed price — shown only when a tier applies
-  // (orders below the $75 floor get no discount, same mechanic as Utsav's floor).
-  const festiveTier = isFestiveCampaignActive()
-    ? bestFestiveTier(parseFloat(currentPrice.amount))
-    : null;
   const hasAvailableVariant = product.variants.edges.some(
     (edge) => edge.node.availableForSale !== false
   );
@@ -940,12 +929,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
               (parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
               currentPrice.currencyCode
             )}
-          </p>
-        )}
-        {festiveTier && (
-          <p className="flex items-center gap-1.5 text-sm font-medium text-primary">
-            <BadgePercent className="h-4 w-4 shrink-0" aria-hidden="true" />
-            Festive Sale: {festiveTier.percent}% off auto-applied at checkout
           </p>
         )}
       </div>
@@ -1431,26 +1414,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
         <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
       </div>
-
-      {isLaunchOfferActive && (
-        <div
-          className="rounded-md border border-primary/25 bg-primary/5 px-4 py-3 text-sm"
-          role="note"
-        >
-          <div className="flex items-start gap-2">
-            <BadgeCheck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-            <p className="leading-5">
-              <span className="font-semibold">72-hour offer:</span>{' '}
-              Use <strong>{RAKSHA_BANDHAN_CAMPAIGN.code}</strong> at checkout for{' '}
-              {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off orders of ${RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal}+ through{' '}
-              {RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}.
-            </p>
-          </div>
-          <p className="mt-1 pl-6 text-[11px] leading-4 text-muted-foreground">
-            One use per customer. Cannot be combined with other discounts.
-          </p>
-        </div>
-      )}
 
       {/* Add to Cart */}
       <div className="flex gap-3 pt-2">

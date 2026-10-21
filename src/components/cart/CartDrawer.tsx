@@ -6,18 +6,7 @@ import { useCartStore } from '@/stores/cartStore';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { isGarmentAlterationCartLine, isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
-import {
-  isRakshaBandhanCampaignActive,
-  RAKSHA_BANDHAN_CAMPAIGN,
-} from '@/config/rakshaBandhanCampaign';
 import { SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
-import {
-  bestFestiveTier,
-  FESTIVE_CAMPAIGN,
-  isFestiveCampaignActive,
-  nextFestiveTier,
-} from '@/config/festiveCampaign';
-
 const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
 const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
 
@@ -45,18 +34,6 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
-  const isRakhiSaleActive = isRakshaBandhanCampaignActive();
-  const amountUntilRakhiDiscount = Math.max(
-    0,
-    RAKSHA_BANDHAN_CAMPAIGN.minimumSubtotal - subtotal,
-  );
-  const festiveActive = isFestiveCampaignActive();
-  const festiveTier = festiveActive ? bestFestiveTier(subtotal) : null;
-  const festiveNext = festiveActive ? nextFestiveTier(subtotal) : null;
-  // Checkout applies the festive code before checking shipping eligibility.
-  const subtotalCents = Math.round(subtotal * 100);
-  const festiveDiscountCents = Math.floor(subtotalCents * (festiveTier?.percent ?? 0) / 100);
-  const shippingSubtotal = (subtotalCents - festiveDiscountCents) / 100;
   // Persisted carts can outlive Shopify inventory changes. Block checkout when
   // the locally stored variant is explicitly unavailable instead of sending a
   // stale line to Shopify and giving the customer a confusing API error.
@@ -236,17 +213,17 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               <div className="max-h-[60dvh] shrink-0 overflow-y-auto overscroll-contain border-t border-border/60 bg-card/70 backdrop-blur-sm safe-area-bottom">
                 {/* Free Shipping Progress */}
                 <div className="px-5 pb-3 pt-4 sm:px-6">
-                  {shippingSubtotal >= FREE_SHIPPING_THRESHOLD ? (
+                  {subtotal >= FREE_SHIPPING_THRESHOLD ? (
                     <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
                       <Truck className="w-3.5 h-3.5" />
-                      Your estimated subtotal after discounts qualifies for free U.S. standard shipping
+                      Your current subtotal meets the free U.S. shipping threshold before checkout discounts
                     </div>
                   ) : (
                     <div className="mb-2">
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
                         <span className="flex items-center gap-1">
                           <Truck className="w-3.5 h-3.5" />
-                          {formatPrice(FREE_SHIPPING_THRESHOLD - shippingSubtotal, currencyCode)} below the free U.S. shipping threshold after discounts
+                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} below the free U.S. shipping threshold before checkout discounts
                         </span>
                         <span className="font-medium">${FREE_SHIPPING_THRESHOLD}</span>
                       </div>
@@ -254,7 +231,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                         <motion.div
                           className="h-full bg-foreground rounded-full"
                           initial={{ width: 0 }}
-                          animate={{ width: `${Math.min(100, (shippingSubtotal / FREE_SHIPPING_THRESHOLD) * 100)}%` }}
+                          animate={{ width: `${Math.min(100, (subtotal / FREE_SHIPPING_THRESHOLD) * 100)}%` }}
                           transition={{ duration: 0.5, ease: 'easeOut' }}
                         />
                       </div>
@@ -263,71 +240,15 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                 </div>
 
                 <div className="space-y-3 px-5 pb-4 sm:px-6">
-                  {festiveActive && (
-                    <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
-                      {festiveTier ? (
-                        <p className="text-xs leading-relaxed text-foreground">
-                          Festive offer unlocked: <strong className="font-semibold">{festiveTier.percent}% off</strong>{' '}
-                          auto-applied at checkout.
-                          {festiveNext && (
-                            <> Add {formatPrice(festiveNext.minSubtotal - subtotal, currencyCode)} more for {festiveNext.percent}% off.</>
-                          )}
-                        </p>
-                      ) : (
-                        <p className="text-xs leading-relaxed text-foreground">
-                          {festiveNext && (
-                            <>Add {formatPrice(festiveNext.minSubtotal - subtotal, currencyCode)} more for {festiveNext.percent}% off — auto-applied at checkout.</>
-                          )}
-                        </p>
-                      )}
-                      <p className="mt-1 text-[11px] text-muted-foreground">
-                        Festive Sale ends {FESTIVE_CAMPAIGN.displayEndDate}. Cannot be combined with other discount codes.
-                      </p>
-                    </div>
-                  )}
-                  {isRakhiSaleActive && (
-                    <div className="border border-primary/25 bg-primary/5 px-4 py-3 text-center">
-                      {amountUntilRakhiDiscount === 0 ? (
-                        <p className="text-xs leading-relaxed text-foreground">
-                          Your offer is unlocked. Enter{' '}
-                          <strong className="font-semibold tracking-wide">
-                            {RAKSHA_BANDHAN_CAMPAIGN.code}
-                          </strong>{' '}
-                          at checkout for {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off.
-                        </p>
-                      ) : (
-                        <p className="text-xs leading-relaxed text-foreground">
-                          Add {formatPrice(amountUntilRakhiDiscount, currencyCode)} more, then enter{' '}
-                          <strong className="font-semibold tracking-wide">
-                            {RAKSHA_BANDHAN_CAMPAIGN.code}
-                          </strong>{' '}
-                          at checkout for {RAKSHA_BANDHAN_CAMPAIGN.discountPercent}% off.
-                        </p>
-                      )}
-                      <p className="mt-1 text-[11px] text-muted-foreground">
-                        Ends {RAKSHA_BANDHAN_CAMPAIGN.displayEndDate}. Cannot be combined with other discounts.
-                      </p>
-                    </div>
-                  )}
                   <div className="flex justify-between text-sm">
                     <span className="text-foreground/70">Subtotal</span>
                     <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>
-                  </div>
-                  {festiveTier && (
-                    <div className="flex justify-between gap-3 text-sm">
-                      <span className="text-foreground/70">Estimated festive discount ({festiveTier.percent}%)</span>
-                      <span className="font-medium">−{formatPrice(festiveDiscountCents / 100, currencyCode)}</span>
-                    </div>
-                  )}
-                  <div className="flex justify-between gap-3 text-sm">
-                    <span className="text-foreground/70">Estimated subtotal after discounts</span>
-                    <span className="font-medium">{formatPrice(shippingSubtotal, currencyCode)}</span>
                   </div>
                   <div className="flex justify-between gap-3 text-sm">
                     <span className="text-foreground/70">Shipping</span>
                     <span className="text-right">Calculated at checkout</span>
                   </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground">Estimates exclude shipping, taxes and duties. Discount eligibility and final amounts are confirmed at checkout.</p>
+                  <p className="text-xs leading-relaxed text-muted-foreground">Subtotal excludes shipping, taxes and duties. Enter any eligible discount codes at checkout; eligibility and final amounts are confirmed there.</p>
                   <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
                     <p>{SHIPPING_PROMISE}</p>
                     <p className="mt-1">Discounts are applied before shipping eligibility. Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.</p>

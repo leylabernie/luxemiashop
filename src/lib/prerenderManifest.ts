@@ -71,7 +71,6 @@ export const PRERENDERED_PRODUCT_HANDLES: Set<string> = new Set([
   'embroidered-sharara-suit-hot-pink-banno',
   'bead-embroidered-sharara-suit-cream-divya',
   'bead-embroidered-sharara-suit-peach-divya',
-  'bead-embroidered-sharara-suit-mauve-maroon-divya',
   'bead-embroidered-sharara-suit-hot-pink-divya',
   'embroidered-sharara-suit-black-mahira',
   'embroidered-sharara-suit-pink-mahira',

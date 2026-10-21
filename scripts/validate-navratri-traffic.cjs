@@ -58,12 +58,15 @@ const feedXml = read('dist/merchant-feed.xml');
 const sitemapIndexXml = read('dist/sitemap.xml');
 
 // Promotion truth checks must run even when retired seasonal inventory skips
-// the product-specific traffic gate. Shopify expiry: 2026-11-10T23:59:59Z.
+// the product-specific traffic gate. Retired codes must not return in static copy.
 for (const [label, html] of [['collection', collectionHtml], ['article', articleHtml]]) {
-  requireText(html, '10% off eligible orders of US$75 or more', `${label} LUXE10 minimum`);
-  requireText(html, 'One use per customer.', `${label} LUXE10 usage limit`);
-  requireText(html, 'November 10, 2026 at 6:59 p.m. Eastern', `${label} LUXE10 expiry`);
-  requireText(html, 'Final eligibility is confirmed at checkout.', `${label} LUXE10 eligibility`);
+  requireText(html, 'FIRST10', `${label} welcome offer`);
+  requireText(html, '10% off an eligible first order', `${label} first-order eligibility`);
+  requireText(html, 'One use per customer.', `${label} welcome usage limit`);
+  requireText(html, 'Final eligibility is confirmed at checkout.', `${label} welcome eligibility`);
+  if (/LUXE(?:10|15|20)/i.test(html)) {
+    throw new Error(`[navratri-traffic] ${label} contains a retired discount code`);
+  }
   if (/no minimum purchase requirement/i.test(html)) {
     throw new Error(`[navratri-traffic] ${label} contains obsolete no-minimum promotion copy`);
   }
@@ -107,7 +110,7 @@ requirePattern(collectionHtml, /"@type"\s*:\s*"CollectionPage"/, 'CollectionPage
 requirePattern(collectionHtml, /"@type"\s*:\s*"ItemList"/, 'ItemList schema');
 requireText(collectionHtml, 'https://luxemia.shop/collections/navratri-outfits#products', 'linked collection product schema');
 requireText(collectionHtml, '/blog/navratri-9-day-color-guide-2026', 'collection-to-guide internal link');
-requireText(collectionHtml, 'LUXE10', 'collection festive offer');
+requireText(collectionHtml, 'FIRST10', 'collection first-order offer');
 
 const collectionProductLinks = new Set(
   [...collectionHtml.matchAll(/href="\/product\/([^"?]+)"/g)].map((match) => match[1])
@@ -134,7 +137,7 @@ requirePattern(
 );
 requireText(articleHtml, 'https://www.timeanddate.com/holidays/us/hindu-navaratri', 'United States date source');
 requireText(articleHtml, 'href="/collections/navratri-outfits"', 'guide-to-collection internal link');
-requireText(articleHtml, 'LUXE10', 'article festive offer');
+requireText(articleHtml, 'FIRST10', 'article first-order offer');
 
 requireText(homepageHtml, 'href="/collections/navratri-outfits"', 'homepage Navratri collection link');
 requireText(homepageHtml, 'href="/blog/navratri-9-day-color-guide-2026"', 'homepage Navratri guide link');

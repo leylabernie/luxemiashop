@@ -389,7 +389,7 @@ const NewVisitorPopup = () => {
                       <h3 className="font-serif text-2xl mb-2">You're In</h3>
 
                       <p className="text-sm text-foreground/60 mb-4">
-                        Your exclusive <strong className="text-foreground">10% off</strong> code is ready:
+                        Your <strong className="text-foreground">10% off</strong> code for an eligible first order:
                       </p>
 
                       <div className="bg-muted px-6 py-3 rounded-md inline-block mb-4 border-2 border-dashed border-primary/30">
@@ -399,7 +399,7 @@ const NewVisitorPopup = () => {
                       </div>
 
                       <p className="text-xs text-foreground/50 mb-6">
-                        Code copied to clipboard. Apply it at checkout.
+                        Code copied to clipboard. One use per customer. Apply it at checkout, where eligibility is confirmed.
                       </p>
 
                       <Button

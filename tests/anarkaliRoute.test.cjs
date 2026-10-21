@@ -30,6 +30,7 @@ function sitemap(html = '') {
       };
       if (name === './product-retirement-20260908.json') return { retained: [] };
       if (name === '../src/config/emptyCatalogRoutes.json') return JSON.parse(read('src/config/emptyCatalogRoutes.json'));
+      if (name === './storefront-catalog.cjs') return require('../scripts/storefront-catalog.cjs');
       throw new Error(`Unexpected sitemap dependency: ${name}`);
     },
   });

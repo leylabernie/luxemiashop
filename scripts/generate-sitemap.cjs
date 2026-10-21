@@ -14,6 +14,7 @@
 
 const fs = require('fs');
 const path = require('path');
+const { fetchCompleteStorefrontCatalog } = require('./storefront-catalog.cjs');
 
 const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
@@ -282,43 +283,13 @@ function prerenderRouteFailure(routePath, manifestRoutes, exactRedirectSources) 
 // ─── Shopify API Fetch ──────────────────────────────────────────────────────
 
 async function fetchAllProducts() {
-  const allProducts = [];
-  let cursor = null;
-  let hasNextPage = true;
-
-  while (hasNextPage) {
-    const variables = { first: 250 };
-    if (cursor) variables.after = cursor;
-
-    console.log(`[sitemap] Fetching products page (cursor: ${cursor || 'start'})...`);
-
-    const response = await fetch(SHOPIFY_STOREFRONT_URL, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
-      },
-      body: JSON.stringify({ query: ALL_PRODUCTS_QUERY, variables }),
-    });
-
-    if (!response.ok) {
-      throw new Error(`[sitemap] Shopify API error: ${response.status} ${response.statusText}`);
-    }
-
-    const data = await response.json();
-    if (data?.errors?.length) {
-      throw new Error(`[sitemap] Shopify GraphQL error: ${JSON.stringify(data.errors)}`);
-    }
-    const edges = data?.data?.products?.edges || [];
-    allProducts.push(...edges.map(e => e.node));
-
-    const pageInfo = data?.data?.products?.pageInfo;
-    hasNextPage = pageInfo?.hasNextPage ?? false;
-    cursor = pageInfo?.endCursor ?? null;
-  }
-
-  console.log(`[sitemap] Fetched ${allProducts.length} total products from Shopify`);
-  return allProducts.filter((product) => !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle));
+  const products = await fetchCompleteStorefrontCatalog({
+    url: SHOPIFY_STOREFRONT_URL,
+    token: SHOPIFY_STOREFRONT_TOKEN,
+    query: ALL_PRODUCTS_QUERY,
+    fetchImpl: fetch,
+  });
+  return products.filter(product => !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle));
 }
 
 // ─── Sitemap XML Generation ─────────────────────────────────────────────────

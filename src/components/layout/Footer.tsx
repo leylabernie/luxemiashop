@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck, Check } from 'lucide-react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
+import { WELCOME_OFFER } from '@/config/welcomeOffer';
 
 // Google Customer Reviews badge — loads the merchant widget script and renders
 // the badge showing our seller rating. Positioned in the footer so it appears
@@ -76,13 +77,14 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
         body: { email: newsletterEmail, type: 'newsletter', source: 'footer' },
       });
       if (error) throw error;
-      // Verified against the active Shopify welcome discount on August 20, 2026.
-      // Do not rely on a stale backend response for a checkout-facing promotion.
-      const discountCode = 'LUXE10';
+      // Use the same verified first-order offer as the welcome popup and header.
+      const discountCode = WELCOME_OFFER.enabled ? WELCOME_OFFER.code : null;
       setNewsletterDiscountCode(discountCode);
       setNewsletterSubmitted(true);
-      toast.success(`Welcome — use ${discountCode}`, {
-        description: 'Use your 10% first-order code at checkout. We\'ll also send new arrivals and offers.',
+      toast.success(discountCode ? `Welcome — use ${discountCode}` : 'Thank you for subscribing', {
+        description: discountCode
+          ? '10% off eligible first orders. One use per customer. Eligibility is confirmed at checkout.'
+          : 'We\'ll send new arrivals and offers.',
       });
     } catch {
       toast.error('Something went wrong', {
@@ -130,7 +132,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
                 <Check className="h-4 w-4" />
                 <span>
                   {newsletterDiscountCode
-                    ? <>Thank you! Use <strong>{newsletterDiscountCode}</strong> for 10% off your first order.</>
+                    ? <>Thank you! Use <strong>{newsletterDiscountCode}</strong> for 10% off an eligible first order. One use per customer. Eligibility is confirmed at checkout.</>
                     : 'Thank you! You\'re on the list.'}
                 </span>
               </div>

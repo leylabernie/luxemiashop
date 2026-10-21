@@ -61,6 +61,7 @@ async function runGenerator(options = {}) {
     require(name) {
       if (name === 'fs') return fixtureFs;
       if (name === 'path') return path;
+      if (name === './storefront-catalog.cjs') return require('../scripts/storefront-catalog.cjs');
       if (name === './product-retirement-20260908.json') {
         return { retained: baselineHandles.slice(0, 149).map(handle => ({ handle })), retired: (options.retiredHandles || []).map(handle => ({ handle })) };
       }

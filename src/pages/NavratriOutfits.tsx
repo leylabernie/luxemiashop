@@ -48,7 +48,7 @@ const navratriOutfitFaqs = [
   },
   {
     question: 'Is there a festive discount?',
-    answer: 'Use LUXE10 for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.',
+    answer: 'Use FIRST10 for 10% off an eligible first order. One use per customer. Final eligibility is confirmed at checkout.',
   },
   {
     question: 'Can I return a Navratri outfit?',
@@ -120,7 +120,7 @@ const NavratriOutfits = () => {
             <div className="grid gap-3 text-sm sm:grid-cols-3">
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><CheckCircle2 className="h-4 w-4 text-primary" /> Current catalog listings</p>
               <p className="flex items-center justify-center gap-2 text-muted-foreground"><Truck className="h-4 w-4 text-primary" /> $14.99 below $150 · Free at $150+</p>
-              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use LUXE10 for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.</p>
+              <p className="flex items-center justify-center gap-2 text-muted-foreground"><Gift className="h-4 w-4 text-primary" /> Use FIRST10 for 10% off an eligible first order. One use per customer. Final eligibility is confirmed at checkout.</p>
             </div>
           </div>
         </div>
