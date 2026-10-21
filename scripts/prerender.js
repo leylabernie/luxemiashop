@@ -13,6 +13,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
+import catalogSource from './storefront-catalog.cjs';
+const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
 import { getPrimaryCategory, getCatalogDisplayCategory, selectLatestArrivals } from '../src/lib/catalogCategories.mjs';
 import { hasReviewedProductCopy, renderReviewedProductHtml } from '../src/lib/reviewedProductCopy.mjs';
 
@@ -592,7 +594,7 @@ function disambiguateDuplicateProductRouteTitles(routes) {
 const SHOPIFY_STOREFRONT_URL = 'https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json';
 const SHOPIFY_STOREFRONT_TOKEN = process.env.SHOPIFY_STOREFRONT_TOKEN || '';
 if (!SHOPIFY_STOREFRONT_TOKEN) {
-  console.warn('[prerender] WARNING: SHOPIFY_STOREFRONT_TOKEN env var is not set. Product prerendering will use fallback data.');
+  console.warn('[prerender] SHOPIFY_STOREFRONT_TOKEN is not set; fresh product prerendering will fail.');
 }
 
 
@@ -737,41 +739,17 @@ function forceJpegForGmc(url) {
 }
 
 async function fetchAllShopifyProducts() {
-  const map = new Map();
-  let cursor = null;
-  try {
-    for (let i = 0; i < 20; i++) {
-      const resp = await fetch(SHOPIFY_STOREFRONT_URL, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Shopify-Storefront-Access-Token': SHOPIFY_STOREFRONT_TOKEN,
-        },
-        body: JSON.stringify({
-          query: ALL_PRODUCTS_QUERY,
-          variables: { first: 100, after: cursor },
-        }),
-      });
-      if (!resp.ok) {
-        console.warn(`[prerender] Shopify fetch returned ${resp.status} — using fallbacks`);
-        break;
-      }
-      const json = await resp.json();
-      const data = json?.data?.products;
-      if (!data) break;
-      for (const edge of data.edges || []) {
-        const p = edge.node;
-        if (p?.handle && !HIDDEN_BILLING_PRODUCT_HANDLES.has(p.handle)) {
-          map.set(p.handle, applyCustomizableProductDetails(p));
-        }
-      }
-      if (!data.pageInfo?.hasNextPage) break;
-      cursor = data.pageInfo.endCursor;
-    }
-  } catch (err) {
-    console.warn(`[prerender] Shopify fetch failed: ${err.message} — using fallbacks`);
-  }
-  console.log(`[prerender] Loaded ${map.size} products from Shopify Storefront API`);
+  const products = await fetchCompleteStorefrontCatalog({
+    url: SHOPIFY_STOREFRONT_URL,
+    token: SHOPIFY_STOREFRONT_TOKEN,
+    query: ALL_PRODUCTS_QUERY,
+    pageSize: 100,
+    fetchImpl: fetch,
+  });
+  const map = new Map(products
+    .filter(product => !HIDDEN_BILLING_PRODUCT_HANDLES.has(product.handle))
+    .map(product => [product.handle, applyCustomizableProductDetails(product)]));
+  console.log(`[prerender] Loaded ${map.size} products from a complete Shopify Storefront response`);
   return map;
 }
 
@@ -2466,7 +2444,7 @@ const routes = [
     path: '/collections/navratri-outfits',
     category: 'occasion:navratri',
     title: 'Navratri Outfits USA 2026 | Garba Styles | LuxeMia',
-    description: 'Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; LUXE10 on eligible US$75+ orders.',
+    description: 'Shop Navratri outfits in the USA for Garba and Dandiya, including chaniya choli and festive styles. Tracked U.S. shipping; FIRST10 for eligible first orders.',
     h1: 'Navratri Outfits for Garba in the USA',
     content: `
       <p>Shop current Navratri lehenga, chaniya choli and festive styles for Garba and Dandiya events in the United States. This collection includes available products whose catalog details explicitly mention Navratri, Garba, chaniya, or dandiya.</p>
@@ -2479,7 +2457,7 @@ const routes = [
         <li><a href="/suits">Shop Anarkali and Salwar Suits</a></li>
         <li><a href="/sizing-measurements-guide">Sizing and Measurement Guide</a></li>
       </ul>
-      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch. Use LUXE10 for 10% off eligible orders of US$75 or more. One use per customer. Offer ends November 10, 2026 at 6:59 p.m. Eastern. Final eligibility is confirmed at checkout.</p>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking is provided after dispatch. Use FIRST10 for 10% off an eligible first order. One use per customer. Final eligibility is confirmed at checkout.</p>
       <p>Contact LuxeMia before ordering when your celebration date is fixed. Delivery by a particular event is not guaranteed.</p>
     `,
   },
@@ -3473,6 +3451,13 @@ async function main() {
   // Pre-fetch live Shopify product data so /product/* prerendered HTML
   // emits valid Product JSON-LD with image, description, and offers.price.
   const productMap = await fetchAllShopifyProducts();
+  // A fixed route is presentation metadata, not proof that an archived or
+  // unpublished product is still available. Only the complete current catalog
+  // may authorize product HTML, schema, links, and manifest entries.
+  const liveRoutes = retainLiveProductRoutes(routes, productMap);
+  const unavailableCount = routes.length - liveRoutes.length;
+  routes.splice(0, routes.length, ...liveRoutes);
+  if (unavailableCount) console.log(`[prerender] Omitted ${unavailableCount} fixed product routes absent from the current catalog`);
   const hardcodedProductHandles = new Set();
   for (const route of routes) {
     if (route.path.startsWith('/product/')) {
@@ -3627,12 +3612,6 @@ async function main() {
     console.error(`[prerender]   - Network error connecting to Shopify`);
     console.error(`[prerender] Fix: verify the token at Vercel → Project → Settings → Environment Variables`);
     process.exit(1);
-  }
-
-  if (!SHOPIFY_STOREFRONT_TOKEN) {
-    console.warn(`\n[prerender] WARNING: SHOPIFY_STOREFRONT_TOKEN is not set.`);
-    console.warn(`[prerender] Only ${productCount} hardcoded product pages were generated.`);
-    console.warn(`[prerender] Set SHOPIFY_STOREFRONT_TOKEN in Vercel environment variables to prerender all products.`);
   }
 
   // Write prerenderManifest.ts with the EXACT set of product handles that have

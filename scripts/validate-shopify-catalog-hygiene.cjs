@@ -331,7 +331,8 @@ async function main() {
   const products = await fetchAllProducts();
   const handles = new Set(products.map(product => product.handle));
   const missing = retirement.retained.filter(product => !handles.has(product.handle));
-  const resurfaced = retirement.retired.filter(product => handles.has(product.handle));
+  const resurfaced = [...retirement.retired, ...(retirement.reversiblyArchived || [])]
+    .filter(product => handles.has(product.handle));
   if (missing.length || resurfaced.length) throw new Error('Retirement catalog mismatch: missing=' + missing.map(p => p.handle).join(', ') + '; resurfaced=' + resurfaced.map(p => p.handle).join(', '));
   if (products.length < MIN_EXPECTED_ACTIVE_PRODUCTS) {
     throw new Error(

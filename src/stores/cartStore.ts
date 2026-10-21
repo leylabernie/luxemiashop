@@ -2,7 +2,6 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
-import { bestFestiveTier, isFestiveCampaignActive } from '@/config/festiveCampaign';
 import {
   AnalyticsItem,
   trackAddToCart,
@@ -225,7 +224,6 @@ export const useCartStore = create<CartStore>()(
 
         set({ isLoading: true, checkoutError: null });
         try {
-          const festiveTier = isFestiveCampaignActive() ? bestFestiveTier(totalValue) : null;
           const checkoutUrl = await createStorefrontCheckout(
             items.map((item) => ({
               variantId: item.variantId,
@@ -233,7 +231,6 @@ export const useCartStore = create<CartStore>()(
               handle: item.product.node.handle,
               customAttributes: item.customAttributes,
             })),
-            festiveTier?.code,
           );
 
           if (checkoutUrl) {

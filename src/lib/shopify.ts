@@ -806,9 +806,9 @@ export async function fetchCollectionByHandle(
   }
 }
 
-// discountCode: festive campaign tier code (LUXE10/15/20), auto-applied the way
-// Utsav applies its sitewide tiers. Shopify silently ignores a code the cart
-// does not qualify for, so passing the best tier is always safe.
+// Optional explicit code support is retained for callers that have verified an offer.
+// The storefront does not guess or automatically apply discounts; Shopify confirms
+// eligibility, combinations, and final amounts at checkout.
 export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>, discountCode?: string | null): Promise<string | null> {
    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
   // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
