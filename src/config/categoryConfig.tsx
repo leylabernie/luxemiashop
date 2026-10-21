@@ -774,7 +774,11 @@ const MENSWEAR: CategoryConfig = {
     styleSub('velvet-menswear', 'Velvet', ['fabric:velvet', 'velvet']),
     styleSub('cotton-menswear', 'Cotton', ['fabric:cotton', 'cotton']),
     // By Occasion (simplified — 2 main)
-    occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding']),
+    occasionSub('wedding', 'Wedding', ['occasion:wedding', 'wedding'], {
+      // Reviewed menswear copy states "Wear it for Indian Weddings" even
+      // when the product title and tags have no occasion:wedding signal.
+      descriptionKeywords: ['indian wedding', 'wedding ceremonies'],
+    }),
     occasionSub('festive', 'Festive', ['occasion:festive', 'festive', 'reception', 'party', 'engagement']),
     // By Price (2 tiers)
     priceSub('under-200', 'Under $200', 0, 200),

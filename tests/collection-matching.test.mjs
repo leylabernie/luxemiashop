@@ -218,3 +218,55 @@ test('All Collections applies selected filters instead of silently ignoring them
   assert.deepEqual(filterAndSortProducts([red, blue], { Color: ['Red'] }, [0, 1000], 'price-asc'), [red]);
   assert.deepEqual(filterAndSortProducts([red, blue], { Color: ['Red'], Fabric: ['Cotton'] }, [0, 1000], 'price-asc'), []);
 });
+
+// Shopify read-only verification, 2026-10-21: reviewed menswear titles omit
+// "wedding" and their occasion tags are unprefixed. The product descriptions
+// explicitly state Indian Weddings / Wedding ceremonies instead.
+const menswearWedding = getCategoryConfig('menswear').subcategories.find(sub => sub.slug === 'wedding');
+
+test('menswear Wedding includes reviewed groom and guest products without a wedding title or prefixed tag', () => {
+  const fixtures = [
+    product('Beige Fancy Work Art Silk Groom Sherwani with Stole', 'Sherwani',
+      ['menswear', 'groom wear', 'indian weddings'],
+      'Beige Fancy Work Art Silk Groom Sherwani with Stole. Wear it for Indian Weddings.'),
+    product('Beige Jacquard Sherwani with Dhoti-Style Bottoms', 'Sherwani',
+      ['menswear', 'Festive Wear', 'indian weddings and festive celebrations'],
+      'Beige Jacquard Sherwani with Dhoti-Style Bottoms (Style 403980). Wear it for Indian Weddings and Festive Celebrations.'),
+    product('Black Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear', 'Mens Kurta Pajama Set',
+      ['men', 'wedding-guest', 'indian weddings and festive celebrations'],
+      'Black Silk Embroidered Kurta Pajama Set. Wear it for Indian Weddings and Festive Celebrations.'),
+  ];
+  for (const node of fixtures) {
+    assert.equal(matchSubcategory(node, { ...menswearWedding, descriptionKeywords: undefined }), false);
+    assert.equal(matchSubcategory(node, menswearWedding), true);
+  }
+  assert.deepEqual(applySubcategory(fixtures.map(node => ({ node })), menswearWedding).map(p => p.node), fixtures);
+});
+
+test('menswear Wedding keeps explicit wedding signals and excludes generic festive or casual copy', () => {
+  for (const node of [
+    product('Wedding Sherwani', 'Sherwani'),
+    product('Cream Kurta Set', 'Mens Kurta Pajama Set', ['occasion:wedding']),
+    product('Cream Kurta Set', 'Mens Kurta Pajama Set', [], 'Wedding ceremonies, sangeet nights and festive receptions.'),
+  ]) assert.equal(matchSubcategory(node, menswearWedding), true);
+
+  for (const node of [
+    product('Casual Cotton Kurta', 'Mens Kurta Pajama Set', [], 'Comfortable for everyday wear.'),
+    product('Party Sherwani', 'Sherwani', ['festive'], 'Wear it for festive celebrations and parties.'),
+    product('Cotton Kurta', 'Mens Kurta Pajama Set', ['wedding', 'indian weddings'], 'Everyday casual wear.'),
+  ]) assert.equal(matchSubcategory(node, menswearWedding), false);
+});
+
+test('Wedding mapping is confined to menswear and retains category, color and price filtering', () => {
+  const groom = { node: product('Beige Groom Sherwani', 'Sherwani', ['color:beige'], 'Wear it for Indian Weddings.') };
+  const saree = { node: product('Beige Saree', 'Saree', ['color:beige'], 'Wear it for Indian Weddings.') };
+  const boys = { node: product('Boys Kurta Pajama', 'Kids Boy Set', ['menswear'], 'Wear it for Indian Weddings.') };
+  const selected = applySubcategory(filterByCategory([groom, saree, boys], 'menswear'), menswearWedding);
+  assert.deepEqual(selected, [groom]);
+  const { filters } = getCategoryConfig('menswear');
+  assert.deepEqual(applyProductFiltersV2(selected, { Color: ['beige'] }, [0, 100], filters), [groom]);
+  assert.deepEqual(applyProductFiltersV2(selected, { Color: ['blue'] }, [0, 100], filters), []);
+  assert.deepEqual(applyProductFiltersV2(selected, {}, [100, 200], filters), []);
+  assert.equal(getCategoryConfig('suits').subcategories.find(sub => sub.slug === 'wedding').descriptionKeywords, undefined);
+  assert.equal(getCategoryConfig('kids').subcategories.find(sub => sub.slug === 'wedding').descriptionKeywords, undefined);
+});
