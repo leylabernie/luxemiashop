@@ -107,3 +107,25 @@ test('approved sitemap inventory count matches the reconciled paths', () => {
   assert.equal(inventory.urlCount, inventory.paths.length);
   assert.equal(new Set(inventory.paths).size, inventory.paths.length);
 });
+
+test('authorized archives supersede old retained-product and offer baselines without becoming permanent retirements', () => {
+  const retirement = require('../scripts/product-retirement-20260908.json');
+  const archives = retirement.reversiblyArchived;
+  assert.deepEqual(new Set(archives.map(product => product.handle)), new Set(archivedHandles));
+  assert.equal(archives.length, archivedHandles.length);
+  const archivedIds = new Set(archives.map(product => product.id.split('/').pop()));
+  for (const product of [...retirement.retained, ...retirement.retired]) {
+    assert.ok(!archivedIds.has(product.id.split('/').pop()), product.handle);
+  }
+  for (const [field, offerIds] of Object.entries(retirement.feedBaseline)) {
+    for (const offerId of offerIds) {
+      assert.ok(!archivedIds.has(offerId.match(/^p(\d+)(?:-v|$)/)?.[1]), `${field}: ${offerId}`);
+    }
+  }
+  assert.equal(retirement.retained.length, 147, 'Only the two archived retained products are removed');
+  assert.equal(retirement.feedBaseline.offerIds.length, 1379, 'All other historical offers remain required');
+  assert.equal(retirement.feedBaseline.sizeOfferIds.length, 1371);
+  assert.equal(retirement.feedBaseline.materialOfferIds.length, 48);
+  const goneHandles = new Set(require('../src/data/legacyGoneProductHandles.json'));
+  for (const handle of archivedHandles) assert.ok(!goneHandles.has(handle), handle);
+});
