@@ -17,6 +17,10 @@ function urlsFromSitemap(name) {
 }
 
 async function main() {
+  if (['preview', 'development'].includes(process.env.VERCEL_ENV)) {
+    console.log(`[indexnow] Skipped for ${process.env.VERCEL_ENV}; preview builds must not submit production URLs.`);
+    return;
+  }
   const urls = [...new Set(SITEMAPS.flatMap(urlsFromSitemap))].slice(0, 10000);
   if (urls.length === 0) throw new Error('No canonical URLs were found in the generated scoped sitemaps');
   const response = await fetch('https://api.indexnow.org/indexnow', {
