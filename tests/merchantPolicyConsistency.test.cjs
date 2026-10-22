@@ -176,6 +176,7 @@ test('runtime crawler HTML uses shared timing and return terms with product-spec
 });
 
 test('actual middleware entry typechecks with NodeNext resolution and no Vite alias support', () => {
+  assert.doesNotMatch(read('src/lib/customizableProductStatus.ts'), /from .*\.json' with \{/); // Vercel's final Edge parser predates import attributes.
   execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--noEmit', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', '--target', 'ES2022', '--esModuleInterop', '--resolveJsonModule', '--strict', '--skipLibCheck', 'middleware.ts'], {cwd:root,stdio:'pipe'});
 });
 

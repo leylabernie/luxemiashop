@@ -1,5 +1,5 @@
 // Pure registry/classification shared with Edge middleware; keep app-only types out.
-import customizableProductsData from '../data/customizableProducts.json' with { type: 'json' };
+import customizableProductsData from '../data/customizableProducts.cjs';
 
 export interface CustomizableProductRecord {
   handle: string;
