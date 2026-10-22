@@ -160,6 +160,8 @@ async function loadTsModule(relativeSrcPath) {
   }
 }
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
+const { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE } = await loadTsModule('src/config/shippingPolicy.ts');
+const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
@@ -1411,7 +1413,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'How long does LuxeMia shipping take?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.',
+        text: SHIPPING_TIMING_NOTICE,
       },
     },
     {
@@ -1427,7 +1429,7 @@ const FAQ_PAGE_SCHEMA = {
       name: 'What is LuxeMia’s return policy?',
       acceptedAnswer: {
         '@type': 'Answer',
-        text: 'Except where applicable law provides otherwise, LuxeMia does not accept voluntary change-of-mind returns or exchanges. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours with supporting evidence.',
+        text: RETURN_POLICY_FAQ_ANSWER,
       },
     },
     {
@@ -2185,11 +2187,11 @@ const routes = [
       <h2>Where does LuxeMia ship?</h2>
       <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above.</p>
       <h2>How long does LuxeMia shipping take?</h2>
-      <p>In-stock online items receive tracking after dispatch. Carrier transit time begins after dispatch.</p>
+      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)}</p>
       <h2>How should I choose a LuxeMia size?</h2>
       <p>Take current body measurements and compare them with the size options and details on the exact product page. Contact LuxeMia before ordering if the listing is unclear.</p>
       <h2>What is LuxeMia’s return policy?</h2>
-      <p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.</p>
+      <p>${escapeHtml(RETURN_POLICY_FAQ_ANSWER)}</p>
       <h2>Can I cancel a LuxeMia order?</h2>
       <p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.</p>
 `,
@@ -2211,7 +2213,7 @@ const routes = [
       <h3>South Africa</h3><p>$49.99 per order.</p>
       <h3>Mauritius</h3><p>$59.99 per order.</p>
       <h2>Processing and carrier transit</h2>
-      <p>Processing is the time before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Review the exact product page for published processing information and contact LuxeMia before ordering for a fixed event date.</p>
+      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any additional tailoring or made-to-order processing and contact LuxeMia before ordering for a fixed event date.</p>
       <h2>Carriers, consolidation and express service</h2>
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
       <h2>Customs and duties</h2>
@@ -2240,13 +2242,13 @@ const routes = [
     description: 'Review international shipping, duties, customs, brokerage and tracking guidance for all seven LuxeMia destination countries.',
     h1: 'International Shipping, Duties & Customs',
     content: `
-      <p>Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
+      <p>${escapeHtml(SHIPPING_ORIGIN_NOTICE)} Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
       <h2>Duties, taxes and brokerage</h2>
       <p>International orders may be assessed customs duties, import taxes, value-added tax, brokerage or carrier processing fees. These charges are the customer’s responsibility unless checkout or a written LuxeMia quote explicitly states that they are included.</p>
       <h2>Carrier routing</h2>
       <p>LuxeMia may compare qualified carriers and consolidation services by destination, parcel weight, dimensions, customs requirements and cost. A standard rate does not guarantee a particular carrier.</p>
       <h2>Processing and delivery</h2>
-      <p>Processing time occurs before dispatch. Carrier transit begins after acceptance by the carrier. Delivery estimates are not guarantees unless LuxeMia confirms a guaranteed date in writing.</p>
+      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the product page for additional tailoring or made-to-order processing.</p>
       <h2>Questions?</h2>
       <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a customs, timing or checkout detail is unclear, or review the <a href="/shipping">Shipping Policy</a>.</p>
     `,
@@ -2256,7 +2258,7 @@ const routes = [
     title: 'Returns, Refunds & Cancellations | LuxeMia',
     description: 'LuxeMia’s final-sale policy, 48-hour damage and order-issue claim requirements, and cancellation terms.',
     h1: 'Returns, Refunds & Cancellations',
-    content: '<p>All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video showing the unopened package, shipping label, and item condition.</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>',
+    content: `<p>${escapeHtml(RETURN_POLICY_SUMMARY)}</p><h2>Order cancellations</h2><p>Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted where applicable law permits. Email hello@luxemia.shop immediately with your order number.</p>`,
   },
   {
     path: '/contact',
@@ -3021,9 +3023,15 @@ function generateHtml(template, route, allShopifyProducts) {
       ? 'Unstitched (Fabric Only) requires tailoring before wearing. Standard Stitched and Custom Stitched dispatch timing is confirmed after measurements. Confirm availability, processing and carrier transit before ordering.'
       : isCustomizable
       ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
+      : isMadeToOrderProduct(p)
+      ? 'Made to order. Confirm production, dispatch and carrier transit with LuxeMia before ordering for a fixed event date.'
+      : p.tags?.includes('availability:Confirm before ordering')
+      ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+      : p.tags?.includes('construction:Unstitched')
+      ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
       : productAttributes.shipsWithinDays
       ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
-      : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.';
+      : SHIPPING_TIMING_NOTICE + ' Optional tailoring adds processing time; confirm timing before ordering for an event date.';
     // Specification rows render as a real <table> (th/td) so answer engines and
     // AI crawlers can lift fabric, sizing, and shipping facts as structured
     // key-value pairs instead of parsing prose.
@@ -3032,6 +3040,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ...(includedPieces ? [['Included Pieces', includedPieces]] : []),
       ['Sizing & Chart', sizingDetails],
       ['Shipping Estimate', shippingEstimate],
+      ['Ships from', 'India'],
       ...(productType ? [['Type', productType]] : []),
       ...(styleReference ? [['Style Reference', styleReference]] : []),
       ['Brand', brandName],
@@ -3054,9 +3063,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ? 'Unstitched (Fabric Only) is supplied unstitched and requires tailoring before wearing. Standard Stitched and Custom Stitched selections require tailoring; dispatch timing is confirmed after measurements. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
       : isCustomizable
       ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
-      : productAttributes.jewelry
-      ? 'Delivery timing depends on the item. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.'
-      : 'Delivery timing depends on the item and any selected tailoring. Tracking details are emailed when the shipping label is created for dispatch. Shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.';
+      : shippingEstimate;
     // Questions/answers are plain strings so the same array feeds BOTH the
     // visible HTML and the FAQPage JSON-LD — the markup always mirrors what
     // shoppers can see, per Google's structured data guidelines.
@@ -3080,7 +3087,7 @@ function generateHtml(template, route, allShopifyProducts) {
       },
       {
         question: 'What is the return policy?',
-        answer: 'All sales are final and exchanges are not accepted, subject to applicable law. Report shipping damage, a defective or incorrect item, or a missing item within 48 hours of delivery with clear photos and a continuous unboxing video.',
+        answer: RETURN_POLICY_FAQ_ANSWER,
       },
       {
         question: 'How should I care for this product?',

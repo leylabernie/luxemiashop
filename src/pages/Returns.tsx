@@ -1,6 +1,7 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
+import { RETURN_CLAIM_WINDOW, RETURN_EVIDENCE_REQUIREMENT } from '@/lib/returnPolicyCopy';
 import { Phone, Mail, Scissors, ShieldCheck, Clock } from 'lucide-react';
 
 const Returns = () => {
@@ -39,7 +40,7 @@ const Returns = () => {
               <tbody className="text-muted-foreground">
                 <tr className="border-t border-border">
                   <td className="p-4">Item arrives <strong className="text-foreground">damaged, defective, wrong, or not as described</strong></td>
-                  <td className="p-4"><strong className="text-foreground">Full refund or replacement, your choice.</strong> You don&rsquo;t pay return shipping. Report within 7 days.</td>
+                  <td className="p-4"><strong className="text-foreground">Full refund or replacement, your choice.</strong> You don&rsquo;t pay return shipping. Report within {RETURN_CLAIM_WINDOW} with the required photos and continuous unboxing video.</td>
                 </tr>
                 <tr className="border-t border-border">
                   <td className="p-4">Item arrives but the <strong className="text-foreground">size doesn&rsquo;t fit</strong></td>
@@ -86,8 +87,8 @@ const Returns = () => {
               If your order arrives damaged, defective, materially different from its listing, incorrect, or with missing pieces, that is on me &mdash; and I will fix it. <strong className="text-foreground">You choose</strong> a full refund or a replacement, and you do not pay return shipping. Here is how to report it:
             </p>
             <ol className="list-decimal pl-6 space-y-2 my-4">
-              <li>Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> within <strong className="text-foreground">7 days of delivery</strong> with your order number and a clear description of the issue.</li>
-              <li>Attach 2&ndash;3 photos of the item and the packaging. A short video helps but is <em>not</em> required.</li>
+              <li>Email <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> within <strong className="text-foreground">{RETURN_CLAIM_WINDOW} of delivery</strong> with your order number and a clear description of the issue.</li>
+              <li>Provide {RETURN_EVIDENCE_REQUIREMENT}. The continuous unboxing/opening video is required.</li>
               <li>Keep the item and all packaging until I review and reply &mdash; usually within 48 hours, often faster.</li>
               <li>Once I confirm the issue, I refund you in full or ship a replacement &mdash; your choice. You do not pay return shipping.</li>
             </ol>
@@ -95,7 +96,7 @@ const Returns = () => {
               If the issue is something that requires you to return the item (for example, the supplier needs it back to honor their own defect policy), I will email you a prepaid return label. You don&rsquo;t pay for it.
             </p>
             <p className="text-sm italic mt-4">
-              Note: a 7-day window is the U.S. FTC Mail Order Rule standard and matches or beats most major Indian ethnic wear stores. Reporting earlier is always better and helps me resolve faster, but I won&rsquo;t deny a legitimate claim because you needed an extra day to take photos.
+              This reporting process does not limit any consumer rights or remedies that cannot legally be excluded.
             </p>
           </div>
         </section>

@@ -48,7 +48,7 @@ const shippingBlock = `  {
       <h3>South Africa</h3><p>$49.99 per order.</p>
       <h3>Mauritius</h3><p>$59.99 per order.</p>
       <h2>Processing and carrier transit</h2>
-      <p>Processing is the time before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Review the exact product page for published processing information and contact LuxeMia before ordering for a fixed event date.</p>
+      <p>\${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any additional tailoring or made-to-order processing and contact LuxeMia before ordering for a fixed event date.</p>
       <h2>Carriers, consolidation and express service</h2>
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
       <h2>Customs and duties</h2>
@@ -75,13 +75,13 @@ const shippingBlock = `  {
     description: 'Review international shipping, duties, customs, brokerage and tracking guidance for all seven LuxeMia destination countries.',
     h1: 'International Shipping, Duties & Customs',
     content: \`
-      <p>Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
+      <p>\${escapeHtml(SHIPPING_ORIGIN_NOTICE)} Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
       <h2>Duties, taxes and brokerage</h2>
       <p>International orders may be assessed customs duties, import taxes, value-added tax, brokerage or carrier processing fees. These charges are the customer’s responsibility unless checkout or a written LuxeMia quote explicitly states that they are included.</p>
       <h2>Carrier routing</h2>
       <p>LuxeMia may compare qualified carriers and consolidation services by destination, parcel weight, dimensions, customs requirements and cost. A standard rate does not guarantee a particular carrier.</p>
       <h2>Processing and delivery</h2>
-      <p>Processing time occurs before dispatch. Carrier transit begins after acceptance by the carrier. Delivery estimates are not guarantees unless LuxeMia confirms a guaranteed date in writing.</p>
+      <p>\${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the product page for additional tailoring or made-to-order processing.</p>
       <h2>Questions?</h2>
       <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a customs, timing or checkout detail is unclear, or review the <a href="/shipping">Shipping Policy</a>.</p>
     \`,
