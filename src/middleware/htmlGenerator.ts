@@ -5,6 +5,10 @@
  * Used by middleware.ts for product page SSR and 404 responses.
  */
 
+import { SHIPPING_TIMING_NOTICE } from '../config/shippingPolicy.js';
+import { RETURN_POLICY_FAQ_ANSWER } from '../lib/returnPolicyCopy.js';
+import { isCustomizableProduct, isMadeToOrderProduct } from '../lib/customizableProductStatus.js';
+import { hasNativeFullStitchingOptions } from '../lib/serviceAddOns.js';
 import { getCatalogMaterial } from '../lib/catalogMaterial.js';
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
@@ -367,6 +371,26 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     description,
   });
 
+  const nativeStitching = hasNativeFullStitchingOptions({
+    ...product,
+    variants: { edges: product.variants.edges.map(({ node }) => ({
+      node: { selectedOptions: node.selectedOptions ?? [] },
+    })) },
+  });
+  const shippingEstimate = nativeStitching
+    ? 'Unstitched (Fabric Only) requires tailoring before wearing. Standard Stitched and Custom Stitched dispatch timing is confirmed after measurements. Confirm availability, processing and carrier transit before ordering.'
+    : isCustomizableProduct(product.handle)
+    ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
+    : isMadeToOrderProduct(product.handle, product.tags)
+    ? 'Made to order. Confirm production, dispatch and carrier transit with LuxeMia before ordering for a fixed event date.'
+    : product.tags?.includes('availability:Confirm before ordering')
+    ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+    : product.tags?.includes('construction:Unstitched')
+    ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
+    : shipsWithinDays
+    ? `Ships within ${shipsWithinDays} business day${shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
+    : SHIPPING_TIMING_NOTICE + ' Optional tailoring adds processing time; confirm timing before ordering for an event date.';
+
   const sizeAnswer = sizes.length > 0
     ? `Available choices shown for this listing are ${sizes.join(', ')}. Review the Size Guide before ordering.`
     : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
@@ -391,8 +415,12 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       answer: 'Yes. LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Tracking details are emailed when the shipping label is created for dispatch.',
     },
     {
+      question: `What is the delivery time for the ${displayTitle}?`,
+      answer: shippingEstimate,
+    },
+    {
       question: `Can I return the ${displayTitle}?`,
-      answer: 'Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. If your item arrives damaged, defective, incorrect, or incomplete, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video, and LuxeMia will make it right. See Returns & Cancellations for complete claim instructions.',
+      answer: RETURN_POLICY_FAQ_ANSWER,
     },
     {
       question: `How should I care for the ${displayTitle}?`,
@@ -533,7 +561,8 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           ${careInstructions ? `<div><dt>Care</dt><dd>${escapeHtml(careInstructions)}</dd></div>` : ''}
           ${shopifyCategory ? `<div><dt>Product Category</dt><dd>${escapeHtml(shopifyCategory)}</dd></div>` : ''}
           <div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizes.length > 0 ? `Listed options: ${sizes.join(', ')}. Review the Size Guide before ordering.` : 'Available sizing varies by product. Review the listed options and Size Guide before ordering.')}</dd></div>
-          <div><dt>Shipping Estimate</dt><dd>${escapeHtml(shipsWithinDays ? `Ships within ${shipsWithinDays} business day${shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.` : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.')}</dd></div>
+          <div><dt>Ships from</dt><dd>India</dd></div>
+          <div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>
           ${vendor ? `<div><dt>Brand</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
           ${color ? `<div><dt>Color</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
           <div><dt>Gender</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>

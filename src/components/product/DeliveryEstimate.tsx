@@ -1,5 +1,5 @@
 import { Truck, Clock, PackageCheck } from 'lucide-react';
-import { SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
+import { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
 import { NATIVE_STITCHING_TIMING_NOTICE } from '@/lib/serviceAddOns';
 
 interface DeliveryEstimateProps {
@@ -50,7 +50,7 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
         <Truck className="mt-0.5 h-3.5 w-3.5 text-muted-foreground" />
         <div>
           <p className="text-foreground">
-            Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.
+            {SHIPPING_ORIGIN_NOTICE} Tracked shipping is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
             U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.
