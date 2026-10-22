@@ -7,7 +7,7 @@
 
 import { SHIPPING_TIMING_NOTICE } from '../config/shippingPolicy.js';
 import { RETURN_POLICY_FAQ_ANSWER } from '../lib/returnPolicyCopy.js';
-import { isCustomizableProduct, isMadeToOrderProduct } from '../lib/customizableProducts.js';
+import { isCustomizableProduct, isMadeToOrderProduct } from '../lib/customizableProductStatus.js';
 import { hasNativeFullStitchingOptions } from '../lib/serviceAddOns.js';
 import { getCatalogMaterial } from '../lib/catalogMaterial.js';
 import type { ShopifyProduct } from './shopifyProxy.js';

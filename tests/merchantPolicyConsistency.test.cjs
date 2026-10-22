@@ -175,6 +175,10 @@ test('runtime crawler HTML uses shared timing and return terms with product-spec
   }
 });
 
+test('actual middleware entry typechecks with NodeNext resolution and no Vite alias support', () => {
+  execFileSync(process.execPath, [require.resolve('typescript/bin/tsc'), '--noEmit', '--module', 'NodeNext', '--moduleResolution', 'NodeNext', '--target', 'ES2022', '--esModuleInterop', '--resolveJsonModule', '--strict', '--skipLibCheck', 'middleware.ts'], {cwd:root,stdio:'pipe'});
+});
+
 test('build-time route rewriting retains shared timing expressions on repeated runs', () => {
   const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'luxemia-policy-codemod-'));
   try {
