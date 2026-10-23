@@ -74,6 +74,7 @@ export const BLOG_CATEGORY_GROUPS: BlogCategoryGroup[] = [
 
 /** Every published article belongs to exactly one active hub. */
 export const BLOG_POST_CATEGORY_MAP: Record<string, string> = {
+  'saree-outfit-cost-blouse-stitching-finishing-shipping': 'fit-sizing-and-garment-care',
   'winter-indian-wedding-guest-outfits-layering-guide': 'weddings-festivals',
   'what-should-a-male-guest-wear-to-a-three-day-indian-wedding': 'weddings-festivals',
   'what-should-a-non-indian-guest-wear-to-an-indian-wedding': 'weddings-festivals',

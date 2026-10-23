@@ -37,6 +37,7 @@ export interface BlogPost {
  * included pieces, sizing and availability.
  */
 export const PUBLISHED_BLOG_SLUGS = [
+  'saree-outfit-cost-blouse-stitching-finishing-shipping',
   'winter-indian-wedding-guest-outfits-layering-guide',
   'what-should-a-male-guest-wear-to-a-three-day-indian-wedding',
   'what-should-a-non-indian-guest-wear-to-an-indian-wedding',
@@ -215,6 +216,68 @@ const editorialNote = editorialNoteFor('August 8, 2026');
 const growthEditorialNote = editorialNoteFor('August 28, 2026');
 
 export const blogPosts: BlogPost[] = [
+  {
+    id: 'saree-outfit-cost-20261023',
+    slug: 'saree-outfit-cost-blouse-stitching-finishing-shipping',
+    title: 'What Does a Saree Outfit Cost Beyond the Saree Price?',
+    excerpt: 'Budget for a saree, optional blouse stitching, finishing, petticoat and shipping with three current LuxeMia examples and a clear pre-checkout checklist.',
+    author: EDITORIAL_TEAM,
+    publishedAt: '2026-10-23',
+    updatedAt: '2026-10-23',
+    factCheckedAt: '2026-10-23',
+    category: 'Shopping Guide',
+    tags: ['saree outfit cost', 'saree blouse stitching', 'saree finishing', 'saree shopping USA'],
+    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/emerald-green-mashru-silk-resham-and-zari-designer-border-work-banarasi-saree-106005-0.jpg?v=1792514047',
+    imageFit: 'contain',
+    readTime: 5,
+    sources: [
+      {title: 'Sky Blue Faux Soft Silk Zari Plain Banarasi Saree', url: 'https://luxemia.shop/product/sky-blue-faux-soft-silk-zari-plain-banarasi-saree-102039', publisher: 'LuxeMia'},
+      {title: 'Brown Faux Georgette Zari Buti Banarasi Saree', url: 'https://luxemia.shop/product/brown-faux-georgette-zari-buti-banarasi-saree-102041', publisher: 'LuxeMia'},
+      {title: 'Emerald Green Mashru Silk Blend Designer Border Banarasi Saree', url: 'https://luxemia.shop/product/emerald-green-mashru-silk-blend-designer-border-banarasi-saree-106005', publisher: 'LuxeMia'},
+      {title: 'Shipping & Delivery', url: 'https://luxemia.shop/shipping', publisher: 'LuxeMia'},
+    ],
+    content: `
+      <p>The saree price is the starting point, not always the cost of a wearable outfit. Your budget may also need blouse stitching, finishing, a petticoat, shipping and tax. The useful question is not simply “Which saree costs less?” but “What do I still need to wear it?”</p>
+      <p>This guide uses three current LuxeMia listings as U.S. shopping examples, checked on October 23, 2026. Prices and available options can change. Use the exact product page and checkout for your final order, rather than treating these planning examples as a quote.</p>
+      <h2>What does the base saree price include?</h2>
+      <p>Each saree below includes a matching <strong>unstitched blouse piece</strong>. That is blouse fabric, not a finished blouse ready to wear. The model photograph shows a styling reference; it does not establish that the photographed blouse, jewelry, shoes or other accessories are included.</p>
+      <p>Read <a href="/blog/does-a-saree-come-with-a-blouse">Does a Saree Come With a Blouse?</a> if you need help distinguishing blouse fabric from a stitched blouse. Then check the particular listing again: the included pieces on one saree do not establish what comes with another.</p>
+      <h2>Which optional charges should you check?</h2>
+      <p>At the time of review, all three featured listings offer these separately priced choices:</p>
+      <ul>
+      <li><strong>Blouse Stitching / Alteration: $10.</strong> Confirm your measurements, chosen design, fabric suitability and dispatch timing before tailoring begins.</li>
+      <li><strong>Pico &amp; Fall: $8.</strong> This is one combined finishing option, not $8 for each service.</li>
+      <li><strong>Matching Petticoat: $8.</strong> This is an optional extra, not an automatic part of the base saree price.</li>
+      </ul>
+      <p>Selecting all three adds <strong>$26</strong>. They are optional: if you already have suitable pieces or have arranged your own tailoring, choose only what you need. Do not assume the same charges or services apply to every LuxeMia product. Stitching feasibility depends on the available blouse fabric and your requested design.</p>
+      <h2>What could one saree outfit cost before tax?</h2>
+      <p>The table assumes one saree, all three optional extras, standard shipping to the United States and <strong>no discount</strong>. All figures are in USD. It excludes tax, separately purchased shoes, jewelry, outerwear and any other services you arrange elsewhere.</p>
+      <table>
+      <thead><tr><th>Saree and base price</th><th>With $26 extras</th><th>Standard shipping</th><th>Total before tax</th></tr></thead>
+      <tbody>
+      <tr><td><a href="/product/sky-blue-faux-soft-silk-zari-plain-banarasi-saree-102039">Sky Blue Faux Soft Silk Zari Plain Banarasi Saree</a><br>$57.87</td><td>$83.87</td><td>$14.99</td><td><strong>$98.86</strong></td></tr>
+      <tr><td><a href="/product/brown-faux-georgette-zari-buti-banarasi-saree-102041">Brown Faux Georgette Zari Buti Banarasi Saree</a><br>$97.07</td><td>$123.07</td><td>$14.99</td><td><strong>$138.06</strong></td></tr>
+      <tr><td><a href="/product/emerald-green-mashru-silk-blend-designer-border-banarasi-saree-106005">Emerald Green Mashru Silk Blend Designer Border Banarasi Saree</a><br>$173.60</td><td>$199.60</td><td>$0.00</td><td><strong>$199.60</strong></td></tr>
+      </tbody>
+      </table>
+      <p>For example, the Sky Blue calculation is $57.87 + $10 + $8 + $8 + $14.99 = $98.86 before tax. The fabric names are deliberately different: faux soft silk, faux georgette and Mashru silk blend are not interchangeable material claims. Compare the listing's fabric, work and included pieces alongside the total.</p>
+      <h2>How does shipping affect the budget?</h2>
+      <p>The current <a href="/shipping">LuxeMia shipping policy</a> lists U.S. standard shipping at $14.99 below $150, with free standard shipping at $150 and above after discounts. A discount or a different combination of items can change the qualifying subtotal, so recheck the shipping line at checkout. Do not add an unwanted item merely to reach a threshold without comparing the overall amount.</p>
+      <p>These are U.S. examples only. Other supported destinations have their own shipping rates and thresholds, and may involve duties, import taxes, brokerage or carrier fees unless checkout states otherwise. Checkout controls the final available service, currency conversion and applicable tax.</p>
+      <h2>Can tailoring affect the event timeline?</h2>
+      <p>Yes. Ready-to-ship dispatch is approximately 3–4 business days. Standard carrier transit is approximately 9–14 business days after dispatch, or approximately 12–18 business days total. Optional tailoring can add processing time. These are estimates, not a guarantee that an outfit will arrive before a particular celebration.</p>
+      <p>Before ordering for a fixed date, contact LuxeMia with the product link, selected services, destination and event date. Allow time to inspect and try the complete outfit. For a winter celebration, the <a href="/blog/winter-indian-wedding-guest-outfits-layering-guide">winter wedding guest and layering guide</a> can help you plan an outer layer and shoes without assuming those pieces come with the saree.</p>
+      <h2>What should you check before paying?</h2>
+      <ol>
+      <li>Confirm the exact fabric and included pieces, especially whether the blouse is unstitched.</li>
+      <li>Select only the finishing, blouse and petticoat options you actually want.</li>
+      <li>Confirm tailoring details and timing before the work begins.</li>
+      <li>Review the item subtotal, any discount, shipping, tax and final checkout total.</li>
+      <li>Keep a separate budget for any shoes, jewelry or outerwear you still need.</li>
+      </ol>
+      <p>A clear outfit budget starts with the listing, adds only the services and pieces you choose, and ends with the actual checkout total.</p>
+    `,
+  },
   {
     id: 'winter-wedding-guest-20261011',
     imageFit: 'contain',
