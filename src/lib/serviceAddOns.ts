@@ -179,16 +179,44 @@ export const hasNativeStitchingChoices = (product: ServiceEligibleProduct): bool
   ].every(value => values.includes(value));
 };
 
+/** Native alteration variants already bill measurement-based fitting. Keep this
+ * contract narrow: construction/size choices alone are not an alteration service.
+ * Sold-out variants remain evidence so availability cannot create a second charge.
+ */
+export const hasNativeAlterationOptions = (product: ServiceEligibleProduct): boolean => {
+  const normalize = (value: string) => value.trim().replace(/\s+/g, ' ').toLowerCase();
+  const alteration = product.options?.find(option => normalize(option.name) === 'alteration');
+  if (!alteration || alteration.values.length !== 2) return false;
+  const values = alteration.values.map(normalize);
+  const madeToFit = values.find(value => /^made to fit(?: \(\+\$\d+(?:\.\d{1,2})?\))?$/.test(value));
+  if (!values.includes('standard fit') || !madeToFit) return false;
+  const groups = new Map<string, Set<string>>();
+  for (const { node } of product.variants?.edges ?? []) {
+    const value = node.selectedOptions.find(option => option.name === alteration.name)?.value;
+    if (!value || !values.includes(normalize(value))) return false;
+    const key = JSON.stringify(node.selectedOptions.filter(option => option.name !== alteration.name)
+      .map(option => [option.name, option.value]).sort(([a], [b]) => a.localeCompare(b)));
+    const seen = groups.get(key) ?? new Set<string>();
+    if (seen.has(normalize(value))) return false;
+    seen.add(normalize(value));
+    groups.set(key, seen);
+  }
+  return groups.size > 0 && [...groups.values()].every(values => values.size === 2);
+};
+
 export const NATIVE_STITCHING_TIMING_NOTICE =
   'Tailoring required; dispatch timing confirmed after measurements.';
 
 export const requiresNativeStitchingTimingConfirmation = (
   product: ServiceEligibleProduct,
   selectedOptions: Array<{ name: string; value: string }>,
-): boolean => hasNativeFullStitchingOptions(product) && selectedOptions.some(option =>
+): boolean => (hasNativeAlterationOptions(product) && selectedOptions.some(option =>
+  option.name.trim().toLowerCase() === 'alteration'
+  && /^made to fit(?: \(\+\$\d+(?:\.\d{1,2})?\))?$/i.test(option.value.trim().replace(/\s+/g, ' ')),
+)) || (hasNativeFullStitchingOptions(product) && selectedOptions.some(option =>
   option.name.trim().toLowerCase() === 'stitching'
   && /^(?:standard|custom) stitched$/i.test(option.value.trim()),
-);
+));
 
 export const isUnstitchedDeliverySelection = (
   product: ServiceEligibleProduct,
@@ -233,7 +261,7 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
 
   // These native variant prices already include the selected full-stitching
   // service. Neither their fabric-only nor finished choices sell alterations.
-  if (hasNativeFullStitchingOptions(product)) return [];
+  if (hasNativeFullStitchingOptions(product) || hasNativeAlterationOptions(product)) return [];
 
   // Fabric-only selections cannot be altered as finished garments. Keep
   // alteration available for ready-made products and mixed construction ranges.
