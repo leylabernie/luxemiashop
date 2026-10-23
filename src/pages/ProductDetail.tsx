@@ -1,5 +1,5 @@
-import { useEffect, useMemo, useState } from 'react';
-import { useParams, Link } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronRight, ArrowLeft } from 'lucide-react';
 import Header from '@/components/layout/Header';
@@ -28,6 +28,8 @@ import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandNam
 import { isProductSizeOptionName } from '@/lib/productOptionNames';
 import { getProductShipsWithin } from '@/lib/shipBy';
 import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
+import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
+import type { ShopifyProduct } from '@/lib/shopify';
 
 // Determine if a product type supports stitching options
 const STITCHABLE_PRODUCT_TYPES = [
@@ -72,8 +74,18 @@ const sanitizeSeoTitle = (value?: string | null): string => (value || '')
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
+  const [searchParams] = useSearchParams();
+  const requestedVariantId = searchParams.get('variant');
+  const selectionKey = `${handle}:${requestedVariantId ?? ''}`;
   const { product: shopifyProduct, isLoading: shopifyLoading, error: shopifyError } = useShopifyProduct(handle);
   const [selectedVariantImageUrl, setSelectedVariantImageUrl] = useState<string | null>(null);
+  const [variantSelection, setVariantSelection] = useState<{ key: string; id: string | null } | null>(null);
+  const handleSelectedVariantChange = useCallback((variant: ShopifyProduct['node']['variants']['edges'][number]['node'] | null) => {
+    const id = variant?.id ?? null;
+    setVariantSelection(previous => previous?.key === selectionKey && previous.id === id
+      ? previous : { key: selectionKey, id });
+    setSelectedVariantImageUrl(variant?.image?.url ?? null);
+  }, [selectionKey]);
   const addToRecentlyViewed = useRecentlyViewedStore((state) => state.addProduct);
 
   // CRITICAL FIX (June 2026): Removed the localProducts.ts fallback.
@@ -159,8 +171,15 @@ const ProductDetail = () => {
   const productIsAvailable = product
     ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
     : false;
-  const schemaVariant = product?.variants.edges.find((variant) => variant.node.availableForSale)?.node
+  // Ignore a prior route's selection during Back/Forward or variant-link navigation.
+  const selectedVariantId = variantSelection?.key === selectionKey ? variantSelection.id : null;
+  const schemaVariant = product?.variants.edges.find(({ node }) => node.id === selectedVariantId)?.node
+    || product?.variants.edges.find(({ node }) => node.availableForSale !== false && requestedVariantId && (
+      node.id === requestedVariantId || node.id.endsWith(`/${requestedVariantId}`)
+    ))?.node
+    || product?.variants.edges.find((variant) => variant.node.availableForSale)?.node
     || product?.variants.edges[0]?.node;
+  const schemaReferencePrice = getVariantReferencePrice(schemaVariant);
 
   // Enrich thin descriptions only with attributes supported by the listing.
   // Some legacy jewelry records contain garment option values (for example,
@@ -401,8 +420,8 @@ const ProductDetail = () => {
           image={product.images.edges[0]?.node.url}
           product={{
             name: product.title,
-            price: product.priceRange.minVariantPrice.amount,
-            currency: product.priceRange.minVariantPrice.currencyCode,
+            price: schemaVariant?.price.amount || product.priceRange.minVariantPrice.amount,
+            currency: schemaVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
             image: product.images.edges[0]?.node.url || '',
             description: enrichedDescription || product.description || '',
             availability: productIsAvailable ? 'InStock' : 'OutOfStock',
@@ -411,7 +430,7 @@ const ProductDetail = () => {
             mpn: normalizeBrandName(product.vendor) === 'LuxeMia' && schemaVariant?.sku && !schemaVariant?.barcode
               ? schemaVariant.sku
               : undefined,
-            originalPrice: product.compareAtPriceRange?.maxVariantPrice?.amount,
+            originalPrice: schemaReferencePrice?.amount,
             category: productSchemaCategory,
             brand: normalizeBrandName(product.vendor),
             color: productColor,
@@ -485,13 +504,13 @@ const ProductDetail = () => {
 
                 {/* Product Info — its own grid cell so the buy box fills the right column */}
                 <ProductInfo
-                  key={product.id}
+                  key={`${product.id}:${selectionKey}`}
                   product={{
                     ...product,
                     title: sanitizeProductTitle(product.title),
                     description: enrichedDescription || product.description,
                   }}
-                  onSelectedVariantChange={(variant) => setSelectedVariantImageUrl(variant?.image?.url ?? null)}
+                  onSelectedVariantChange={handleSelectedVariantChange}
                 />
               </div>
 
