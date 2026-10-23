@@ -1,4 +1,5 @@
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
+import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -497,6 +498,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       currencyCode: basePrice.currencyCode,
     };
   }, [basePrice, selectedServiceAddOnCharge]);
+  const currentReferencePrice = getVariantReferencePrice(activeVariantForGallery, currentPrice);
   const hasAvailableVariant = product.variants.edges.some(
     (edge) => edge.node.availableForSale !== false
   );
@@ -911,22 +913,20 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           <p className="text-2xl font-medium text-foreground">
             {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
           </p>
-          {product.compareAtPriceRange?.maxVariantPrice?.amount &&
-            parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
+          {currentReferencePrice && (
             <p className="text-lg text-muted-foreground line-through">
               {formatPrice(
-                product.compareAtPriceRange.maxVariantPrice.amount,
-                product.compareAtPriceRange.maxVariantPrice.currencyCode
+                currentReferencePrice.amount,
+                currentReferencePrice.currencyCode
               )}
             </p>
           )}
         </div>
-        {product.compareAtPriceRange?.maxVariantPrice?.amount &&
-          parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) > parseFloat(currentPrice.amount) && (
+        {currentReferencePrice && (
           <p className="text-sm text-primary font-medium">
             {Math.round((1 - parseFloat(currentPrice.amount) /
-              parseFloat(product.compareAtPriceRange.maxVariantPrice.amount)) * 100)}% off — You save {formatPrice(
-              (parseFloat(product.compareAtPriceRange.maxVariantPrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
+              parseFloat(currentReferencePrice.amount)) * 100)}% off — You save {formatPrice(
+              (parseFloat(currentReferencePrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
               currentPrice.currencyCode
             )}
           </p>
