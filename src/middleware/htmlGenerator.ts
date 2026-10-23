@@ -14,6 +14,8 @@ import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
 import { isProductSizeOptionName } from '../lib/productOptionNames.js';
 import { clampTitle, clampDescription } from '../lib/meta/clamp.js';
+import { renderSelectedOptions, selectInitialVariant } from './variantPrerender.js';
+import { getVariantReferencePrice } from '../lib/variantReferencePrice.js';
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -200,7 +202,7 @@ function buildVerifiedProductDescription(product: ShopifyProduct): string {
   return parts.join(' ').replace(/\s+/g, ' ').trim();
 }
 
-export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string): string {
+export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string, requestedVariantId?: string | null): string {
   const displayTitle = sanitizeProductTitle(product.title);
   // Prefer Shopify admin "Search engine listing" (SEO) fields when set, fall
   // back to a template built from the plain product title/type. This matches
@@ -216,14 +218,16 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     ? `Shop ${displayTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
     : `Shop ${displayTitle} at LuxeMia. Indian ethnic wear online with tracked U.S. shipping.`;
   const description = clampDescription((product.tags?.includes('facts:source-verified') ? product.seo?.description : '') || cleanProductDescription || fallbackDescription);
-  const price = product.priceRange.minVariantPrice.amount;
-  const currency = product.priceRange.minVariantPrice.currencyCode;
-  const compareAtPrice = product.compareAtPriceRange?.minVariantPrice?.amount;
+  const selectedVariant = requestedVariantId !== undefined ? selectInitialVariant(product, requestedVariantId) : undefined;
+  const price = selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount;
+  const currency = selectedVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode;
+  const compareAtPrice = selectedVariant ? getVariantReferencePrice(selectedVariant)?.amount : product.compareAtPriceRange?.minVariantPrice?.amount;
   const imageUrl = product.images.edges[0]?.node.url || `${SITE_URL}/images/campaigns/new-indian-ethnic-wear-2026-desktop.jpg`;
   const gmcSafeImage = forceJpegForGmc(imageUrl);
   const categoryUrl = getCategoryUrl(product.productType, displayTitle);
   const categoryName = product.productType || 'Collections';
-  const availability = product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
+  const availability = (selectedVariant ? selectedVariant.availableForSale !== false
+    : product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale))
     ? 'InStock'
     : 'OutOfStock';
   const vendor = product.vendor || 'LuxeMia';
@@ -436,7 +440,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     .map(({ question, answer }) => `<div style="margin-bottom:16px;"><h3 style="font-size:16px;margin-bottom:4px;">${escapeHtml(question)}</h3><p>${escapeHtml(answer)}</p></div>`)
     .join('');
 
-  const allImages = product.images.edges.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
+  const visibleImages = selectedVariant?.image
+    ? [{ node: selectedVariant.image }, ...product.images.edges.filter(edge => edge.node.url !== selectedVariant.image?.url)]
+    : product.images.edges;
+  const allImages = visibleImages.map((edge: { node: { url: string; altText: string | null } }, i: number) => {
     const imgSrc = forceJpegForGmc(edge.node.url);
     return `<img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(edge.node.altText || displayTitle)}" style="max-width:100%;height:auto;${i === 0 ? '' : 'max-width:80px;margin:4px;'}" ${i === 0 ? 'width="800" height="1067"' : ''} />`;
   });
@@ -550,6 +557,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
             : `<span>${currency} ${price}</span>`
           }
         </div>
+        ${selectedVariant ? renderSelectedOptions(selectedVariant) : ''}
         <p class="description">${escapeHtml(cleanProductDescription.slice(0, 500) || '')}</p>
         ${variantOptions ? `<div style="margin-bottom:16px;">${variantOptions}</div>` : ''}
         <h2 style="font-size:22px;margin:24px 0 12px;">Product Specifications</h2>
@@ -564,7 +572,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div><dt>Ships from</dt><dd>India</dd></div>
           <div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>
           ${vendor ? `<div><dt>Brand</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}
-          ${color ? `<div><dt>Color</dt><dd>${escapeHtml(color)}</dd></div>` : ''}
+          ${color ? `<div><dt>Color</dt><dd>${escapeHtml(selectedVariant?.selectedOptions?.find(option => ['color', 'colour'].includes(option.name.toLowerCase()))?.value || color)}</dd></div>` : ''}
           <div><dt>Gender</dt><dd>${gender === 'male' ? 'Male' : 'Female'}</dd></div>
           <div><dt>Condition</dt><dd>${escapeHtml(conditionLabel)}</dd></div>
           <div><dt>Availability</dt><dd>${availability === 'InStock' ? 'In Stock' : 'Out of Stock'}</dd></div>
