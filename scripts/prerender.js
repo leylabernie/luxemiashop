@@ -3112,13 +3112,17 @@ function generateHtml(template, route, allShopifyProducts) {
 
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
-      <p>Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p>
-      ${imgHtml}
+      <!--variant-price-start--><p>Price: ${priceHtml} | ${isAvailable ? 'In Stock' : 'Out of Stock'}</p><!--variant-price-end-->
+      <!--variant-image-start-->${imgHtml}<!--variant-image-end-->
       ${descHtml}
       <h2>Product Specifications</h2>
       <table>
         <tbody>
-          ${detailRows.map(([label, value]) => `<tr><th scope="row">${escapeHtml(label)}</th><td>${escapeHtml(value)}</td></tr>`).join('\n          ')}
+          ${detailRows.map(([label, value]) => {
+            const marker = label === 'Availability' ? 'availability' : label === 'Color' ? 'color' : null;
+            const content = marker ? `<!--variant-${marker}-start-->${escapeHtml(value)}<!--variant-${marker}-end-->` : escapeHtml(value);
+            return `<tr><th scope="row">${escapeHtml(label)}</th><td>${content}</td></tr>`;
+          }).join('\n          ')}
         </tbody>
       </table>
       ${productQuestionsHtml}

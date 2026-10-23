@@ -7,6 +7,7 @@ import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
 import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
 import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
+import { renderPrerenderedVariant, VARIANT_HTML_HEADERS } from './src/middleware/variantPrerender.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -444,7 +445,13 @@ async function routeRequest(request: Request): Promise<Response> {
       return return404(request);
     }
     if (PRERENDERED_PRODUCT_HANDLES.has(handle)) {
-      return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
+      if (!url.searchParams.has('variant')) {
+        return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
+      }
+      const selectedResponse = await renderPrerenderedVariant(request, handle, url.searchParams.get('variant'));
+      if (selectedResponse) return selectedResponse;
+      // A missing/stale asset must not silently return the wrong selected price.
+      // Fall through to the existing live product renderer instead.
     }
 
     const productLookup = await fetchProductByHandle(handle);
@@ -452,13 +459,14 @@ async function routeRequest(request: Request): Promise<Response> {
       const canonicalUrl = `https://luxemia.shop/product/${handle}`;
       let html: string;
       try {
-        html = await attachShoppingApp(generateProductHtml(productLookup.product, canonicalUrl), request);
+        html = await attachShoppingApp(generateProductHtml(productLookup.product, canonicalUrl,
+          url.searchParams.has('variant') ? url.searchParams.get('variant') : undefined), request);
       } catch {
         return returnShopifyUnavailable();
       }
       return new Response(html, {
         status: 200,
-        headers: {
+        headers: url.searchParams.has('variant') ? VARIANT_HTML_HEADERS : {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
           'X-Robots-Tag': 'index, follow',
