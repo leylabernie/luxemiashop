@@ -9,6 +9,7 @@ import { renderToStaticMarkup } from 'react-dom/server';
 import {
   getEligibleServiceAddOns,
   hasNativeFullStitchingOptions,
+  hasNativeAlterationOptions,
   selectedEligibleServiceAddOns,
   serviceAddOnTotal,
   requiresNativeStitchingTimingConfirmation,
@@ -342,4 +343,64 @@ test('32–42 color matrices remain complete even when a size is sold out', () =
   assert.equal(hasNativeFullStitchingOptions(product), true);
   product.variants.edges.pop();
   assert.equal(hasNativeFullStitchingOptions(product), false);
+});
+
+const nativeAlterationProduct = () => ({
+  title: 'Art Silk Embroidered Suit Set', productType: 'Suit Set',
+  description: 'Choose Made to Fit for measurement-based tailoring.',
+  options: [{ name: 'Size', values: ['32', '38'] },
+    { name: 'Alteration', values: ['Standard Fit', 'Made to Fit (+$10)'] }],
+  variants: { edges: ['32', '38'].flatMap(size => ['Standard Fit', 'Made to Fit (+$10)'].map(fit => ({
+    node: { availableForSale: true, selectedOptions: [
+      { name: 'Size', value: size }, { name: 'Alteration', value: fit },
+    ] },
+  }))) },
+});
+
+test('native alteration replaces duplicate generic billing for both fit selections', () => {
+  const product = nativeAlterationProduct();
+  assert.equal(hasNativeAlterationOptions(product), true);
+  assert.deepEqual(getEligibleServiceAddOns(product), []);
+  assert.deepEqual(selectedEligibleServiceAddOns(product, ['garment-alteration'], ['garment-alteration']), []);
+  for (const { node } of product.variants.edges) {
+    assert.equal(requiresNativeStitchingTimingConfirmation(product, node.selectedOptions),
+      node.selectedOptions[1].value.startsWith('Made to Fit'));
+  }
+  assert.equal(requiresNativeStitchingTimingConfirmation(product, []), false);
+  product.variants.edges.forEach(({ node }) => { node.availableForSale = false; });
+  assert.equal(hasNativeAlterationOptions(product), true);
+});
+
+test('native alteration detection preserves unrelated and incomplete service contracts', () => {
+  const product = nativeAlterationProduct();
+  product.variants.edges.pop();
+  assert.equal(hasNativeAlterationOptions(product), false);
+  assert.deepEqual(getEligibleServiceAddOns(product), ['garment-alteration']);
+  const unrelated = nativeAlterationProduct();
+  unrelated.options[1].name = 'Fit';
+  assert.equal(hasNativeAlterationOptions(unrelated), false);
+  const noVariants = nativeAlterationProduct();
+  noVariants.variants.edges = [];
+  assert.equal(hasNativeAlterationOptions(noVariants), false);
+  const otherScope = nativeAlterationProduct();
+  otherScope.options[1].values = ['Standard Fit', 'Sleeve shortening'];
+  assert.equal(hasNativeAlterationOptions(otherScope), false);
+});
+
+test('Made to Fit delivery renders tailoring timing while Standard Fit stays ready-stock', () => {
+  const product = nativeAlterationProduct();
+  for (const { node } of product.variants.edges) {
+    const tailored = node.selectedOptions[1].value.startsWith('Made to Fit');
+    const html = renderDelivery({ hasStitching: false,
+      requiresTailoringTimingConfirmation: requiresNativeStitchingTimingConfirmation(product, node.selectedOptions),
+    });
+    if (tailored) {
+      assert.match(html, /Tailored to order/);
+      assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE));
+      assert.doesNotMatch(html, /Ready to ship|3–4 business days/);
+    } else {
+      assert.match(html, /Ready to ship/);
+      assert.match(html, /3–4 business days/);
+    }
+  }
 });
