@@ -61,9 +61,23 @@ const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[]) => (
   JSON.stringify(left || []) === JSON.stringify(right || [])
 );
 
-const getTailoringOption = (item: CartItem) => item.customAttributes
-  ?.find((attribute) => /stitch|tailor|custom|measurement/i.test(attribute.key))
-  ?.value;
+// Cart attributes also contain free-text fit/color requests and measurements.
+// Keep those for fulfillment only; never infer an analytics value from a key
+// substring. Both key and value must match a fixed storefront choice, and only
+// its fixed label is emitted (including for older locally persisted carts).
+const ANALYTICS_TAILORING_CHOICES = [
+  { key: 'Stitching Type', value: 'Semi Stitched', label: 'Semi Stitched' },
+  { key: 'Stitching Type', value: 'Ready to Wear', label: 'Ready to Wear' },
+  { key: 'Stitching Type', value: 'Made to Measure (UDesign)', label: 'Made to Measure (UDesign)' },
+  { key: 'Tailoring', value: 'Tailored to order', label: 'Tailored to order' },
+  { key: 'Custom Size', value: 'Measurements must be confirmed before production', label: 'Custom Size' },
+  { key: 'Made to Order', value: 'Yes — confirmation required', label: 'Made to Order' },
+] as const;
+
+const getTailoringOption = (item: CartItem) => ANALYTICS_TAILORING_CHOICES
+  .find((choice) => item.customAttributes?.some((attribute) => (
+    attribute.key === choice.key && attribute.value === choice.value
+  )))?.label;
 
 const appliesToProductTitle = (item: CartItem) => item.customAttributes
   ?.find((attribute) => attribute.key === 'Applies To')
