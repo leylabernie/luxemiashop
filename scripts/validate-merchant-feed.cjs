@@ -566,19 +566,16 @@ if (imageAttributeFailures.length > 0) {
   );
 }
 
-// Target country, language, and tax stay account-managed at Merchant Center.
-// Item-level g:shipping is required instead: GMC flagged "Missing shipping
-// info in some countries" on most offers because the account does not declare
-// services for all seven feed destinations. Rates must mirror
-// src/config/shippingPolicy.ts; if account-level services are configured for
-// every destination later, the generator can drop these again.
+// Target country, language, tax, and U.S. shipping stay account-managed.
+// A U.S. shipping price would override the verified account order-total table
+// ($14.99 below $150, free at $150+) and its delivery settings. Retain the six
+// international overrides unchanged until their account policies are verified.
 for (const accountManagedTag of ['g:target_country', 'g:content_language', 'g:tax']) {
   if (xml.includes(`<${accountManagedTag}>`)) {
     throw new Error(`Merchant feed contains account-managed attribute <${accountManagedTag}>`);
   }
 }
 const FEED_SHIPPING_RATES = {
-  US: '14.99 USD',
   CA: '24.99 USD',
   GB: '24.99 USD',
   AU: '29.99 USD',
@@ -590,9 +587,14 @@ const expectedShippingCountries = Object.keys(FEED_SHIPPING_RATES).sort().join('
 const shippingFailures = [];
 for (const block of itemBlocks) {
   const itemId = block.match(/<g:id>([^<]+)<\/g:id>/)?.[1] || 'unknown-item';
+  const allShippingEntries = [...block.matchAll(/<g:shipping\b[^>]*>[\s\S]*?<\/g:shipping>/gi)];
   const entries = [
     ...block.matchAll(/<g:shipping><g:country>([A-Z]{2})<\/g:country><g:service>([^<]*)<\/g:service><g:price>([^<]*)<\/g:price><\/g:shipping>/g),
   ];
+  if (entries.length !== allShippingEntries.length) {
+    shippingFailures.push(`${itemId}: unrecognized shipping override format`);
+    continue;
+  }
   const entryCountries = entries.map((entry) => entry[1]).sort().join(',');
   if (entryCountries !== expectedShippingCountries) {
     shippingFailures.push(`${itemId}: shipping countries [${entryCountries || 'none'}] != [${expectedShippingCountries}]`);
@@ -606,7 +608,7 @@ for (const block of itemBlocks) {
 }
 if (shippingFailures.length > 0) {
   throw new Error(
-    `Merchant feed item shipping must cover all seven destinations at shippingPolicy.ts rates: ${shippingFailures.slice(0, 10).join('; ')}`
+    `Merchant feed must inherit U.S. account shipping and preserve the six international overrides: ${shippingFailures.slice(0, 10).join('; ')}`
   );
 }
 if (/<g:returns>/i.test(xml)) {

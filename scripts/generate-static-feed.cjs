@@ -52,12 +52,12 @@ const { getTitleDesignDetails } = loadTsModule('src/lib/merchantDesignDetails.ts
 const { selectMerchantImage } = loadTsModule('src/lib/merchantImages.ts');
 
 const SITE_URL = 'https://luxemia.shop';
-// Per-item shipping for every supported destination — mirrors src/config/shippingPolicy.ts.
-// Google Merchant Center disapproves items missing shipping info ("Missing shipping info in
-// some countries"), so every item must carry rates for all seven countries we serve.
-// Rates are the standard per-order rates; free-shipping thresholds are enforced at checkout.
+// U.S. shipping is account-managed: $14.99 below $150, free at $150 and above.
+// Do not emit a U.S. price override: it suppresses the account's order-total
+// threshold (including multi-item carts) and delivery settings. Keep the other
+// six destination overrides unchanged until their account policies are verified.
+// https://support.google.com/merchants/answer/6324484
 const SHIPPING_FEED_XML = [
-  ['US', '14.99 USD'],
   ['CA', '24.99 USD'],
   ['GB', '24.99 USD'],
   ['AU', '29.99 USD'],
@@ -818,9 +818,8 @@ function buildDescription(product, color, material, productType, displayTitle = 
   return sanitizeShippingAndBoilerplate(out);
 }
 
-// Shipping is intentionally managed at the Merchant Center account level so
-// destination-based rates and thresholds remain centralized. Item-level
-// shipping entries would override those account-level rules.
+// U.S. shipping stays account-managed; the retained international overrides are
+// emitted separately and must not reintroduce a U.S. shipping price.
 
 function generateProductHighlights(product, color, material, productType, title, size) {
   const highlights = [];
