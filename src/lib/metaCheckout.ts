@@ -28,7 +28,8 @@ export function parseMetaCheckout(search: string): MetaRequest {
     if (quantity > MAX_QUANTITY) throw new Error('The requested quantity exceeds the limit of 99 per product.');
     quantities.set(match[1], quantity);
   }
-  const coupon = params.get('coupon');
+  // Meta emits a bare `&coupon` when no optional promotion was entered.
+  const coupon = params.get('coupon') || null;
   if (coupon !== null && (!coupon.trim() || coupon.length > 256 || Array.from(coupon).some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127))) {
     throw new Error('This shopping link contains an invalid discount code.');
   }
