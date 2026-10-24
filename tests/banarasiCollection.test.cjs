@@ -160,7 +160,7 @@ test('all three add-ons are optional, deduplicated, and total the existing $26 c
   assert.match(source, /blouseServiceConfirmed, setBlouseServiceConfirmed\] = useState\(false\)/);
   const handler = source.slice(source.indexOf('const handleAddToCart = async'), source.indexOf('const formatPrice ='));
   const gate = handler.indexOf('if (!isBlouseServiceSelectionConfirmed');
-  assert.ok(gate >= 0 && gate < handler.indexOf('addItem({'));
+  assert.ok(gate >= 0 && gate < handler.indexOf('addConfiguredItem({'));
   assert.match(handler.slice(gate, handler.indexOf('if (customizableProduct', gate)), /toast\.error[\s\S]*return;/);
   assert.match(handler, /Selected Saree Services/);
   assert.match(handler, /Selected Service/);
@@ -183,9 +183,12 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
     price: { amount: String(value.price), currencyCode: 'USD' },
     selectedOptions: [{ name: 'Stitching', value: value.checkoutOptionValue }],
   }]));
-  async function run(selected, confirmed) {
-    const lines = [], errors = [];
+  async function run(selected, confirmed, metaMode = false) {
+    const lines = [], errors = [], configured = [], destinations = [];
     const context = vm.createContext({
+      metaToken: metaMode ? 'test-context' : null, metaContentId: metaMode ? 'test-item' : null, metaRequestedLine: metaMode ? {quantity:1} : null,
+      saveMetaConfiguration(token, item, handle, values) { configured.push(...values); return '/meta-checkout?context=test-context'; },
+      window: {location: {assign(path) { destinations.push(path); }}},
       ...api, product, purchasableVariant: { node: garment },
       selectedAvailableServiceAddOnCodes: selected, blouseServiceConfirmed: confirmed,
       customizableProduct: null, isCustomSizeSelected: false, isStitchable: false,
@@ -200,7 +203,7 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
     });
     vm.runInContext(code, context);
     await context.addToCart();
-    return { lines, errors };
+    return { lines, errors, configured, destinations };
   }
   const rejected = await run(['blouse-stitching'], false);
   assert.equal(rejected.lines.length, 0);
@@ -210,6 +213,12 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
   assert.equal(fabricOnly.lines.length, 1);
   assert.equal(fabricOnly.lines[0].price.amount, '66.27');
   assert.equal(fabricOnly.lines[0].customAttributes, undefined);
+  const metaConfigured = await run(['blouse-stitching', 'pico-fall', 'matching-petticoat'], true, true);
+  assert.equal(metaConfigured.lines.length, 0, 'Meta configuration must not mutate the regular bag');
+  assert.equal(metaConfigured.configured.length, 4, 'All garment and paid service lines stay together');
+  assert.equal(metaConfigured.destinations[0], '/meta-checkout?context=test-context');
+  const metaRejected = await run(['blouse-stitching'], false, true);
+  assert.equal(metaRejected.configured.length, 0, 'Meta cannot bypass measurement acknowledgment');
   const finished = await run(['blouse-stitching', 'pico-fall', 'matching-petticoat'], true);
   assert.equal(finished.errors.length, 0);
   assert.equal(finished.lines.length, 4);

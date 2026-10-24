@@ -7,7 +7,8 @@ import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Pa
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getColorwaysForHandle } from '@/config/colorwayLinks';
-import { useCartStore } from '@/stores/cartStore';
+import { useCartStore, type CartItem } from '@/stores/cartStore';
+import { readMetaContext, saveMetaConfiguration, metaReturnPath } from '@/lib/metaCheckoutContext';
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
@@ -299,6 +300,10 @@ const isMenswearProduct = (productType?: string, tags?: string[]): boolean => {
 export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
   const requestedVariantId = searchParams.get('variant');
+  const metaToken = searchParams.get('meta_context');
+  const metaContentId = searchParams.get('meta_item');
+  const metaContext = readMetaContext(metaToken);
+  const metaRequestedLine = metaContext?.request.lines.find(line => line.contentId === metaContentId);
   const customizableProduct = getCustomizableProduct(product.handle);
   const madeToOrderProduct = isMadeToOrderProduct(product.handle, product.tags);
   const hasNativeFullStitching = hasNativeFullStitchingOptions(product);
@@ -328,6 +333,13 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   // variant as the normal default when no variant query parameter is present.
   const defaultOptions = useMemo(() => {
     const defaults: Record<string, string> = {};
+    // Meta product-level IDs cannot choose a shopper's size or fit implicitly.
+    if (metaToken && product.variants.edges.length > 1) {
+      const explicit = product.variants.edges.find(edge => edge.node.id === requestedVariantId && edge.node.availableForSale);
+      if (explicit) { explicit.node.selectedOptions.forEach(option => { defaults[option.name] = option.value; }); return defaults; }
+      product.options.filter(option => option.values.length === 1).forEach(option => { defaults[option.name] = option.values[0]; });
+      return defaults;
+    }
     const requestedVariant = requestedVariantId
       ? product.variants.edges.find((edge) =>
           edge.node.id === requestedVariantId ||
@@ -346,10 +358,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     });
 
     return defaults;
-  }, [product.variants.edges, requestedVariantId]);
+  }, [product.variants.edges, product.options, requestedVariantId, metaToken]);
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(metaRequestedLine?.quantity || 1);
   const [isAdding, setIsAdding] = useState(false);
   const [stitchingSize, setStitchingSize] = useState<string | null>(null);
   const [showSizeValidation, setShowSizeValidation] = useState(false);
@@ -661,10 +673,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       return;
     }
 
-    const nextSelectedOptions = {
-      ...selectedOptions,
-      ...selectedOptionsFromVariant(resolvedVariant),
-    };
+    const nextSelectedOptions = metaToken
+      ? { ...selectedOptions, [optionName]: value }
+      : { ...selectedOptions, ...selectedOptionsFromVariant(resolvedVariant) };
     setSelectedOptions(nextSelectedOptions);
 
     const currentCustomSize = Object.entries(selectedOptions).some(([name, selectedValue]) =>
@@ -745,7 +756,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       return;
     }
 
+    if (metaToken && (!metaRequestedLine || !metaContentId)) { toast.error('Your shopping session expired. Return to your Meta shopping link before continuing.'); return; }
     setIsAdding(true);
+    const metaItems: CartItem[] = [];
+    const addConfiguredItem = (item: CartItem) => { if (metaToken) metaItems.push(item); else addItem(item); };
 
     const blouseConfirmationAttributes = blouseServiceConfirmationAttributes(
       product, selectedAvailableServiceAddOnCodes, blouseServiceConfirmed,
@@ -813,7 +827,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       customAttributes.push({ key: 'Custom Alteration Instructions', value: customAlteration.trim() });
     }
 
-    addItem({
+    addConfiguredItem({
       product: { node: product },
       variantId: purchasableVariant.node.id,
       variantTitle: purchasableVariant.node.title,
@@ -827,7 +841,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       for (const code of selectedAvailableServiceAddOnCodes) {
         const serviceVariant = serviceVariants.get(code);
         if (!serviceVariant) continue;
-        addItem({
+        addConfiguredItem({
           product: { node: serviceAddOnProduct },
           serviceAddOnCode: code,
           variantId: serviceVariant.id,
@@ -846,6 +860,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       }
     }
 
+    if (metaToken && metaContentId) {
+      try { window.location.assign(saveMetaConfiguration(metaToken, metaContentId, product.handle, metaItems)); }
+      catch (error) { toast.error(error instanceof Error ? error.message : 'Could not save your product options.'); }
+      setIsAdding(false);
+      return;
+    }
     await new Promise((resolve) => setTimeout(resolve, 600));
     setIsAdding(false);
     openCart();
@@ -905,6 +925,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       )}
 
       {/* Title */}
+      {metaToken && metaContext && <div className="border rounded p-3 text-sm"><p>Review or re-enter all options for this item; saving replaces its previous configuration. Then use Add to Bag to return to your complete Meta selection. Your other products and discount code stay saved; your regular bag is unchanged.</p><Link className="underline" to={metaReturnPath(metaToken)}>Return to my Meta selection without changing this item</Link></div>}
       <h1 className="text-3xl lg:text-4xl font-serif leading-tight">{product.title}</h1>
 
       {/* Price */}
@@ -1393,7 +1414,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             </button>
             <span className="w-12 text-center font-medium">{quantity}</span>
             <button
-              onClick={() => setQuantity(quantity + 1)}
+              disabled={!!metaToken && quantity >= 99}
+              onClick={() => setQuantity(metaToken ? Math.min(99, quantity + 1) : quantity + 1)}
               className="p-3 hover:bg-secondary transition-colors"
             >
               <Plus className="h-4 w-4" />
