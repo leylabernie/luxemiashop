@@ -80,6 +80,7 @@ const NewVisitorPopup = () => {
     // add-to-bag controls, or made-to-measure form.
     if (
       location.pathname.startsWith('/product/') ||
+      location.pathname === '/meta-checkout' ||
       location.pathname === '/collections/customizable-indian-outfits'
     ) {
       setIsOpen(false);

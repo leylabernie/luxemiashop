@@ -226,6 +226,7 @@ function isPublicHtmlPath(pathname: string): boolean {
     '/cart',
     '/checkout',
     '/order-confirmation',
+    '/meta-checkout',
   ];
 
   return !nonPublicPrefixes.some(
@@ -541,6 +542,7 @@ async function routeRequest(request: Request): Promise<Response> {
     '/account',
     '/admin',
     '/order-confirmation',
+    '/meta-checkout',
   ]);
   if (PRIVATE_SPA_ROUTES.has(pathname) || pathname.startsWith('/admin/')) {
     return withResponseHeader(next(), 'X-Robots-Tag', 'noindex, nofollow');

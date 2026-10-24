@@ -15,6 +15,7 @@ import Index from "./pages/Index";
 
 // Lazy loaded: all other pages — reduces initial JS bundle by ~60%
 // This is the single biggest FCP/LCP improvement for SPA architectures
+const MetaCheckout = lazy(() => import("./pages/MetaCheckout"));
 const ProductDetail = lazy(() => import("./pages/ProductDetail"));
 const Collections = lazy(() => import("./pages/Collections"));
 const About = lazy(() => import("./pages/About"));
@@ -226,6 +227,7 @@ const App = () => (
                 <Route path="/wedding-party-orders" element={<Suspense fallback={<PageLoader />}><WeddingPartyOrders /></Suspense>} />
                 <Route path="/style-quiz" element={<Suspense fallback={<PageLoader />}><StyleQuiz /></Suspense>} />
                 {/* Order Confirmation — Google Customer Reviews opt-in */}
+                <Route path="/meta-checkout" element={<Suspense fallback={<PageLoader />}><MetaCheckout /></Suspense>} />
                 <Route path="/order-confirmation" element={<Suspense fallback={<PageLoader />}><OrderConfirmation /></Suspense>} />
                 {/* NRI Landing Pages for SEO */}
                 <Route path="/nri" element={<Suspense fallback={<PageLoader />}><NRIGeneral /></Suspense>} />
