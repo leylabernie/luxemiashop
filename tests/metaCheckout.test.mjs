@@ -58,3 +58,13 @@ test('confirmed handoff clears custom data but restores encoded products and cou
 test('failed handoff preserves configuration and explicit cancellation clears it',()=>{const original=globalThis.sessionStorage,win=globalThis.window;try{const {token,request}=contextFixture();globalThis.window={history:{replaceState(){}},location:{assign(){throw Error('navigation failed');}}};assert.throws(()=>cm.exports.completeMetaHandoff(token,request,'https://lovable-project-zlh0w.myshopify.com/cart/c/test'));assert.ok(readMetaContext(token));cm.exports.clearMetaContext(token);assert.equal(readMetaContext(token),null);}finally{globalThis.sessionStorage=original;globalThis.window=win;}});
 
 test('BFCache restoration reloads the sanitized intent rather than stale personal configuration',()=>{const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(source,/if \(event.persisted\) window.location.reload\(\)/);assert.match(source,/removeEventListener\('pageshow', restore\)/);});
+
+test('Meta absent, bare and empty optional coupon are equivalent',()=>{
+ for(const suffix of ['', '&coupon', '&coupon=']) assert.deepEqual(parseMetaCheckout('?products=anarkali-green-chinon:1,dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear:5'+suffix+'&cart_origin=meta_shops'),{lines:[{contentId:'anarkali-green-chinon',quantity:1},{contentId:'dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear',quantity:5}],coupon:null});
+});
+test('blank normalization preserves discount validation and duplicate guards',()=>{
+ for(const value of ['%20','+','%09','%00','%7F','x'.repeat(257)]) assert.throws(()=>parseMetaCheckout('?products=a:1&coupon='+value));
+ for(const suffix of ['&coupon&coupon','&coupon=&coupon=SAVE','&coupon=SAVE&coupon=']) assert.throws(()=>parseMetaCheckout('?products=a:1'+suffix));
+ assert.equal(parseMetaCheckout('?products=a:1&coupon=SAVE%2B10%20%26%20MORE&cart_origin=meta_shops').coupon,'SAVE+10 & MORE');
+ assert.equal(parseMetaCheckout('?products=a:1&coupon=%20SAVE%20').coupon,' SAVE ');
+});
