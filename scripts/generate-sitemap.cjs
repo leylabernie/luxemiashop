@@ -80,12 +80,14 @@ const staticPages = [
   { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
   // High-intent commercial collection pages. Emptied by the 2026-09-22
   // single-image removal and excluded here until new stock lands:
-  // bollywood-inspired-indian-outfits, bridal-party-outfits, designer-sarees,
+  // bollywood-inspired-indian-outfits, bridal-party-outfits,
   // eid-outfits, gharara-suits, haldi-outfits, kanchipuram-sarees, mehendi-outfits,
   // silk-sarees, wedding-sarees (all noindexed empty prerenders, see ops doc).
   { loc: '/collections/sharara-suits', changefreq: 'daily', priority: '0.9' },
   // Restocked 2026-10-15; existing prerender validation enforces indexability and self-canonical.
   { loc: '/collections/anarkali-suits', changefreq: 'daily', priority: '0.9' },
+  // Active again; existing prerender validation enforces indexability and self-canonical.
+  { loc: '/collections/designer-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },

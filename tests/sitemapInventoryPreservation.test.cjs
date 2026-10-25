@@ -24,7 +24,7 @@ const validHtml = route => `<link rel="canonical" href="https://luxemia.shop${ro
 async function runGenerator(options = {}) {
   const approvedHandles = options.approvedHandles || baselineHandles;
   const responseHandles = options.responseHandles || approvedHandles;
-  const approvedPaths = [...staticPaths, ...approvedHandles.map(productPath)];
+  const approvedPaths = [...(options.approvedStaticPaths || staticPaths), ...approvedHandles.map(productPath)];
   const inventory = { source: 'reviewed fixture', capturedOn: '2026-10-01', urlCount: approvedPaths.length, paths: approvedPaths };
   const inventoryBytes = `${JSON.stringify(inventory, null, 2)}\n`;
   const manifestPaths = [...new Set([...staticPaths, ...responseHandles.map(productPath)])]
@@ -88,6 +88,8 @@ async function runGenerator(options = {}) {
     exitCode, fetchCalls, logs, writes, inventoryBytes,
     inventoryAfter: files.get(inventoryPath),
     productSitemap: files.get(path.join(fixtureRoot, 'dist/sitemap-products.xml')),
+    collectionSitemap: files.get(path.join(fixtureRoot, 'dist/sitemap-collections.xml')),
+    publicCollectionSitemap: files.get(path.join(fixtureRoot, 'public/sitemap-collections.xml')),
     inventoryWrites: writes.filter(write => write.file === inventoryPath),
   };
 }
@@ -169,4 +171,42 @@ test('existing total-count floor still rejects uncompensated shrinkage before an
   assert.deepEqual(result.writes, []);
   assert.equal(result.inventoryAfter, result.inventoryBytes);
   assert.ok(result.logs.error.some(message => message.includes('shrank below the approved inventory floor')));
+});
+
+test('active designer sarees appears once in collection sitemaps while intentional exclusions stay out', async () => {
+  const route = '/collections/designer-sarees';
+  const emptyCatalogRoutes = require('../src/config/emptyCatalogRoutes.json');
+  const redirects = require('../vercel.json').redirects;
+  assert.ok(!emptyCatalogRoutes.includes(route));
+  assert.ok(!redirects.some(entry => entry.source === route));
+  assert.ok(emptyCatalogRoutes.includes('/collections/wedding-sarees'), 'Wedding sarees remains intentionally excluded');
+  const approvedStaticPaths = staticPaths.filter(path => !emptyCatalogRoutes.includes(path));
+  const result = await runGenerator({ emptyCatalogRoutes, redirects, approvedStaticPaths });
+  assert.equal(result.exitCode, 0);
+  const loc = `<loc>https://luxemia.shop${route}</loc>`;
+  assert.equal(result.collectionSitemap.split(loc).length - 1, 1);
+  assert.equal(result.publicCollectionSitemap, result.collectionSitemap);
+  assert.ok(!result.productSitemap.includes(loc));
+  for (const excluded of emptyCatalogRoutes) {
+    assert.ok(!result.collectionSitemap.includes(`<loc>https://luxemia.shop${excluded}</loc>`), excluded);
+  }
+  const collectionUrls = [...result.collectionSitemap.matchAll(/<loc>([^<]+)<\/loc>/g)].map(match => match[1]);
+  assert.equal(collectionUrls.length, new Set(collectionUrls).size);
+  assert.equal(result.inventoryAfter, result.inventoryBytes, 'Collection inclusion must not rewrite the product inventory');
+});
+
+test('designer sarees must pass built-route validation before any sitemap is written', async () => {
+  const route = '/collections/designer-sarees';
+  const cases = [
+    [{ missingPrerenders: [route] }, /prerender manifest/],
+    [{ redirects: [{ source: route, destination: '/sarees', statusCode: 301 }] }, /redirected URL/],
+    [{ htmlOverrides: { [route]: validHtml('/sarees') } }, /self-canonical/],
+    [{ htmlOverrides: { [route]: validHtml(route).replace('index,follow', 'noindex,follow') } }, /indexable robots directive/],
+  ];
+  for (const [options, expectedError] of cases) {
+    const result = await runGenerator(options);
+    assert.equal(result.exitCode, 1, JSON.stringify(options));
+    assert.deepEqual(result.writes, []);
+    assert.ok(result.logs.error.some(message => expectedError.test(message)), result.logs.error.join('\n'));
+  }
 });
