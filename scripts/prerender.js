@@ -160,7 +160,7 @@ async function loadTsModule(relativeSrcPath) {
   }
 }
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
-const { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE } = await loadTsModule('src/config/shippingPolicy.ts');
+const { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
@@ -2213,6 +2213,7 @@ const routes = [
       <h3>South Africa</h3><p>$49.99 per order.</p>
       <h3>Mauritius</h3><p>$59.99 per order.</p>
       <h2>Processing and carrier transit</h2>
+      <p>${escapeHtml(SHIPPING_PROCESSING_NOTICE)}</p>
       <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any additional tailoring or made-to-order processing and contact LuxeMia before ordering for a fixed event date.</p>
       <h2>Carriers, consolidation and express service</h2>
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
