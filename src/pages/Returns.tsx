@@ -2,7 +2,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { RETURN_CLAIM_WINDOW, RETURN_EVIDENCE_REQUIREMENT } from '@/lib/returnPolicyCopy';
-import { Phone, Mail, Scissors, Clock } from 'lucide-react';
+import { Phone, Mail, Clock } from 'lucide-react';
 
 const Returns = () => {
   return (
@@ -44,7 +44,7 @@ const Returns = () => {
                 </tr>
                 <tr className="border-t border-border">
                   <td className="p-4">Item arrives but the <strong className="text-foreground">size doesn&rsquo;t fit</strong></td>
-                  <td className="p-4"><strong className="text-foreground">$30 alteration credit</strong> at a local U.S. tailor. No international return shipping.</td>
+                  <td className="p-4">Alteration and store credits are not offered. Contact us before ordering if you need sizing guidance.</td>
                 </tr>
                 <tr className="border-t border-border">
                   <td className="p-4"><strong className="text-foreground">Change of mind</strong> (didn&rsquo;t like the color, event was cancelled, found something else)</td>
@@ -105,16 +105,6 @@ const Returns = () => {
         <section className="container mx-auto px-4 lg:px-8 max-w-3xl py-12">
           <div className="prose prose-neutral max-w-none text-muted-foreground">
             <h2 className="text-foreground">If the size doesn&rsquo;t fit</h2>
-            <p>
-              Sizing is the #1 reason shoppers ask about returns on Indian ethnic wear. Here is how I handle it honestly:
-            </p>
-            <div className="not-prose my-6 grid gap-4">
-              <div className="border border-border rounded-lg p-6 bg-secondary/30">
-                <Scissors className="h-5 w-5 text-primary mb-3" />
-                <h3 className="font-serif text-lg text-foreground mb-2">$30 alteration credit</h3>
-                <p className="text-sm">If a saree blouse, lehenga choli, or suit doesn&rsquo;t fit, take it to a local U.S. tailor. Email me the receipt and I refund up to $30 toward the alteration. Most blouse and choli alterations cost $15&ndash;$25 in the U.S.</p>
-              </div>
-            </div>
             <p>
               To avoid the size issue in the first place: email me your measurements (or your daughter&rsquo;s, your niece&rsquo;s &mdash; whoever the outfit is for) before you order. I will check against the actual garment measurements from the supplier and tell you honestly whether it will fit. I&rsquo;d rather lose a sale than ship the wrong size.
             </p>

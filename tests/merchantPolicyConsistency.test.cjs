@@ -76,7 +76,7 @@ test('Returns page renders the chosen window, required evidence, and preserves u
   requireReturnPolicy(html);
   assert.match(html, /video is required/);
   assert.match(html, /unopened package, shipping label, opening process, contents, and item condition/);
-  assert.match(html, /\$30 alteration credit/);
+  assert.match(html, /Alteration and store credits are not offered/);
   assert.match(html, /Full refund or replacement, your choice/);
   assert.match(html, /consumer rights or remedies/);
 });
@@ -225,7 +225,7 @@ test('build-time route finalization preserves the shipping processing qualifier'
   } finally { fs.rmSync(fixture,{recursive:true,force:true}); }
 });
 
-test('returns initial HTML and rendered shopper page contain no unsupported resale promises', async () => {
+test('returns initial HTML and rendered shopper page contain no unsupported resale or credit promises', async () => {
   const source = read('src/pages/Returns.tsx')
     .replace(/^import (Header|Footer|SEOHead) from .*;$/gm, 'const $1 = () => null;');
   const { outputFiles } = buildSync({ stdin: { contents: source, loader: 'tsx', resolveDir: root }, bundle: true, write: false, format: 'cjs', platform: 'node', packages: 'external', jsx: 'automatic', alias: { '@': path.join(root, 'src') } });
@@ -235,11 +235,11 @@ test('returns initial HTML and rendered shopper page contain no unsupported resa
   const initialHtml = generateHtml(template, routes.find(r=>r.path==='/returns'), new Map());
   for (const html of [shopperHtml, initialHtml]) {
     assert.doesNotMatch(html, /resell|resale|pre-loved|100%|30(?:–|&ndash;|-)60/i);
+    assert.doesNotMatch(html, /\$30 alteration credit|refund up to \$30|store credit refund/i);
     requireReturnPolicy(html);
   }
-  // Owner rejected resale only: unrelated terms stay pending, not silently removed.
-  assert.match(shopperHtml, /\$30 alteration credit/);
-  assert.match(shopperHtml, /refund up to \$30/);
+  // Owner rejects credit offers; preserve genuine remedies and pending cancellation terms.
+  assert.match(shopperHtml, /Alteration and store credits are not offered/);
   assert.match(shopperHtml, /24 hours of ordering/);
   assert.match(shopperHtml, /10–20%/);
   assert.match(shopperHtml, /Full refund or replacement, your choice/);
