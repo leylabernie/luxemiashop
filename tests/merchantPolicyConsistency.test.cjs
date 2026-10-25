@@ -224,3 +224,23 @@ test('build-time route finalization preserves the shipping processing qualifier'
     }
   } finally { fs.rmSync(fixture,{recursive:true,force:true}); }
 });
+
+test('returns initial HTML and rendered shopper page contain no unsupported resale promises', async () => {
+  const source = read('src/pages/Returns.tsx')
+    .replace(/^import (Header|Footer|SEOHead) from .*;$/gm, 'const $1 = () => null;');
+  const { outputFiles } = buildSync({ stdin: { contents: source, loader: 'tsx', resolveDir: root }, bundle: true, write: false, format: 'cjs', platform: 'node', packages: 'external', jsx: 'automatic', alias: { '@': path.join(root, 'src') } });
+  const m = { exports: {} }; new Function('require','module','exports', outputFiles[0].text)(require,m,m.exports);
+  const shopperHtml = renderToStaticMarkup(React.createElement(m.exports.default));
+  const { routes, generateHtml } = await prerender();
+  const initialHtml = generateHtml(template, routes.find(r=>r.path==='/returns'), new Map());
+  for (const html of [shopperHtml, initialHtml]) {
+    assert.doesNotMatch(html, /resell|resale|pre-loved|100%|30(?:–|&ndash;|-)60/i);
+    requireReturnPolicy(html);
+  }
+  // Owner rejected resale only: unrelated terms stay pending, not silently removed.
+  assert.match(shopperHtml, /\$30 alteration credit/);
+  assert.match(shopperHtml, /refund up to \$30/);
+  assert.match(shopperHtml, /24 hours of ordering/);
+  assert.match(shopperHtml, /10–20%/);
+  assert.match(shopperHtml, /Full refund or replacement, your choice/);
+});
