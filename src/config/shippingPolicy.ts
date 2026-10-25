@@ -63,6 +63,9 @@ export const SHIPPING_POLICY_SUMMARY =
 
 export const SHIPPING_ORIGIN_NOTICE = 'Orders ship from India.';
 
+export const SHIPPING_PROCESSING_NOTICE =
+  'Ready-to-ship items dispatch within 3–4 business days. For tailoring or made-to-order items, dispatch timing is confirmed after measurements and service details are agreed.';
+
 export const SHIPPING_TIMING_NOTICE =
   'Orders ship from India. Ready-to-ship items dispatch within 3–4 business days. Standard shipping takes approximately 9–14 business days after dispatch (12–18 business days total). Express shipping, when separately quoted and confirmed before ordering, takes approximately 3–6 business days after dispatch (6–10 business days total). These are estimates; delivery varies by destination and carrier or customs delays.';
 

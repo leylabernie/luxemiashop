@@ -192,3 +192,35 @@ test('build-time route rewriting retains shared timing expressions on repeated r
     assert.equal((once.match(/<p>\$\{escapeHtml\(SHIPPING_TIMING_NOTICE\)\}/g)||[]).length,3);
   } finally { fs.rmSync(fixture,{recursive:true,force:true}); }
 });
+
+test('shipping processing clarification is identical in rendered shopper and initial HTML', async () => {
+  const expected = 'Ready-to-ship items dispatch within 3–4 business days. For tailoring or made-to-order items, dispatch timing is confirmed after measurements and service details are agreed.';
+  assert.equal(shipping.SHIPPING_PROCESSING_NOTICE, expected);
+  const source = read('src/pages/Shipping.tsx')
+    .replace(/^import (Header|Footer|SEOHead) from .*;$/gm, 'const $1 = () => null;');
+  const { outputFiles } = buildSync({ stdin: { contents: source, loader: 'tsx', resolveDir: root }, bundle: true, write: false, format: 'cjs', platform: 'node', packages: 'external', jsx: 'automatic', alias: { '@': path.join(root, 'src') } });
+  const m = { exports: {} }; new Function('require','module','exports', outputFiles[0].text)(require,m,m.exports);
+  const shopperHtml = renderToStaticMarkup(React.createElement(m.exports.default));
+  const { routes, generateHtml } = await prerender();
+  const initialHtml = generateHtml(template, routes.find(r=>r.path==='/shipping'), new Map());
+  for (const html of [shopperHtml, initialHtml]) {
+    assert.equal(html.split(expected).length - 1, 1);
+    assert.doesNotMatch(html, /All items are ready to ship/);
+    requireStandardTiming(html);
+    assert.match(html, /14\.99/);
+    assert.match(html, /150/);
+  }
+});
+
+test('build-time route finalization preserves the shipping processing qualifier', () => {
+  const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'luxemia-processing-codemod-'));
+  try {
+    fs.mkdirSync(path.join(fixture,'scripts'));
+    for (const file of ['scripts/finalize-prerender-routes.cjs','scripts/generate-routes.cjs','scripts/prerender.js']) fs.copyFileSync(path.join(root,file),path.join(fixture,file));
+    for(let i=0;i<2;i++) {
+      execFileSync(process.execPath,[path.join(fixture,'scripts/finalize-prerender-routes.cjs')]);
+      const source=fs.readFileSync(path.join(fixture,'scripts/prerender.js'),'utf8');
+      assert.equal((source.match(/<p>\$\{escapeHtml\(SHIPPING_PROCESSING_NOTICE\)\}<\/p>/g)||[]).length,1);
+    }
+  } finally { fs.rmSync(fixture,{recursive:true,force:true}); }
+});
