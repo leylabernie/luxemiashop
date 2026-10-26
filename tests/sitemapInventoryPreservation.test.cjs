@@ -261,3 +261,14 @@ test('declared collection route inventory is either in the sitemap or explicitly
     .map(match => match[1]).sort();
   assert.deepEqual(actual, expected, 'Active canonical collections need sitemap coverage; exclusions need explicit route intent');
 });
+
+test('collection indexing regression checks gate every build before sitemap publication', () => {
+  const scripts = require('../package.json').scripts;
+  assert.equal(scripts['test:collection-indexing'], 'node --test tests/emptyCollectionNavigation.test.mjs tests/sitemapInventoryPreservation.test.cjs');
+  const steps = scripts.build.split(' && ');
+  const gate = steps.indexOf('npm run test:collection-indexing');
+  assert.ok(gate > steps.indexOf('node scripts/finalize-built-approved-seo.cjs'));
+  assert.ok(gate < steps.indexOf('node scripts/generate-sitemap.cjs'));
+  assert.ok(gate < steps.indexOf('node scripts/submit-indexnow.cjs'));
+  assert.equal(steps.filter(step => step === 'npm run test:collection-indexing').length, 1);
+});
