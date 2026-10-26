@@ -33,6 +33,19 @@ const template = '<html><head><title>Fixture</title><meta name="description" con
 const payload = html => JSON.parse(html.match(/window\.__INITIAL_DATA__ = (\{[\s\S]*?\});<\/script>/)[1]);
 const schemas = html => [...html.matchAll(/<script[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
 
+test('new collection navigation preserves the existing desktop shopping shortcuts', () => {
+  const header = read('src/components/layout/Header.tsx');
+  const literal = header.match(/const secondaryLinks = (\[[\s\S]*?\]);/);
+  assert.ok(literal);
+  const links = vm.runInNewContext(literal[1]);
+  assert.match(header, /secondaryLinks\.slice\(0, 2\)/);
+  assert.deepEqual(Array.from(links.slice(0, 2), link => link.href), ['/new-arrivals', '/ready-to-ship']);
+  for (const handle of Object.keys(configs)) {
+    assert.ok(links.some(link => link.href === `/collections/${handle}`));
+    assert.ok(read('src/config/categoryConfig.tsx').includes(`/collections/${handle}`));
+  }
+});
+
 for (const [handle, config] of Object.entries(configs)) {
   test(`${handle}: exact reviewed assortment, exclusions, availability and images`, () => {
     assert.equal(config.products.length, handle === 'organza-lehengas' ? 9 : 8);
