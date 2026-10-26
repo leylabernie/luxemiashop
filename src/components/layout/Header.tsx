@@ -33,10 +33,10 @@ const navLinks = [
 ];
 
 const secondaryLinks = [
-  { name: 'Organza Lehengas', href: '/collections/organza-lehengas' },
-  { name: 'Mirror Work Lehengas', href: '/collections/mirror-work-lehengas' },
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Ready to Ship', href: '/ready-to-ship' },
+  { name: 'Organza Lehengas', href: '/collections/organza-lehengas' },
+  { name: 'Mirror Work Lehengas', href: '/collections/mirror-work-lehengas' },
   { name: 'Shop by Video', href: '/videos' },
   { name: 'Guides', href: '/blog' },
 ];
