@@ -173,20 +173,31 @@ test('existing total-count floor still rejects uncompensated shrinkage before an
   assert.ok(result.logs.error.some(message => message.includes('shrank below the approved inventory floor')));
 });
 
-test('active designer sarees appears once in collection sitemaps while intentional exclusions stay out', async () => {
-  const route = '/collections/designer-sarees';
+const restoredCollectionRoutes = [
+  '/collections/designer-sarees',
+  '/collections/mehendi-outfits',
+  '/collections/eid-outfits',
+  '/collections/haldi-outfits',
+  '/collections/silk-sarees',
+];
+
+test('restored active collections appear once in sitemaps while intentional exclusions stay out', async () => {
   const emptyCatalogRoutes = require('../src/config/emptyCatalogRoutes.json');
   const redirects = require('../vercel.json').redirects;
-  assert.ok(!emptyCatalogRoutes.includes(route));
-  assert.ok(!redirects.some(entry => entry.source === route));
+  for (const route of restoredCollectionRoutes) {
+    assert.ok(!emptyCatalogRoutes.includes(route), route);
+    assert.ok(!redirects.some(entry => entry.source === route), route);
+  }
   assert.ok(emptyCatalogRoutes.includes('/collections/wedding-sarees'), 'Wedding sarees remains intentionally excluded');
   const approvedStaticPaths = staticPaths.filter(path => !emptyCatalogRoutes.includes(path));
   const result = await runGenerator({ emptyCatalogRoutes, redirects, approvedStaticPaths });
   assert.equal(result.exitCode, 0);
-  const loc = `<loc>https://luxemia.shop${route}</loc>`;
-  assert.equal(result.collectionSitemap.split(loc).length - 1, 1);
+  for (const route of restoredCollectionRoutes) {
+    const loc = `<loc>https://luxemia.shop${route}</loc>`;
+    assert.equal(result.collectionSitemap.split(loc).length - 1, 1, route);
+    assert.ok(!result.productSitemap.includes(loc), route);
+  }
   assert.equal(result.publicCollectionSitemap, result.collectionSitemap);
-  assert.ok(!result.productSitemap.includes(loc));
   for (const excluded of emptyCatalogRoutes) {
     assert.ok(!result.collectionSitemap.includes(`<loc>https://luxemia.shop${excluded}</loc>`), excluded);
   }
@@ -195,18 +206,69 @@ test('active designer sarees appears once in collection sitemaps while intention
   assert.equal(result.inventoryAfter, result.inventoryBytes, 'Collection inclusion must not rewrite the product inventory');
 });
 
-test('designer sarees must pass built-route validation before any sitemap is written', async () => {
-  const route = '/collections/designer-sarees';
-  const cases = [
-    [{ missingPrerenders: [route] }, /prerender manifest/],
-    [{ redirects: [{ source: route, destination: '/sarees', statusCode: 301 }] }, /redirected URL/],
-    [{ htmlOverrides: { [route]: validHtml('/sarees') } }, /self-canonical/],
-    [{ htmlOverrides: { [route]: validHtml(route).replace('index,follow', 'noindex,follow') } }, /indexable robots directive/],
-  ];
-  for (const [options, expectedError] of cases) {
-    const result = await runGenerator(options);
-    assert.equal(result.exitCode, 1, JSON.stringify(options));
-    assert.deepEqual(result.writes, []);
-    assert.ok(result.logs.error.some(message => expectedError.test(message)), result.logs.error.join('\n'));
+test('every restored collection must pass built-route validation before any sitemap is written', async () => {
+  for (const route of restoredCollectionRoutes) {
+    const cases = [
+      [{ missingPrerenders: [route] }, /prerender manifest/],
+      [{ redirects: [{ source: route, destination: '/sarees', statusCode: 301 }] }, /redirected URL/],
+      [{ htmlOverrides: { [route]: validHtml('/sarees') } }, /self-canonical/],
+      [{ htmlOverrides: { [route]: validHtml(route).replace('index,follow', 'noindex,follow') } }, /indexable robots directive/],
+    ];
+    for (const [options, expectedError] of cases) {
+      const result = await runGenerator(options);
+      assert.equal(result.exitCode, 1, JSON.stringify(options));
+      assert.deepEqual(result.writes, []);
+      assert.ok(result.logs.error.some(message => expectedError.test(message)), result.logs.error.join('\n'));
+    }
   }
+});
+
+test('declared collection route inventory is either in the sitemap or explicitly excluded', async () => {
+  const ts = require('typescript');
+  function staticArray(relativePath, name) {
+    const file = path.resolve(__dirname, '..', relativePath);
+    const ast = ts.createSourceFile(file, fs.readFileSync(file, 'utf8'), ts.ScriptTarget.Latest, true, ts.ScriptKind.JS);
+    const declaration = ast.statements.filter(ts.isVariableStatement)
+      .flatMap(statement => Array.from(statement.declarationList.declarations))
+      .find(entry => entry.name.getText(ast) === name);
+    assert.ok(declaration && ts.isArrayLiteralExpression(declaration.initializer), `Review route inventory parser: ${name}`);
+    return declaration.initializer.elements;
+  }
+  const declarations = staticArray('scripts/prerender.js', 'routes')
+    .filter(ts.isObjectLiteralExpression).map(route => {
+      const value = name => route.properties.find(property => ts.isPropertyAssignment(property)
+        && property.name.getText() === name)?.initializer;
+      const routePath = value('path');
+      assert.ok(routePath && ts.isStringLiteral(routePath), 'Every literal prerender route must have a literal path');
+      return { path: routePath.text, noindex: [value('noIndex'), value('noIndexFollow')].some(value => value?.kind === ts.SyntaxKind.TrueKeyword) };
+    }).filter(route => route.path.startsWith('/collections/'));
+  const byPath = new Map(declarations.map(route => [route.path, route]));
+  const generatedRoutes = staticArray('scripts/generate-routes.cjs', 'STATIC_ROUTES')
+    .filter(ts.isStringLiteral).map(route => route.text).filter(route => route.startsWith('/collections/'));
+  assert.ok(generatedRoutes.length >= 20, 'Review the complete declared collection inventory');
+  const redirects = require('../vercel.json').redirects;
+  const redirectSources = new Set(redirects.map(entry => entry.source));
+  const emptyCatalogRoutes = require('../src/config/emptyCatalogRoutes.json');
+  for (const route of generatedRoutes) assert.ok(byPath.has(route) || redirectSources.has(route), `Missing collection prerender: ${route}`);
+  const allDeclaredRoutes = [...new Set([...generatedRoutes, ...byPath.keys()])];
+  const expected = allDeclaredRoutes.filter(route => !redirectSources.has(route)
+    && !emptyCatalogRoutes.includes(route) && !byPath.get(route)?.noindex).sort();
+  for (const route of expected) assert.ok(generatedRoutes.includes(route), `Active collection missing from generated route manifest: ${route}`);
+  const result = await runGenerator({ emptyCatalogRoutes, redirects,
+    approvedStaticPaths: staticPaths.filter(route => !emptyCatalogRoutes.includes(route)) });
+  assert.equal(result.exitCode, 0);
+  const actual = [...result.collectionSitemap.matchAll(/<loc>https:\/\/luxemia\.shop(\/collections\/[^<]+)<\/loc>/g)]
+    .map(match => match[1]).sort();
+  assert.deepEqual(actual, expected, 'Active canonical collections need sitemap coverage; exclusions need explicit route intent');
+});
+
+test('collection indexing regression checks gate every build before sitemap publication', () => {
+  const scripts = require('../package.json').scripts;
+  assert.equal(scripts['test:collection-indexing'], 'node --test tests/emptyCollectionNavigation.test.mjs tests/sitemapInventoryPreservation.test.cjs');
+  const steps = scripts.build.split(' && ');
+  const gate = steps.indexOf('npm run test:collection-indexing');
+  assert.ok(gate > steps.indexOf('node scripts/finalize-built-approved-seo.cjs'));
+  assert.ok(gate < steps.indexOf('node scripts/generate-sitemap.cjs'));
+  assert.ok(gate < steps.indexOf('node scripts/submit-indexnow.cjs'));
+  assert.equal(steps.filter(step => step === 'npm run test:collection-indexing').length, 1);
 });
