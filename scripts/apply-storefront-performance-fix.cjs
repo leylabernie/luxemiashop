@@ -38,7 +38,7 @@ function patchSource() {
   changes += Number(replaceOnce(
     'index.html',
     '<link rel="preload" as="image" href="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp" type="image/webp" media="(max-width: 639px)" fetchpriority="high">\n    <link rel="preload" as="image" href="/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp" type="image/webp" media="(min-width: 640px)" fetchpriority="high">',
-    '<link rel="preload" as="image" href="/images/hero-carousel/navratri-lehenga.webp" type="image/webp" media="(max-width: 639px)" fetchpriority="high">\n    <link rel="preload" as="image" href="/images/hero-carousel/navratri-lehenga-desktop.webp" type="image/webp" media="(min-width: 640px)" fetchpriority="high">',
+    '<link rel="preload" as="image" href="/images/campaigns/luxemia-diwali-2026-mobile.webp" type="image/webp" media="(max-width: 639px)" fetchpriority="high">\n    <link rel="preload" as="image" href="/images/campaigns/luxemia-diwali-2026-desktop.webp" type="image/webp" media="(min-width: 640px)" fetchpriority="high">',
     'homepage LCP preload',
   ));
 
@@ -161,8 +161,8 @@ function patchBuiltHomepage() {
 
     const before = fs.readFileSync(absolutePath, 'utf8');
     let after = before
-      .replaceAll('/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp', '/images/hero-carousel/navratri-lehenga.webp')
-      .replaceAll('/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp', '/images/hero-carousel/navratri-lehenga-desktop.webp');
+      .replaceAll('/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp', '/images/campaigns/luxemia-diwali-2026-mobile.webp')
+      .replaceAll('/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp', '/images/campaigns/luxemia-diwali-2026-desktop.webp');
 
     const compacted = compactHomepageProductSchema(after);
     after = compacted.output;

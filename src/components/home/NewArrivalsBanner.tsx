@@ -1,5 +1,3 @@
-import DussehraEditorial from './DussehraEditorial';
-import NewArrivalsEditorial from './NewArrivalsEditorial';
 import {
   type FocusEvent,
   type KeyboardEvent,
@@ -11,7 +9,6 @@ import {
 } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
-import { isDussehraBannerActive } from '@/config/dussehraBanner.mjs';
 
 interface FeaturedSlide {
   id: string;
@@ -36,40 +33,39 @@ interface FeaturedSlide {
   designed?: boolean;
 }
 
-const festiveSlide: FeaturedSlide = {
-  id: 'festive-sale',
-  eyebrow: 'Dussehra · The festive edit',
-  headline: 'Celebrate Dussehra',
-  subline: 'A celebration of new beginnings.',
-  cta: 'Shop festive lehengas',
-  link: '/collections/lehengas',
-  image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-festive-mobile-sage-v3.webp?v=1791592746",
-  desktopImage: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-festive-desktop-sage-v3.webp?v=1791592732",
-  alt: 'Celebrate Dussehra with LuxeMia festive lehengas',
-  width: 2172,
-  height: 724,
-  imageFit: 'cover',
-  imagePosition: 'left center',
-  designed: true,
-};
-
-// The Dussehra creative ends after October 20 Eastern; New Arrivals remains.
+// Original Diwali artwork uses verified active product photographs.
+// Creative only: no discount, dispatch deadline, or policy change is implied.
 const featuredSlides: FeaturedSlide[] = [
-  ...(isDussehraBannerActive() ? [festiveSlide] : []),
   {
-    id: 'new-arrivals-edit',
-    eyebrow: 'Festive 2026 · New In',
-    headline: 'New Arrivals',
-    subline: 'Embroidered lehengas for your next celebration.',
-    cta: 'Explore Now',
-    link: '/new-arrivals',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-arrivals-mobile-sage-v3.webp?v=1791592753",
-    desktopImage: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-arrivals-desktop-sage-v3.webp?v=1791592739",
-    alt: 'New Arrivals — embroidered suits and palazzo sets. Model in a purple floral embroidered palazzo suit.',
+    id: 'diwali-2026',
+    eyebrow: 'LuxeMia · The festival of lights',
+    headline: 'Diwali',
+    subline: 'A celebration of light & style.',
+    cta: 'Shop Diwali styles',
+    link: '/collections/diwali-outfits',
+    image: '/images/campaigns/luxemia-diwali-2026-mobile',
+    desktopImage: '/images/campaigns/luxemia-diwali-2026-desktop',
+    alt: 'Diwali — A celebration of light and style. Shop Diwali styles. Model in a green dotted-motif georgette saree with ivory and jade festive artwork.',
     width: 2172,
     height: 724,
-    imageFit: 'cover',
-    imagePosition: 'left center',
+    imageFit: 'contain',
+    imagePosition: 'center',
+    designed: true,
+  },
+  {
+    id: 'new-arrivals-edit',
+    eyebrow: 'LuxeMia · The Diwali edit',
+    headline: 'New Arrivals',
+    subline: 'New looks. Luminous celebrations.',
+    cta: 'Explore the collection',
+    link: '/new-arrivals',
+    image: '/images/campaigns/luxemia-new-arrivals-2026-mobile',
+    desktopImage: '/images/campaigns/luxemia-new-arrivals-2026-desktop',
+    alt: 'New Arrivals — New looks. Luminous celebrations. Explore the collection. Model in a magenta floral-embroidered velvet suit with ivory and plum festive artwork.',
+    width: 2172,
+    height: 724,
+    imageFit: 'contain',
+    imagePosition: 'center',
     designed: true,
   },
 ];
@@ -143,7 +139,7 @@ const NewArrivalsBanner = () => {
     }
   };
 
-  const preservesFullImage = activeSlide.imageFit === 'contain';
+  const preservesFullImage = !activeSlide.designed && activeSlide.imageFit === 'contain';
 
   return (
     <section
@@ -169,7 +165,7 @@ const NewArrivalsBanner = () => {
         className="absolute inset-0 overflow-hidden animate-in fade-in duration-700"
         role="group"
       >
-        {activeSlide.id === 'festive-sale' ? <DussehraEditorial /> : activeSlide.id === 'new-arrivals-edit' ? <NewArrivalsEditorial /> : <>
+        <>
         {preservesFullImage && (
           <picture aria-hidden="true" className="absolute inset-0 block overflow-hidden">
             {activeSlide.desktopImage && (
@@ -203,8 +199,9 @@ const NewArrivalsBanner = () => {
           <Link
             to={activeSlide.link}
             aria-label={`${activeSlide.headline} - ${activeSlide.cta}`}
-            className="absolute inset-0 z-10 block cursor-pointer"
+            className="absolute inset-0 z-10 block cursor-pointer focus-visible:outline focus-visible:outline-[3px] focus-visible:outline-white focus-visible:outline-offset-[-5px]"
           >
+            <h2 className="sr-only">{activeSlide.headline}</h2>
 <picture className="absolute inset-0 block overflow-hidden">
           {activeSlide.desktopImage && (
             <source
@@ -233,7 +230,7 @@ const NewArrivalsBanner = () => {
             className={`absolute inset-0 h-full w-full ${activeSlide.designed ? '' : 'animate-in zoom-in-105 duration-[7000ms] ease-out'} ${
               activeSlide.imageFit === 'cover'
                 ? 'object-cover'
-                : preservesFullImage
+                : activeSlide.imageFit === 'contain'
                   ? 'object-contain object-top sm:object-center'
                   : 'object-cover object-[center_15%] sm:object-[center_20%]'
             }`}
@@ -270,7 +267,7 @@ const NewArrivalsBanner = () => {
             className={`absolute inset-0 h-full w-full ${activeSlide.designed ? '' : 'animate-in zoom-in-105 duration-[7000ms] ease-out'} ${
               activeSlide.imageFit === 'cover'
                 ? 'object-cover'
-                : preservesFullImage
+                : activeSlide.imageFit === 'contain'
                   ? 'object-contain object-top sm:object-center'
                   : 'object-cover object-[center_15%] sm:object-[center_20%]'
             }`}
@@ -342,7 +339,7 @@ const NewArrivalsBanner = () => {
           </div>
         </div>
         )}
-        </>}
+        </>
       </div>
 
       <div className="pointer-events-none absolute inset-x-0 top-1/2 z-20 hidden -translate-y-1/2 justify-between px-[clamp(12px,2vw,28px)] sm:flex">
@@ -371,7 +368,7 @@ const NewArrivalsBanner = () => {
               <button
                 key={slide.id}
                 type="button"
-                aria-label={`Show banner ${slideIndex + 1}: ${slide.eyebrow}`}
+                aria-label={`Show banner ${slideIndex + 1}: ${slide.headline}`}
                 aria-current={slideIndex === index ? 'true' : undefined}
                 onClick={() => setIndex(slideIndex)}
                 className={`relative h-1 overflow-hidden rounded-full transition-all duration-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#d4b078] ${
