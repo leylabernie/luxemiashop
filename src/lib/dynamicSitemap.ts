@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { fetchAllProducts } from "@/lib/shopify";
 // Product URLs come only from the live Shopify catalog. This keeps the sitemap
 // aligned with middleware, which validates /product/{handle} through Shopify,
@@ -54,7 +55,7 @@ export const staticPages = [
   // Legal
   { loc: '/privacy', changefreq: 'yearly', priority: '0.3', title: 'Privacy Policy' },
   { loc: '/terms', changefreq: 'yearly', priority: '0.3', title: 'Terms & Conditions' },
-];
+].filter(page => canPromoteCollection(page.loc));
 
 // Fetch all products for sitemap.
 // Uses LIVE Shopify data instead of hardcoded local product data files

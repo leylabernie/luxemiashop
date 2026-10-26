@@ -1,3 +1,4 @@
+import { stripPausedCustomizationLinks } from '../src/lib/pausedCollectionLinks.cjs';
 import { serializeJsonLd } from '../src/lib/serializeJsonLd.cjs';
 /**
  * Build-time prerender script
@@ -30,6 +31,7 @@ const FALLBACK_PRICE = '299.00';
 const SEO_ARCHITECTURE = JSON.parse(
   fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/seoArchitecture.json'), 'utf8')
 );
+const EMPTY_CATALOG_ROUTES = new Set(JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/emptyCatalogRoutes.json'), 'utf8')));
 const INDEXABLE_ROUTE_SEO = SEO_ARCHITECTURE.routes;
 const USA_LANDING = JSON.parse(fs.readFileSync(path.join(PROJECT_ROOT, 'src/config/usaLandingPage.json'), 'utf8'));
 const SUBCATEGORY_LANDING_PATHS = SEO_ARCHITECTURE.subcategoryLandingPaths;
@@ -2617,12 +2619,18 @@ const routes = [
  */
 function generateHtml(template, route, allShopifyProducts) {
   route = { ...route, ...(INDEXABLE_ROUTE_SEO[route.path] || {}) };
+  if (EMPTY_CATALOG_ROUTES.has(route.path)) {
+    route.image = `${SITE_URL}/images/social/luxemia-brand-preview-2026.jpg`;
+    route.noIndexFollow = true;
+  }
   let html = template;
   const seoTitle = clampTitle(route.title);
   const seoDescription = clampDescription(route.description);
   const routeContent = normalizeInternalNavigationHtml(route.content) +
     (['/lehengas', '/collections'].includes(route.path)
-      ? '<nav aria-label="Lehenga fabrics and details"><a href="/collections/organza-lehengas">Organza Lehengas</a> · <a href="/collections/mirror-work-lehengas">Mirror Work Lehengas</a></nav>'
+      ? '<nav aria-label="Lehenga fabrics and details">' + Object.values(reviewedLehengaCollections)
+        .filter(config => !EMPTY_CATALOG_ROUTES.has(`/collections/${config.handle}`))
+        .map(config => `<a href="/collections/${config.handle}">${escapeHtml(config.name)}</a>`).join(' · ') + '</nav>'
       : '');
 
   // Replace title
@@ -3309,6 +3317,7 @@ function generateHtml(template, route, allShopifyProducts) {
     () => `<div id="root"></div>${seoContent}`
   );
 
+  html = stripPausedCustomizationLinks(html);
   return html;
 }
 

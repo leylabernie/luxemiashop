@@ -281,7 +281,7 @@ export const seoGrowthBlogPosts: BlogPost[] = [
       </table>
 
       <h2>See a current stitched-blouse listing</h2>
-      <p>The <a href="/product/slate-grey-chiffon-sequin-border-saree-stitched-blouse">slate grey chiffon saree with a stitched blouse</a> is a current example of a listing that identifies a constructed blouse. Check its exact size options and measurements rather than assuming that every saree has the same package or fit.</p>
+      <p>When browsing <a href="/sarees">current saree listings</a>, check whether each listing identifies a constructed blouse. Check its exact size options and measurements rather than assuming that every saree has the same package or fit.</p>
 
       <h2>What is an unstitched blouse piece?</h2>
       <p>It is fabric intended for constructing a blouse, not a finished blouse ready to wear. Confirm whether the piece is attached to the saree length or supplied separately, what its documented dimensions and material are, and whether the pictured blouse uses that exact piece. Cutting and stitching require a design, body measurements, seam allowances, closures and construction choices that an unstitched piece does not provide by itself.</p>

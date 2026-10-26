@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
@@ -75,7 +76,7 @@ const Collections = () => {
             ['Menswear', '/menswear'], ['Kids', '/kids'], ['Indo-Western', '/indowestern'],
             ['Blouses', '/collections/blouses'], ['Couple Sets', '/collections/couple-outfits'],
             ['Jewelry', '/jewelry'], ['Organza Lehengas', '/collections/organza-lehengas'],
-            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas']].map(([name, href]) =>
+            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas']].filter(([, href]) => canPromoteCollection(href)).map(([name, href]) =>
               <Link key={href} to={href} className="text-sm hover:underline">{name}</Link>)}
         </nav>
         {/* Hero Banner */}
@@ -122,7 +123,7 @@ const Collections = () => {
             <span>/</span>
             <span className="text-foreground">Collections</span>
           </nav>
-          <div className="mt-6 flex flex-col gap-3 rounded-sm border border-primary/25 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between">
+          {canPromoteCollection('/collections/customizable-indian-outfits') && (<div className="mt-6 flex flex-col gap-3 rounded-sm border border-primary/25 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <h2 className="font-serif text-xl">Need a custom color and made-to-order fit?</h2>
               <p className="mt-1 text-sm text-muted-foreground">Browse designs verified for a custom color and tailoring from confirmed measurements.</p>
@@ -130,7 +131,7 @@ const Collections = () => {
             <Link to="/collections/customizable-indian-outfits" className="shrink-0 text-sm font-medium text-primary underline underline-offset-4">
               Shop customizable outfits
             </Link>
-          </div>
+          </div>)}
         </div>
 
         {/* Main Content */}
@@ -269,7 +270,7 @@ const Collections = () => {
           <div className="flex flex-wrap justify-center gap-3 mt-6 text-xs text-muted-foreground">
             <Link to="/lehengas" className="hover:text-foreground transition-colors underline underline-offset-2">Bridal Lehengas</Link>
             <Link to="/sarees" className="hover:text-foreground transition-colors underline underline-offset-2">Sarees</Link>
-            <Link to="/collections/customizable-indian-outfits" className="hover:text-foreground transition-colors underline underline-offset-2">Customizable Indian Outfits</Link>
+            {canPromoteCollection('/collections/customizable-indian-outfits') && (<Link to="/collections/customizable-indian-outfits" className="hover:text-foreground transition-colors underline underline-offset-2">Customizable Indian Outfits</Link>)}
             <Link to="/suits" className="hover:text-foreground transition-colors underline underline-offset-2">Salwar Kameez</Link>
             <Link to="/menswear" className="hover:text-foreground transition-colors underline underline-offset-2">Men's Sherwanis</Link>
             <Link to="/indowestern" className="hover:text-foreground transition-colors underline underline-offset-2">Indo-Western</Link>

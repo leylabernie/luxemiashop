@@ -1,3 +1,4 @@
+import { isReversiblyArchivedProduct } from '@/lib/reversibleProductArchive.cjs';
 import { useState, useEffect } from 'react';
 import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
 
@@ -17,7 +18,7 @@ declare global {
 }
 
 function getInitialProduct(handle: string | undefined): ShopifyProduct['node'] | null {
-  if (!handle || typeof window === 'undefined') return null;
+  if (!handle || isReversiblyArchivedProduct(handle) || typeof window === 'undefined') return null;
   const initial = window.__INITIAL_PRODUCT_DATA__;
   if (!initial?.product || initial.handle !== handle) return null;
   return initial.product;
@@ -46,7 +47,7 @@ export const useShopifyProduct = (
     const initial = getInitialProduct(handle);
 
     const fetchProduct = async () => {
-      if (!handle) {
+      if (!handle || isReversiblyArchivedProduct(handle)) {
         setProduct(null);
         setError('Product not found');
         setIsLoading(false);

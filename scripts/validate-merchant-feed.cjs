@@ -219,9 +219,9 @@ if (
   throw new Error('ProductInfo must render Shopify numeric size variants through the selectedOptions-wired native option picker');
 }
 
-// Retained 14-variant size fixture; the former 36-variant fixture
-// (pistachio-green-lehenga-luxemia) was owner-archived 2026-09-20.
-const VARIANT_PARITY_HANDLE = 'art-silk-cream-groom-wear-thread-work-readymade-sherwani-385484';
+// Verified surviving 15-variant fixture after the 2026-10-26 age archive.
+// Preserve exact Storefront / feed / ProductGroup parity checks.
+const VARIANT_PARITY_HANDLE = 'off-white-art-silk-sherwani-groomsmen';
 const variantPrerenderPath = path.join(
   PROJECT_ROOT,
   'dist/_prerender/product',

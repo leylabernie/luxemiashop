@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
 import { Link, useNavigate, useSearchParams } from 'react-router-dom';
@@ -303,7 +304,7 @@ const Header = () => {
                 {/* Secondary links */}
                 <div className="pt-4 border-t border-border/30">
                   <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Collections</p>
-                  {secondaryLinks.map((link, index) => (
+                  {secondaryLinks.filter(link => canPromoteCollection(link.href)).map((link, index) => (
                     <div
                       key={link.name}
                       style={{ animation: `menuItemIn 0.3s ease-out ${(navLinks.length + index) * 0.05}s both`, willChange: 'opacity, transform' }}

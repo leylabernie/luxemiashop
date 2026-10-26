@@ -79,8 +79,9 @@ if (!Array.isArray(inventory.paths)) {
   throw new Error('[owner-retired-products] approved-sitemap-inventory.json must contain a paths array.');
 }
 
+const archivedPaths = new Set(require('../src/data/reversiblyArchivedProductHandles.json').map(handle => `/product/${handle}`));
 const emptyCatalogRoutes = new Set(require('../src/config/emptyCatalogRoutes.json'));
-inventory.paths = inventory.paths.filter((pathname) => !REQUIRED_RETIRED_PATHS.has(pathname) && !emptyCatalogRoutes.has(pathname));
+inventory.paths = inventory.paths.filter((pathname) => !REQUIRED_RETIRED_PATHS.has(pathname) && !archivedPaths.has(pathname) && !emptyCatalogRoutes.has(pathname));
 inventory.urlCount = inventory.paths.length;
 fs.writeFileSync(APPROVED_SITEMAP_FILE, `${JSON.stringify(inventory, null, 2)}\n`, 'utf8');
 

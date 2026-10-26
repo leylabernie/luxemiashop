@@ -1,3 +1,5 @@
+import { stripPausedCustomizationLinks } from '@/lib/pausedCollectionLinks.cjs';
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useMemo, useState, useEffect, useCallback } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
@@ -143,7 +145,7 @@ const BlogPost = () => {
   // NOTE: All hooks must be called before any conditional early returns
   // to comply with React's Rules of Hooks (fixes Error #310).
   const sanitizedContent = useMemo(
-    () => DOMPurify.sanitize(post?.content ?? '', {
+    () => DOMPurify.sanitize(stripPausedCustomizationLinks(post?.content ?? ''), {
       ALLOWED_TAGS: [
         'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'br', 'hr',
         'ul', 'ol', 'li', 'a', 'strong', 'em', 'b', 'i', 'u',
@@ -345,7 +347,8 @@ const BlogPost = () => {
 
   const shareUrl = `https://luxemia.shop/blog/${post.slug}`;
   const isSizingArticle = /size|measurement|fit|plus-size/i.test(`${post.slug} ${post.title}`);
-  const shopCta = postShopCta[post.slug] || {
+  const configuredShopCta = postShopCta[post.slug];
+  const shopCta = (configuredShopCta && canPromoteCollection(configuredShopCta.href) ? configuredShopCta : null) || {
     eyebrow: 'Shop the guide',
     heading: 'Browse current Indian occasionwear.',
     href: '/collections',
