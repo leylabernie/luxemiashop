@@ -5,28 +5,28 @@
 export const FIT_COPY_REVIEW_DATE = '2026-10-26';
 const reviewedFitCopy = {
   "gid://shopify/Product/9134761476267": [
-    "Supplied stitched and ready to wear in the listed standard finished sizes. Requests outside those sizes require a fit review.",
-    "Finished bust-size labels for this design are 40, 42, 44 inches. The 32, 34, 36, 38 options are alteration requests, not additional standard finished sizes. Choose Alter/Custom for a measurement review. Fit, alteration scope and any service charge must be confirmed before fulfillment."
+    "Supplied stitched and ready to wear.",
+    "Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit."
   ],
   "gid://shopify/Product/9134762950827": [
-    "Supplied stitched and ready to wear in the listed standard finished sizes. Requests outside those sizes require a fit review.",
-    "Finished bust-size labels for this design are 38, 40, 42, 44 inches. The 32, 34, 36 options are alteration requests, not additional standard finished sizes. Choose Alter/Custom for a measurement review. Fit, alteration scope and any service charge must be confirmed before fulfillment."
+    "Supplied stitched and ready to wear.",
+    "Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit."
   ],
   "gid://shopify/Product/9134763311275": [
-    "Supplied stitched and ready to wear in the listed standard finished sizes. Requests outside those sizes require a fit review.",
-    "Finished bust-size labels for this design are 38, 40, 42, 44 inches. The 32, 34, 36 options are alteration requests, not additional standard finished sizes. Choose Alter/Custom for a measurement review. Fit, alteration scope and any service charge must be confirmed before fulfillment."
+    "Supplied stitched and ready to wear.",
+    "Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit."
   ],
   "gid://shopify/Product/9134765441195": [
-    "Supplied stitched and ready to wear in the listed standard finished sizes. Requests outside those sizes require a fit review.",
-    "Finished bust-size labels for this design are 38, 40, 42, 44 inches. The 32, 34, 36 options are alteration requests, not additional standard finished sizes. Choose Alter/Custom for a measurement review. Fit, alteration scope and any service charge must be confirmed before fulfillment."
+    "Supplied stitched and ready to wear.",
+    "Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit."
   ],
   "gid://shopify/Product/9134765899947": [
-    "Supplied stitched and ready to wear in the listed standard finished sizes. Requests outside those sizes require a fit review.",
-    "Finished bust-size labels for this design are 36, 38, 40, 42, 44 inches. The 32, 34 options are alteration requests, not additional standard finished sizes. Choose Alter/Custom for a measurement review. Fit, alteration scope and any service charge must be confirmed before fulfillment."
+    "Supplied stitched and ready to wear.",
+    "Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit."
   ],
   "gid://shopify/Product/9134766096555": [
-    "Supplied stitched and ready to wear in the listed standard finished sizes. Requests outside those sizes require a fit review.",
-    "Finished bust-size labels for this design are 36, 38, 40, 42, 44 inches. The 32, 34 options are alteration requests, not additional standard finished sizes. Choose Alter/Custom for a measurement review. Fit, alteration scope and any service charge must be confirmed before fulfillment."
+    "Supplied stitched and ready to wear.",
+    "Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit."
   ]
 };
 

@@ -64,7 +64,7 @@ test('dated review is exactly six IDs, requires unchanged public fit text, and d
     assert.equal(hasReviewedProductCopy(p.tags), false);
     assert.equal(appendReviewedFitCopy(p.description, p), p.description, 'do not duplicate live fit text');
     assert.deepEqual(getReviewedFitCopy({ ...p, id: 'gid://shopify/Product/999' }), []);
-    assert.deepEqual(getReviewedFitCopy({ ...p, descriptionHtml: p.descriptionHtml.replace('Finished bust-size', 'Changed bust-size') }), []);
+    assert.deepEqual(getReviewedFitCopy({ ...p, descriptionHtml: p.descriptionHtml.replace('Available in standard sizes', 'Changed standard sizes') }), []);
     assert.deepEqual(getReviewedFitCopy({ ...p, description: '', descriptionHtml: '' }), []);
   }
   for (const id of [undefined, '', 'constructor', '__proto__', '9134761476267']) assert.deepEqual(getReviewedFitCopy({ id }), []);
@@ -104,7 +104,7 @@ test('source drift fails closed; body-only changes leave metadata/schema/other p
   const { buildInitialProductPayload } = await generator();
   for (const fixture of fixtures) {
     const p = product(fixture);
-    const changed = { ...p, descriptionHtml: p.descriptionHtml.replace('Finished bust-size', 'Changed bust-size'), description: p.description.replace('Finished bust-size', 'Changed bust-size') };
+    const changed = { ...p, descriptionHtml: p.descriptionHtml.replace('Available in standard sizes', 'Changed standard sizes'), description: p.description.replace('Available in standard sizes', 'Changed standard sizes') };
     const staticReviewed = await render(p);
     const staticChanged = await render(changed);
     assert(!staticChanged.includes('data-reviewed-fit-copy'));
@@ -113,11 +113,11 @@ test('source drift fails closed; body-only changes leave metadata/schema/other p
     assert.equal(removeReviewedSection(generateProductHtml(p, 'https://luxemia.shop/product/fixture')),
       generateProductHtml(changed, 'https://luxemia.shop/product/fixture'), 'dynamic renderer only gains reviewed visible section');
     const initial = JSON.parse(buildInitialProductPayload(changed)).product;
-    assert(!initial.description.includes('Finished bust-size'));
+    assert(!initial.description.includes('Available in standard sizes'));
   }
   const unrelated = { ...product(fixtures[0]), id: 'gid://shopify/Product/999' };
   assert(!((await render(unrelated)).includes('data-reviewed-fit-copy')));
-  assert(!JSON.parse(buildInitialProductPayload(unrelated)).product.description.includes('Finished bust-size'));
+  assert(!JSON.parse(buildInitialProductPayload(unrelated)).product.description.includes('Available in standard sizes'));
 });
 
 test('long body and hostile appended content cannot truncate or inject into the reviewed fit section', async () => {
@@ -126,7 +126,7 @@ test('long body and hostile appended content cannot truncate or inject into the 
   p.descriptionHtml = `<p>${'Long text '.repeat(600)}</p>${p.descriptionHtml}<script>BAD_SCRIPT_SENTINEL</script><p>UNREVIEWED_BODY_SENTINEL</p>`;
   const html = await render(p);
   assert(html.includes('data-reviewed-fit-copy="2026-10-26"'));
-  assert(html.includes('not additional standard finished sizes'));
+  assert(html.includes('Choose Made to Fit (+$10) for a personalized fit'));
   assert(!html.includes('BAD_SCRIPT_SENTINEL'));
   assert(!html.includes('UNREVIEWED_BODY_SENTINEL'));
   assert(!renderReviewedFitCopy(p).includes('<script'));
