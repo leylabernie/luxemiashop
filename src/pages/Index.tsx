@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { lazy, Suspense, useState } from 'react';
 import { ArrowRight, ChevronDown, Heart, Sparkles, Truck } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -111,7 +112,7 @@ const Index = () => {
                 { title: 'Shop the event', copy: 'Browse wedding, festive, reception, Navratri and guest-ready edits.', href: '/collections', cta: 'Explore collections' },
                 { title: 'Fit and customization', copy: 'See only the size, stitching or made-to-measure options stated on each listing.', href: '/collections/customizable-indian-outfits', cta: 'View custom options' },
                 { title: 'Shopping in the USA?', copy: 'Shop sarees, lehengas and shararas with clear USA shipping costs, timing, duties and return terms.', href: '/indian-ethnic-wear-usa', cta: 'Explore USA shopping' },
-              ].map((item) => (
+              ].filter(item => canPromoteCollection(item.href)).map((item) => (
                 <Link key={item.title} to={item.href} className="group rounded-sm border border-[#eaded6] bg-white p-6 transition-all hover:-translate-y-1 hover:border-[#c99591] hover:shadow-lg">
                   <h3 className="font-serif text-xl text-[#291f20]">{item.title}</h3>
                   <p className="mt-3 text-sm leading-6 text-[#716563]">{item.copy}</p>
@@ -171,7 +172,7 @@ const Index = () => {
           </div>
         </section>
 
-        <section aria-labelledby="customizable-home-heading" className="bg-[linear-gradient(125deg,#493235_0%,#684549_100%)] text-[#fff9f4]">
+        {canPromoteCollection('/collections/customizable-indian-outfits') && (<section aria-labelledby="customizable-home-heading" className="bg-[linear-gradient(125deg,#493235_0%,#684549_100%)] text-[#fff9f4]">
           <div className="container mx-auto grid max-w-7xl overflow-hidden lg:grid-cols-2">
             <div className="relative min-h-[360px] overflow-hidden lg:order-2 lg:min-h-[480px]">
               <picture>
@@ -204,7 +205,7 @@ const Index = () => {
               </div>
             </div>
           </div>
-        </section>
+        </section>)}
 
         <section aria-labelledby="our-story-home-heading" className="relative overflow-hidden bg-[#352629] py-16 text-[#fff9f4] sm:py-20 lg:py-24">
           <div className="pointer-events-none absolute -left-24 top-1/2 h-72 w-72 -translate-y-1/2 rounded-full bg-[#bd7f7c]/20 blur-3xl" aria-hidden="true" />

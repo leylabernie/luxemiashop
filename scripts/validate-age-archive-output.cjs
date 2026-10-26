@@ -36,11 +36,14 @@ walk(root);
 for (const handle of archived) {
   if (fs.existsSync(path.join(root, '_prerender/product', `${handle}.html`))) throw new Error(`Archived static product remains: ${handle}`);
 }
-const mirror = read('_prerender/collections/mirror-work-lehengas.html');
-if (!/<meta[^>]*name="robots"[^>]*content="noindex, follow"/.test(mirror)) throw new Error('Empty mirror collection is indexable');
-if (/"@type"\s*:\s*"(?:Product|ProductGroup|ItemList|CollectionPage)"/.test(mirror)) throw new Error('Empty mirror collection has shopping schema');
-if (read('sitemap-collections.xml').includes('/collections/mirror-work-lehengas')) throw new Error('Empty mirror collection remains in sitemap');
-for (const file of ['_prerender/index.html', '_prerender/lehengas.html', '_prerender/collections.html']) {
-  if (read(file).includes('href="/collections/mirror-work-lehengas"')) throw new Error(`Empty mirror shopping link in ${file}`);
+for (const handle of ['mirror-work-lehengas', 'customizable-indian-outfits']) {
+  const route = `/collections/${handle}`;
+  const empty = read(`_prerender${route}.html`);
+  if (!/<meta[^>]*name="robots"[^>]*content="noindex, follow"/.test(empty)) throw new Error(`Empty ${handle} is indexable`);
+  if (/"@type"\s*:\s*"(?:Product|ProductGroup|ItemList|CollectionPage)"/.test(empty)) throw new Error(`Empty ${handle} has shopping schema`);
+  if (read('sitemap-collections.xml').includes(route)) throw new Error(`Empty ${handle} remains in sitemap`);
+  for (const file of ['_prerender/index.html', '_prerender/lehengas.html', '_prerender/collections.html']) {
+    if (read(file).includes(`href="${route}"`)) throw new Error(`Empty ${handle} shopping link in ${file}`);
+  }
 }
-console.log(`[age-archive] Exact ${archived.size} archives absent from built HTML/public feeds; ${baseline.retained.length} survivors preserved; mirror safely empty.`);
+console.log(`[age-archive] Exact ${archived.size} archives absent from built HTML/public feeds; ${baseline.retained.length} survivors preserved; mirror and customizable collections safely empty.`);

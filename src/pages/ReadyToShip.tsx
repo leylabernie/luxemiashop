@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useEffect, useMemo, useState } from 'react';
 import { ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -83,9 +84,9 @@ const ReadyToShip = () => {
             </p>
             <p className="mt-4 text-xs text-muted-foreground">
               Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Those custom selections require additional processing and use the timing stated on the product page.{' '}
-              <Link className="text-primary underline" to="/collections/customizable-indian-outfits">
+              {canPromoteCollection('/collections/customizable-indian-outfits') && (<Link className="text-primary underline" to="/collections/customizable-indian-outfits">
                 View made-to-order outfits.
-              </Link>
+              </Link>)}
             </p>
             <p className="mt-2 text-xs text-muted-foreground">
               Tracked delivery is available to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius.{' '}

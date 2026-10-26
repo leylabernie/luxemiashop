@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { Link, useLocation } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -119,7 +120,7 @@ const SemanticCommercePage = () => {
       </div></section>
       <section className="container mx-auto grid max-w-5xl gap-8 px-4 py-12 lg:grid-cols-[1fr_280px] lg:px-8">
         <div className="space-y-10">{page.sections.map(section => <article key={section.heading}><h2 className="mb-3 font-serif text-2xl">{section.heading}</h2><p className="leading-7 text-muted-foreground">{section.body}</p></article>)}</div>
-        <aside className="h-fit border border-border bg-card p-6"><h2 className="font-serif text-xl">Choose by need</h2><nav className="mt-4 flex flex-col gap-3">{page.links.map(link => <Link className="text-sm text-primary underline underline-offset-4" key={link.href} to={link.href}>{link.label}</Link>)}</nav></aside>
+        <aside className="h-fit border border-border bg-card p-6"><h2 className="font-serif text-xl">Choose by need</h2><nav className="mt-4 flex flex-col gap-3">{page.links.filter(link => canPromoteCollection(link.href)).map(link => <Link className="text-sm text-primary underline underline-offset-4" key={link.href} to={link.href}>{link.label}</Link>)}</nav></aside>
       </section>
     </main><Footer />
   </div>;

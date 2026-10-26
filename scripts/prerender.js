@@ -1,3 +1,4 @@
+import { stripPausedCustomizationLinks } from '../src/lib/pausedCollectionLinks.cjs';
 import { serializeJsonLd } from '../src/lib/serializeJsonLd.cjs';
 /**
  * Build-time prerender script
@@ -2618,7 +2619,10 @@ const routes = [
  */
 function generateHtml(template, route, allShopifyProducts) {
   route = { ...route, ...(INDEXABLE_ROUTE_SEO[route.path] || {}) };
-  if (EMPTY_CATALOG_ROUTES.has(route.path)) route.image = `${SITE_URL}/images/social/luxemia-brand-preview-2026.jpg`;
+  if (EMPTY_CATALOG_ROUTES.has(route.path)) {
+    route.image = `${SITE_URL}/images/social/luxemia-brand-preview-2026.jpg`;
+    route.noIndexFollow = true;
+  }
   let html = template;
   const seoTitle = clampTitle(route.title);
   const seoDescription = clampDescription(route.description);
@@ -3313,6 +3317,7 @@ function generateHtml(template, route, allShopifyProducts) {
     () => `<div id="root"></div>${seoContent}`
   );
 
+  html = stripPausedCustomizationLinks(html);
   return html;
 }
 

@@ -38,6 +38,7 @@ const restoredRoutes = [
   '/collections/silk-sarees',
 ];
 const intentionallyEmptyRoutes = [
+  '/collections/customizable-indian-outfits',
   '/collections/mirror-work-lehengas',
   '/collections/bollywood-inspired-indian-outfits',
   '/collections/bridal-party-outfits',
@@ -155,4 +156,14 @@ test('prerender no longer advertises the empty wedding destination in primary na
   assert.ok(!source.includes('href="/sarees?sub=wedding"'));
   assert.ok(source.includes("path: '/collections/wedding-sarees'"));
   assert.ok(source.includes('href="/sarees"'));
+});
+
+test('HTML sitemap and XML share the same already-filtered static-page export', async () => {
+  const { outputFiles } = await esbuild.build({entryPoints:[path.join(root,'src/lib/dynamicSitemap.ts')],bundle:true,write:false,platform:'node',format:'cjs',packages:'external',alias:{'@':path.join(root,'src')},define:{'import.meta.env':'{}'}});
+  const module={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,module,module.exports);
+  const routes=module.exports.staticPages.map(p=>p.loc);
+  assert.ok(!routes.includes('/collections/customizable-indian-outfits'));
+  assert.ok(!routes.includes('/collections/mirror-work-lehengas'));
+  assert.ok(routes.includes('/collections'));
+  assert.ok(routes.includes('/sarees'));
 });

@@ -159,3 +159,24 @@ test('route manifests and desktop/mobile/hub links include only the two approved
   assert.match(read('src/App.tsx'), /path="\/collections\/:handle"/);
   assert.match(read('src/pages/ShopifyCollection.tsx'), /noIndexFollow = !isLoading && purchasableProducts.length === 0/);
 });
+
+test('the archived last-MTO collection stays empty and out of raw shopping navigation', async () => {
+  const { generateHtml, routes } = await generator();
+  const emptyRoute = routes.find(route => route.path === '/collections/customizable-indian-outfits');
+  const html = generateHtml(template, emptyRoute, new Map());
+  assert.match(html, /name="robots" content="noindex, follow"/);
+  assert.ok(!schemas(html).some(s => ['Product', 'ProductGroup', 'ItemList', 'CollectionPage'].includes(s['@type'])));
+  for (const path of ['/', '/collections', '/lehengas', '/shop-by-fulfillment/customizable-outfits']) {
+    const source = generateHtml(template, routes.find(route => route.path === path), new Map());
+    assert.ok(!source.includes('href="/collections/customizable-indian-outfits"'), path);
+  }
+});
+
+test('paused customization anchors share raw/client transformation without erasing prose or citations', () => {
+  const { stripPausedCustomizationLinks } = require('../src/lib/pausedCollectionLinks.cjs');
+  const input='<p>Read <a class="x" href="/collections/customizable-indian-outfits">current options</a> and <a href="/sizing-measurements-guide">measurements</a>.</p>';
+  assert.equal(stripPausedCustomizationLinks(input), '<p>Read <span>current options</span> and <a href="/sizing-measurements-guide">measurements</a>.</p>');
+  const citation='<a href="https://luxemia.shop/collections/customizable-indian-outfits">Source reviewed earlier</a>';
+  assert.equal(stripPausedCustomizationLinks(citation), citation);
+  assert.ok(read('src/pages/BlogPost.tsx').includes("DOMPurify.sanitize(stripPausedCustomizationLinks(post?.content ?? '')"));
+});
