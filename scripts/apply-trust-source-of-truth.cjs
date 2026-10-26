@@ -9,6 +9,7 @@
  */
 
 const fs = require('fs');
+const { serializeJsonLd } = require('../src/lib/serializeJsonLd.cjs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -404,7 +405,7 @@ function patchIndex() {
       const parsed = JSON.parse(body.trim());
       const cleaned = cleanSchemaValue(parsed);
       if (cleaned === null) return '';
-      return `<script type="application/ld+json">\n${JSON.stringify(cleaned, null, 2)}\n</script>`;
+      return `<script type="application/ld+json">\n${serializeJsonLd(cleaned, 2)}\n</script>`;
     } catch {
       return full;
     }

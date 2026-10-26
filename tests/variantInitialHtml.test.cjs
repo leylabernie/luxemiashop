@@ -77,6 +77,55 @@ async function loadModule(entry, plugins = []) {
 
 let personalizerPromise;
 const personalizer = () => personalizerPromise ||= loadModule('src/middleware/variantPrerender.ts');
+
+test('static and live product JSON-LD preserve hostile option text without creating script tags', async () => {
+  const product = productFixture();
+  const option = 'S "quoted" \\ </script><script data-schema-injection>bad</script>';
+  product.variants.edges[0].node.selectedOptions[1].value = option;
+  const { generateProductHtml } = await loadModule('src/middleware/htmlGenerator.ts');
+  for (const html of [await render(product), generateProductHtml(product, canonical)]) {
+    assert.doesNotMatch(html, /<script data-schema-injection>/);
+    const nodes = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+      .map(match => JSON.parse(match[1]));
+    const groups = nodes.filter(node => node['@type'] === 'ProductGroup');
+    assert.equal(groups.length, 1);
+    assert.equal(nodes.filter(node => node['@type'] === 'Product').length, 0);
+    assert(groups[0].hasVariant.some(variant => variant.name.includes(option)));
+    assert.equal(groups[0].hasVariant.length, product.variants.edges.length);
+  }
+});
+
+test('prerender treats every dollar replacement token as literal product data in JSON-LD, metadata, body and hydration', async () => {
+  const { generateHtml } = await generator();
+  const actualTemplate = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const originalEntryScripts = (actualTemplate.match(/<script\b[^>]*src="\/src\/main\.tsx"/g) || []).length;
+  assert.equal(originalEntryScripts, 1, 'use the real application template with its body entry script');
+  for (const token of ["$'", '$`', '$&', '$$', '$1', '$<name>']) {
+    const product = productFixture();
+    const value = `Fixture ${token} literal`;
+    product.title = value;
+    product.description = value;
+    product.descriptionHtml = `<p>${value}</p>`;
+    product.variants.edges[0].node.selectedOptions[1].value = value;
+    const html = generateHtml(actualTemplate, {
+      path: `/product/${product.handle}`, title: value, h1: value,
+      description: value, content: '', product,
+    }, new Map([[product.handle, product]]));
+    const nodes = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+      .map(match => JSON.parse(match[1]));
+    const group = nodes.find(node => node['@type'] === 'ProductGroup');
+    assert.equal(group.name, value, `${token}: product name survives`);
+    assert(group.hasVariant[0].name.includes(value), `${token}: variant option survives`);
+    assert.equal(nodes.filter(node => node['@type'] === 'ProductGroup').length, 1);
+    assert.equal((html.match(/<script\b[^>]*src="\/src\/main\.tsx"/g) || []).length, originalEntryScripts,
+      `${token}: never duplicate original app entry scripts`);
+    const escapedValue = value.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    assert(html.match(/<title>([\s\S]*?)<\/title>/)[1].includes(escapedValue), `${token}: title stays literal`);
+    assert(html.includes(`<h1>${escapedValue}</h1>`), `${token}: visible heading stays literal`);
+    const payload = JSON.parse(html.match(/<script>window\.__INITIAL_PRODUCT_DATA__ = (\{[\s\S]*?\});<\/script>/)[1]);
+    assert.equal(payload.product.title, value, `${token}: hydration title stays literal`);
+  }
+});
 let middlewarePromise;
 const middleware = () => middlewarePromise ||= loadModule('middleware.ts', [{
   name: 'variant-middleware-fixture',

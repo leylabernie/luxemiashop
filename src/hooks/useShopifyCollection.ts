@@ -1,3 +1,4 @@
+import { isReviewedLehengaCollection, filterReviewedLehengaProducts } from '@/lib/reviewedLehengaCollections.cjs';
 import { useEffect, useState } from 'react';
 import {
   fetchAllProducts,
@@ -21,6 +22,9 @@ function isBridalPartyProduct(product: ShopifyProduct): boolean {
 }
 
 function filterCollectionProducts(handle: string, products: ShopifyProduct[]): ShopifyProduct[] {
+  if (isReviewedLehengaCollection(handle)) {
+    return filterReviewedLehengaProducts(handle, products);
+  }
   if (handle === 'ready-to-wear-palazzo-suits') {
     const selectedIds = new Set([
       'gid://shopify/Product/9095467860139',
@@ -68,7 +72,7 @@ export function useShopifyCollection(handle: string) {
       // collection handle can temporarily return no products. Resolve that case
       // from the live catalog, then apply the same strict membership filter;
       // never substitute the unfiltered catalog.
-      if (['bridal-party-outfits', 'ready-to-wear-palazzo-suits'].includes(handle) && liveProducts.length === 0) {
+      if ((isReviewedLehengaCollection(handle) || ['bridal-party-outfits', 'ready-to-wear-palazzo-suits'].includes(handle)) && liveProducts.length === 0) {
         const catalogProducts = await fetchAllProducts();
         if (controller.signal.aborted) return;
         liveProducts = filterCollectionProducts(handle, catalogProducts);
@@ -77,7 +81,11 @@ export function useShopifyCollection(handle: string) {
       // The build-time collection payload is already scoped to this collection.
       // Do not erase it when Shopify temporarily returns an empty collection
       // response after hydration (the visible Bridesmaid page regression).
-      const resolvedProducts = liveProducts.length > 0 ? liveProducts : (prerendered || []);
+      // Reviewed pages fail closed after the live catalog refresh, rather than
+      // resurrecting a sold-out product from an old build payload.
+      const resolvedProducts = isReviewedLehengaCollection(handle)
+        ? liveProducts
+        : liveProducts.length > 0 ? liveProducts : (prerendered || []);
       setProducts(resolvedProducts);
       setError(!result && resolvedProducts.length === 0);
       setIsLoading(false);

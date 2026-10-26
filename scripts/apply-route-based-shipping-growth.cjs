@@ -161,7 +161,11 @@ const productShippingFunction = `export function generateUsProductShippingDetail
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
   } : null;
-  const withTime = (details: Record<string, unknown>) => ({ ...details, ...(deliveryTime && { deliveryTime }) });
+  const withTime = (details: Record<string, unknown>) => ({
+    ...details,
+    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+    ...(deliveryTime && { deliveryTime }),
+  });
   const create = (countries: string | string[], rate: number, freeThreshold?: number) => [
     withTime({
       '@type': 'OfferShippingDetails',
@@ -191,7 +195,11 @@ const prerenderProductShippingFunction = `function generateUsProductShippingDeta
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
   } : null;
-  const withTime = (details) => ({ ...details, ...(deliveryTime ? { deliveryTime } : {}) });
+  const withTime = (details) => ({
+    ...details,
+    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+    ...(deliveryTime ? { deliveryTime } : {}),
+  });
   const create = (countries, rate, freeThreshold) => [
     withTime({
       '@type': 'OfferShippingDetails',

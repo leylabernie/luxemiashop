@@ -10,6 +10,8 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/jewelry',
   '/blog',
   '/collections',
+  '/collections/organza-lehengas',
+  '/collections/mirror-work-lehengas',
   '/collections/silk-sarees',
   '/collections/kanchipuram-sarees',
   '/collections/bridal-party-outfits',

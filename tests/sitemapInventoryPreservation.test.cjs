@@ -16,7 +16,9 @@ assert.ok(staticPaths.length > 40, 'Review fixtures if static-page syntax change
 const baselineHandles = Array.from({ length: 150 }, (_, index) => `approved-product-${index}`);
 const productPath = handle => `/product/${handle}`;
 const htmlPath = route => route === '/' ? path.join(prerenderDir, 'index.html') : path.join(prerenderDir, `${route.slice(1)}.html`);
-const validHtml = route => `<link rel="canonical" href="https://luxemia.shop${route}"><meta name="robots" content="index,follow">`;
+const reviewedCollections = require('../src/config/reviewedLehengaCollections.json');
+const validHtml = route => `<link rel="canonical" href="https://luxemia.shop${route}"><meta name="robots" content="index,follow">` +
+  (reviewedCollections[route.split('/').pop()] ? `<script>window.__INITIAL_DATA__ = ${JSON.stringify({ category: 'collection:' + route.split('/').pop(), products: [{ node: { handle: 'fixture' } }] })};</script><a href="/product/fixture">Fixture product</a>` : '');
 
 // Run the unchanged CLI entrypoint and all its real validation/generation logic.
 // Only dependencies are fixtures. Neither real fetch nor writable real fs is
@@ -242,6 +244,7 @@ test('declared collection route inventory is either in the sitemap or explicitly
       assert.ok(routePath && ts.isStringLiteral(routePath), 'Every literal prerender route must have a literal path');
       return { path: routePath.text, noindex: [value('noIndex'), value('noIndexFollow')].some(value => value?.kind === ts.SyntaxKind.TrueKeyword) };
     }).filter(route => route.path.startsWith('/collections/'));
+  declarations.push(...Object.values(reviewedCollections).map(config => ({ path: `/collections/${config.handle}`, noindex: false })));
   const byPath = new Map(declarations.map(route => [route.path, route]));
   const generatedRoutes = staticArray('scripts/generate-routes.cjs', 'STATIC_ROUTES')
     .filter(ts.isStringLiteral).map(route => route.text).filter(route => route.startsWith('/collections/'));
@@ -271,4 +274,34 @@ test('collection indexing regression checks gate every build before sitemap publ
   assert.ok(gate < steps.indexOf('node scripts/generate-sitemap.cjs'));
   assert.ok(gate < steps.indexOf('node scripts/submit-indexnow.cjs'));
   assert.equal(steps.filter(step => step === 'npm run test:collection-indexing').length, 1);
+});
+
+test('reviewed collection becoming empty leaves sitemap without lowering product preservation', async () => {
+  const route = '/collections/organza-lehengas';
+  const emptyHtml = `<link rel="canonical" href="https://luxemia.shop${route}"><meta name="robots" content="noindex,follow"><script>window.__INITIAL_DATA__ = {"category":"collection:organza-lehengas","products":[]};</script>`;
+  const result = await runGenerator({ htmlOverrides: { [route]: emptyHtml } });
+  assert.equal(result.exitCode, 0, result.logs.error.join('\n'));
+  assert.ok(!result.collectionSitemap.includes(`https://luxemia.shop${route}</loc>`));
+  assert.equal(result.inventoryAfter, result.inventoryBytes, 'Keep approved product baseline and collection history intact');
+  const missingProduct = await runGenerator({ htmlOverrides: { [route]: emptyHtml }, responseHandles: baselineHandles.slice(1) });
+  assert.equal(missingProduct.exitCode, 1, 'Empty collection must not conceal a missing approved product URL');
+  assert.equal(missingProduct.writes.length, 0);
+});
+
+test('new reviewed routes cannot silently disappear with invalid or missing prerender payloads', async () => {
+  for (const route of Object.keys(reviewedCollections).map(handle => `/collections/${handle}`)) {
+    const result = await runGenerator({ htmlOverrides: { [route]: '<p>broken build</p>' }, responseHandles: [...baselineHandles, 'extra-a', 'extra-b'] });
+    assert.equal(result.exitCode, 1);
+    assert.equal(result.writes.length, 0);
+    assert.ok(result.logs.error.some(message => message.includes(`Invalid reviewed collection prerender: ${route}`)));
+  }
+});
+
+test('empty reviewed sitemap exception requires its actual self-canonical, not a navigation link', async () => {
+  const route = '/collections/organza-lehengas';
+  const html = `<link href="https://luxemia.shop/lehengas" rel="canonical"><meta name="robots" content="noindex,follow"><a href="https://luxemia.shop${route}">Collection</a><script>window.__INITIAL_DATA__ = {"category":"collection:organza-lehengas","products":[]};</script>`;
+  const result = await runGenerator({ htmlOverrides: { [route]: html }, responseHandles: [...baselineHandles, 'extra-a'] });
+  assert.equal(result.exitCode, 1);
+  assert.equal(result.writes.length, 0);
+  assert.ok(result.logs.error.some(message => message.includes(`Invalid reviewed collection prerender: ${route}`)));
 });

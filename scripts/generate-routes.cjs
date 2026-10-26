@@ -49,6 +49,8 @@ const STATIC_ROUTES = [
   '/collections',
   '/collections/blouses',
   '/collections/couple-outfits',
+  '/collections/organza-lehengas',
+  '/collections/mirror-work-lehengas',
   '/collections/banarasi-sarees',
   '/collections/ready-to-wear-palazzo-suits',
   '/collections/silk-sarees',

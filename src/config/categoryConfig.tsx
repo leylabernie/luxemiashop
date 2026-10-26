@@ -1097,6 +1097,10 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     href: '/lehengas',
     groups: [
       { label: 'By Occasion', links: subcatLinks('lehengas', LEHENGAS.subcategories, 'occasion') },
+      { label: 'Fabric & Detail', links: [
+        { name: 'Organza Lehengas', href: '/collections/organza-lehengas' },
+        { name: 'Mirror Work Lehengas', href: '/collections/mirror-work-lehengas' },
+      ] },
     ],
   },
   {

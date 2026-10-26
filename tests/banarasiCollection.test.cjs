@@ -11,7 +11,10 @@ const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 function loadTypeScript(file) {
   const code = transformSync(read(file), { loader: 'ts', format: 'cjs' }).code;
   const module = { exports: {} };
-  vm.runInNewContext(code, { module, exports: module.exports });
+  vm.runInNewContext(code, { module, exports: module.exports, require(name) {
+    if (name === './reviewedLehengaCollections.json') return require('../src/config/reviewedLehengaCollections.json');
+    throw new Error(`Unexpected module dependency: ${name}`);
+  } });
   return module.exports;
 }
 
