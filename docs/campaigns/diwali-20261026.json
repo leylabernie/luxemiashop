@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-26",
+  "photo_policy": "Actual confirmed active LuxeMia product photos, unretouched. Original complete photo rectangle is only uniformly resized; no cropping, watermark removal, recoloring, background removal, face/garment generation or edits. AI generation was limited to original decorative backdrops.",
+  "text": "Complete baked typography and CTA; provide accessible HTML heading/link. No additional visible overlay.",
+  "ratio": "desktop 3:1; mobile 2:3",
+  "sources": [
+    {
+      "key": "diwali",
+      "bg": "diwali-background.png",
+      "photo": "green-saree-9122594652331.jpg",
+      "color": "#193f33",
+      "eyebrow": "LUXEMIA  /  THE FESTIVAL OF LIGHTS",
+      "title": "Diwali",
+      "sub": "A celebration of light & style.",
+      "cta": "Shop Diwali styles",
+      "pid": "9122594652331",
+      "handle": "khaddi-georgette-saree-in-green-with-bandhani-motifs",
+      "url": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/khaddi-georgette-saree-in-green-with-bandhani-motifs-full-length-original.jpg?v=1793034355",
+      "link": "/collections/diwali-outfits",
+      "alt": "Diwali \u2014 A celebration of light and style. Shop Diwali styles. Genuine LuxeMia model photograph in a green dotted-motif georgette saree, with ivory and jade festive artwork.",
+      "sha256": "47811f014f4a99762eacb43b9d055118375521e60d8ae3e366041adeca8c3146",
+      "status_evidence": "ACTIVE + website publication verified by product worker on 2026-10-26. Reverify before deployment if catalog changes."
+    },
+    {
+      "key": "new-arrivals",
+      "bg": "arrivals-background.png",
+      "photo": "magenta-velvet-9134761476267.jpg",
+      "color": "#522638",
+      "eyebrow": "LUXEMIA  /  THE DIWALI EDIT",
+      "title": "New Arrivals",
+      "sub": "New looks. Luminous celebrations.",
+      "cta": "Explore the collection",
+      "pid": "9134761476267",
+      "handle": "magenta-velvet-floral-embroidered-suit",
+      "url": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/magenta-velvet-floral-embroidered-suit-model-view-1.jpg?v=1793034116",
+      "link": "/new-arrivals",
+      "page_link": "#new-arrivals-products",
+      "alt": "New Arrivals \u2014 New looks. Luminous celebrations. Explore the collection. Genuine LuxeMia model photograph in a magenta floral-embroidered velvet suit, with ivory and plum festive artwork.",
+      "sha256": "b2f040f5555d1411e382ac0cf77908c2fe1eb30acd700bfd9eb63f4db8d3830a",
+      "status_evidence": "ACTIVE + website publication verified by product worker on 2026-10-26. Reverify before deployment if catalog changes."
+    }
+  ],
+  "assets": [
+    {
+      "filename": "luxemia-diwali-2026-desktop.webp",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 306428,
+      "sha256": "204a6c3ae0ed55d5184987362e7875eefc7fe12e2668d76e71d20625a6c7b47d"
+    },
+    {
+      "filename": "luxemia-diwali-2026-desktop.jpg",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 622284,
+      "sha256": "3a4b975e3608818822491fbe7a3866460ad1f6cbfd7055a09f8e7219150728a4"
+    },
+    {
+      "filename": "luxemia-diwali-2026-desktop.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 2373219,
+      "sha256": "5c9981e3528003c8f7a93e7a2125da9c82a32d8e9a00f54ab1b18d6fa92a1a02"
+    },
+    {
+      "filename": "luxemia-diwali-2026-mobile.webp",
+      "dimensions": [
+        1080,
+        1620
+      ],
+      "bytes": 292912,
+      "sha256": "60996d274cf0559bb28b432a5b9ce3e80fad92174d0d3a4c71fc195337dee882"
+    },
+    {
+      "filename": "luxemia-diwali-2026-mobile.jpg",
+      "dimensions": [
+        1080,
+        1620
+      ],
+      "bytes": 595329,
+      "sha256": "cd0423dc019227dfc2d500a4be67583f69cecbe62b5e273da99af0fa78720f03"
+    },
+    {
+      "filename": "luxemia-diwali-2026-mobile.png",
+      "dimensions": [
+        1080,
+        1620
+      ],
+      "bytes": 1973567,
+      "sha256": "b477202a36be7d14ae6370eb24e99c047ebb14e2fcd6a1bc2c5a937b87afc529"
+    },
+    {
+      "filename": "luxemia-new-arrivals-2026-desktop.webp",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 310276,
+      "sha256": "70c3542b8e7e5298f7904ffe33cb38572683295fe2b86a65186b11e5bbc90120"
+    },
+    {
+      "filename": "luxemia-new-arrivals-2026-desktop.jpg",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 619692,
+      "sha256": "217dfd4261a1e08124dfcafd6ba48eb5092293d5f3c44e20ea075aa0f6460207"
+    },
+    {
+      "filename": "luxemia-new-arrivals-2026-desktop.png",
+      "dimensions": [
+        2172,
+        724
+      ],
+      "bytes": 2443770,
+      "sha256": "9c40f47078799ffedb9a5bc2ba783b52a8b645579eab4c43c35a07fefc7af15c"
+    },
+    {
+      "filename": "luxemia-new-arrivals-2026-mobile.webp",
+      "dimensions": [
+        1080,
+        1620
+      ],
+      "bytes": 367172,
+      "sha256": "4dbc5bbdde5f37af1912acd1dbc45a1bb3116893f6301df987009a43c37b9026"
+    },
+    {
+      "filename": "luxemia-new-arrivals-2026-mobile.jpg",
+      "dimensions": [
+        1080,
+        1620
+      ],
+      "bytes": 706651,
+      "sha256": "31ed38ac65143899f580fcacde73c8235d480496467c9267399d9faa442732b0"
+    },
+    {
+      "filename": "luxemia-new-arrivals-2026-mobile.png",
+      "dimensions": [
+        1080,
+        1620
+      ],
+      "bytes": 2416632,
+      "sha256": "d96bf2602b10e02380e78dbc9552c1e7c727d49032729c85d2ecc0886ba26050"
+    }
+  ]
+}

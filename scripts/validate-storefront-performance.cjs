@@ -16,9 +16,9 @@ function assert(condition, message) {
 
 const sourceIndex = read('index.html');
 assert(
-  sourceIndex.includes('/images/hero-carousel/navratri-lehenga.webp') &&
-    sourceIndex.includes('/images/hero-carousel/navratri-lehenga-desktop.webp'),
-  'The current Navratri LCP images are not preloaded in index.html.',
+  sourceIndex.includes('/images/campaigns/luxemia-diwali-2026-mobile.webp') &&
+    sourceIndex.includes('/images/campaigns/luxemia-diwali-2026-desktop.webp'),
+  'The current Diwali LCP images are not preloaded in index.html.',
 );
 assert(
   !sourceIndex.includes('href="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp"') &&
@@ -60,9 +60,9 @@ assert(builtFiles.length > 0, 'No built homepage HTML was found.');
 for (const relativePath of builtFiles) {
   const html = read(relativePath);
   assert(
-    html.includes('/images/hero-carousel/navratri-lehenga.webp') ||
-      html.includes('/images/hero-carousel/navratri-lehenga-desktop.webp'),
-    `${relativePath} does not preload the active Navratri hero.`,
+    html.includes('/images/campaigns/luxemia-diwali-2026-mobile.webp') ||
+      html.includes('/images/campaigns/luxemia-diwali-2026-desktop.webp'),
+    `${relativePath} does not preload the active Diwali hero.`,
   );
   assert(
     !html.includes('href="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp"') &&
