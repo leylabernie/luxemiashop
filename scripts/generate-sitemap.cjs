@@ -78,16 +78,14 @@ const staticPages = [
   { loc: '/kids', changefreq: 'daily', priority: '0.8' },
   { loc: '/videos', changefreq: 'daily', priority: '0.8' },
   { loc: '/collections/customizable-indian-outfits', changefreq: 'weekly', priority: '0.9' },
-  // High-intent commercial collection pages. Emptied by the 2026-09-22
-  // single-image removal and excluded here until new stock lands:
-  // bollywood-inspired-indian-outfits, bridal-party-outfits,
-  // eid-outfits, gharara-suits, haldi-outfits, kanchipuram-sarees, mehendi-outfits,
-  // silk-sarees, wedding-sarees (all noindexed empty prerenders, see ops doc).
+  // Intentionally empty collections remain excluded by emptyCatalogRoutes.json.
+  // Restocked routes must also pass this build's prerender/indexability checks.
   { loc: '/collections/sharara-suits', changefreq: 'daily', priority: '0.9' },
   // Restocked 2026-10-15; existing prerender validation enforces indexability and self-canonical.
   { loc: '/collections/anarkali-suits', changefreq: 'daily', priority: '0.9' },
   // Active again; existing prerender validation enforces indexability and self-canonical.
   { loc: '/collections/designer-sarees', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/party-wear-lehengas', changefreq: 'daily', priority: '0.9' },
   { loc: '/suits', changefreq: 'daily', priority: '0.9' },
@@ -136,6 +134,9 @@ const staticPages = [
   // Occasion landing pages
   { loc: '/collections/diwali-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/wedding-guest-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/mehendi-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
+  { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
 ].filter(page => !emptyCatalogRoutes.has(page.loc));
 

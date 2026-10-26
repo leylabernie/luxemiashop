@@ -22,16 +22,85 @@ async function loadSource(entry) {
 const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 const { MemoryRouter } = require('react-router-dom');
+const { HelmetProvider } = require('react-helmet-async');
 const { canPromoteCollection } = await loadSource('src/lib/collectionPromotion.ts');
 const { getCategoryConfig, MEGA_MENUS } = await loadSource('src/config/categoryConfig.tsx');
 const { getCommercialLandingConfig, getCommercialLandingSubcategory } =
   await loadSource('src/config/commercialLandingPages.tsx');
 const { FilterSidebar } = await loadSource('src/components/collections/FilterSidebar.tsx');
 const { default: SEOFooterContent } = await loadSource('src/components/seo/SEOFooterContent.tsx');
+const { default: SEOHead } = await loadSource('src/components/seo/SEOHead.tsx');
+const emptyRoutes = JSON.parse(fs.readFileSync(path.join(root, 'src/config/emptyCatalogRoutes.json'), 'utf8'));
+const restoredRoutes = [
+  '/collections/mehendi-outfits',
+  '/collections/eid-outfits',
+  '/collections/haldi-outfits',
+  '/collections/silk-sarees',
+];
+const intentionallyEmptyRoutes = [
+  '/collections/bollywood-inspired-indian-outfits',
+  '/collections/bridal-party-outfits',
+  '/collections/gharara-suits',
+  '/collections/kanchipuram-sarees',
+  '/collections/wedding-sarees',
+  '/jewelry',
+];
 
 const render = component => renderToStaticMarkup(
   React.createElement(MemoryRouter, null, component),
 );
+
+// Exercise the real component's canonical normalization and robots branches,
+// collecting Helmet output instead of asserting against source-code strings.
+function renderSeoHead(canonical, props = {}) {
+  const context = {};
+  renderToStaticMarkup(React.createElement(HelmetProvider, { context },
+    React.createElement(SEOHead, { canonical, ...props }),
+  ));
+  return {
+    canonicals: context.helmet.link.toComponent()
+      .filter(element => element.props.rel === 'canonical').map(element => element.props.href),
+    robots: context.helmet.meta.toComponent()
+      .filter(element => element.props.name === 'robots').map(element => element.props.content),
+  };
+}
+
+for (const route of restoredRoutes) {
+  test(`active ${route} is promotable, self-canonical and indexable in SEOHead`, () => {
+    for (const canonical of [`https://luxemia.shop${route}`, `https://preview.example${route}/?sort=best-selling`]) {
+      const head = renderSeoHead(canonical);
+      assert.deepEqual(head.canonicals, [`https://luxemia.shop${route}`]);
+      assert.deepEqual(head.robots, ['index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1']);
+    }
+    assert.ok(!emptyRoutes.includes(route), `${route} must no longer be marked empty`);
+    assert.equal(canPromoteCollection(route), true);
+  });
+}
+
+test('all remaining intentionally empty routes stay nonpromotable and noindex in SEOHead', () => {
+  assert.deepEqual([...emptyRoutes].sort(), [...intentionallyEmptyRoutes].sort());
+  for (const route of emptyRoutes) {
+    assert.equal(canPromoteCollection(route), false, route);
+    const head = renderSeoHead(`https://luxemia.shop${route}`);
+    assert.deepEqual(head.canonicals, [`https://luxemia.shop${route}`]);
+    assert.deepEqual(head.robots, ['noindex, follow'], route);
+  }
+});
+
+test('explicit noIndexFollow and noIndex retain their existing behavior and precedence', () => {
+  const cases = [
+    [{ noIndexFollow: true }, 'noindex, follow'],
+    [{ noIndex: true }, 'noindex, nofollow'],
+    [{ noIndexFollow: true, noIndex: true }, 'noindex, nofollow'],
+  ];
+  for (const route of [...restoredRoutes, ...intentionallyEmptyRoutes]) {
+    for (const [props, expectedRobots] of cases) {
+      const head = renderSeoHead(`https://luxemia.shop${route}`, props);
+      assert.deepEqual(head.canonicals, [`https://luxemia.shop${route}`]);
+      assert.deepEqual(head.robots, [expectedRobots], `${route}: ${JSON.stringify(props)}`);
+    }
+  }
+});
 
 test('empty collection promotion follows the existing empty-route registry', () => {
   assert.equal(canPromoteCollection('/collections/wedding-sarees'), false);
