@@ -1,4 +1,5 @@
 import { serializeJsonLd } from '../lib/serializeJsonLd.cjs';
+import { renderReviewedFitCopy } from '../lib/reviewedFitCopy.mjs';
 /**
  * HTML Generator Module
  *
@@ -560,6 +561,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         </div>
         ${selectedVariant ? renderSelectedOptions(selectedVariant) : ''}
         <p class="description">${escapeHtml(cleanProductDescription.slice(0, 500) || '')}</p>
+        ${renderReviewedFitCopy(product)}
         ${variantOptions ? `<div style="margin-bottom:16px;">${variantOptions}</div>` : ''}
         <h2 style="font-size:22px;margin:24px 0 12px;">Product Specifications</h2>
         <dl class="details">

@@ -21,6 +21,7 @@ const { reviewedLehengaCollections, isReviewedLehengaCollection, filterReviewedL
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
 import { getPrimaryCategory, getCatalogDisplayCategory, selectLatestArrivals } from '../src/lib/catalogCategories.mjs';
 import { hasReviewedProductCopy, renderReviewedProductHtml } from '../src/lib/reviewedProductCopy.mjs';
+import { appendReviewedFitCopy, renderReviewedFitCopy } from '../src/lib/reviewedFitCopy.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const PROJECT_ROOT = path.resolve(__dirname, '..');
@@ -1120,6 +1121,7 @@ function buildInitialDataPayload(products, category, routePath) {
 function buildInitialProductPayload(product) {
   const slim = {
     ...buildHydrationProductNode(product),
+    description: appendReviewedFitCopy(buildVerifiedProductCopy(product), product),
     seo: product.seo || { title: null, description: null },
     descriptionHtml: hasReviewedProductCopy(product.tags) ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml || '')) : undefined,
     media: product.media,
@@ -3042,9 +3044,10 @@ function generateHtml(template, route, allShopifyProducts) {
     const reviewedHtml = hasReviewedProductCopy(p.tags)
       ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml || ''))
       : '';
-    const descHtml = reviewedHtml
+    const descHtml = (reviewedHtml
       ? `<h2>Product Description</h2>${reviewedHtml}`
-      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags) ? 6000 : 2000))}</p>` : '';
+      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags) ? 6000 : 2000))}</p>` : '')
+      + (reviewedHtml ? '' : renderReviewedFitCopy(p));
 
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';
