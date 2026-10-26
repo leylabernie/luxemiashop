@@ -1,4 +1,5 @@
 import type { FAQItem } from '@/lib/schema';
+import reviewedLehengaCollections from './reviewedLehengaCollections.json';
 
 export interface ShopifyCollectionPageConfig {
   handle: string;
@@ -8,6 +9,8 @@ export interface ShopifyCollectionPageConfig {
   description: string;
   canonical: string;
   image?: string;
+  parentPath?: string;
+  parentName?: string;
   intro: string;
   editorialTitle: string;
   editorial: string[];
@@ -15,6 +18,7 @@ export interface ShopifyCollectionPageConfig {
 }
 
 const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
+  ...reviewedLehengaCollections,
   'banarasi-sarees': {
     handle: 'banarasi-sarees',
     name: 'Banarasi Sarees',

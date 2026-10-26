@@ -168,9 +168,6 @@ const ProductDetail = () => {
   const categoryName = madeToOrderProduct
     ? 'Made-to-Order Indian Outfits'
     : product?.productType || 'Collections';
-  const productIsAvailable = product
-    ? product.availableForSale === true || product.variants.edges.some((variant) => variant.node.availableForSale)
-    : false;
   // Ignore a prior route's selection during Back/Forward or variant-link navigation.
   const selectedVariantId = variantSelection?.key === selectionKey ? variantSelection.id : null;
   const schemaVariant = product?.variants.edges.find(({ node }) => node.id === selectedVariantId)?.node
@@ -417,14 +414,14 @@ const ProductDetail = () => {
           })()}
           canonical={`https://luxemia.shop/product/${product.handle}`}
           type="product"
-          image={product.images.edges[0]?.node.url}
+          image={schemaVariant?.image?.url || product.images.edges[0]?.node.url}
           product={{
             name: product.title,
             price: schemaVariant?.price.amount || product.priceRange.minVariantPrice.amount,
             currency: schemaVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
-            image: product.images.edges[0]?.node.url || '',
+            image: schemaVariant?.image?.url || product.images.edges[0]?.node.url || '',
             description: enrichedDescription || product.description || '',
-            availability: productIsAvailable ? 'InStock' : 'OutOfStock',
+            availability: schemaVariant?.availableForSale ? 'InStock' : 'OutOfStock',
             sku: schemaVariant?.sku || '',
             gtin: schemaVariant?.barcode || undefined,
             mpn: normalizeBrandName(product.vendor) === 'LuxeMia' && schemaVariant?.sku && !schemaVariant?.barcode

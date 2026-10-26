@@ -120,7 +120,11 @@ export function generateUsProductShippingDetails(shipsWithinDays?: number | null
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
   } : null;
-  const withTime = (details: Record<string, unknown>) => ({ ...details, ...(deliveryTime && { deliveryTime }) });
+  const withTime = (details: Record<string, unknown>) => ({
+    ...details,
+    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+    ...(deliveryTime && { deliveryTime }),
+  });
   const create = (countries: string | string[], rate: number, freeThreshold?: number) => [
     withTime({
       '@type': 'OfferShippingDetails',

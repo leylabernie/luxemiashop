@@ -74,7 +74,8 @@ const Collections = () => {
           {[['Lehengas', '/lehengas'], ['Sarees', '/sarees'], ['Suits', '/suits'],
             ['Menswear', '/menswear'], ['Kids', '/kids'], ['Indo-Western', '/indowestern'],
             ['Blouses', '/collections/blouses'], ['Couple Sets', '/collections/couple-outfits'],
-            ['Jewelry', '/jewelry']].map(([name, href]) =>
+            ['Jewelry', '/jewelry'], ['Organza Lehengas', '/collections/organza-lehengas'],
+            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas']].map(([name, href]) =>
               <Link key={href} to={href} className="text-sm hover:underline">{name}</Link>)}
         </nav>
         {/* Hero Banner */}

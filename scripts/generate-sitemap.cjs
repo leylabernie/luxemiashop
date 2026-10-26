@@ -65,6 +65,8 @@ const ALL_PRODUCTS_QUERY = `
 const staticPages = [
   { loc: '/', changefreq: 'daily', priority: '1.0' },
   { loc: '/collections', changefreq: 'daily', priority: '0.9' },
+  { loc: '/collections/organza-lehengas', changefreq: 'weekly', priority: '0.8', reviewedAssortment: true },
+  { loc: '/collections/mirror-work-lehengas', changefreq: 'weekly', priority: '0.8', reviewedAssortment: true },
   { loc: '/collections/banarasi-sarees', changefreq: 'weekly', priority: '0.8' },
   { loc: '/collections/ready-to-wear-palazzo-suits', changefreq: 'weekly', priority: '0.8' },
   // NOTE: '/products' removed — it 301-redirects to /collections.
@@ -138,7 +140,33 @@ const staticPages = [
   { loc: '/collections/haldi-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/eid-outfits', changefreq: 'weekly', priority: '0.9' },
   { loc: '/collections/navratri-outfits', changefreq: 'weekly', priority: '0.9' },
-].filter(page => !emptyCatalogRoutes.has(page.loc));
+].filter(page => !emptyCatalogRoutes.has(page.loc) && (!page.reviewedAssortment || hasIndexableReviewedAssortment(page.loc)));
+
+const reviewedCollectionPaths = ['/collections/organza-lehengas', '/collections/mirror-work-lehengas'];
+
+function reviewedAssortmentState(routePath) {
+  const htmlPath = path.join(PRERENDER_DIR, `${routePath}.html`);
+  if (!fs.existsSync(htmlPath)) return 'invalid';
+  const html = fs.readFileSync(htmlPath, 'utf8');
+  const payload = html.match(/window\.__INITIAL_DATA__\s*=\s*(\{[\s\S]*?\});?\s*<\/script>/);
+  if (!payload) return 'invalid';
+  let data;
+  try { data = JSON.parse(payload[1]); } catch { return 'invalid'; }
+  if (data.category !== `collection:${routePath.split('/').pop()}` || !Array.isArray(data.products)) return 'invalid';
+  const noindex = /<meta[^>]+name=["']robots["'][^>]+content=["'][^"']*noindex/i.test(html);
+  const canonicals = [...html.matchAll(/<link\b[^>]*>/gi)]
+    .map(match => match[0]).filter(tag => /\brel\s*=\s*["']canonical["']/i.test(tag))
+    .map(tag => tag.match(/\bhref\s*=\s*["']([^"']+)["']/i)?.[1]);
+  const selfCanonical = canonicals.length === 1 && canonicals[0] === `${SITE_URL}${routePath}`;
+  if (!selfCanonical) return 'invalid';
+  if (data.products.length === 0 && noindex) return 'empty';
+  return data.products.length > 0 && !noindex && /href=["']\/product\//.test(html) ? 'indexable' : 'invalid';
+}
+
+function hasIndexableReviewedAssortment(routePath) {
+  return reviewedAssortmentState(routePath) === 'indexable';
+}
+
 
 
 // Parse the compact published blogPosts.ts source for sitemap inclusion.
@@ -555,10 +583,20 @@ async function main() {
       `Generated=${sitemapPaths.length}, unique=${sitemapPathSet.size}.`
     );
   }
-  if (sitemapPaths.length < expectedSitemapUrlCount) {
+  // A reviewed collection becoming empty may leave the sitemap; product URLs
+  // never receive this exception and the preserved approved inventory is not reset.
+  for (const routePath of reviewedCollectionPaths) {
+    if (reviewedAssortmentState(routePath) === 'invalid') {
+      throw new Error(`Invalid reviewed collection prerender: ${routePath}`);
+    }
+  }
+  const emptyReviewedCount = reviewedCollectionPaths.filter(routePath =>
+    approvedPathSet.has(routePath) && reviewedAssortmentState(routePath) === 'empty').length;
+  const requiredSitemapUrlCount = expectedSitemapUrlCount - emptyReviewedCount;
+  if (sitemapPaths.length < requiredSitemapUrlCount) {
     throw new Error(
       `Generated sitemap shrank below the approved inventory floor ` +
-      `(generated=${sitemapPaths.length}, approved=${expectedSitemapUrlCount}).`
+      `(generated=${sitemapPaths.length}, approved=${expectedSitemapUrlCount}, reviewed-empty=${emptyReviewedCount}).`
     );
   }
   for (const routePath of sitemapPaths) {

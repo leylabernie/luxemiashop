@@ -1,3 +1,4 @@
+import { serializeJsonLd } from '../lib/serializeJsonLd.cjs';
 /**
  * Jewelry Product Fallback for Bot SSR
  *
@@ -107,7 +108,6 @@ export function generateJewelryProductHtml(product: JewelryProductMinimal, canon
     description,
   });
   const organizationSchema = generateOrganizationSchema();
-  const serializeJsonLd = (schema: Record<string, unknown>) => JSON.stringify(schema).replace(/</g, '\\u003c');
 
   return `<!DOCTYPE html>
 <html lang="en">

@@ -1,3 +1,4 @@
+import { serializeJsonLd } from '@/lib/serializeJsonLd.cjs';
 import emptyCatalogRoutes from '@/config/emptyCatalogRoutes.json';
 import { Helmet } from 'react-helmet-async';
 import {
@@ -255,35 +256,35 @@ const SEOHead = ({
       {/* Structured Data — only page-specific schemas (Organization & WebSite are in index.html) */}
       {localBusiness && (
         <script type="application/ld+json">
-          {JSON.stringify(localBusiness)}
+          {serializeJsonLd(localBusiness)}
         </script>
       )}
       {additionalSchemas && additionalSchemas.map((schema, i) => (
         <script key={`additional-schema-${i}`} type="application/ld+json">
-          {JSON.stringify(schema)}
+          {serializeJsonLd(schema)}
         </script>
       ))}
       {productSchema && (
         <script type="application/ld+json">
-          {JSON.stringify(productSchema)}
+          {serializeJsonLd(productSchema)}
         </script>
       )}
       {breadcrumbSchema && (
         <script type="application/ld+json">
-          {JSON.stringify(breadcrumbSchema)}
+          {serializeJsonLd(breadcrumbSchema)}
         </script>
       )}
       {faqSchema && (
         <script type="application/ld+json">
-          {JSON.stringify(faqSchema)}
+          {serializeJsonLd(faqSchema)}
         </script>
       )}
       {/* WebPage + SiteNavigation schemas — emitted on every page for sitelinks & rich results */}
       <script type="application/ld+json">
-        {JSON.stringify(webPageSchema)}
+        {serializeJsonLd(webPageSchema)}
       </script>
       <script type="application/ld+json">
-        {JSON.stringify(siteNavSchema)}
+        {serializeJsonLd(siteNavSchema)}
       </script>
     </Helmet>
   );

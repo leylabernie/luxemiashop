@@ -1,3 +1,4 @@
+import { serializeJsonLd } from '../src/lib/serializeJsonLd.cjs';
 /**
  * Build-time prerender script
  *
@@ -14,6 +15,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
 import catalogSource from './storefront-catalog.cjs';
+import reviewedLehengaCatalog from '../src/lib/reviewedLehengaCollections.cjs';
+const { reviewedLehengaCollections, isReviewedLehengaCollection, filterReviewedLehengaProducts } = reviewedLehengaCatalog;
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
 import { getPrimaryCategory, getCatalogDisplayCategory, selectLatestArrivals } from '../src/lib/catalogCategories.mjs';
 import { hasReviewedProductCopy, renderReviewedProductHtml } from '../src/lib/reviewedProductCopy.mjs';
@@ -861,6 +864,11 @@ function filterProductsForCategory(allProducts, category, newestFirst = false, m
 
   if (category.startsWith('collection:')) {
     const handle = category.slice('collection:'.length);
+    if (handle === 'organza-lehengas' || handle === 'mirror-work-lehengas') {
+      return filterReviewedLehengaProducts(handle, allProducts)
+        .filter(product => !EXCLUDED_TITLE_KEYWORDS.test(product.title ?? ''))
+        .slice(0, maxProducts);
+    }
     const tagsFor = (product) => new Set((product.tags ?? []).map((tag) => tag.toLowerCase().trim()));
     const matches = allProducts.filter((product) => {
       if (EXCLUDED_TITLE_KEYWORDS.test(product.title ?? '')) return false;
@@ -1070,7 +1078,7 @@ function filterProductsForCollectionRoute(allProducts, route, maxProducts = MAX_
 // Shopify fetch entirely on first paint.
 function toSafeInlineJson(value) {
   // Prevent a product title or description from closing the inline script tag.
-  return JSON.stringify(value).replace(/</g, '\\u003c');
+  return serializeJsonLd(value);
 }
 
 function buildHydrationProductNode(product) {
@@ -1299,7 +1307,11 @@ function generateUsProductShippingDetails(shipsWithinDays) {
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
   } : null;
-  const withTime = (details) => ({ ...details, ...(deliveryTime ? { deliveryTime } : {}) });
+  const withTime = (details) => ({
+    ...details,
+    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
+    ...(deliveryTime ? { deliveryTime } : {}),
+  });
   const create = (countries, rate, freeThreshold) => [
     withTime({
       '@type': 'OfferShippingDetails',
@@ -1760,6 +1772,18 @@ const routes = [
     h1: 'Couple Sets',
     content: '<p>Browse current couple sets and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
   },
+  ...Object.values(reviewedLehengaCollections).map((config) => ({
+    path: `/collections/${config.handle}`,
+    category: `collection:${config.handle}`,
+    title: config.title,
+    description: config.description,
+    h1: config.name,
+    image: config.image,
+    content: `<p>${escapeHtml(config.intro)}</p><h2>${escapeHtml(config.editorialTitle)}</h2>` +
+      config.editorial.map(paragraph => `<p>${escapeHtml(paragraph)}</p>`).join('') +
+      config.faqs.map(faq => `<h2>${escapeHtml(faq.question)}</h2><p>${escapeHtml(faq.answer)}</p>`).join('') +
+      '<p><a href="/lehengas">All Lehengas</a> · <a href="/size-guide">Size guide</a> · <a href="/shipping">Shipping and timing</a></p>',
+  })),
   {
     path: '/collections/banarasi-sarees',
     category: 'collection:banarasi-sarees',
@@ -2596,12 +2620,15 @@ function generateHtml(template, route, allShopifyProducts) {
   let html = template;
   const seoTitle = clampTitle(route.title);
   const seoDescription = clampDescription(route.description);
-  const routeContent = normalizeInternalNavigationHtml(route.content);
+  const routeContent = normalizeInternalNavigationHtml(route.content) +
+    (['/lehengas', '/collections'].includes(route.path)
+      ? '<nav aria-label="Lehenga fabrics and details"><a href="/collections/organza-lehengas">Organza Lehengas</a> · <a href="/collections/mirror-work-lehengas">Mirror Work Lehengas</a></nav>'
+      : '');
 
   // Replace title
   html = html.replace(
     /<title>.*?<\/title>/,
-    `<title>${escapeHtml(seoTitle)}</title>`
+    () => `<title>${escapeHtml(seoTitle)}</title>`
   );
 
   // Keep the legacy meta name="title" in sync with the real title. Without
@@ -2609,13 +2636,13 @@ function generateHtml(template, route, allShopifyProducts) {
   // small conflicting signal flagged in the Sept 2026 SEO audit.
   html = html.replace(
     /<meta name="title" content="[^"]*" \/>/i,
-    `<meta name="title" content="${escapeHtml(seoTitle)}" />`
+    () => `<meta name="title" content="${escapeHtml(seoTitle)}" />`
   );
 
   // Replace meta description
   html = html.replace(
     /<meta name="description" content="[^"]*" \/>/,
-    `<meta name="description" content="${escapeHtml(seoDescription)}" />`
+    () => `<meta name="description" content="${escapeHtml(seoDescription)}" />`
   );
 
   // Match the hydrated category page's noindex/follow directive while serving
@@ -2631,7 +2658,7 @@ function generateHtml(template, route, allShopifyProducts) {
   if (route.noIndex) {
     html = html.replace(
       /<meta name="robots" content="[^"]*" \/>/,
-      `<meta name="robots" content="noindex, nofollow" />`
+      () => `<meta name="robots" content="noindex, nofollow" />`
     );
     // Also remove canonical for noIndex pages
     html = html.replace(
@@ -2652,55 +2679,55 @@ function generateHtml(template, route, allShopifyProducts) {
     const canonical = route.path === '/' ? SITE_URL + '/' : SITE_URL + route.path;
     html = html.replace(
       /<link rel="canonical" href="[^"]*" \/>/,
-      `<link rel="canonical" href="${canonical}" />`
+      () => `<link rel="canonical" href="${canonical}" />`
     );
 
     // Replace OG tags
     html = html.replace(
       /<meta property="og:url" content="[^"]*" \/>/,
-      `<meta property="og:url" content="${canonical}" />`
+      () => `<meta property="og:url" content="${canonical}" />`
     );
 
     // Replace hreflang alternate tags to point to the route's canonical URL
     html = html.replace(
       /<link rel="alternate" hreflang="en-US" href="[^"]*"\s*\/?>/,
-      `<link rel="alternate" hreflang="en-US" href="${canonical}" />`
+      () => `<link rel="alternate" hreflang="en-US" href="${canonical}" />`
     );
     html = html.replace(
       /<link rel="alternate" hreflang="x-default" href="[^"]*"\s*\/?>/,
-      `<link rel="alternate" hreflang="x-default" href="${canonical}" />`
+      () => `<link rel="alternate" hreflang="x-default" href="${canonical}" />`
     );
   }
 
   // Replace OG title and description
   html = html.replace(
     /<meta property="og:title" content="[^"]*" \/>/,
-    `<meta property="og:title" content="${escapeHtml(seoTitle)}" />`
+    () => `<meta property="og:title" content="${escapeHtml(seoTitle)}" />`
   );
   html = html.replace(
     /<meta property="og:description" content="[^"]*" \/>/,
-    `<meta property="og:description" content="${escapeHtml(seoDescription)}" />`
+    () => `<meta property="og:description" content="${escapeHtml(seoDescription)}" />`
   );
 
   // Replace Twitter tags
   html = html.replace(
     /<meta name="twitter:title" content="[^"]*" \/>/,
-    `<meta name="twitter:title" content="${escapeHtml(seoTitle)}" />`
+    () => `<meta name="twitter:title" content="${escapeHtml(seoTitle)}" />`
   );
   html = html.replace(
     /<meta name="twitter:description" content="[^"]*" \/>/,
-    `<meta name="twitter:description" content="${escapeHtml(seoDescription)}" />`
+    () => `<meta name="twitter:description" content="${escapeHtml(seoDescription)}" />`
   );
 
   // Route-specific social imagery must also be present before React hydrates.
   if (route.image) {
     html = html.replace(
       /<meta property="og:image" content="[^"]*" \/>/,
-      `<meta property="og:image" content="${escapeHtml(route.image)}" />`
+      () => `<meta property="og:image" content="${escapeHtml(route.image)}" />`
     );
     html = html.replace(
       /<meta name="twitter:image" content="[^"]*" \/>/,
-      `<meta name="twitter:image" content="${escapeHtml(route.image)}" />`
+      () => `<meta name="twitter:image" content="${escapeHtml(route.image)}" />`
     );
   }
 
@@ -2721,15 +2748,15 @@ function generateHtml(template, route, allShopifyProducts) {
     };
     html = html.replace(
       '</head>',
-      `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(webPageSchema)}</script>\n</head>`
+      () => `    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(webPageSchema)}</script>\n</head>`
     );
   }
 
   if (Array.isArray(route.schemas) && route.schemas.length > 0) {
     const routeSchemas = route.schemas
-      .map((schema) => `<script type="application/ld+json" data-prerender-schema>${JSON.stringify(schema).replace(/</g, '\\u003c')}</script>`)
+      .map((schema) => `<script type="application/ld+json" data-prerender-schema>${serializeJsonLd(schema)}</script>`)
       .join('\n    ');
-    html = html.replace('</head>', `    ${routeSchemas}\n</head>`);
+    html = html.replace('</head>', () => `    ${routeSchemas}\n</head>`);
   }
 
   // CollectionPage references below must resolve to this complete breadcrumb.
@@ -2755,7 +2782,7 @@ function generateHtml(template, route, allShopifyProducts) {
     };
     html = html.replace(
       '</head>',
-      `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(collectionBreadcrumbSchema)}</script>\n</head>`
+      () => `    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(collectionBreadcrumbSchema)}</script>\n</head>`
     );
   }
 
@@ -2905,11 +2932,11 @@ function generateHtml(template, route, allShopifyProducts) {
     const productOgImage = productImages[0];
     html = html.replace(
       /<meta property="og:image" content="[^"]*" \/>/,
-      `<meta property="og:image" content="${escapeHtml(productOgImage)}" />`
+      () => `<meta property="og:image" content="${escapeHtml(productOgImage)}" />`
     );
     html = html.replace(
       /<meta name="twitter:image" content="[^"]*" \/>/,
-      `<meta name="twitter:image" content="${escapeHtml(productOgImage)}" />`
+      () => `<meta name="twitter:image" content="${escapeHtml(productOgImage)}" />`
     );
 
     // NOTE: FAQPage JSON-LD for product pages is emitted by the product-body
@@ -2919,11 +2946,11 @@ function generateHtml(template, route, allShopifyProducts) {
     // block here would duplicate it on every PDP — do not re-add.
 
     const structuredDataScripts = `
-    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(productSchema)}</script>
-    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(breadcrumbSchema)}</script>`;
+    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(productSchema)}</script>
+    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(breadcrumbSchema)}</script>`;
 
     // Inject before </head>
-    html = html.replace('</head>', `${structuredDataScripts}\n</head>`);
+    html = html.replace('</head>', () => `${structuredDataScripts}\n</head>`);
   }
 
   // Blog routes need article-specific schema in the initial HTML. The author
@@ -2953,7 +2980,7 @@ function generateHtml(template, route, allShopifyProducts) {
     <meta property="article:published_time" content="${escapeHtml(publishedAt)}" />
     <meta property="article:modified_time" content="${escapeHtml(updatedAt)}" />
     <meta name="last-reviewed" content="${escapeHtml(factCheckedAt)}" />`;
-    html = html.replace('</head>', `${reviewMeta}\n    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(articleSchema)}</script>\n</head>`);
+    html = html.replace('</head>', () => `${reviewMeta}\n    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(articleSchema)}</script>\n</head>`);
   }
 
   // Inject SEO content into the body. This content is visible to search engine crawlers
@@ -2967,7 +2994,7 @@ function generateHtml(template, route, allShopifyProducts) {
   if (route.path.startsWith('/product/') && route.product) {
     const p = route.product;
     const initialProductPayload = buildInitialProductPayload(p);
-    html = html.replace('</head>', `    <script>window.__INITIAL_PRODUCT_DATA__ = ${initialProductPayload};</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script>window.__INITIAL_PRODUCT_DATA__ = ${initialProductPayload};</script>\n</head>`);
     const isCustomizable = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.has(p.handle);
     const price = p.priceRange?.minVariantPrice?.amount || FALLBACK_PRICE;
     const currency = p.priceRange?.minVariantPrice?.currencyCode || FALLBACK_CURRENCY;
@@ -3108,7 +3135,7 @@ function generateHtml(template, route, allShopifyProducts) {
         acceptedAnswer: { '@type': 'Answer', text: answer },
       })),
     };
-    html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(faqPageSchema)}</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(faqPageSchema)}</script>\n</head>`);
     const siblingProductLinksHtml = generateApprovedSiblingProductLinks(p, allShopifyProducts);
 
     mainBodyContent = `
@@ -3141,7 +3168,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ${generateApprovedStaticDirectoryHtml()}
       <h2>All Current Products</h2>
       ${generateApprovedProductDirectoryHtml(approvedProducts)}`;
-  } else if (route.category && allShopifyProducts && allShopifyProducts.size > 0) {
+  } else if (route.category && allShopifyProducts && (allShopifyProducts.size > 0 || isReviewedLehengaCollection(route.category.replace(/^collection:/, '')))) {
     // Collection route (sarees/lehengas/suits/menswear/indowestern/collections/new-arrivals)
     // Inject REAL Shopify products so Googlebot sees a fully populated category page on
     // first byte instead of an empty marketing shell. This is the SEO fix for the
@@ -3168,7 +3195,7 @@ function generateHtml(template, route, allShopifyProducts) {
     if (collectionProducts.length > 0) {
       // ItemList JSON-LD — Google Merchant Center reads this for collection rich results.
       const itemListJsonLd = generateItemListJsonLd(collectionProducts, route.category, route.path);
-      html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+      html = html.replace('</head>', () => `    <script type="application/ld+json">${serializeJsonLd(itemListJsonLd)}</script>\n</head>`);
 
       const canonical = `${SITE_URL}${route.path}`;
       const collectionPageJsonLd = {
@@ -3185,17 +3212,19 @@ function generateHtml(template, route, allShopifyProducts) {
       };
       // Remove the page reference with its prerendered breadcrumb at hydration;
       // React then supplies its own route metadata without a dangling @id.
-      html = html.replace('</head>', `    <script type="application/ld+json" data-prerender-schema>${JSON.stringify(collectionPageJsonLd)}</script>\n</head>`);
+      html = html.replace('</head>', () => `    <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(collectionPageJsonLd)}</script>\n</head>`);
 
       // Compact JSON payload for React hydration — useShopifyProducts reads this on mount
       // and skips the client-side Shopify fetch entirely on first paint.
     }
 
     const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category, route.path);
-    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
-    const productCardsHtml = generateCollectionProductHtml(collectionProducts);
+    const productCardsHtml = collectionProducts.length === 0 && isReviewedLehengaCollection(route.category.replace(/^collection:/, ''))
+      ? '<p>No qualifying products are currently available in this collection.</p><p><a href="/lehengas">Browse all lehengas</a> or <a href="/contact">ask LuxeMia for help</a>.</p>'
+      : generateCollectionProductHtml(collectionProducts);
     const overflowProductLinksHtml = generateApprovedOverflowProductLinks(
       allCollectionProducts,
       collectionProducts,
@@ -3213,9 +3242,9 @@ function generateHtml(template, route, allShopifyProducts) {
       true,
     ).slice(0, 12);
     const homepagePayload = buildInitialDataPayload(homepageProducts, 'all', route.path);
-    html = html.replace('</head>', `    <script>window.__INITIAL_DATA__ = ${homepagePayload};</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script>window.__INITIAL_DATA__ = ${homepagePayload};</script>\n</head>`);
     const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'all', route.path);
-    html = html.replace('</head>', `    <script type="application/ld+json">${JSON.stringify(itemListJsonLd)}</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script type="application/ld+json">${serializeJsonLd(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `
       <h1>${escapeHtml(route.h1)}</h1>
       ${routeContent}
@@ -3277,7 +3306,7 @@ function generateHtml(template, route, allShopifyProducts) {
 
   html = html.replace(
     '<div id="root"></div>',
-    `<div id="root"></div>${seoContent}`
+    () => `<div id="root"></div>${seoContent}`
   );
 
   return html;

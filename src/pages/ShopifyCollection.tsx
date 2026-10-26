@@ -125,12 +125,13 @@ const ShopifyCollectionPage = () => {
             <div className="rounded-lg border border-border bg-card/30 px-6 py-14 text-center">
               <h2 className="font-serif text-2xl">No current listings in this collection</h2>
               <p className="mx-auto mt-3 max-w-xl text-sm leading-6 text-muted-foreground">
-                We have not published a qualifying product in this collection. Tell us your event date, preferred color and budget, and we can help you compare currently published listings.
+                No qualifying products are currently available in this collection. Browse the current catalog or contact LuxeMia to compare alternatives.
               </p>
               <div className="mt-6 flex flex-wrap justify-center gap-3">
+                <Button asChild><Link to={config.parentPath || "/collections"}>{config.parentName || "All Collections"}</Link></Button>
                 <Button asChild><Link to="/contact">Ask LuxeMia for Help</Link></Button>
                 <Button asChild variant="outline">
-                  <a href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20I%20am%20looking%20for%20a%20wedding%20saree." target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
+                  <a href="https://wa.me/12153419990?text=Hi%20LuxeMia%2C%20please%20help%20me%20compare%20outfits." target="_blank" rel="noopener noreferrer">WhatsApp Us</a>
                 </Button>
               </div>
               {error && <p className="mt-4 text-xs text-muted-foreground">The live collection could not be refreshed. Please try again shortly.</p>}
@@ -156,6 +157,7 @@ const ShopifyCollectionPage = () => {
             <aside className="border border-border bg-card p-6">
               <h2 className="font-serif text-xl">Choose with confidence</h2>
               <nav className="mt-4 flex flex-col gap-3 text-sm">
+                {config.parentPath && <Link className="text-primary underline underline-offset-4" to={config.parentPath}>{config.parentName}</Link>}
                 <Link className="text-primary underline underline-offset-4" to="/sizing-measurements-guide">Sizing and measurement guide</Link>
                 <Link className="text-primary underline underline-offset-4" to="/blog">Indian attire guides</Link>
                 <Link className="text-primary underline underline-offset-4" to="/shipping">Shipping rates and timing</Link>

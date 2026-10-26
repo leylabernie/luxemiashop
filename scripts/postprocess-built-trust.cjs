@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const { serializeJsonLd } = require('../src/lib/serializeJsonLd.cjs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
@@ -120,7 +121,7 @@ for (const file of files) {
       const parsed = JSON.parse(body.trim());
       const cleaned = cleanSchema(parsed);
       if (cleaned === null) return '';
-      return `<script type="application/ld+json">\n${JSON.stringify(cleaned, null, 2)}\n</script>`;
+      return `<script type="application/ld+json">\n${serializeJsonLd(cleaned, 2)}\n</script>`;
     } catch {
       return full;
     }
