@@ -2,10 +2,35 @@ const test = require('node:test');
 const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
+const esbuild = require('esbuild');
 const root = path.resolve(__dirname, '..');
 const read = (file) => fs.readFileSync(path.join(root, file), 'utf8');
 const architecture = JSON.parse(read('src/config/seoArchitecture.json'));
 const usa = JSON.parse(read('src/config/usaLandingPage.json'));
+const blogOutput = esbuild.buildSync({
+  entryPoints: [path.join(root, 'src/data/blogPosts.ts')],
+  bundle: true, format: 'cjs', platform: 'node', write: false,
+}).outputFiles[0].text;
+const blogModule = { exports: {} };
+new Function('module', 'exports', 'require', blogOutput)(blogModule, blogModule.exports, require);
+const { blogPosts } = blogModule.exports;
+
+test('sherwani comparison links once to the broad menswear collection', () => {
+  const post = blogPosts.find(post => post.slug === 'sherwani-versus-kurta-set');
+  assert.ok(post, 'the published comparison guide must exist');
+  const shopSection = post.content.match(/<h2>Products and collections to compare<\/h2>\s*<ul>([\s\S]*?)<\/ul>/);
+  assert.ok(shopSection, 'the guide must retain its shopping links');
+  const links = [...shopSection[1].matchAll(/<a href="([^"]+)">([^<]+)<\/a>/g)]
+    .map(([, href, label]) => ({ href, label }));
+  assert.deepEqual(links, [{ href: '/menswear', label: 'Sherwanis and menswear' }]);
+});
+
+test('published guides do not send shoppers to the missing groom collection', () => {
+  for (const post of blogPosts) {
+    assert.doesNotMatch(post.content, /href=["']\/collections\/sherwani-for-groom(?:[\/?#][^"']*)?["']/i,
+      `/blog/${post.slug} must not promote the missing groom collection`);
+  }
+});
 
 test('commercial titles retain target phrases without truncation', () => {
   const routes = architecture.routes;
