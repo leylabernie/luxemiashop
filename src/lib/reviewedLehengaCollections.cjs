@@ -1,3 +1,4 @@
+const { isReversiblyArchivedProduct } = require('./reversibleProductArchive.cjs');
 const reviewedLehengaCollections = require('../config/reviewedLehengaCollections.json');
 
 function isReviewedLehengaCollection(handle) {
@@ -13,6 +14,7 @@ function filterReviewedLehengaProducts(handle, products) {
   const seen = new Set();
   return products.filter(entry => {
     const product = entry.node || entry;
+    if (isReversiblyArchivedProduct(product.handle)) return false;
     const member = members.get(product.id);
     if (!member || seen.has(product.id) || product.handle !== member.handle) return false;
     if (product.status && product.status !== 'ACTIVE') return false;

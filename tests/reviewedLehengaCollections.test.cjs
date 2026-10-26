@@ -51,6 +51,10 @@ for (const [handle, config] of Object.entries(configs)) {
     assert.equal(config.products.length, handle === 'organza-lehengas' ? 9 : 8);
     assert.equal(new Set(config.products.map(p => p.id)).size, config.products.length);
     const expected = config.products.map(p => product(p));
+    if (handle === 'mirror-work-lehengas') {
+      assert.deepEqual(filter(handle, expected), [], 'Explicit archives must not revive from stale availableForSale records');
+      return;
+    }
     assert.deepEqual(filter(handle, [...expected, expected[0]]).map(p => p.id), config.products.map(p => p.id));
     assert.equal(filter(handle, expected.map(node => ({ node }))).length, expected.length);
     for (const change of [
@@ -72,6 +76,12 @@ for (const [handle, config] of Object.entries(configs)) {
     assert.equal(selected[0].description, config.description);
     const products = config.products.map(p => product(p));
     const html = generateHtml(template, selected[0], new Map(products.map(p => [p.handle, p])));
+    if (handle === 'mirror-work-lehengas') {
+      assert.match(html, /name="robots" content="noindex, follow"/);
+      assert.deepEqual(payload(html).products, []);
+      assert.ok(!schemas(html).some(s => ['ItemList', 'Product', 'ProductGroup', 'CollectionPage'].includes(s['@type'])));
+      return;
+    }
     assert.match(html, /name="robots" content="index, follow"/);
     assert.ok(html.includes(`rel="canonical" href="${config.canonical}"`));
     assert.deepEqual(payload(html).products.map(p => p.node.id), config.products.map(p => p.id));
@@ -130,9 +140,9 @@ test('client navigation uses the exact manual membership and replaces stale prer
     const [empty] = await hookResult(handle, { initial: stale, collection: { products: [] }, catalog: [] });
     assert.equal(empty.length, 0, 'Live unavailable members must not reappear from stale HTML');
     const [fallback] = await hookResult(handle, { initial: null, collection: null, catalog: [...products, { node: product({ ...config.products[0], id: 'unrelated', handle: 'unrelated' }) }] });
-    assert.deepEqual(fallback.map(p => p.node.id), config.products.map(p => p.id));
+    assert.deepEqual(fallback.map(p => p.node.id), (handle === 'mirror-work-lehengas' ? [] : config.products.map(p => p.id)));
     const [otherRoute] = await hookResult(handle, { initial: { category: 'collection:other', products }, collection: { products }, catalog: [] });
-    assert.equal(otherRoute.length, products.length);
+    assert.equal(otherRoute.length, handle === 'mirror-work-lehengas' ? 0 : products.length);
   }
 });
 
@@ -143,7 +153,7 @@ test('route manifests and desktop/mobile/hub links include only the two approved
     for (const file of ['scripts/generate-routes.cjs', 'scripts/routes.json', 'src/lib/autoRoutes.ts', 'src/config/categoryConfig.tsx', 'src/components/layout/Header.tsx', 'src/pages/Collections.tsx']) {
       assert.ok(read(file).includes(route), file);
     }
-    assert.ok(!emptyBefore.includes(route));
+    assert.equal(emptyBefore.includes(route), handle === 'mirror-work-lehengas');
     assert.ok(!JSON.parse(read('vercel.json')).redirects.some(r => r.source === route));
   }
   assert.match(read('src/App.tsx'), /path="\/collections\/:handle"/);

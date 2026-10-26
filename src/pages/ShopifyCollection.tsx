@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useMemo, useState } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -50,7 +51,7 @@ const ShopifyCollectionPage = () => {
         title={config.title}
         description={config.description}
         canonical={config.canonical}
-        image={config.image}
+        image={canPromoteCollection(`/collections/${handle}`) ? config.image : undefined}
         type="collection"
         noIndexFollow={noIndexFollow}
         breadcrumbs={[

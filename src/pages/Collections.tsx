@@ -1,3 +1,4 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { SlidersHorizontal, ChevronDown, Loader2 } from 'lucide-react';
@@ -75,7 +76,7 @@ const Collections = () => {
             ['Menswear', '/menswear'], ['Kids', '/kids'], ['Indo-Western', '/indowestern'],
             ['Blouses', '/collections/blouses'], ['Couple Sets', '/collections/couple-outfits'],
             ['Jewelry', '/jewelry'], ['Organza Lehengas', '/collections/organza-lehengas'],
-            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas']].map(([name, href]) =>
+            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas']].filter(([, href]) => canPromoteCollection(href)).map(([name, href]) =>
               <Link key={href} to={href} className="text-sm hover:underline">{name}</Link>)}
         </nav>
         {/* Hero Banner */}

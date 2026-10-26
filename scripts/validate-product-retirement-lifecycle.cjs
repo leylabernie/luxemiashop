@@ -87,6 +87,7 @@ async function main() {
   const retiredProductPaths = new Set(
     JSON.parse(read('src/data/legacyGoneProductHandles.json')).map((handle) => `/product/${handle}`)
   );
+  const archivedProductPaths = new Set(JSON.parse(read('src/data/reversiblyArchivedProductHandles.json')).map(handle => `/product/${handle}`));
   const redirects = parseProductRedirects(read('middleware.ts'));
   const redirectSources = Object.keys(redirects);
   const redirectTargets = Object.values(redirects);
@@ -108,12 +109,17 @@ async function main() {
     [...currentSellableShopifyProductPaths].filter((value) => retiredProductPaths.has(value))
   );
 
+  fail('Archived product remains in approved inventory', [...archivedProductPaths].filter(p => activeProductPaths.has(p)));
+  fail('Archived product remains published in Storefront', [...archivedProductPaths].filter(p => currentShopifyProductPaths.has(p)));
+  fail('Reversible archive is incorrectly permanently retired', [...archivedProductPaths].filter(p => retiredProductPaths.has(p)));
+
   const missingPriorProducts = [...priorPrerenderProductPaths].filter((pathname) =>
     !currentShopifyProductPaths.has(pathname) &&
     !retiredProductPaths.has(pathname) &&
+    !archivedProductPaths.has(pathname) &&
     !redirects[pathname]
   );
-  fail('Previously deployed product disappeared from Shopify without a verified 301 or 410 disposition', missingPriorProducts);
+  fail('Previously deployed product disappeared from Shopify without a verified 301, permanent 410, or reversible archive 404 disposition', missingPriorProducts);
 
   console.log(
     `[retirement-lifecycle] OK — ${retiredProductPaths.size} retired routes, ` +

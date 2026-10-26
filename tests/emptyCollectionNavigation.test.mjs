@@ -38,6 +38,7 @@ const restoredRoutes = [
   '/collections/silk-sarees',
 ];
 const intentionallyEmptyRoutes = [
+  '/collections/mirror-work-lehengas',
   '/collections/bollywood-inspired-indian-outfits',
   '/collections/bridal-party-outfits',
   '/collections/gharara-suits',

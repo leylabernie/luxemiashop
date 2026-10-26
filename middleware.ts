@@ -4,6 +4,7 @@ import { fetchProductByHandle } from './src/middleware/shopifyProxy.js';
 import { generateProductHtml, return404 } from './src/middleware/htmlGenerator.js';
 import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
+import { isReversiblyArchivedProduct } from './src/lib/reversibleProductArchive.cjs';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
 import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
 import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
@@ -43,7 +44,7 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
   // Same RANGHAT-1071 blue-net garment: archived legacy handles now resolve
   // to the current purchasable partywear listing instead of returning 404.
   // Spelling correction: brand spelling is "Kora", not "Cora" (order #1001).
-  '/product/cora-cotton-navratri-lehenga-gamthi-embroidered-long-top': '/product/kora-cotton-navratri-lehenga-gamthi-embroidered-long-top',
+
 
 };
 
@@ -359,6 +360,12 @@ async function routeRequest(request: Request): Promise<Response> {
       }
       return return404(request);
     }
+  }
+
+  // Owner-authorized reversible archives must never serve stale prerenders or
+  // redirect into an unavailable garment. Do not add these to permanent 410s.
+  if (pathname.startsWith('/product/') && isReversiblyArchivedProduct(pathname.slice('/product/'.length))) {
+    return return404(request);
   }
 
   // Preserve search equity when a legacy product has a confirmed replacement.

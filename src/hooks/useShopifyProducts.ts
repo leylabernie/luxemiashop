@@ -1,3 +1,4 @@
+import { isReversiblyArchivedProduct } from '@/lib/reversibleProductArchive.cjs';
 import { useState, useEffect, useCallback } from 'react';
 import { fetchAllProducts, type ShopifyProduct } from '@/lib/shopify';
 import { sanitizeProductTitle } from '@/lib/productDescriptionEnrichment';
@@ -387,7 +388,7 @@ const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
 
 export const useShopifyProducts = (category?: string, revalidate = false, storefrontQuery?: string) => {
   const prepareProducts = useCallback((source: ShopifyProduct[]): ShopifyProduct[] => {
-    const allowed = source.filter(p => !isOldBatchProduct(p) && !EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? ''));
+    const allowed = source.filter(p => !isReversiblyArchivedProduct(p.node.handle) && !isOldBatchProduct(p) && !EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? ''));
     return enrichProducts(category ? filterByCategory(allowed, category) : allowed);
   }, [category]);
   const [products, setProducts] = useState<ShopifyProduct[]>(() =>
