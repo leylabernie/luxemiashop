@@ -1086,5 +1086,13 @@
       "handle": "cora-cotton-navratri-lehenga-gamthi-embroidered-long-top",
       "target": "kora-cotton-navratri-lehenga-gamthi-embroidered-long-top"
     }
-  ]
+  ],
+  "fulfillmentBaseline": {
+    "verifiedAt": "2026-10-26T15:55:40Z",
+    "minimumProductLevelMadeToOrderProducts": 0,
+    "archivedProductLevelMadeToOrderIds": [
+      "gid://shopify/Product/8959758434475"
+    ],
+    "evidence": "Admin exact active MTO-tag query returned 0; today-archived MTO-tag query returned only the beige sherwani in this exact batch. Configured Storefront build independently classified all333 active records and found0 product-level MTO garments. Optional custom variants remain separately classified."
+  }
 }

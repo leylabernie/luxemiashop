@@ -12,6 +12,9 @@ test('fixed authorized age batch is exact, reversible, and preserves current mer
   assert.equal(plan.archived.length, 147);
   assert.equal(new Set(plan.archived.map(p => p.id)).size, 147);
   assert.equal(plan.retainedProductIds.length, 332);
+  const inventory=require('../scripts/approved-sitemap-inventory.json');
+  assert.ok(inventory.urlCount >= baseline.retained.length);
+  for(const p of baseline.retained) assert.ok(inventory.paths.includes(`/product/${p.handle}`));
   assert.deepEqual(new Set(baseline.retained.map(p => p.id)), new Set(plan.retainedProductIds));
   assert.equal(plan.ageRule.strictlyBefore, '2026-09-21T14:34:56Z');
   for (const p of plan.archived) {
@@ -56,4 +59,20 @@ test('checked-in shopping links and public exports contain no exact archived pat
     const text=fs.readFileSync(path.join(root,file),'utf8');
     for (const p of plan.archived) assert.ok(!text.includes(p.handle),`${file}: ${p.handle}`);
   }
+});
+
+test('inventory-dependent MTO floor follows the exact archive without changing classification', () => {
+  assert.equal(plan.fulfillmentBaseline.minimumProductLevelMadeToOrderProducts, 0);
+  assert.deepEqual(plan.fulfillmentBaseline.archivedProductLevelMadeToOrderIds, ['gid://shopify/Product/8959758434475']);
+  assert.ok(plan.archived.some(p => p.id === plan.fulfillmentBaseline.archivedProductLevelMadeToOrderIds[0]));
+  const source=fs.readFileSync(path.join(root,'scripts/validate-shopify-catalog-hygiene.cjs'),'utf8');
+  const vm=require('node:vm');
+  const declarations=source.slice(source.indexOf('const MADE_TO_ORDER_TAGS'),source.indexOf('function hasReadyToShipTag'));
+  const context=vm.createContext({});vm.runInContext(declarations,context);
+  assert.equal(vm.runInContext("isMadeToOrder({tags:['availability:Made to Order']})",context),true);
+  assert.equal(vm.runInContext("isMadeToOrder({tags:['custom-made']})",context),true);
+  assert.equal(vm.runInContext("isMadeToOrder({tags:['ready to ship'],options:[{name:'Size',values:['Custom']}]})",context),false);
+  assert.ok(source.includes('onlyCustomSize && !madeToOrder'));
+  assert.ok(source.includes('madeToOrder && hasReadyToShipTag(product)'));
+  assert.ok(source.includes('readyToShipProducts + madeToOrderProducts !== purchasableProducts'));
 });
