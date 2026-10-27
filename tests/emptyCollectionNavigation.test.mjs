@@ -123,11 +123,11 @@ test('saree sidebar promotes the restored wedding destination', () => {
   assert.ok(html.includes('href="/collections/wedding-guest-outfits"'));
 });
 
-test('mega menu preserves its existing current-saree links', () => {
+test('mega menu restores wedding sarees while preserving current-saree links', () => {
   const sarees = MEGA_MENUS.find(menu => menu.href === '/sarees');
   assert.ok(sarees);
   const occasions = sarees.groups.find(group => group.label === 'By Occasion').links;
-  assert.ok(!occasions.some(link => link.href === '/collections/wedding-sarees'));
+  assert.ok(occasions.some(link => link.href === '/collections/wedding-sarees'));
   assert.ok(occasions.some(link => link.href === '/collections/designer-sarees'));
 });
 
