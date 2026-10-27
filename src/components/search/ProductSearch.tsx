@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { Slider } from '@/components/ui/slider';
 import { fetchAllProducts } from '@/lib/shopify';
+import { filterSearchResults, getSearchFabric, getSearchSizes } from '@/lib/productSearchFilters';
 
 interface SearchResult {
   id: string;
@@ -15,6 +16,7 @@ interface SearchResult {
   price: string;
   image: string;
   fabric: string;
+  sizes: string[];
 }
 
 interface ProductSearchProps {
@@ -59,13 +61,6 @@ const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProp
           else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
           else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
 
-          // Extract fabric
-          let fabric = 'Silk';
-          if (desc.includes('velvet')) fabric = 'Velvet';
-          else if (desc.includes('georgette')) fabric = 'Georgette';
-          else if (desc.includes('cotton')) fabric = 'Cotton';
-          else if (desc.includes('chiffon')) fabric = 'Chiffon';
-
           return {
             id: node.id,
             handle: node.handle,
@@ -73,7 +68,8 @@ const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProp
             category,
             price: node.priceRange.minVariantPrice.amount,
             image: node.images.edges[0]?.node.url || '',
-            fabric,
+            fabric: getSearchFabric(node),
+            sizes: getSearchSizes(node),
           };
         });
         if (!cancelled) setAllProducts(products);
@@ -86,42 +82,8 @@ const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProp
 
   // Filter products based on query and filters
   useEffect(() => {
-    let filtered = [...allProducts];
-    
-    // Text search
-    if (query.length >= 2) {
-      const searchTerm = query.toLowerCase();
-      filtered = filtered.filter(product =>
-        product.title.toLowerCase().includes(searchTerm) ||
-        product.category.toLowerCase().includes(searchTerm) ||
-        product.fabric.toLowerCase().includes(searchTerm)
-      );
-    }
-    
-    // Price filter
-    filtered = filtered.filter(product => {
-      const price = parseFloat(product.price);
-      return price >= priceRange[0] && price <= priceRange[1];
-    });
-    
-    // Size filter - note: we can't filter by size in search since we don't have variant data in the simplified search results
-    // This would require fetching full product data
-    
-    
-    // Fabric filter
-    if (selectedFabrics.length > 0) {
-      filtered = filtered.filter(product =>
-        selectedFabrics.some(f => product.fabric.toLowerCase() === f.toLowerCase())
-      );
-    }
-    
-    // Show results if query or filters are active
-    if (query.length >= 2 || selectedFabrics.length > 0 || priceRange[0] > 0 || priceRange[1] < 1000) {
-      setResults(filtered.slice(0, 12));
-    } else {
-      setResults([]);
-    }
-  }, [query, allProducts, priceRange, selectedFabrics]);
+    setResults(filterSearchResults(allProducts, { query, priceRange, selectedSizes, selectedFabrics }));
+  }, [query, allProducts, priceRange, selectedSizes, selectedFabrics]);
 
   // Focus input when opened
   useEffect(() => {

@@ -80,7 +80,7 @@ const DETAIL_BULLETS: Record<ProductCategory, string[]> = {
     'Use the listed options and Size Guide before ordering any stitched version',
   ],
   suit: [
-    'Product Details and images identify the listed kameez, bottom, dupatta, fabric, and work',
+    'Product Details and images identify the listed pieces, fabric, and work',
     'Included pieces and available stitching choices vary by design',
     'Use the listed options and Size Guide before ordering a stitched version',
   ],
