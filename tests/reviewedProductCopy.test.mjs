@@ -1,3 +1,4 @@
+import { readFileSync } from 'node:fs';
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { hasReviewedProductCopy, renderReviewedProductHtml, REVIEWED_PRODUCT_COPY_TAG } from '../src/lib/reviewedProductCopy.mjs';
@@ -17,4 +18,10 @@ test('preserves the listing sections instead of flattening garment and size deta
 test('does not publish scripts, event handlers, images, or unsafe link protocols', () => {
   const output = renderReviewedProductHtml('<script>alert(1)</script><h3 onclick="alert(1)">Care</h3><img src=x onerror=alert(1)><a href="javascript:alert(1)">Bad link</a><a href="/contact">Contact</a>');
   assert.equal(output, '<h3>Care</h3><a>Bad link</a><a href="/contact">Contact</a>');
+});
+
+test('generic suit details do not invent a kameez for blouse and palazzo sets', () => {
+  const source = readFileSync(new URL('../src/components/product/ProductTabs.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /identify the listed kameez, bottom, dupatta/);
+  assert.match(source, /identify the listed pieces, fabric, and work/);
 });
