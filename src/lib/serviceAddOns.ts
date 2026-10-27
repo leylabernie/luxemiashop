@@ -55,6 +55,7 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
 
 const SAREE_PATTERN = /\b(?:saree|sari)\b/i;
 const BLOUSE_PATTERN = /\b(?:blouse\s+fabric|unstitched\s+blouse|blouse\s+piece|blouse)\b/i;
+const STITCHED_BLOUSE_PATTERN = /\b(?:(?:fully[-\s]+)?stitched|ready[-\s]*(?:made|to[-\s]*wear))\s+blouse\b|\bblouse\s+(?:is\s+)?(?:fully[-\s]+)?stitched\b/i;
 const APPAREL_PATTERN = /\b(?:lehenga|choli|suit|kurta|salwar|sharara|palazzo|anarkali|gown|sherwani|jacket|co-?ord|blouse|dress|kaftan|skirt|dhoti|pant|tunic)\b/i;
 
 export interface ServiceEligibleProduct {
@@ -105,7 +106,7 @@ export const isGarmentAlterationCartLine = (
   if (!isHiddenBillingProductHandle(item.product.node.handle)) return false;
   if (item.serviceAddOnCode) return item.serviceAddOnCode === 'garment-alteration';
   // Older carts have only Applies To. Infer only when the shared alteration
-  // variant is linked unambiguously to an eligible non-saree garment in this cart.
+  // variant is linked unambiguously to a garment eligible for alteration.
   if (item.variantTitle !== SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue) return false;
   const appliesTo = item.customAttributes?.find(attribute => attribute.key === 'Applies To')?.value;
   if (!appliesTo) return false;
@@ -234,7 +235,15 @@ const productEvidence = (product: ServiceEligibleProduct) => [
   ...(product.options ?? []).flatMap((option) => [option.name, ...option.values]),
   product.metadata?.blouseFabric,
   ...(product.metadata?.includedComponents ?? []),
-].filter(Boolean).join(' ');
+].filter((value): value is string => Boolean(value));
+
+/** Supplied construction outranks blouse styling shown in an otherwise fabric-only listing. */
+export const hasIncludedStitchedBlouse = (product: ServiceEligibleProduct): boolean => {
+  const evidence = productEvidence(product);
+  if (evidence.some(value => /\bunstitched\s+blouse\b/i.test(value))) return false;
+  return evidence.some(value => STITCHED_BLOUSE_PATTERN.test(value)
+    && !/\b(?:no|without)\s+(?:(?:fully[-\s]+)?stitched|ready[-\s]*made)\s+blouse\b|\bblouse\s+(?:is\s+)?(?:not\s+included|sold\s+separately)\b|\bstitched\s+blouse\s+shown\b/i.test(value));
+};
 
 /**
  * Returns direct purchase options for sarees and an alteration option for
@@ -245,7 +254,6 @@ const productEvidence = (product: ServiceEligibleProduct) => [
  * a stitching/alteration option skip the duplicate alteration line.
  */
 export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): ServiceAddOnCode[] => {
-  const evidence = productEvidence(product);
   const isSaree = SAREE_PATTERN.test(`${product.title} ${product.productType}`);
   const hasListingStitchingOption = (product.options ?? []).some((option) =>
     /stitch|alter/i.test(option.name),
@@ -253,8 +261,11 @@ export const getEligibleServiceAddOns = (product: ServiceEligibleProduct): Servi
 
   if (isSaree) {
     const services: ServiceAddOnCode[] = ['pico-fall', 'matching-petticoat'];
-    if (BLOUSE_PATTERN.test(evidence) && !hasListingStitchingOption) {
-      services.unshift('blouse-stitching');
+    if (!hasListingStitchingOption) {
+      // A supplied stitched blouse may still be altered; it does not need to
+      // be sold again as an unstitched fabric-stitching service.
+      if (hasIncludedStitchedBlouse(product)) services.unshift('garment-alteration');
+      else if (BLOUSE_PATTERN.test(productEvidence(product).join(' '))) services.unshift('blouse-stitching');
     }
     return services;
   }
