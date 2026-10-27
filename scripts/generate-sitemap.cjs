@@ -86,6 +86,7 @@ const staticPages = [
   // Restocked 2026-10-15; existing prerender validation enforces indexability and self-canonical.
   { loc: '/collections/anarkali-suits', changefreq: 'daily', priority: '0.9' },
   // Active again; existing prerender validation enforces indexability and self-canonical.
+  { loc: '/collections/wedding-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/designer-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/silk-sarees', changefreq: 'daily', priority: '0.9' },
   { loc: '/collections/bridal-lehengas', changefreq: 'daily', priority: '0.9' },
