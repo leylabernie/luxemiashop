@@ -176,6 +176,7 @@ test('existing total-count floor still rejects uncompensated shrinkage before an
 });
 
 const restoredCollectionRoutes = [
+  '/collections/wedding-sarees',
   '/collections/designer-sarees',
   '/collections/mehendi-outfits',
   '/collections/eid-outfits',
@@ -190,7 +191,8 @@ test('restored active collections appear once in sitemaps while intentional excl
     assert.ok(!emptyCatalogRoutes.includes(route), route);
     assert.ok(!redirects.some(entry => entry.source === route), route);
   }
-  assert.ok(emptyCatalogRoutes.includes('/collections/wedding-sarees'), 'Wedding sarees remains intentionally excluded');
+  assert.ok(emptyCatalogRoutes.includes('/collections/mirror-work-lehengas'), 'Mirror work remains intentionally excluded');
+  assert.ok(emptyCatalogRoutes.includes('/collections/customizable-indian-outfits'), 'Customizable outfits remains intentionally excluded');
   const approvedStaticPaths = staticPaths.filter(path => !emptyCatalogRoutes.includes(path));
   const result = await runGenerator({ emptyCatalogRoutes, redirects, approvedStaticPaths });
   assert.equal(result.exitCode, 0);

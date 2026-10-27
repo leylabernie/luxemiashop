@@ -32,6 +32,7 @@ const { default: SEOFooterContent } = await loadSource('src/components/seo/SEOFo
 const { default: SEOHead } = await loadSource('src/components/seo/SEOHead.tsx');
 const emptyRoutes = JSON.parse(fs.readFileSync(path.join(root, 'src/config/emptyCatalogRoutes.json'), 'utf8'));
 const restoredRoutes = [
+  '/collections/wedding-sarees',
   '/collections/mehendi-outfits',
   '/collections/eid-outfits',
   '/collections/haldi-outfits',
@@ -44,7 +45,6 @@ const intentionallyEmptyRoutes = [
   '/collections/bridal-party-outfits',
   '/collections/gharara-suits',
   '/collections/kanchipuram-sarees',
-  '/collections/wedding-sarees',
   '/jewelry',
 ];
 
@@ -105,29 +105,29 @@ test('explicit noIndexFollow and noIndex retain their existing behavior and prec
 });
 
 test('empty collection promotion follows the existing empty-route registry', () => {
-  assert.equal(canPromoteCollection('/collections/wedding-sarees'), false);
+  assert.equal(canPromoteCollection('/collections/wedding-sarees'), true);
   assert.equal(canPromoteCollection('/sarees'), true);
   assert.equal(canPromoteCollection('/collections/designer-sarees'), true);
   assert.equal(canPromoteCollection(undefined), true);
 });
 
-test('saree sidebar stops promoting the empty wedding/bridal destination', () => {
+test('saree sidebar promotes the restored wedding destination', () => {
   const html = render(React.createElement(FilterSidebar, {
     config: getCategoryConfig('sarees'),
     activeFilters: {}, priceRange: [0, 1500], activeFilterCount: 0,
     onToggleFilter() {}, onPriceChange() {}, onClearAll() {}, onSelectSubcategory() {},
   }));
-  assert.ok(!html.includes('href="/collections/wedding-sarees"'));
+  assert.ok(html.includes('href="/collections/wedding-sarees"'));
   assert.ok(html.includes('href="/sarees"'));
   assert.ok(html.includes('href="/collections/designer-sarees"'));
   assert.ok(html.includes('href="/collections/wedding-guest-outfits"'));
 });
 
-test('mega menu keeps current sarees accessible without empty wedding links', () => {
+test('mega menu restores wedding sarees while preserving current-saree links', () => {
   const sarees = MEGA_MENUS.find(menu => menu.href === '/sarees');
   assert.ok(sarees);
   const occasions = sarees.groups.find(group => group.label === 'By Occasion').links;
-  assert.ok(!occasions.some(link => link.href === '/collections/wedding-sarees'));
+  assert.ok(occasions.some(link => link.href === '/collections/wedding-sarees'));
   assert.ok(occasions.some(link => link.href === '/collections/designer-sarees'));
 });
 
@@ -146,10 +146,10 @@ test('the dedicated route and restrictive product selection are preserved', () =
   assert.deepEqual(subcategory.matchTags, ['occasion:wedding', 'occasion:bridal', 'role:bride']);
   assert.deepEqual(subcategory.matchProductType, ['Wedding Saree', 'Bridal Saree']);
   const emptyRoutes = JSON.parse(fs.readFileSync(path.join(root, 'src/config/emptyCatalogRoutes.json'), 'utf8'));
-  assert.ok(emptyRoutes.includes('/collections/wedding-sarees'));
+  assert.ok(!emptyRoutes.includes('/collections/wedding-sarees'));
 });
 
-test('prerender no longer advertises the empty wedding destination in primary navigation', () => {
+test('prerender preserves primary navigation and the dedicated wedding route', () => {
   const source = fs.readFileSync(path.join(root, 'scripts/prerender.js'), 'utf8');
   assert.ok(!source.includes('href="/collections/wedding-sarees"'));
   assert.ok(!source.includes('href="/sarees?sub=bridal"'));
