@@ -1,0 +1,11 @@
+{
+  "suits": [
+    { "name": "Anarkali Suits", "href": "/collections/anarkali-suits" },
+    { "name": "Sharara Suits", "href": "/collections/sharara-suits" },
+    { "name": "Palazzo Suit Sets", "href": "/collections/ready-to-wear-palazzo-suits" }
+  ],
+  "sarees": [
+    { "name": "Wedding Guest & Reception Sarees", "href": "/collections/wedding-sarees" },
+    { "name": "Banarasi Sarees", "href": "/collections/banarasi-sarees" }
+  ]
+}

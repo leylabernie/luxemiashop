@@ -167,3 +167,26 @@ test('HTML sitemap and XML share the same already-filtered static-page export', 
   assert.ok(routes.includes('/collections'));
   assert.ok(routes.includes('/sarees'));
 });
+
+test('reviewed menu and sidebar labels match stocked destinations without changing wedding predicates', () => {
+  const reviewed = JSON.parse(fs.readFileSync(path.join(root, 'src/config/reviewedShoppingLinks.json'), 'utf8'));
+  const suits = MEGA_MENUS.find(menu => menu.href === '/suits');
+  assert.deepEqual(suits.groups.find(group => group.label === 'By Style').links, reviewed.suits);
+  const sarees = MEGA_MENUS.find(menu => menu.href === '/sarees');
+  const links = sarees.groups.flatMap(group => group.links);
+  assert.equal(links.filter(link => link.href === '/collections/wedding-sarees').length, 1);
+  assert.equal(links.find(link => link.href === '/collections/wedding-sarees').name, 'Wedding Guest & Reception Sarees');
+  assert.ok(links.every(link => canPromoteCollection(link.href)));
+  const html = render(React.createElement(FilterSidebar, {
+    config: getCategoryConfig('sarees'), activeFilters: {}, priceRange: [0, 1500], activeFilterCount: 0,
+    onToggleFilter() {}, onPriceChange() {}, onClearAll() {}, onSelectSubcategory() {},
+  }));
+  assert.equal((html.match(/href="\/collections\/wedding-sarees"/g) || []).length, 1);
+  assert.match(html, /Wedding Guest &amp; Reception Sarees/);
+  const editorial = render(React.createElement(React.Fragment, null, getCategoryConfig('sarees').editorialContent));
+  assert.ok(!editorial.includes('href="/collections/kanchipuram-sarees"'));
+  assert.ok(editorial.includes('href="/collections/banarasi-sarees"'));
+  const config = getCategoryConfig('sarees');
+  assert.equal(config.subcategories.find(sub => sub.slug === 'bridal').label, 'Bridal');
+  assert.equal(config.subcategories.find(sub => sub.slug === 'wedding').label, 'Ceremony Sarees');
+});

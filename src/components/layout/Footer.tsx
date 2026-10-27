@@ -1,3 +1,5 @@
+import { canPromoteCollection } from '@/lib/collectionPromotion';
+import reviewedShoppingLinks from '@/config/reviewedShoppingLinks.json';
 import { forwardRef, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Instagram, Facebook, Mail, Phone, Clock, Shield, Lock, CreditCard, Truck, Check } from 'lucide-react';
@@ -32,7 +34,7 @@ const footerLinks = {
     { name: 'Bridal Lehengas', href: '/collections/bridal-lehengas' },
     { name: 'Designer Sarees', href: '/collections/designer-sarees' },
     { name: 'Silk Sarees', href: '/collections/silk-sarees' },
-    { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
+    ...reviewedShoppingLinks.sarees,
     { name: 'Jewelry', href: '/jewelry' },
   ],
   about: [
@@ -225,7 +227,7 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
           <div>
             <h4 className="text-xs tracking-luxury uppercase mb-4 font-medium">Collections</h4>
             <ul className="space-y-2.5">
-              {footerLinks.collections.map((link) => (
+              {footerLinks.collections.filter(link => canPromoteCollection(link.href)).map((link) => (
                 <li key={link.name}>
                   <Link to={link.href} className="text-sm text-foreground/60 hover:text-foreground transition-colors font-light">
                     {link.name}

@@ -126,15 +126,15 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     name: 'Wedding Sarees',
     title: 'Wedding Sarees Online USA | Indian Wedding Sarees | LuxeMia',
     description: 'Shop wedding sarees online in the USA. Compare current bridal and wedding saree listings by stated fabric, work, blouse details, price and availability before ordering.',
-    editorialTitle: 'Shop Wedding Sarees Online for Indian Wedding Events',
+    editorialTitle: 'Sarees for Wedding Guests and Receptions',
     editorialContent: (
       <>
         <p>
-          Browse current LuxeMia wedding sarees for ceremonies, receptions and family celebrations. Each listing has its own stated fabric, weave or work, blouse-piece details, dimensions and availability, so compare the individual product page before placing an event-critical order.
+          Explore sarees for wedding guests and receptions. Compare the listed fabric, weave or work, blouse details and current availability. Open your chosen design to check its exact included pieces and options.
         </p>
         <h3>Compare Wedding Saree Details Before Ordering</h3>
         <p>
-          Use the product grid to compare currently listed wedding and bridal sarees. Confirm the exact fabric wording, included blouse material or blouse details, selected option and current availability on the product page rather than assuming every saree has the same construction.
+          Use the product grid to compare currently listed wedding guest and reception sarees. Confirm the exact fabric wording, included blouse material or blouse details, selected option and current availability on the product page rather than assuming every saree has the same construction.
         </p>
         <h3>Plan Size and Delivery for a Wedding Event</h3>
         <p>

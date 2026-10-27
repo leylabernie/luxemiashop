@@ -77,8 +77,10 @@ test('Banarasi collection resolves through the existing dynamic collection route
 });
 
 test('desktop and mobile navigation link the category', () => {
-  assert.match(read('src/config/categoryConfig.tsx'), /name: 'Banarasi Sarees', href: '\/collections\/banarasi-sarees'/);
-  assert.match(read('src/components/layout/Header.tsx'), /const weddingSareeLinks = \[\s*\{ name: 'Banarasi Sarees', href: '\/collections\/banarasi-sarees' \}/);
+  const links = JSON.parse(read('src/config/reviewedShoppingLinks.json'));
+  assert.ok(links.sarees.some(link => link.name === 'Banarasi Sarees' && link.href === '/collections/banarasi-sarees'));
+  assert.match(read('src/config/categoryConfig.tsx'), /reviewedShoppingLinks\.sarees\.filter/);
+  assert.match(read('src/components/layout/Header.tsx'), /const weddingSareeLinks = \[\s*\.\.\.reviewedShoppingLinks\.sarees/);
 });
 
 test('prerender selects the tagged batch and excludes unrelated products', () => {
