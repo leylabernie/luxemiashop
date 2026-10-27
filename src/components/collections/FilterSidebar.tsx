@@ -1,3 +1,4 @@
+import reviewedShoppingLinks from '@/config/reviewedShoppingLinks.json';
 /**
  * FilterSidebar — shared left-sidebar filter component for category listing pages.
  *
@@ -62,9 +63,10 @@ export function FilterSidebar({
   };
 
   const hasActiveFilters = activeFilterCount > 0;
+  const activeLandingPath = config.subcategories.find(sub => sub.slug === activeSubSlug)?.landingPath;
   const occasionSubcategories = config.subcategories.filter(
     sub => sub.group === 'occasion' && canPromoteCollection(sub.landingPath),
-  );
+  ).filter((sub, index, entries) => !sub.landingPath || entries.findIndex(entry => entry.landingPath === sub.landingPath) === index);
 
   return (
     <aside className="w-full lg:w-64 flex-shrink-0">
@@ -115,14 +117,14 @@ export function FilterSidebar({
                 .map(sub => {
                   const className = cn(
                     'text-left text-sm py-1.5 px-2 rounded transition-colors',
-                    activeSubSlug === sub.slug
+                    (activeSubSlug === sub.slug || (sub.landingPath && sub.landingPath === activeLandingPath))
                       ? 'bg-secondary text-foreground font-medium'
                       : 'text-muted-foreground hover:text-foreground hover:bg-secondary/50'
                   );
 
                   return sub.landingPath ? (
                     <Link key={sub.slug} to={sub.landingPath} className={className}>
-                      {sub.label}
+                      {reviewedShoppingLinks.sarees.find(link => link.href === sub.landingPath)?.name || sub.label}
                     </Link>
                   ) : (
                     <button

@@ -1,3 +1,4 @@
+import reviewedShoppingLinks from '@/config/reviewedShoppingLinks.json';
 import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useState, useMemo } from 'react';
 import { motion } from 'framer-motion';
@@ -76,7 +77,8 @@ const Collections = () => {
             ['Menswear', '/menswear'], ['Kids', '/kids'], ['Indo-Western', '/indowestern'],
             ['Blouses', '/collections/blouses'], ['Couple Sets', '/collections/couple-outfits'],
             ['Jewelry', '/jewelry'], ['Organza Lehengas', '/collections/organza-lehengas'],
-            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas']].filter(([, href]) => canPromoteCollection(href)).map(([name, href]) =>
+            ['Mirror Work Lehengas', '/collections/mirror-work-lehengas'],
+            ...[...reviewedShoppingLinks.suits, ...reviewedShoppingLinks.sarees].map(link => [link.name, link.href])].filter(([, href]) => canPromoteCollection(href)).map(([name, href]) =>
               <Link key={href} to={href} className="text-sm hover:underline">{name}</Link>)}
         </nav>
         {/* Hero Banner */}
@@ -258,7 +260,7 @@ const Collections = () => {
               LuxeMia is an online Indian ethnic-wear store for shoppers in seven countries. Browse <strong>bridal and party-wear lehengas</strong>, <strong>silk and wedding sarees</strong>, <strong>Anarkali, sharara and gharara suits</strong>, sherwanis, and Indo-Western outfits.
             </p>
             <p>
-              Explore dedicated collections for <Link to="/collections/sharara-suits" className="underline underline-offset-2 hover:text-foreground">sharara suits</Link>, <Link to="/collections/gharara-suits" className="underline underline-offset-2 hover:text-foreground">gharara suits</Link>, <Link to="/collections/anarkali-suits" className="underline underline-offset-2 hover:text-foreground">Anarkali suits</Link>, <Link to="/collections/bridal-lehengas" className="underline underline-offset-2 hover:text-foreground">bridal lehengas</Link>, and <Link to="/collections/party-wear-lehengas" className="underline underline-offset-2 hover:text-foreground">party-wear lehengas</Link>.
+              Explore the dedicated style and occasion collections above, then check each product’s included pieces, fabric, sizes and current availability.
             </p>
             <p>
               Product names can describe a fabric, weave, embroidery style, or regional tradition. Check the exact listing before ordering; LuxeMia does not assume origin, fiber content, handwork, or authenticity when the product information does not support that claim.

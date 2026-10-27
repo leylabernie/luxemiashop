@@ -1,3 +1,4 @@
+import { renderReviewedShoppingLinks } from '../src/lib/reviewedShoppingLinks.cjs';
 import { stripPausedCustomizationLinks } from '../src/lib/pausedCollectionLinks.cjs';
 import { serializeJsonLd } from '../src/lib/serializeJsonLd.cjs';
 /**
@@ -1602,6 +1603,9 @@ const routes = [
     h1: getIndexableRouteSeo('/suits').h1,
     content: `
       <p>Explore salwar kameez, anarkali, sharara and palazzo sets. Review each product page for the exact fabric, work, included pieces, stitching status, sizing and current availability.</p>
+      <h2>Shop suits by style</h2>
+      <p>Compare each listing’s included pieces, available sizes and current price.</p>
+      <ul>${renderReviewedShoppingLinks('suits')}</ul>
       <h2>Shop Suits by Occasion</h2>
       <ul>
         <li><a href="/suits?sub=wedding">Wedding Suits</a> — Elegant salwar kameez for wedding celebrations</li>
@@ -1717,6 +1721,8 @@ const routes = [
     h1: getIndexableRouteSeo('/sarees').h1,
     content: `
       <p>Explore wedding, silk and festive sarees for U.S. delivery. Review each product page for the exact fabric, weave or work, blouse details, dimensions and availability; a style name is not treated as proof of fiber, weaving method or origin.</p>
+      <h2>Explore Saree Collections</h2>
+      <ul>${renderReviewedShoppingLinks('sarees')}</ul>
       <h2>Shop Sarees by Occasion</h2>
       <ul>
         <li><a href="/sarees?sub=reception">Reception Sarees</a> — Glamorous sarees for the reception</li>
@@ -1727,7 +1733,7 @@ const routes = [
       <ul>
         <li><a href="/collections/silk-sarees">Silk Sarees</a> — Check each listing for exact fiber and weave details</li>
         <li><a href="/sarees?sub=banarasi">Banarasi Sarees</a> — Check each listing for exact weave and origin details</li>
-        <li><a href="/collections/kanchipuram-sarees">Kanchipuram &amp; Kanjivaram Sarees</a> — Review current listed fabric, weave and zari details</li>
+
         <li><a href="/kanjivaram-saree-for-wedding">Kanjivaram Wedding Saree Guide</a> — Compare wedding-shopping considerations</li>
         <li><a href="/sarees?sub=georgette">Georgette Sarees</a> — Lightweight & elegant</li>
         <li><a href="/sarees?sub=chiffon">Chiffon Sarees</a> — Flowy & comfortable</li>
@@ -2012,13 +2018,17 @@ const routes = [
     h1: 'All Collections',
     content: `
       <p>Browse our curated collections of Indian ethnic wear, thoughtfully organized for every occasion.</p>
+      <h2>Shop Suits by Style</h2>
+      <ul>${renderReviewedShoppingLinks('suits')}</ul>
+      <h2>Explore Saree Collections</h2>
+      <ul>${renderReviewedShoppingLinks('sarees')}</ul>
       <ul>
         <li><a href="/lehengas">Bridal Lehengas</a> — Bridal wear for your special day</li>
         <li><a href="/sarees">Wedding Sarees</a> — Elegant sarees for wedding celebrations</li>
         <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
         <li><a href="/menswear">Menswear</a> — Sherwanis, kurta sets & Indo-western</li>
         <li><a href="/collections/sharara-suits">Sharara Suits</a> — Wedding and festive sharara sets</li>
-        <li><a href="/collections/gharara-suits">Gharara Suits</a> — Gharara sets for weddings and celebrations</li>
+
         <li><a href="/collections/anarkali-suits">Anarkali Suits</a> — Anarkali styles for weddings and party wear</li>
         <li><a href="/collections/bridal-lehengas">Bridal Lehengas</a> — Indian wedding lehenga styles</li>
         <li><a href="/collections/party-wear-lehengas">Party-Wear Lehengas</a> — Festive lehenga choli styles</li>
@@ -2128,9 +2138,9 @@ const routes = [
     title: getIndexableRouteSeo('/collections/wedding-sarees').title,
     description: getIndexableRouteSeo('/collections/wedding-sarees').description,
     h1: getIndexableRouteSeo('/collections/wedding-sarees').h1,
-    content: `<p>Browse current wedding sarees for ceremonies, receptions and family celebrations. Each listing has its own supplied fabric, weave or work, blouse details, dimensions, price and availability, so compare the exact product page before placing an event-critical order.</p>
-      <h2>Compare Wedding Saree Details Before Ordering</h2>
-      <p>Use the current product grid to compare wedding and bridal sarees, then verify the selected listing’s fabric wording, blouse material or blouse details, available option and current availability. A category label does not confirm that every saree has the same construction or included pieces.</p>
+    content: `<p>Explore sarees for wedding guests and receptions. Compare the listed fabric, weave or work, blouse details and current availability. Open your chosen design to check its exact included pieces and options.</p>
+      <h2>Sarees for Wedding Guests and Receptions</h2>
+      <p>Use the current product grid to compare designs, then verify the selected listing’s fabric wording, blouse details and available options. A category label does not confirm that every saree has the same construction or included pieces.</p>
       <h3>Plan Size and Delivery for a Wedding Event</h3>
       <p>Read the <a href="/size-guide">size guide</a> and the selected product details before ordering for a fixed date. Review <a href="/shipping">U.S. shipping information</a> and browse <a href="/sarees">all current sarees</a> for additional comparison.</p>
       <p>Free U.S. standard shipping applies at $150 and above; shipping is $14.99 below $150.</p>`,

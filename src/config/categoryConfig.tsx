@@ -12,6 +12,7 @@
  */
 
 import type { ReactNode } from 'react';
+import reviewedShoppingLinks from '@/config/reviewedShoppingLinks.json';
 import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 import {
@@ -557,12 +558,11 @@ const SAREES: CategoryConfig = {
         Silk sarees can use pure silk, blended silk or art-silk fabrics. Review the exact composition and
         product wording on each listing rather than assuming every saree uses the same fiber, zari or weaving method.
       </p>
-      <h3>Silk, Kanchipuram and Kanjivaram Sarees</h3>
+      <h3>Explore Banarasi Sarees</h3>
       <p>
-        Browse the <a href="/collections/silk-sarees">silk saree collection</a> and the
-        <a href="/collections/kanchipuram-sarees"> Kanchipuram and Kanjivaram collection</a>, then compare the stated
-        fiber, weave, border, blouse details and availability on each listing. These collection pages provide
-        the current shopping options without relying on discontinued guide URLs.
+        Explore {canPromoteCollection('/collections/banarasi-sarees')
+          ? <a href="/collections/banarasi-sarees">Banarasi sarees</a>
+          : 'Banarasi sarees'} and compare each listing’s fabric, weave or work, blouse details and current availability.
       </p>
       <h3>Blouse and Sizing Details</h3>
       <p>
@@ -1086,9 +1086,11 @@ function subcatLinks(catSlug: string, subcats: Subcategory[], group: Subcategory
   const filtered = subcats.filter(s => s.group === group);
   const indexableLinks = filtered.flatMap((subcategory) => {
     const href = getDedicatedSubcategoryPath(catSlug, subcategory.slug);
-    return href && canPromoteCollection(href) ? [{ name: subcategory.label, href }] : [];
+    const reviewed = [...reviewedShoppingLinks.sarees, ...reviewedShoppingLinks.suits].find(link => link.href === href);
+    return href && canPromoteCollection(href) ? [{ name: reviewed?.name || subcategory.label, href }] : [];
   });
-  return limit ? indexableLinks.slice(0, limit) : indexableLinks;
+  const uniqueLinks = indexableLinks.filter((link, index, links) => links.findIndex(item => item.href === link.href) === index);
+  return limit ? uniqueLinks.slice(0, limit) : uniqueLinks;
 }
 
 export const MEGA_MENUS: MegaMenuConfig[] = [
@@ -1111,10 +1113,10 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
       {
         label: 'Wedding Traditions',
         links: [
-          { name: 'Banarasi Sarees', href: '/collections/banarasi-sarees' },
+          ...reviewedShoppingLinks.sarees.filter(link => link.href !== '/collections/wedding-sarees'),
           { name: 'Silk Sarees', href: '/collections/silk-sarees' },
           { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
-        ],
+        ].filter(link => canPromoteCollection(link.href)),
       },
     ],
   },
@@ -1127,7 +1129,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Salwar Kameez',
     href: '/suits',
     groups: [
-      { label: 'By Style', links: subcatLinks('suits', SUITS.subcategories, 'style').filter(l => ['Anarkali', 'Sharara', 'Palazzo'].includes(l.name)) },
+      { label: 'By Style', links: reviewedShoppingLinks.suits.filter(link => canPromoteCollection(link.href)) },
       { label: 'By Occasion', links: subcatLinks('suits', SUITS.subcategories, 'occasion') },
     ],
   },

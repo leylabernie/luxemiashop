@@ -72,3 +72,4 @@ public/sitemap-images.xml
 public/sitemap-pages.xml
 public/sitemap-products.xml
 scripts/backups/
+!scripts/validate-navigation-parity.cjs

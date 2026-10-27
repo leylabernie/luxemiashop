@@ -1,3 +1,4 @@
+import reviewedShoppingLinks from '@/config/reviewedShoppingLinks.json';
 import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { lazy, Suspense, useState, useEffect } from 'react';
 import { Search, ShoppingBag, User, Menu, X, Heart, LogOut, ChevronRight } from 'lucide-react';
@@ -30,7 +31,7 @@ const shippingAnnouncements = [
 
 // Combined nav links for the mobile menu (mega-menu not used on mobile).
 const navLinks = [
-  ...MEGA_MENUS.map(m => ({ name: m.label, href: m.href })),
+  ...MEGA_MENUS.filter(menu => canPromoteCollection(menu.href)).map(m => ({ name: m.label, href: m.href })),
 ];
 
 const secondaryLinks = [
@@ -43,7 +44,7 @@ const secondaryLinks = [
 ];
 
 const weddingSareeLinks = [
-  { name: 'Banarasi Sarees', href: '/collections/banarasi-sarees' },
+  ...reviewedShoppingLinks.sarees,
   { name: 'Silk Sarees', href: '/collections/silk-sarees' },
   { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
 ];
@@ -226,7 +227,7 @@ const Header = () => {
         <div className="hidden lg:block border-t border-border/20 bg-secondary/20">
           <div className="container mx-auto px-8">
             <div className="relative flex items-center justify-center gap-4 xl:gap-6 py-1.5">
-              {MEGA_MENUS.map(menu => <MegaMenuNavItem key={menu.href} menu={menu} />)}
+              {MEGA_MENUS.filter(menu => canPromoteCollection(menu.href)).map(menu => <MegaMenuNavItem key={menu.href} menu={menu} />)}
               {secondaryLinks.slice(0, 2).map(link => (
                 <Link
                   key={link.name}
@@ -288,8 +289,19 @@ const Header = () => {
                 ))}
 
                 <div className="pt-4 border-t border-border/30">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Wedding Sarees</p>
-                  {weddingSareeLinks.map((link) => (
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Shop suits by style</p>
+                  {reviewedShoppingLinks.suits.filter(link => canPromoteCollection(link.href)).map(link => (
+                    <Link key={link.href} to={link.href}
+                      className="flex items-center justify-between py-2 text-sm font-light text-foreground/70 hover:text-foreground transition-colors"
+                      onClick={() => setIsMenuOpen(false)}>
+                      {link.name}
+                    </Link>
+                  ))}
+                </div>
+
+                <div className="pt-4 border-t border-border/30">
+                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground py-2">Saree Collections</p>
+                  {weddingSareeLinks.filter(link => canPromoteCollection(link.href)).map((link) => (
                     <Link
                       key={link.name}
                       to={link.href}
