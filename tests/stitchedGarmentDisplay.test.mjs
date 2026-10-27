@@ -195,3 +195,55 @@ test('mixed legacy and typed repeated additions merge and never duplicate the al
   }
 });
 test.after(() => { globalThis.localStorage = savedStorage; delete globalThis.__displayCart; delete globalThis.__displayBillingProduct; delete globalThis.__displaySearch; });
+
+test('supplied stitched-blouse saree renders alteration not fabric-only stitching and keeps native sizes/prices', () => {
+  const sage = {
+    ...garment, title: 'Sage Green Ready to Wear Jacquard Silk Saree', productType: 'Saree',
+    handle: 'sage-green-ready-to-wear-jacquard-silk-saree',
+    description: 'Ready-to-wear saree with stitched blouse with built-in cups.', tags: [],
+    options: [{ name: 'Size', values: ['34', '36', '38', '40', '42', '44'] }],
+    variants: { edges: ['34', '36', '38', '40', '42', '44'].map(size => ({ node: {
+      ...garment.variants.edges[0].node, id: 'sage-' + size, title: size,
+      price: { amount: '55.99', currencyCode: 'USD' },
+      selectedOptions: [{ name: 'Size', value: size }],
+    } })) },
+  };
+  setState([]); globalThis.__displaySearch = '';
+  const html = renderProduct(sage);
+  assert.match(html, /Garment Alteration/);
+  assert.match(html, /confirms the alteration scope and timing/);
+  assert.doesNotMatch(html, /Available only where this listing includes blouse fabric/);
+  assert.match(html, /55\.99/);
+  assert.match(html, /\+\$10\.00/);
+  const line = { ...garmentLine, product: { node: sage } };
+  const alteration = { ...service, serviceAddOnCode: 'garment-alteration', customAttributes: [{ key: 'Applies To', value: sage.title }] };
+  const cartHtml = renderCart([line, alteration]);
+  assert.match(cartHtml, /Garment Alteration/);
+  assert.equal(isGarmentAlterationCartLine(alteration, [line, alteration]), true);
+  assert.equal(alteration.variantId, 'shared-billing-10');
+  assert.equal(SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue, SERVICE_ADD_ONS['blouse-stitching'].checkoutOptionValue);
+});
+
+test('existing blouse-stitching cart lines merge with corrected alteration without duplicate billing', () => {
+  const parent = { ...garmentLine, product: { node: {
+    ...garment, title: 'Sage Green Ready to Wear Jacquard Silk Saree', productType: 'Saree',
+    description: 'Ready-to-wear saree with stitched blouse with built-in cups.',
+  } } };
+  const legacy = { ...service, serviceAddOnCode: 'blouse-stitching', customAttributes: [{ key: 'Applies To', value: parent.product.node.title }] };
+  const corrected = { ...legacy, serviceAddOnCode: 'garment-alteration' };
+  for (const lines of [[legacy, corrected], [corrected, legacy]]) {
+    cartStore.setState({ items: [] });
+    for (const line of lines) {
+      cartStore.getState().addItem(parent);
+      cartStore.getState().addItem(line);
+    }
+    assert.equal(cartStore.getState().items.length, 2);
+    cartStore.getState().updateQuantity(parent.variantId, 3, parent.customAttributes);
+    const billable = cartStore.getState().items.filter(item => item.variantId === service.variantId);
+    assert.equal(billable.length, 1);
+    assert.equal(billable[0].quantity, 3);
+    assert.equal(Number(billable[0].price.amount) * billable[0].quantity, 30);
+  }
+  const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(source, /isBanarasiSareeServiceProduct\(product\)\s*\|\|\s*code === 'garment-alteration'/);
+});

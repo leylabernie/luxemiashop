@@ -404,3 +404,52 @@ test('Made to Fit delivery renders tailoring timing while Standard Fit stays rea
     }
   }
 });
+
+test('stitched-blouse saree retains alteration instead of fabric stitching at the same $10', () => {
+  const sage = {
+    title: 'Sage Green Ready to Wear Jacquard Silk Saree', productType: 'Saree',
+    description: 'Ready-to-wear saree with stitched blouse with built-in cups.',
+    options: [{ name: 'Size', values: ['34', '36', '38', '40', '42', '44'] }],
+  };
+  assert.deepEqual(getEligibleServiceAddOns(sage), ['garment-alteration', 'pico-fall', 'matching-petticoat']);
+  assert.equal(serviceAddOnTotal(['garment-alteration']), 10);
+  assert.deepEqual(selectedEligibleServiceAddOns(sage, ['blouse-stitching', 'garment-alteration', 'garment-alteration'], ['blouse-stitching', 'garment-alteration']), ['garment-alteration']);
+});
+
+test('unspecified blouse construction retains existing services rather than assuming an alteration', () => {
+  assert.deepEqual(getEligibleServiceAddOns({
+    title: 'Silk Saree', productType: 'Saree', description: 'Saree with blouse.',
+  }), ['blouse-stitching', 'pico-fall', 'matching-petticoat']);
+  assert.deepEqual(getEligibleServiceAddOns({
+    title: 'Silk Saree', productType: 'Saree', description: 'One saree.',
+  }), ['pico-fall', 'matching-petticoat']);
+});
+
+test('fabric and unstitched blouse evidence retain stitching while construction wins over material', () => {
+  for (const description of ['Includes blouse fabric.', 'Unstitched blouse piece included.', 'Saree with blouse material.']) {
+    assert.deepEqual(getEligibleServiceAddOns({ title: 'Silk Saree', productType: 'Saree', description }), ['blouse-stitching', 'pico-fall', 'matching-petticoat'], description);
+  }
+  assert.deepEqual(getEligibleServiceAddOns({
+    title: 'Silk Saree', productType: 'Saree', description: 'Stitched blouse included. Blouse fabric: silk.',
+    metadata: { blouseFabric: 'Silk' },
+  }), ['garment-alteration', 'pico-fall', 'matching-petticoat']);
+});
+
+test('stitched blouse tags and reverse wording work without duplicating native paid service options', () => {
+  for (const evidence of [
+    { tags: ['construction:Saree with stitched blouse'] },
+    { description: 'Blouse is fully stitched.' },
+    { description: 'Ready-made blouse included.' },
+  ]) {
+    const product = { title: 'Silk Saree', productType: 'Saree', description: '', ...evidence };
+    assert.deepEqual(getEligibleServiceAddOns(product), ['garment-alteration', 'pico-fall', 'matching-petticoat']);
+    assert.deepEqual(getEligibleServiceAddOns({ ...product, options: [{ name: 'Alteration', values: ['Standard', 'Made to Fit'] }] }), ['pico-fall', 'matching-petticoat']);
+  }
+});
+
+test('unstitched fabric listing does not become alteration because a model shows a stitched blouse', () => {
+  assert.deepEqual(getEligibleServiceAddOns({
+    title: 'Woven Saree with Embroidered Blouse Fabric', productType: 'Saree',
+    description: 'One saree and one unstitched blouse fabric piece. The stitched blouse shown on the model demonstrates styling and is not included as a finished garment.',
+  }), ['blouse-stitching', 'pico-fall', 'matching-petticoat']);
+});
