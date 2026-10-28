@@ -4,8 +4,7 @@
  * Finalize the competitor-derived merchandising work using LuxeMia's verified
  * fulfillment rule:
  *
- * - every purchasable product is Ready to Ship unless Shopify identifies it as
- *   Made to Order / Made to Measure;
+ * - listed semi-stitched, stitched and explicitly unstitched construction stays intact;
  * - a stocked product can also offer an optional custom-size or custom-stitching
  *   selection, and that selection takes additional processing time;
  * - processing and carrier transit are always stated separately.
@@ -24,8 +23,8 @@ const changed = [];
 
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 const PRODUCT_SHIPPING_ANSWER = `LuxeMia ships to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.`;
-const PRODUCT_READY_DELIVERY_ANSWER = 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.';
-const READY_PAGE_DESCRIPTION = 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.';
+const PRODUCT_READY_DELIVERY_ANSWER = 'Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.';
+const READY_PAGE_DESCRIPTION = 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.';
 const READY_ROUTE_CONTENT = `  {
     path: '/ready-to-ship',
     category: 'ready-to-ship',
@@ -33,9 +32,9 @@ const READY_ROUTE_CONTENT = `  {
     description: '${READY_PAGE_DESCRIPTION}',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: \`
-      <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
+      <p>Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
-      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Standard stocked selections remain Ready to Ship, while the custom selection requires additional processing. Fully custom products are shown separately as Made to Order.</p>
+      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>
       <p>Order processing happens before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Confirm the selected size, included pieces and any custom option before ordering for a fixed event date.</p>
       <h2>Shipping rates and timing</h2>
@@ -72,6 +71,8 @@ function requireAbsent(relative, source, expression, label) {
   }
 }
 
+const APPROVED_READY_COPY = PRODUCT_READY_DELIVERY_ANSWER;
+
 function patchReadyToShipPage() {
   const relative = 'src/pages/ReadyToShip.tsx';
   let source = read(relative);
@@ -101,7 +102,7 @@ function patchReadyToShipPage() {
     .replace(/Verified shorter processing/g, 'Stocked catalog styles')
     .replace(
       /These products have a verified semi-stitched processing window of up to five business days\.[\s\S]*?Review the exact product option and contact LuxeMia before ordering for a fixed event date\./,
-      'Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch. Order processing and carrier transit are separate.',
+      'Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.',
     )
     .replace(/styles with verified shorter processing/g, 'ready-to-ship styles')
     .replace(
@@ -109,6 +110,9 @@ function patchReadyToShipPage() {
       'No currently available ready-to-ship products were returned.',
     );
 
+  source = source
+    .replace(/Every purchasable LuxeMia catalog item is Ready to Ship[^<\n]*/, APPROVED_READY_COPY)
+    .replace(/description="Shop LuxeMia ready-to-ship[^"]*"/, `description="${READY_PAGE_DESCRIPTION}"`);
   write(relative, source);
 }
 
@@ -139,7 +143,7 @@ function patchProductDetail() {
   source = source
     .replace('const categoryUrl = customizableProduct', 'const categoryUrl = madeToOrderProduct')
     .replace('const categoryName = customizableProduct', 'const categoryName = madeToOrderProduct')
-    .replace("    ? 'Customizable Indian Outfits'", "    ? 'Made-to-Order Indian Outfits'")
+    .replace("    ? 'Customizable Indian Outfits'", "    ? 'Outfits with fit requests'")
     .replace('const sizeAnswer = customizableProduct', 'const sizeAnswer = madeToOrderProduct')
     .replace(/isStitchable=\{!customizableProduct &&/g, 'isStitchable={!madeToOrderProduct &&');
 
@@ -212,9 +216,9 @@ function patchProductInfo() {
 `,
       `    if (madeToOrderProduct && !customizableProduct) {
       customAttributes.push(
-        { key: 'Made to Order', value: 'Yes — confirmation required' },
+        { key: 'Fit Request', value: 'Confirmation required' },
         { key: 'Measurements', value: 'Required after order' },
-        { key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' },
+        { key: 'Timing Estimate', value: alterationShippingTimingNotice(shipsWithinDays) },
       );
     }
     if (isCustomSizeSelected) {
@@ -229,7 +233,7 @@ function patchProductInfo() {
       `    if (isCustomSizeSelected && !madeToOrderProduct) {
       customAttributes.push({
         key: 'Timing Estimate',
-        value: 'Approximately 4–5 weeks total for the custom selection; production and transit confirmed separately',
+        value: alterationShippingTimingNotice(shipsWithinDays),
       });
     }
     if (isStitchable && selectedStitchingType) {
@@ -262,8 +266,8 @@ function patchProductCard() {
       '  const isMadeToOrder = isMadeToOrderProduct(product.node.handle, product.node.tags);',
     )
     .replace(/\bisVerifiedCustom\b/g, 'isMadeToOrder')
-    .replace('View custom color &amp; measurement details', 'View made-to-order details')
-    .replace('                Custom color', '                Made to Order');
+    .replace('View custom color &amp; measurement details', 'View fit request details')
+    .replace('                Custom color', '                Fit confirmation required');
 
   const shippingBlock = `          {shipByLabel && (
             <p className="text-xs text-green-700 dark:text-green-400 font-medium">
@@ -271,7 +275,7 @@ function patchProductCard() {
             </p>
           )}`;
   const availabilityBlock = `          <p className={\`text-xs font-medium \${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-green-400'}\`}>
-            {isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+            {isMadeToOrder ? 'Fit confirmation required' : 'Available to order'}
           </p>
           {shipByLabel && !isMadeToOrder && (
             <p className="text-xs text-green-700 dark:text-green-400 font-medium">
@@ -283,6 +287,10 @@ function patchProductCard() {
     source = source.replace(shippingBlock, availabilityBlock);
   }
 
+  source = source
+    .replace(/Made to Order' : 'Ready to Ship'/g, "Fit confirmation required' : 'Available to order'")
+    .replace('View made-to-order details', 'View fit request details')
+    .replace('                Made to Order', '                Fit confirmation required');
   write(relative, source);
 }
 
@@ -523,7 +531,7 @@ function isMadeToOrderProduct(product) {
     )
     .replace(
       "? { label: 'Customizable Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }",
-      "? { label: 'Made-to-Order Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }",
+      "? { label: 'Outfits with fit requests', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }",
     );
 
   source = source.replace(
@@ -553,8 +561,8 @@ function patchTrustSourceValidator() {
     /requireAll\('src\/pages\/ReadyToShip\.tsx', \[[\s\S]*?\]\);/,
     `requireAll('src/pages/ReadyToShip.tsx', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
-  'Every purchasable LuxeMia catalog item is Ready to Ship',
-  'Order processing and carrier transit are separate',
+  'Items are supplied semi-stitched or ready stitched',
+  'Requested alterations or finishing add 3 business days once',
   'View route-based rates',
 ]);`,
   );
@@ -591,7 +599,7 @@ function patchBuiltTrustValidator() {
     /requireAll\('ready-to-ship', ready, \[[\s\S]*?\]\);/,
     `requireAll('ready-to-ship', ready, [
   'Ready-to-Ship Indian Ethnic Wear',
-  'Every purchasable LuxeMia catalog item is Ready to Ship',
+  'Items are supplied semi-stitched or ready stitched',
   'Custom Size, Custom Stitching or Made-to-Measure selection',
   'Processing and carrier transit are separate',
   'View route-based rates',
@@ -616,7 +624,7 @@ function patchBuiltTrustValidator() {
 function validateFinalState() {
   const ready = read('src/pages/ReadyToShip.tsx');
   requireMatch('src/pages/ReadyToShip.tsx', ready, /isMadeToOrderProduct\(product\.node\.handle, product\.node\.tags\)/, 'tag-aware Made-to-Order exclusion');
-  requireMatch('src/pages/ReadyToShip.tsx', ready, /Every purchasable LuxeMia catalog item is Ready to Ship/, 'owner-approved Ready-to-Ship rule');
+  requireMatch('src/pages/ReadyToShip.tsx', ready, /Items are supplied semi-stitched or ready stitched/, 'owner-approved Ready-to-Ship rule');
   requireAbsent('src/pages/ReadyToShip.tsx', ready, /processingDays\s*<=\s*5|verified semi-stitched processing window/i, 'retired five-day gate');
 
   const detail = read('src/pages/ProductDetail.tsx');
@@ -631,7 +639,7 @@ function validateFinalState() {
 
   const card = read('src/components/ui/ProductCard.tsx');
   requireMatch('src/components/ui/ProductCard.tsx', card, /isMadeToOrderProduct\(product\.node\.handle, product\.node\.tags\)/, 'card fulfillment classification');
-  requireMatch('src/components/ui/ProductCard.tsx', card, /Made to Order' : 'Ready to Ship'/, 'card availability label');
+  requireMatch('src/components/ui/ProductCard.tsx', card, /Fit confirmation required' : 'Available to order'/, 'card availability label');
   requireAbsent('src/components/ui/ProductCard.tsx', card, /View custom color &amp; measurement details/, 'custom-color-only card label');
 
   const filters = read('src/lib/productFilters.ts');
@@ -648,7 +656,7 @@ function validateFinalState() {
 
   const prerender = read('scripts/prerender.js');
   requireMatch('scripts/prerender.js', prerender, /category === 'ready-to-ship'[\s\S]*?!isMadeToOrderProduct\(product\)/, 'prerender Ready-to-Ship filter');
-  requireMatch('scripts/prerender.js', prerender, /Every purchasable LuxeMia catalog item is Ready to Ship/, 'prerender Ready-to-Ship copy');
+  requireMatch('scripts/prerender.js', prerender, /Items are supplied semi-stitched or ready stitched/, 'prerender Ready-to-Ship copy');
   requireAbsent('scripts/prerender.js', prerender, /days >= 1 && days <= 5|semi-stitched option has a verified processing window/i, 'retired prerender five-day rule');
 
   const trustValidator = read('scripts/validate-trust-source-of-truth.cjs');
@@ -690,5 +698,5 @@ patchBuiltTrustValidator();
 validateFinalState();
 
 console.log(
-  `[competitor-merchandising] OK — all purchasable non-custom products resolve as Ready to Ship; product-level and selection-level Made-to-Order timing, international shipping, catalog filters, product cards, prerendering and release validators are aligned${changed.length ? ` across ${changed.length} file(s)` : ''}.`,
+  `[competitor-merchandising] OK — listed construction and alteration timing are preserved; product-level and selection-level fit timing, international shipping, catalog filters, product cards, prerendering and release validators are aligned${changed.length ? ` across ${changed.length} file(s)` : ''}.`,
 );

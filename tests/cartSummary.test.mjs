@@ -18,6 +18,7 @@ const result = await build({
       else if(a.path === 'lucide-react') contents=`export const X=()=>null,Minus=X,Plus=X,Trash2=X,Loader2=X,ArrowRight=X,ShieldCheck=X,Award=X,Truck=X;`;
       else if(a.path.includes('cartStore')) contents=`export const useCartStore=()=>globalThis.fixtureStore;`;
       else if(a.path.includes('serviceAddOns')) contents=`export const isGarmentAlterationCartLine=()=>false; export const isHiddenBillingProductHandle=()=>false;`;
+      else if(a.path.includes('shipBy')) contents=`export const getProductShipsWithin=p=>Number(p.shipsWithinMetafield?.value || p.shipsWithin) || null;`;
       else if(a.path.includes('imageUtils')) contents=`export const getOptimizedImage=x=>x;`;
       else if(a.path.includes('/button')) contents=`import React from 'react'; export const Button=({children})=>React.createElement('button',null,children);`;
       else contents=`export default ()=>null;`;

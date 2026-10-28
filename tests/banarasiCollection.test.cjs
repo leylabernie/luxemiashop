@@ -13,6 +13,7 @@ function loadTypeScript(file) {
   const module = { exports: {} };
   vm.runInNewContext(code, { module, exports: module.exports, require(name) {
     if (name === './reviewedLehengaCollections.json') return require('../src/config/reviewedLehengaCollections.json');
+    if (name === '../config/shippingTiming.cjs') return require('../src/config/shippingTiming.cjs');
     throw new Error(`Unexpected module dependency: ${name}`);
   } });
   return module.exports;
@@ -194,7 +195,7 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
       metaToken: metaMode ? 'test-context' : null, metaContentId: metaMode ? 'test-item' : null, metaRequestedLine: metaMode ? {quantity:1} : null,
       saveMetaConfiguration(token, item, handle, values) { configured.push(...values); return '/meta-checkout?context=test-context'; },
       window: {location: {assign(path) { destinations.push(path); }}},
-      ...api, product, purchasableVariant: { node: garment },
+      ...api, ...require('../src/config/shippingTiming.cjs'), shipsWithinDays: null, product, purchasableVariant: { node: garment },
       selectedAvailableServiceAddOnCodes: selected, blouseServiceConfirmed: confirmed,
       customizableProduct: null, isCustomSizeSelected: false, isStitchable: false,
       needsStitchingSize: false, isMenswear: false, madeToOrderProduct: false,

@@ -1,4 +1,4 @@
-import { DESTINATION_IMPORT_NOTICE } from '@/config/shippingPolicy';
+import { DESTINATION_IMPORT_NOTICE, BASE_SHIPPING_TIMING_NOTICE, alterationShippingTimingNotice, productShippingTimingNotice } from '@/config/shippingPolicy';
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect } from 'react';
@@ -39,11 +39,11 @@ import { inferProductSpecColors } from '@/lib/productSpecColor';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
   getEligibleServiceAddOns,
+  selectedServicesRequireProcessing,
   hasFixedStitchedLehengaOptions,
   hasNativeFullStitchingOptions,
   requiresNativeStitchingTimingConfirmation,
   isUnstitchedDeliverySelection,
-  NATIVE_STITCHING_TIMING_NOTICE,
   selectedEligibleServiceAddOns,
   SERVICE_ADD_ON_PRODUCT_HANDLE,
   SERVICE_ADD_ONS,
@@ -553,8 +553,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   const isUnstitchedDelivery = isUnstitchedDeliverySelection(
     product, purchasableVariant?.node.selectedOptions ?? [],
   );
-  const shipsWithinDays = requiresNativeTimingConfirmation ? null : getProductShipsWithin(product);
-  const shipByLabel = requiresNativeTimingConfirmation ? null : getShipByLabel(product);
   const listedSizeOptions = useMemo(() => {
     const sizeOption = product.options.find((option) => isProductSizeOptionName(option.name));
     if (!sizeOption) return null;
@@ -576,6 +574,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     ),
   [selectedOptions]);
   const currentSelectionIsMadeToOrder = madeToOrderProduct || isCustomSizeSelected;
+  const hasSelectedAlterations = requiresNativeTimingConfirmation
+    || selectedServicesRequireProcessing(selectedAvailableServiceAddOnCodes)
+    || currentSelectionIsMadeToOrder || selectedStitchingType === 'made-to-measure';
+  const shipsWithinDays = getProductShipsWithin(product);
+  const shipByLabel = hasSelectedAlterations ? null : getShipByLabel(product);
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -774,35 +777,35 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     }
     if (requiresNativeTimingConfirmation) {
       customAttributes.push(
-        { key: 'Tailoring', value: 'Tailored to order' },
-        { key: 'Timing Confirmation', value: NATIVE_STITCHING_TIMING_NOTICE },
+        { key: 'Tailoring', value: 'Alterations / finishing requested' },
+        { key: 'Timing Confirmation', value: alterationShippingTimingNotice(shipsWithinDays) },
       );
     }
     if (customizableProduct) {
       customAttributes.push(
-        { key: 'Made to Order', value: 'Yes — confirmation required' },
+        { key: 'Fit Request', value: 'Confirmation required' },
         { key: 'Requested Custom Color', value: `${requestedCustomColor.trim()} — pending LuxeMia confirmation` },
         { key: 'Measurements', value: 'Required after order' },
-        ...(requiresNativeTimingConfirmation ? [] : [{ key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' }]),
+        ...(requiresNativeTimingConfirmation ? [] : [{ key: 'Timing Estimate', value: alterationShippingTimingNotice(shipsWithinDays) }]),
       );
     }
     if (madeToOrderProduct && !customizableProduct) {
       customAttributes.push(
-        { key: 'Made to Order', value: 'Yes — confirmation required' },
+        { key: 'Fit Request', value: 'Confirmation required' },
         { key: 'Measurements', value: 'Required after order' },
-        ...(requiresNativeTimingConfirmation ? [] : [{ key: 'Timing Estimate', value: 'Approximately 4–5 weeks total; production and transit confirmed separately' }]),
+        ...(requiresNativeTimingConfirmation ? [] : [{ key: 'Timing Estimate', value: alterationShippingTimingNotice(shipsWithinDays) }]),
       );
     }
     if (isCustomSizeSelected) {
       customAttributes.push(
-        { key: 'Custom Size', value: 'Measurements must be confirmed before production' },
+        { key: 'Custom Size', value: 'Measurements must be confirmed before alterations' },
         { key: 'Measurement Confirmation', value: 'Customer acknowledged before checkout' },
       );
     }
     if (isCustomSizeSelected && !madeToOrderProduct && !requiresNativeTimingConfirmation) {
       customAttributes.push({
         key: 'Timing Estimate',
-        value: 'Approximately 4–5 weeks total for the custom selection; production and transit confirmed separately',
+        value: alterationShippingTimingNotice(shipsWithinDays),
       });
     }
     if (isStitchable && selectedStitchingType) {
@@ -966,7 +969,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       <p className="text-xs text-muted-foreground">{DESTINATION_IMPORT_NOTICE}</p>
 
       {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} />
+      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} hasSelectedAlterations={hasSelectedAlterations} />
       {shipByLabel && !currentSelectionIsMadeToOrder && (
         <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
           <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
@@ -979,13 +982,13 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       {customizableProduct && (
         <section className="space-y-4 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="made-to-order-heading">
           <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Verified made-to-order design</p>
+            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Fit and color requests require confirmation</p>
             <h2 id="made-to-order-heading" className="mt-1 font-serif text-2xl">Custom color and measurements</h2>
           </div>
           <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
-            <li>This design can be made in a custom color, subject to fabric availability.</li>
-            <li>The outfit is made from measurements confirmed with LuxeMia after ordering.</li>
-            <li>Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the color, measurements, fabric availability, and delivery address are known.</li>
+            <li>Request a color only if LuxeMia confirms availability in writing; a custom color is not guaranteed.</li>
+            <li>The listed semi-stitched or ready-stitched item may be altered to confirmed measurements; the supplied construction remains as described.</li>
+            <li>{alterationShippingTimingNotice(shipsWithinDays)}</li>
             <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
             <li>For deliveries outside the United States, import-charge treatment must be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
             <li>Custom orders are final sale, subject to applicable law.</li>
@@ -1070,7 +1073,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
               <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed with adjustable side seams. Select only a size offered on this listing and plan local alterations if needed.</p>
               <p><strong className="text-foreground">Ready to Wear:</strong> A listing-specific request that requires LuxeMia to confirm the stated size, availability, timing, and any charge.</p>
-              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> The design choices, measurements, timing, and charge require LuxeMia confirmation before production.</p>
+              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> The design choices, measurements, timing, and charge require LuxeMia confirmation before alterations.</p>
             </div>
           )}
 
@@ -1123,7 +1126,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm">
               <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
               <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                After checkout, LuxeMia will use the order contact details to confirm whether tailoring is available, the exact measurements, timing, and any charge before production. Contact LuxeMia before ordering for a fixed event date.
+                After checkout, LuxeMia will use the order contact details to confirm whether tailoring is available, the exact measurements, timing, and any charge before alterations. Contact LuxeMia before ordering for a fixed event date.
               </p>
             </div>
           )}
@@ -1322,7 +1325,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Custom size selected</p>
-            <h3 id="custom-size-confirmation-heading" className="mt-1 font-serif text-xl">Measurements must be confirmed before production</h3>
+            <h3 id="custom-size-confirmation-heading" className="mt-1 font-serif text-xl">Measurements must be confirmed before alterations</h3>
           </div>
           <p className="text-sm leading-relaxed text-muted-foreground">
             Your selected Custom size is recorded with this order. LuxeMia will confirm measurements before tailoring begins; do not assume other design changes are included unless confirmed in writing.
@@ -1334,7 +1337,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
               onChange={(event) => setCustomSizeConfirmed(event.target.checked)}
               className="mt-1 h-4 w-4 accent-primary"
             />
-            <span>I understand that LuxeMia must confirm my measurements before production begins.</span>
+            <span>I understand that LuxeMia must confirm my measurements before alterations begin.</span>
           </label>
           <div className="flex flex-wrap gap-3 text-sm">
             <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">View the sizing guide</Link>
@@ -1537,7 +1540,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           <dt className="font-medium text-foreground">Sizing & Chart</dt>
           <dd className="text-muted-foreground">
             {currentSelectionIsMadeToOrder
-              ? 'Made to order from measurements confirmed with LuxeMia. '
+              ? 'Alteration measurements must be confirmed with LuxeMia. '
               : listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
             {hasStitchedBlouse ? (
               <span>The size applies to the stitched blouse. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance; these labels do not specify bra cup sizes.</span>
@@ -1550,13 +1553,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
           <dt className="font-medium text-foreground">Shipping Estimate</dt>
           <dd className="text-muted-foreground">
-            {requiresNativeTimingConfirmation
-              ? NATIVE_STITCHING_TIMING_NOTICE
-              : currentSelectionIsMadeToOrder
-              ? 'Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the required details and delivery address are known.'
+            {hasSelectedAlterations
+              ? alterationShippingTimingNotice(shipsWithinDays)
               : shipByLabel
-              ? `${shipByLabel}. Tracking details are emailed when the shipping label is created for dispatch.`
-              : 'Timing depends on the item and selected options. Tracking details are emailed when the shipping label is created for dispatch.'}
+              ? `${shipByLabel} without alterations. ${productShippingTimingNotice(shipsWithinDays)}`
+              : BASE_SHIPPING_TIMING_NOTICE}
           </dd>
 
           {productSpecs.color && (

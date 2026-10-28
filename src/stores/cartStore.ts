@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
+import { getProductShipsWithin } from '@/lib/shipBy';
+import { normalizeFulfillmentAttributes } from '@/lib/fulfillmentAttributes';
 import {
   AnalyticsItem,
   trackAddToCart,
@@ -57,9 +59,24 @@ interface CartStore {
   createCheckout: () => Promise<string | null>;
 }
 
-const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[]) => (
-  JSON.stringify(left || []) === JSON.stringify(right || [])
+const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[], days?: number | null) => (
+  JSON.stringify(normalizeFulfillmentAttributes(left, days) || []) === JSON.stringify(normalizeFulfillmentAttributes(right, days) || [])
 );
+
+// Multiple tabs can leave old and current automatic-copy versions in storage.
+// Collapse only lines with the existing variant/attribute identity, summing all
+// quantities once and retaining the first line's product, options and price.
+const normalizeCartItems = (items: CartItem[]): CartItem[] => {
+  const normalized: CartItem[] = [];
+  for (const item of items) {
+    const candidate = { ...item, customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)) };
+    const existing = normalized.find(current => current.variantId === candidate.variantId
+      && sameAttributes(current.customAttributes, candidate.customAttributes, getProductShipsWithin(candidate.product.node)));
+    if (existing) existing.quantity += candidate.quantity;
+    else normalized.push(candidate);
+  }
+  return normalized;
+};
 
 // Cart attributes also contain free-text fit/color requests and measurements.
 // Keep those for fulfillment only; never infer an analytics value from a key
@@ -72,6 +89,10 @@ const ANALYTICS_TAILORING_CHOICES = [
   { key: 'Tailoring', value: 'Tailored to order', label: 'Tailored to order' },
   { key: 'Custom Size', value: 'Measurements must be confirmed before production', label: 'Custom Size' },
   { key: 'Made to Order', value: 'Yes — confirmation required', label: 'Made to Order' },
+  // Preserve fixed analytics dimensions across automatic-copy migrations.
+  { key: 'Tailoring', value: 'Alterations / finishing requested', label: 'Tailored to order' },
+  { key: 'Custom Size', value: 'Measurements must be confirmed before alterations', label: 'Custom Size' },
+  { key: 'Fit Request', value: 'Confirmation required', label: 'Made to Order' },
 ] as const;
 
 const getTailoringOption = (item: CartItem) => ANALYTICS_TAILORING_CHOICES
@@ -119,10 +140,11 @@ export const useCartStore = create<CartStore>()(
       checkoutError: null,
 
       addItem: (item) => {
-        const { items } = get();
+        const items = normalizeCartItems(get().items);
+        const normalizedItem = { ...item, customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)) };
         const existingItem = items.find((current) => (
           current.variantId === item.variantId
-          && sameAttributes(current.customAttributes, item.customAttributes)
+          && sameAttributes(current.customAttributes, item.customAttributes, getProductShipsWithin(item.product.node))
         ));
 
         // Fire only after a valid cart action. Variant ID, selected variant, and
@@ -134,20 +156,20 @@ export const useCartStore = create<CartStore>()(
             checkoutError: null,
             items: items.map((current) => (
               current.variantId === item.variantId
-              && sameAttributes(current.customAttributes, item.customAttributes)
-                ? { ...current, quantity: current.quantity + item.quantity }
+              && sameAttributes(current.customAttributes, item.customAttributes, getProductShipsWithin(item.product.node))
+                ? { ...current, quantity: current.quantity + item.quantity, customAttributes: normalizeFulfillmentAttributes(current.customAttributes, getProductShipsWithin(current.product.node)) }
                 : current
             )),
           });
         } else {
-          set({ items: [...items, item], checkoutError: null });
+          set({ items: [...items, normalizedItem], checkoutError: null });
         }
       },
 
       updateQuantity: (variantId, quantity, customAttributes) => {
         const current = get().items.find((item) => (
           item.variantId === variantId
-          && sameAttributes(item.customAttributes, customAttributes)
+          && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node))
         ));
         if (!current) return;
 
@@ -170,12 +192,14 @@ export const useCartStore = create<CartStore>()(
           checkoutError: null,
           items: get().items.map((item) => {
             const isCurrentLine = item.variantId === variantId
-              && sameAttributes(item.customAttributes, customAttributes);
+              && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node));
             const isDependentService = shouldSyncServiceQuantities
               && isServiceLine(item)
               && appliesToProductTitle(item) === appliesToTitle;
 
-            return isCurrentLine || isDependentService ? { ...item, quantity } : item;
+            return isCurrentLine || isDependentService
+              ? { ...item, quantity, customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)) }
+              : item;
           }),
         });
       },
@@ -183,14 +207,14 @@ export const useCartStore = create<CartStore>()(
       removeItem: (variantId, customAttributes) => {
         const itemToRemove = get().items.find((item) => (
           item.variantId === variantId
-          && sameAttributes(item.customAttributes, customAttributes)
+          && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node))
         ));
         if (!itemToRemove) return;
 
         const removeDependentServices = !isServiceLine(itemToRemove);
         const linesToRemove = get().items.filter((item) => {
           const isCurrentLine = item.variantId === variantId
-            && sameAttributes(item.customAttributes, customAttributes);
+            && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node));
           const isDependentService = removeDependentServices
             && isServiceLine(item)
             && appliesToProductTitle(item) === itemToRemove.product.node.title;
@@ -223,8 +247,10 @@ export const useCartStore = create<CartStore>()(
       },
 
       createCheckout: async () => {
-        const { items, setLoading, setCheckoutUrl } = get();
+        const { setLoading, setCheckoutUrl } = get();
+        const items = normalizeCartItems(get().items);
         if (items.length === 0) return null;
+        set({ items });
 
         const totalValue = items.reduce(
           (sum, item) => sum + Number(item.price.amount) * item.quantity,
@@ -243,7 +269,7 @@ export const useCartStore = create<CartStore>()(
               variantId: item.variantId,
               quantity: item.quantity,
               handle: item.product.node.handle,
-              customAttributes: item.customAttributes,
+              customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)),
             })),
           );
 
@@ -297,14 +323,14 @@ export const useCartStore = create<CartStore>()(
           // customer-facing service experience was refined. Shopify displays
           // cart attributes in checkout, so only shopper-friendly context may
           // be persisted on service lines.
-          state.items = state.items.map((item) => ({
+          state.items = normalizeCartItems(state.items.map((item) => ({
             ...item,
-            customAttributes: item.customAttributes?.filter((attribute) => {
+            customAttributes: normalizeFulfillmentAttributes(item.customAttributes?.filter((attribute) => {
               if (attribute.key === 'Related Product Handle') return false;
               if (!isServiceLine(item) && attribute.key === 'Selected Paid Services') return false;
               return true;
-            }),
-          }));
+            }), getProductShipsWithin(item.product.node)),
+          })));
         }
       },
     },

@@ -91,8 +91,8 @@ requireAll('src/App.tsx', [
 ]);
 requireAll('src/pages/ReadyToShip.tsx', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
-  'Every purchasable LuxeMia catalog item is Ready to Ship',
-  'Order processing and carrier transit are separate',
+  'Items are supplied semi-stitched or ready stitched',
+  'Requested alterations or finishing add 3 business days once',
   'View route-based rates',
 ]);
 requireAll('src/lib/productFilters.ts', [

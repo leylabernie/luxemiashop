@@ -7,10 +7,9 @@ import { renderReviewedFitCopy } from '../lib/reviewedFitCopy.mjs';
  * Used by middleware.ts for product page SSR and 404 responses.
  */
 
-import { SHIPPING_TIMING_NOTICE } from '../config/shippingPolicy.js';
+import { productShippingTimingNotice } from '../config/shippingPolicy.js';
 import { RETURN_POLICY_FAQ_ANSWER } from '../lib/returnPolicyCopy.js';
-import { isCustomizableProduct, isMadeToOrderProduct } from '../lib/customizableProductStatus.js';
-import { hasNativeFullStitchingOptions } from '../lib/serviceAddOns.js';
+import { hasNativeFullStitchingOptions, mayRequireAlterationProcessing } from '../lib/serviceAddOns.js';
 import { getCatalogMaterial } from '../lib/catalogMaterial.js';
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
@@ -338,6 +337,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         additionalProperties,
         productGroupId: groupId,
         shipsWithinDays,
+        omitShippingTiming: mayRequireAlterationProcessing({...product, description: product.description || '', variants: {edges: product.variants.edges.map(({node}) => ({node: {selectedOptions: node.selectedOptions ?? []}}))}}),
         variesBy: [
           ...(schemaVariants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
           ...(schemaVariants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
@@ -364,6 +364,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
         currency,
         availability: availability as 'InStock' | 'OutOfStock',
         shipsWithinDays,
+        omitShippingTiming: mayRequireAlterationProcessing({...product, description: product.description || '', variants: {edges: product.variants.edges.map(({node}) => ({node: {selectedOptions: node.selectedOptions ?? []}}))}}),
       });
 
   const breadcrumbSchema = generateBreadcrumbSchema([
@@ -383,19 +384,12 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       node: { selectedOptions: node.selectedOptions ?? [] },
     })) },
   });
-  const shippingEstimate = nativeStitching
-    ? 'Unstitched (Fabric Only) requires tailoring before wearing. Standard Stitched and Custom Stitched dispatch timing is confirmed after measurements. Confirm availability, processing and carrier transit before ordering.'
-    : isCustomizableProduct(product.handle)
-    ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
-    : isMadeToOrderProduct(product.handle, product.tags)
-    ? 'Made to order. Confirm production, dispatch and carrier transit with LuxeMia before ordering for a fixed event date.'
-    : product.tags?.includes('availability:Confirm before ordering')
-    ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+  const shippingEstimate = productShippingTimingNotice(shipsWithinDays) + (nativeStitching
+    ? ' The Fabric Only selection retains its listed semi-stitched / unstitched pieces and requires finishing before wearing. Standard Stitched and Custom Stitched fitting selections use the alteration allowance.'
     : product.tags?.includes('construction:Unstitched')
-    ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
-    : shipsWithinDays
-    ? `Ships within ${shipsWithinDays} business day${shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
-    : SHIPPING_TIMING_NOTICE + ' Optional tailoring adds processing time; confirm timing before ordering for an event date.';
+    ? ' This listing is supplied unstitched, not as a ready-to-wear garment.'
+    : '') + (product.tags?.includes('availability:Confirm before ordering')
+    ? ' Confirm the selected size and current availability before ordering.' : '');
 
   const sizeAnswer = sizes.length > 0
     ? `Available choices shown for this listing are ${sizes.join(', ')}. Review the Size Guide before ordering.`

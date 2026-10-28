@@ -25,7 +25,7 @@ const defaultFilterSections: FilterSection[] = [
   },
   {
     name: 'Availability',
-    options: ['Available Online', 'Made to Order'],
+    options: ['Available Online', 'Fit confirmation required'],
   },
   {
     name: 'Fabric',
