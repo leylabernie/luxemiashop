@@ -168,9 +168,37 @@ export function inferIncludedPiecesFromTitle(
   return undefined;
 }
 
+/** Recognize only complete, explicitly enumerated Anarkali sets in listing prose. */
+function includedAnarkaliPiecesFromDescription(listing: string): string | undefined {
+  // Restrict this fallback to the opening statement followed by an explicit
+  // three-piece count. Do not turn styling/availability suggestions into contents.
+  if (/\b(?:does not include|not included|exclud(?:e|es|ed|ing)|without|separately|optional)\b/i.test(listing)) {
+    return undefined;
+  }
+  const opening = listing.trim().match(/^([^.!?]{1,240})\.\s*3 pieces\./i)?.[1];
+  if (!opening || /\b(?:available|optional|separately|not|without|may|can|could|style|styling|pair|paired)\b/i.test(opening)) {
+    return undefined;
+  }
+
+  const enumerated = opening.match(/^[a-z -]*anarkali suit set:\s*(.+)$/i)?.[1];
+  if (enumerated) {
+    const pieces = enumerated.split(',').map((piece) => piece.trim());
+    if (pieces.length === 3
+      && /^[a-z -]*anarkali top$/i.test(pieces[0])
+      && /^[a-z -]*palazzo$/i.test(pieces[1])
+      && /^[a-z -]*dupatta(?: with [a-z -]*border)?$/i.test(pieces[2])) {
+      return pieces.join(', ');
+    }
+  }
+  if (/^[a-z -]*anarkali gown set with palazzo and dupatta$/i.test(opening)) {
+    return 'Anarkali gown, palazzo, and dupatta';
+  }
+  return undefined;
+}
+
 /**
  * Uses only listing-backed set contents: normalized metadata first, then one
- * exact included-pieces tag, and finally conservative title/tag evidence.
+ * exact included-pieces tag, explicit description contents, then conservative title/tag evidence.
  * Product type alone is never used to invent set contents.
  */
 export function resolveIncludedPieces(
@@ -209,5 +237,7 @@ export function resolveIncludedPieces(
     && /\b(?:blouse|choli|lehenga|skirt|dupatta|saree|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?)\b/i.test(explicit)) {
     return explicit;
   }
+  const descriptionPieces = includedAnarkaliPiecesFromDescription(listing);
+  if (descriptionPieces) return descriptionPieces;
   return inferIncludedPiecesFromTitle(productTitle, tags);
 }
