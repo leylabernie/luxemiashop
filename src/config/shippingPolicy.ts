@@ -64,10 +64,9 @@ export const SHIPPING_POLICY_SUMMARY =
 export const SHIPPING_ORIGIN_NOTICE = 'Orders ship from India.';
 
 export const SHIPPING_PROCESSING_NOTICE =
-  'Ready-to-ship items dispatch within 3–4 business days. For tailoring or made-to-order items, dispatch timing is confirmed after measurements and service details are agreed.';
+  'Items are supplied semi-stitched or ready stitched as described on each listing; any explicitly listed fabric-only or unstitched blouse pieces remain as described. Without alterations, estimated dispatch is within 3–4 business days. Requested alterations or finishing add 3 business days once, after complete measurements and service details are confirmed.';
 
-export const SHIPPING_TIMING_NOTICE =
-  'Orders ship from India. Ready-to-ship items dispatch within 3–4 business days. Standard shipping takes approximately 9–14 business days after dispatch (12–18 business days total). Express shipping, when separately quoted and confirmed before ordering, takes approximately 3–6 business days after dispatch (6–10 business days total). These are estimates; delivery varies by destination and carrier or customs delays.';
+export { alterationShippingTimingNotice, BASE_SHIPPING_TIMING_NOTICE, ALTERATION_TIMING_NOTICE, SHIPPING_TIMING_NOTICE, productShippingTimingNotice } from './shippingTiming.cjs';
 
 export const SHIPPING_CONSOLIDATION_NOTICE =
   'Multi-item orders are normally consolidated into one shipment after every item is ready. Contact LuxeMia before ordering for a separately quoted split shipment or express option.';

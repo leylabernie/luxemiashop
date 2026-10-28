@@ -1,3 +1,5 @@
+import { productShippingTimingNotice } from '@/config/shippingPolicy';
+import { mayRequireAlterationProcessing } from '@/lib/serviceAddOns';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams, useSearchParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -166,7 +168,7 @@ const ProductDetail = () => {
     ? '/collections/customizable-indian-outfits'
     : getCategoryUrl(product?.productType);
   const categoryName = madeToOrderProduct
-    ? 'Made-to-Order Indian Outfits'
+    ? 'Outfits with fit requests'
     : product?.productType || 'Collections';
   // Ignore a prior route's selection during Back/Forward or variant-link navigation.
   const selectedVariantId = variantSelection?.key === selectionKey ? variantSelection.id : null;
@@ -270,7 +272,7 @@ const ProductDetail = () => {
     ?.find((option) => isProductSizeOptionName(option.name))
     ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
   const sizeAnswer = madeToOrderProduct
-    ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+    ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
     : product?.tags?.includes('construction:Saree with stitched blouse') && productSizeValues.length > 0
     ? `Choose blouse size ${productSizeValues.join(', ')}. The size applies to the stitched blouse; the saree needs draping. These are blouse size labels, not complete bra sizes. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance.`
     : productSizeValues.length > 0
@@ -299,19 +301,11 @@ const ProductDetail = () => {
     },
     {
       question: `What is the delivery time for the ${product.title}?`,
-      answer: hasNativeFullStitchingOptions(product)
-        ? 'Unstitched (Fabric Only) is supplied unstitched and requires tailoring before wearing. Standard Stitched and Custom Stitched selections require tailoring; dispatch timing is confirmed after measurements. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
-        : madeToOrderProduct
-        ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
-        : product?.tags?.includes('availability:Confirm before ordering')
-        ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
-        : product?.tags?.includes('construction:Unstitched')
-        ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
-        : 'This product is Ready to Ship in its listed stocked selections. Ready to Ship describes stock availability; order processing and carrier transit are separate. Any Custom Size, Custom Stitching or Made-to-Measure selection takes additional processing time, and LuxeMia confirms timing before production.'
+      answer: productShippingTimingNotice(productShipsWithinDays) + ' The selected variant and listing describe the supplied construction; explicit fabric-only or unstitched pieces are not ready-to-wear garments.'
     },
     ...(customizableProduct ? [{
       question: `Can I request another color for the ${product.title}?`,
-      answer: 'Yes. A custom color is available for this verified design. Contact LuxeMia with the product link and requested color so fabric availability can be confirmed before ordering. Other design changes are not promised unless LuxeMia confirms them in writing.',
+      answer: 'A different color is a request, not a guaranteed option. LuxeMia must confirm availability in writing. Contact LuxeMia with the product link and requested color so fabric availability can be confirmed before ordering. Other design changes are not promised unless LuxeMia confirms them in writing.',
     }] : []),
     {
       question: `Can I return the ${product.title}?`,
@@ -381,6 +375,7 @@ const ProductDetail = () => {
       additionalProperties: productAdditionalProperties,
       productGroupId: groupId,
       shipsWithinDays: productShipsWithinDays,
+      omitShippingTiming: mayRequireAlterationProcessing(product),
       variesBy: [
         ...(variants.some((variant) => variant.color) ? ['https://schema.org/color'] : []),
         ...(variants.some((variant) => variant.size) ? ['https://schema.org/size'] : []),
@@ -436,6 +431,7 @@ const ProductDetail = () => {
             additionalProperties: productAdditionalProperties,
             googleProductCategory: productGoogleCategory,
             shipsWithinDays: productShipsWithinDays,
+      omitShippingTiming: mayRequireAlterationProcessing(product),
           }}
           structuredProduct={productGroupSchema}
           breadcrumbs={[

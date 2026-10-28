@@ -85,12 +85,12 @@ test('DeliveryEstimate preserves custom/tailoring exceptions while disclosing In
   const { DeliveryEstimate } = loadTs('src/components/product/DeliveryEstimate.tsx');
   const render = props => renderToStaticMarkup(React.createElement(DeliveryEstimate, { hasStitching: false, ...props }));
   requireStandardTiming(render({}));
-  for (const props of [{ isMadeToOrder:true },{ isUnstitched:true },{ confirmAvailability:true },{ requiresTailoringTimingConfirmation:true },{ shipsWithinDays:6 }]) {
+  for (const props of [{ isMadeToOrder:true },{ requiresTailoringTimingConfirmation:true },{ shipsWithinDays:6 }]) {
     const html = render(props);
     assert.match(html,/Orders ship from India/);
     assert.doesNotMatch(html,/12–18 business days total/);
   }
-  assert.match(render({hasStitching:true}),/add processing time/);
+  assert.match(render({hasStitching:true}),/add 3 business days once/);
 });
 
 test('real crawler shipping, customs, FAQ and return pages agree with shared shopper policy', async () => {
@@ -126,9 +126,9 @@ test('product-specific dispatch and made-to-order branches do not inherit the st
   for (const overrides of [{ shipsWithinMetafield:{value:'6'} }, { tags:['made to order'] }]) {
     const p=product(overrides);
     const html=generateHtml(template,{path:'/product/policy-fixture',title:p.title,h1:p.title,description:p.description,product:p},new Map());
-    assert.doesNotMatch(html,/12–18 business days total/);
+    if (overrides.shipsWithinMetafield) assert.doesNotMatch(html,/12–18 business days total/);
     if (overrides.shipsWithinMetafield) assert.match(html,/Ships within 6 business days/);
-    if (overrides.tags) assert.match(html,/Made to order. Confirm production/);
+    if (overrides.tags) { assert.match(html,/15–21 business days total/); assert.doesNotMatch(html,/Made to order. Confirm production/); }
     assert.match(html,/Ships from/);requireReturnPolicy(html);
   }
 });
@@ -143,8 +143,9 @@ test('crawler confirmation and unstitched guards override default and explicit p
       const faq = schemas.find(s=>s['@type']==='FAQPage');
       const answer = faq.mainEntity.find(q=>q.name==='How is this product shipped?').acceptedAnswer.text;
       for (const text of [html,answer]) {
-        assert.doesNotMatch(text,/3–4 business days|12–18 business days total|Ships within 6 business days/);
-        assert.match(text,/Confirm .*availability/);
+        assert.match(text,/add 3 business days once/);
+        if (shipsWithinMetafield) assert.match(text,/Ships within 6 business days/);
+        if (tag==='availability:Confirm before ordering') assert.match(text,/Confirm .*availability/);
         if(tag==='construction:Unstitched') assert.match(text,/supplied unstitched/);
       }
       assert.match(html,/Ships from/);requireReturnPolicy(html);
@@ -163,13 +164,13 @@ test('runtime crawler HTML uses shared timing and return terms with product-spec
   requireStandardTiming(render(product()));
   requireStandardTiming(render(product({variants:{edges:[{node:{...product().variants.edges[0].node,selectedOptions:undefined}}]}})));
   const mapped = loadTs('src/middleware/htmlGenerator.ts', [{handle:'policy-fixture',sku:'fixture',title:'Custom fixture',etsyUrl:'',imageId:''}]).generateProductHtml(product(),'https://luxemia.shop/product/policy-fixture');
-  assert.match(mapped,/4–5 week total order window/);
-  assert.doesNotMatch(mapped,/12–18 business days total/);requireReturnPolicy(mapped);
+  assert.doesNotMatch(mapped,/4–5 week total order window/);
+  assert.match(mapped,/15–21 business days total/);requireReturnPolicy(mapped);
   assert.match(render(product({shipsWithinMetafield:{value:'6'}})),/Ships within 6 business days/);
   for (const p of [native,product({tags:['made to order']}), ...['availability:Confirm before ordering','construction:Unstitched'].flatMap(tag=>[product({tags:[tag]}),product({tags:[tag],shipsWithinMetafield:{value:'6'}})])]) {
     const html = render(p);
-    assert.doesNotMatch(html,/3–4 business days|12–18 business days total|Ships within 6 business days/);
-    assert.match(html,/Confirm /);
+    assert.match(html,/add 3 business days once/);
+    assert.doesNotMatch(html,/Made to order\. Confirm production/);
     assert.match(html,/<dt>Ships from<\/dt><dd>India/);
     assert.match(html,/79.08/);requireReturnPolicy(html);
   }
@@ -194,7 +195,10 @@ test('build-time route rewriting retains shared timing expressions on repeated r
 });
 
 test('shipping processing clarification is identical in rendered shopper and initial HTML', async () => {
-  const expected = 'Ready-to-ship items dispatch within 3–4 business days. For tailoring or made-to-order items, dispatch timing is confirmed after measurements and service details are agreed.';
+  const expected = shipping.SHIPPING_PROCESSING_NOTICE;
+  assert.match(expected, /semi-stitched or ready stitched/);
+  assert.match(expected, /add 3 business days once/);
+  assert.doesNotMatch(expected, /made-to-order/);
   assert.equal(shipping.SHIPPING_PROCESSING_NOTICE, expected);
   const source = read('src/pages/Shipping.tsx')
     .replace(/^import (Header|Footer|SEOHead) from .*;$/gm, 'const $1 = () => null;');

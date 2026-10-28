@@ -114,8 +114,9 @@ export function generateUsShippingServiceSchema() {
 // $14.99 below $150 and free at $150+. A handling-time window is emitted only
 // when the product carries a valid custom.ships_within value. Carrier transit
 // remains omitted because it depends on the destination and selected service.
-export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
-  const handlingDays = normalizeShipsWithinDays(shipsWithinDays);
+// Omit a base-only handling window when fitting or services can change dispatch.
+export function generateUsProductShippingDetails(shipsWithinDays?: number | null, omitShippingTiming = false) {
+  const handlingDays = omitShippingTiming ? null : normalizeShipsWithinDays(shipsWithinDays);
   const deliveryTime = handlingDays ? {
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
@@ -199,6 +200,8 @@ export interface ProductSchemaInput {
   availability: 'InStock' | 'OutOfStock';
   /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
   shipsWithinDays?: number | null;
+  /** Suppress a base-only handling window when alterations or services can change dispatch. */
+  omitShippingTiming?: boolean;
   aggregateRating?: AggregateRatingInput | null;
 }
 
@@ -239,6 +242,7 @@ function getGtinSchemaProperty(value?: string | null): Record<string, string> {
 function generateOfferSchema(
   input: Pick<ProductVariantSchemaInput, 'url' | 'price' | 'currency' | 'availability'> & {
     shipsWithinDays?: number | null;
+    omitShippingTiming?: boolean;
   },
 ) {
   return {
@@ -251,7 +255,7 @@ function generateOfferSchema(
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@id': `${SITE_URL}/#organization` },
     merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-    shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays),
+    shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays, input.omitShippingTiming),
   };
 }
 
@@ -270,6 +274,8 @@ export function generateProductGroupSchema(input: {
   variants: ProductVariantSchemaInput[];
   /** Source-backed custom.ships_within handling window; carrier transit is intentionally not inferred. */
   shipsWithinDays?: number | null;
+  /** Suppress a base-only handling window when alterations or services can change dispatch. */
+  omitShippingTiming?: boolean;
   aggregateRating?: AggregateRatingInput | null;
 }) {
   const groupId = `${input.url}#productgroup`;
@@ -320,7 +326,7 @@ export function generateProductGroupSchema(input: {
       }),
       ...(variant.size && { size: variant.size }),
       ...(buildAggregateRating(variant.aggregateRating) && { aggregateRating: buildAggregateRating(variant.aggregateRating) }),
-      offers: generateOfferSchema({ ...variant, shipsWithinDays: input.shipsWithinDays }),
+      offers: generateOfferSchema({ ...variant, shipsWithinDays: input.shipsWithinDays, omitShippingTiming: input.omitShippingTiming }),
     })),
   };
 }
@@ -365,6 +371,7 @@ export function generateProductSchema(input: ProductSchemaInput) {
       currency: input.currency,
       availability: input.availability,
       shipsWithinDays: input.shipsWithinDays,
+      omitShippingTiming: input.omitShippingTiming,
     }),
   };
 }

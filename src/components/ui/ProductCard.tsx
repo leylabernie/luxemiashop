@@ -368,7 +368,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             <div className="flex gap-2 w-full">
               {isMadeToOrder ? (
                 <span className="flex w-full items-center justify-center bg-background/95 px-3 py-2 text-xs font-medium text-foreground backdrop-blur-sm">
-                  View made-to-order details
+                  View fit request details
                 </span>
               ) : (
                 <button
@@ -403,7 +403,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
             )}
             {isMadeToOrder && isAvailable && (
               <span className="rounded-[2px] bg-[#a96f72] px-2 py-0.5 text-[10px] font-medium uppercase tracking-widest text-[#fff9f4]">
-                Made to Order
+                Fit confirmation required
               </span>
             )}
 
@@ -444,7 +444,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
 
           </div>
           <p className={`text-xs font-medium ${isMadeToOrder ? 'text-amber-700 dark:text-amber-400' : 'text-green-700 dark:text-green-400'}`}>
-            {hasStitchingChoices ? 'Stitching options available' : product.node.tags?.includes('construction:Saree with stitched blouse') ? 'Stitched blouse included' : product.node.tags?.includes('construction:Unstitched') ? 'Unstitched' : isMadeToOrder ? 'Made to Order' : 'Ready to Ship'}
+            {hasStitchingChoices ? 'Stitching options available' : product.node.tags?.includes('construction:Saree with stitched blouse') ? 'Stitched blouse included' : product.node.tags?.includes('construction:Unstitched') ? 'Unstitched' : isMadeToOrder ? 'Fit confirmation required' : 'Available to order'}
           </p>
           {shipByLabel && !isMadeToOrder && (
             <p className="text-xs text-green-700 dark:text-green-400 font-medium">

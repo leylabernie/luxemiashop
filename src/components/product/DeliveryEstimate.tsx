@@ -1,6 +1,5 @@
 import { Truck, Clock, PackageCheck } from 'lucide-react';
-import { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
-import { NATIVE_STITCHING_TIMING_NOTICE } from '@/lib/serviceAddOns';
+import { SHIPPING_ORIGIN_NOTICE, BASE_SHIPPING_TIMING_NOTICE, alterationShippingTimingNotice, productShippingTimingNotice } from '@/config/shippingPolicy';
 
 interface DeliveryEstimateProps {
   hasStitching: boolean;
@@ -10,9 +9,10 @@ interface DeliveryEstimateProps {
   hasStitchedBlouse?: boolean;
   confirmAvailability?: boolean;
   requiresTailoringTimingConfirmation?: boolean;
+  hasSelectedAlterations?: boolean;
 }
 
-export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false, requiresTailoringTimingConfirmation = false }: DeliveryEstimateProps) => (
+export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder = false, isUnstitched = false, hasStitchedBlouse = false, confirmAvailability = false, requiresTailoringTimingConfirmation = false, hasSelectedAlterations = false }: DeliveryEstimateProps) => (
   <div className="space-y-3 rounded-sm border border-border/50 bg-card/50 p-4">
     <div className="flex items-center gap-2 text-sm">
       <Truck className="h-4 w-4 text-primary" />
@@ -21,27 +21,27 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
 
     <div className="space-y-2 text-sm">
       <div className="flex items-start gap-2">
-        {isMadeToOrder || requiresTailoringTimingConfirmation ? (
+        {isMadeToOrder || requiresTailoringTimingConfirmation || hasSelectedAlterations ? (
           <Clock className="mt-0.5 h-3.5 w-3.5 text-amber-600" />
         ) : (
           <PackageCheck className="mt-0.5 h-3.5 w-3.5 text-green-700" />
         )}
         <div>
           <p className="font-medium text-foreground">
-            {requiresTailoringTimingConfirmation ? 'Tailored to order' : hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Made to Order' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days` : 'Ready to ship'}
+            {requiresTailoringTimingConfirmation || hasSelectedAlterations ? 'Alterations / finishing selected' : hasStitchedBlouse ? 'Stitched blouse included; saree needs draping' : isUnstitched ? 'Unstitched fabric set' : isMadeToOrder ? 'Fit request — confirmation required' : confirmAvailability ? 'Confirm availability' : shipsWithinDays ? `Estimated dispatch in ${shipsWithinDays} business days without alterations` : 'Available to order'}
           </p>
           <p className="mt-1 text-xs text-muted-foreground">
-            {requiresTailoringTimingConfirmation
-              ? NATIVE_STITCHING_TIMING_NOTICE
-              : confirmAvailability
-              ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
-              : isUnstitched
-              ? 'Supplied unstitched; tailoring is required before wearing. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+            {requiresTailoringTimingConfirmation || hasSelectedAlterations
+              ? alterationShippingTimingNotice(shipsWithinDays)
               : isMadeToOrder
-              ? 'Use approximately 4–5 weeks as the total planning window. Production time and carrier transit are confirmed separately after the requested color, measurements, available design options and delivery address are known.'
+              ? alterationShippingTimingNotice(shipsWithinDays)
+              : isUnstitched
+              ? `Supplied as the listed fabric-only / unstitched selection; it is not a finished garment. ${shipsWithinDays ? productShippingTimingNotice(shipsWithinDays) : BASE_SHIPPING_TIMING_NOTICE} Any separate local stitching before wearing is outside this shipping estimate.`
+              : confirmAvailability
+              ? `Confirm the selected size and availability before ordering. ${shipsWithinDays ? productShippingTimingNotice(shipsWithinDays) : BASE_SHIPPING_TIMING_NOTICE}`
               : shipsWithinDays
-              ? 'Standard transit takes approximately 9–14 business days after dispatch; express transit takes approximately 3–6 business days. Delivery varies by destination and carrier or customs delays.'
-              : SHIPPING_TIMING_NOTICE}
+              ? `The listed dispatch estimate excludes requested alterations or finishing, which add 3 business days once after required details are confirmed. Standard transit is approximately 9–14 business days after dispatch; arrival dates are not guaranteed.`
+              : BASE_SHIPPING_TIMING_NOTICE}
           </p>
         </div>
       </div>
@@ -58,11 +58,11 @@ export const DeliveryEstimate = ({ shipsWithinDays, hasStitching, isMadeToOrder 
         </div>
       </div>
 
-      {hasStitching && !isMadeToOrder && !isUnstitched && !confirmAvailability && !requiresTailoringTimingConfirmation && (
+      {hasStitching && !isMadeToOrder && !isUnstitched && !confirmAvailability && !requiresTailoringTimingConfirmation && !hasSelectedAlterations && (
         <div className="flex items-start gap-2">
           <Clock className="mt-0.5 h-3.5 w-3.5 text-amber-600" />
           <p className="text-muted-foreground">
-            Optional stitching, finishing or alterations add processing time to the ready-stock base item. Confirm timing with LuxeMia before ordering for a fixed event date.
+            Requested alterations or finishing add 3 business days once after complete measurements and service details are confirmed. Confirm any fabric-piece stitching service separately; the listed construction is unchanged.
           </p>
         </div>
       )}

@@ -283,7 +283,7 @@ export function applyProductFiltersV2(
             return variants.some(v => v.node.availableForSale);
           }
 
-          if (valueLower.includes('made to order') || valueLower.includes('custom')) {
+          if (valueLower.includes('made to order') || valueLower.includes('custom') || valueLower.includes('fit confirmation')) {
             return isMadeToOrderProduct(p.node.handle, p.node.tags);
           }
 

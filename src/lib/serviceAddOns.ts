@@ -1,3 +1,5 @@
+import { ALTERATION_TIMING_NOTICE } from '../config/shippingTiming.cjs';
+
 export const SERVICE_ADD_ON_PRODUCT_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
 
 /**
@@ -206,7 +208,19 @@ export const hasNativeAlterationOptions = (product: ServiceEligibleProduct): boo
 };
 
 export const NATIVE_STITCHING_TIMING_NOTICE =
-  'Tailoring required; dispatch timing confirmed after measurements.';
+  ALTERATION_TIMING_NOTICE;
+
+/** One processing allowance for any alteration/finishing selection, never per fee. */
+export const selectedServicesRequireProcessing = (codes: ServiceAddOnCode[]): boolean =>
+  codes.some(code => code === 'garment-alteration' || code === 'blouse-stitching' || code === 'pico-fall');
+
+/** A family may offer fitting even when its first/default variant does not. */
+export const mayRequireAlterationProcessing = (product: ServiceEligibleProduct): boolean =>
+  hasNativeFullStitchingOptions(product) || hasNativeAlterationOptions(product)
+  || selectedServicesRequireProcessing(getEligibleServiceAddOns(product))
+  || (product.options ?? []).some(option => /size/i.test(option.name)
+    && option.values.some(value => /\bcustom\b/i.test(value)))
+  || (product.tags ?? []).some(tag => /^(?:availability:)?made to order$|^custom-made$/i.test(tag.trim()));
 
 export const requiresNativeStitchingTimingConfirmation = (
   product: ServiceEligibleProduct,

@@ -24,7 +24,7 @@ test('native standard stitching requires timing acknowledgment and transfers att
  p.variants.edges=[variant(1,'Standard Stitched / 34'),variant(2,'Unstitched (Fabric Only) / Fabric Only'),variant(3,'Custom Stitched / Custom Fit')];[['Standard Stitched','34'],['Unstitched (Fabric Only)','Fabric Only'],['Custom Stitched','Custom Fit']].forEach(([stitching,size],i)=>{p.variants.edges[i].node.selectedOptions=[{name:'Stitching',value:stitching},{name:'Size',value:size}];});
  const selection={product:p,quantity:1,variantId:'gid://shopify/ProductVariant/1'};
  assert.throws(()=>metaCheckoutLines([selection]),/acknowledge/);
- const lines=metaCheckoutLines([{...selection,timingConfirmed:true}]);assert.equal(lines[0].customAttributes[0].key,'Tailoring');
+ const lines=metaCheckoutLines([{...selection,timingConfirmed:true}]);assert.equal(lines[0].customAttributes[0].key,'Tailoring');assert.equal(lines[0].customAttributes[0].value,'Alterations / finishing requested');
 });
 test('made to order cannot bypass full configurator',()=>{const p=product();p.tags=['made to order'];assert.throws(()=>metaCheckoutLines([{product:p,quantity:1,variantId:'gid://shopify/ProductVariant/1'}]),/configurator/);});
 test('Meta route is private in Edge middleware and absent from prerender manifest',()=>{
@@ -67,4 +67,12 @@ test('blank normalization preserves discount validation and duplicate guards',()
  for(const suffix of ['&coupon&coupon','&coupon=&coupon=SAVE','&coupon=SAVE&coupon=']) assert.throws(()=>parseMetaCheckout('?products=a:1'+suffix));
  assert.equal(parseMetaCheckout('?products=a:1&coupon=SAVE%2B10%20%26%20MORE&cart_origin=meta_shops').coupon,'SAVE+10 & MORE');
  assert.equal(parseMetaCheckout('?products=a:1&coupon=%20SAVE%20').coupon,' SAVE ');
+});
+
+test('saved Meta configuration normalizes only legacy automatic fulfillment copy',async()=>{
+ const p=product('custom-lehenga');const attrs=[{key:'Tailoring',value:'Tailored to order'},{key:'Requested Custom Color',value:'SYNTHETIC blue'},{key:'Applies To',value:'Tailored to order'}];
+ const line={...configuredItem(p.handle,1),handle:p.handle,customAttributes:attrs};
+ const lines=await mod.exports.configuredMetaCheckoutLines({product:p,quantity:1,variantId:line.variantId,configured:[line]},async()=>p);
+ assert.deepEqual(lines[0].customAttributes,[{key:'Tailoring',value:'Alterations / finishing requested'},...attrs.slice(1)]);
+ assert.equal(lines[0].quantity,1);assert.equal(lines[0].variantId,line.variantId);assert.equal(attrs[0].value,'Tailored to order');
 });

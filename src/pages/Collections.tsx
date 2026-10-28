@@ -127,8 +127,8 @@ const Collections = () => {
           </nav>
           {canPromoteCollection('/collections/customizable-indian-outfits') && (<div className="mt-6 flex flex-col gap-3 rounded-sm border border-primary/25 bg-primary/5 p-5 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <h2 className="font-serif text-xl">Need a custom color and made-to-order fit?</h2>
-              <p className="mt-1 text-sm text-muted-foreground">Browse designs verified for a custom color and tailoring from confirmed measurements.</p>
+              <h2 className="font-serif text-xl">Need help with fit or color choices?</h2>
+              <p className="mt-1 text-sm text-muted-foreground">Review listed choices and request confirmation before ordering; additional colors are not guaranteed.</p>
             </div>
             <Link to="/collections/customizable-indian-outfits" className="shrink-0 text-sm font-medium text-primary underline underline-offset-4">
               Shop customizable outfits

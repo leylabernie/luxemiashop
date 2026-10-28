@@ -299,7 +299,7 @@ const LEHENGAS: CategoryConfig = {
       options: [
         { value: 'ready to ship', label: 'Ready to Ship' },
         { value: 'available online', label: 'Available Online' },
-        { value: 'made to order', label: 'Made to Order' },
+        { value: 'made to order', label: 'Fit confirmation required' },
       ],
     },
   ],
@@ -511,7 +511,7 @@ const SAREES: CategoryConfig = {
       defaultExpanded: false,
       options: [
         { value: 'available online', label: 'Available Online' },
-        { value: 'made to order', label: 'Made to Order' },
+        { value: 'made to order', label: 'Fit confirmation required' },
       ],
     },
   ],
@@ -684,7 +684,7 @@ const SUITS: CategoryConfig = {
       defaultExpanded: false,
       options: [
         { value: 'available online', label: 'Available Online' },
-        { value: 'made to order', label: 'Made to Order' },
+        { value: 'made to order', label: 'Fit confirmation required' },
       ],
     },
   ],
@@ -848,7 +848,7 @@ const MENSWEAR: CategoryConfig = {
       defaultExpanded: false,
       options: [
         { value: 'available online', label: 'Available Online' },
-        { value: 'made to order', label: 'Made to Order' },
+        { value: 'made to order', label: 'Fit confirmation required' },
       ],
     },
   ],

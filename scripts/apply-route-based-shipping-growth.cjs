@@ -155,8 +155,8 @@ const shippingServicesFunction = `export function generateUsShippingServiceSchem
   ];
 }`;
 
-const productShippingFunction = `export function generateUsProductShippingDetails(shipsWithinDays?: number | null) {
-  const handlingDays = normalizeShipsWithinDays(shipsWithinDays);
+const productShippingFunction = `export function generateUsProductShippingDetails(shipsWithinDays?: number | null, omitShippingTiming = false) {
+  const handlingDays = omitShippingTiming ? null : normalizeShipsWithinDays(shipsWithinDays);
   const deliveryTime = handlingDays ? {
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
@@ -189,8 +189,8 @@ const productShippingFunction = `export function generateUsProductShippingDetail
   ];
 }`;
 
-const prerenderProductShippingFunction = `function generateUsProductShippingDetails(shipsWithinDays) {
-  const handlingDays = Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
+const prerenderProductShippingFunction = `function generateUsProductShippingDetails(shipsWithinDays, omitShippingTiming = false) {
+  const handlingDays = !omitShippingTiming && Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
   const deliveryTime = handlingDays ? {
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },

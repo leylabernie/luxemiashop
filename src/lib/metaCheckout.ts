@@ -1,8 +1,11 @@
+import { alterationShippingTimingNotice } from '../config/shippingPolicy';
+import { getProductShipsWithin } from './shipBy';
+import { normalizeFulfillmentAttributes } from './fulfillmentAttributes';
 import type { ShopifyProduct } from './shopify';
 import type { ConfiguredMetaLine } from './metaCheckoutContext';
 import { getCustomizableProduct, isMadeToOrderProduct } from './customizableProductStatus';
 import { hasNativeProductSizeOption } from './productOptionNames';
-import { hasNativeFullStitchingOptions, requiresNativeStitchingTimingConfirmation, NATIVE_STITCHING_TIMING_NOTICE } from './serviceAddOns';
+import { hasNativeFullStitchingOptions, requiresNativeStitchingTimingConfirmation } from './serviceAddOns';
 
 export type MetaLine = { contentId: string; quantity: number };
 export type MetaRequest = { lines: MetaLine[]; coupon: string | null };
@@ -95,8 +98,8 @@ export function metaCheckoutLines(selections: MetaSelection[]) {
     const timing = requiresNativeStitchingTimingConfirmation(product, variant.selectedOptions);
     if (timing && !timingConfirmed) throw new Error('Please acknowledge the tailoring timing before continuing.');
     return { variantId: variant.id, quantity, handle: product.handle, ...(timing ? { customAttributes: [
-      { key: 'Tailoring', value: 'Tailored to order' },
-      { key: 'Timing Confirmation', value: NATIVE_STITCHING_TIMING_NOTICE },
+      { key: 'Tailoring', value: 'Alterations / finishing requested' },
+      { key: 'Timing Confirmation', value: alterationShippingTimingNotice(getProductShipsWithin(product)) },
     ] } : {}) };
   });
 }
@@ -112,6 +115,6 @@ export async function configuredMetaCheckoutLines(selection: MetaSelection, getP
     const variant = product?.variants.edges.find(edge => edge.node.id === line.variantId)?.node;
     if (!variant?.availableForSale || !Number.isFinite(Number(variant.price.amount)) || Number(variant.price.amount) <= 0) throw new Error('A configured option is no longer available. Reopen the product configurator.');
     if (line.customAttributes && (!Array.isArray(line.customAttributes) || line.customAttributes.length > 30 || line.customAttributes.some(attr => typeof attr.key !== 'string' || typeof attr.value !== 'string' || attr.key.length > 255 || attr.value.length > 2000))) throw new Error('Invalid product configuration.');
-    return { variantId: variant.id, quantity: line.quantity, handle: line.handle, customAttributes: line.customAttributes };
+    return { variantId: variant.id, quantity: line.quantity, handle: line.handle, customAttributes: normalizeFulfillmentAttributes(line.customAttributes, getProductShipsWithin(product)) };
   }));
 }
