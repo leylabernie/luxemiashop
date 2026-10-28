@@ -23,7 +23,8 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
 const retirement = require('./product-retirement-20260908.json');
-const MIN_EXPECTED_ACTIVE_PRODUCTS = retirement.retained.length;
+const MIN_EXPECTED_ACTIVE_PRODUCTS = Math.max(retirement.retained.length,
+  require('./product-owner-archive-20261028.json').minimumExpectedActiveProducts);
 const MIN_EXPECTED_READY_PRODUCTS = 90;
 // The exact owner-approved archive removed the last product-level MTO garment.
 // Optional custom variants and all fulfillment-consistency checks stay intact.
