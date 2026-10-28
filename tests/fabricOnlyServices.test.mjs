@@ -213,21 +213,21 @@ test('rendered native tailoring notice overrides inherited stock and custom ETAs
     { isUnstitched: true, shipsWithinDays: 4 },
   ]) {
     const html = renderDelivery({ hasStitching: false, ...inherited, requiresTailoringTimingConfirmation: true });
-    assert.match(html, /Tailored to order/);
-    assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE));
-    assert.doesNotMatch(html, /Ready to ship|Estimated dispatch|3–4|4–5|Unstitched fabric set/);
+    assert.match(html, /Alterations \/ finishing selected/);
+    if (inherited.shipsWithinDays) { assert.match(html, /7 business days before dispatch/); assert.match(html, /16–21 business days total/); } else { assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE)); }
+    assert.doesNotMatch(html, /Ready to ship|Estimated dispatch|4–5|Unstitched fabric set/);
   }
 });
 
 test('rendered fabric-only and unrelated ready-stock shipping behavior is unchanged', () => {
   const fabric = renderDelivery({ hasStitching: false, isUnstitched: true });
   assert.match(fabric, /Unstitched fabric set/);
-  assert.doesNotMatch(fabric, /Tailored to order/);
+  assert.doesNotMatch(fabric, /Alterations \/ finishing selected/);
   const readyStock = renderDelivery({ hasStitching: false });
-  assert.match(readyStock, /Ready to ship/);
+  assert.match(readyStock, /Available to order/);
   assert.match(readyStock, /3–4 business days/);
   const madeToOrder = renderDelivery({ hasStitching: false, isMadeToOrder: true });
-  assert.match(madeToOrder, /4–5 weeks/);
+  assert.match(madeToOrder, /15–21 business days total/);
 });
 
 test('mixed-offer catalog tags use the actual selected Fabric Only variant in delivery', () => {
@@ -243,10 +243,10 @@ test('mixed-offer catalog tags use the actual selected Fabric Only variant in de
     });
     if (node.id === '0') {
       assert.match(html, /Unstitched fabric set/);
-      assert.match(html, /Supplied unstitched; tailoring is required before wearing/);
-      assert.doesNotMatch(html, /Ready to ship|3–4 business days|Tailored to order/);
+      assert.match(html, /Supplied as the listed fabric-only \/ unstitched selection; it is not a finished garment/);
+      assert.doesNotMatch(html, /Ready to ship|Tailored to order/);
     } else {
-      assert.match(html, /Tailored to order/);
+      assert.match(html, /Alterations \/ finishing selected/);
       assert.doesNotMatch(html, /Unstitched fabric set/);
     }
   }
@@ -260,11 +260,11 @@ test('mixed-offer catalog tags use the actual selected Fabric Only variant in de
 
 test('native timing guard also covers ship-by badges, specifications and cart attributes', () => {
   const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
-  assert.match(source, /const shipByLabel = requiresNativeTimingConfirmation \? null : getShipByLabel\(product\)/);
-  assert.match(source, /const shipsWithinDays = requiresNativeTimingConfirmation \? null : getProductShipsWithin\(product\)/);
+  assert.match(source, /const shipByLabel = hasSelectedAlterations \? null : getShipByLabel\(product\)/);
+  assert.match(source, /const shipsWithinDays = getProductShipsWithin\(product\)/);
   assert.match(source, /requiresTailoringTimingConfirmation=\{requiresNativeTimingConfirmation\}/);
-  assert.match(source, /requiresNativeTimingConfirmation\s*\? NATIVE_STITCHING_TIMING_NOTICE\s*: currentSelectionIsMadeToOrder/);
-  assert.match(source, /key: 'Timing Confirmation', value: NATIVE_STITCHING_TIMING_NOTICE/);
+  assert.match(source, /hasSelectedAlterations\s*\? alterationShippingTimingNotice\(shipsWithinDays\)/);
+  assert.match(source, /key: 'Timing Confirmation', value: alterationShippingTimingNotice\(shipsWithinDays\)/);
   assert.match(source, /isCustomSizeSelected && !madeToOrderProduct && !requiresNativeTimingConfirmation/);
   assert.match(source, /if \(isCustomSizeSelected && !customSizeConfirmed\)/);
 });
@@ -307,7 +307,7 @@ test('32–42 offers resolve every sparse transition at its unchanged native pri
       requiresTailoringTimingConfirmation: requiresNativeStitchingTimingConfirmation(product, current.selectedOptions),
       shipsWithinDays: 4,
     });
-    assert.match(html, current.id === '0' ? /Unstitched fabric set/ : /Tailored to order/);
+    assert.match(html, current.id === '0' ? /Unstitched fabric set/ : /Alterations \/ finishing selected/);
     assert.doesNotMatch(html, /Ready to ship|Estimated dispatch/);
   }
   assert.equal(checked, 88);
@@ -395,11 +395,11 @@ test('Made to Fit delivery renders tailoring timing while Standard Fit stays rea
       requiresTailoringTimingConfirmation: requiresNativeStitchingTimingConfirmation(product, node.selectedOptions),
     });
     if (tailored) {
-      assert.match(html, /Tailored to order/);
+      assert.match(html, /Alterations \/ finishing selected/);
       assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE));
       assert.doesNotMatch(html, /Ready to ship|3–4 business days/);
     } else {
-      assert.match(html, /Ready to ship/);
+      assert.match(html, /Available to order/);
       assert.match(html, /3–4 business days/);
     }
   }

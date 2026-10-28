@@ -194,7 +194,7 @@ const Index = () => {
                 <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#f1b9b4]">Made to your moment</p>
                 <h2 id="customizable-home-heading" className="mt-5 font-serif text-4xl leading-[0.95] sm:text-5xl">A look that feels entirely yours.</h2>
                 <p className="mt-6 text-sm leading-7 text-white/70 sm:text-base">
-                  Explore selected designs available for custom color and made-to-measure tailoring. We confirm the details with you before production begins.
+                  Explore selected designs with alteration options. Confirm measurements and service details with LuxeMia before ordering; color or design changes are not promised.
                 </p>
                 <Link
                   to="/collections/customizable-indian-outfits"

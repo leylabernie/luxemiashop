@@ -49,7 +49,7 @@ const shippingBlock = `  {
       <h3>Mauritius</h3><p>$59.99 per order.</p>
       <h2>Processing and carrier transit</h2>
       <p>\${escapeHtml(SHIPPING_PROCESSING_NOTICE)}</p>
-      <p>\${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any additional tailoring or made-to-order processing and contact LuxeMia before ordering for a fixed event date.</p>
+      <p>\${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any requested alterations or finishing and contact LuxeMia before ordering for a fixed event date.</p>
       <h2>Carriers, consolidation and express service</h2>
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
       <h2>Customs and duties</h2>
@@ -60,10 +60,10 @@ const shippingBlock = `  {
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.',
+    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: \`
-      <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
+      <p>Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked and custom selections are different</h2>
       <p>Some stocked products also offer Custom Size, Custom Stitching or Made-to-Measure selections. Standard stocked selections remain Ready to Ship, while a custom selection requires the additional processing stated on the product page.</p>
       <h2>Shipping rates and timing</h2>
@@ -82,7 +82,7 @@ const shippingBlock = `  {
       <h2>Carrier routing</h2>
       <p>LuxeMia may compare qualified carriers and consolidation services by destination, parcel weight, dimensions, customs requirements and cost. A standard rate does not guarantee a particular carrier.</p>
       <h2>Processing and delivery</h2>
-      <p>\${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the product page for additional tailoring or made-to-order processing.</p>
+      <p>\${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the product page for requested alterations or finishing.</p>
       <h2>Questions?</h2>
       <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a customs, timing or checkout detail is unclear, or review the <a href="/shipping">Shipping Policy</a>.</p>
     \`,
@@ -124,7 +124,7 @@ updateFile(PRERENDER, (source) => {
 
 for (const [file, required] of [
   [ROUTE_GENERATOR, ["'/ready-to-ship'", "'/shipping'", "'/pages/shipping-customs'"]],
-  [PRERENDER, ["path: '/ready-to-ship'", "category === 'ready-to-ship'", '!isMadeToOrderProduct(product)', 'Purchasable catalog items are ready to ship', '$24.99', '$59.99']],
+  [PRERENDER, ["path: '/ready-to-ship'", "category === 'ready-to-ship'", '!isMadeToOrderProduct(product)', 'Review the selected construction and allow extra processing', '$24.99', '$59.99']],
 ]) {
   const source = fs.readFileSync(file, 'utf8');
   for (const value of required) {

@@ -3,6 +3,8 @@ import { useEffect } from 'react';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
+import { getProductShipsWithin } from '@/lib/shipBy';
+import { normalizeFulfillmentAttributes } from '../../lib/fulfillmentAttributes';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { isGarmentAlterationCartLine, isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
@@ -118,11 +120,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   )?.node.image;
                   const image = isService ? undefined : variantImage ?? item.product.node.images?.edges?.[0]?.node;
                   const serviceLabel = isGarmentAlteration ? 'Garment Alteration' : item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
-                  const visibleAttributes = item.customAttributes;
+                  const visibleAttributes = normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node));
                   
                   return (
                     <motion.div
-                      key={`${item.variantId}-${JSON.stringify(item.customAttributes)}`}
+                      key={`${item.variantId}-${JSON.stringify(visibleAttributes)}`}
                       initial={{ opacity: 0, y: 20 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: index * 0.1 }}

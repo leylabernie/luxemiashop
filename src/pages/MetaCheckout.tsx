@@ -1,6 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { requiresNativeStitchingTimingConfirmation, NATIVE_STITCHING_TIMING_NOTICE } from '@/lib/serviceAddOns';
+import { alterationShippingTimingNotice } from '@/config/shippingPolicy';
+import { getProductShipsWithin } from '@/lib/shipBy';
+import { requiresNativeStitchingTimingConfirmation } from '@/lib/serviceAddOns';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
@@ -105,7 +107,7 @@ export default function MetaCheckout() {
                 {node.title} — {node.price.currencyCode} {Number(node.price.amount).toFixed(2)}{!node.availableForSale ? ' — Sold out' : ''}
               </option>)}
             </select>
-            {!item.configured && variant && requiresNativeStitchingTimingConfirmation(item.product, variant.selectedOptions) && <label className="block mt-3"><input type="checkbox" checked={!!item.timingConfirmed} disabled={submitting} onChange={event => setSelections(items => items.map((value, i) => i === index ? { ...value, timingConfirmed: event.target.checked } : value))} /> I understand: {NATIVE_STITCHING_TIMING_NOTICE}</label>}
+            {!item.configured && variant && requiresNativeStitchingTimingConfirmation(item.product, variant.selectedOptions) && <label className="block mt-3"><input type="checkbox" checked={!!item.timingConfirmed} disabled={submitting} onChange={event => setSelections(items => items.map((value, i) => i === index ? { ...value, timingConfirmed: event.target.checked } : value))} /> I understand: {alterationShippingTimingNotice(getProductShipsWithin(item.product))}</label>}
             {variant && <p className="mt-2 font-semibold">Item subtotal: {variant.price.currencyCode} {(Number(variant.price.amount) * item.quantity).toFixed(2)}</p>}
             {item.configured?.slice(1).map((line, serviceIndex) => <p key={serviceIndex} className="text-sm">{line.variantTitle}: {line.price.currencyCode} {(Number(line.price.amount) * line.quantity).toFixed(2)}</p>)}
             {item.configured && <p className="text-sm mt-2">Full product options saved{item.configured.length > 1 ? `, including ${item.configured.length - 1} paid service(s)` : ''}. Final prices are verified at Shopify checkout.</p>}

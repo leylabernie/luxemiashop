@@ -1,3 +1,4 @@
+import { ALTERATION_TIMING_NOTICE } from '@/config/shippingPolicy';
 import { useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ChevronDown, Send } from 'lucide-react';
@@ -25,15 +26,15 @@ const sortOptions = [
 const customizableFaqs = [
   {
     question: 'What is customizable in this collection?',
-    answer: 'Every design on this page is verified for a custom color and made-to-order sizing from measurements confirmed with LuxeMia. Other design changes are not included unless LuxeMia confirms them in writing.',
+    answer: 'The listed semi-stitched or ready-stitched construction is unchanged. Fit adjustments and any different color are requests requiring confirmation; no unlisted design change or custom color is guaranteed.',
   },
   {
     question: 'How do I request a custom color?',
     answer: 'Send LuxeMia the product link, requested color, event date, and country before ordering. LuxeMia must confirm fabric availability and timing in writing.',
   },
   {
-    question: 'How long does a made-to-order outfit take?',
-    answer: 'Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Timing and rush delivery are not guaranteed unless confirmed in writing.',
+    question: 'How long do alterations take?',
+    answer: ALTERATION_TIMING_NOTICE,
   },
   {
     question: 'Where does LuxeMia currently ship these outfits?',
@@ -122,7 +123,7 @@ const CustomizableOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Customizable Indian Outfits | Custom Color & Measurements | LuxeMia"
-        description="Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering."
+        description="Review listed fit and color choices. Alterations add 3 business days after complete details are confirmed; additional colors require written confirmation."
         canonical="https://luxemia.shop/collections/customizable-indian-outfits"
         type="collection"
         breadcrumbs={[
@@ -137,10 +138,10 @@ const CustomizableOutfits = () => {
       <main className="pt-[88px] lg:pt-[130px]">
         <section className="border-b border-border/30 bg-secondary/40 py-12 lg:py-16">
           <div className="container mx-auto max-w-4xl px-4 text-center lg:px-8">
-            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Verified made-to-order designs</p>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Fit requests require confirmation</p>
             <h1 className="font-serif text-3xl lg:text-5xl">Customizable Indian Outfits</h1>
             <p className="mx-auto mt-5 max-w-3xl text-sm leading-relaxed text-muted-foreground lg:text-base">
-              These selected lehengas, sarees, kurta sets, and wedding outfits can be made in a custom color and tailored from measurements confirmed with LuxeMia. No other design option is promised unless it is confirmed in writing for the exact product.
+              Review the supplied construction and available options on each listing. Alterations use confirmed measurements; additional colors or design changes are requests, not guaranteed options.
             </p>
             <div className="mt-7 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Button onClick={scrollToInquiry} variant="luxury" className="gap-2">
@@ -159,11 +160,11 @@ const CustomizableOutfits = () => {
             </div>
             <div>
               <h2 className="font-serif text-xl">2. Submit measurements</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Provide the measurements requested for the design. Production starts only after the required details are complete and confirmed.</p>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Provide the measurements requested for the design. Alterations start only after the required details are complete and confirmed.</p>
             </div>
             <div>
-              <h2 className="font-serif text-xl">3. Production, then transit</h2>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after the required details and delivery address are known.</p>
+              <h2 className="font-serif text-xl">3. Alterations, then transit</h2>
+              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{ALTERATION_TIMING_NOTICE}</p>
             </div>
           </div>
         </section>

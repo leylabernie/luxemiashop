@@ -58,7 +58,7 @@ const ReadyToShip = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Ready-to-Ship Indian Ethnic Wear | LuxeMia"
-        description="Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order."
+        description="Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing."
         canonical="https://luxemia.shop/ready-to-ship"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -75,9 +75,7 @@ const ReadyToShip = () => {
             </span>
             <h1 className="mb-4 font-serif text-3xl lg:text-5xl">Ready-to-Ship Indian Ethnic Wear</h1>
             <p className="mx-auto max-w-3xl text-sm font-light leading-relaxed text-muted-foreground lg:text-base">
-              Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked
-              <strong className="font-medium text-foreground"> Made to Order</strong> or
-              <strong className="font-medium text-foreground"> Made to Measure</strong>. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch. Order processing and carrier transit are separate.
+              Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.
             </p>
             <p className="mt-4 text-sm">
               <Link className="text-primary underline underline-offset-4" to="/collections/ready-to-wear-palazzo-suits">Shop ready-to-wear palazzo sets</Link>
@@ -85,7 +83,7 @@ const ReadyToShip = () => {
             <p className="mt-4 text-xs text-muted-foreground">
               Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Those custom selections require additional processing and use the timing stated on the product page.{' '}
               {canPromoteCollection('/collections/customizable-indian-outfits') && (<Link className="text-primary underline" to="/collections/customizable-indian-outfits">
-                View made-to-order outfits.
+                View fit request options.
               </Link>)}
             </p>
             <p className="mt-2 text-xs text-muted-foreground">

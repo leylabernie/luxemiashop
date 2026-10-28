@@ -166,7 +166,7 @@ if (brandedLogoCount !== 2) {
 const schema = read('src/lib/schema.ts');
 requireText(schema, "BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`", 'shared existing brand logo URL');
 forbidText(schema, "logo: `${SITE_URL}/favicon.ico`", 'Lovable favicon as Organization logo');
-requireText(schema, 'generateUsProductShippingDetails(input.shipsWithinDays)', 'source-backed offer handling time');
+requireText(schema, 'generateUsProductShippingDetails(input.shipsWithinDays, input.omitShippingTiming)', 'source-backed offer handling time');
 requireText(schema, "unitCode: 'DAY'", 'schema handling-time unit');
 forbidText(schema, 'transitTime:', 'invented carrier transit time');
 
@@ -174,7 +174,7 @@ const prerender = read('scripts/prerender.js');
 requireText(prerender, "src/config/seoArchitecture.json", 'shared prerender SEO architecture');
 requireText(prerender, 'normalizeInternalNavigationHtml(route.content)', 'prerender internal-link normalization');
 requireText(prerender, 'would disappear after hydration', 'commercial collection hydration-stability guard');
-requireText(prerender, 'generateUsProductShippingDetails(productAttributes.shipsWithinDays)', 'source-backed prerender handling time');
+requireText(prerender, 'generateUsProductShippingDetails(productAttributes.shipsWithinDays, mayRequireAlterationProcessing(live || {}))', 'source-backed prerender handling time');
 forbidText(prerender, 'transitTime:', 'invented prerender carrier transit time');
 
 const schemaBundle = esbuild.buildSync({

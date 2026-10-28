@@ -94,7 +94,7 @@ const SIZE_OPTION_NAMES = new Set([
   'chest size',
   'stitching size',
 ]);
-const CUSTOM_PRODUCT_TIMING = 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms the current production time and carrier transit separately after the color, measurements, fabric availability, and delivery address are known; timing is not guaranteed until confirmed in writing.';
+
 
 function normalizeOptionName(value) {
   return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
@@ -105,14 +105,14 @@ function isSizeOptionName(value) {
 }
 
 function getCustomProductDescription(title) {
-  return `${title}. Made to order from measurements confirmed with LuxeMia, with a custom color available for this design. ${CUSTOM_PRODUCT_TIMING} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
+  return `${title}. Fit or color changes are requests requiring LuxeMia confirmation; no custom color or new construction is promised. ${ALTERATION_TIMING_NOTICE} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
 }
 
 function applyCustomizableProductDetails(product) {
   const matched = CUSTOMIZABLE_PRODUCTS_BY_HANDLE.get(product?.handle);
   if (!matched) return product;
 
-  const description = getCustomProductDescription(matched.title);
+  const description = [product.description, getCustomProductDescription(matched.title)].filter(Boolean).join(' ');
 
   return {
     ...product,
@@ -121,9 +121,7 @@ function applyCustomizableProductDetails(product) {
     tags: [
       ...(product.tags || []).filter((tag) => !/ready[- ]?to[- ]?ship|ships? within|worldwide|canada|australia|dhl|ddp/i.test(String(tag))),
       'customizable',
-      'made to order',
-      'custom color',
-      'custom measurements',
+      'custom requests require confirmation',
     ],
     shipsWithinMetafield: null,
     seo: {
@@ -155,21 +153,19 @@ async function loadTsModule(relativeSrcPath) {
     // Type-only imports are erased by esbuild's TS transform.
   });
   const code = result.outputFiles[0].text;
-  const tmpFile = path.join(
-    PROJECT_ROOT,
-    `.prerender-tmp-${path.basename(relativeSrcPath, '.ts')}-${Date.now()}.mjs`
-  );
+  const tmpDir = fs.mkdtempSync(path.join(PROJECT_ROOT, '.prerender-tmp-'));
+  const tmpFile = path.join(tmpDir, 'module.mjs');
   fs.writeFileSync(tmpFile, code, 'utf-8');
   try {
     return await import(`file://${tmpFile}`);
   } finally {
-    fs.unlinkSync(tmpFile);
+    fs.rmSync(tmpDir, { recursive: true, force: true });
   }
 }
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
-const { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE } = await loadTsModule('src/config/shippingPolicy.ts');
+const { SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
-const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
+const { hasNativeFullStitchingOptions, mayRequireAlterationProcessing } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
@@ -1306,8 +1302,8 @@ function generateApprovedProductDirectoryHtml(products) {
 // Product-level shipping details mirror the public U.S. standard-shipping terms.
 // Add a handling window only when custom.ships_within supplies a positive day
 // count. Carrier transit remains omitted because it varies by destination.
-function generateUsProductShippingDetails(shipsWithinDays) {
-  const handlingDays = Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
+function generateUsProductShippingDetails(shipsWithinDays, omitShippingTiming = false) {
+  const handlingDays = !omitShippingTiming && Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
   const deliveryTime = handlingDays ? {
     '@type': 'ShippingDeliveryTime',
     handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
@@ -1396,7 +1392,7 @@ function generateItemListJsonLd(products, category, routePath) {
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': `${SITE_URL}/#organization` },
           merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-          shippingDetails: generateUsProductShippingDetails(shipsWithinDays),
+          shippingDetails: generateUsProductShippingDetails(shipsWithinDays, mayRequireAlterationProcessing(p)),
         },
       },
     };
@@ -1532,18 +1528,18 @@ const semanticCommerceRoutes = [
   },
   {
     path: '/shop-by-fulfillment', title: 'Shop Indian Outfits by Fulfillment | LuxeMia', h1: 'Shop Indian Outfits by Fulfillment',
-    description: 'Separate ready-to-ship, made-to-order and customizable Indian outfits before ordering.',
-    content: '<p>Fulfillment describes what happens before dispatch. Availability for sale alone does not prove immediate stock.</p><h2>Choose a fulfillment path</h2><p><a href="/shop-by-fulfillment/ready-to-ship">Ready to ship</a>, <a href="/shop-by-fulfillment/made-to-order">made to order</a>, or <a href="/shop-by-fulfillment/customizable-outfits">customizable outfits</a>.</p>',
+    description: 'Review supplied construction, fit requests and processing before ordering.',
+    content: '<p>Fulfillment describes what happens before dispatch. Availability for sale alone does not prove immediate stock.</p><h2>Choose a fulfillment path</h2><p><a href="/shop-by-fulfillment/ready-to-ship">Ready to ship</a>, <a href="/shop-by-fulfillment/made-to-order">fit requests</a>, or <a href="/shop-by-fulfillment/customizable-outfits">customizable outfits</a>.</p>',
   },
   {
     path: '/shop-by-fulfillment/ready-to-ship', title: 'Ready-to-Ship Indian Outfits | LuxeMia', h1: 'Ready-to-Ship Indian Outfits',
     description: 'Shop items classified as stocked while confirming selected-variant availability and processing.',
-    content: '<p>Ready-to-ship removes the production stage for the selected item but still requires order processing before carrier transit.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event.</p>',
+    content: '<p>A listed item still requires order processing before carrier transit; requested alterations or finishing add processing time.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event.</p>',
   },
   {
-    path: '/shop-by-fulfillment/made-to-order', title: 'Made-to-Order Indian Outfits | LuxeMia', h1: 'Made-to-Order Indian Outfits',
-    description: 'Understand production, measurements and timing for made-to-order Indian clothing.',
-    content: '<p>Made-to-order products begin production after an order is confirmed. Review stated customization, measurements and processing separately from carrier transit.</p>',
+    path: '/shop-by-fulfillment/made-to-order', title: 'Indian Outfits & Fit Requests | LuxeMia', h1: 'Indian Outfits & Fit Requests',
+    description: 'Understand measurements and timing for requested garment alterations.',
+    content: '<p>This legacy route describes requested alterations, not new garment production. Items retain their listed construction. Requested alterations or finishing add 3 business days once after complete details are confirmed; estimated standard delivery is 15–21 business days, not guaranteed.</p>',
   },
   {
     path: '/shop-by-fulfillment/customizable-outfits', title: 'Customizable Indian Outfits | LuxeMia', h1: 'Customizable Indian Outfits',
@@ -2039,15 +2035,15 @@ const routes = [
     path: '/collections/customizable-indian-outfits',
     category: 'customizable',
     title: 'Customizable Indian Outfits | Custom Color & Measurements | LuxeMia',
-    description: 'Shop verified made-to-order Indian outfits with custom color and confirmed measurements. Review the approximate 4–5 week total planning window before ordering.',
+    description: 'Review listed fit and color choices. Alterations add 3 business days after complete details are confirmed; additional colors require written confirmation.',
     h1: 'Customizable Indian Outfits',
     content: `
-      <p>These selected lehengas, sarees, kurta sets, and wedding outfits are verified for a custom color and made-to-order construction from measurements confirmed with LuxeMia.</p>
+      <p>Review supplied construction and available options on each listing. Fit adjustments and additional colors are requests requiring confirmation, not guaranteed unlisted options.</p>
       <h2>How does a LuxeMia custom order work?</h2>
       <ol>
         <li>Send the exact product link, requested color, event date, and delivery country.</li>
         <li>LuxeMia confirms fabric availability, timing, and the measurements required for that design.</li>
-        <li>Use approximately 4–5 weeks as a total planning window. LuxeMia confirms production time and carrier transit separately in writing after all required details and the delivery address are known.</li>
+        <li>${escapeHtml(ALTERATION_TIMING_NOTICE)}</li>
       </ol>
       <p>Other design changes are not included unless LuxeMia confirms them in writing. Rush delivery is not guaranteed. Custom orders are final sale, subject to applicable law.</p>
       <h2>Current shipping availability</h2>
@@ -2252,7 +2248,7 @@ const routes = [
       <h3>Mauritius</h3><p>$59.99 per order.</p>
       <h2>Processing and carrier transit</h2>
       <p>${escapeHtml(SHIPPING_PROCESSING_NOTICE)}</p>
-      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any additional tailoring or made-to-order processing and contact LuxeMia before ordering for a fixed event date.</p>
+      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any requested alterations or finishing and contact LuxeMia before ordering for a fixed event date.</p>
       <h2>Carriers, consolidation and express service</h2>
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
       <h2>Customs and duties</h2>
@@ -2263,12 +2259,12 @@ const routes = [
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Purchasable catalog items are ready to ship unless explicitly marked Made to Order.',
+    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
-      <p>Every purchasable LuxeMia catalog item is Ready to Ship unless the product is explicitly marked Made to Order or Made to Measure. Ready to Ship means the listed non-custom selection is stocked for order handling and dispatch; it does not promise same-day dispatch or a fixed carrier-delivery date.</p>
+      <p>Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
-      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Standard stocked selections remain Ready to Ship, while the custom selection requires additional processing. Fully custom products are shown separately as Made to Order.</p>
+      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>
       <p>Order processing happens before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Confirm the selected size, included pieces and any custom option before ordering for a fixed event date.</p>
       <h2>Shipping rates and timing</h2>
@@ -2287,7 +2283,7 @@ const routes = [
       <h2>Carrier routing</h2>
       <p>LuxeMia may compare qualified carriers and consolidation services by destination, parcel weight, dimensions, customs requirements and cost. A standard rate does not guarantee a particular carrier.</p>
       <h2>Processing and delivery</h2>
-      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the product page for additional tailoring or made-to-order processing.</p>
+      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the product page for requested alterations or finishing.</p>
       <h2>Questions?</h2>
       <p>Contact <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering if a customs, timing or checkout detail is unclear, or review the <a href="/shipping">Shipping Policy</a>.</p>
     `,
@@ -2835,7 +2831,7 @@ function generateHtml(template, route, allShopifyProducts) {
       : '';
     const productAttributes = getListedProductAttributes(live);
     const productCategory = isMadeToOrderProduct(live)
-      ? { label: 'Made-to-Order Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+      ? { label: 'Indian Outfits & Fit Requests', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(live?.productType || '', live?.title || route.h1);
 
     // Product schema must mirror Merchant Center's product grouping. Google
@@ -2859,7 +2855,7 @@ function generateHtml(template, route, allShopifyProducts) {
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#organization` },
       merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-      shippingDetails: generateUsProductShippingDetails(productAttributes.shipsWithinDays),
+      shippingDetails: generateUsProductShippingDetails(productAttributes.shipsWithinDays, mayRequireAlterationProcessing(live || {})),
     });
     const schemaVariantProduct = (variant) => {
       const variantId = variant?.id?.split('/').pop() || '';
@@ -3028,7 +3024,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const productAttributes = getListedProductAttributes(p);
     const styleReference = getVerifiedPrimaryStyleReference(p);
     const productCategory = isMadeToOrderProduct(p)
-      ? { label: 'Made-to-Order Indian Outfits', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
+      ? { label: 'Indian Outfits & Fit Requests', link: '/collections/customizable-indian-outfits', schemaCategory: 'Apparel & Accessories > Clothing' }
       : getProductCategoryInfo(productType, p.title || route.h1);
 
     let priceHtml = `<strong>${currency} ${parseFloat(price).toFixed(2)}</strong>`;
@@ -3063,24 +3059,15 @@ function generateHtml(template, route, allShopifyProducts) {
       || 'Review the product description for the fabric or material supplied with this listing.';
     const includedPieces = productAttributes.includedPieces;
     const sizingDetails = isCustomizable
-      ? 'Made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+      ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
       ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
     const nativeStitching = hasNativeFullStitchingOptions(p);
-    const shippingEstimate = nativeStitching
-      ? 'Unstitched (Fabric Only) requires tailoring before wearing. Standard Stitched and Custom Stitched dispatch timing is confirmed after measurements. Confirm availability, processing and carrier transit before ordering.'
-      : isCustomizable
-      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known.'
-      : isMadeToOrderProduct(p)
-      ? 'Made to order. Confirm production, dispatch and carrier transit with LuxeMia before ordering for a fixed event date.'
-      : p.tags?.includes('availability:Confirm before ordering')
-      ? 'Confirm the selected size, current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
+    const shippingEstimate = productShippingTimingNotice(productAttributes.shipsWithinDays) + (nativeStitching
+      ? ' The Fabric Only selection retains its listed semi-stitched / unstitched pieces and requires finishing before wearing. Standard Stitched and Custom Stitched fitting selections use the alteration allowance.'
       : p.tags?.includes('construction:Unstitched')
-      ? 'This set is supplied unstitched. Confirm current availability, processing and transit timing with LuxeMia before ordering for an event date, and allow time for tailoring before wearing.'
-      : productAttributes.shipsWithinDays
-      ? `Ships within ${productAttributes.shipsWithinDays} business day${productAttributes.shipsWithinDays === 1 ? '' : 's'}. Tracking details are emailed when the shipping label is created for dispatch.`
-      : SHIPPING_TIMING_NOTICE + ' Optional tailoring adds processing time; confirm timing before ordering for an event date.';
+      ? ' This listing is supplied unstitched, not as a ready-to-wear garment.' : '') + (p.tags?.includes('availability:Confirm before ordering') ? ' Confirm the selected size and current availability before ordering.' : '');
     // Specification rows render as a real <table> (th/td) so answer engines and
     // AI crawlers can lift fabric, sizing, and shipping facts as structured
     // key-value pairs instead of parsing prose.
@@ -3099,7 +3086,7 @@ function generateHtml(template, route, allShopifyProducts) {
     ];
 
     const sizeAnswer = isCustomizable
-      ? 'This design is made to order from measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
+      ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
       ? `Available choices shown for this listing are ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
       : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
@@ -3108,11 +3095,7 @@ function generateHtml(template, route, allShopifyProducts) {
       : nativeStitching
       ? p.careInstructionsMetafield?.value || 'Care instructions are not specified for this design. Check the garment care label and contact LuxeMia before cleaning.'
       : 'Follow any product-specific care instructions. Dry cleaning is recommended for embroidered or embellished ethnic wear.';
-    const deliveryAnswer = nativeStitching
-      ? 'Unstitched (Fabric Only) is supplied unstitched and requires tailoring before wearing. Standard Stitched and Custom Stitched selections require tailoring; dispatch timing is confirmed after measurements. Confirm current availability, processing and carrier transit with LuxeMia before ordering for an event date.'
-      : isCustomizable
-      ? 'The source listing carries an approximate 4–5 week total order window. LuxeMia confirms production time and carrier transit separately after the requested color, measurements, fabric availability, and delivery address are known. Contact LuxeMia before ordering for a fixed event date.'
-      : shippingEstimate;
+    const deliveryAnswer = shippingEstimate;
     // Questions/answers are plain strings so the same array feeds BOTH the
     // visible HTML and the FAQPage JSON-LD — the markup always mirrors what
     // shoppers can see, per Google's structured data guidelines.
@@ -3128,7 +3111,7 @@ function generateHtml(template, route, allShopifyProducts) {
           },
       ...(isCustomizable ? [{
         question: 'Can I request another color?',
-        answer: 'Yes. A custom color is available for this verified design, subject to fabric availability. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.',
+        answer: 'A different color is a request, not a guaranteed option; LuxeMia must confirm availability in writing. Contact LuxeMia with the product link and requested color before ordering. Other design changes are not promised unless confirmed in writing.',
       }] : []),
       {
         question: 'How is this product shipped?',

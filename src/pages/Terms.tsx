@@ -191,7 +191,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">5.3 Custom Order Terms</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>Custom and made-to-measure orders are final sale.</li>
-                        <li>Use approximately 4–5 weeks as a total planning window for verified customizable designs. LuxeMia confirms production and carrier timing after the requested color, measurements, fabric availability, and delivery address are known.</li>
+                        <li>Requested alterations or finishing add 3 business days once after complete measurements and service details are confirmed. With the standard 3–4-business-day dispatch estimate and 9–14-business-day carrier transit, allow approximately 15–21 business days total. Listing-specific dispatch estimates take precedence, with the same additional 3-business-day alteration allowance. Arrival dates are estimates, not guarantees.</li>
                         <li>Custom orders require full payment upfront before production begins.</li>
                         <li>Customization requests (color changes, design modifications) must be specified at order placement and may incur additional charges.</li>
                       </ul>
