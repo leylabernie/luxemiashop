@@ -147,9 +147,9 @@ test('designer native tailoring matrix requires handoff without inventing sizes,
   const handler=source.slice(source.indexOf('const handleAddToCart = async () => {'),source.indexOf('\n  const formatPrice',source.indexOf('const handleAddToCart = async () => {')));
   const compiled=buildSync({stdin:{contents:handler+'\nexport default handleAddToCart;',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
   // Exact catalog option labels; commerce IDs, price amounts and matrix availability are synthetic.
-  const options=[{name:'Stitching',values:['Unstitched Blouse Fabric','Made to Measure Blouse (+$10)']},{name:'Alteration',values:['Standard Fit','Made to Fit (+$10)']}];
-  const variants=options[0].values.flatMap((stitching,i)=>options[1].values.map((alteration,j)=>({id:`fixture-designer-${i}-${j}`,availableForSale:true,title:`${stitching} / ${alteration}`,price:{amount:String(100+10*i+10*j),currencyCode:'USD'},selectedOptions:[{name:'Stitching',value:stitching},{name:'Alteration',value:alteration}]})));
-  const product={id:'fixture-designer',handle:'designer-net-saree',title:'Designer Hand-Embroidered Net Saree with Bead and Pearl Work',productType:'Saree',tags:[],options,variants:{edges:variants.map(node=>({node}))}};
+  const options=[{name:'Blouse',values:['Unstitched Blouse Fabric','Made to Measure Blouse (+$10)']},{name:'Alteration',values:['Standard Fit','Made to Fit (+$10)']}];
+  const variants=options[0].values.flatMap((stitching,i)=>options[1].values.map((alteration,j)=>({id:`fixture-designer-${i}-${j}`,availableForSale:true,title:`${stitching} / ${alteration}`,price:{amount:String(100+10*i+10*j),currencyCode:'USD'},selectedOptions:[{name:'Blouse',value:stitching},{name:'Alteration',value:alteration}]})));
+  const product={id:'fixture-designer',handle:'designer-embroidered-net-saree',title:'Designer Hand-Embroidered Net Saree with Bead and Pearl Work',productType:'Saree',tags:[],options,variants:{edges:variants.map(node=>({node}))}};
   assert.equal(hasNativeProductSizeOption(options),false);
   const sentinel='I will provide measurements after ordering, before tailoring begins.';
   const needsSource=source.slice(source.indexOf('const needsStitchingSize = useMemo'),source.indexOf('\n\n  // Whether blouse neckline',source.indexOf('const needsStitchingSize = useMemo')));
@@ -174,7 +174,7 @@ test('designer native tailoring matrix requires handoff without inventing sizes,
       assert.equal(added[0].variantId,variant.id);assert.deepEqual(added[0].price,variant.price);assert.deepEqual(added[0].selectedOptions,variant.selectedOptions);
       const attrs=added[0].customAttributes??[];assert(!attrs.some(a=>a.key==='Stitching Size'));
       assert.deepEqual(attrs.filter(a=>a.key==='Measurement Handoff'),needs?[{key:'Measurement Handoff',value:sentinel}]:[]);
-      const notices=attrs.filter(a=>a.key==='Timing Confirmation');assert.equal(notices.length,selectedOptions.Alteration.startsWith('Made to Fit')?1:0);
+      const notices=attrs.filter(a=>a.key==='Timing Confirmation');assert.equal(notices.length,needs?1:0);
       if(notices.length)assert.match(notices[0].value,/add 3 business days once.*15–21 business days total/);
     }
   }
@@ -186,4 +186,47 @@ test('designer native tailoring matrix requires handoff without inventing sizes,
   mod.exports.default('Alteration','Made to Fit (+$10)');assert.equal(resets,1);
   mod.exports.default('Alteration','Unavailable option');assert.equal(resets,1);assert.equal(errors,1);
   assert.match(source,/setStitchingSize\(null\);\s*setShowSizeValidation\(false\);\s*setSelectedServiceAddOnCodes/);
+});
+
+test('listed native blouse timing renders once for MTM, MTF or both and preserves dispatch overrides', async () => {
+  const {requiresNativeStitchingTimingConfirmation}=await import('../src/lib/serviceAddOns.ts');
+  const options=[{name:'Blouse',values:['Unstitched Blouse Fabric','Made to Measure Blouse (+$10)']},{name:'Alteration',values:['Standard Fit','Made to Fit (+$10)']}];
+  const product={title:'Designer Hand-Embroidered Net Saree',productType:'Saree',options,variants:{edges:options[0].values.flatMap(blouse=>options[1].values.map(alteration=>({node:{selectedOptions:[{name:'Blouse',value:blouse},{name:'Alteration',value:alteration}]}})))}};
+  const original=JSON.stringify(product);
+  assert.equal(mayRequireAlterationProcessing(product),true);
+  for(const [blouse,alteration] of [[0,0],[1,0],[0,1],[1,1]]) {
+    const selected=options.map((option,i)=>({name:option.name,value:option.values[i===0?blouse:alteration]}));
+    const processing=requiresNativeStitchingTimingConfirmation(product,selected);
+    assert.equal(processing,Boolean(blouse||alteration));
+    for(const days of [undefined,6]) {
+      const html=renderToStaticMarkup(createElement(m.exports.DeliveryEstimate,{hasStitching:false,requiresTailoringTimingConfirmation:processing,shipsWithinDays:days}));
+      if(processing) {
+        assert.match(html,/add 3 business days once, not per service/);
+        assert.match(html,days===6?/18–23 business days total/:/15–21 business days total/);
+        assert.doesNotMatch(html,/add 6 business days|21–26 business days total/);
+      } else {
+        assert.match(html,days===6?/Estimated dispatch in 6 business days without alterations/:/12–18 business days total/);
+        if(days===6) assert.match(html,/9–14 business days after dispatch/);
+        assert.doesNotMatch(html,/15–21 business days total|18–23 business days total/);
+      }
+    }
+    assert.equal(serviceAddOnTotal([]),0,'native options never create optional-service fees');
+  }
+  assert.equal(JSON.stringify(product),original,'timing predicate does not mutate native catalog options');
+});
+
+test('native blouse timing requires the exact supported listed selection, not descriptions or unsupported choices', async () => {
+  const {requiresNativeStitchingTimingConfirmation}=await import('../src/lib/serviceAddOns.ts');
+  const selected={name:'Blouse',value:'Made to Measure Blouse (+$10)'};
+  for(const product of [
+    {title:'Made to Measure Blouse',description:'Made to Measure Blouse (+$10)',options:[]},
+    {options:[{name:'Blouse',values:['Unstitched Blouse Fabric']}]},
+    {options:[{name:'Blouse',values:['Made to Measure Blouse (+$20)']}]},
+    {options:[{name:'Color',values:[selected.value]}]},
+  ]) assert.equal(requiresNativeStitchingTimingConfirmation(product,[selected]),false);
+  for(const value of ['Unstitched Blouse Fabric','Standard Fit','Optional Made to Measure Blouse','Made to Measure Blouse sold separately']) {
+    const option={name:'Blouse',value};
+    assert.equal(requiresNativeStitchingTimingConfirmation({options:[{name:'Blouse',values:[value]}]},[option]),false,value);
+  }
+  assert.equal(mayRequireAlterationProcessing({title:'Plain fabric',productType:'Fabric',options:[{name:'Blouse',values:['Unstitched Blouse Fabric']}]}),false);
 });
