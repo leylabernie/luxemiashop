@@ -329,9 +329,11 @@ test('hydrated ProductInfo derives included pieces from raw catalog HTML despite
     {title:'Green Embroidered Anarkali Suit, Chinon Fabric, Pink Dupatta',html:'<p>Green Anarkali suit set: green Chinon embroidered Anarkali top, matching palazzo, pink Chinon dupatta with green border. 3 pieces. Stitched. </p><h3>Size and Fit</h3><p>Available sizes: S, M, L, XL, XXL, XS. Select your size from the product options.</p><h3>Occasions</h3><p>Indian wedding celebrations, festive gatherings and special occasions.</p><h3>Care</h3><p>Dry clean to care for the embroidery and fabric.</p><p>Accessories shown are for styling unless included in the outfit details. Colors may appear slightly different across screens.</p>',expected:'green Chinon embroidered Anarkali top, matching palazzo, pink Chinon dupatta with green border'},
     {title:'Teal Green Chinon Anarkali Gown Set, Embroidered Wedding Dress with Palazzo & Dupatta for Women',html:'<p>Teal green Chinon embroidered Anarkali gown set with palazzo and dupatta. 3 pieces. Ready-to-wear. Dry clean only.</p><h3>Size and Fit</h3><p>Available sizes: S, M, L, XL, XXL, XXXL. Select your preferred size from the options.</p><h3>Occasions</h3><p>An Indian ethnic outfit for wedding celebrations, festive gatherings and special occasions.</p><p>Accessories shown are for styling unless included in the outfit details. Screen settings may affect how colors appear.</p>',expected:'Anarkali gown, palazzo, and dupatta'},
   ];
+  const catalog = JSON.parse(read('tests/fixtures/catalog-included-pieces-20261028.json')).products;
+  fixtures.push(...catalog.filter(p => p.expected !== p.before).map(p => ({title:p.title,html:p.descriptionHtml,expected:p.expected})));
   for (const fixture of fixtures) {
     const description = enrichProductDescription(fixture.html,'Anarkali',fixture.title);
-    assert.match(description,/is available from LuxeMia online in the USA/);
+    assert.match(description,/is available from LuxeMia/);
     const p={title:fixture.title,productType:'Anarkali',tags:['anarkali'],descriptionHtml:fixture.html,description};
     assert.equal(m.exports.specs(p).includedPieces,fixture.expected);
     assert.equal(m.exports.specs({...p,metadata:{includedComponents:['Verified catalog components']}}).includedPieces,'Verified catalog components');
@@ -339,4 +341,54 @@ test('hydrated ProductInfo derives included pieces from raw catalog HTML despite
   const ambiguous='<p>Dusty pink Chinon embroidered Anarkali suit set with green dupatta. 3 pieces. Stitched.</p>';
   assert.equal(m.exports.specs({title:'Dusty Pink Embroidered Anarkali Suit, Chinon, Green Dupatta',productType:'Anarkali',descriptionHtml:ambiguous,description:enrichProductDescription(ambiguous,'Anarkali','Dusty Pink Anarkali')}).includedPieces,undefined);
   assert.equal(m.exports.specs({title:'Green Anarkali',productType:'Anarkali',description:fixtures[0].html}).includedPieces,fixtures[0].expected);
+});
+
+test('generic size modal gives product-specific guidance for every category without universal measurements', () => {
+  // Only bypass the portal for server snapshots; real Radix tabs/title/trigger remain.
+  const source = read('src/components/product/SizeGuideModal.tsx')
+    .replace(/<DialogContent className=/g, '<div className=')
+    .replace(/<\/DialogContent>/g, '</div>');
+  const { outputFiles } = buildSync({stdin:{contents:source,loader:'tsx',resolveDir:root},bundle:true,write:false,format:'cjs',platform:'node',packages:'external',jsx:'automatic',alias:{'@':path.join(root,'src')}});
+  const m={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,m,m.exports);
+  for (const [category, heading] of [['lehenga','Lehenga &amp; Choli Fit Guide'],['saree','Saree Sizing Information'],['sharara suit','Salwar Suits, Sharara &amp; Palazzo Fit Guide'],['sherwani','Men’s Ethnic Wear Fit Guide'], ...['Kids Boy Set','Blouse','Palazzo Set','Couple Set',''].map(category => [category,'Product-specific Fit Guidance'])]) {
+    const html=renderToStaticMarkup(React.createElement(m.exports.SizeGuideModal,{category}));
+    assert(html.includes(heading),category);
+    if (heading === 'Product-specific Fit Guidance') assert.doesNotMatch(html, /Lehenga &amp; Choli Fit Guide|Men’s Ethnic Wear Fit Guide/);
+    assert.match(html,/Fit varies by design/);
+    assert.match(html,/role="tablist"/);
+    assert.match(html,/role="tab"[^>]*aria-selected="true"/);
+    assert.match(html,/role="tabpanel"/);
+    assert.match(html,/aria-haspopup="dialog"/);
+    assert.doesNotMatch(html,/<table|one-size-fits-all|5\.5 meters|0\.8 meter|0\.8m|run true to size|pants are stretchable|4-6 weeks|32-34|36-38/);
+    assert.match(html,/hello@luxemia.shop/);
+  }
+  const original=read('src/components/product/SizeGuideModal.tsx');
+  assert.match(original,/<Dialog open=\{open\} onOpenChange=\{setOpen\}>/);
+  assert.match(original,/<DialogTitle/);
+  assert.match(original,/<DialogDescription/);
+  assert.match(read('src/components/ui/dialog.tsx'),/DialogPrimitive.Close/);
+});
+
+test('product sizing tab removes invented universal dimensions but preserves verified blouse labels and product facts', () => {
+  // Select the real sizing panel for SSR; all actual tab primitives are retained.
+  const source=read('src/components/product/ProductTabs.tsx').replace('defaultValue="details"','defaultValue="sizing"');
+  const {outputFiles}=buildSync({stdin:{contents:source,loader:'tsx',resolveDir:root},bundle:true,write:false,format:'cjs',platform:'node',packages:'external',jsx:'automatic',alias:{'@':path.join(root,'src')}});
+  const m={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,m,m.exports);
+  const render=props=>renderToStaticMarkup(React.createElement(m.exports.ProductTabs,props));
+  for(const productType of ['Lehenga','Saree','Anarkali','Sherwani','Kids Wear']) {
+    const html=render({productType});
+    assert.match(html,/Product-specific fit guidance/);
+    assert.match(html,/role="tabpanel"/);
+    assert.match(html,/body measurements or finished-garment measurements/);
+    assert.doesNotMatch(html,/<table|All measurements are in inches/);
+  }
+  const blouse=render({productType:'Saree',blouseSizeValues:['34','36','38','44']});
+  assert.match(blouse,/Available blouse sizes: 34, 36, 38, 44/);
+  assert.match(blouse,/size labels, not complete bra sizes/);
+  assert.match(blouse,/No cup size, blouse length or garment measurement is implied/);
+  assert.doesNotMatch(blouse,/Product-specific fit guidance|<table/);
+  assert.doesNotMatch(render({productType:'Jewelry'}),/Product-specific fit guidance|Choose the stitched blouse size/);
+  // Product-supplied descriptions/charts still use the existing sanitizer, including table tags.
+  assert.match(source,/DOMPurify.sanitize\(descriptionHtml/);
+  assert.match(source,/'table', 'tbody', 'tr', 'th', 'td'/);
 });

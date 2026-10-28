@@ -2,7 +2,10 @@ import './fabricOnlyServices.test.mjs';
 import './shoppingApp.test.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
+import { readFileSync } from 'node:fs';
 import './checkoutCartIntegrity.test.mjs';
+
+const catalogContents = JSON.parse(readFileSync(new URL('./fixtures/catalog-included-pieces-20261028.json', import.meta.url), 'utf8')).products;
 
 import {
   inferIncludedPiecesFromTitle,
@@ -291,4 +294,63 @@ test('commercial catalog build rewrite preserves explicit description parsing on
   } finally {
     fs.rmSync(fixture, { recursive: true, force: true });
   }
+});
+
+test('complete 388-product catalog changes only 99 explicit headed/prose contents; all 76 ambiguous sections stay unchanged', () => {
+  assert.equal(catalogContents.length, 388);
+  assert.equal(new Set(catalogContents.map(p => p.handle)).size, 388);
+  let changed = 0;
+  let ambiguous = 0;
+  for (const p of catalogContents) {
+    const actual = resolveIncludedPieces(p.metadata, p.tags, p.title, p.descriptionHtml) ?? null;
+    assert.equal(actual, p.expected, p.handle);
+    if (actual !== p.before) {
+      changed++;
+      assert.equal(p.before, null, 'never replace an existing summary: ' + p.handle);
+    }
+    if (p.ambiguous) {
+      ambiguous++;
+      assert.equal(actual, p.before, 'availability language must not add a guarantee: ' + p.handle);
+    }
+  }
+  assert.equal(changed, 99);
+  assert.equal(ambiguous, 76);
+});
+
+test('headed contents stay bounded, literal and subordinate to existing evidence', () => {
+  const html = '<h3>Included Pieces</h3><p>Saree with unstitched blouse fabric.</p><h4>Care</h4><p>Optional blouse stitching service, not included.</p>';
+  assert.equal(resolveIncludedPieces(null, [], '', html), 'Saree with unstitched blouse fabric.');
+  assert.equal(resolveIncludedPieces(['Verified metadata'], ['Included: verified tag'], '', html), 'Verified metadata');
+  assert.equal(resolveIncludedPieces(null, ['Included: verified tag'], '', html), 'verified tag');
+  assert.equal(resolveIncludedPieces(null, [], 'Lehenga with dupatta', html), 'Lehenga and dupatta');
+  for (const text of ['Available with dupatta', 'Optional blouse', 'May include blouse', 'Blouse not included', 'Saree without blouse', 'Blouse sold separately', 'Blouse stitching service', 'Saree $20', 'See photos']) {
+    assert.equal(resolveIncludedPieces(null, [], '', `<h3>Set Components</h3><p>${text}</p><h3>Care</h3><p>Saree</p>`), undefined, text);
+  }
+  assert.equal(resolveIncludedPieces(null, [], '', '<h3>Included Pieces</h3><p>Saree</p><h3>Included Pieces</h3><p>Blouse</p>'), undefined);
+  assert.equal(resolveIncludedPieces(null, [], '', '<h3>Design Details</h3><p>Saree with blouse</p>'), undefined);
+  assert.equal(resolveIncludedPieces(null, [], '', '<h3>Set Includes</h3><script>Saree</script>'), undefined);
+  assert.equal(resolveIncludedPieces(null, [], '', '<h3>What&#39;s Included</h3><p>Shirt &amp; Mundu</p>'), 'Shirt & Mundu');
+});
+
+
+test('explicit prose rejects conditional components, exclusions, incomplete counts and photography', () => {
+  for (const text of [
+    '<p><strong>What’s included:</strong><script>Saree</script></p>',
+    '<p>Available as a two-piece set: skirt and blouse (no dupatta)</p><p>Dupatta is included.</p>',
+    '<p>Available as a two-piece set: skirt and blouse (no dupatta)</p><p>This set does not include the blouse.</p>',
+    '<p>Red Anarkali suit: top, palazzo, dupatta.</p><p>Dupatta may be supplied subject to availability.</p>',
+    'Pink suit: top, palazzo, dupatta. 3 pieces. Dupatta sold separately.',
+    'Pink suit: top, palazzo, optional dupatta. 3 pieces.',
+    'Pink suit: embroidered top hem, palazzo, dupatta. 3 pieces.',
+    'Pink suit: top, dupatta. 3 pieces.',
+    'Pink suit paired with top, palazzo, dupatta. 3 pieces.',
+    'Anarkali gown available with dupatta.',
+    'Anarkali gown with dupatta. This set excludes the dupatta.',
+    '<p><strong>What’s included:</strong> Saree with optional blouse.</p>',
+    '<p><strong>What’s included:</strong> Saree.</p><p><strong>What’s included:</strong> Blouse.</p>',
+    '<li>Available with skirt and blouse (no dupatta)</li>',
+  ]) assert.equal(resolveIncludedPieces(null, [], '', text), undefined, text);
+  const html='<p>Pink suit: top, palazzo, dupatta. 3 pieces.</p>';
+  assert.equal(resolveIncludedPieces(['Verified metadata'], [], '', html), 'Verified metadata');
+  assert.equal(resolveIncludedPieces(null, ['Included: verified tag'], '', html), 'verified tag');
 });
