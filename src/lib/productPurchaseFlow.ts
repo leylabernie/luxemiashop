@@ -237,6 +237,7 @@ export function resolveIncludedPieces(
     && /\b(?:blouse|choli|lehenga|skirt|dupatta|saree|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?)\b/i.test(explicit)) {
     return explicit;
   }
-  return includedAnarkaliPiecesFromDescription(listing)
-    ?? inferIncludedPiecesFromTitle(productTitle, tags);
+  const descriptionPieces = includedAnarkaliPiecesFromDescription(listing);
+  if (descriptionPieces) return descriptionPieces;
+  return inferIncludedPiecesFromTitle(productTitle, tags);
 }

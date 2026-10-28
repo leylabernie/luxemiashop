@@ -267,3 +267,28 @@ test('ambiguous counts and available-with styling never invent set contents', ()
     assert.equal(resolveIncludedPieces(null, [], 'Embroidered Anarkali', description), undefined, description);
   }
 });
+
+
+test('commercial catalog build rewrite preserves explicit description parsing on repeated runs', async () => {
+  const fs = await import('node:fs');
+  const os = await import('node:os');
+  const path = await import('node:path');
+  const { execFileSync } = await import('node:child_process');
+  const { fileURLToPath } = await import('node:url');
+  const root = fileURLToPath(new URL('..', import.meta.url));
+  const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'luxemia-contents-rewrite-'));
+  try {
+    const files = ['scripts/apply-commercial-catalog-recovery.cjs', 'src/lib/productPurchaseFlow.ts', 'tests/productPurchaseFlow.test.mjs', 'scripts/prerender.js', 'src/middleware/htmlGenerator.ts'];
+    for (const file of files) {
+      fs.mkdirSync(path.dirname(path.join(fixture, file)), { recursive: true });
+      fs.copyFileSync(path.join(root, file), path.join(fixture, file));
+    }
+    const original = fs.readFileSync(path.join(fixture, 'src/lib/productPurchaseFlow.ts'), 'utf8');
+    for (let i = 0; i < 2; i++) {
+      execFileSync(process.execPath, [path.join(fixture, files[0])], { stdio: 'pipe' });
+      assert.equal(fs.readFileSync(path.join(fixture, 'src/lib/productPurchaseFlow.ts'), 'utf8'), original);
+    }
+  } finally {
+    fs.rmSync(fixture, { recursive: true, force: true });
+  }
+});
