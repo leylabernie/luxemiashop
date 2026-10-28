@@ -214,9 +214,21 @@ export const NATIVE_STITCHING_TIMING_NOTICE =
 export const selectedServicesRequireProcessing = (codes: ServiceAddOnCode[]): boolean =>
   codes.some(code => code === 'garment-alteration' || code === 'blouse-stitching' || code === 'pico-fall');
 
+/** A listed made-to-measure blouse requires the same one-time processing
+ * allowance as other selected tailoring. This never infers a charge or size. */
+const isNativeMadeToMeasureBlouse = (option: { name: string; value: string }): boolean =>
+  option.name.trim().toLowerCase() === 'blouse'
+  && /^made[-\s]+to[-\s]+measure blouse(?: \(\+\$\d+(?:\.\d{1,2})?\))?$/i.test(option.value.trim());
+
+const hasNativeMadeToMeasureBlouse = (product: ServiceEligibleProduct): boolean =>
+  (product.options ?? []).some(option => option.values.some(value =>
+    isNativeMadeToMeasureBlouse({ name: option.name, value }),
+  ));
+
 /** A family may offer fitting even when its first/default variant does not. */
 export const mayRequireAlterationProcessing = (product: ServiceEligibleProduct): boolean =>
   hasNativeFullStitchingOptions(product) || hasNativeAlterationOptions(product)
+  || hasNativeMadeToMeasureBlouse(product)
   || selectedServicesRequireProcessing(getEligibleServiceAddOns(product))
   || (product.options ?? []).some(option => /size/i.test(option.name)
     && option.values.some(value => /\bcustom\b/i.test(value)))
@@ -225,7 +237,9 @@ export const mayRequireAlterationProcessing = (product: ServiceEligibleProduct):
 export const requiresNativeStitchingTimingConfirmation = (
   product: ServiceEligibleProduct,
   selectedOptions: Array<{ name: string; value: string }>,
-): boolean => (hasNativeAlterationOptions(product) && selectedOptions.some(option =>
+): boolean => selectedOptions.some(selected => isNativeMadeToMeasureBlouse(selected)
+  && (product.options ?? []).some(option => option.name === selected.name && option.values.includes(selected.value)))
+  || (hasNativeAlterationOptions(product) && selectedOptions.some(option =>
   option.name.trim().toLowerCase() === 'alteration'
   && /^made to fit(?: \(\+\$\d+(?:\.\d{1,2})?\))?$/i.test(option.value.trim().replace(/\s+/g, ' ')),
 )) || (hasNativeFullStitchingOptions(product) && selectedOptions.some(option =>
