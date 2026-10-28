@@ -8,7 +8,7 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { HelpCircle, Package, Truck, Ruler, Sparkles, CreditCard, RotateCcw, Mail, Search, Phone, MessageCircle, ChevronRight, Home } from 'lucide-react';
-import { SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
+import { DESTINATION_IMPORT_NOTICE, US_IMPORT_COVERAGE_NOTICE, SHIPPING_TIMING_NOTICE } from '@/config/shippingPolicy';
 import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
 
 const FAQ = () => {
@@ -59,7 +59,7 @@ const FAQ = () => {
         },
         {
           question: 'Do I have to pay taxes?',
-          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
+          answer: DESTINATION_IMPORT_NOTICE,
         },
         {
           question: 'What if my package is delayed or lost?',
@@ -235,7 +235,7 @@ const FAQ = () => {
         },
         {
           question: 'Will I have to pay taxes on my order in the USA?',
-          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
+          answer: US_IMPORT_COVERAGE_NOTICE,
         },
         {
           question: 'Do you ship outside the United States?',

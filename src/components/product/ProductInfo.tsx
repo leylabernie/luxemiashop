@@ -1,3 +1,4 @@
+import { DESTINATION_IMPORT_NOTICE } from '@/config/shippingPolicy';
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect } from 'react';
@@ -962,6 +963,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         </dl>
       )}
 
+      <p className="text-xs text-muted-foreground">{DESTINATION_IMPORT_NOTICE}</p>
+
       {/* Shipping terms — timing is confirmed from the selected product and service */}
       <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} />
       {shipByLabel && !currentSelectionIsMadeToOrder && (
@@ -984,7 +987,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             <li>The outfit is made from measurements confirmed with LuxeMia after ordering.</li>
             <li>Use approximately 4–5 weeks as a total planning window. Production time and carrier transit are confirmed separately after the color, measurements, fabric availability, and delivery address are known.</li>
             <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
-            <li>If LuxeMia confirms that this item will be fulfilled cross-border, import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
+            <li>For deliveries outside the United States, import-charge treatment must be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
             <li>Custom orders are final sale, subject to applicable law.</li>
           </ul>
           <p className="text-sm text-foreground">

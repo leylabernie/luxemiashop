@@ -1,3 +1,4 @@
+import { US_IMPORT_COVERAGE_NOTICE } from '@/config/shippingPolicy';
 import { Truck, Shield, Clock } from 'lucide-react';
 import NRILandingPage from './NRILandingPage';
 import { COVERED_ORDER_ISSUE_ANSWER } from '@/lib/returnPolicyCopy';
@@ -14,7 +15,7 @@ const NRIGeneral = () => (
       heroSubtitle: 'Compare Exact Product Details Before Ordering',
       shippingTime: 'tracking provided after dispatch',
       shippingCost: '$14.99 per order; free at $150 and above',
-      customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
+      customsNote: US_IMPORT_COVERAGE_NOTICE,
       faqs: [
         {
           question: 'Where does LuxeMia ship?',
@@ -26,7 +27,7 @@ const NRIGeneral = () => (
         },
         {
           question: 'Will taxes be charged?',
-          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
+          answer: US_IMPORT_COVERAGE_NOTICE,
         },
         {
           question: 'Can I get custom sizing?',

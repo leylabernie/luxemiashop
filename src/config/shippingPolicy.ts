@@ -12,6 +12,11 @@ export interface ShippingZonePolicy {
   duties: string;
 }
 
+// Owner-confirmed US customer-facing import policy.
+export const US_IMPORT_COVERAGE_NOTICE = 'For US deliveries, no tariffs or import fees are collected at your doorstep. Applicable sales tax is calculated at checkout.';
+export const NON_US_IMPORT_NOTICE = 'Outside the United States, the customer is responsible for duties, import taxes, brokerage and carrier fees unless checkout explicitly states that they are included.';
+export const DESTINATION_IMPORT_NOTICE = `${US_IMPORT_COVERAGE_NOTICE} ${NON_US_IMPORT_NOTICE}`;
+
 export const SHIPPING_ZONES: readonly ShippingZonePolicy[] = [
   {
     id: 'us',
@@ -19,7 +24,7 @@ export const SHIPPING_ZONES: readonly ShippingZonePolicy[] = [
     countries: ['US'],
     standardRate: 14.99,
     freeShippingThreshold: 150,
-    duties: 'Taxes, if applicable, are calculated at checkout.',
+    duties: US_IMPORT_COVERAGE_NOTICE,
   },
   {
     id: 'canada-uk',

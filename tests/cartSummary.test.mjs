@@ -35,7 +35,9 @@ function render(amount, quantity=1, date='2026-10-16T12:00:00Z') {
 }
 test('two $79.99 suits show the real $159.98 subtotal without fictitious discounts',()=>{
  const html=render(79.99,2);
- for(const value of ['Subtotal','$159.98','Calculated at checkout','Subtotal excludes shipping, taxes and duties.','Enter any eligible discount codes at checkout']) assert.ok(html.includes(value),value);
+ for(const value of ['Subtotal','$159.98','Calculated at checkout','Subtotal excludes shipping and applicable sales tax.','Enter any eligible discount codes at checkout']) assert.ok(html.includes(value),value);
+ assert.ok(html.includes('For US deliveries, no tariffs or import fees are collected at your doorstep.'));
+ assert.ok(html.includes('Outside the United States, the customer is responsible'));
  assert.ok(!html.includes('$143.99'));
  assert.ok(html.includes('before checkout discounts'));
 });

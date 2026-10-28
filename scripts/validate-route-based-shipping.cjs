@@ -32,7 +32,7 @@ requireAll('src/pages/Shipping.tsx', [
 ]);
 requireAll('src/pages/ShippingCustoms.tsx', [
   'International Shipping, Duties & Taxes',
-  'Do not assume an international parcel is duty paid',
+  'DESTINATION_IMPORT_NOTICE',
 ]);
 requireAll('src/pages/ReadyToShip.tsx', [
   'processingDays <= 3',
@@ -45,7 +45,7 @@ requireAll('src/pages/Index.tsx', [
 ]);
 requireAll('src/components/cart/CartDrawer.tsx', [
   'US_FREE_SHIPPING_THRESHOLD',
-  'Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.',
+  'Destination, local-currency conversion and final delivery options are confirmed at checkout.',
 ]);
 requireAll('src/config/seoArchitecture.ts', [
   'LuxeMia Ethnic Wear | Indian Wedding Sarees & Bridal Lehengas USA',

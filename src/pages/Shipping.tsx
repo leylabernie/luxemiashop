@@ -6,6 +6,7 @@ import SEOHead from '@/components/seo/SEOHead';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import {
   SHIPPING_CONSOLIDATION_NOTICE,
+  DESTINATION_IMPORT_NOTICE,
   SHIPPING_DESTINATION_NAMES,
   SHIPPING_POLICY_SUMMARY,
   SHIPPING_PROCESSING_NOTICE,
@@ -164,7 +165,7 @@ const Shipping = () => {
               </AccordionItem>
               <AccordionItem value="duties">
                 <AccordionTrigger>Are duties and import taxes included?</AccordionTrigger>
-                <AccordionContent>Do not assume duties are prepaid. Outside the United States, the customer is responsible for duties, import taxes, brokerage and carrier fees unless checkout explicitly states that they are included.</AccordionContent>
+                <AccordionContent>{DESTINATION_IMPORT_NOTICE}</AccordionContent>
               </AccordionItem>
               <AccordionItem value="address">
                 <AccordionTrigger>Can I change my address after ordering?</AccordionTrigger>
