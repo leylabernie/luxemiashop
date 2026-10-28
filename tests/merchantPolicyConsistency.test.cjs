@@ -254,3 +254,66 @@ test('returns initial HTML and rendered shopper page contain no unsupported resa
   assert.match(shopperHtml, /10–20%/);
   assert.match(shopperHtml, /Full refund or replacement, your choice/);
 });
+
+test('US import coverage is destination-qualified and leaves non-US fees and all rates unchanged', () => {
+  assert.equal(shipping.US_IMPORT_COVERAGE_NOTICE, 'For US deliveries, no tariffs or import fees are collected at your doorstep. Applicable sales tax is calculated at checkout.');
+  assert.equal(shipping.SHIPPING_ZONES[0].duties, shipping.US_IMPORT_COVERAGE_NOTICE);
+  for (const zone of shipping.SHIPPING_ZONES.slice(1)) {
+    assert.equal(zone.duties, 'Duties, import taxes, brokerage and carrier fees may apply unless checkout states otherwise.');
+    assert.doesNotMatch(zone.duties, /no tariffs or import fees|collected at your doorstep/);
+  }
+  assert.match(shipping.DESTINATION_IMPORT_NOTICE, /Outside the United States, the customer is responsible/);
+  assert(read('src/config/usaLandingPage.json').includes(shipping.US_IMPORT_COVERAGE_NOTICE));
+  for (const file of ['src/components/cart/CartDrawer.tsx', 'src/components/product/ProductInfo.tsx', 'src/pages/Shipping.tsx', 'src/pages/ShippingCustoms.tsx']) {
+    assert.match(read(file), /\{DESTINATION_IMPORT_NOTICE\}/);
+  }
+  assert.doesNotMatch(read('src/components/cart/CartDrawer.tsx'), /Subtotal excludes shipping, taxes and duties/);
+  assert.match(read('src/components/product/ProductInfo.tsx'), /For deliveries outside the United States, import-charge treatment must be confirmed/);
+  assert.doesNotMatch(read('src/components/product/ProductInfo.tsx'), /fulfilled cross-border, import-charge/);
+});
+
+test('rendered customs and country pages distinguish US import coverage from other destinations', () => {
+  const { MemoryRouter } = require('react-router-dom');
+  function renderPage(file, route) {
+    const source = read(file).replace(/^import (Header|Footer|SEOHead) from .*;$/gm, 'const $1 = () => null;');
+    const { outputFiles } = buildSync({ stdin: {contents:source,loader:'tsx',resolveDir:root},bundle:true,write:false,format:'cjs',platform:'node',packages:'external',jsx:'automatic',alias:{'@':path.join(root,'src')} });
+    const m={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,m,m.exports);
+    return renderToStaticMarkup(React.createElement(MemoryRouter,{initialEntries:[route]},React.createElement(m.exports.default)));
+  }
+  const customs = renderPage('src/pages/ShippingCustoms.tsx','/pages/shipping-customs');
+  assert(customs.includes(shipping.US_IMPORT_COVERAGE_NOTICE));
+  assert(customs.includes(shipping.NON_US_IMPORT_NOTICE));
+  const us = renderPage('src/pages/SemanticCommercePage.tsx','/shipping/united-states');
+  assert(us.includes(shipping.US_IMPORT_COVERAGE_NOTICE));
+  assert.doesNotMatch(us,/does not promise that a shipment will be free/);
+  const canada = renderPage('src/pages/SemanticCommercePage.tsx','/shipping/canada');
+  assert.doesNotMatch(canada,/no tariffs or import fees|collected at your doorstep/);
+  assert.match(canada,/Duties, import taxes, brokerage and carrier fees may apply/);
+});
+
+test('crawler shipping and customs pages preserve US/non-US import distinction', async () => {
+  const { routes, generateHtml } = await prerender();
+  for (const url of ['/shipping','/pages/shipping-customs','/shipping/united-states']) {
+    const route=routes.find(r=>r.path===url);assert(route);
+    const html=generateHtml(template,route,new Map());
+    assert(html.includes(shipping.US_IMPORT_COVERAGE_NOTICE),url);
+    if (url !== '/shipping/united-states') assert(html.includes(shipping.NON_US_IMPORT_NOTICE));
+  }
+  const canada = generateHtml(template,routes.find(r=>r.path==='/shipping/canada'),new Map());
+  assert.doesNotMatch(canada,/no tariffs or import fees|collected at your doorstep/);
+});
+
+test('repeated route rewriting retains import coverage expressions', () => {
+  const fixture=fs.mkdtempSync(path.join(os.tmpdir(),'luxemia-import-codemod-'));
+  try {
+    fs.mkdirSync(path.join(fixture,'scripts'));
+    for(const file of ['scripts/finalize-prerender-routes.cjs','scripts/generate-routes.cjs','scripts/prerender.js']) fs.copyFileSync(path.join(root,file),path.join(fixture,file));
+    for(let i=0;i<2;i++) {
+      execFileSync(process.execPath,[path.join(fixture,'scripts/finalize-prerender-routes.cjs')]);
+      const source=fs.readFileSync(path.join(fixture,'scripts/prerender.js'),'utf8');
+      assert.equal((source.match(/escapeHtml\(DESTINATION_IMPORT_NOTICE\)/g)||[]).length,2);
+      assert.match(source,/path === '\/shipping\/united-states' \? US_IMPORT_COVERAGE_NOTICE/);
+      assert.doesNotMatch(source,/These charges are the customer’s responsibility unless checkout/);
+    }
+  } finally { fs.rmSync(fixture,{recursive:true,force:true}); }
+});

@@ -1,3 +1,4 @@
+import { US_IMPORT_COVERAGE_NOTICE } from '@/config/shippingPolicy';
 import { Truck, Shield, Clock } from 'lucide-react';
 import NRILandingPage from './NRILandingPage';
 import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
@@ -16,7 +17,7 @@ const USA = () => (
       heroSubtitle: 'Product Details, Sizing Guidance and Tracked Shipping',
       shippingTime: 'tracking provided after dispatch',
       shippingCost: '$14.99 per order; free at $150 and above',
-      customsNote: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
+      customsNote: US_IMPORT_COVERAGE_NOTICE,
       faqs: [
         {
           question: 'How long does shipping to the United States take?',
@@ -28,7 +29,7 @@ const USA = () => (
         },
         {
           question: 'Will taxes be charged?',
-          answer: 'Taxes collected by LuxeMia, if applicable, are calculated at checkout.',
+          answer: US_IMPORT_COVERAGE_NOTICE,
         },
         {
           question: 'Can I return an item?',

@@ -8,7 +8,7 @@ import { normalizeFulfillmentAttributes } from '../../lib/fulfillmentAttributes'
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { isGarmentAlterationCartLine, isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
-import { SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
+import { DESTINATION_IMPORT_NOTICE, SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
 const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
 const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
 
@@ -250,10 +250,11 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     <span className="text-foreground/70">Shipping</span>
                     <span className="text-right">Calculated at checkout</span>
                   </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground">Subtotal excludes shipping, taxes and duties. Enter any eligible discount codes at checkout; eligibility and final amounts are confirmed there.</p>
+                  <p className="text-xs leading-relaxed text-muted-foreground">Subtotal excludes shipping and applicable sales tax. Enter any eligible discount codes at checkout; eligibility and final amounts are confirmed there.</p>
                   <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
                     <p>{SHIPPING_PROMISE}</p>
-                    <p className="mt-1">Discounts are applied before shipping eligibility. Destination, local-currency conversion, duties and final delivery options are confirmed at checkout.</p>
+                    <p className="mt-1">{DESTINATION_IMPORT_NOTICE}</p>
+                    <p className="mt-1">Discounts are applied before shipping eligibility. Destination, local-currency conversion and final delivery options are confirmed at checkout.</p>
                   </div>
                   {unavailableItems.length > 0 && (
                     <p className="text-xs text-destructive text-center" role="alert">

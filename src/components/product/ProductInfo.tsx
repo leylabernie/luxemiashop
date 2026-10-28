@@ -1,4 +1,4 @@
-import { BASE_SHIPPING_TIMING_NOTICE, alterationShippingTimingNotice, productShippingTimingNotice } from '@/config/shippingPolicy';
+import { DESTINATION_IMPORT_NOTICE, BASE_SHIPPING_TIMING_NOTICE, alterationShippingTimingNotice, productShippingTimingNotice } from '@/config/shippingPolicy';
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect } from 'react';
@@ -966,6 +966,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         </dl>
       )}
 
+      <p className="text-xs text-muted-foreground">{DESTINATION_IMPORT_NOTICE}</p>
+
       {/* Shipping terms — timing is confirmed from the selected product and service */}
       <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} hasSelectedAlterations={hasSelectedAlterations} />
       {shipByLabel && !currentSelectionIsMadeToOrder && (
@@ -988,7 +990,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
             <li>The listed semi-stitched or ready-stitched item may be altered to confirmed measurements; the supplied construction remains as described.</li>
             <li>{alterationShippingTimingNotice(shipsWithinDays)}</li>
             <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
-            <li>If LuxeMia confirms that this item will be fulfilled cross-border, import-charge treatment must also be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
+            <li>For deliveries outside the United States, import-charge treatment must be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
             <li>Custom orders are final sale, subject to applicable law.</li>
           </ul>
           <p className="text-sm text-foreground">

@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import {
+  DESTINATION_IMPORT_NOTICE,
   SHIPPING_DESTINATION_NAMES,
   SHIPPING_POLICY_SUMMARY,
   SHIPPING_TIMING_NOTICE,
@@ -24,7 +25,7 @@ const faqs = [
   },
   {
     question: 'Are duties and import taxes included?',
-    answer: 'Outside the United States, duties, import taxes, brokerage and carrier fees may be charged to the customer unless checkout explicitly states otherwise.',
+    answer: DESTINATION_IMPORT_NOTICE,
   },
 ];
 
@@ -86,7 +87,7 @@ const ShippingCustoms = () => {
             <div>
               <h2 className="font-serif text-2xl mb-4">Duties, import taxes and brokerage</h2>
               <p className="text-base text-foreground/90 leading-relaxed">
-                Do not assume an international parcel is duty paid. For Canada, the United Kingdom, Australia, New Zealand, South Africa and Mauritius, the recipient is responsible for duties, import taxes, brokerage and carrier fees unless checkout explicitly states that those charges are included. LuxeMia will not advertise DDP service until the selected carrier provides a verified landed-cost quote.
+                {DESTINATION_IMPORT_NOTICE}
               </p>
             </div>
 
