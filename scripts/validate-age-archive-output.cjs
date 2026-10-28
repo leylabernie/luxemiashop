@@ -5,7 +5,7 @@ const path = require('node:path');
 const plan = require('./product-age-archive-20261026.json');
 const baseline = require('./product-retirement-20260908.json');
 const root = path.resolve(__dirname, '../dist');
-const archived = new Set(plan.archived.map(p => p.handle));
+const archived = new Set([...plan.archived, ...require('./product-owner-archive-20261028.json').archived].map(p => p.handle));
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const sitemap = read('sitemap-products.xml');
 const feed = read('merchant-feed.xml');

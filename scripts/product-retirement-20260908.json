@@ -7347,21 +7347,6 @@
       "createdAt": "2026-10-05T17:12:43Z"
     },
     {
-      "id": "gid://shopify/Product/9075984892075",
-      "handle": "kids-onam-set-maroon",
-      "createdAt": "2026-10-05T17:13:15Z"
-    },
-    {
-      "id": "gid://shopify/Product/9075988168875",
-      "handle": "kids-onam-set-orange",
-      "createdAt": "2026-10-05T17:13:49Z"
-    },
-    {
-      "id": "gid://shopify/Product/9075992789163",
-      "handle": "kids-onam-set-purple",
-      "createdAt": "2026-10-05T17:14:35Z"
-    },
-    {
       "id": "gid://shopify/Product/9075996262571",
       "handle": "lehenga-black-sequins-size-42",
       "createdAt": "2026-10-05T17:15:09Z"
@@ -9168,21 +9153,6 @@
       "lehenga-black-sequins-size-42-48122092683435",
       "lehenga-black-sequins-size-42-48122092716203",
       "lehenga-black-sequins-size-42-48122092748971",
-      "kids-onam-set-purple-48120838979755",
-      "kids-onam-set-purple-48121858261163",
-      "kids-onam-set-purple-48121858293931",
-      "kids-onam-set-purple-48121858326699",
-      "kids-onam-set-purple-48121858359467",
-      "kids-onam-set-orange-48120825643179",
-      "kids-onam-set-orange-48121855344811",
-      "kids-onam-set-orange-48121855377579",
-      "kids-onam-set-orange-48121855410347",
-      "kids-onam-set-orange-48121855443115",
-      "kids-onam-set-maroon-48120812306603",
-      "kids-onam-set-maroon-48121849643179",
-      "kids-onam-set-maroon-48121849675947",
-      "kids-onam-set-maroon-48121849708715",
-      "kids-onam-set-maroon-48121849741483",
       "kids-kurta-set-yellow-48120804114603",
       "kids-kurta-set-yellow-48121835061419",
       "kids-kurta-set-yellow-48121835094187",
@@ -15692,8 +15662,62 @@
       "handle": "art-silk-cream-groom-wear-thread-work-readymade-sherwani-385484",
       "archivedOn": "2026-10-26",
       "reason": "Owner-approved reversible archive of merchandise created before 2026-09-21T14:34:56Z; explicit 404, not permanent URL retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9075984892075",
+      "handle": "kids-onam-set-maroon",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9075988168875",
+      "handle": "kids-onam-set-orange",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9075992789163",
+      "handle": "kids-onam-set-purple",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9134761476267",
+      "handle": "magenta-velvet-floral-embroidered-suit",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9134762950827",
+      "handle": "pink-silk-botanical-embroidered-palazzo-suit",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9134763311275",
+      "handle": "crepe-paisley-embroidered-suit",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9134765441195",
+      "handle": "maroon-crepe-embroidered-suit-with-floral-trousers",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9134765899947",
+      "handle": "wine-silk-floral-embroidered-sharara-suit",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
+    },
+    {
+      "id": "gid://shopify/Product/9134766096555",
+      "handle": "purple-silk-bird-embroidered-sharara-suit",
+      "archivedOn": "2026-10-28",
+      "reason": "Owner-requested reversible removal; explicit 404, not permanent retirement."
     }
   ],
-  "retainedBaselineUpdatedOn": "2026-10-26",
-  "retainedBaselineReason": "Complete 480-product audit minus exactly 147 owner-authorized age archives and one preserved non-merchandise service. Public pre-removal merchant feed intersected with the exact 332 surviving merchandise IDs."
+  "retainedBaselineUpdatedOn": "2026-10-28",
+  "retainedBaselineReason": "Prior 332-product survivor baseline minus exactly three owner-archived Onam listings; six additional owner-archived listings were not in that older baseline. All unrelated retained products, permanent retirements, and existing offer baselines are preserved. Current active catalog count is 379 including the service product."
 }

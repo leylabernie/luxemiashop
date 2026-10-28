@@ -1,0 +1,43 @@
+{
+  "userInstructionAt": "2026-10-28T21:33:05Z",
+  "reason": "Owner-requested reversible archive of three Onam listings and six unresolved packing listings",
+  "archived": [
+    {
+      "id": "gid://shopify/Product/9075984892075",
+      "handle": "kids-onam-set-maroon"
+    },
+    {
+      "id": "gid://shopify/Product/9075988168875",
+      "handle": "kids-onam-set-orange"
+    },
+    {
+      "id": "gid://shopify/Product/9075992789163",
+      "handle": "kids-onam-set-purple"
+    },
+    {
+      "id": "gid://shopify/Product/9134761476267",
+      "handle": "magenta-velvet-floral-embroidered-suit"
+    },
+    {
+      "id": "gid://shopify/Product/9134762950827",
+      "handle": "pink-silk-botanical-embroidered-palazzo-suit"
+    },
+    {
+      "id": "gid://shopify/Product/9134763311275",
+      "handle": "crepe-paisley-embroidered-suit"
+    },
+    {
+      "id": "gid://shopify/Product/9134765441195",
+      "handle": "maroon-crepe-embroidered-suit-with-floral-trousers"
+    },
+    {
+      "id": "gid://shopify/Product/9134765899947",
+      "handle": "wine-silk-floral-embroidered-sharara-suit"
+    },
+    {
+      "id": "gid://shopify/Product/9134766096555",
+      "handle": "purple-silk-bird-embroidered-sharara-suit"
+    }
+  ],
+  "minimumExpectedActiveProducts": 379
+}

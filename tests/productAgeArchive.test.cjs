@@ -4,6 +4,8 @@ const fs = require('node:fs');
 const path = require('node:path');
 const { build } = require('esbuild');
 const plan = require('../scripts/product-age-archive-20261026.json');
+const ownerArchive = require('../scripts/product-owner-archive-20261028.json');
+const ownerIds = new Set(ownerArchive.archived.map(p => p.id));
 const archived = require('../src/data/reversiblyArchivedProductHandles.json');
 const { isReversiblyArchivedProduct } = require('../src/lib/reversibleProductArchive.cjs');
 const baseline = require('../scripts/product-retirement-20260908.json');
@@ -15,18 +17,18 @@ test('fixed authorized age batch is exact, reversible, and preserves current mer
   const inventory=require('../scripts/approved-sitemap-inventory.json');
   assert.ok(inventory.urlCount >= baseline.retained.length);
   for(const p of baseline.retained) assert.ok(inventory.paths.includes(`/product/${p.handle}`));
-  assert.deepEqual(new Set(baseline.retained.map(p => p.id)), new Set(plan.retainedProductIds));
+  assert.deepEqual(new Set(baseline.retained.map(p => p.id)), new Set(plan.retainedProductIds.filter(id => !ownerIds.has(id))));
   assert.equal(plan.ageRule.strictlyBefore, '2026-09-21T14:34:56Z');
   for (const p of plan.archived) {
     assert.ok(p.createdAt < plan.ageRule.strictlyBefore);
     assert.notEqual(p.id, plan.preservedServiceId);
     assert.ok(isReversiblyArchivedProduct(p.handle));
   }
-  assert.deepEqual(new Set(archived), new Set([...plan.archived.map(p => p.handle), ...plan.archivedAliases.map(p => p.handle)]));
+  assert.deepEqual(new Set(archived), new Set([...plan.archived.map(p => p.handle), ...plan.archivedAliases.map(p => p.handle), ...ownerArchive.archived.map(p => p.handle)]));
   assert.equal(isReversiblyArchivedProduct('luxemia-tailoring-saree-finishing-add-ons'), false);
   assert.equal(isReversiblyArchivedProduct('unrelated-new-product'), false);
   assert.equal(baseline.retired.length, 1300);
-  assert.equal(baseline.reversiblyArchived.length, 153);
+  assert.equal(baseline.reversiblyArchived.length, 162);
 });
 test('real middleware rejects archives before stale prerender/live lookup and retains unrelated response paths', async () => {
   let lookups = 0;
@@ -75,4 +77,25 @@ test('inventory-dependent MTO floor follows the exact archive without changing c
   assert.ok(source.includes('onlyCustomSize && !madeToOrder'));
   assert.ok(source.includes('madeToOrder && hasReadyToShipTag(product)'));
   assert.ok(source.includes('readyToShipProducts + madeToOrderProducts !== purchasableProducts'));
+});
+
+test('owner removal batch is exactly nine reversible archives and keeps a 379-product active floor', () => {
+  assert.deepEqual(ownerArchive.archived.map(p=>p.handle), [
+    'kids-onam-set-maroon','kids-onam-set-orange','kids-onam-set-purple',
+    'magenta-velvet-floral-embroidered-suit','pink-silk-botanical-embroidered-palazzo-suit',
+    'crepe-paisley-embroidered-suit','maroon-crepe-embroidered-suit-with-floral-trousers',
+    'wine-silk-floral-embroidered-sharara-suit','purple-silk-bird-embroidered-sharara-suit',
+  ]);
+  assert.equal(ownerIds.size,9);
+  assert.equal(ownerArchive.minimumExpectedActiveProducts,379);
+  assert.equal(baseline.retained.length,329);
+  for(const p of ownerArchive.archived) {
+    assert.ok(baseline.reversiblyArchived.some(a=>a.id===p.id&&a.handle===p.handle));
+    assert.ok(!baseline.retained.some(a=>a.id===p.id));
+    assert.ok(!baseline.retired.some(a=>a.id===p.id));
+    assert.ok(isReversiblyArchivedProduct(p.handle));
+  }
+  const source=fs.readFileSync(path.join(root,'scripts/validate-shopify-catalog-hygiene.cjs'),'utf8');
+  assert.match(source,/Math\.max\(retirement\.retained\.length,[\s\S]*?minimumExpectedActiveProducts\)/);
+  assert.match(source,/if \(missing\.length \|\| resurfaced\.length\) throw new Error/);
 });
