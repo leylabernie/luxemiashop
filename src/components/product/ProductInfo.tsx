@@ -856,6 +856,9 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           selectedOptions: serviceVariant.selectedOptions,
           customAttributes: [
             { key: 'Applies To', value: product.title },
+            ...(selectedServicesRequireProcessing([code])
+              ? [{ key: 'Timing Estimate', value: alterationShippingTimingNotice(shipsWithinDays) }]
+              : []),
             ...(isBanarasiSareeServiceProduct(product)
               ? [{ key: 'Selected Service', value: SERVICE_ADD_ONS[code].label }]
               : []),

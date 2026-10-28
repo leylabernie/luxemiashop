@@ -60,3 +60,81 @@ for (const flag of ['hasSelectedAlterations', 'requiresTailoringTimingConfirmati
  assert.match(html,/9 business days before dispatch/); assert.match(html,/18–23 business days total/);
  assert.doesNotMatch(html,/15–21 business days total|6–7 business days/);
 });
+
+test('actual PDP handler keeps optional timing on removable processing-service lines', async () => {
+  const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
+  const start = source.indexOf('const handleAddToCart = async () => {');
+  const end = source.indexOf('\n  const formatPrice', start);
+  assert(start >= 0 && end > start);
+  // Compile the actual handler, not a reimplementation of its payload conditions.
+  const { outputFiles } = buildSync({stdin:{contents:source.slice(start,end)+'\nexport default handleAddToCart;',loader:'ts'},write:false,platform:'node',format:'cjs'});
+  const product = {id:'gid://shopify/Product/9095363264683',handle:'green-embroidered-anarkali-suit-chinon-fabric-pink-dupatta',title:'Green Embroidered Anarkali Suit, Chinon Fabric, Pink Dupatta',productType:'Anarkali'};
+  const variant = {id:'gid://shopify/ProductVariant/48210759155883',title:'S',price:{amount:'103.00',currencyCode:'USD'},selectedOptions:[{name:'Size',value:'S'}]};
+  const serviceVariant={id:'gid://shopify/ProductVariant/fixture-service',title:'Garment Alteration',price:{amount:'10.00',currencyCode:'USD'},selectedOptions:[]};
+  for (const [codes,days,native,madeToOrder=false] of [[['garment-alteration'],null,false],[['garment-alteration','pico-fall'],null,false],[['garment-alteration'],6,false],[[],null,false],[['matching-petticoat'],null,false],[['garment-alteration'],null,true],[['garment-alteration'],null,false,true]]) {
+    const added=[];
+    const scope={
+      purchasableVariant:{node:variant}, product,
+      selectedAvailableServiceAddOnCodes:codes,
+      isBlouseServiceSelectionConfirmed:()=>true, blouseServiceConfirmed:false,
+      customizableProduct:null, requestedCustomColor:'', isCustomSizeSelected:false,customSizeConfirmed:true,
+      isStitchable:false, selectedStitchingType:null, needsStitchingSize:false, productHasNativeSizes:true,
+      stitchingSize:null,isMenswear:false,metaToken:null,metaRequestedLine:null,metaContentId:null,
+      setIsAdding:()=>{},addItem:item=>added.push(item),blouseServiceConfirmationAttributes:()=>[],
+      isBanarasiSareeServiceProduct:()=>false, requiresNativeTimingConfirmation:native,
+      selectedServicesRequireProcessing, alterationShippingTimingNotice:timing.alterationShippingTimingNotice,
+      shipsWithinDays:days,madeToOrderProduct:madeToOrder,showNeckline:false,showBottomStyleOption:false,
+      showSleeveStyle:false,hasNativeFullStitching:false,customAlteration:'',quantity:1,
+      serviceAddOnProduct:{handle:'luxemia-tailoring-saree-finishing-add-ons',title:'Services'},
+      serviceVariants:new Map(codes.map(code=>[code,{...serviceVariant,id:serviceVariant.id+code}])),
+      setTimeout:fn=>fn(),openCart:()=>{},toast:{error:message=>assert.fail(message)},
+    };
+    const mod={exports:{}};
+    new Function('module','exports',...Object.keys(scope),outputFiles[0].text)(mod,mod.exports,...Object.values(scope));
+    await mod.exports.default();
+    assert.equal(added[0].variantId,variant.id);
+    assert.deepEqual(added[0].selectedOptions,[{name:'Size',value:'S'}]);
+    assert.equal(added[0].price.amount,'103.00');
+    const attrs=added[0].customAttributes ?? [];
+    const notices=attrs.filter(a=>/^Timing /.test(a.key));
+    if (native || madeToOrder) {
+      assert.equal(notices.length,1);
+      assert.match(notices[0].value,/add 3 business days once/);
+      assert.match(notices[0].value,days===6?/18–23 business days total/:/15–21 business days total/);
+    } else assert.equal(notices.length,0);
+    assert.equal(added.length,1+codes.length);
+    for (const line of added.slice(1)) {
+      assert.deepEqual(line.customAttributes[0],{key:'Applies To',value:product.title});
+      const serviceNotices=line.customAttributes.filter(a=>a.key==='Timing Estimate');
+      assert.equal(serviceNotices.length,selectedServicesRequireProcessing([line.serviceAddOnCode])?1:0);
+      if(serviceNotices.length) {
+        assert.match(serviceNotices[0].value,/add 3 business days once, not per service/);
+        assert.match(serviceNotices[0].value,days===6?/18–23 business days total/:/15–21 business days total/);
+      }
+    }
+    // Exercise the real store removal method against the actual handler payload.
+    // No checkout, storage or network writes are needed to test the transition.
+    const storeSource=readFileSync(new URL('../src/stores/cartStore.ts',import.meta.url),'utf8');
+    const methodStart=storeSource.indexOf('removeItem: (variantId, customAttributes) => {');
+    const methodEnd=storeSource.indexOf('\n\n      clearCart:',methodStart);
+    const method=storeSource.slice(methodStart,methodEnd).trim().replace(/,$/,'');
+    const compiled=buildSync({stdin:{contents:'export default ({'+method+'});',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
+    let state={items:added};
+    const rm={exports:{}};
+    new Function('module','exports','get','set','sameAttributes','getProductShipsWithin','isServiceLine','appliesToProductTitle','trackRemoveFromCart','toAnalyticsItem',compiled)(
+      rm,rm.exports,()=>state,update=>{state={...state,...update}},
+      (a,b)=>JSON.stringify(a||[])===JSON.stringify(b||[]),()=>days,
+      item=>Boolean(item.serviceAddOnCode),item=>item.customAttributes?.find(a=>a.key==='Applies To')?.value,
+      ()=>{},item=>item,
+    );
+    for(const service of added.slice(1)) {
+      rm.exports.default.removeItem(service.variantId,service.customAttributes);
+      assert(state.items.includes(added[0]),'standalone service removal preserves garment');
+      const remainingProcessing=state.items.filter(item=>item.serviceAddOnCode && selectedServicesRequireProcessing([item.serviceAddOnCode]));
+      const remainingNotices=state.items.flatMap(item=>(item.customAttributes||[]).filter(a=>/^Timing /.test(a.key)));
+      assert.equal(remainingNotices.length,remainingProcessing.length+(native || madeToOrder?1:0));
+    }
+    assert.deepEqual(state.items,[added[0]]);
+    assert.equal((state.items[0].customAttributes||[]).filter(a=>/^Timing /.test(a.key)).length,native || madeToOrder?1:0);
+  }
+});
