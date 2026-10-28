@@ -3,6 +3,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 
 interface HowToMeasureModalProps {
@@ -19,12 +20,12 @@ const measurements = [
   {
     name: 'Waist',
     description:
-      'Measure around your natural waistline, about 1 inch above the navel. Bend to the side to find your natural crease — that is your waist.',
+      'Measure around your natural waistline. Bend to the side to find your natural crease — that is your waist.',
   },
   {
     name: 'Hip',
     description:
-      'Measure around the fullest part of your hips, usually about 7–9 inches below your waist. Keep the tape level all around.',
+      'Measure around the fullest part of your hips. Keep the tape level all around.',
   },
   {
     name: 'Shoulder',
@@ -39,6 +40,7 @@ export const HowToMeasureModal = ({ open, onOpenChange }: HowToMeasureModalProps
       <DialogContent className="max-w-lg max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl">How to Measure</DialogTitle>
+          <DialogDescription>General measuring guidance; confirm which measurements the selected garment requires.</DialogDescription>
         </DialogHeader>
 
         <div className="mt-4 space-y-6">
@@ -59,8 +61,8 @@ export const HowToMeasureModal = ({ open, onOpenChange }: HowToMeasureModalProps
           <div className="bg-card/50 border border-border/50 rounded-sm p-4 mt-4">
             <p className="text-xs text-muted-foreground">
               <span className="font-medium text-foreground">Tip:</span> If you're between sizes,
-              we recommend choosing the larger size. Minor alterations can always be made for a
-              perfect fit.
+              compare the exact product’s measurements and ask LuxeMia before ordering. Alteration
+              availability and fit must be confirmed for the selected garment.
             </p>
           </div>
         </div>

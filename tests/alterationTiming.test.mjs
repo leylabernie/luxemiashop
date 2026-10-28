@@ -138,3 +138,52 @@ test('actual PDP handler keeps optional timing on removable processing-service l
     assert.equal((state.items[0].customAttributes||[]).filter(a=>/^Timing /.test(a.key)).length,native || madeToOrder?1:0);
   }
 });
+
+test('designer native tailoring matrix requires handoff without inventing sizes, variants or fees', async () => {
+  const {selectionRequiresSeparateMeasurements,resolveAvailableVariantForOption,selectedOptionsFromVariant}=await import('../src/lib/productPurchaseFlow.ts');
+  const {hasNativeProductSizeOption,isProductSizeOptionName}=await import('../src/lib/productOptionNames.ts');
+  const {requiresNativeStitchingTimingConfirmation}=await import('../src/lib/serviceAddOns.ts');
+  const source=readFileSync(new URL('../src/components/product/ProductInfo.tsx',import.meta.url),'utf8');
+  const handler=source.slice(source.indexOf('const handleAddToCart = async () => {'),source.indexOf('\n  const formatPrice',source.indexOf('const handleAddToCart = async () => {')));
+  const compiled=buildSync({stdin:{contents:handler+'\nexport default handleAddToCart;',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
+  // Exact catalog option labels; commerce IDs, price amounts and matrix availability are synthetic.
+  const options=[{name:'Stitching',values:['Unstitched Blouse Fabric','Made to Measure Blouse (+$10)']},{name:'Alteration',values:['Standard Fit','Made to Fit (+$10)']}];
+  const variants=options[0].values.flatMap((stitching,i)=>options[1].values.map((alteration,j)=>({id:`fixture-designer-${i}-${j}`,availableForSale:true,title:`${stitching} / ${alteration}`,price:{amount:String(100+10*i+10*j),currencyCode:'USD'},selectedOptions:[{name:'Stitching',value:stitching},{name:'Alteration',value:alteration}]})));
+  const product={id:'fixture-designer',handle:'designer-net-saree',title:'Designer Hand-Embroidered Net Saree with Bead and Pearl Work',productType:'Saree',tags:[],options,variants:{edges:variants.map(node=>({node}))}};
+  assert.equal(hasNativeProductSizeOption(options),false);
+  const sentinel='I will provide measurements after ordering, before tailoring begins.';
+  const needsSource=source.slice(source.indexOf('const needsStitchingSize = useMemo'),source.indexOf('\n\n  // Whether blouse neckline',source.indexOf('const needsStitchingSize = useMemo')));
+  const needsCompiled=buildSync({stdin:{contents:needsSource+'\nexport default needsStitchingSize;',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
+  for(const variant of variants) {
+    const selectedOptions=selectedOptionsFromVariant(variant);
+    const needsMod={exports:{}};
+    const needsScope={useMemo:fn=>fn(),productHasNativeSizes:false,hasNativeFullStitching:false,isReadyMadeOnly:false,isStitchable:false,selectedStitchingType:null,product,selectedOptions,selectionRequiresSeparateMeasurements};
+    new Function('module','exports',...Object.keys(needsScope),needsCompiled)(needsMod,needsMod.exports,...Object.values(needsScope));
+    const needs=needsMod.exports.default;
+    assert.equal(needs,variant.id!=='fixture-designer-0-0');
+    const nativeMod={exports:{}};
+    const nativeScope={...needsScope,productHasNativeSizes:true};
+    new Function('module','exports',...Object.keys(nativeScope),needsCompiled)(nativeMod,nativeMod.exports,...Object.values(nativeScope));
+    assert.equal(nativeMod.exports.default,Object.entries(selectedOptions).some(([name,value])=>selectionRequiresSeparateMeasurements(name,value)),'native-fit path retains preexisting tailoring predicate');
+    for(const confirmed of [false,true]) {
+      const added=[],errors=[];
+      const scope={purchasableVariant:{node:variant},product,selectedAvailableServiceAddOnCodes:[],isBlouseServiceSelectionConfirmed:()=>true,blouseServiceConfirmed:false,customizableProduct:null,requestedCustomColor:'',isCustomSizeSelected:false,customSizeConfirmed:true,isStitchable:false,selectedStitchingType:null,needsStitchingSize:needs,productHasNativeSizes:false,stitchingSize:confirmed?sentinel:null,isMenswear:false,metaToken:null,metaRequestedLine:null,metaContentId:null,setShowSizeValidation:()=>{},setIsAdding:()=>{},addItem:item=>added.push(item),blouseServiceConfirmationAttributes:()=>[],isBanarasiSareeServiceProduct:()=>false,requiresNativeTimingConfirmation:requiresNativeStitchingTimingConfirmation(product,variant.selectedOptions),selectedServicesRequireProcessing,alterationShippingTimingNotice:timing.alterationShippingTimingNotice,shipsWithinDays:null,madeToOrderProduct:false,showNeckline:false,showBottomStyleOption:false,showSleeveStyle:false,hasNativeFullStitching:false,customAlteration:'',quantity:1,serviceAddOnProduct:null,setTimeout:fn=>fn(),openCart:()=>{},toast:{error:message=>errors.push(message)}};
+      const mod={exports:{}};new Function('module','exports',...Object.keys(scope),compiled)(mod,mod.exports,...Object.values(scope));await mod.exports.default();
+      if(needs&&!confirmed){assert.equal(added.length,0);assert.deepEqual(errors,['Please confirm the measurement handoff']);continue;}
+      assert.equal(errors.length,0);assert.equal(added.length,1,'native price already includes selected options; no service line');
+      assert.equal(added[0].variantId,variant.id);assert.deepEqual(added[0].price,variant.price);assert.deepEqual(added[0].selectedOptions,variant.selectedOptions);
+      const attrs=added[0].customAttributes??[];assert(!attrs.some(a=>a.key==='Stitching Size'));
+      assert.deepEqual(attrs.filter(a=>a.key==='Measurement Handoff'),needs?[{key:'Measurement Handoff',value:sentinel}]:[]);
+      const notices=attrs.filter(a=>a.key==='Timing Confirmation');assert.equal(notices.length,selectedOptions.Alteration.startsWith('Made to Fit')?1:0);
+      if(notices.length)assert.match(notices[0].value,/add 3 business days once.*15–21 business days total/);
+    }
+  }
+  const selection=source.slice(source.indexOf('const handleOptionSelect ='),source.indexOf('\n  const handleStitchingTypeSelect'));
+  const selectionCompiled=buildSync({stdin:{contents:selection+'\nexport default handleOptionSelect;',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
+  let resets=0,errors=0;
+  const scope={resolveAvailableVariantForOption,selectedOptionsFromVariant,variantNodes:variants,selectedOptions:selectedOptionsFromVariant(variants[0]),metaToken:null,setSelectedOptions:()=>{},setStitchingSize:value=>{assert.equal(value,null);resets++;},setShowSizeValidation:()=>{},setCustomSizeConfirmed:()=>{},isProductSizeOptionName,selectionRequiresSeparateMeasurements,productHasNativeSizes:false,toast:{error:()=>errors++}};
+  const mod={exports:{}};new Function('module','exports',...Object.keys(scope),selectionCompiled)(mod,mod.exports,...Object.values(scope));
+  mod.exports.default('Alteration','Made to Fit (+$10)');assert.equal(resets,1);
+  mod.exports.default('Alteration','Unavailable option');assert.equal(resets,1);assert.equal(errors,1);
+  assert.match(source,/setStitchingSize\(null\);\s*setShowSizeValidation\(false\);\s*setSelectedServiceAddOnCodes/);
+});

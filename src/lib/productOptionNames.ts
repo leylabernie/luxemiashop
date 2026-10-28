@@ -1,5 +1,7 @@
 const SIZE_OPTION_NAMES = new Set([
   'size',
+  // Native children’s age variants are complete catalog fit choices, not adult sizes.
+  'age',
   'standard size',
   'blouse size',
   'bust size',

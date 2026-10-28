@@ -392,3 +392,19 @@ test('product sizing tab removes invented universal dimensions but preserves ver
   assert.match(source,/DOMPurify.sanitize\(descriptionHtml/);
   assert.match(source,/'table', 'tbody', 'tr', 'th', 'td'/);
 });
+
+test('alternate stitching chart and how-to-measure dialogs contain no universal body conversion or guaranteed fit', () => {
+  for (const [file,component] of [['src/components/SizeChartModal.tsx','SizeChartModal'],['src/components/HowToMeasureModal.tsx','HowToMeasureModal']]) {
+    const source=read(file).replace(/<DialogContent className=/g,'<div className=').replace(/<\/DialogContent>/g,'</div>');
+    const {outputFiles}=buildSync({stdin:{contents:source,loader:'tsx',resolveDir:root},bundle:true,write:false,format:'cjs',platform:'node',packages:'external',jsx:'automatic',alias:{'@':path.join(root,'src')}});
+    const m={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,m,m.exports);
+    const html=renderToStaticMarkup(React.createElement(m.exports[component],{open:true,onOpenChange(){}}));
+    assert.doesNotMatch(html,/<table|±0\.5|always be made|perfect fit|choosing the larger size/);
+    assert.match(html,/selected (?:item|garment)|selected product/);
+    assert.match(source,/<Dialog open=\{open\} onOpenChange=\{onOpenChange\}>/);
+    assert.match(source,/<DialogTitle/);
+    assert.match(source,/<DialogDescription/);
+  }
+  assert.doesNotMatch(read('src/components/SizeChartModal.tsx'),/sizeChart|row\.bust|row\.waist|row\.hip/);
+  assert.match(read('src/components/HowToMeasureModal.tsx'),/Measure around the fullest part/);
+});
