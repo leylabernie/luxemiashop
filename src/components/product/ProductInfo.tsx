@@ -524,10 +524,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       product.productType,
       product.title,
       product.metadata?.includedComponents,
-      product.description,
+      // Specs must use catalog facts, not the SEO-enriched display introduction.
+      product.descriptionHtml || product.description,
       getCatalogMaterial(product),
     ),
-    [product.tags, product.productType, product.title, product.metadata, product.fabricMetafield, product.materialMetafield, product.description],
+    [product.tags, product.productType, product.title, product.metadata, product.fabricMetafield, product.materialMetafield, product.descriptionHtml, product.description],
   );
 
   // Utsav-style short lead: first two sentences of the listing description.

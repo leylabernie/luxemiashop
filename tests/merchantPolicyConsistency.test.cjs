@@ -317,3 +317,26 @@ test('repeated route rewriting retains import coverage expressions', () => {
     }
   } finally { fs.rmSync(fixture,{recursive:true,force:true}); }
 });
+
+test('hydrated ProductInfo derives included pieces from raw catalog HTML despite SEO display enrichment', () => {
+  const source = read('src/components/product/ProductInfo.tsx');
+  const helper = source.slice(source.indexOf('const extractProductSpecs ='), source.indexOf('// Product types that support blouse neckline selection'));
+  const invocation = source.match(/const productSpecs = useMemo\(\s*\(\) => (extractProductSpecs\([\s\S]*?\n    \)),/)[1];
+  const { outputFiles } = buildSync({ stdin: {contents: `import { inferProductSpecColors } from './src/lib/productSpecColor'; import { resolveIncludedPieces } from './src/lib/productPurchaseFlow.ts'; import { getCatalogMaterial } from './src/lib/catalogMaterial.ts'; ${helper}\nexport const specs = (product: any) => ${invocation};`, loader:'ts',resolveDir:root},bundle:true,write:false,format:'cjs',platform:'node' });
+  const m={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,m,m.exports);
+  const { enrichProductDescription } = loadTs('src/lib/productDescriptionEnrichment.ts');
+  const fixtures = [
+    {title:'Green Embroidered Anarkali Suit, Chinon Fabric, Pink Dupatta',html:'<p>Green Anarkali suit set: green Chinon embroidered Anarkali top, matching palazzo, pink Chinon dupatta with green border. 3 pieces. Stitched. </p><h3>Size and Fit</h3><p>Available sizes: S, M, L, XL, XXL, XS. Select your size from the product options.</p><h3>Occasions</h3><p>Indian wedding celebrations, festive gatherings and special occasions.</p><h3>Care</h3><p>Dry clean to care for the embroidery and fabric.</p><p>Accessories shown are for styling unless included in the outfit details. Colors may appear slightly different across screens.</p>',expected:'green Chinon embroidered Anarkali top, matching palazzo, pink Chinon dupatta with green border'},
+    {title:'Teal Green Chinon Anarkali Gown Set, Embroidered Wedding Dress with Palazzo & Dupatta for Women',html:'<p>Teal green Chinon embroidered Anarkali gown set with palazzo and dupatta. 3 pieces. Ready-to-wear. Dry clean only.</p><h3>Size and Fit</h3><p>Available sizes: S, M, L, XL, XXL, XXXL. Select your preferred size from the options.</p><h3>Occasions</h3><p>An Indian ethnic outfit for wedding celebrations, festive gatherings and special occasions.</p><p>Accessories shown are for styling unless included in the outfit details. Screen settings may affect how colors appear.</p>',expected:'Anarkali gown, palazzo, and dupatta'},
+  ];
+  for (const fixture of fixtures) {
+    const description = enrichProductDescription(fixture.html,'Anarkali',fixture.title);
+    assert.match(description,/is available from LuxeMia online in the USA/);
+    const p={title:fixture.title,productType:'Anarkali',tags:['anarkali'],descriptionHtml:fixture.html,description};
+    assert.equal(m.exports.specs(p).includedPieces,fixture.expected);
+    assert.equal(m.exports.specs({...p,metadata:{includedComponents:['Verified catalog components']}}).includedPieces,'Verified catalog components');
+  }
+  const ambiguous='<p>Dusty pink Chinon embroidered Anarkali suit set with green dupatta. 3 pieces. Stitched.</p>';
+  assert.equal(m.exports.specs({title:'Dusty Pink Embroidered Anarkali Suit, Chinon, Green Dupatta',productType:'Anarkali',descriptionHtml:ambiguous,description:enrichProductDescription(ambiguous,'Anarkali','Dusty Pink Anarkali')}).includedPieces,undefined);
+  assert.equal(m.exports.specs({title:'Green Anarkali',productType:'Anarkali',description:fixtures[0].html}).includedPieces,fixtures[0].expected);
+});
