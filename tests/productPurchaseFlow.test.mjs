@@ -233,3 +233,37 @@ test('explicit set contents are shown without leaking the next listing field', (
     'Embroidered top, gharara bottom and coordinating dupatta');
   assert.equal(resolveIncludedPieces(undefined, [], 'Silk Saree', 'Package Includes: blouse stitching service for $10.'), undefined);
 });
+
+// Live listing excerpts verified 2026-10-28; no dimensions or components inferred.
+const greenAnarkaliContents = '<p>Green Anarkali suit set: green Chinon embroidered Anarkali top, matching palazzo, pink Chinon dupatta with green border. 3 pieces. Stitched. </p><h3>Size and Fit</h3><p>Available sizes: S, M, L, XL, XXL, XS. Select your size from the product options.</p>';
+const tealAnarkaliContents = '<p>Teal green Chinon embroidered Anarkali gown set with palazzo and dupatta. 3 pieces. Ready-to-wear. Dry clean only.</p><h3>Size and Fit</h3><p>Available sizes: S, M, L, XL, XXL, XXXL. Select your preferred size from the options.</p>';
+
+test('explicit three-piece Anarkali description enumerations expose only named garments', () => {
+  assert.equal(resolveIncludedPieces(null, [], 'Green Embroidered Anarkali Suit, Chinon Fabric, Pink Dupatta', greenAnarkaliContents),
+    'green Chinon embroidered Anarkali top, matching palazzo, pink Chinon dupatta with green border');
+  assert.equal(resolveIncludedPieces(null, [], 'Teal Green Chinon Anarkali Gown Set', tealAnarkaliContents),
+    'Anarkali gown, palazzo, and dupatta');
+});
+
+test('normalized metadata and included tags outrank explicit Anarkali prose', () => {
+  assert.equal(resolveIncludedPieces(['Verified top', 'Verified dupatta'], ['Included: tagged components'], '', greenAnarkaliContents), 'Verified top, Verified dupatta');
+  assert.equal(resolveIncludedPieces(null, ['Included: verified components'], '', tealAnarkaliContents), 'verified components');
+});
+
+test('ambiguous counts and available-with styling never invent set contents', () => {
+  const descriptions = [
+    '<p>Dusty pink Chinon embroidered Anarkali suit set with green dupatta. 3 pieces. Stitched. </p>',
+    '<p>Green Digital Printed Chinon Anarkali Suit Set. Wear it for Mehendi and Festive Celebrations.</p><h3>Design and Outfit Details</h3><ul><li>Round neckline and full sleeves; palazzo pants in matching green</li></ul><h3>Set Components</h3><ul><li>Available with a matching green chinon dupatta with printed border</li></ul>',
+    '<p>Mint Green Chikankari Embroidered Georgette Anarkali. Wear it for Mehendi and Festive Celebrations.</p><h3>Set Components</h3><ul><li>Available with a matching mint green net dupatta</li></ul>',
+    'Teal Anarkali gown set available with palazzo and dupatta. 3 pieces.',
+    'Teal Anarkali gown set with palazzo and dupatta.',
+    'Teal Anarkali gown set with palazzo and dupatta. 3 pieces. Palazzo sold separately.',
+    'Teal Anarkali gown set with palazzo and dupatta. 3 pieces. Palazzo pants sold separately.',
+    'Teal Anarkali gown set with palazzo and dupatta. 3 pieces. Dupatta is available separately.',
+    'Teal Anarkali gown set with palazzo and dupatta. 3 pieces. This set excludes the dupatta.',
+    'Green Anarkali suit set: embroidered Anarkali top, optional palazzo, pink dupatta. 3 pieces.',
+  ];
+  for (const description of descriptions) {
+    assert.equal(resolveIncludedPieces(null, [], 'Embroidered Anarkali', description), undefined, description);
+  }
+});

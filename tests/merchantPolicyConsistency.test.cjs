@@ -79,6 +79,12 @@ test('Returns page renders the chosen window, required evidence, and preserves u
   assert.match(html, /Alteration and store credits are not offered/);
   assert.match(html, /Full refund or replacement, your choice/);
   assert.match(html, /consumer rights or remedies/);
+  assert.doesNotMatch(html, /30[-– ]day returns|no-questions-asked|fake returns policy/i);
+  assert.match(html, /Change-of-mind returns are not accepted, except where applicable law provides otherwise/);
+  assert.match(html, /Items that arrive damaged, defective, wrong, not as described, or with missing pieces remain covered under the reporting process below/);
+  assert.match(html, /Not returnable for change of mind once stitching starts/);
+  assert.match(html, /24 hours/);
+  assert.match(html, /This reporting process does not limit any consumer rights or remedies that cannot legally be excluded/);
 });
 
 test('DeliveryEstimate preserves custom/tailoring exceptions while disclosing India in every branch', () => {

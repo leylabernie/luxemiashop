@@ -71,10 +71,10 @@ const Returns = () => {
               Every LuxeMia order is sourced and shipped from India &mdash; from my family&rsquo;s textile contacts in Surat, Kanchipuram, Banaras, and Gujarat. Return shipping from the U.S. to India typically costs $30&ndash;$50, requires customs paperwork, and the supplier doesn&rsquo;t always accept returns. By the time the item got back to India, the shipping cost would be more than the refund on most sarees and suits.
             </p>
             <p>
-              I could pretend otherwise and write a &ldquo;no-questions-asked 30-day returns&rdquo; policy like the big stores do &mdash; and then fight you when you actually tried to use it. I won&rsquo;t. Honesty is the whole reason LuxeMia exists.
+              Change-of-mind returns are not accepted, except where applicable law provides otherwise. Items that arrive damaged, defective, wrong, not as described, or with missing pieces remain covered under the reporting process below.
             </p>
             <p>
-              So instead of a fake returns policy, here is what I do instead: I answer every email and every phone call myself before you order. If you&rsquo;re not sure about a color, a fabric, a size, or whether a piece is right for the occasion you&rsquo;re shopping for &mdash; <a href="mailto:hello@luxemia.shop">email me</a> or call <a href="tel:+12153419990">+1-215-341-9990</a>. I&rsquo;ll send you extra photos, real measurements, fit notes from past customers, and an honest opinion on whether that piece is right for you. The goal is to get it right the first time, not to ship the wrong thing and argue about it later.
+              Before you order, I answer every email and every phone call myself. If you&rsquo;re not sure about a color, a fabric, a size, or whether a piece is right for the occasion you&rsquo;re shopping for &mdash; <a href="mailto:hello@luxemia.shop">email me</a> or call <a href="tel:+12153419990">+1-215-341-9990</a>. I&rsquo;ll send you extra photos, real measurements, fit notes from past customers, and an honest opinion on whether that piece is right for you. The goal is to get it right the first time, not to ship the wrong thing and argue about it later.
             </p>
           </div>
         </section>
