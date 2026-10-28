@@ -192,6 +192,7 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
   async function run(selected, confirmed, metaMode = false) {
     const lines = [], errors = [], configured = [], destinations = [];
     const context = vm.createContext({
+      measurementEligible:false,measurementDraft:loadTypeScript('src/lib/measurementRequest.ts').emptyMeasurementDraft(),measurementNow:false,nativeMeasurementRequest:false,measurementServiceCodes:[],...loadTypeScript('src/lib/measurementRequest.ts'),setMeasurementValidation() {},
       metaToken: metaMode ? 'test-context' : null, metaContentId: metaMode ? 'test-item' : null, metaRequestedLine: metaMode ? {quantity:1} : null,
       saveMetaConfiguration(token, item, handle, values) { configured.push(...values); return '/meta-checkout?context=test-context'; },
       window: {location: {assign(path) { destinations.push(path); }}},

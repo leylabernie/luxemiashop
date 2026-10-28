@@ -1,3 +1,4 @@
+import { emptyMeasurementDraft, measurementError, measurementAttributes } from '../src/lib/measurementRequest.ts';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { createRequire } from 'node:module';
@@ -6,7 +7,7 @@ import { readFileSync } from 'node:fs';
 import { buildSync } from 'esbuild';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { selectedServicesRequireProcessing, serviceAddOnTotal, getEligibleServiceAddOns, mayRequireAlterationProcessing } from '../src/lib/serviceAddOns.ts';
+import { selectedServicesRequireProcessing, isHiddenBillingProductHandle, serviceAddOnTotal, getEligibleServiceAddOns, mayRequireAlterationProcessing } from '../src/lib/serviceAddOns.ts';
 import timing from '../src/config/shippingTiming.cjs';
 const require = createRequire(import.meta.url);
 const {outputFiles} = buildSync({entryPoints:[fileURLToPath(new URL('../src/components/product/DeliveryEstimate.tsx',import.meta.url))],bundle:true,write:false,platform:'node',format:'cjs',packages:'external',jsx:'automatic',alias:{'@':fileURLToPath(new URL('../src',import.meta.url))}});
@@ -74,6 +75,7 @@ test('actual PDP handler keeps optional timing on removable processing-service l
   for (const [codes,days,native,madeToOrder=false] of [[['garment-alteration'],null,false],[['garment-alteration','pico-fall'],null,false],[['garment-alteration'],6,false],[[],null,false],[['matching-petticoat'],null,false],[['garment-alteration'],null,true],[['garment-alteration'],null,false,true]]) {
     const added=[];
     const scope={
+      measurementEligible:false,measurementDraft:emptyMeasurementDraft(),measurementNow:false,nativeMeasurementRequest:false,measurementServiceCodes:[],measurementError,measurementAttributes,setMeasurementValidation:()=>{},
       purchasableVariant:{node:variant}, product,
       selectedAvailableServiceAddOnCodes:codes,
       isBlouseServiceSelectionConfirmed:()=>true, blouseServiceConfirmed:false,
@@ -118,13 +120,14 @@ test('actual PDP handler keeps optional timing on removable processing-service l
     const methodStart=storeSource.indexOf('removeItem: (variantId, customAttributes) => {');
     const methodEnd=storeSource.indexOf('\n\n      clearCart:',methodStart);
     const method=storeSource.slice(methodStart,methodEnd).trim().replace(/,$/,'');
-    const compiled=buildSync({stdin:{contents:'export default ({'+method+'});',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
+    const dependencyHelpers=storeSource.slice(storeSource.indexOf('const appliesToProductTitle'),storeSource.indexOf('const toAnalyticsItem'));
+    const compiled=buildSync({stdin:{contents:dependencyHelpers+'\nexport default ({'+method+'});',loader:'ts'},write:false,platform:'node',format:'cjs'}).outputFiles[0].text;
     let state={items:added};
     const rm={exports:{}};
-    new Function('module','exports','get','set','sameAttributes','getProductShipsWithin','isServiceLine','appliesToProductTitle','trackRemoveFromCart','toAnalyticsItem',compiled)(
+    new Function('module','exports','get','set','sameAttributes','getProductShipsWithin','isHiddenBillingProductHandle','trackRemoveFromCart','toAnalyticsItem',compiled)(
       rm,rm.exports,()=>state,update=>{state={...state,...update}},
       (a,b)=>JSON.stringify(a||[])===JSON.stringify(b||[]),()=>days,
-      item=>Boolean(item.serviceAddOnCode),item=>item.customAttributes?.find(a=>a.key==='Applies To')?.value,
+      isHiddenBillingProductHandle,
       ()=>{},item=>item,
     );
     for(const service of added.slice(1)) {
@@ -167,7 +170,7 @@ test('designer native tailoring matrix requires handoff without inventing sizes,
     assert.equal(nativeMod.exports.default,Object.entries(selectedOptions).some(([name,value])=>selectionRequiresSeparateMeasurements(name,value)),'native-fit path retains preexisting tailoring predicate');
     for(const confirmed of [false,true]) {
       const added=[],errors=[];
-      const scope={purchasableVariant:{node:variant},product,selectedAvailableServiceAddOnCodes:[],isBlouseServiceSelectionConfirmed:()=>true,blouseServiceConfirmed:false,customizableProduct:null,requestedCustomColor:'',isCustomSizeSelected:false,customSizeConfirmed:true,isStitchable:false,selectedStitchingType:null,needsStitchingSize:needs,productHasNativeSizes:false,stitchingSize:confirmed?sentinel:null,isMenswear:false,metaToken:null,metaRequestedLine:null,metaContentId:null,setShowSizeValidation:()=>{},setIsAdding:()=>{},addItem:item=>added.push(item),blouseServiceConfirmationAttributes:()=>[],isBanarasiSareeServiceProduct:()=>false,requiresNativeTimingConfirmation:requiresNativeStitchingTimingConfirmation(product,variant.selectedOptions),selectedServicesRequireProcessing,alterationShippingTimingNotice:timing.alterationShippingTimingNotice,shipsWithinDays:null,madeToOrderProduct:false,showNeckline:false,showBottomStyleOption:false,showSleeveStyle:false,hasNativeFullStitching:false,customAlteration:'',quantity:1,serviceAddOnProduct:null,setTimeout:fn=>fn(),openCart:()=>{},toast:{error:message=>errors.push(message)}};
+      const scope={measurementEligible:false,measurementDraft:emptyMeasurementDraft(),measurementNow:false,nativeMeasurementRequest:false,measurementServiceCodes:[],measurementError,measurementAttributes,setMeasurementValidation:()=>{},purchasableVariant:{node:variant},product,selectedAvailableServiceAddOnCodes:[],isBlouseServiceSelectionConfirmed:()=>true,blouseServiceConfirmed:false,customizableProduct:null,requestedCustomColor:'',isCustomSizeSelected:false,customSizeConfirmed:true,isStitchable:false,selectedStitchingType:null,needsStitchingSize:needs,productHasNativeSizes:false,stitchingSize:confirmed?sentinel:null,isMenswear:false,metaToken:null,metaRequestedLine:null,metaContentId:null,setShowSizeValidation:()=>{},setIsAdding:()=>{},addItem:item=>added.push(item),blouseServiceConfirmationAttributes:()=>[],isBanarasiSareeServiceProduct:()=>false,requiresNativeTimingConfirmation:requiresNativeStitchingTimingConfirmation(product,variant.selectedOptions),selectedServicesRequireProcessing,alterationShippingTimingNotice:timing.alterationShippingTimingNotice,shipsWithinDays:null,madeToOrderProduct:false,showNeckline:false,showBottomStyleOption:false,showSleeveStyle:false,hasNativeFullStitching:false,customAlteration:'',quantity:1,serviceAddOnProduct:null,setTimeout:fn=>fn(),openCart:()=>{},toast:{error:message=>errors.push(message)}};
       const mod={exports:{}};new Function('module','exports',...Object.keys(scope),compiled)(mod,mod.exports,...Object.values(scope));await mod.exports.default();
       if(needs&&!confirmed){assert.equal(added.length,0);assert.deepEqual(errors,['Please confirm the measurement handoff']);continue;}
       assert.equal(errors.length,0);assert.equal(added.length,1,'native price already includes selected options; no service line');

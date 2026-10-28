@@ -1,3 +1,4 @@
+import { redactMeasurementAttributes } from './measurementRequest';
 import type { CartItem } from '@/stores/cartStore';
 import { parseMetaCheckout, type MetaRequest } from './metaCheckout';
 
@@ -23,7 +24,7 @@ export function saveMetaContext(token: string | null, request: MetaRequest, sele
   const id = token && TOKEN.test(token) ? token : crypto.randomUUID();
   const existing = token ? readMetaContext(token) : null;
   if (token && !existing) throw new Error('Your shopping session expired. Reopen your Meta shopping link.');
-  sessionStorage.setItem(PREFIX + id, JSON.stringify({ version: 1, expires: existing?.expires ?? Date.now() + 2 * 60 * 60 * 1000, request, selections }));
+  sessionStorage.setItem(PREFIX + id, JSON.stringify({ version: 1, expires: existing?.expires ?? Date.now() + 2 * 60 * 60 * 1000, request, selections: selections.map(selection => ({ ...selection, configured: selection.configured?.map(line => ({ ...line, customAttributes: redactMeasurementAttributes(line.customAttributes) })) })) }));
   return id;
 }
 export function metaReturnPath(token: string): string {

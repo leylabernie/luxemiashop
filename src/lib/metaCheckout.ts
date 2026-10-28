@@ -1,3 +1,4 @@
+import { hasPendingMeasurementAttributes } from './measurementRequest';
 import { alterationShippingTimingNotice } from '../config/shippingPolicy';
 import { getProductShipsWithin } from './shipBy';
 import { normalizeFulfillmentAttributes } from './fulfillmentAttributes';
@@ -108,6 +109,7 @@ export function metaCheckoutLines(selections: MetaSelection[]) {
 export async function configuredMetaCheckoutLines(selection: MetaSelection, getProduct: (handle: string) => Promise<MetaProduct | null>) {
   const configured = selection.configured;
   if (!configured?.length || configured.length > 10 || configured[0].handle !== selection.product.handle) throw new Error('Reconfigure this product before checkout.');
+  if (configured.some(line => hasPendingMeasurementAttributes(line.customAttributes))) throw new Error('Measurement details must be re-entered. Reopen the product and explicitly choose to provide measurements after ordering for this shopping-link checkout.');
   return Promise.all(configured.map(async (line, index) => {
     if (index > 0 && line.handle !== 'luxemia-tailoring-saree-finishing-add-ons') throw new Error('Invalid service configuration.');
     if (line.quantity !== selection.quantity || !Number.isInteger(line.quantity) || line.quantity < 1 || line.quantity > 99) throw new Error('Reconfigure the product quantity before checkout.');

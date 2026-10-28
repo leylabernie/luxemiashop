@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify';
 import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Ruler, Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
+import { Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
 import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
 
 interface ProductTabsProps {

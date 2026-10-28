@@ -1,3 +1,4 @@
+import { hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect } from 'react';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
@@ -120,6 +121,10 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   )?.node.image;
                   const image = isService ? undefined : variantImage ?? item.product.node.images?.edges?.[0]?.node;
                   const serviceLabel = isGarmentAlteration ? 'Garment Alteration' : item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
+                  const pendingMeasurements = hasPendingMeasurementAttributes(item.customAttributes);
+                  const reference = item.customAttributes?.find(attribute => attribute.key === 'Configuration reference')?.value;
+                  const measurementGarment = isService ? items.find(candidate => !isHiddenBillingProductHandle(candidate.product.node.handle)
+                    && Boolean(reference) && candidate.customAttributes?.some(attribute => attribute.key === 'Configuration reference' && attribute.value === reference)) : item;
                   const visibleAttributes = normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node));
                   
                   return (
@@ -158,9 +163,16 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                             ? (isGarmentAlteration ? 'Alteration service for your selected garment' : 'Finishing service for your selected saree')
                             : (item.selectedOptions.map(o => o.value).join(' / ') || item.variantTitle)}
                         </p>
+                        {pendingMeasurements && <div role="alert" className="mb-2 rounded border border-amber-400 p-2 text-xs">
+                          <p>Measurement details were cleared when this page reloaded. Checkout is blocked for this configuration.</p>
+                          {measurementGarment ? <a className="underline" href={`/product/${measurementGarment.product.node.handle}`}
+                            onClick={() => { removeItem(measurementGarment.variantId, measurementGarment.customAttributes); onClose(); }}>
+                            Remove this configuration and reopen the product to enter details again or choose after-order submission
+                          </a> : <button type="button" className="underline" onClick={() => removeItem(item.variantId, item.customAttributes)}>Remove this incomplete measurement item</button>}
+                        </div>}
                         {visibleAttributes && visibleAttributes.length > 0 && (
                           <div className="mb-2 space-y-0.5">
-                            {visibleAttributes.map((attr, i) => (
+                            {visibleAttributes.filter(attr => attr.key !== 'Configuration reference').map((attr, i) => (
                               <p key={i} className="text-[10px] text-primary/80 italic leading-tight">
                                 <span className="font-medium">{attr.key}:</span> {attr.value}
                               </p>
