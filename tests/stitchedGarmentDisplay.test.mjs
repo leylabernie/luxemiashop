@@ -247,3 +247,61 @@ test('existing blouse-stitching cart lines merge with corrected alteration witho
   const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /isBanarasiSareeServiceProduct\(product\)\s*\|\|\s*code === 'garment-alteration'/);
 });
+
+test('catalog kids Age variants remain the only fit selector, without invented adult S–XXL choices', () => {
+  setState([]);
+  // Exact public option/category/tag evidence from kids-onam-set-maroon; commerce IDs/prices below are synthetic.
+  const ages = ['1Y', '2-3Y', '4-5Y', '6-12M', '6-7Y'];
+  const kids = {
+    ...garment, id:'fixture-kids',handle:'kids-onam-set-maroon',
+    title:'Maroon Onam Kids Shirt Mundu Set with Maggam Work, Festive Kids Outfit',
+    productType:'Kids Boy Set', description:'Shirt + Mundu',
+    tags:['kids boy set','maroon toddler kurta'], options:[{name:'Age',values:ages}],
+    variants:{edges:ages.map(age=>({node:{id:'fixture-age-'+age,title:age,availableForSale:true,price:{amount:'50',currencyCode:'USD'},selectedOptions:[{name:'Age',value:age}]}}))},
+  };
+  const html=renderProduct(kids);
+  assert.match(html,/Age/);
+  for(const age of ages) assert(html.includes(age),age);
+  assert.doesNotMatch(html,/>Select Size<|>S<|>M<|>L<|>XL<|>XXL<|>Size Chart<|>Stitching Size</);
+});
+
+test('catalog designer net saree uses after-order handoff, not invented sizes, for measurement-based variants', () => {
+  setState([]);
+  // Exact catalog options; fixture IDs and prices test billing preservation, not live availability.
+  const blouses = ['Unstitched Blouse Fabric', 'Made to Measure Blouse (+$10)'];
+  const alterations = ['Standard Fit', 'Made to Fit (+$10)'];
+  const saree = {
+    ...garment, id:'fixture-designer',handle:'designer-embroidered-net-saree',
+    title:'Designer Hand-Embroidered Net Saree with Bead and Pearl Work', productType:'Saree',tags:[],
+    description:'Embroidered net saree with matching blouse pieces. Choose the Made to Fit option for measurement-based tailoring. Submit your measurements after placing your order.',
+    options:[{name:'Blouse',values:blouses},{name:'Alteration',values:alterations}],
+    variants:{edges:blouses.flatMap((blouse,b)=>alterations.map((alteration,a)=>({node:{id:`fixture-designer-${b}-${a}`,title:`${blouse} / ${alteration}`,availableForSale:true,price:{amount:String(100+b*10+a*10),currencyCode:'USD'},selectedOptions:[{name:'Blouse',value:blouse},{name:'Alteration',value:alteration}]}})))},
+  };
+  for (const {node} of saree.variants.edges) {
+    globalThis.__displaySearch = `variant=${node.id}`;
+    const html=renderProduct(saree);
+    const needsHandoff=node.selectedOptions.some(o=>/Made to/.test(o.value));
+    assert.equal(html.includes('Measurement handoff'),needsHandoff,node.title);
+    if(needsHandoff) {
+      assert.match(html,/type="checkbox"/);
+      assert.match(html,/provide measurements after ordering, before tailoring begins/);
+    }
+    assert.doesNotMatch(html,/>28&quot;<|>30&quot;<|>S<|>M<|>L<|Bust size in inches|Stitching Size|Select Neckline|Round Neck|Sleeve Style/);
+  }
+  globalThis.__displaySearch='';
+});
+
+ test('native Made to Fit choices do not newly offer handoff, neckline or bottom redesign', () => {
+  // Exact public catalog options and classification; synthetic commerce matrix.
+  const rows = [{"handle": "art-silk-embroidered-suit-set", "title": "Rust Orange Art Silk Embroidered 3-Piece Suit Set", "productType": "Salwar Suit", "tags": ["3 Piece Suit Set", "Art Silk Salwar Suit", "Art Silk Suit", "copy:reviewed-2026-10-09", "Embroidered Art Silk Suit", "festive celebrations", "Indian Festive Wear", "Party Wear Suit", "rust orange art silk embroidered 3-piece suit set", "salwar suit", "Wedding Guest Suit"], "options": [{"name": "Size", "values": ["32", "34", "36", "38", "40"]}, {"name": "Alteration", "values": ["Standard Fit", "Made to Fit (+$10)"]}]}, {"handle": "floral-printed-organza-lehenga-choli-white-peach", "title": "White and Peach Floral Printed Organza Lehenga Choli", "productType": "Lehenga Choli", "tags": ["copy:reviewed-2026-10-09", "festive celebrations", "floral lehenga", "lehenga choli", "organza lehenga", "sequin lehenga", "white and peach floral printed organza lehenga choli", "white and peach lehenga", "zari work"], "options": [{"name": "Size", "values": ["32", "34", "36", "38", "40"]}, {"name": "Alteration", "values": ["Standard Fit", "Made to Fit (+$10)"]}]}];
+  setState([]);
+  for(const row of rows) {
+    const nativeOptions=row.options.map(o=>({name:o.name,value:o.name==='Alteration'?'Made to Fit (+$10)':o.values[0]}));
+    const standardOptions=nativeOptions.map(o=>o.name==='Alteration'?{...o,value:'Standard Fit'}:o);
+    const product={...garment,...row,id:'fixture-native-'+row.handle,description:'Listed garment.',variants:{edges:[nativeOptions,standardOptions].map((selectedOptions,i)=>({node:{id:'fixture-native-'+row.handle+'-'+i,title:String(i),price:{amount:String(100-i*10),currencyCode:'USD'},availableForSale:true,selectedOptions}}))}};
+    globalThis.__displaySearch='variant='+product.variants.edges[0].node.id;
+    const html=renderProduct(product);
+    assert.doesNotMatch(html,/Measurement handoff|Blouse Neckline|Bottom Style|Round Neck|Stitching Size/);
+  }
+  globalThis.__displaySearch='';
+});

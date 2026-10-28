@@ -354,3 +354,14 @@ test('explicit prose rejects conditional components, exclusions, incomplete coun
   assert.equal(resolveIncludedPieces(['Verified metadata'], [], '', html), 'Verified metadata');
   assert.equal(resolveIncludedPieces(null, ['Included: verified tag'], '', html), 'verified tag');
 });
+
+test('native Age option preserves exact age labels and resolves real variants without adult measurement selection', () => {
+  const option={name:'Age',values:['1Y','2-3Y','4-5Y','6-12M','6-7Y']};
+  assert.equal(hasNativeProductSizeOption([option]),true);
+  assert.equal(getCustomerFacingProductOptionName(option),'Age');
+  for(const age of option.values) assert.equal(selectionRequiresSeparateMeasurements('Age',age),false);
+  const variants=option.values.map(age=>({id:'age-'+age,availableForSale:true,selectedOptions:[{name:'Age',value:age}]}));
+  for(const age of option.values) assert.equal(resolveAvailableVariantForOption(variants,{Age:'1Y'},'Age',age).id,'age-'+age);
+  assert.equal(hasNativeProductSizeOption([{name:'Color',values:['S','M']}]),false);
+  assert.equal(hasNativeProductSizeOption([{name:'Age',values:['Default Title']}]),false);
+});

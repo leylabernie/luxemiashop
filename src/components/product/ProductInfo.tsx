@@ -14,7 +14,6 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
-import type { SizeMode } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
@@ -604,39 +603,18 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     // they must not trigger a second measurement selector. Only an explicit
     // tailoring choice (for example Custom Stitching) reaches this fallback.
     return Object.entries(selectedOptions).some(([key, val]) =>
-      selectionRequiresSeparateMeasurements(key, val),
+      selectionRequiresSeparateMeasurements(key, val)
+      || (!productHasNativeSizes && /\bmade[-\s]+to[-\s]+fit\b/i.test(val)),
     );
-  }, [hasNativeFullStitching, selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
-
-  // Determine the size mode based on stitching type
-  const sizeMode: SizeMode = useMemo(() => {
-    if (isMenswear) return 'menswear';
-    if (selectedStitchingType === 'semi-stitched') return 'letter';
-    return 'numeric'; // ready-to-wear or made-to-measure
-  }, [selectedStitchingType, isMenswear]);
-
-  // Size label and hint based on stitching type
-  const sizeLabel = useMemo(() => {
-    if (isMenswear) return 'Select Size';
-    if (selectedStitchingType === 'semi-stitched') return 'Standard Size';
-    if (selectedStitchingType === 'ready-to-wear') return 'Bust Size';
-    if (selectedStitchingType === 'made-to-measure') return 'Bust Size';
-    return 'Stitching Size';
-  }, [selectedStitchingType, isMenswear]);
-
-  const sizeHint = useMemo(() => {
-    if (isMenswear) return undefined;
-    if (selectedStitchingType === 'semi-stitched') return 'Standard sizes';
-    if (selectedStitchingType === 'ready-to-wear' || selectedStitchingType === 'made-to-measure') return 'Bust size in inches';
-    return undefined;
-  }, [selectedStitchingType, isMenswear]);
+  }, [hasNativeFullStitching, productHasNativeSizes, selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
 
   // Whether blouse neckline selector should show
   const showNeckline = useMemo(() => {
     // Native fit choices on a supplied stitched lehenga do not promise a redesign.
     if (hasFixedStitchedLehenga) return false;
-    // Always show for blouse products (lehenga/saree) when stitching is selected
-    if (isBlouseProductType(product.productType, product.tags) && needsStitchingSize) {
+    // Preserve existing native-fit and explicit tailoring design controls.
+    // A native measurement-based variant alone does not promise a neckline redesign.
+    if ((productHasNativeSizes || isStitchable) && isBlouseProductType(product.productType, product.tags) && needsStitchingSize) {
       return true;
     }
     // Show for salwar/suit products when Made to Measure is selected
@@ -648,7 +626,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       return true;
     }
     return false;
-  }, [hasFixedStitchedLehenga, product.productType, product.tags, needsStitchingSize, selectedStitchingType, showBottomStyleOption]);
+  }, [hasFixedStitchedLehenga, productHasNativeSizes, isStitchable, product.productType, product.tags, needsStitchingSize, selectedStitchingType, showBottomStyleOption]);
 
   // Whether sleeve style selector should show (only for Made to Measure)
   const showSleeveStyle = useMemo(() => {
@@ -682,6 +660,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       ? { ...selectedOptions, [optionName]: value }
       : { ...selectedOptions, ...selectedOptionsFromVariant(resolvedVariant) };
     setSelectedOptions(nextSelectedOptions);
+    setStitchingSize(null);
+    setShowSizeValidation(false);
 
     const currentCustomSize = Object.entries(selectedOptions).some(([name, selectedValue]) =>
       isProductSizeOptionName(name)
@@ -713,10 +693,10 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     if (option?.requiresMeasurement) {
       setShowSizeValidation(true);
     } else {
-      // Semi Stitched doesn't require a numeric size but we still show letter sizes
+      // No separate measurement handoff is required for this choice.
       setShowSizeValidation(false);
     }
-    // Reset size when changing stitching type since size mode changes
+    // A changed tailoring choice needs a fresh measurement acknowledgment.
     setStitchingSize(null);
   };
 
@@ -747,17 +727,17 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       return;
     }
 
-    // Require stitching size when needed and not already provided by Shopify variants
+    // Confirm the after-order handoff only when no native fit choice exists.
     if (needsStitchingSize && !productHasNativeSizes && !stitchingSize) {
       setShowSizeValidation(true);
-      toast.error('Please select a size for stitching');
+      toast.error('Please confirm the measurement handoff');
       return;
     }
 
-    // For menswear, require size
+    // Never replace a missing native menswear size with an invented size grid.
     if (isMenswear && !stitchingSize && !productHasNativeSizes) {
       setShowSizeValidation(true);
-      toast.error('Please select a size');
+      toast.error('Please confirm the measurement handoff');
       return;
     }
 
@@ -816,8 +796,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         customAttributes.push({ key: 'Tailoring Confirmation', value: 'Listing-specific availability, measurements, timing, and charge require LuxeMia confirmation' });
       }
     }
-    if (needsStitchingSize && !productHasNativeSizes && stitchingSize) {
-      customAttributes.push({ key: 'Stitching Size', value: stitchingSize });
+    if ((needsStitchingSize || isMenswear) && !productHasNativeSizes && stitchingSize) {
+      customAttributes.push({ key: 'Measurement Handoff', value: stitchingSize });
     }
     if (showNeckline) {
       customAttributes.push({ key: 'Blouse Neckline', value: selectedNeckline });
@@ -1143,8 +1123,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           selectedSize={stitchingSize}
           onSizeChange={setStitchingSize}
           showValidation={showSizeValidation}
-          sizeMode="menswear"
-          label="Select Size"
         />
       )}
 
@@ -1272,6 +1250,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                   aria-pressed={selected}
                   onClick={() => {
                     if (code === 'blouse-stitching') setBlouseServiceConfirmed(false);
+                    setStitchingSize(null);
+                    setShowSizeValidation(false);
                     setSelectedServiceAddOnCodes((current) =>
                       current.includes(code)
                         ? current.filter((currentCode) => currentCode !== code)
@@ -1365,9 +1345,6 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           selectedSize={stitchingSize}
           onSizeChange={setStitchingSize}
           showValidation={showSizeValidation}
-          sizeMode={sizeMode}
-          label={sizeLabel}
-          hint={sizeHint}
         />
       )}
 
