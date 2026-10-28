@@ -5,6 +5,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
   DialogTrigger,
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
@@ -14,31 +15,17 @@ interface SizeGuideModalProps {
   category?: string;
 }
 
-const lehengaSizes = [
-  { size: 'S', bust: '32-34', waist: '26-28', hips: '36-38', length: '42' },
-  { size: 'M', bust: '34-36', waist: '28-30', hips: '38-40', length: '42' },
-  { size: 'L', bust: '36-38', waist: '30-32', hips: '40-42', length: '43' },
-  { size: 'XL', bust: '38-40', waist: '32-34', hips: '42-44', length: '43' },
-  { size: 'XXL', bust: '40-42', waist: '34-36', hips: '44-46', length: '44' },
-];
-
-const menswearSizes = [
-  { size: 'S', chest: '36-38', waist: '30-32', shoulder: '16.5', length: '28' },
-  { size: 'M', chest: '38-40', waist: '32-34', shoulder: '17', length: '29' },
-  { size: 'L', chest: '40-42', waist: '34-36', shoulder: '17.5', length: '30' },
-  { size: 'XL', chest: '42-44', waist: '36-38', shoulder: '18', length: '31' },
-  { size: 'XXL', chest: '44-46', waist: '38-40', shoulder: '18.5', length: '32' },
-];
-
-export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) => {
+export const SizeGuideModal = ({ category = '' }: SizeGuideModalProps) => {
   const [open, setOpen] = useState(false);
 
   const getDefaultTab = () => {
     if (category?.toLowerCase().includes('saree')) return 'sarees';
     if (category?.toLowerCase().includes('suit') || category?.toLowerCase().includes('sharara') || category?.toLowerCase().includes('anarkali')) return 'suits';
     if (category?.toLowerCase().includes('men') || category?.toLowerCase().includes('sherwani') || category?.toLowerCase().includes('kurta')) return 'menswear';
-    return 'lehengas';
+    if (category?.toLowerCase().includes('lehenga')) return 'lehengas';
+    return 'general';
   };
+  const defaultTab = getDefaultTab();
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -51,56 +38,34 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle className="font-serif text-2xl">Size Guide</DialogTitle>
+          <DialogDescription>Fit varies by design. Use the selected product’s size options and verified measurements, not a universal chart.</DialogDescription>
         </DialogHeader>
 
-        <Tabs defaultValue={getDefaultTab()} className="mt-4">
-          <TabsList className="grid w-full grid-cols-4">
+        <Tabs defaultValue={defaultTab} className="mt-4">
+          <TabsList className={`grid w-full ${defaultTab === 'general' ? 'h-auto grid-cols-2 sm:grid-cols-5' : 'grid-cols-4'}`}>
+            {defaultTab === 'general' && <TabsTrigger value="general">Fit guidance</TabsTrigger>}
             <TabsTrigger value="lehengas">Lehengas</TabsTrigger>
             <TabsTrigger value="sarees">Sarees</TabsTrigger>
             <TabsTrigger value="suits">Suits</TabsTrigger>
             <TabsTrigger value="menswear">Menswear</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="lehengas" className="mt-6 space-y-6">
-            <div className="space-y-4">
-              <h3 className="font-medium text-lg">Lehenga & Choli Size Chart</h3>
-              <p className="text-sm text-muted-foreground">All measurements are in inches</p>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-3 px-2 font-medium">Size</th>
-                      <th className="text-left py-3 px-2 font-medium">Bust</th>
-                      <th className="text-left py-3 px-2 font-medium">Waist</th>
-                      <th className="text-left py-3 px-2 font-medium">Hips</th>
-                      <th className="text-left py-3 px-2 font-medium">Lehenga Length</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {lehengaSizes.map((row) => (
-                      <tr key={row.size} className="border-b border-border/50">
-                        <td className="py-3 px-2 font-medium">{row.size}</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.bust}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.waist}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.hips}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.length}"</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+          {defaultTab === 'general' && <TabsContent value="general" className="mt-6 space-y-4">
+            <h3 className="font-medium text-lg">Product-specific Fit Guidance</h3>
+            <p className="text-sm text-muted-foreground">Use only the size options and verified measurements for the selected product. Garment type, age labels and size names alone do not establish body measurements or fit.</p>
+            <p className="text-sm text-muted-foreground">For sets, confirm the measurements of each included piece. Record your measurements and units, and check whether the listing refers to body or finished-garment measurements.</p>
+            <p className="text-sm text-muted-foreground">If a product-specific chart or important measurement is missing, ask LuxeMia before ordering. Do not use another garment category’s chart as a substitute.</p>
+          </TabsContent>}
 
-              <div className="bg-card/50 border border-border/50 rounded-sm p-4 space-y-3">
-                <h4 className="font-medium">Fitting Recommendations</h4>
-                <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• For a perfect fit, measure over undergarments you plan to wear</li>
-                  <li>• If between sizes, we recommend ordering the larger size</li>
-                  <li>• Bridal lehengas: Order 4-6 weeks in advance to allow for custom sizing and shipping</li>
-                  <li>• Choli typically comes semi-stitched for custom fitting</li>
-                </ul>
-              </div>
-            </div>
+          <TabsContent value="lehengas" className="mt-6 space-y-6">
+            <h3 className="font-medium text-lg">Lehenga &amp; Choli Fit Guide</h3>
+            <p className="text-sm text-muted-foreground">Lehenga and choli measurements vary by design. Size labels do not establish bust, waist, hip or garment-length measurements.</p>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li>• Take measurements over the undergarments you plan to wear and note the desired skirt length with your planned shoes.</li>
+              <li>• Compare your measurements with the exact listing’s verified garment measurements. If details are missing or you are between sizes, ask LuxeMia before ordering.</li>
+              <li>• Check the listing for supplied construction, included pieces and available alteration options; a stitched or semi-stitched choli is not implied by the category.</li>
+              <li>• Use the selected product and service’s processing estimate when planning for an event.</li>
+            </ul>
           </TabsContent>
 
           <TabsContent value="sarees" className="mt-6 space-y-6">
@@ -111,24 +76,21 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
                 <div>
                   <h4 className="font-medium mb-2">Standard Saree (Unstitched)</h4>
                   <p className="text-sm text-muted-foreground">
-                    Traditional sarees are one-size-fits-all. Each saree is approximately 5.5 meters (6 yards) 
-                    with an additional 0.8 meter blouse piece. The saree draping adjusts to your body naturally.
+                    Saree length, width and draping requirements vary by product. Use dimensions explicitly provided on the selected listing; if they are missing, confirm them before ordering. Do not assume one size will fit every wearer.
                   </p>
                 </div>
                 
                 <div>
                   <h4 className="font-medium mb-2">Blouse Piece</h4>
                   <p className="text-sm text-muted-foreground">
-                    Sarees come with an unstitched blouse piece (0.8m fabric). We recommend getting it 
-                    tailored locally for the perfect fit. Alternatively, select a ready-to-wear blouse option.
+                    Check the listing’s included pieces: a saree may include blouse fabric, a stitched blouse, or neither. Blouse fabric does not mean a finished blouse or included stitching service. Confirm any needed dimensions and services for the selected product.
                   </p>
                 </div>
 
                 <div>
                   <h4 className="font-medium mb-2">Ready-to-Wear Sarees</h4>
                   <p className="text-sm text-muted-foreground">
-                    Pre-stitched sarees are available in sizes S, M, L, XL. These feature a pre-pleated 
-                    design that can be worn in minutes. Check individual product descriptions for sizing.
+                    Use only the sizes offered for the selected ready-to-wear saree. Confirm its waistband, length and blouse fit from product-specific measurements; available sizes and construction differ by design.
                   </p>
                 </div>
               </div>
@@ -136,8 +98,7 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
               <div className="bg-secondary/50 border border-border/50 rounded-sm p-4">
                 <h4 className="font-medium mb-2">Pro Tip</h4>
                 <p className="text-sm text-muted-foreground">
-                  When getting your blouse stitched, share your exact measurements with your tailor:
-                  bust, underbust, shoulder width, arm hole, blouse length, and sleeve length.
+                  For blouse fitting, useful measurements may include bust, underbust, shoulder width, armhole, blouse length and sleeve length. Ask which measurements are required for the selected blouse; this list is not a complete tailoring specification.
                 </p>
               </div>
             </div>
@@ -166,45 +127,14 @@ export const SizeGuideModal = ({ category = 'lehenga' }: SizeGuideModalProps) =>
           </TabsContent>
 
           <TabsContent value="menswear" className="mt-6 space-y-6">
-            <div className="space-y-4">
-              <h3 className="font-medium text-lg">Men's Ethnic Wear Size Chart</h3>
-              <p className="text-sm text-muted-foreground">All measurements are in inches</p>
-              
-              <div className="overflow-x-auto">
-                <table className="w-full text-sm">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-3 px-2 font-medium">Size</th>
-                      <th className="text-left py-3 px-2 font-medium">Chest</th>
-                      <th className="text-left py-3 px-2 font-medium">Waist</th>
-                      <th className="text-left py-3 px-2 font-medium">Shoulder</th>
-                      <th className="text-left py-3 px-2 font-medium">Kurta Length</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {menswearSizes.map((row) => (
-                      <tr key={row.size} className="border-b border-border/50">
-                        <td className="py-3 px-2 font-medium">{row.size}</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.chest}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.waist}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.shoulder}"</td>
-                        <td className="py-3 px-2 text-muted-foreground">{row.length}"</td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-
-              <div className="bg-card/50 border border-border/50 rounded-sm p-4 space-y-3">
-                <h4 className="font-medium">Fitting Recommendations</h4>
-                <ul className="text-sm text-muted-foreground space-y-2">
-                  <li>• Sherwanis: Order your regular size for a fitted look</li>
-                  <li>• Kurta Pajamas: Consider sizing up for a relaxed fit</li>
-                  <li>• Indo-western pieces run true to size</li>
-                  <li>• Churidar pants are stretchable for comfort</li>
-                </ul>
-              </div>
-            </div>
+            <h3 className="font-medium text-lg">Men’s Ethnic Wear Fit Guide</h3>
+            <p className="text-sm text-muted-foreground">Kurta, sherwani and Indo-western sizing varies by design. Your usual size label does not confirm chest, waist, shoulder or garment-length measurements.</p>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li>• Record your chest, waist and preferred garment length, then compare with verified measurements for the exact product.</li>
+              <li>• Confirm whether any measurements describe the body or the finished garment, and whether they are in inches or centimetres.</li>
+              <li>• Check the listing for fabric, waistband and construction details. Stretch, a relaxed fit or a particular size range is not guaranteed.</li>
+              <li>• If measurements are missing or you are between sizes, ask LuxeMia before ordering rather than automatically sizing up or down.</li>
+            </ul>
           </TabsContent>
         </Tabs>
 

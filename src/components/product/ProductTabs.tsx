@@ -834,64 +834,12 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
             <p className="text-muted-foreground">These are blouse size labels, not complete bra sizes. Contact LuxeMia with your full-bust and underbust measurements before ordering if you need help confirming fit. No cup size, blouse length or garment measurement is implied by the number alone.</p>
           </div>
         ) : (
-        <div className="space-y-6">
-          <div className="flex items-center gap-2 text-sm text-muted-foreground">
-            <Ruler className="h-4 w-4" />
-            <span>All measurements are in inches</span>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-3 px-4 font-medium">Size</th>
-                  <th className="text-left py-3 px-4 font-medium">Bust</th>
-                  <th className="text-left py-3 px-4 font-medium">Waist</th>
-                  <th className="text-left py-3 px-4 font-medium">Hip</th>
-                  <th className="text-left py-3 px-4 font-medium">Length</th>
-                </tr>
-              </thead>
-              <tbody className="text-muted-foreground">
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">XS</td>
-                  <td className="py-3 px-4">32</td>
-                  <td className="py-3 px-4">26</td>
-                  <td className="py-3 px-4">35</td>
-                  <td className="py-3 px-4">54</td>
-                </tr>
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">S</td>
-                  <td className="py-3 px-4">34</td>
-                  <td className="py-3 px-4">28</td>
-                  <td className="py-3 px-4">37</td>
-                  <td className="py-3 px-4">54</td>
-                </tr>
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">M</td>
-                  <td className="py-3 px-4">36</td>
-                  <td className="py-3 px-4">30</td>
-                  <td className="py-3 px-4">39</td>
-                  <td className="py-3 px-4">55</td>
-                </tr>
-                <tr className="border-b border-border/50">
-                  <td className="py-3 px-4">L</td>
-                  <td className="py-3 px-4">38</td>
-                  <td className="py-3 px-4">32</td>
-                  <td className="py-3 px-4">41</td>
-                  <td className="py-3 px-4">55</td>
-                </tr>
-                <tr>
-                  <td className="py-3 px-4">XL</td>
-                  <td className="py-3 px-4">40</td>
-                  <td className="py-3 px-4">34</td>
-                  <td className="py-3 px-4">43</td>
-                  <td className="py-3 px-4">56</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <p className="text-sm text-muted-foreground">
-            Need help? Contact our team for personalized size recommendations.
-          </p>
+        <div className="space-y-4 text-sm">
+          <h3 className="font-medium">Product-specific fit guidance</h3>
+          <p className="text-muted-foreground">Sizes and measurements vary by design. Use the available options and any verified size chart or garment measurements in this listing. A size label alone does not establish bust, chest, waist, hip or length measurements.</p>
+          <p className="text-muted-foreground">Measure with a soft tape and record the units. Confirm whether the listing describes body measurements or finished-garment measurements before comparing them.</p>
+          <p className="text-muted-foreground">If important measurements are missing or you are between sizes, contact LuxeMia before ordering. This guide does not replace a product-specific size chart.</p>
+          <a href="/size-guide" className="text-primary underline underline-offset-2">How to compare product measurements</a>
         </div>
         )}
       </TabsContent>

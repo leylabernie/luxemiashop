@@ -26,6 +26,68 @@ export function selectedOptionsFromVariant(
   );
 }
 
+/** Read only explicitly labeled catalog sections; never complete a set from its title. */
+function includedPiecesFromHeadedDescription(html: string): string | undefined {
+  const plain = (value: string) => value.replace(/<[^>]*>/g, ' ')
+    .replace(/&amp;/gi, '&').replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/&apos;|&#39;|&#x27;/gi, "'").replace(/&rsquo;|&#8217;/gi, '’')
+    .replace(/\s+/g, ' ').trim();
+  const contents: string[] = [];
+  for (const section of html.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1\s*>([\s\S]*?)(?=<h[1-6]\b|$)/gi)) {
+    if (!/^(?:included pieces|set includes|set components|what['’]s included)\s*:?$/i.test(plain(section[2]))) continue;
+    const body = section[3];
+    // Unsupported structures, conditional availability, exclusions and service/price
+    // copy are not evidence of included garments. Keep this fallback conservative.
+    if (/<\/?(?!p\b|ul\b|ol\b|li\b|br\b|strong\b|b\b|em\b|i\b|span\b)[a-z]/i.test(body)) return undefined;
+    const text = plain(body.replace(/<\/\s*(?:li|p)\s*>\s*(?=<(?:li|p)\b)/gi, '; '));
+    if (!text || text.length > 600 || /&(?:#\w+|\w+);/.test(text)
+      || /\b(?:available|optional|may|might|can|could|not|without|unless|except|separately|exclud\w*|styling|shown|service|fee|price|charge|shipping|delivery)\b|[$€£]/i.test(text)
+      || !/\b(?:saree|blouse|lehenga|choli|dupatta|kurta|kameez|palazzo|sharara|gharara|pants|bottoms?|shirt|mundu|gown)\b/i.test(text)) return undefined;
+    contents.push(text);
+  }
+  // Conflicting sections need catalog review rather than an arbitrary first match.
+  return contents.length && new Set(contents).size === 1 ? contents[0] : undefined;
+}
+
+/** Narrow prose fallback: quote named components, never complete a partial list. */
+function includedPiecesFromExplicitProse(html: string): string | undefined {
+  const plain = (value: string) => value.replace(/<[^>]*>/g, ' ').replace(/&amp;/gi, '&')
+    .replace(/&nbsp;|&#160;/gi, ' ').replace(/&#39;|&apos;|&#x27;/gi, "'")
+    .replace(/\s+/g, ' ').trim();
+  if (/<(?:script|style|iframe)\b/i.test(html)) return undefined;
+  const listing = plain(html);
+  // One exact affirmative packing statement contains an explicit exclusion.
+  // Do not generalize "available with" or remove the no-dupatta qualification.
+  if (/\b(?:subject to availability|(?:dupatta|blouse|skirt|top|palazzo|bottoms?|gown|jacket)\s+(?:may|might|could|can)\b)/i.test(listing)) return undefined;
+  const twoPiece = /(?:^|>)\s*Available as a two-piece set: skirt and blouse \(no dupatta\)\s*(?:<|$)/i.test(html);
+  if (twoPiece && /\b(?:(?:set includes|included pieces|package includes|what['’]s included)\s*:|dupatta (?:is )?included\b)/i.test(listing)) return undefined;
+  if (twoPiece && !/\b(?:separately|optional|exclud\w*|not included|does not include|without)\b/i.test(listing)) {
+    return 'Skirt and blouse (no dupatta)';
+  }
+  if (/\b(?:available with|optional|separately|exclud\w*|not included|does not include|without)\b/i.test(listing)) return undefined;
+  const unsafe = /\b(?:available|optional|may|might|can|could|not|without|unless|except|separately|exclud\w*|styling|shown|pair(?:ed)?|service|fee|price|charge|shipping|delivery)\b|[$€£]/i;
+  const garment = /\b(?:saree|blouse|choli|lehenga|skirt|dupatta|top|kurti|kurta|kameez|palazzo|sharara|bottoms?|gown|jacket)\b/i;
+  const inline = [...html.matchAll(/<p\b[^>]*>\s*<(?:strong|b)\b[^>]*>\s*What['’]s included:\s*<\/(?:strong|b)>\s*([\s\S]*?)<\/p>/gi)]
+    .map(match => plain(match[1]).replace(/\.$/, ''));
+  if (inline.length) return new Set(inline).size === 1 && inline[0].length <= 300
+    && garment.test(inline[0]) && !unsafe.test(inline[0]) ? inline[0] : undefined;
+  const opening = listing.match(/^([^.!?]{1,600})\./)?.[1];
+  if (!opening || unsafe.test(opening)) return undefined;
+  // Exact gown + dupatta phrasing preserves attached cancan as attached, not another piece.
+  if (/^[a-z -]*anarkali gown with (?:[a-z -]*dupatta|attached cancan, [a-z -]*dupatta)$/i.test(opening)) return opening;
+  const list = opening.match(/^[a-z0-9 -]*(?:suit|set):\s*(.+)$/i)?.[1]
+    ?? opening.match(/^[a-z -]*(?:suit|three-piece outfit) with\s+(.+)$/i)?.[1];
+  if (!list) return undefined;
+  const parts = list.split(list.includes(';') ? /;\s*/ : (list.match(/,/g)?.length ?? 0) >= 2 ? /,\s*/ : /,\s*|\s+and\s+/).map(part => part.replace(/^and\s+/i, '').trim());
+  const count = /\b(?:3-piece|three-piece)\b/i.test(opening) || /^.+?\.\s*3 pieces\./i.test(listing) ? 3
+    : /^.+?\.\s*2 pieces(?:\.| \(no dupatta listed\))/i.test(listing) ? 2 : undefined;
+  // A named Anarkali top/bottom/dupatta list is explicit even without a count.
+  const explicitAnarkali = /anarkali suit:/i.test(opening) && parts.length === 3;
+  if ((!count && !explicitAnarkali) || parts.length !== (count ?? 3)
+    || parts.some(part => !garment.test(part) || /\btop (?:hem|border)\b/i.test(part))) return undefined;
+  return list + (/^.+?\.\s*2 pieces \(no dupatta listed\)/i.test(listing) ? ' (no dupatta listed)' : '');
+}
+
 /**
  * Resolves an option click to a real, available Shopify variant. If the
  * shopper's current combination does not exist, the closest variant that
@@ -239,5 +301,12 @@ export function resolveIncludedPieces(
   }
   const descriptionPieces = includedAnarkaliPiecesFromDescription(listing);
   if (descriptionPieces) return descriptionPieces;
+  // Preserve existing title-backed summaries and the build normalizer's tail anchor.
+  if (!inferIncludedPiecesFromTitle(productTitle, tags)) {
+    const headedPieces = includedPiecesFromHeadedDescription(productDescription);
+    if (headedPieces) return headedPieces;
+    const prosePieces = includedPiecesFromExplicitProse(productDescription);
+    if (prosePieces) return prosePieces;
+  }
   return inferIncludedPiecesFromTitle(productTitle, tags);
 }
