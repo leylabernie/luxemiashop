@@ -121,11 +121,12 @@ test('authorized archives supersede old retained-product and offer baselines wit
   }
   for (const [field, offerIds] of Object.entries(retirement.feedBaseline)) {
     for (const offerId of offerIds) {
+      assert.ok(!archives.some(p => offerId === p.handle || offerId.startsWith(p.handle + '-')), `${field}: ${offerId}`);
       assert.ok(!archivedIds.has(offerId.match(/^p(\d+)(?:-v|$)/)?.[1]), `${field}: ${offerId}`);
     }
   }
   assert.equal(retirement.retained.length, 329, 'Exact surviving merchandise baseline');
-  assert.equal(retirement.feedBaseline.offerIds.length, 2260, 'Every verified surviving current offer remains required');
+  assert.equal(retirement.feedBaseline.offerIds.length, 2245, 'Every verified surviving current offer remains required');
   assert.equal(retirement.feedBaseline.sizeOfferIds.length, 2164);
   assert.equal(retirement.feedBaseline.materialOfferIds.length, 2175);
   const goneHandles = new Set(require('../src/data/legacyGoneProductHandles.json'));
