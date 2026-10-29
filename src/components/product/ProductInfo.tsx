@@ -41,6 +41,7 @@ import { inferProductSpecColors } from '@/lib/productSpecColor';
 import { useShopifyProduct } from '@/hooks/useShopifyProduct';
 import {
   getEligibleServiceAddOns,
+  matchesServiceAddOnVariant,
   selectedServicesRequireProcessing,
   hasFixedStitchedLehengaOptions,
   hasNativeFullStitchingOptions,
@@ -436,14 +437,9 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
     if (!serviceAddOnProduct) return variants;
 
     for (const code of eligibleServiceAddOnCodes) {
-      const definition = SERVICE_ADD_ONS[code];
-      // Match on the option VALUE, not its name: the live service product's
-      // option is named "Stitching", and a name requirement silently hid
-      // every add-on from every listing. Values are the stable contract.
+      // Exact hidden product + shared billing ID accepts old/new checkout copy.
       const variant = serviceAddOnProduct.variants.edges.find(({ node }) =>
-        node.availableForSale && node.selectedOptions.some((option) =>
-          option.value === definition.checkoutOptionValue,
-        ),
+        node.availableForSale && matchesServiceAddOnVariant(serviceAddOnProduct.handle, code, node),
       )?.node;
       if (variant) variants.set(code, variant);
     }
@@ -916,9 +912,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
             ...(selectedServicesRequireProcessing([code])
               ? [{ key: 'Timing Estimate', value: alterationShippingTimingNotice(shipsWithinDays) }]
               : []),
-            ...(isBanarasiSareeServiceProduct(product)
-              ? [{ key: 'Selected Service', value: SERVICE_ADD_ONS[code].label }]
-              : []),
+            { key: 'Selected Service', value: SERVICE_ADD_ONS[code].label },
             ...(code === 'blouse-stitching' ? blouseConfirmationAttributes : []),
           ],
         });

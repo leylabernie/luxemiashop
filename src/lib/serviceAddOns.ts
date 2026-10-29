@@ -55,6 +55,25 @@ export const SERVICE_ADD_ONS: Record<ServiceAddOnCode, ServiceAddOnDefinition> =
   },
 };
 
+/** Preserve the existing shared billing ID while accepting its truthful rename. */
+export const SHARED_TAILORING_VARIANT_ID = 'gid://shopify/ProductVariant/47669368455339';
+export const SHARED_TAILORING_OPTION_VALUES = [
+  'Blouse Stitching / Alteration (+$10)',
+  'Stitching / Alteration (+$10)',
+] as const;
+export function matchesServiceAddOnVariant(
+  handle: string,
+  code: ServiceAddOnCode,
+  variant: { id: string; selectedOptions: Array<{ name: string; value: string }> },
+): boolean {
+  if (handle !== SERVICE_ADD_ON_PRODUCT_HANDLE) return false;
+  if (code === 'blouse-stitching' || code === 'garment-alteration') {
+    return variant.id === SHARED_TAILORING_VARIANT_ID
+      && variant.selectedOptions.some(option => SHARED_TAILORING_OPTION_VALUES.some(value => value === option.value));
+  }
+  return variant.selectedOptions.some(option => option.value === SERVICE_ADD_ONS[code].checkoutOptionValue);
+}
+
 const SAREE_PATTERN = /\b(?:saree|sari)\b/i;
 const BLOUSE_PATTERN = /\b(?:blouse\s+fabric|unstitched\s+blouse|blouse\s+piece|blouse)\b/i;
 const STITCHED_BLOUSE_PATTERN = /\b(?:(?:fully[-\s]+)?stitched|ready[-\s]*(?:made|to[-\s]*wear))\s+blouse\b|\bblouse\s+(?:is\s+)?(?:fully[-\s]+)?stitched\b/i;
@@ -109,7 +128,7 @@ export const isGarmentAlterationCartLine = (
   if (item.serviceAddOnCode) return item.serviceAddOnCode === 'garment-alteration';
   // Older carts have only Applies To. Infer only when the shared alteration
   // variant is linked unambiguously to a garment eligible for alteration.
-  if (item.variantTitle !== SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue) return false;
+  if (!SHARED_TAILORING_OPTION_VALUES.some(value => value === item.variantTitle)) return false;
   const appliesTo = item.customAttributes?.find(attribute => attribute.key === 'Applies To')?.value;
   if (!appliesTo) return false;
   const linked = cartItems.filter(line => !isHiddenBillingProductHandle(line.product.node.handle)
