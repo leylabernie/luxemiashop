@@ -245,6 +245,18 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
                   {link.name}
                 </Link>
               ))}
+              {config.slug === 'sarees' && (
+                <>
+                  <Link to="/sarees?price=0-99.99&sort=price-asc" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                    Sarees under $100
+                  </Link>
+                  {canPromoteCollection('/collections/designer-sarees') && (
+                    <Link to="/collections/designer-sarees" className="rounded-full border border-border px-4 py-2 text-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                      Designer &amp; Party-Wear Sarees
+                    </Link>
+                  )}
+                </>
+              )}
             </div>
           </nav>
         )}
