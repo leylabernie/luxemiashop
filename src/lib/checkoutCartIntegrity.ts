@@ -7,7 +7,7 @@ type RequestedLine = {
 type ReturnedLine = {
   quantity: number;
   attributes?: Attribute[];
-  merchandise?: { id: string; title?: string; product?: { title?: string } };
+  merchandise?: { id: string; price?: { amount: string; currencyCode: string }; title?: string; product?: { title?: string } };
 };
 
 export class CheckoutCartChangedError extends Error {
@@ -49,5 +49,18 @@ export function assertCheckoutCartMatches(
     throw new CheckoutCartChangedError(
       'Some selected quantities or options are no longer available. Your bag is saved. Reduce the quantity or remove the affected item, then try checkout again. Contact LuxeMia if you need help.',
     );
+  }
+}
+
+/** Fail closed if Shopify reprices an exact Meta selection before handoff. */
+export function assertCheckoutCartPrices(expected: Record<string, { amount: string; currencyCode: string }>, returned: ReturnedLine[]): void {
+  for (const line of returned) {
+    const wanted = line.merchandise && expected[line.merchandise.id];
+    const price = line.merchandise?.price;
+    if (!wanted || !price || wanted.currencyCode !== price.currencyCode
+      || !Number.isFinite(Number(price.amount)) || Number(price.amount) <= 0
+      || Number(wanted.amount) !== Number(price.amount)) {
+      throw new CheckoutCartChangedError('A selected product price changed. Reload this shopping link to review the current price before checkout.');
+    }
   }
 }

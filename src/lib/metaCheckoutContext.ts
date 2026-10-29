@@ -1,6 +1,6 @@
 import { redactMeasurementAttributes } from './measurementRequest';
 import type { CartItem } from '@/stores/cartStore';
-import { parseMetaCheckout, type MetaRequest } from './metaCheckout';
+import { isExactMetaPilotRequest, metaRequestSearch, parseMetaCheckout, type MetaRequest } from './metaCheckout';
 
 export type ConfiguredMetaLine = Pick<CartItem, 'variantId' | 'variantTitle' | 'quantity' | 'price' | 'customAttributes'> & { handle: string };
 export type MetaSavedSelection = { contentId: string; handle: string; variantId: string; timingConfirmed?: boolean; configured?: ConfiguredMetaLine[] };
@@ -16,7 +16,7 @@ export function readMetaContext(token: string | null): MetaContext | null {
     if (context.version !== 1 || !Number.isFinite(context.expires) || !Array.isArray(context.request?.lines) || !Array.isArray(context.selections)) return null;
     if (context.expires < Date.now()) { sessionStorage.removeItem(PREFIX + token); return null; }
     if (context.selections.length !== context.request.lines.length || context.selections.some(item => !item || typeof item.contentId !== 'string' || typeof item.handle !== 'string' || typeof item.variantId !== 'string' || (item.configured !== undefined && (!Array.isArray(item.configured) || !item.configured.length || item.configured.length > 10)))) return null;
-    parseMetaCheckout(new URLSearchParams({ products: context.request.lines.map(line => `${line.contentId}:${line.quantity}`).join(','), ...(context.request.coupon !== null ? { coupon: context.request.coupon } : {}) }).toString());
+    context.request = parseMetaCheckout(metaRequestSearch(context.request));
     return context;
   } catch { return null; }
 }
@@ -47,12 +47,12 @@ export function clearMetaContext(token: string): void { if (TOKEN.test(token)) s
 
 /** Restores only validated, non-personal shopping intent after hosted-checkout Back. */
 export function metaRequestPath(request: MetaRequest): string {
-  const params = new URLSearchParams({ products: request.lines.map(line => `${line.contentId}:${line.quantity}`).join(','), ...(request.coupon !== null ? { coupon: request.coupon } : {}) });
+  const params = metaRequestSearch(request);
   parseMetaCheckout(params.toString());
   return `/meta-checkout?${params}`;
 }
 export function completeMetaHandoff(token: string, request: MetaRequest, url: string): void {
-  window.history.replaceState(null, '', metaRequestPath(request));
+  window.history.replaceState(null, '', metaRequestPath(isExactMetaPilotRequest(request) ? { ...request, reviewOnly: true } : request));
   // If navigation throws, keep personal configuration so retry remains possible.
   try { window.location.assign(url); }
   catch (error) { window.history.replaceState(null, '', metaReturnPath(token)); throw error; }

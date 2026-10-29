@@ -1,3 +1,4 @@
+import { getMetaPilotVariant, verifyMetaPilotVariant } from './metaPilot';
 import { hasPendingMeasurementAttributes } from './measurementRequest';
 import { alterationShippingTimingNotice } from '../config/shippingPolicy';
 import { getProductShipsWithin } from './shipBy';
@@ -9,7 +10,7 @@ import { hasNativeProductSizeOption } from './productOptionNames';
 import { hasNativeFullStitchingOptions, requiresNativeStitchingTimingConfirmation } from './serviceAddOns';
 
 export type MetaLine = { contentId: string; quantity: number };
-export type MetaRequest = { lines: MetaLine[]; coupon: string | null };
+export type MetaRequest = { lines: MetaLine[]; coupon: string | null; attribution?: Record<string, string>; reviewOnly?: true };
 export type MetaProduct = ShopifyProduct['node'];
 export type MetaSelection = { product: MetaProduct; quantity: number; variantId: string; timingConfirmed?: boolean; configured?: ConfiguredMetaLine[] };
 const MAX_QUANTITY = 99;
@@ -37,7 +38,41 @@ export function parseMetaCheckout(search: string): MetaRequest {
   if (coupon !== null && (!coupon.trim() || coupon.length > 256 || Array.from(coupon).some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127))) {
     throw new Error('This shopping link contains an invalid discount code.');
   }
-  return { lines: Array.from(quantities, ([contentId, quantity]) => ({ contentId, quantity })), coupon };
+  const attribution = readMetaAttribution(params);
+  return { lines: Array.from(quantities, ([contentId, quantity]) => ({ contentId, quantity })), coupon,
+    ...(Object.keys(attribution).length ? { attribution } : {}), ...(params.get('review') === '1' ? { reviewOnly: true as const } : {}) };
+}
+
+/** Only non-personal attribution tokens, never arbitrary query parameters. */
+export function readMetaAttribution(params: URLSearchParams): Record<string, string> {
+  const result: Record<string, string> = {};
+  for (const key of ['fbclid', 'cart_origin', 'utm_source', 'utm_medium', 'utm_campaign', 'utm_content']) {
+    const value = params.get(key);
+    if (!value || params.getAll(key).length !== 1) continue;
+    if (key === 'cart_origin' ? !['facebook', 'instagram', 'meta_shops'].includes(value)
+      : !(key === 'fbclid' ? /^[A-Za-z0-9_-]{1,512}$/ : /^[A-Za-z0-9._~-]{1,256}$/).test(value)) continue;
+    result[key] = value;
+  }
+  return result;
+}
+export function metaRequestSearch(request: MetaRequest): string {
+  const params = new URLSearchParams({ products: request.lines.map(line => `${line.contentId}:${line.quantity}`).join(','),
+    ...(request.coupon !== null ? { coupon: request.coupon } : {}), ...(request.reviewOnly ? { review: '1' } : {}) });
+  const safe = readMetaAttribution(new URLSearchParams(request.attribution || {}));
+  Object.entries(safe).forEach(([key, value]) => params.set(key, value));
+  return params.toString();
+}
+export function metaAttributedCheckoutUrl(url: string, request: MetaRequest): string {
+  const result = new URL(url);
+  Object.entries(readMetaAttribution(new URLSearchParams(request.attribution || {}))).forEach(([key, value]) => result.searchParams.set(key, value));
+  return result.toString();
+}
+export function isExactMetaPilotRequest(request: MetaRequest): boolean {
+  return request.lines.length > 0 && request.lines.every(line => Boolean(getMetaPilotVariant(line.contentId)));
+}
+export function canAutoMetaCheckout(request: MetaRequest, selections: MetaSelection[]): boolean {
+  return !request.reviewOnly && isExactMetaPilotRequest(request) && selections.length === request.lines.length
+    && selections.every((item, index) => !item.configured && item.variantId === getMetaPilotVariant(request.lines[index].contentId)?.variantId);
 }
 
 /** Must remain byte-for-byte compatible with api/meta-catalog.ts ID generation. */
@@ -51,7 +86,7 @@ export async function resolveMetaProducts(
   request: MetaRequest,
   getProduct: (handle: string) => Promise<MetaProduct | null>,
   getCatalog: () => Promise<ShopifyProduct[]>,
-): Promise<Array<{ product: MetaProduct; quantity: number }>> {
+): Promise<Array<{ product: MetaProduct; quantity: number; variantId?: string }>> {
   // A hashed ID cannot be reversed. Resolve against the current published catalog.
   const hashed = request.lines.some(line => /^lm-[a-f0-9]{24}$/.test(line.contentId));
   const handles = new Map<string, string>();
@@ -65,13 +100,20 @@ export async function resolveMetaProducts(
     }
   }
   return Promise.all(request.lines.map(async line => {
-    const handle = hashed ? handles.get(line.contentId) : line.contentId;
+    const pilot = getMetaPilotVariant(line.contentId);
+    if (line.contentId.startsWith('lmv-') && !pilot) throw new Error('This Meta product option is not supported. Return to the shop to update your selection.');
+    const handle = pilot?.handle || (hashed ? handles.get(line.contentId) : line.contentId);
     if (!handle || handle === 'luxemia-tailoring-saree-finishing-add-ons') throw new Error('A requested product is unavailable. Return to the shop to update your selection.');
     const product = await getProduct(handle);
-    if (!product || await metaContentId(product.handle) !== line.contentId || product.availableForSale === false || !product.variants.edges.some(edge => edge.node.availableForSale)) {
+    if (!product || (!pilot && await metaContentId(product.handle) !== line.contentId) || (pilot && product.handle !== pilot.handle) || product.availableForSale === false || !product.variants.edges.some(edge => edge.node.availableForSale)) {
       throw new Error('A requested product is unavailable or could not be loaded. Please return to the shop or try again.');
     }
-    return { product, quantity: line.quantity };
+    if (pilot) {
+      const variant = product.variants.edges.find(edge => edge.node.id === pilot.variantId)?.node;
+      if (!variant?.availableForSale) throw new Error('A selected Meta size is no longer available. Return to the shop to update your selection.');
+      verifyMetaPilotVariant(product.handle, variant);
+    }
+    return { product, quantity: line.quantity, ...(pilot ? { variantId: pilot.variantId } : {}) };
   }));
 }
 

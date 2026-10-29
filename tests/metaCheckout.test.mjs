@@ -18,7 +18,7 @@ test('explicit variant required; quantities and exact variants retained',()=>{co
 test('custom-fit and absent size requirements cannot bypass configurator',()=>{const p=product();p.variants.edges=[variant(1,'Custom Fit')];assert.throws(()=>metaCheckoutLines([{product:p,quantity:1,variantId:p.variants.edges[0].node.id}]));p.variants.edges=[variant(1)];p.productType='Menswear';assert.throws(()=>metaCheckoutLines([{product:p,quantity:1,variantId:p.variants.edges[0].node.id}]));});
 test('unavailable variant and invalid price fail safely',()=>{const p=product();p.variants.edges[0].node.availableForSale=false;assert.throws(()=>metaCheckoutLines([{product:p,quantity:1,variantId:p.variants.edges[0].node.id}]));p.variants.edges[0].node.availableForSale=true;p.variants.edges[0].node.price.amount='NaN';assert.throws(()=>metaCheckoutLines([{product:p,quantity:1,variantId:p.variants.edges[0].node.id}]));});
 test('truncated variant list cannot be accepted',()=>{const p=product();p.variants.edges=Array.from({length:100},(_,i)=>variant(i+1));assert.throws(()=>metaCheckoutLines([{product:p,quantity:1,variantId:p.variants.edges[0].node.id}]));});
-test('route uses verified helper and does not modify existing shopping bag',()=>{const s=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(s,/createStorefrontCheckout\(lines, request.coupon\)/);assert.doesNotMatch(s,/useCartStore|localStorage\.setItem|clearCart/);assert.match(s,/generation.current !== current/);assert.match(s,/busy.current \|\| !request/);assert.match(readFileSync('src/App.tsx','utf8'),/path="\/meta-checkout"/);});
+test('route uses verified helper and does not modify existing shopping bag',()=>{const s=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(s,/createStorefrontCheckout\(lines, request.coupon, expectedPrices\)/);assert.doesNotMatch(s,/useCartStore|localStorage\.setItem|clearCart/);assert.match(s,/generation.current !== current/);assert.match(s,/busy.current \|\| !request/);assert.match(readFileSync('src/App.tsx','utf8'),/path="\/meta-checkout"/);});
 test('native standard stitching requires timing acknowledgment and transfers attributes',()=>{
  const p=product();p.productType='Lehenga Choli';p.options=[{name:'Stitching',values:['Unstitched (Fabric Only)','Standard Stitched','Custom Stitched']},{name:'Size',values:['Fabric Only','34','Custom Fit']}];
  p.variants.edges=[variant(1,'Standard Stitched / 34'),variant(2,'Unstitched (Fabric Only) / Fabric Only'),variant(3,'Custom Stitched / Custom Fit')];[['Standard Stitched','34'],['Unstitched (Fabric Only)','Fabric Only'],['Custom Stitched','Custom Fit']].forEach(([stitching,size],i)=>{p.variants.edges[i].node.selectedOptions=[{name:'Stitching',value:stitching},{name:'Size',value:size}];});
@@ -60,7 +60,7 @@ test('failed handoff preserves configuration and explicit cancellation clears it
 test('BFCache restoration reloads the sanitized intent rather than stale personal configuration',()=>{const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(source,/if \(event.persisted\) window.location.reload\(\)/);assert.match(source,/removeEventListener\('pageshow', restore\)/);});
 
 test('Meta absent, bare and empty optional coupon are equivalent',()=>{
- for(const suffix of ['', '&coupon', '&coupon=']) assert.deepEqual(parseMetaCheckout('?products=anarkali-green-chinon:1,dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear:5'+suffix+'&cart_origin=meta_shops'),{lines:[{contentId:'anarkali-green-chinon',quantity:1},{contentId:'dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear',quantity:5}],coupon:null});
+ for(const suffix of ['', '&coupon', '&coupon=']) assert.deepEqual(parseMetaCheckout('?products=anarkali-green-chinon:1,dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear:5'+suffix+'&cart_origin=meta_shops'),{lines:[{contentId:'anarkali-green-chinon',quantity:1},{contentId:'dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear',quantity:5}],coupon:null,attribution:{cart_origin:'meta_shops'}});
 });
 test('blank normalization preserves discount validation and duplicate guards',()=>{
  for(const value of ['%20','+','%09','%00','%7F','x'.repeat(257)]) assert.throws(()=>parseMetaCheckout('?products=a:1&coupon='+value));
@@ -132,5 +132,73 @@ test('Meta optional services are separate and counted once; inconsistent configu
  item.configured[0].variantId='wrong';assert.equal(basketSubtotal([item]),null);
 });
 test('Meta review exposes accessible combined subtotal without changing checkout or auto-selecting',()=>{
- const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(source,/aria-label="Selection subtotal" aria-live="polite"/);assert.match(source,/Merchandise subtotal:/);assert.match(source,/Before shipping, taxes and discounts/);assert.match(source,/metaBasketSubtotal\(selections\)/);assert.match(source,/disabled=\{submitting \|\| selections.some\(item => !item.variantId\)\}/);assert.match(source,/createStorefrontCheckout\(lines, request.coupon\)/);
+ const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(source,/aria-label="Selection subtotal" aria-live="polite"/);assert.match(source,/Merchandise subtotal:/);assert.match(source,/Before shipping, taxes and discounts/);assert.match(source,/metaBasketSubtotal\(selections\)/);assert.match(source,/disabled=\{submitting \|\| selections.some\(item => !item.variantId\)\}/);assert.match(source,/createStorefrontCheckout\(lines, request.coupon, expectedPrices\)/);
+});
+
+const pilotFixture = (peach = false) => {
+ const handle = peach ? 'dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear' : 'anarkali-green-chinon';
+ const id = peach ? '48210922504363' : '48120657903787';
+ const p = product(handle); p.productType = peach ? 'Palazzo Suit' : 'Anarkali';
+ p.options=[{name:'Size',values:['S','M']},...(!peach?[{name:'Alteration',values:['Standard','Custom']}]:[])];
+ p.variants.edges=[{node:{id:`gid://shopify/ProductVariant/${id}`,title:peach?'S':'S / Standard',availableForSale:true,requiresComponents:false,price:{amount:peach?'77.49':'108.99',currencyCode:'USD'},selectedOptions:[{name:'Size',value:'S'},...(!peach?[{name:'Alteration',value:'Standard'}]:[])]}}];
+ return p;
+};
+test('exact pilot IDs resolve actual Meta-selected sizes and496.44 basket without choosing defaults',async()=>{
+ const a=pilotFixture(),p=pilotFixture(true),request=parseMetaCheckout('?products=lmv-48120657903787:1,lmv-48210922504363:5');
+ const resolved=await resolveMetaProducts(request,async h=>h===a.handle?a:p,async()=>[]);
+ assert.deepEqual(metaCheckoutLines(resolved).map(x=>[x.variantId,x.quantity]),[['gid://shopify/ProductVariant/48120657903787',1],['gid://shopify/ProductVariant/48210922504363',5]]);
+ assert.equal(mod.exports.metaBasketSubtotal(resolved).merchandise,'496.44');assert(mod.exports.canAutoMetaCheckout(request,resolved));
+ assert(!mod.exports.canAutoMetaCheckout({...request,reviewOnly:true},resolved));
+ assert(!mod.exports.canAutoMetaCheckout(request,[{...resolved[0],variantId:'gid://shopify/ProductVariant/48121669583019'},resolved[1]]));
+ assert(!mod.exports.canAutoMetaCheckout(request,[{...resolved[0],configured:[{}]},resolved[1]]));
+});
+test('unknown pilot IDs and changed option/price/currency/availability fail closed',async()=>{
+ await assert.rejects(resolveMetaProducts(parseMetaCheckout('?products=lmv-1:1'),async()=>pilotFixture(),async()=>[]),/not supported/);
+ for(const alter of [v=>v.availableForSale=false,v=>v.selectedOptions[0].value='M',v=>v.price.currencyCode='INR',v=>v.price.amount='0',v=>v.requiresComponents=true]){
+  const p=pilotFixture();alter(p.variants.edges[0].node);await assert.rejects(resolveMetaProducts(parseMetaCheckout('?products=lmv-48120657903787:1'),async()=>p,async()=>[]));
+ }
+});
+test('legacy handles and mixed legacy/exact baskets preserve manual review and explicit choices',async()=>{
+ const a=pilotFixture(),p=pilotFixture(true),request=parseMetaCheckout('?products=anarkali-green-chinon:1,lmv-48210922504363:5');
+ const resolved=await resolveMetaProducts(request,async h=>h===a.handle?a:p,async()=>[]);
+ assert.equal(resolved[0].variantId,undefined);assert.equal(resolved[1].variantId,p.variants.edges[0].node.id);assert(!mod.exports.canAutoMetaCheckout(request,resolved));
+});
+test('attribution is bounded allowlisted and survives context while PII/unknown/duplicates are discarded',()=>{
+ const query='?products=lmv-48120657903787:1&coupon=SAVE&cart_origin=instagram&fbclid=Ab_12-34&utm_source=IGShopping&utm_medium=Social&utm_campaign=spring-2026&utm_content=carousel&email=customer%40example.com&token=secret&address=private';
+ const req=parseMetaCheckout(query);assert.deepEqual(req.attribution,{fbclid:'Ab_12-34',cart_origin:'instagram',utm_source:'IGShopping',utm_medium:'Social',utm_campaign:'spring-2026',utm_content:'carousel'});
+ assert.deepEqual(parseMetaCheckout(mod.exports.metaRequestSearch(req)),req);
+ const url=new URL(mod.exports.metaAttributedCheckoutUrl('https://lovable-project-zlh0w.myshopify.com/cart/c/test?key=private-cart-key',req));assert.equal(url.searchParams.get('key'),'private-cart-key');assert.equal(url.searchParams.get('cart_origin'),'instagram');assert(!url.searchParams.has('email'));assert(!url.searchParams.has('coupon'));
+ for(const bad of ['&fbclid=a&fbclid=b','&utm_campaign=hello%40example.com','&utm_source=%0Asecret','&cart_origin=evil','&utm_content='+ 'x'.repeat(257)])assert.equal(parseMetaCheckout('?products=x:1'+bad).attribution,undefined);
+});
+test('exact pilot handoff marks Back as review-only and retains attribution without navigation loop',()=>{
+ const oldStorage=globalThis.sessionStorage,oldWindow=globalThis.window;
+ try{const {storage}=contextFixture();const request=parseMetaCheckout('?products=lmv-48120657903787:1&cart_origin=meta_shops&fbclid=test123');const token=saveMetaContext(null,request,[{contentId:request.lines[0].contentId,handle:pilotFixture().handle,variantId:'gid://shopify/ProductVariant/48120657903787'}]);assert.deepEqual(readMetaContext(token).request.attribution,request.attribution);
+ let back='',destination='';globalThis.window={history:{replaceState:(_a,_b,url)=>{back=url}},location:{assign:url=>{destination=url}}};cm.exports.completeMetaHandoff(token,request,'https://lovable-project-zlh0w.myshopify.com/cart/c/test');assert.match(destination,/myshopify/);assert.equal(new URL(back,'https://luxemia.shop').searchParams.get('review'),'1');assert.equal(readMetaContext(token),null);assert.equal(parseMetaCheckout(new URL(back,'https://luxemia.shop').search).reviewOnly,true);
+ }finally{globalThis.sessionStorage=oldStorage;globalThis.window=oldWindow;}
+});
+
+test('actual auto effect cannot hand off previous selections under a new or loading context; once per loaded token',()=>{
+ const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');const effect=source.match(/useEffect\(\(\) => \{\n    if \(loading[\s\S]*?\n  \}\);/)[0];let calls=0;
+ const state={loading:false,request:{},contextToken:'B',loadedContext:{current:'A'},autoAttempted:{current:new Set()},selections:[],canAutoMetaCheckout:()=>true,checkout:()=>{calls++;}};
+ const run=()=>new Function(...Object.keys(state),'let callback; const useEffect=fn=>callback=fn;'+effect+';callback();')(...Object.values(state));
+ run();assert.equal(calls,0);state.loadedContext.current=null;run();assert.equal(calls,0);state.loadedContext.current='B';run();run();assert.equal(calls,1);
+ state.contextToken='C';run();assert.equal(calls,1);state.loadedContext.current='C';state.loading=true;run();assert.equal(calls,1);state.loading=false;state.request={reviewOnly:true};run();assert.equal(calls,1);
+ assert.match(source,/loadedContext.current = null;\n    setLoading/);assert.match(source,/if \(generation.current !== current\) return;[\s\S]*loadedContext.current = contextToken/);
+});
+test('actual checkout handler rejects stale context before work and cancels before cartCreate after async configuration',async()=>{
+ const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');const handler=source.slice(source.indexOf('  async function checkout()'),source.indexOf('  // A fresh exact-variant'));
+ let carts=0,handoffs=0,release;const scope={busy:{current:false},request:{coupon:null},loadedContext:{current:'A'},contextToken:'B',readMetaContext:()=>({}),setError:()=>{},generation:{current:1},setSubmitting:()=>{},selections:[{configured:[{}]}],configuredMetaCheckoutLines:()=>new Promise(resolve=>{release=resolve;}),fetchProductByHandle:()=>{},metaCheckoutLines:()=>[],isExactMetaPilotRequest:()=>false,createStorefrontCheckout:async()=>{carts++;return 'https://lovable-project-zlh0w.myshopify.com/cart/c/test';},completeMetaHandoff:()=>{handoffs++;},metaAttributedCheckoutUrl:x=>x};
+ const checkout=new Function(...Object.keys(scope),handler+';return checkout;')(...Object.values(scope));await checkout();assert.equal(carts,0);assert.equal(scope.busy.current,false);
+ scope.loadedContext.current='B';const pending=checkout();scope.generation.current=2;scope.loadedContext.current='C';release([]);await pending;assert.equal(carts,0);assert.equal(handoffs,0);
+});
+
+test('actual persistence and configure handlers never overwrite a new context with old render selections',()=>{
+ const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');
+ const effect=source.match(/useEffect\(\(\) => \{\n    if \(!request[\s\S]*?\n  \}, \[request, selections, contextToken\]\);/)[0];
+ let saves=0,navigations=0;const scope={request:{lines:[{contentId:'old-a'}]},contextToken:'B',loadedContext:{current:'A'},selections:[{product:{handle:'old-product'},variantId:'old-variant'}],saveMetaContext:()=>{saves++;},setError:()=>{},navigate:()=>{navigations++;}};
+ const persist=()=>new Function(...Object.keys(scope),'let callback;const useEffect=fn=>callback=fn;'+effect+';callback();')(...Object.values(scope));
+ const handler=source.slice(source.indexOf('  function configure(index: number)'),source.indexOf('  async function checkout()')).replace('index: number','index');
+ const configure=new Function(...Object.keys(scope),handler+';return configure;')(...Object.values(scope));
+ persist();configure(0);assert.equal(saves,0);assert.equal(navigations,0);scope.loadedContext.current=null;persist();configure(0);assert.equal(saves,0);
+ scope.loadedContext.current='B';persist();configure(0);assert.equal(saves,2);assert.equal(navigations,1);
 });
