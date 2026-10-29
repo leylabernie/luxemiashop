@@ -1,0 +1,406 @@
+[
+  {
+    "id": "gid://shopify/Product/9134765179051",
+    "handle": "teal-blue-floral-embroidered-silk-kurta-pajama-with-jacket",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410563608747",
+        "legacy": "gid://shopify/ProductVariant/48410563870891"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563641515",
+        "legacy": "gid://shopify/ProductVariant/48411503329451"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563674283",
+        "legacy": "gid://shopify/ProductVariant/48411503362219"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563707051",
+        "legacy": "gid://shopify/ProductVariant/48411503394987"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563739819",
+        "legacy": "gid://shopify/ProductVariant/48411503427755"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563772587",
+        "legacy": "gid://shopify/ProductVariant/48411503460523"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563805355",
+        "legacy": "gid://shopify/ProductVariant/48411503493291"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410563838123",
+        "legacy": "gid://shopify/ProductVariant/48411503526059"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134767210667",
+    "handle": "purple-paisley-embroidered-silk-kurta-pajama-with-jacket",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410567770283",
+        "legacy": "gid://shopify/ProductVariant/48410568032427"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567803051",
+        "legacy": "gid://shopify/ProductVariant/48411520172203"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567835819",
+        "legacy": "gid://shopify/ProductVariant/48411520204971"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567868587",
+        "legacy": "gid://shopify/ProductVariant/48411520237739"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567901355",
+        "legacy": "gid://shopify/ProductVariant/48411520270507"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567934123",
+        "legacy": "gid://shopify/ProductVariant/48411520303275"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567966891",
+        "legacy": "gid://shopify/ProductVariant/48411520336043"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410567999659",
+        "legacy": "gid://shopify/ProductVariant/48411520368811"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134767472811",
+    "handle": "brown-floral-embroidered-silk-kurta-pajama-with-jacket",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410568327339",
+        "legacy": "gid://shopify/ProductVariant/48410568589483"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568360107",
+        "legacy": "gid://shopify/ProductVariant/48411521679531"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568392875",
+        "legacy": "gid://shopify/ProductVariant/48411521712299"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568425643",
+        "legacy": "gid://shopify/ProductVariant/48411521745067"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568458411",
+        "legacy": "gid://shopify/ProductVariant/48411521777835"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568491179",
+        "legacy": "gid://shopify/ProductVariant/48411521810603"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568523947",
+        "legacy": "gid://shopify/ProductVariant/48411521843371"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568556715",
+        "legacy": "gid://shopify/ProductVariant/48411521876139"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134767800491",
+    "handle": "maroon-embroidered-silk-kurta-pajama-with-jacket",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410568949931",
+        "legacy": "gid://shopify/ProductVariant/48410569212075"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410568982699",
+        "legacy": "gid://shopify/ProductVariant/48411523055787"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410569015467",
+        "legacy": "gid://shopify/ProductVariant/48411523088555"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410569048235",
+        "legacy": "gid://shopify/ProductVariant/48411523121323"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410569081003",
+        "legacy": "gid://shopify/ProductVariant/48411523154091"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410569113771",
+        "legacy": "gid://shopify/ProductVariant/48411523186859"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410569146539",
+        "legacy": "gid://shopify/ProductVariant/48411523219627"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410569179307",
+        "legacy": "gid://shopify/ProductVariant/48411523252395"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134768095403",
+    "handle": "navy-blue-embroidered-silk-kurta-pajama-with-jacket",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410570260651",
+        "legacy": "gid://shopify/ProductVariant/48410570522795"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570293419",
+        "legacy": "gid://shopify/ProductVariant/48411524989099"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570326187",
+        "legacy": "gid://shopify/ProductVariant/48411525021867"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570358955",
+        "legacy": "gid://shopify/ProductVariant/48411525054635"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570391723",
+        "legacy": "gid://shopify/ProductVariant/48411525087403"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570424491",
+        "legacy": "gid://shopify/ProductVariant/48411525120171"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570457259",
+        "legacy": "gid://shopify/ProductVariant/48411525152939"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410570490027",
+        "legacy": "gid://shopify/ProductVariant/48411525185707"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134768357547",
+    "handle": "floral-border-salsa-silk-kurta-pajama-set",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410571047083",
+        "legacy": "gid://shopify/ProductVariant/48410571276459"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571079851",
+        "legacy": "gid://shopify/ProductVariant/48411527774379"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571112619",
+        "legacy": "gid://shopify/ProductVariant/48411527807147"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571145387",
+        "legacy": "gid://shopify/ProductVariant/48411527839915"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571178155",
+        "legacy": "gid://shopify/ProductVariant/48411527872683"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571210923",
+        "legacy": "gid://shopify/ProductVariant/48411527905451"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571243691",
+        "legacy": "gid://shopify/ProductVariant/48411527938219"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571309227",
+        "legacy": "gid://shopify/ProductVariant/48410571538603"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571341995",
+        "legacy": "gid://shopify/ProductVariant/48411527970987"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571374763",
+        "legacy": "gid://shopify/ProductVariant/48411528003755"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571407531",
+        "legacy": "gid://shopify/ProductVariant/48411528036523"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571440299",
+        "legacy": "gid://shopify/ProductVariant/48411528069291"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571473067",
+        "legacy": "gid://shopify/ProductVariant/48411528102059"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410571505835",
+        "legacy": "gid://shopify/ProductVariant/48411528134827"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134768816299",
+    "handle": "botanical-border-salsa-silk-kurta-pajama-set",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410573013163",
+        "legacy": "gid://shopify/ProductVariant/48410573242539"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573045931",
+        "legacy": "gid://shopify/ProductVariant/48411529380011"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573078699",
+        "legacy": "gid://shopify/ProductVariant/48411529412779"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573111467",
+        "legacy": "gid://shopify/ProductVariant/48411529445547"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573144235",
+        "legacy": "gid://shopify/ProductVariant/48411529478315"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573177003",
+        "legacy": "gid://shopify/ProductVariant/48411529511083"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573209771",
+        "legacy": "gid://shopify/ProductVariant/48411529543851"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573275307",
+        "legacy": "gid://shopify/ProductVariant/48410573504683"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573308075",
+        "legacy": "gid://shopify/ProductVariant/48411529576619"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573340843",
+        "legacy": "gid://shopify/ProductVariant/48411529609387"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573373611",
+        "legacy": "gid://shopify/ProductVariant/48411529642155"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573406379",
+        "legacy": "gid://shopify/ProductVariant/48411529674923"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573439147",
+        "legacy": "gid://shopify/ProductVariant/48411529707691"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573471915",
+        "legacy": "gid://shopify/ProductVariant/48411529740459"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573537451",
+        "legacy": "gid://shopify/ProductVariant/48410573766827"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573570219",
+        "legacy": "gid://shopify/ProductVariant/48411529773227"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573602987",
+        "legacy": "gid://shopify/ProductVariant/48411529805995"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573635755",
+        "legacy": "gid://shopify/ProductVariant/48411529838763"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573668523",
+        "legacy": "gid://shopify/ProductVariant/48411529871531"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573701291",
+        "legacy": "gid://shopify/ProductVariant/48411529904299"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410573734059",
+        "legacy": "gid://shopify/ProductVariant/48411529937067"
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9134769111211",
+    "handle": "allover-floral-embroidered-linen-kurta-pajama-set",
+    "pairs": [
+      {
+        "standard": "gid://shopify/ProductVariant/48410574225579",
+        "legacy": "gid://shopify/ProductVariant/48410574454955"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574258347",
+        "legacy": "gid://shopify/ProductVariant/48411532558507"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574291115",
+        "legacy": "gid://shopify/ProductVariant/48411532591275"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574323883",
+        "legacy": "gid://shopify/ProductVariant/48411532624043"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574356651",
+        "legacy": "gid://shopify/ProductVariant/48411532656811"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574389419",
+        "legacy": "gid://shopify/ProductVariant/48411532689579"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574422187",
+        "legacy": "gid://shopify/ProductVariant/48411532722347"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574487723",
+        "legacy": "gid://shopify/ProductVariant/48410574717099"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574520491",
+        "legacy": "gid://shopify/ProductVariant/48411532755115"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574553259",
+        "legacy": "gid://shopify/ProductVariant/48411532787883"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574586027",
+        "legacy": "gid://shopify/ProductVariant/48411532820651"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574618795",
+        "legacy": "gid://shopify/ProductVariant/48411532853419"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574651563",
+        "legacy": "gid://shopify/ProductVariant/48411532886187"
+      },
+      {
+        "standard": "gid://shopify/ProductVariant/48410574684331",
+        "legacy": "gid://shopify/ProductVariant/48411532918955"
+      }
+    ]
+  }
+]

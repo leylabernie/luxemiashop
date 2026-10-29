@@ -162,7 +162,7 @@ test('all three add-ons are optional, deduplicated, and total the existing $26 c
   assert.equal(api.serviceAddOnTotal([]), 0);
   assert.deepEqual(codes.map(code => api.SERVICE_ADD_ONS[code].price), [10, 8, 8]);
   const source = read('src/components/product/ProductInfo.tsx');
-  assert.match(source, /selectedServiceAddOnCodes, setSelectedServiceAddOnCodes\] = useState<ServiceAddOnCode\[\]>\(\[\]\)/);
+  assert.match(source, /selectedServiceAddOnCodes, setSelectedServiceAddOnCodes\] = useState<ServiceAddOnCode\[\]>\(presentation\.alteration \? \['garment-alteration'\] : \[\]\)/);
   assert.match(source, /blouseServiceConfirmed, setBlouseServiceConfirmed\] = useState\(false\)/);
   const handler = source.slice(source.indexOf('const handleAddToCart = async'), source.indexOf('const formatPrice ='));
   const gate = handler.indexOf('if (!isBlouseServiceSelectionConfirmed');
@@ -192,7 +192,7 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
   async function run(selected, confirmed, metaMode = false) {
     const lines = [], errors = [], configured = [], destinations = [];
     const context = vm.createContext({
-      measurementEligible:false,measurementDraft:loadTypeScript('src/lib/measurementRequest.ts').emptyMeasurementDraft(),measurementNow:false,nativeMeasurementRequest:false,measurementServiceCodes:[],...loadTypeScript('src/lib/measurementRequest.ts'),setMeasurementValidation() {},
+      isMensSharedStockActive:()=>false,rawProduct:{},measurementEligible:false,measurementDraft:loadTypeScript('src/lib/measurementRequest.ts').emptyMeasurementDraft(),measurementNow:false,nativeMeasurementRequest:false,measurementServiceCodes:[],...loadTypeScript('src/lib/measurementRequest.ts'),setMeasurementValidation() {},
       metaToken: metaMode ? 'test-context' : null, metaContentId: metaMode ? 'test-item' : null, metaRequestedLine: metaMode ? {quantity:1} : null,
       saveMetaConfiguration(token, item, handle, values) { configured.push(...values); return '/meta-checkout?context=test-context'; },
       window: {location: {assign(path) { destinations.push(path); }}},

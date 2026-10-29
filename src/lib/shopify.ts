@@ -1,3 +1,4 @@
+import { normalizeMensCheckoutLines } from './mensSharedStock';
 import { toast } from 'sonner';
 import { loadCatalogPages } from './catalogPagination';
 import { assertCheckoutCartMatches, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
@@ -217,6 +218,8 @@ export interface ShopifyProduct {
             currencyCode: string;
           } | null;
           availableForSale: boolean;
+          requiresComponents?: boolean;
+          quantityAvailable?: number | null;
           selectedOptions: Array<{
             name: string;
             value: string;
@@ -424,6 +427,8 @@ const PRODUCT_BY_HANDLE_QUERY = `
               currencyCode
             }
             availableForSale
+            requiresComponents
+            quantityAvailable
             image {
               url
               altText
@@ -657,9 +662,9 @@ const _shopifyCache = new Map<string, { at: number; data: StorefrontResponse<unk
 const _shopifyInflight = new Map<string, Promise<StorefrontResponse<unknown> | null>>();
 const _SHOPIFY_CACHE_TTL = 5 * 60 * 1000;
 
-export async function storefrontApiRequest<T = unknown>(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal): Promise<StorefrontResponse<T> | null> {
+export async function storefrontApiRequest<T = unknown>(query: string, variables: Record<string, unknown> = {}, signal?: AbortSignal, fresh = false): Promise<StorefrontResponse<T> | null> {
   const isRead = isCacheableStorefrontOperation(query) && !signal;
-  const cacheKey = isRead ? JSON.stringify([query, variables]) : null;
+  const cacheKey = isRead && !fresh ? JSON.stringify([query, variables]) : null;
   if (cacheKey) {
     const hit = _shopifyCache.get(cacheKey);
     if (hit && Date.now() - hit.at < _SHOPIFY_CACHE_TTL) return hit.data as StorefrontResponse<T>;
@@ -754,12 +759,12 @@ export async function fetchAllProducts(
 
 export async function fetchProductByHandle(
   handle: string,
-  options: { allowHiddenBillingProduct?: boolean } = {},
+  options: { allowHiddenBillingProduct?: boolean; fresh?: boolean } = {},
 ): Promise<ShopifyProduct['node'] | null> {
   if (isHiddenBillingProductHandle(handle) && !options.allowHiddenBillingProduct) return null;
 
   try {
-    const data = await storefrontApiRequest<StorefrontProductData>(PRODUCT_BY_HANDLE_QUERY, { handle });
+    const data = await storefrontApiRequest<StorefrontProductData>(PRODUCT_BY_HANDLE_QUERY, { handle }, undefined, options.fresh);
     if (!data) return null;
     // The query now uses `product(handle:)` (replacing the deprecated
     // `productByHandle`) so the response shape is `data.product`, not
@@ -819,6 +824,8 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     // Instead of throwing, we'll return null to trigger the fallback in the store
     return null;
   }
+
+  items = await normalizeMensCheckoutLines(items, handle => fetchProductByHandle(handle, { allowHiddenBillingProduct: true, fresh: true }));
 
   const lines = items.map(item => ({
     quantity: item.quantity,

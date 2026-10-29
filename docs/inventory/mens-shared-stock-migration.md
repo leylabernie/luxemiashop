@@ -1,0 +1,12 @@
+# Eight menswear records: ordinary physical inventory + optional alteration
+
+Scope is the exact product IDs and 89 variant pairs in `mensSharedStock.json`.
+Activation tag: `inventory:mens-shared-standard-v1`.
+
+Deploy code while tag absent. Then remove approved bundle/component relationships, retain original IDs/SKUs/blank barcodes, set each of 89 Standard size/color variants to tracked/DENY/10 and each legacy Made to Fit variant to tracked/DENY/0. Verify every variant `requiresComponents=false`. Add activation tag LAST only after complete per-product verification. No synthetic GTIN, no physical service inventory, no extra garment quantities. Rebuild same commit after catalog data changes to refresh prerender/schema and merchant feed. Observe both fresh and legacy paths before declaring complete.
+
+The PDP purchase controls alone present Standard physical variants plus existing optional Garment Alteration ($10). Raw Shopify data, schema and feeds retain native availability: retired MTF variants are out of stock. No fabricated independent MTF availability. Standard native variant URLs/IDs remain; legacy MTF links remap same size/color and preselect alteration, with measurements and timing handled by the existing service workflow. Missing/unverified service fails closed instead of silently discarding fitting.
+
+New carts use Standard + service. Persisted native-MTF carts are normalized immediately before cartCreate using uncached Shopify reads; exact original MTF price must equal Standard + verified $10 service. Missing timing acknowledgement, duplicate/ambiguous existing service, unavailable physical size, partial migration, or unreadable data requires reconfiguration. Each mapped pair uses a nonpersonal configuration reference, quantity matched, preserving private garment attributes without exposing them to analytics. Repeated normalization does not add another charge. Shopify's returned cart is checked against the normalized basket so quantity truncation blocks handoff. Existing Meta saved MTF configuration fails closed with a reconfigure message; users can select Standard and configure optional services on its PDP. No purchase is needed for validation.
+
+This does not guarantee Pinterest acceptance: ordinary product eligibility removes a known bundle restriction; channel diagnostics must independently confirm the outcome. The storefront migration does not change inventory on its own, and no rollout authority is implied by this document.
