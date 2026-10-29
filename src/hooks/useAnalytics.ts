@@ -11,6 +11,7 @@ declare global {
       params?: Record<string, unknown>,
     ) => void;
     dataLayer: unknown[];
+    luxemiaAnalyticsEnabled?: boolean;
   }
 }
 
@@ -68,7 +69,7 @@ const sendEcommerceEvent = (
   currency?: string,
   additionalParams: Record<string, unknown> = {},
 ) => {
-  if (typeof window.gtag !== 'function' || !Number.isFinite(value)) return;
+  if (window.luxemiaAnalyticsEnabled === false || typeof window.gtag !== 'function' || !Number.isFinite(value)) return;
 
   window.gtag('event', eventName, {
     currency: resolveCurrency(currency),
@@ -88,7 +89,7 @@ export const usePageTracking = () => {
   const location = useLocation();
 
   useEffect(() => {
-    if (typeof window.gtag === 'function') {
+    if (window.luxemiaAnalyticsEnabled !== false && typeof window.gtag === 'function') {
       window.gtag('event', 'page_view', {
         send_to: GA_MEASUREMENT_ID,
         page_path: location.pathname + location.search,
@@ -195,7 +196,7 @@ export const trackAddPaymentInfo = (
 // available. This prevents the generic app shell from creating empty or duplicate
 // purchases when a shopper returns from Shopify checkout.
 export const trackPurchase = (data: AnalyticsPurchase) => {
-  if (typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
+  if (window.luxemiaAnalyticsEnabled === false || typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
 
   window.gtag('event', 'purchase', {
     transaction_id: data.transactionId,
@@ -212,7 +213,7 @@ export const trackPurchase = (data: AnalyticsPurchase) => {
 };
 
 export const trackRefund = (data: AnalyticsPurchase) => {
-  if (typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
+  if (window.luxemiaAnalyticsEnabled === false || typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
 
   window.gtag('event', 'refund', {
     transaction_id: data.transactionId,
@@ -228,7 +229,7 @@ export const trackConsultationSubmission = (data: {
   country?: string;
   occasion?: string;
 }) => {
-  if (typeof window.gtag === 'function') {
+  if (window.luxemiaAnalyticsEnabled !== false && typeof window.gtag === 'function') {
     window.gtag('event', 'generate_lead', {
       currency: 'USD',
       value: 0,
@@ -240,7 +241,7 @@ export const trackConsultationSubmission = (data: {
 };
 
 export const trackConsultationBookingAttempt = (method: 'whatsapp' | 'email') => {
-  if (typeof window.gtag === 'function') {
+  if (window.luxemiaAnalyticsEnabled !== false && typeof window.gtag === 'function') {
     window.gtag('event', 'consultation_booking_attempt', {
       contact_method: method,
       market_focus: 'US',
