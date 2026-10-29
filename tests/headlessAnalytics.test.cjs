@@ -17,6 +17,8 @@ function runBootstrap(idleCallbackAvailable) {
   const consent = ['consent', 'default', { analytics_storage: 'denied' }];
   const context = {
     dataLayer: [consent],
+    location: { hostname: 'luxemia.shop', search: '' },
+    URLSearchParams,
     document: {
       createElement: tag => ({ tag }),
       head: { appendChild: script => scripts.push(script) },

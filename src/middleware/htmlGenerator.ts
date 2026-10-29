@@ -495,12 +495,31 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(breadcrumbSchema)}</script>
   <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(webPageSchema)}</script>
   ${faqSchema ? `<script type="application/ld+json" data-prerender-schema>${serializeJsonLd(faqSchema)}</script>` : ''}
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0"></script>
   <script>
+      // Analytics runs only on customer production hosts. Opt-in QA mode is
+      // tab-scoped and contains no identity, measurement or customer data.
+      window.luxemiaAnalyticsEnabled = false;
+      (function () {
+        var host = window.location.hostname.toLowerCase();
+        var qa = false;
+        var choice = new URLSearchParams(window.location.search).get('luxemia_qa');
+        try {
+          qa = window.sessionStorage.getItem('luxemia.analytics.qa') === '1';
+          if (choice === '1') { qa = true; window.sessionStorage.setItem('luxemia.analytics.qa', '1'); }
+          if (choice === '0') { qa = false; window.sessionStorage.removeItem('luxemia.analytics.qa'); }
+        } catch (_) {
+          // Explicit choice still applies to this document if storage is blocked.
+          if (choice === '1') qa = true;
+          if (choice === '0') qa = false;
+        }
+        window.luxemiaAnalyticsEnabled = !qa && (host === 'luxemia.shop' || host === 'www.luxemia.shop');
+      })();
     window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
+    function gtag(){if(window.luxemiaAnalyticsEnabled)dataLayer.push(arguments);}
+    window.gtag = gtag;
     gtag('js', new Date());
     gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true, linked_domains: ['luxemia.shop'] });
+    if(window.luxemiaAnalyticsEnabled){var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0';s.async=true;document.head.appendChild(s);}
   </script>
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
