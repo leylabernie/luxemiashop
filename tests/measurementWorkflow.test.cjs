@@ -14,6 +14,7 @@ function load(file) {
 }
 const measurements = load('src/lib/measurementRequest.ts');
 const services = load('src/lib/serviceAddOns.ts');
+const mens = load('src/lib/mensSharedStock.ts');
 const timing = require('../src/config/shippingTiming.cjs');
 const source = read('src/components/product/ProductInfo.tsx');
 const start = source.indexOf('const handleAddToCart = async () => {');
@@ -34,7 +35,7 @@ async function run({ draft = now(), native = false, codes = [], overrides = {} }
   const variant = { id: 'fixture-size-s', title: 'S', price: { amount: '103.00', currencyCode: 'USD' }, selectedOptions: [{ name: 'Size', value: 'S' }] };
 
   const scope = {
-    ...measurements, ...services, ...timing, crypto: webcrypto,
+    ...measurements, ...services, ...timing, ...mens, rawProduct: product, selectedServiceAddOnCodes: codes, basePrice: variant.price, crypto: webcrypto,
     measurementDraft: draft,
     setMeasurementValidation: error => validation.push(error),
     purchasableVariant: { node: variant }, product, selectedAvailableServiceAddOnCodes: codes,
@@ -240,4 +241,48 @@ test('actual context/state expressions clear NOW details on variant, service, st
   assert.equal(view.measurementNow, false);
   view.setMeasurementState({ context: view.measurementContext, draft: { ...measurements.emptyMeasurementDraft(), choice: 'now' } });
   assert.equal(render().measurementDraft.rows.length, 0, 'later→now never restores old rows');
+});
+
+// Real migration identifiers; prices and measurement values below are local test fixtures.
+function migratedMensFixture() {
+  const plan = require('../src/config/mensSharedStock.json')[0];
+  const raw = { id: plan.id, handle: plan.handle, title: 'Synthetic migrated kurta', productType: 'Kurta', tags: [mens.MENS_SHARED_STOCK_TAG],
+    options: [{ name: 'Size', values: plan.pairs.map((_, i) => String(32 + i * 2)) }, { name: 'Alteration', values: ['Standard Fit', 'Made to Fit (+$10)'] }],
+    variants: { edges: plan.pairs.flatMap((pair, i) => [false, true].map(legacy => ({ node: { id: legacy ? pair.legacy : pair.standard,
+      title: `${32 + i * 2} / ${legacy ? 'Made to Fit (+$10)' : 'Standard Fit'}`, availableForSale: !legacy, requiresComponents: false, quantityAvailable: legacy ? 0 : 10,
+      price: { amount: legacy ? '72.99' : '62.99', currencyCode: 'USD' }, selectedOptions: [{ name: 'Size', value: String(32 + i * 2) }, { name: 'Alteration', value: legacy ? 'Made to Fit (+$10)' : 'Standard Fit' }] } }))) } };
+  const product = mens.mensPurchasePresentation(raw).product;
+  const serviceVariant = { id: mens.ALTERATION_SERVICE_ID, title: services.SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue,
+    requiresComponents: false, availableForSale: true, price: { amount: '10.00', currencyCode: 'USD' }, selectedOptions: [] };
+  return { raw, product, serviceVariant };
+}
+async function migratedRun(index, draft = measurements.emptyMeasurementDraft(), extra = {}) {
+  const { raw, product, serviceVariant } = migratedMensFixture();
+  return run({ draft, codes: ['garment-alteration'], overrides: { rawProduct: raw, product, isMenswear: true,
+    purchasableVariant: product.variants.edges[index], basePrice: product.variants.edges[index].node.price,
+    serviceVariants: new Map([['garment-alteration', serviceVariant]]), ...extra } });
+}
+test('migrated mens LATER two sizes keep separate service associations through quantity and removal', async () => {
+  const a = await migratedRun(0), b = await migratedRun(1);
+  for (const result of [a,b]) {
+    assert.deepEqual(result.errors, []); assert.equal(result.added.length, 2);
+    assert.equal(result.added[0].price.amount, '62.99'); assert.equal(result.added[1].price.amount, '10.00');
+    assert.equal(measurementRows(result.added[0]).length, 0);
+    assert(attrs(result.added[1]).some(x => x.key === 'Measurement submission' && /after order/i.test(x.value)));
+    const ref = attrs(result.added[0]).find(x => x.key === 'Configuration reference').value;
+    assert.equal(attrs(result.added[1]).find(x => x.key === 'Configuration reference').value, ref);
+  }
+  assert.notEqual(attrs(a.added[0]).find(x=>x.key==='Configuration reference').value, attrs(b.added[0]).find(x=>x.key==='Configuration reference').value);
+  const { store } = testCart(); for (const line of [...a.added,...b.added]) store.getState().addItem(line);
+  assert.equal(store.getState().items.length,4);
+  store.getState().updateQuantity(a.added[0].variantId,3,a.added[0].customAttributes);
+  assert.deepEqual(store.getState().items.map(x=>x.quantity),[3,3,1,1]);
+  store.getState().removeItem(a.added[0].variantId,a.added[0].customAttributes);
+  assert.deepEqual(store.getState().items.map(x=>x.variantId),b.added.map(x=>x.variantId));
+});
+test('migrated mens NOW remains service-owned and missing paid service fails before cart mutation', async () => {
+  const result=await migratedRun(0,now()); assert.deepEqual(result.errors,[]);
+  assert.equal(measurementRows(result.added[0]).length,0); assert.equal(measurementRows(result.added[1]).length,1);
+  const missing=await migratedRun(0,measurements.emptyMeasurementDraft(),{serviceVariants:new Map(),selectedAvailableServiceAddOnCodes:[]});
+  assert.equal(missing.added.length,0); assert.match(missing.errors[0],/alteration service could not be verified/);
 });

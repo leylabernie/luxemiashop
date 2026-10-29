@@ -1,7 +1,8 @@
+import { mensPurchasePresentation, isMensSharedStockActive, ALTERATION_SERVICE_ID } from '@/lib/mensSharedStock';
 import { DESTINATION_IMPORT_NOTICE, BASE_SHIPPING_TIMING_NOTICE, alterationShippingTimingNotice, productShippingTimingNotice } from '@/config/shippingPolicy';
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
@@ -299,9 +300,11 @@ const isMenswearProduct = (productType?: string, tags?: string[]): boolean => {
   return false;
 };
 
-export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoProps) => {
+export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
-  const requestedVariantId = searchParams.get('variant');
+  const presentation = useMemo(() => mensPurchasePresentation(rawProduct, searchParams.get('variant')), [rawProduct, searchParams]);
+  const product = presentation.product;
+  const requestedVariantId = presentation.requested;
   const metaToken = searchParams.get('meta_context');
   const metaContentId = searchParams.get('meta_item');
   const metaContext = readMetaContext(metaToken);
@@ -348,6 +351,11 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           edge.node.id.endsWith(`/${requestedVariantId}`)
         )
       : undefined;
+    // A historical fit URL must never silently switch to another physical size.
+    if (presentation.alteration && requestedVariant) {
+      requestedVariant.node.selectedOptions.forEach(option => { defaults[option.name] = option.value; });
+      return defaults;
+    }
     const requestedPurchasable = requestedVariant?.node.availableForSale !== false
       ? requestedVariant
       : undefined;
@@ -360,7 +368,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     });
 
     return defaults;
-  }, [product.variants.edges, product.options, requestedVariantId, metaToken]);
+  }, [product.variants.edges, product.options, requestedVariantId, metaToken, presentation.alteration]);
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
   const [quantity, setQuantity] = useState(metaRequestedLine?.quantity || 1);
@@ -377,7 +385,16 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     isStitchable ? 'semi-stitched' : null
   );
   const [showStitchingInfo, setShowStitchingInfo] = useState<string | null>(null);
-  const [selectedServiceAddOnCodes, setSelectedServiceAddOnCodes] = useState<ServiceAddOnCode[]>([]);
+  const [selectedServiceAddOnCodes, setSelectedServiceAddOnCodes] = useState<ServiceAddOnCode[]>(presentation.alteration ? ['garment-alteration'] : []);
+  const legacySelectionApplied = useRef(false);
+  useEffect(() => {
+    if (presentation.alteration && !legacySelectionApplied.current) {
+      setSelectedServiceAddOnCodes(['garment-alteration']);
+      const standard = product.variants.edges.find(v => v.node.id === presentation.requested)?.node;
+      if (standard) setSelectedOptions(Object.fromEntries(standard.selectedOptions.map(o => [o.name, o.value])));
+      legacySelectionApplied.current = true;
+    }
+  }, [presentation.alteration, presentation.requested, product.variants.edges]);
   const [blouseServiceConfirmed, setBlouseServiceConfirmed] = useState(false);
   const addItem = useCartStore((state) => state.addItem);
   const openCart = useCartStore((state) => state.openCart);
@@ -651,7 +668,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       (isProductSizeOptionName(name) || /^(?:blouse|alteration|stitching|tailoring)$/i.test(name.trim()))
       && /\b(?:custom|made[-\s]+to[-\s]+(?:measure|fit))\b/i.test(value)));
   const measurementServiceCodes = selectedAvailableServiceAddOnCodes.filter(code =>
-    code === 'blouse-stitching' && needsBlouseServiceConfirmation);
+    (code === 'blouse-stitching' && needsBlouseServiceConfirmation)
+    || (code === 'garment-alteration' && isMensSharedStockActive(rawProduct)));
   const measurementEligible = nativeMeasurementRequest || measurementServiceCodes.length > 0;
   const measurementContext = JSON.stringify([product.id, metaToken, purchasableVariant?.node.id, selectedOptions,
     selectedStitchingType, selectedAvailableServiceAddOnCodes, selectedNeckline, selectedBottomStyle, selectedSleeveStyle, requestedCustomColor]);
@@ -729,6 +747,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   };
 
   const handleAddToCart = async () => {
+    if (isMensSharedStockActive(rawProduct) && selectedServiceAddOnCodes.includes('garment-alteration')) {
+      const alteration = serviceVariants.get('garment-alteration');
+      if (!alteration || alteration.id !== ALTERATION_SERVICE_ID || alteration.requiresComponents !== false
+        || alteration.price.currencyCode !== basePrice.currencyCode || Number(alteration.price.amount) !== 10) {
+        toast.error('The $10 alteration service could not be verified. Please retry before adding this selection.');
+        return;
+      }
+    }
     if (measurementNow && metaToken) {
       toast.error('Provide measurements after ordering for this shopping-link checkout, or open the product directly to provide them now.');
       return;
@@ -786,7 +812,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       product, selectedAvailableServiceAddOnCodes, blouseServiceConfirmed,
     ).map(attribute => measurementNow && attribute.key === 'Blouse Measurements'
       ? { ...attribute, value: 'Customer supplied measurements for review; confirm before stitching' } : attribute);
-    const configurationReference = measurementNow ? crypto.randomUUID() : null;
+    const configurationReference = measurementNow || (isMensSharedStockActive(rawProduct) && selectedAvailableServiceAddOnCodes.includes('garment-alteration'))
+      ? crypto.randomUUID() : null;
     const customAttributes: Array<{ key: string; value: string }> = measurementNow && !nativeMeasurementRequest
       ? [] : [...blouseConfirmationAttributes];
     if (configurationReference) customAttributes.push({ key: 'Configuration reference', value: configurationReference });
