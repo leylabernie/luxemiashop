@@ -13,6 +13,8 @@ import { readMetaContext, saveMetaConfiguration, metaReturnPath } from '@/lib/me
 import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import { SizeGuideModal } from './SizeGuideModal';
+import { MeasurementRequestForm } from './MeasurementRequestForm';
+import { emptyMeasurementDraft, measurementError, measurementAttributes, type MeasurementDraft } from '@/lib/measurementRequest';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
@@ -641,6 +643,32 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     return needsStitchingSize;
   }, [needsStitchingSize, productHasNativeSizes, isMenswear]);
 
+  // Only existing measurement-based selections expose this optional request.
+  // Service-only measurements stay on that removable service line, not the garment.
+  const nativeMeasurementRequest = Boolean(isCustomSizeSelected || customizableProduct || madeToOrderProduct
+    || (needsStitchingSize && !productHasNativeSizes) || (isMenswear && !productHasNativeSizes)
+    || Object.entries(selectedOptions).some(([name, value]) =>
+      (isProductSizeOptionName(name) || /^(?:blouse|alteration|stitching|tailoring)$/i.test(name.trim()))
+      && /\b(?:custom|made[-\s]+to[-\s]+(?:measure|fit))\b/i.test(value)));
+  const measurementServiceCodes = selectedAvailableServiceAddOnCodes.filter(code =>
+    code === 'blouse-stitching' && needsBlouseServiceConfirmation);
+  const measurementEligible = nativeMeasurementRequest || measurementServiceCodes.length > 0;
+  const measurementContext = JSON.stringify([product.id, metaToken, purchasableVariant?.node.id, selectedOptions,
+    selectedStitchingType, selectedAvailableServiceAddOnCodes, selectedNeckline, selectedBottomStyle, selectedSleeveStyle, requestedCustomColor]);
+  const [measurementState, setMeasurementState] = useState<{ context: string; draft: MeasurementDraft }>(
+    () => ({ context: measurementContext, draft: emptyMeasurementDraft() }));
+  const [measurementValidation, setMeasurementValidation] = useState<string | undefined>();
+  const measurementDraft = measurementState.context === measurementContext
+    ? measurementState.draft : emptyMeasurementDraft();
+  useEffect(() => {
+    setMeasurementState({ context: measurementContext, draft: emptyMeasurementDraft() });
+    setMeasurementValidation(undefined);
+    setStitchingSize(null);
+    setBlouseServiceConfirmed(false);
+    setCustomSizeConfirmed(false);
+  }, [measurementContext]);
+  const measurementNow = measurementEligible && measurementDraft.choice === 'now';
+
   // Whether to show the Customize header (all stitchable products + menswear)
   const showCustomizeHeader = isStitchable || isMenswear;
 
@@ -701,6 +729,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
   };
 
   const handleAddToCart = async () => {
+    if (measurementNow && metaToken) {
+      toast.error('Provide measurements after ordering for this shopping-link checkout, or open the product directly to provide them now.');
+      return;
+    }
+    if (measurementEligible) {
+      const error = measurementError(measurementDraft);
+      if (error) { setMeasurementValidation(error); toast.error(error); return; }
+    }
     if (!purchasableVariant) {
       toast.error('Please select all options');
       return;
@@ -728,14 +764,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
     }
 
     // Confirm the after-order handoff only when no native fit choice exists.
-    if (needsStitchingSize && !productHasNativeSizes && !stitchingSize) {
+    if (needsStitchingSize && !productHasNativeSizes && !stitchingSize && !measurementNow) {
       setShowSizeValidation(true);
       toast.error('Please confirm the measurement handoff');
       return;
     }
 
     // Never replace a missing native menswear size with an invented size grid.
-    if (isMenswear && !stitchingSize && !productHasNativeSizes) {
+    if (isMenswear && !stitchingSize && !productHasNativeSizes && !measurementNow) {
       setShowSizeValidation(true);
       toast.error('Please confirm the measurement handoff');
       return;
@@ -748,8 +784,12 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
 
     const blouseConfirmationAttributes = blouseServiceConfirmationAttributes(
       product, selectedAvailableServiceAddOnCodes, blouseServiceConfirmed,
-    );
-    const customAttributes: Array<{ key: string; value: string }> = [...blouseConfirmationAttributes];
+    ).map(attribute => measurementNow && attribute.key === 'Blouse Measurements'
+      ? { ...attribute, value: 'Customer supplied measurements for review; confirm before stitching' } : attribute);
+    const configurationReference = measurementNow ? crypto.randomUUID() : null;
+    const customAttributes: Array<{ key: string; value: string }> = measurementNow && !nativeMeasurementRequest
+      ? [] : [...blouseConfirmationAttributes];
+    if (configurationReference) customAttributes.push({ key: 'Configuration reference', value: configurationReference });
     if (isBanarasiSareeServiceProduct(product) && selectedAvailableServiceAddOnCodes.length > 0) {
       customAttributes.push({
         key: 'Selected Saree Services',
@@ -812,6 +852,14 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       customAttributes.push({ key: 'Custom Alteration Instructions', value: customAlteration.trim() });
     }
 
+    if (nativeMeasurementRequest) {
+      if (measurementNow) {
+        for (let i = customAttributes.length - 1; i >= 0; i--) {
+          if (['Measurements', 'Measurement Handoff'].includes(customAttributes[i].key)) customAttributes.splice(i, 1);
+        }
+      }
+      customAttributes.push(...measurementAttributes(measurementDraft));
+    }
     addConfiguredItem({
       product: { node: product },
       variantId: purchasableVariant.node.id,
@@ -836,6 +884,8 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
           selectedOptions: serviceVariant.selectedOptions,
           customAttributes: [
             { key: 'Applies To', value: product.title },
+            ...(configurationReference ? [{ key: 'Configuration reference', value: configurationReference }] : []),
+            ...(measurementServiceCodes.includes(code) ? measurementAttributes(measurementDraft) : []),
             ...(selectedServicesRequireProcessing([code])
               ? [{ key: 'Timing Estimate', value: alterationShippingTimingNotice(shipsWithinDays) }]
               : []),
@@ -1118,7 +1168,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
       )}
 
       {/* ─── Menswear Size Selector ─── */}
-      {isMenswear && !productHasNativeSizes && (
+      {isMenswear && !productHasNativeSizes && !measurementNow && (
         <StitchingSizeSelector
           selectedSize={stitchingSize}
           onSizeChange={setStitchingSize}
@@ -1293,7 +1343,7 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
                   onChange={(event) => setBlouseServiceConfirmed(event.target.checked)}
                   className="mt-1 h-4 w-4 accent-primary"
                 />
-                <span>{BLOUSE_SERVICE_CONFIRMATION_NOTICE}</span>
+                <span>{measurementNow ? 'I have provided measurements for review. LuxeMia must confirm fabric suitability, design and fit feasibility, and dispatch timing before stitching begins.' : BLOUSE_SERVICE_CONFIRMATION_NOTICE}</span>
               </label>
             </div>
           )}
@@ -1339,8 +1389,19 @@ export const ProductInfo = ({ product, onSelectedVariantChange }: ProductInfoPro
         </section>
       )}
 
+      {measurementEligible && metaToken && <p className="text-sm">For this shopping-link checkout, provide measurements after ordering. To provide them now, open this product directly from the store and add it to your bag.</p>}
+      {measurementEligible && !metaToken && <MeasurementRequestForm
+        key={measurementContext}
+        value={measurementDraft}
+        onChange={draft => {
+          if (draft.choice !== measurementDraft.choice) { setStitchingSize(null); setBlouseServiceConfirmed(false); }
+          setMeasurementState({ context: measurementContext, draft }); setMeasurementValidation(undefined);
+        }}
+        error={measurementValidation}
+      />}
+
       {/* ─── Stitching Size Selector (when product doesn't have Shopify size variants) ─── */}
-      {showStitchingSizeSelector && !isMenswear && (
+      {showStitchingSizeSelector && !isMenswear && !measurementNow && (
         <StitchingSizeSelector
           selectedSize={stitchingSize}
           onSizeChange={setStitchingSize}

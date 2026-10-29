@@ -4,6 +4,7 @@ import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
 import { getProductShipsWithin } from '@/lib/shipBy';
 import { normalizeFulfillmentAttributes } from '@/lib/fulfillmentAttributes';
+import { redactMeasurementAttributes, hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import {
   AnalyticsItem,
   trackAddToCart,
@@ -106,6 +107,21 @@ const appliesToProductTitle = (item: CartItem) => item.customAttributes
 
 const isServiceLine = (item: CartItem) => isHiddenBillingProductHandle(item.product.node.handle);
 
+// New measurement submissions carry a per-add reference on the garment and
+// each paid service. A title alone must not associate two configurations of
+// the same garment. Only legacy pairs without a reference retain title linkage.
+const isDependentServiceFor = (service: CartItem, garment: CartItem): boolean => {
+  if (!isServiceLine(service) || appliesToProductTitle(service) !== garment.product.node.title) return false;
+  const serviceReference = service.customAttributes?.find(attribute => attribute.key === 'Configuration reference');
+  const garmentReference = garment.customAttributes?.find(attribute => attribute.key === 'Configuration reference');
+  if (serviceReference || garmentReference) {
+    return Boolean(serviceReference?.value.trim())
+      && Boolean(garmentReference?.value.trim())
+      && serviceReference?.value === garmentReference?.value;
+  }
+  return true;
+};
+
 const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => {
   const serviceLine = isServiceLine(item);
   const serviceVariant = item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
@@ -185,7 +201,6 @@ export const useCartStore = create<CartStore>()(
           trackRemoveFromCart(toAnalyticsItem(current, Math.abs(quantityDelta)));
         }
 
-        const appliesToTitle = current.product.node.title;
         const shouldSyncServiceQuantities = !isServiceLine(current);
 
         set({
@@ -194,8 +209,7 @@ export const useCartStore = create<CartStore>()(
             const isCurrentLine = item.variantId === variantId
               && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node));
             const isDependentService = shouldSyncServiceQuantities
-              && isServiceLine(item)
-              && appliesToProductTitle(item) === appliesToTitle;
+              && isDependentServiceFor(item, current);
 
             return isCurrentLine || isDependentService
               ? { ...item, quantity, customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)) }
@@ -216,8 +230,7 @@ export const useCartStore = create<CartStore>()(
           const isCurrentLine = item.variantId === variantId
             && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node));
           const isDependentService = removeDependentServices
-            && isServiceLine(item)
-            && appliesToProductTitle(item) === itemToRemove.product.node.title;
+            && isDependentServiceFor(item, itemToRemove);
           return isCurrentLine || isDependentService;
         });
 
@@ -250,6 +263,12 @@ export const useCartStore = create<CartStore>()(
         const { setLoading, setCheckoutUrl } = get();
         const items = normalizeCartItems(get().items);
         if (items.length === 0) return null;
+        if (items.some(item => hasPendingMeasurementAttributes(item.customAttributes))) {
+          const message = 'Re-enter your measurement details on the product page before checkout. They are not saved on this device.';
+          set({ items, checkoutError: message, checkoutUrl: null, cartId: null, isLoading: false });
+          toast.error(message);
+          return null;
+        }
         set({ items });
 
         const totalValue = items.reduce(
@@ -304,11 +323,20 @@ export const useCartStore = create<CartStore>()(
     {
       name: 'shopify-cart',
       storage: createJSONStorage(() => localStorage),
-      partialize: (state) => ({
-        items: state.items,
-        cartId: state.cartId,
-        checkoutUrl: state.checkoutUrl,
-      }),
+      partialize: (state) => {
+        // Keep submitted measurements in memory for this checkout only. A
+        // reloaded cart retains product/configuration identity, never raw details.
+        const items = state.items.map(item => ({
+          ...item,
+          customAttributes: redactMeasurementAttributes(item.customAttributes),
+        }));
+        const requiresMeasurementReentry = items.some(item => hasPendingMeasurementAttributes(item.customAttributes));
+        return {
+          items,
+          cartId: requiresMeasurementReentry ? null : state.cartId,
+          checkoutUrl: requiresMeasurementReentry ? null : state.checkoutUrl,
+        };
+      },
       onRehydrateStorage: () => (state) => {
         if (state) {
           const serialized = JSON.stringify(state.items) + (state.checkoutUrl || '');
@@ -317,6 +345,11 @@ export const useCartStore = create<CartStore>()(
             state.cartId = null;
             state.checkoutUrl = null;
             return;
+          }
+
+          if (state.items.some(item => hasPendingMeasurementAttributes(item.customAttributes))) {
+            state.cartId = null;
+            state.checkoutUrl = null;
           }
 
           // Remove legacy implementation details from carts created before the

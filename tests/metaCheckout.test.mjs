@@ -76,3 +76,21 @@ test('saved Meta configuration normalizes only legacy automatic fulfillment copy
  assert.deepEqual(lines[0].customAttributes,[{key:'Tailoring',value:'Alterations / finishing requested'},...attrs.slice(1)]);
  assert.equal(lines[0].quantity,1);assert.equal(lines[0].variantId,line.variantId);assert.equal(attrs[0].value,'Tailored to order');
 });
+
+test('Meta storage redacts NOW details and pending configuration cannot reach checkout',async()=>{
+ const original=globalThis.sessionStorage;
+ try{
+  const {token,storage}=contextFixture();
+  const line=configuredItem('custom-lehenga',1);
+  line.customAttributes=[{key:'Measurement submission',value:'Customer supplied — review required'},{key:'Provided measurement 1',value:'PRIVATE_LABEL: 36.123 inches'},{key:'Measurement notes',value:'PRIVATE_NOTES'},{key:'Measurement basis',value:'Body'},{key:'Configuration reference',value:'safe-reference'}];
+  saveMetaConfiguration(token,'custom-lehenga','custom-lehenga',[line]);
+  const serialized=[...storage.values()].join('');
+  assert.doesNotMatch(serialized,/PRIVATE_LABEL|36\.123|PRIVATE_NOTES|"Body"/);
+  const configured=readMetaContext(token).selections[1].configured;
+  assert(configured[0].customAttributes.some(a=>a.value==='Re-enter measurement details after reload'));
+  assert(configured[0].customAttributes.some(a=>a.value==='safe-reference'));
+  let reads=0;
+  await assert.rejects(mod.exports.configuredMetaCheckoutLines({product:product('custom-lehenga'),quantity:1,variantId:line.variantId,configured},async()=>{reads++;return product('custom-lehenga')}),/re-entered/);
+  assert.equal(reads,0,'pending details fail closed before product/checkout network');
+ }finally{globalThis.sessionStorage=original;}
+});

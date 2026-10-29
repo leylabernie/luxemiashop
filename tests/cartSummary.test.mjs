@@ -10,6 +10,7 @@ const result = await build({
   entryPoints: [resolve('src/components/cart/CartDrawer.tsx')], bundle: true, write: false,
   platform: 'node', format: 'cjs', jsx: 'automatic', external: ['react', 'react/jsx-runtime'],
   plugins: [{ name: 'isolated-ui-fixtures', setup(b) {
+    b.onResolve({filter: /^@\/lib\/measurementRequest$/}, () => ({path: resolve('src/lib/measurementRequest.ts')}));
     b.onResolve({filter: /^@\/config\/(shippingPolicy)$/}, a => ({path: resolve('src/config', a.path.split('/').at(-1)+'.ts')}));
     b.onResolve({filter: /^(framer-motion|lucide-react|@\/)/}, a => ({path:a.path, namespace:'fixture'}));
     b.onLoad({filter:/.*/,namespace:'fixture'}, a => {
@@ -59,4 +60,15 @@ test('free-shipping progress uses the $150 undiscounted boundary and qualifies t
  assert.ok(render(149.99).includes('$0.01 below'));
  assert.ok(render(150).includes('before checkout discounts'));
  assert.ok(render(150).includes('Discounts are applied before shipping eligibility.'));
+});
+
+
+test('reloaded measurement configuration has an explicit re-entry action without exposing private data',()=>{
+ render(79.99);
+ globalThis.fixtureStore.items[0].customAttributes=[{key:'Measurement submission',value:'Re-enter measurement details after reload'},{key:'Configuration reference',value:'private-reference'}];
+ const html=renderToStaticMarkup(React.createElement(CartDrawer,{isOpen:true,onClose:()=>{}}));
+ assert.match(html,/Checkout is blocked/);
+ assert.match(html,/href="\/product\/test-suit"/);
+ assert.match(html,/Remove this configuration and reopen the product/);
+ assert.doesNotMatch(html,/private-reference/);
 });
