@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import test from 'node:test';
 import {
   assertCheckoutCartMatches,
+  assertCheckoutCartPrices,
   CheckoutCartChangedError,
   isCacheableStorefrontOperation,
 } from '../src/lib/checkoutCartIntegrity.ts';
@@ -50,4 +51,14 @@ test('named and anonymous mutations never use the read cache', () => {
   assert.equal(isCacheableStorefrontOperation('mutation { cartCreate(input: {}) { cart { id } } }'), false);
   assert.equal(isCacheableStorefrontOperation('query Product($id: ID!) { node(id: $id) { id } }'), true);
   assert.equal(isCacheableStorefrontOperation('  { shop { name } }'), true);
+});
+
+test('exact Meta cart price guard accepts formatting equivalence and rejects changed prices/currencies', () => {
+ const expected={'a':{amount:'108.99',currencyCode:'USD'},'b':{amount:'77.49',currencyCode:'USD'}};
+ const rows=[{quantity:1,merchandise:{id:'a',price:{amount:'108.990',currencyCode:'USD'}}},{quantity:5,merchandise:{id:'b',price:{amount:'77.49',currencyCode:'USD'}}}];
+ assert.doesNotThrow(()=>assertCheckoutCartPrices(expected,rows));
+ for(const price of [{amount:'108.98',currencyCode:'USD'},{amount:'108.99',currencyCode:'INR'},{amount:'NaN',currencyCode:'USD'},{amount:'0',currencyCode:'USD'},undefined]){
+   assert.throws(()=>assertCheckoutCartPrices(expected,[{...rows[0],merchandise:{...rows[0].merchandise,price}},rows[1]]),CheckoutCartChangedError);
+ }
+ assert.throws(()=>assertCheckoutCartPrices(expected,[{quantity:1,merchandise:{id:'unknown',price:{amount:'108.99',currencyCode:'USD'}}}]),CheckoutCartChangedError);
 });

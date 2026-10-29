@@ -1,7 +1,7 @@
 import { normalizeMensCheckoutLines } from './mensSharedStock';
 import { toast } from 'sonner';
 import { loadCatalogPages } from './catalogPagination';
-import { assertCheckoutCartMatches, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
+import { assertCheckoutCartMatches, assertCheckoutCartPrices, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
 
@@ -814,7 +814,7 @@ export async function fetchCollectionByHandle(
 // Optional explicit code support is retained for callers that have verified an offer.
 // The storefront does not guess or automatically apply discounts; Shopify confirms
 // eligibility, combinations, and final amounts at checkout.
-export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>, discountCode?: string | null): Promise<string | null> {
+export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>, discountCode?: string | null, expectedPrices?: Record<string, { amount: string; currencyCode: string }>): Promise<string | null> {
    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
   // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
   const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
@@ -866,6 +866,8 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     (cart.lines?.edges ?? []).map((edge) => edge.node),
     cart.lines?.pageInfo?.hasNextPage === true,
   );
+
+  if (expectedPrices) assertCheckoutCartPrices(expectedPrices, cart.lines.edges.map(edge => edge.node));
 
   // Shopify can return the Vercel storefront hostname even though hosted
   // checkout must remain on Shopify. The permanent myshopify.com host is the

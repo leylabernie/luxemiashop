@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { createStorefrontCheckout, fetchAllProducts, fetchProductByHandle } from '@/lib/shopify';
 import { readMetaContext, saveMetaContext, metaReturnPath, clearMetaContext, completeMetaHandoff } from '@/lib/metaCheckoutContext';
-import { configuredMetaCheckoutLines, metaBasketSubtotal, metaCheckoutLines, parseMetaCheckout, resolveMetaProducts, type MetaRequest, type MetaSelection } from '@/lib/metaCheckout';
+import { canAutoMetaCheckout, configuredMetaCheckoutLines, isExactMetaPilotRequest, metaAttributedCheckoutUrl, metaRequestSearch, metaBasketSubtotal, metaCheckoutLines, parseMetaCheckout, resolveMetaProducts, type MetaRequest, type MetaSelection } from '@/lib/metaCheckout';
 
 export default function MetaCheckout() {
   const { search } = useLocation();
@@ -21,6 +21,8 @@ export default function MetaCheckout() {
   const [submitting, setSubmitting] = useState(false);
   const busy = useRef(false);
   const generation = useRef(0);
+  const autoAttempted = useRef(new Set<string>());
+  const loadedContext = useRef<string | null>(null);
   useEffect(() => {
     // BFCache can restore stale React Router state after the privacy-safe history rewrite.
     const restore = (event: PageTransitionEvent) => { if (event.persisted) window.location.reload(); };
@@ -29,42 +31,44 @@ export default function MetaCheckout() {
   }, []);
   useEffect(() => {
     const current = ++generation.current;
+    loadedContext.current = null;
     setLoading(true); setError(''); setSelections([]); setRequest(null);
     busy.current = false; setSubmitting(false);
     (async () => {
       try {
         const saved = readMetaContext(new URLSearchParams(search).get('context'));
         if (new URLSearchParams(search).has('context') && !saved) throw new Error('Your shopping session expired. Reopen the original Meta shopping link.');
-        const parsed = saved ? parseMetaCheckout(new URLSearchParams({ products: saved.request.lines.map(line => `${line.contentId}:${line.quantity}`).join(','), ...(saved.request.coupon !== null ? { coupon: saved.request.coupon } : {}) }).toString()) : parseMetaCheckout(search);
-        const products = await resolveMetaProducts(parsed, fetchProductByHandle, () => fetchAllProducts());
+        const parsed = saved ? parseMetaCheckout(metaRequestSearch(saved.request)) : parseMetaCheckout(search);
+        const products = await resolveMetaProducts(parsed, handle => fetchProductByHandle(handle, { fresh: true }), () => fetchAllProducts());
         if (generation.current !== current) return;
         // Preserve exact selections/coupon across reloads and the full configurator.
-        const restored = products.map((item, index) => { const choice = saved?.selections.find(value => value.contentId === parsed.lines[index].contentId); return { ...item, variantId: choice?.variantId || '', timingConfirmed: choice?.timingConfirmed, configured: choice?.configured }; });
+        const restored = products.map((item, index) => { const choice = saved?.selections.find(value => value.contentId === parsed.lines[index].contentId); return { ...item, variantId: choice?.variantId ?? item.variantId ?? '', timingConfirmed: choice?.timingConfirmed, configured: choice?.configured }; });
         if (!saved) {
           const token = saveMetaContext(null, parsed, restored.map((item,index) => ({ contentId: parsed.lines[index].contentId, handle: item.product.handle, variantId: item.variantId })));
           navigate(metaReturnPath(token), { replace: true });
           return;
         }
+        loadedContext.current = contextToken;
         setRequest(parsed); setSelections(restored);
       } catch (cause) {
         if (generation.current === current) setError(cause instanceof Error ? cause.message : 'Unable to load this shopping link.');
       } finally { if (generation.current === current) setLoading(false); }
     })();
     return () => { generation.current = current + 1; };
-  }, [search, navigate]);
+  }, [search, navigate, contextToken]);
   useEffect(() => {
-    if (!request || !contextToken || !selections.length) return;
+    if (!request || !contextToken || loadedContext.current !== contextToken || !selections.length) return;
     try { saveMetaContext(contextToken, request, selections.map((item,index) => ({ contentId: request.lines[index].contentId, handle: item.product.handle, variantId: item.variantId, timingConfirmed: item.timingConfirmed, configured: item.configured }))); }
     catch { setError('Your browser could not preserve this shopping selection. Enable session storage before continuing.'); }
   }, [request, selections, contextToken]);
   function configure(index: number) {
-    if (!contextToken || !request) return;
+    if (!contextToken || !request || loadedContext.current !== contextToken) return;
     try { saveMetaContext(contextToken, request, selections.map((item, i) => ({ contentId: request.lines[i].contentId, handle: item.product.handle, variantId: item.variantId, timingConfirmed: item.timingConfirmed, configured: item.configured }))); }
     catch { setError('Your browser could not preserve this shopping selection. Enable session storage before continuing.'); return; }
     navigate(`/product/${selections[index].product.handle}?${new URLSearchParams({ meta_context: contextToken, meta_item: request.lines[index].contentId, ...(selections[index].variantId ? { variant: selections[index].variantId } : {}) })}`);
   }
   async function checkout() {
-    if (busy.current || !request) return;
+    if (busy.current || !request || loadedContext.current !== contextToken) return;
     if (!contextToken || !readMetaContext(contextToken)) { setError('Your shopping session expired. Reopen the original Meta shopping link.'); return; }
     const current = generation.current;
     busy.current = true; setSubmitting(true); setError('');
@@ -72,30 +76,46 @@ export default function MetaCheckout() {
       const groups = await Promise.all(selections.map(item => item.configured
         ? configuredMetaCheckoutLines(item, handle => fetchProductByHandle(handle, { allowHiddenBillingProduct: handle === 'luxemia-tailoring-saree-finishing-add-ons' }))
         : Promise.resolve(metaCheckoutLines([item]))));
+      if (generation.current !== current || loadedContext.current !== contextToken) return;
       const lines = groups.flat();
-      const url = await createStorefrontCheckout(lines, request.coupon);
+      // Pilot IDs are exact choices made in Meta, never defaults selected here.
+      const expectedPrices = isExactMetaPilotRequest(request) && !selections.some(item => item.configured)
+        ? Object.fromEntries(selections.map(item => {
+          const variant = item.product.variants.edges.find(edge => edge.node.id === item.variantId)?.node;
+          if (!variant) throw new Error('A selected option is no longer available.');
+          return [variant.id, variant.price];
+        })) : undefined;
+      const url = await createStorefrontCheckout(lines, request.coupon, expectedPrices);
       if (generation.current !== current) return;
       if (!url) throw new Error('Checkout could not be opened. Your selection is preserved; please try again.');
-      completeMetaHandoff(contextToken, request, url);
+      completeMetaHandoff(contextToken, request, metaAttributedCheckoutUrl(url, request));
     } catch (cause) {
       if (generation.current === current) setError(cause instanceof Error ? cause.message : 'Checkout is temporarily unavailable. Please try again.');
     } finally {
       if (generation.current === current) { busy.current = false; setSubmitting(false); }
     }
   }
+  // A fresh exact-variant Meta basket can go straight to hosted checkout. Legacy
+  // handles, mixed baskets, Back/review and custom configurations retain review.
+  useEffect(() => {
+    if (loading || !request || request.reviewOnly || !contextToken || loadedContext.current !== contextToken || autoAttempted.current.has(contextToken)
+      || !canAutoMetaCheckout(request, selections)) return;
+    autoAttempted.current.add(contextToken);
+    void checkout();
+  });
   const subtotal = metaBasketSubtotal(selections);
   return <div className="min-h-screen bg-background">
     <SEOHead title="Review Your Selection | LuxeMia" description="Choose your product options before secure Shopify checkout." noIndex />
     <Header />
     <main className="pt-[110px] lg:pt-[150px] pb-16 px-4 max-w-3xl mx-auto">
       <h1 className="font-serif text-3xl mb-4">Review your selection</h1>
-      <p className="text-muted-foreground mb-6">Choose the exact options you want. This selection is separate from your existing shopping bag, which will not be changed.</p>
+      <p className="text-muted-foreground mb-6">{request && isExactMetaPilotRequest(request) ? 'Your selected Meta sizes and quantities are shown below. Opening secure checkout does not change your existing shopping bag.' : 'Choose the exact options you want. This selection is separate from your existing shopping bag, which will not be changed.'}</p>
       {loading && <p role="status">Loading your products…</p>}
       {error && <p role="alert" className="border border-destructive rounded p-4 mb-4">{error}</p>}
       {!loading && selections.map((item, index) => {
         const variant = item.product.variants.edges.find(edge => edge.node.id === item.variantId)?.node;
         const image = variant?.image?.url || item.product.images.edges[0]?.node.url;
-        return <section key={item.product.id} className="border rounded p-4 mb-4 flex gap-4">
+        return <section key={request?.lines[index].contentId || item.product.id} className="border rounded p-4 mb-4 flex gap-4">
           {image && <img src={image} alt={item.product.title} className="w-24 h-32 object-cover" />}
           <div className="flex-1 min-w-0">
             <h2 className="font-semibold">{item.product.title}</h2>
