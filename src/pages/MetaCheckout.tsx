@@ -8,7 +8,7 @@ import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { createStorefrontCheckout, fetchAllProducts, fetchProductByHandle } from '@/lib/shopify';
 import { readMetaContext, saveMetaContext, metaReturnPath, clearMetaContext, completeMetaHandoff } from '@/lib/metaCheckoutContext';
-import { configuredMetaCheckoutLines, metaCheckoutLines, parseMetaCheckout, resolveMetaProducts, type MetaRequest, type MetaSelection } from '@/lib/metaCheckout';
+import { configuredMetaCheckoutLines, metaBasketSubtotal, metaCheckoutLines, parseMetaCheckout, resolveMetaProducts, type MetaRequest, type MetaSelection } from '@/lib/metaCheckout';
 
 export default function MetaCheckout() {
   const { search } = useLocation();
@@ -83,6 +83,7 @@ export default function MetaCheckout() {
       if (generation.current === current) { busy.current = false; setSubmitting(false); }
     }
   }
+  const subtotal = metaBasketSubtotal(selections);
   return <div className="min-h-screen bg-background">
     <SEOHead title="Review Your Selection | LuxeMia" description="Choose your product options before secure Shopify checkout." noIndex />
     <Header />
@@ -116,6 +117,16 @@ export default function MetaCheckout() {
         </section>;
       })}
       {request && selections.length > 0 && <>
+        <section aria-label="Selection subtotal" aria-live="polite" className="border rounded p-4 mb-4">
+          {subtotal ? <>
+            <p className="font-semibold">Merchandise subtotal: {subtotal.currency} {subtotal.merchandise}</p>
+            {Number(subtotal.services) > 0 && <>
+              <p>Optional services: {subtotal.currency} {subtotal.services}</p>
+              <p className="font-semibold">Estimated subtotal including services: {subtotal.currency} {subtotal.total}</p>
+            </>}
+            <p className="text-sm text-muted-foreground">Before shipping, taxes and discounts. Final prices and availability are verified at Shopify checkout.</p>
+          </> : <p>Choose an available option for every item to see the merchandise subtotal. If options have changed, reconfigure the affected item.</p>}
+        </section>
         {request.coupon && <p className="mb-3">Discount code: <strong>{request.coupon}</strong>. Shopify will confirm eligibility and any savings at checkout.</p>}
         <p className="text-sm text-muted-foreground mb-4">Shipping, taxes and final discounts are calculated at checkout. Custom-fit measurements must be configured on the product page. For privacy, saved configuration is cleared when checkout opens. If you come back, your products and code remain, but you must reconfirm options.</p>
         <button className="bg-primary text-primary-foreground px-6 py-3 rounded disabled:opacity-50" disabled={submitting || selections.some(item => !item.variantId)} onClick={checkout}>

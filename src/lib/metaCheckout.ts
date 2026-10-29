@@ -120,3 +120,52 @@ export async function configuredMetaCheckoutLines(selection: MetaSelection, getP
     return { variantId: variant.id, quantity: line.quantity, handle: line.handle, customAttributes: normalizeFulfillmentAttributes(line.customAttributes, getProductShipsWithin(product)) };
   }));
 }
+
+/** Display-only estimate. Checkout still revalidates exact variants and prices. */
+export function metaBasketSubtotal(selections: MetaSelection[]): { currency: string; merchandise: string; services: string; total: string } | null {
+  if (!selections.length) return null;
+  let currency = '';
+  let digits = 2;
+  let merchandise = 0;
+  let services = 0;
+  function amount(value: string, code: string, quantity: number): number | null {
+    if (!/^[A-Z]{3}$/.test(code) || (currency && currency !== code)) return null;
+    try {
+      const precision = new Intl.NumberFormat('en', { style: 'currency', currency: code }).resolvedOptions().maximumFractionDigits;
+      if (precision === undefined) return null;
+      digits = precision;
+    }
+    catch { return null; }
+    currency = code;
+    // Parse decimal money as integer minor units, never floating-point multiplication.
+    const match = /^(\d+)(?:\.(\d+))?$/.exec(value);
+    if (!match || !Number.isInteger(quantity) || quantity < 1 || quantity > 99) return null;
+    const fraction = match[2] || '';
+    if (fraction.slice(digits).replace(/0/g, '')) return null;
+    const minor = Number(match[1]) * 10 ** digits + Number(fraction.slice(0, digits).padEnd(digits, '0'));
+    const result = minor * quantity;
+    return minor > 0 && Number.isSafeInteger(result) ? result : null;
+  }
+  for (const item of selections) {
+    const variant = item.product.variants.edges.find(edge => edge.node.id === item.variantId)?.node;
+    if (!variant?.availableForSale || item.product.availableForSale === false) return null;
+    const main = amount(variant.price.amount, variant.price.currencyCode, item.quantity);
+    if (main === null) return null;
+    merchandise += main;
+    if (item.configured) {
+      const first = item.configured[0];
+      if (!first || first.handle !== item.product.handle || first.variantId !== item.variantId || first.quantity !== item.quantity || item.configured.length > 10) return null;
+      const seen = new Set<string>([first.variantId]);
+      for (const line of item.configured.slice(1)) {
+        if (line.handle !== 'luxemia-tailoring-saree-finishing-add-ons' || line.quantity !== item.quantity || seen.has(line.variantId)) return null;
+        seen.add(line.variantId);
+        const service = amount(line.price.amount, line.price.currencyCode, line.quantity);
+        if (service === null) return null;
+        services += service;
+      }
+    }
+  }
+  if (!Number.isSafeInteger(merchandise + services)) return null;
+  const format = (minor: number) => (minor / 10 ** digits).toFixed(digits);
+  return { currency, merchandise: format(merchandise), services: format(services), total: format(merchandise + services) };
+}

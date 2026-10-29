@@ -94,3 +94,43 @@ test('Meta storage redacts NOW details and pending configuration cannot reach ch
   assert.equal(reads,0,'pending details fail closed before product/checkout network');
  }finally{globalThis.sessionStorage=original;}
 });
+
+const basketSubtotal = mod.exports.metaBasketSubtotal;
+const subtotalItem = (price='108.99', quantity=1, currency='USD') => {
+ const p=product();p.variants.edges=[variant(1)];p.variants.edges[0].node.price={amount:price,currencyCode:currency};
+ return {product:p,quantity,variantId:p.variants.edges[0].node.id};
+};
+test('Meta exact 1 + 5 basket has combined merchandise subtotal 496.44',()=>{
+ assert.deepEqual(basketSubtotal([subtotalItem(),subtotalItem('77.49',5)]),{currency:'USD',merchandise:'496.44',services:'0.00',total:'496.44'});
+});
+test('Meta subtotal requires all available explicit selections and valid quantities',()=>{
+ assert.equal(basketSubtotal([]),null);
+ for(const quantity of [0,-1,1.5,100,NaN])assert.equal(basketSubtotal([subtotalItem('1',quantity)]),null);
+ const item=subtotalItem();item.variantId='';assert.equal(basketSubtotal([subtotalItem(),item]),null);
+ item.variantId='gid://shopify/ProductVariant/1';item.product.variants.edges[0].node.availableForSale=false;assert.equal(basketSubtotal([item]),null);
+ item.product.variants.edges[0].node.availableForSale=true;item.product.availableForSale=false;assert.equal(basketSubtotal([item]),null);
+});
+test('Meta decimal minor units avoid floating-point errors and reject invalid mixed money',()=>{
+ assert.equal(basketSubtotal([subtotalItem('0.10',3),subtotalItem('0.20')]).merchandise,'0.50');
+ assert.equal(basketSubtotal([subtotalItem('1.2300',3)]).merchandise,'3.69');
+ for(const price of ['NaN','Infinity','-1','0','1.005','1e2','','9007199254740991'])assert.equal(basketSubtotal([subtotalItem(price)]),null);
+ assert.equal(basketSubtotal([subtotalItem('1',1,'USD'),subtotalItem('1',1,'CAD')]),null);
+ assert.equal(basketSubtotal([subtotalItem('100',2,'JPY')]).merchandise,'200');
+ assert.equal(basketSubtotal([subtotalItem('1.234',2,'KWD')]).merchandise,'2.468');
+});
+test('Meta subtotal reflects current selection and quantity without trusting saved main price',()=>{
+ const item=subtotalItem('10',2);item.configured=[{handle:item.product.handle,variantId:item.variantId,variantTitle:'Default',quantity:2,price:{amount:'999',currencyCode:'USD'}}];
+ assert.equal(basketSubtotal([item]).total,'20.00');item.product.variants.edges[0].node.price.amount='12.34';assert.equal(basketSubtotal([item]).total,'24.68');
+ item.quantity=3;assert.equal(basketSubtotal([item]),null);item.configured[0].quantity=3;assert.equal(basketSubtotal([item]).total,'37.02');
+});
+test('Meta optional services are separate and counted once; inconsistent configurations fail closed',()=>{
+ const item=subtotalItem('10',2);item.configured=[{handle:item.product.handle,variantId:item.variantId,variantTitle:'Default',quantity:2,price:{amount:'10',currencyCode:'USD'}},{handle:'luxemia-tailoring-saree-finishing-add-ons',variantId:'gid://shopify/ProductVariant/99',variantTitle:'Finishing',quantity:2,price:{amount:'3.25',currencyCode:'USD'}}];
+ assert.deepEqual(basketSubtotal([item]),{currency:'USD',merchandise:'20.00',services:'6.50',total:'26.50'});
+ item.configured.push(item.configured[1]);assert.equal(basketSubtotal([item]),null);item.configured.pop();
+ item.configured[1].quantity=1;assert.equal(basketSubtotal([item]),null);item.configured[1].quantity=2;
+ item.configured[1].handle='unrelated';assert.equal(basketSubtotal([item]),null);item.configured[1].handle='luxemia-tailoring-saree-finishing-add-ons';
+ item.configured[0].variantId='wrong';assert.equal(basketSubtotal([item]),null);
+});
+test('Meta review exposes accessible combined subtotal without changing checkout or auto-selecting',()=>{
+ const source=readFileSync('src/pages/MetaCheckout.tsx','utf8');assert.match(source,/aria-label="Selection subtotal" aria-live="polite"/);assert.match(source,/Merchandise subtotal:/);assert.match(source,/Before shipping, taxes and discounts/);assert.match(source,/metaBasketSubtotal\(selections\)/);assert.match(source,/disabled=\{submitting \|\| selections.some\(item => !item.variantId\)\}/);assert.match(source,/createStorefrontCheckout\(lines, request.coupon\)/);
+});
