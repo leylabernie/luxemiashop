@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { build } from 'esbuild';
 import { createElement } from 'react';
 import { renderToStaticMarkup } from 'react-dom/server';
-import { hasFixedStitchedLehengaOptions, isGarmentAlterationCartLine, getEligibleServiceAddOns, serviceAddOnTotal, SERVICE_ADD_ONS, SERVICE_ADD_ON_PRODUCT_HANDLE } from '../src/lib/serviceAddOns.ts';
+import { matchesServiceAddOnVariant, SHARED_TAILORING_VARIANT_ID, SHARED_TAILORING_OPTION_VALUES, hasFixedStitchedLehengaOptions, isGarmentAlterationCartLine, getEligibleServiceAddOns, serviceAddOnTotal, SERVICE_ADD_ONS, SERVICE_ADD_ON_PRODUCT_HANDLE } from '../src/lib/serviceAddOns.ts';
 
 const sizes = ['32', '34', '36', '38', '40', '42', '44', '46', 'Custom Fit'];
 const garment = {
@@ -25,7 +25,7 @@ const garment = {
 };
 const service = {
   product: { node: { title: 'LuxeMia Saree Services', handle: SERVICE_ADD_ON_PRODUCT_HANDLE, description: '', variants: { edges: [] }, images: { edges: [] } } },
-  variantId: 'shared-billing-10', variantTitle: SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue,
+  variantId: SHARED_TAILORING_VARIANT_ID, variantTitle: SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue,
   price: { amount: '10', currencyCode: 'USD' }, quantity: 1, selectedOptions: [],
   customAttributes: [{ key: 'Applies To', value: garment.title }],
 };
@@ -115,7 +115,7 @@ test('new and persisted garment service lines render accurate labels without cha
     assert.match(html, /\$10\.00/);
     assert.match(html, /\$89\.08/);
     assert.doesNotMatch(html, /Saree service|Finishing service for your selected saree|Applied to 1 saree/);
-    assert.equal(line.variantId, 'shared-billing-10');
+    assert.equal(line.variantId, SHARED_TAILORING_VARIANT_ID);
   }
 });
 
@@ -220,7 +220,7 @@ test('supplied stitched-blouse saree renders alteration not fabric-only stitchin
   const cartHtml = renderCart([line, alteration]);
   assert.match(cartHtml, /Garment Alteration/);
   assert.equal(isGarmentAlterationCartLine(alteration, [line, alteration]), true);
-  assert.equal(alteration.variantId, 'shared-billing-10');
+  assert.equal(alteration.variantId, SHARED_TAILORING_VARIANT_ID);
   assert.equal(SERVICE_ADD_ONS['garment-alteration'].checkoutOptionValue, SERVICE_ADD_ONS['blouse-stitching'].checkoutOptionValue);
 });
 
@@ -304,4 +304,26 @@ test('catalog designer net saree uses after-order handoff, not invented sizes, f
     assert.doesNotMatch(html,/Measurement handoff|Blouse Neckline|Bottom Style|Round Neck|Stitching Size/);
   }
   globalThis.__displaySearch='';
+});
+
+
+test('shared tailoring rename resolves both service meanings only for exact hidden product and variant', () => {
+  for (const code of ['blouse-stitching', 'garment-alteration']) {
+    for (const value of SHARED_TAILORING_OPTION_VALUES) {
+      const variant = { id: SHARED_TAILORING_VARIANT_ID, selectedOptions: [{ name: 'Stitching', value }] };
+      assert(matchesServiceAddOnVariant(SERVICE_ADD_ON_PRODUCT_HANDLE, code, variant));
+      assert(!matchesServiceAddOnVariant('unrelated-product', code, variant));
+      assert(!matchesServiceAddOnVariant(SERVICE_ADD_ON_PRODUCT_HANDLE, code, {...variant,id:'other'}));
+      assert(!matchesServiceAddOnVariant(SERVICE_ADD_ON_PRODUCT_HANDLE, code, {...variant,selectedOptions:[{name:'Stitching',value:'Other alteration'}]}));
+    }
+  }
+  for (const code of ['pico-fall','matching-petticoat']) assert(matchesServiceAddOnVariant(SERVICE_ADD_ON_PRODUCT_HANDLE,code,{id:'existing8',selectedOptions:[{name:'Stitching',value:SERVICE_ADD_ONS[code].checkoutOptionValue}]}));
+});
+test('legacy renamed shared service cart retains garment identity and specific service attributes', () => {
+  const garmentLine = {product:{node:garment},variantTitle:'Standard Fit'};
+  assert(isGarmentAlterationCartLine({...service,variantTitle:'Stitching / Alteration (+$10)'},[garmentLine]));
+  assert(!isGarmentAlterationCartLine({...service,variantTitle:'Other alteration'},[garmentLine]));
+  const source=readFileSync(new URL('../src/components/product/ProductInfo.tsx',import.meta.url),'utf8');
+  assert.match(source,/matchesServiceAddOnVariant\(serviceAddOnProduct.handle, code, node\)/);
+  assert.match(source,/\{ key: 'Selected Service', value: SERVICE_ADD_ONS\[code\].label \}/);
 });
