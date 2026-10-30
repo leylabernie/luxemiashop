@@ -84,18 +84,24 @@ test('build policy rewriters use the safe serializer and keep legal/return guard
   }
 });
 
-test('verified India dispatch enriches existing shipping entries without inventing policy timing or returns', async () => {
-  const { generateUsProductShippingDetails, generateReturnPolicySchema } = await load('src/lib/schema.ts');
-  const entries = generateUsProductShippingDetails();
-  assert.equal(entries.length, 8);
-  for (const entry of entries) {
-    assert.deepEqual(entry.shippingOrigin, { '@type': 'DefinedRegion', addressCountry: 'IN' });
-    assert(entry.shippingDestination);
-    assert(entry.shippingRate);
-    assert.equal('deliveryTime' in entry, false);
-    assert.notEqual(entry.shippingDestination.addressCountry, 'IN');
-  }
-  assert.equal(entries[0].shippingRate.value, 14.99);
-  assert.equal(entries[1].shippingRate.value, 0);
+test('incomplete optional product shipping and global return overrides remain absent', async () => {
+  const { generateProductSchema, generateReturnPolicySchema } = await load('src/lib/schema.ts');
+  const product = generateProductSchema({ name: 'Fixture', description: 'Fixture', url: 'https://luxemia.shop/product/fixture', image: [], sku: 'fixture', price: '100.00', currency: 'USD', availability: 'InStock' });
+  assert.equal('shippingDetails' in product.offers, false);
+  assert.equal('merchantReturnLink' in product.offers, false);
   assert.equal(generateReturnPolicySchema(), null);
+});
+
+
+test('blog citations use typed publishers in client and prerender markup', () => {
+  const fixture = { title: 'Source title', url: 'https://example.com/source', publisher: 'House of Manish Malhotra' };
+  for (const file of ['src/pages/BlogPost.tsx', 'scripts/prerender.js']) {
+    const source = fs.readFileSync(path.join(root, file), 'utf8');
+    const mapping = source.match(/isBasedOn["']?: (?:(?:post|route)\.)?sources\.map\(source => \(\{([\s\S]*?)\}\)\)/);
+    assert(mapping, `${file} citation mapping present`);
+    const citation = new Function('source', `return ({${mapping[1]}});`)(fixture);
+    assert.deepEqual(citation.publisher, { '@type': 'Organization', name: fixture.publisher });
+    assert.equal(citation.url, fixture.url);
+    assert.equal(citation.name, fixture.title);
+  }
 });
