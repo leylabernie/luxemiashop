@@ -195,14 +195,14 @@ const SOURCES = {
     'https://luxemia.shop/collections/customizable-indian-outfits',
     'LuxeMia',
   ),
-  luxemiaLavenderBridesmaid: source(
-    'Lavender Georgette Lehenga Choli — Custom Indian Bridesmaid Outfit',
-    'https://luxemia.shop/product/handcrafted-lavender-georgette-lehenga-choli-set-bridesmaid-ready-to-ship',
+  luxemiaLehengas: source(
+    'Current Lehenga Collection',
+    'https://luxemia.shop/lehengas',
     'LuxeMia',
   ),
-  luxemiaPeriwinkleSaree: source(
-    'Lavender Blue Banarasi Brocade Saree — Custom-Fit Wedding Guest Outfit',
-    'https://luxemia.shop/product/handcrafted-periwinkle-banarasi-brocade-saree-wedding-guest-ready-to-ship',
+  luxemiaSarees: source(
+    'Current Saree Collection',
+    'https://luxemia.shop/sarees',
     'LuxeMia',
   ),
 };
@@ -565,6 +565,7 @@ export const blogPosts: BlogPost[] = [
       ${growthEditorialNote}
       <h2>Festival names do not create one dress code</h2>
       <p>Diwali, Eid, Navratri and other celebrations are observed by diverse communities. A temple program, family dinner, community garba and formal fundraiser can require different clothing even when held for the same festival. Use the invitation or organizer's instructions as the authority.</p>
+      <p>For an Eid celebration, browse <a href="/collections/eid-outfits">current Eid outfit ideas</a> and confirm the selected listing's included pieces, sizes and availability.</p>
 
       <h2>Plan for the actual event</h2>
       <ul>
@@ -975,7 +976,7 @@ export const blogPosts: BlogPost[] = [
       ${growthEditorialNote}
       <h2>Can you order a custom bridesmaid or wedding guest lehenga online in the USA?</h2>
       <p>Yes, for selected LuxeMia designs that are currently identified as customizable. This is not a promise that every lehenga, saree or suit can be changed in every way. The <a href="/collections/customizable-indian-outfits">Customizable Indian Outfits collection</a> and the individual product page are the current sources of truth.</p>
-      <p>For example, the current lavender georgette lehenga-choli listing is presented as a custom Indian bridesmaid outfit, while a current periwinkle wedding-guest saree is presented with custom-fit ordering. Those examples establish that customization exists on selected products; they do not extend the same options to the rest of the catalog.</p>
+      <p>Browse the current lehenga and saree collections, then open the individual listing to check its available sizing and customization choices. A collection is a starting point for comparison, not confirmation that any particular design, color or custom-fit option is available.</p>
 
       <h2>What to verify before ordering</h2>
       <table>
@@ -1021,8 +1022,8 @@ export const blogPosts: BlogPost[] = [
       SOURCES.nistSizing,
       SOURCES.luxemiaSizing,
       SOURCES.luxemiaCustomizableCollection,
-      SOURCES.luxemiaLavenderBridesmaid,
-      SOURCES.luxemiaPeriwinkleSaree,
+      SOURCES.luxemiaLehengas,
+      SOURCES.luxemiaSarees,
       SOURCES.luxemiaShipping,
     ],
   },
@@ -1035,7 +1036,7 @@ export const blogPosts: BlogPost[] = [
       ${growthEditorialNote}
       <h2>Can you order this exact blouse combination?</h2>
       <p>A custom saree blouse with a deep neckline and elbow-length sleeves may be possible only when those choices are offered or confirmed for a specific LuxeMia product. The reviewed catalog does not establish those details as universal options. Before ordering, use the <a href="/collections/customizable-indian-outfits">current customizable collection</a> and obtain written confirmation for the exact neckline, sleeve and fit request.</p>
-      <p>A current LuxeMia periwinkle wedding-guest saree is labeled as a custom-fit product. That verifies a selected custom-fit offering, but it does not prove that every blouse shape can be made with that saree or that the same request applies to every listing.</p>
+      <p>Browse the current saree collection and check the selected listing for its blouse and stitching options. A saree appearing in that collection does not establish that a custom neckline or sleeve can be made; confirm the exact request before ordering.</p>
 
       <h2>Define “deep neckline” with measurements</h2>
       <p>“Deep” is subjective. A reference photo can help explain the shape, but it does not define the finished depth on a different body. If LuxeMia confirms the request, record the front neck depth and back neck depth using the measurement method the seller specifies. Also state the desired front and back shape, closure position and coverage preference.</p>
@@ -1085,7 +1086,7 @@ export const blogPosts: BlogPost[] = [
       SOURCES.ftcTextiles,
       SOURCES.luxemiaSizing,
       SOURCES.luxemiaCustomizableCollection,
-      SOURCES.luxemiaPeriwinkleSaree,
+      SOURCES.luxemiaSarees,
       SOURCES.luxemiaShipping,
     ],
   },
