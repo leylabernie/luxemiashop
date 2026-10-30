@@ -271,7 +271,7 @@ const BlogPost = () => {
     "isBasedOn": post.sources.map(source => ({
       "@type": "CreativeWork",
       "name": source.title,
-      "publisher": source.publisher,
+      "publisher": { "@type": "Organization", "name": source.publisher },
       "url": source.url
     }))
   };
