@@ -165,7 +165,7 @@ async function loadTsModule(relativeSrcPath) {
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
 const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
-const { hasNativeFullStitchingOptions, mayRequireAlterationProcessing } = await loadTsModule('src/lib/serviceAddOns.ts');
+const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
@@ -1299,42 +1299,8 @@ function generateApprovedProductDirectoryHtml(products) {
   return `<p>Browse all ${approvedProducts.length} current product listings by category. Open an individual listing for its exact fabric, included pieces, sizing, price and availability.</p>${sections}`;
 }
 
-// Product-level shipping details mirror the public U.S. standard-shipping terms.
-// Add a handling window only when custom.ships_within supplies a positive day
-// count. Carrier transit remains omitted because it varies by destination.
-function generateUsProductShippingDetails(shipsWithinDays, omitShippingTiming = false) {
-  const handlingDays = !omitShippingTiming && Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
-  const deliveryTime = handlingDays ? {
-    '@type': 'ShippingDeliveryTime',
-    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
-  } : null;
-  const withTime = (details) => ({
-    ...details,
-    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
-    ...(deliveryTime ? { deliveryTime } : {}),
-  });
-  const create = (countries, rate, freeThreshold) => [
-    withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
-      shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
-    }),
-    ...(freeThreshold ? [withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
-      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-    })] : []),
-  ];
-  return [
-    ...create('US', 14.99, 150),
-    ...create(['CA', 'GB'], 24.99, 299),
-    ...create(['AU', 'NZ'], 29.99, 349),
-    ...create('ZA', 49.99),
-    ...create('MU', 59.99),
-  ];
-}
+// Offers omit optional shippingDetails: cart-value thresholds are represented by
+// Organization ShippingService, and SKU handling alone is not a delivery estimate.
 
 function normalizeBrand(vendor) {
   const raw = (vendor || '').trim();
@@ -1391,8 +1357,6 @@ function generateItemListJsonLd(products, category, routePath) {
           availability,
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': `${SITE_URL}/#organization` },
-          merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-          shippingDetails: generateUsProductShippingDetails(shipsWithinDays, mayRequireAlterationProcessing(p)),
         },
       },
     };
@@ -2854,8 +2818,6 @@ function generateHtml(template, route, allShopifyProducts) {
       availability: `https://schema.org/${variant?.availableForSale === false ? 'OutOfStock' : 'InStock'}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#organization` },
-      merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-      shippingDetails: generateUsProductShippingDetails(productAttributes.shipsWithinDays, mayRequireAlterationProcessing(live || {})),
     });
     const schemaVariantProduct = (variant) => {
       const variantId = variant?.id?.split('/').pop() || '';
@@ -2988,7 +2950,7 @@ function generateHtml(template, route, allShopifyProducts) {
       isBasedOn: sources.map(source => ({
         '@type': 'CreativeWork',
         name: source.title,
-        publisher: source.publisher,
+        publisher: { '@type': 'Organization', name: source.publisher },
         url: source.url,
       })),
     };
