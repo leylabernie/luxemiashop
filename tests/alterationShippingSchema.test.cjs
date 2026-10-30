@@ -17,74 +17,60 @@ function loadSchema(source = read('src/lib/schema.ts')) {
   new Function('require', 'module', 'exports', outputFiles[0].text)(require, module, module.exports);
   return module.exports;
 }
-function withoutTiming(entries) {
-  return entries.map(({ deliveryTime, ...entry }) => entry);
-}
-function assertGuard(helper) {
-  const regular = helper(4);
-  assert.equal(regular.length, 8);
-  assert.deepEqual(helper(4, false), regular);
-  for (const entry of regular) {
-    assert.deepEqual(entry.deliveryTime.handlingTime, {
-      '@type': 'QuantitativeValue', minValue: 0, maxValue: 4, unitCode: 'DAY',
-    });
-    assert.equal('transitTime' in entry.deliveryTime, false);
-  }
-  for (const days of [4, 6, undefined, null, 0, -1, NaN]) {
-    const guarded = helper(days, true);
-    assert.deepEqual(guarded, withoutTiming(regular));
-    for (const entry of guarded) {
-      assert.equal('deliveryTime' in entry, false);
-      assert.deepEqual(entry.shippingOrigin, { '@type': 'DefinedRegion', addressCountry: 'IN' });
-      assert(entry.shippingDestination);
-      assert(entry.shippingRate);
-    }
-  }
-  for (const days of [undefined, null, 0, -1, NaN]) {
-    assert.deepEqual(helper(days), withoutTiming(regular));
-  }
+function assertOfferSafe(offer) {
+  assert.equal('shippingDetails' in offer, false);
+  assert.equal('merchantReturnLink' in offer, false);
+  assert.equal('hasMerchantReturnPolicy' in offer, false);
 }
 const product = {
   name: 'Alteration-capable outfit', description: 'Fixture', url: 'https://luxemia.shop/product/fixture',
   image: [], sku: 'FIXTURE', price: '99.97', currency: 'USD', availability: 'InStock', shipsWithinDays: 4,
 };
 
-test('optional timing guard preserves every rate, destination and India origin without adding transit promises', () => {
-  assertGuard(loadSchema().generateUsProductShippingDetails);
+test('Product offers omit incomplete shipping and invalid return properties regardless of handling or alterations', () => {
+  const { generateProductSchema, generateUsShippingServiceSchema, generateReturnPolicySchema } = loadSchema();
+  for (const price of ['80.00', '149.99', '150.00', '173.60']) {
+    for (const days of [undefined, 4, 6, 0, -1, NaN]) {
+      for (const omitShippingTiming of [false, true]) {
+        const result = generateProductSchema({ ...product, price, shipsWithinDays: days, omitShippingTiming });
+        assertOfferSafe(result.offers);
+        assert.equal(result.offers.price, price);
+        assert.equal(result.offers.priceCurrency, 'USD');
+        assert.equal(result.offers.availability, 'https://schema.org/InStock');
+      }
+    }
+  }
+  assert.equal(generateReturnPolicySchema(), null);
+  const policies = generateUsShippingServiceSchema();
+  assert.equal(policies.length, 5);
+  assert.deepEqual(policies[0].shippingConditions.map(x => [x.shippingRate.value, x.orderValue]), [
+    [14.99, { '@type': 'MonetaryAmount', minValue: 0, maxValue: 149.99, currency: 'USD' }],
+    [0, { '@type': 'MonetaryAmount', minValue: 150, currency: 'USD' }],
+  ]);
+  assert.deepEqual(policies.slice(1).map(x => x.shippingConditions.map(c => c.shippingRate.value)), [[24.99, 0], [29.99, 0], [49.99], [59.99]]);
 });
 
-test('Product schema propagates the optional family timing guard without changing the offer', () => {
-  const { generateProductSchema } = loadSchema();
-  const normal = generateProductSchema(product);
-  const guarded = generateProductSchema({ ...product, omitShippingTiming: true });
-  assert.deepEqual(guarded, {
-    ...normal, offers: { ...normal.offers, shippingDetails: withoutTiming(normal.offers.shippingDetails) },
-  });
-  assert.deepEqual(generateProductSchema({ ...product, omitShippingTiming: false }), normal);
-});
-
-test('ProductGroup suppresses base-only handling for every variant when the family allows fitting or services', () => {
+test('ProductGroup variant offers preserve identity, price and stock without inventing universal delivery or returns', () => {
   const { generateProductGroupSchema } = loadSchema();
-  const input = {
-    ...product, productGroupId: 'fixture', variesBy: ['https://schema.org/size'],
+  const input = { ...product, productGroupId: 'fixture', variesBy: ['https://schema.org/size'],
     variants: ['32', 'Alteration / Custom Size'].map((size, index) => ({
       ...product, id: String(index + 1), name: `${product.name} / ${size}`, size,
       url: `${product.url}?variant=${index + 1}`, sku: `FIXTURE-${index + 1}`,
     })),
   };
-  const normal = generateProductGroupSchema(input);
-  const guarded = generateProductGroupSchema({ ...input, omitShippingTiming: true });
-  assert.equal(guarded.hasVariant.length, 2);
-  assert.deepEqual(guarded, {
-    ...normal,
-    hasVariant: normal.hasVariant.map(variant => ({
-      ...variant, offers: { ...variant.offers, shippingDetails: withoutTiming(variant.offers.shippingDetails) },
-    })),
-  });
-  assert.deepEqual(generateProductGroupSchema({ ...input, omitShippingTiming: false }), normal);
+  for (const omitShippingTiming of [false, true]) {
+    const result = generateProductGroupSchema({ ...input, omitShippingTiming });
+    assert.equal(result.hasVariant.length, 2);
+    result.hasVariant.forEach((variant, index) => {
+      assertOfferSafe(variant.offers);
+      assert.equal(variant.offers.url, input.variants[index].url);
+      assert.equal(variant.offers.price, '99.97');
+      assert.equal(variant.offers.availability, 'https://schema.org/InStock');
+    });
+  }
 });
 
-test('the real schema rewriter retains the optional guard in TypeScript and prerender helpers after two runs', () => {
+test('the real schema rewriter cannot reintroduce invalid offer properties after two runs', () => {
   const fixture = fs.mkdtempSync(path.join(os.tmpdir(), 'luxemia-alteration-schema-'));
   try {
     fs.mkdirSync(path.join(fixture, 'src/lib'), { recursive: true });
@@ -101,11 +87,10 @@ test('the real schema rewriter retains the optional guard in TypeScript and prer
       vm.runInNewContext(schemaOnly, { require, __dirname: path.join(fixture, 'scripts') });
       const schemaSource = fs.readFileSync(path.join(fixture, 'src/lib/schema.ts'), 'utf8');
       const prerenderSource = fs.readFileSync(path.join(fixture, 'scripts/prerender.js'), 'utf8');
-      assertGuard(loadSchema(schemaSource).generateUsProductShippingDetails);
-      const helper = prerenderSource.match(/function generateUsProductShippingDetails\([^]*?\n\}/)?.[0];
-      assert(helper, 'prerender helper is present');
-      const generateShipping = new Function(`${helper}; return generateUsProductShippingDetails;`)();
-      assertGuard(generateShipping);
+      assertOfferSafe(loadSchema(schemaSource).generateProductSchema(product).offers);
+      for (const source of [schemaSource, prerenderSource]) {
+        assert.doesNotMatch(source, /^\s*(?:merchantReturnLink|shippingDetails):|['"]@type['"]: ['"]OfferShippingDetails['"]/m);
+      }
       const current = { schemaSource, prerenderSource };
       if (first) assert.deepEqual(current, first, 'second schema rewrite is idempotent');
       first = current;
