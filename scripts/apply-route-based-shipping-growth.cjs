@@ -155,74 +155,6 @@ const shippingServicesFunction = `export function generateUsShippingServiceSchem
   ];
 }`;
 
-const productShippingFunction = `export function generateUsProductShippingDetails(shipsWithinDays?: number | null, omitShippingTiming = false) {
-  const handlingDays = omitShippingTiming ? null : normalizeShipsWithinDays(shipsWithinDays);
-  const deliveryTime = handlingDays ? {
-    '@type': 'ShippingDeliveryTime',
-    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
-  } : null;
-  const withTime = (details: Record<string, unknown>) => ({
-    ...details,
-    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
-    ...(deliveryTime && { deliveryTime }),
-  });
-  const create = (countries: string | string[], rate: number, freeThreshold?: number) => [
-    withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
-      shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
-    }),
-    ...(freeThreshold ? [withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
-      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-    })] : []),
-  ];
-  return [
-    ...create('US', 14.99, 150),
-    ...create(['CA', 'GB'], 24.99, 299),
-    ...create(['AU', 'NZ'], 29.99, 349),
-    ...create('ZA', 49.99),
-    ...create('MU', 59.99),
-  ];
-}`;
-
-const prerenderProductShippingFunction = `function generateUsProductShippingDetails(shipsWithinDays, omitShippingTiming = false) {
-  const handlingDays = !omitShippingTiming && Number.isFinite(shipsWithinDays) && shipsWithinDays > 0 ? Math.trunc(shipsWithinDays) : null;
-  const deliveryTime = handlingDays ? {
-    '@type': 'ShippingDeliveryTime',
-    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
-  } : null;
-  const withTime = (details) => ({
-    ...details,
-    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
-    ...(deliveryTime ? { deliveryTime } : {}),
-  });
-  const create = (countries, rate, freeThreshold) => [
-    withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
-      shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
-    }),
-    ...(freeThreshold ? [withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
-      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-    })] : []),
-  ];
-  return [
-    ...create('US', 14.99, 150),
-    ...create(['CA', 'GB'], 24.99, 299),
-    ...create(['AU', 'NZ'], 29.99, 349),
-    ...create('ZA', 49.99),
-    ...create('MU', 59.99),
-  ];
-}`;
-
 function patchSchema() {
   let schema = read('src/lib/schema.ts');
   schema = schema.replace(
@@ -231,12 +163,8 @@ function patchSchema() {
   );
   schema = schema.replace("'@type': 'OnlineStore',", "'@type': ['OnlineStore', 'ClothingStore'],");
   schema = replaceFunction(schema, 'generateUsShippingServiceSchema', shippingServicesFunction);
-  schema = replaceFunction(schema, 'generateUsProductShippingDetails', productShippingFunction);
   write('src/lib/schema.ts', schema);
 
-  let prerender = read('scripts/prerender.js');
-  prerender = replaceFunction(prerender, 'generateUsProductShippingDetails', prerenderProductShippingFunction);
-  write('scripts/prerender.js', prerender);
 }
 
 function patchHomepageJsonLd() {
