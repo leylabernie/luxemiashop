@@ -166,15 +166,16 @@ if (brandedLogoCount !== 2) {
 const schema = read('src/lib/schema.ts');
 requireText(schema, "BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`", 'shared existing brand logo URL');
 forbidText(schema, "logo: `${SITE_URL}/favicon.ico`", 'Lovable favicon as Organization logo');
-requireText(schema, 'generateUsProductShippingDetails(input.shipsWithinDays, input.omitShippingTiming)', 'source-backed offer handling time');
-requireText(schema, "unitCode: 'DAY'", 'schema handling-time unit');
+forbidText(schema, 'merchantReturnLink:', 'misplaced return link on Offer');
+forbidText(schema, "'@type': 'OfferShippingDetails'", 'incomplete product shipping overrides');
 forbidText(schema, 'transitTime:', 'invented carrier transit time');
 
 const prerender = read('scripts/prerender.js');
 requireText(prerender, "src/config/seoArchitecture.json", 'shared prerender SEO architecture');
 requireText(prerender, 'normalizeInternalNavigationHtml(route.content)', 'prerender internal-link normalization');
 requireText(prerender, 'would disappear after hydration', 'commercial collection hydration-stability guard');
-requireText(prerender, 'generateUsProductShippingDetails(productAttributes.shipsWithinDays, mayRequireAlterationProcessing(live || {}))', 'source-backed prerender handling time');
+forbidText(prerender, 'merchantReturnLink:', 'misplaced prerender return link on Offer');
+forbidText(prerender, "'@type': 'OfferShippingDetails'", 'incomplete prerender shipping overrides');
 forbidText(prerender, 'transitTime:', 'invented prerender carrier transit time');
 
 const schemaBundle = esbuild.buildSync({
@@ -187,22 +188,10 @@ const schemaBundle = esbuild.buildSync({
 }).outputFiles[0].text;
 const schemaModule = { exports: {} };
 new Function('module', 'exports', 'require', schemaBundle)(schemaModule, schemaModule.exports, require);
-const { generateUsProductShippingDetails } = schemaModule.exports;
-
-const unspecifiedShipping = generateUsProductShippingDetails();
-if (unspecifiedShipping.some((detail) => detail.deliveryTime)) {
-  failures.push('Shipping schema must omit deliveryTime when custom.ships_within is absent.');
-}
-
-const sourceBackedShipping = generateUsProductShippingDetails(4);
-for (const detail of sourceBackedShipping) {
-  const handlingTime = detail.deliveryTime?.handlingTime;
-  if (handlingTime?.maxValue !== 4 || handlingTime?.unitCode !== 'DAY') {
-    failures.push('Shipping schema did not preserve the source-backed four-day handling window.');
-  }
-  if (detail.deliveryTime?.transitTime) {
-    failures.push('Shipping schema invented a carrier transit time.');
-  }
+const { generateUsShippingServiceSchema } = schemaModule.exports;
+const services = generateUsShippingServiceSchema();
+if (services.length !== 5 || services[0].shippingConditions[1].orderValue.minValue !== 150) {
+  failures.push('Organization shipping policies must preserve the U.S. order-total threshold.');
 }
 
 if (failures.length > 0) {
@@ -212,5 +201,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `SEO architecture validation passed: ${requiredSharedRoutes.length} indexable routes share titles/H1s, navigation avoids crawlable noindex facets and redirects, brand schema uses the existing LuxeMia asset, SearchAction targets URL-initialized search, and handlingTime remains source-backed.`,
+  `SEO architecture validation passed: ${requiredSharedRoutes.length} indexable routes share titles/H1s, navigation avoids crawlable noindex facets and redirects, brand schema uses the existing LuxeMia asset, SearchAction targets URL-initialized search, and optional incomplete product shipping overrides remain omitted.`,
 );
