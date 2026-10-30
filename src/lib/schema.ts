@@ -48,11 +48,6 @@ interface PriceData {
   currency: string;
 }
 
-function normalizeShipsWithinDays(value?: number | null): number | null {
-  if (!Number.isFinite(value) || !value || value < 1) return null;
-  return Math.trunc(value);
-}
-
 export function getSchemaPrices(priceData: PriceData) {
   const priceNum = parseFloat(priceData.price);
   const compareNum = priceData.compareAtPrice ? parseFloat(priceData.compareAtPrice) : 0;
@@ -110,44 +105,11 @@ export function generateUsShippingServiceSchema() {
   ];
 }
 
-// Product-level shipping details mirror the public U.S. shipping terms:
-// $14.99 below $150 and free at $150+. A handling-time window is emitted only
-// when the product carries a valid custom.ships_within value. Carrier transit
-// remains omitted because it depends on the destination and selected service.
-// Omit a base-only handling window when fitting or services can change dispatch.
-export function generateUsProductShippingDetails(shipsWithinDays?: number | null, omitShippingTiming = false) {
-  const handlingDays = omitShippingTiming ? null : normalizeShipsWithinDays(shipsWithinDays);
-  const deliveryTime = handlingDays ? {
-    '@type': 'ShippingDeliveryTime',
-    handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: handlingDays, unitCode: 'DAY' },
-  } : null;
-  const withTime = (details: Record<string, unknown>) => ({
-    ...details,
-    shippingOrigin: { '@type': 'DefinedRegion', addressCountry: 'IN' },
-    ...(deliveryTime && { deliveryTime }),
-  });
-  const create = (countries: string | string[], rate: number, freeThreshold?: number) => [
-    withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      ...(freeThreshold ? { orderValue: { '@type': 'MonetaryAmount', maxValue: freeThreshold - 0.01, currency: 'USD' } } : {}),
-      shippingRate: { '@type': 'MonetaryAmount', value: rate, currency: 'USD' },
-    }),
-    ...(freeThreshold ? [withTime({
-      '@type': 'OfferShippingDetails',
-      shippingDestination: { '@type': 'DefinedRegion', addressCountry: countries },
-      orderValue: { '@type': 'MonetaryAmount', minValue: freeThreshold, currency: 'USD' },
-      shippingRate: { '@type': 'MonetaryAmount', value: 0, currency: 'USD' },
-    })] : []),
-  ];
-  return [
-    ...create('US', 14.99, 150),
-    ...create(['CA', 'GB'], 24.99, 299),
-    ...create(['AU', 'NZ'], 29.99, 349),
-    ...create('ZA', 49.99),
-    ...create('MU', 59.99),
-  ];
-}
+// Product offers intentionally omit optional shippingDetails. Order-total thresholds
+// belong on Organization ShippingService.shippingConditions, not OfferShippingDetails.
+// A product handling window alone cannot describe destination/service-specific transit
+// or optional tailoring. Keep Merchant Center and the published shipping policy as
+// the authoritative delivery configuration instead of inventing a universal estimate.
 
 // ─── Product Schema ────────────────────────────────────────────────────────
 
@@ -254,8 +216,6 @@ function generateOfferSchema(
     availability: `https://schema.org/${input.availability}`,
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@id': `${SITE_URL}/#organization` },
-    merchantReturnLink: `${SITE_URL}/returns#merchant-return-policy`,
-    shippingDetails: generateUsProductShippingDetails(input.shipsWithinDays, input.omitShippingTiming),
   };
 }
 
