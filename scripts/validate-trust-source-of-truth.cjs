@@ -126,11 +126,14 @@ requireAll('index.html', [
   'hello@luxemia.shop',
   '+1-215-341-9990',
 ]);
-requireAll('scripts/prerender.js', [
-  "...create(['CA', 'GB'], 24.99, 299)",
-  "...create(['AU', 'NZ'], 29.99, 349)",
-  "...create('ZA', 49.99)",
-  "...create('MU', 59.99)",
+// Rates and cart-value thresholds belong to Organization ShippingService.
+// Product OfferShippingDetails cannot express those orderValue conditions.
+requireAll('src/lib/schema.ts', [
+  "createService('us-standard-shipping', 'LuxeMia U.S. Standard Shipping', 'US', 14.99, 150)",
+  "createService('canada-uk-standard-shipping', 'LuxeMia Canada and UK Standard Shipping', ['CA', 'GB'], 24.99, 299)",
+  "createService('australia-nz-standard-shipping', 'LuxeMia Australia and New Zealand Standard Shipping', ['AU', 'NZ'], 29.99, 349)",
+  "createService('south-africa-standard-shipping', 'LuxeMia South Africa Standard Shipping', 'ZA', 49.99)",
+  "createService('mauritius-standard-shipping', 'LuxeMia Mauritius Standard Shipping', 'MU', 59.99)",
 ]);
 
 const blockedRuntimePatterns = [
