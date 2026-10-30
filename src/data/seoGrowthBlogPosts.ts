@@ -136,7 +136,7 @@ export const seoGrowthBlogPosts: BlogPost[] = [
       <p>Browse the current <a href="/collections/sharara-suits">LuxeMia sharara collection</a> for available styles. Category placement helps discovery; it does not replace close-up images, the included-pieces statement or the selected variant information.</p>
 
       <h2>Compare current sharara and gharara sets</h2>
-      <p>Start with the <a href="/product/embroidered-silk-sharara-suit-georgette-dupatta-mt1079">MT-1079 embroidered silk sharara suit with georgette dupatta</a> and the <a href="/product/royal-purple-georgette-embroidered-gharara-set-003">royal purple georgette gharara set</a>. Open each listing to compare its photos, included pieces and available sizes before choosing.</p>
+      <p>Explore the <a href="/collections/sharara-suits">current sharara collection</a> or browse <a href="/suits">all current suits</a>. Open an available listing to compare its photos, included pieces, construction and size options before choosing; collection membership alone does not establish those details.</p>
 
       <h2>Why do product names sometimes conflict with the construction?</h2>
       <p>Retail titles are not a universal garment standard. A seller may use a familiar search term broadly, while another may use a regional or workshop term. Even a correctly named outfit can be photographed in a way that hides its most important seam. Treat the title as a starting point and the documented construction as the deciding evidence.</p>
