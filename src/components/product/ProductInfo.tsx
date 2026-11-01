@@ -18,6 +18,7 @@ import { MeasurementRequestForm } from './MeasurementRequestForm';
 import { emptyMeasurementDraft, measurementError, measurementAttributes, type MeasurementDraft } from '@/lib/measurementRequest';
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
+import { ProductDeliverySummary } from './ProductDeliverySummary';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
@@ -1021,16 +1022,24 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         </dl>
       )}
 
-      <p className="text-xs text-muted-foreground">{DESTINATION_IMPORT_NOTICE}</p>
+      <ProductDeliverySummary
+        shipsWithinDays={shipsWithinDays}
+        hasAlterations={requiresNativeTimingConfirmation || hasSelectedAlterations || currentSelectionIsMadeToOrder}
+        confirmAvailability={product.tags?.includes('availability:Confirm before ordering')}
+        isUnstitched={isUnstitchedDelivery}
+      >
+        <p className="text-xs text-muted-foreground">{DESTINATION_IMPORT_NOTICE}</p>
 
-      {/* Shipping terms — timing is confirmed from the selected product and service */}
-      <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} hasSelectedAlterations={hasSelectedAlterations} />
-      {shipByLabel && !currentSelectionIsMadeToOrder && (
-        <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
-          <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
-          <span>{shipByLabel}. This is the estimated dispatch date; carrier transit time is separate.</span>
-        </p>
-      )}
+        {/* Shipping terms — timing is confirmed from the selected product and service */}
+        <DeliveryEstimate shipsWithinDays={shipsWithinDays} hasStitching={needsStitchingSize} isMadeToOrder={currentSelectionIsMadeToOrder} isUnstitched={isUnstitchedDelivery} hasStitchedBlouse={hasStitchedBlouse} confirmAvailability={product.tags?.includes('availability:Confirm before ordering')} requiresTailoringTimingConfirmation={requiresNativeTimingConfirmation} hasSelectedAlterations={hasSelectedAlterations} />
+        {shipByLabel && !currentSelectionIsMadeToOrder && (
+          <p className="flex items-start gap-2 text-sm text-muted-foreground" role="status">
+            <Truck className="mt-0.5 h-4 w-4 shrink-0 text-primary" aria-hidden="true" />
+            <span>{shipByLabel}. This is the estimated dispatch date; carrier transit time is separate.</span>
+          </p>
+        )}
+
+      </ProductDeliverySummary>
 
       <Separator />
 
