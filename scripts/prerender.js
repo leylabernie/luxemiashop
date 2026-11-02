@@ -245,8 +245,47 @@ function cleanVerifiedFact(value, maxLength = 120) {
   return cleaned.length > maxLength ? undefined : cleaned;
 }
 
+const LISTING_FACT_FIELD_PATTERN = 'Style|Fabric|Material|Work|Embroidery|Embellishment|Color|Care|Construction|Size and Fit|Stitching and Fit|Sizing|Included Pieces|Set Includes|Package Includes|Lehenga Silhouette|Blouse\\/Choli|Dupatta|Lining|Closure|Flair|Shipping|Returns?|FAQQ?';
+
+function cleanStructuredListingFact(value, includedPieces = false) {
+  // A single paragraph/list item may itself contain several labeled fields.
+  const fields = includedPieces ? 'Care|Construction|Size and Fit|Stitching and Fit|Sizing|Shipping|Returns?|FAQQ?' : LISTING_FACT_FIELD_PATTERN;
+  const firstField = String(value || '').split(new RegExp(`(?:\\s+|;\\s*)(?:${fields})\\s*:`, 'i'))[0];
+  return cleanVerifiedFact(firstField.replace(/;\s*$/, ''));
+}
+
+// Prefer Shopify's HTML boundaries to its flattened plain-text description.
+// Only explicit labels are read; this does not approve or render the whole body.
+function getHtmlListingFact(description, labels) {
+  const source = String(description || '');
+  const includedPieces = labels.some(label => /included|includes/i.test(label));
+  const firstSentence = value => value.match(/^[\s\S]*?[.!?](?=\s|$)/)?.[0] || value;
+  const matchesLabel = (text) => labels.some(label =>
+    textFromListing(text).replace(/\s*[:–-]\s*$/, '').toLowerCase() === label.toLowerCase());
+  const headings = [...source.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1>/gi)];
+  for (let index = 0; index < headings.length; index += 1) {
+    const heading = headings[index];
+    if (!matchesLabel(heading[2])) continue;
+    const section = source.slice(heading.index + heading[0].length, headings[index + 1]?.index ?? source.length);
+    const items = [...section.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li>/gi)];
+    const value = items.length
+      ? items.map(item => textFromListing(item[1])).join('; ')
+      : textFromListing(section.match(/<p\b[^>]*>([\s\S]*?)<\/p>/i)?.[1] || section);
+    return { matched: true, value: cleanStructuredListingFact(items.length ? value : firstSentence(value), includedPieces) };
+  }
+  for (const block of source.matchAll(/<(li|p)\b[^>]*>([\s\S]*?)<\/\1>/gi)) {
+    const text = textFromListing(block[2]);
+    const colon = text.indexOf(':');
+    if (colon < 0 || !matchesLabel(text.slice(0, colon))) continue;
+    return { matched: true, value: cleanStructuredListingFact(firstSentence(text.slice(colon + 1)), includedPieces) };
+  }
+  return { matched: false };
+}
+
 function getLabeledListingFact(description, labels) {
   const source = String(description || '');
+  const structured = getHtmlListingFact(source, labels);
+  if (structured.matched) return structured.value;
   const labelPattern = labels
     .map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'))
     .join('|');
@@ -294,6 +333,13 @@ function getExplicitIncludedPieces(product) {
     return cleanVerifiedFact(parsed);
   }
 
+  const structured = getHtmlListingFact(product?.descriptionHtml, ['Included Pieces', 'Set Includes', 'Package Includes', 'Includes', 'Included']);
+  if (structured.matched) {
+    const parsed = structured.value;
+    if (!parsed || /\$|\b(?:approved|price|pricing|fee|charge|service|shipping|delivery|return|refund|tier)\b/i.test(parsed)) return undefined;
+    return /\b(?:blouse|choli|lehenga|skirt|dupatta|saree|fabric|top|kurta|kameez|pants?|palazzo|sharara|gharara|jacket|vest|tunic|necklace|earrings?|bangles?|bracelet|ring|tikka|purse|potli)\b/i.test(parsed) ? parsed : undefined;
+  }
+
   const listingText = textFromListing(product?.description);
   if (/\bblouse material included\b/i.test(listingText)) return 'blouse material';
   const explicit = listingText.match(/\b(?:(?:included pieces|set includes|package includes|includes)\s*[:\-]?|included\s*:)\s*(.{1,120}?)(?=\s+(?:Occasion|Fabric|Material|Work|Color|Care|Sizing|Shipping|Returns?|FAQQ?)\s*:|[.!?]|$)/i);
@@ -339,8 +385,8 @@ function getListedProductAttributes(product) {
   const taggedColor = prefixedTagValue('color');
   const taggedMaterial = prefixedTagValue('fabric', 'material');
   const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
-  const listedMaterial = getLabeledListingFact(product?.description, ['Fabric', 'Material']);
-  const listedWork = getLabeledListingFact(product?.description, ['Work', 'Embroidery', 'Embellishment']);
+  const listedMaterial = getLabeledListingFact(product?.descriptionHtml || product?.description, ['Fabric', 'Material']);
+  const listedWork = getLabeledListingFact(product?.descriptionHtml || product?.description, ['Work', 'Embroidery', 'Embellishment']);
   const sizeValues = product?.options
     ?.find(option => isSizeOptionName(option?.name))
     ?.values

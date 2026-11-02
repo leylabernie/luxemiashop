@@ -1,0 +1,96 @@
+[
+  {
+    "id": "gid://shopify/Product/9150324375723",
+    "title": "Teal Blue Chanderi Embroidered Readymade Salwar Suit",
+    "handle": "teal-blue-chanderi-embroidered-readymade-salwar-suit",
+    "descriptionHtml": "<p>A teal blue Chanderi readymade salwar suit with embroidery for festive occasions.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Teal Blue</li>\n<li>Fabric: Chanderi</li>\n<li>Work: Embroidery</li>\n<li>Construction: Readymade</li>\n</ul><h3>Size and Fit</h3><p>Available size labels: 38, 40, 42 and 44. These are supplier size labels, not body measurements.</p><h3>Included Pieces</h3><ul>\n<li>Kameez (top)</li>\n<li>Salwar-style bottom</li>\n<li>Dupatta</li>\n</ul><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+    "tags": [
+      "color:Teal Blue",
+      "embroidery-work",
+      "fabric:Chanderi",
+      "ready-to-wear",
+      "salwar-kameez"
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "values": [
+          "38",
+          "40",
+          "42",
+          "44"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9150324572331",
+    "title": "Off-White Crepe Embroidered Readymade Sharara Suit",
+    "handle": "off-white-crepe-embroidered-readymade-sharara-suit",
+    "descriptionHtml": "<p>An off-white Crepe readymade sharara suit with embroidery for festive occasions.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Off-White</li>\n<li>Fabric: Crepe</li>\n<li>Work: Embroidery</li>\n<li>Construction: Readymade</li>\n</ul><h3>Size and Fit</h3><p>Available size labels: 38, 40, 42 and 44. These are supplier size labels, not body measurements.</p><h3>Included Pieces</h3><ul>\n<li>Kameez (top)</li>\n<li>Sharara bottoms</li>\n<li>Dupatta</li>\n</ul><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+    "tags": [
+      "color:Off-White",
+      "embroidery-work",
+      "fabric:Crepe",
+      "ready-to-wear",
+      "salwar-kameez"
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "values": [
+          "38",
+          "40",
+          "42",
+          "44"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9150324605099",
+    "title": "Olive Green Chinon Embroidered Readymade Palazzo Suit",
+    "handle": "olive-green-chinon-embroidered-readymade-palazzo-suit",
+    "descriptionHtml": "<p>An olive green Chinon readymade palazzo suit with embroidery for festive occasions.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Olive Green</li>\n<li>Fabric: Chinon</li>\n<li>Work: Embroidery</li>\n<li>Construction: Readymade</li>\n</ul><h3>Size and Fit</h3><p>Available size labels: 38, 40, 42 and 44. These are supplier size labels, not body measurements.</p><h3>Included Pieces</h3><ul>\n<li>Tunic (top)</li>\n<li>Palazzo pants</li>\n<li>Dupatta</li>\n</ul><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+    "tags": [
+      "color:Olive Green",
+      "embroidery-work",
+      "fabric:Chinon",
+      "ready-to-wear",
+      "salwar-kameez"
+    ],
+    "options": [
+      {
+        "name": "Size",
+        "values": [
+          "38",
+          "40",
+          "42",
+          "44"
+        ]
+      }
+    ]
+  },
+  {
+    "id": "gid://shopify/Product/9150324703403",
+    "title": "Grey Georgette Embroidered Wedding Lehenga Choli",
+    "handle": "grey-georgette-embroidered-wedding-lehenga-choli",
+    "descriptionHtml": "<p>A grey Georgette lehenga choli with embroidery for wedding celebrations.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Grey</li>\n<li>Fabric: Georgette</li>\n<li>Work: Embroidery</li>\n</ul><h3>Stitching and Fit</h3><p>This listing is for the unstitched option. Tailoring is required before wear.</p><h3>Included Pieces</h3><p>Unstitched lehenga and choli material with dupatta. This is not the finished, stitched outfit shown on the model; tailoring is required before wear.</p><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+    "tags": [
+      "color:Grey",
+      "embroidery-work",
+      "fabric:Georgette",
+      "lehenga-choli",
+      "unstitched",
+      "included:Unstitched lehenga and choli material; Dupatta"
+    ],
+    "options": [
+      {
+        "name": "Finish",
+        "values": [
+          "Unstitched"
+        ]
+      }
+    ]
+  }
+]
