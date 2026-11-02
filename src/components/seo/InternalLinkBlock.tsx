@@ -44,7 +44,6 @@ const OCCASION_LINKS: LinkItem[] = [
   { to: "/collections/wedding-guest-outfits", label: "Wedding Guest Outfits" },
   { to: "/collections/mehendi-outfits", label: "Mehendi Ceremony Outfits" },
   { to: "/collections/eid-outfits", label: "Eid Outfits" },
-  { to: "/collections/navratri-outfits", label: "Navratri & Garba Outfits" },
   { to: "/collections/haldi-outfits", label: "Haldi Ceremony Outfits" },
   { to: "/nri", label: "NRI Shopping Hub" },
   { to: "/indian-ethnic-wear-usa", label: "Indian Ethnic Wear — USA" },
