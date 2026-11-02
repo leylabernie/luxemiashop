@@ -1527,7 +1527,6 @@ const routes = [
       <p><a href="/indian-ethnic-wear-usa">Indian ethnic wear in the USA — sarees, lehengas, shararas and USA delivery details</a></p>
       <nav>
         <ul>
-          <li><a href="/collections/navratri-outfits">Navratri &amp; Garba Outfits 2026</a> — Current chaniya choli, lehenga and festive styles for U.S. celebrations</li>
           <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
@@ -3262,8 +3261,6 @@ function generateHtml(template, route, allShopifyProducts) {
         <a href="/contact">Contact</a>
       </nav>
       <nav aria-label="Featured shopping guides">
-        <a href="/collections/navratri-outfits">Navratri &amp; Garba Outfits 2026</a> |
-        <a href="/blog/navratri-9-day-color-guide-2026">Navratri 2026 Buying Guide</a> |
         <a href="/blog/plus-size-indian-ethnic-wear-guide">Plus-Size Indian Ethnic Wear Guide</a> |
         <a href="/blog/manish-malhotra-bollywood-bridal-designer-profile">Manish Malhotra Designer Profile</a> |
         <a href="/blog/indian-wedding-terms-glossary-50-events-rituals-roles">Indian Wedding Terms Glossary</a>

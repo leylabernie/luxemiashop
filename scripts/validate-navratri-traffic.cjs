@@ -57,6 +57,12 @@ const homepageHtml = read(homepagePath);
 const feedXml = read('dist/merchant-feed.xml');
 const sitemapIndexXml = read('dist/sitemap.xml');
 
+// The owner retired homepage/sitewide seasonal promotion. Keep evergreen pages,
+// but never require or reintroduce their campaign links on the homepage.
+if (/href=['"]\/(?:collections\/navratri-outfits|blog\/navratri-9-day-color-guide-2026)(?:['"?#/])/i.test(homepageHtml)) {
+  throw new Error('[navratri-traffic] Retired Navratri promotion remains on the homepage');
+}
+
 // Promotion truth checks must run even when retired seasonal inventory skips
 // the product-specific traffic gate. Retired codes must not return in static copy.
 for (const [label, html] of [['collection', collectionHtml], ['article', articleHtml]]) {
@@ -139,8 +145,6 @@ requireText(articleHtml, 'https://www.timeanddate.com/holidays/us/hindu-navaratr
 requireText(articleHtml, 'href="/collections/navratri-outfits"', 'guide-to-collection internal link');
 requireText(articleHtml, 'FIRST10', 'article first-order offer');
 
-requireText(homepageHtml, 'href="/collections/navratri-outfits"', 'homepage Navratri collection link');
-requireText(homepageHtml, 'href="/blog/navratri-9-day-color-guide-2026"', 'homepage Navratri guide link');
 
 const priorityItems = [...feedXml.matchAll(/<item>[\s\S]*?<\/item>/gi)]
   .map((match) => match[0])

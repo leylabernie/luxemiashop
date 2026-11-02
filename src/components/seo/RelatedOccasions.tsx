@@ -11,7 +11,6 @@ const OCCASIONS = [
   { slug: 'wedding-guest', label: 'Wedding Guest', path: '/collections/wedding-guest-outfits' },
   { slug: 'diwali', label: 'Diwali', path: '/collections/diwali-outfits' },
   { slug: 'eid', label: 'Eid', path: '/collections/eid-outfits' },
-  { slug: 'navratri', label: 'Navratri', path: '/collections/navratri-outfits' },
 ];
 
 export const RelatedOccasions = ({ currentOccasion }: RelatedOccasionsProps) => {
