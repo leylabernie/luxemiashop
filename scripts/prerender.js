@@ -140,13 +140,14 @@ function applyCustomizableProductDetails(product) {
 // Search Console traffic-drop bug: 27 blog posts + 25 combo pages existed in
 // the app/sitemap but had no prerendered HTML, so Googlebot/Bingbot got a
 // 404 while regular browsers got 200 — a soft-cloaking regression).
-async function loadTsModule(relativeSrcPath) {
+async function loadTsModule(relativeSrcPath, externalPackages = false) {
   const entry = path.join(PROJECT_ROOT, relativeSrcPath);
   const result = await esbuild.build({
     entryPoints: [entry],
     bundle: true,
     format: 'esm',
     platform: 'node',
+    ...(externalPackages ? { packages: 'external' } : {}),
     jsx: 'automatic',
     write: false,
     logLevel: 'silent',
@@ -162,6 +163,7 @@ async function loadTsModule(relativeSrcPath) {
     fs.rmSync(tmpDir, { recursive: true, force: true });
   }
 }
+const { measurementTitle, measurementHtml, sizingNextStepsHtml } = await loadTsModule('scripts/render-sizing-content.tsx', true);
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
 const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
@@ -2187,31 +2189,13 @@ const routes = [
   },
   {
     path: '/sizing-measurements-guide',
-    title: 'Indian Clothing Measurement Guide & Printable Worksheet | LuxeMia',
+    title: measurementTitle,
+    titleMaxLength: 60,
     description: 'Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable worksheet. Compare your measurements with the exact product listing before ordering.',
     h1: 'Indian Clothing Measurement Guide',
+    contentIncludesH1: true,
     schemas: [MEASUREMENT_HOW_TO_SCHEMA],
-    content: `<p>Record the measurements commonly requested for saree blouses, lehengas, suits, kurtas and sherwanis, then compare them with the exact product listing.</p>
-      <h2>How do I take body measurements for Indian clothing?</h2>
-      <p>Use a soft tape, wear the undergarments and shoes planned for the outfit, and record each measurement twice.</p>
-      <ol>
-        <li><strong>Measure your bust:</strong> Wrap the tape around the fullest part of your bust and keep it level across your back.</li>
-        <li><strong>Measure your waist:</strong> Measure around your natural waist without pulling the tape tight.</li>
-        <li><strong>Measure your hips:</strong> Stand with your feet together and measure around the fullest part of your hips.</li>
-        <li><strong>Measure the garment length:</strong> Measure to the desired hem while wearing the shoes planned for a floor-length outfit.</li>
-        <li><strong>Measure sleeves:</strong> Record sleeve length from the shoulder and the arm circumference where the sleeve will end.</li>
-      </ol>
-      <h2>How to measure for an Indian saree blouse</h2>
-      <p>Wear the undergarment you plan to use with the blouse, keep the tape level, and record your actual body measurements without adding ease. Compare the results with the exact product listing; this guide does not mean stitching or tailoring is included.</p>
-      <ol>
-        <li><strong>Bust:</strong> Measure around the fullest part of the bust with the tape level across the back.</li>
-        <li><strong>Underbust:</strong> Measure directly below the bust where the blouse band will sit.</li>
-        <li><strong>Shoulder:</strong> Measure across the back from one shoulder edge to the other.</li>
-        <li><strong>Blouse length:</strong> Measure from the top of the shoulder to the preferred blouse hem.</li>
-        <li><strong>Armhole:</strong> Wrap the tape around the shoulder and underarm while the arm rests naturally.</li>
-        <li><strong>Sleeve length:</strong> Measure from the shoulder point to the preferred sleeve end.</li>
-        <li><strong>Upper-arm circumference:</strong> Measure around the fullest part of the relaxed upper arm without pulling the tape tight.</li>
-      </ol>`,
+    content: measurementHtml,
   },
   {
     path: '/care-guide',
@@ -2641,7 +2625,7 @@ function generateHtml(template, route, allShopifyProducts) {
     route.noIndexFollow = true;
   }
   let html = template;
-  const seoTitle = clampTitle(route.title);
+  const seoTitle = clampTitle(route.title, undefined, route.titleMaxLength);
   const seoDescription = clampDescription(route.description);
   const routeContent = normalizeInternalNavigationHtml(route.content) +
     (['/lehengas', '/collections'].includes(route.path)
@@ -3263,7 +3247,7 @@ function generateHtml(template, route, allShopifyProducts) {
       ${generateCollectionProductHtml(homepageProducts)}`;
   } else {
     mainBodyContent = `
-      <h1>${escapeHtml(route.h1)}</h1>
+      ${route.contentIncludesH1 ? '' : `<h1>${escapeHtml(route.h1)}</h1>`}
       ${routeContent}`;
   }
 
@@ -3439,7 +3423,7 @@ async function main() {
         title: `${post.title} | LuxeMia`,
         description: post.excerpt || `${post.title} — read the full guide on the LuxeMia blog.`,
         h1: post.title,
-        content: `${post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`}${sourceReview}`,
+        content: `${post.slug === 'indian-to-us-clothing-size-conversion-guide' ? sizingNextStepsHtml : ''}${post.content || `<p>${escapeHtml(post.excerpt || post.title)}</p>`}${sourceReview}`,
         blogPost: {
           publishedAt: post.publishedAt,
           updatedAt: post.updatedAt,

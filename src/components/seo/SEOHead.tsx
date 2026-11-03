@@ -32,6 +32,7 @@ interface HreflangAlternate {
 
 interface SEOHeadProps {
   title?: string;
+  titleMaxLength?: number;
   description?: string;
   canonical?: string;
   image?: string;
@@ -81,6 +82,7 @@ interface SEOHeadProps {
 
 const SEOHead = ({
   title = 'Indian Ethnic Wear Online USA | LuxeMia',
+  titleMaxLength,
   description = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.',
   canonical,
   image = 'https://luxemia.shop/images/social/luxemia-brand-preview-2026.jpg',
@@ -100,7 +102,7 @@ const SEOHead = ({
   hreflang,
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
-  const seoTitle = clampTitle(title);
+  const seoTitle = clampTitle(title, undefined, titleMaxLength);
   const seoDescription = clampDescription(description);
   // Canonicals must always resolve to the production apex domain. Using only
   // the pathname prevents Vercel/Lovable preview hosts, query parameters, and
