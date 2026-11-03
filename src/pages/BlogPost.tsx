@@ -1,3 +1,4 @@
+import SizingNextSteps from '@/components/SizingNextSteps';
 import { stripPausedCustomizationLinks } from '@/lib/pausedCollectionLinks.cjs';
 import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { useMemo, useState, useEffect, useCallback } from 'react';
@@ -87,7 +88,6 @@ const categoryToShopLink: Record<string, { label: string; href: string }[]> = {
 };
 
 const postShopCta: Record<string, { eyebrow: string; heading: string; href: string; label: string }> = {
-  'indian-to-us-clothing-size-conversion-guide': { eyebrow: 'Put your measurements to use', heading: 'Explore outfits and check each design’s available sizes.', href: '/ready-to-ship', label: 'Shop Ready-to-Ship Outfits' },
   'wedding-saree-for-mother-of-bride': { eyebrow: 'Shop the guide', heading: 'Compare sarees for the celebration.', href: '/sarees', label: 'Shop Sarees' },
   'wedding-guest-outfit-ideas': { eyebrow: 'Shop wedding guest looks', heading: 'Browse current outfits by ceremony and style.', href: '/collections/wedding-guest-outfits', label: 'Shop Wedding Guest Looks' },
   'accessorize-indian-ethnic-wear': { eyebrow: 'Complete the look', heading: 'Browse current jewelry styles.', href: '/jewelry', label: 'Shop Jewelry' },
@@ -515,7 +515,7 @@ const BlogPost = () => {
                 </p>
               </div>
 
-              <aside className="mb-10 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6" aria-label="Shop LuxeMia styles related to this guide">
+              {post.slug === 'indian-to-us-clothing-size-conversion-guide' ? <SizingNextSteps /> : <aside className="mb-10 rounded-xl border border-primary/20 bg-gradient-to-br from-primary/10 via-background to-primary/5 p-5 sm:p-6" aria-label="Shop LuxeMia styles related to this guide">
                 <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-primary">
                   {shopCta.eyebrow}
                 </p>
@@ -549,7 +549,7 @@ const BlogPost = () => {
                     </a>
                   </Button>
                 </div>
-              </aside>
+              </aside>}
 
               {/* Table of Contents */}
               {tocItems.length > 0 && (
