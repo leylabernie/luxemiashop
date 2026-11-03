@@ -3260,22 +3260,22 @@ function generateHtml(template, route, allShopifyProducts) {
     <script>
       (function(){
         var root = document.getElementById('root');
-        var seo = document.getElementById('seo-prerender');
+        // Select the static fallback, not a semantic ID reused by the React page.
+        var seo = document.querySelector('main[data-prerender-fallback]');
         if (!root || !seo) return;
         // A Suspense fallback is not a usable page. Keep the server-rendered
         // products until the route chunk has mounted its interactive content.
         var obs = new MutationObserver(function() {
           if (!root.childElementCount || root.querySelector('[data-page-loading]')) return;
           obs.disconnect();
-          var p = document.getElementById('seo-prerender');
-          if (p) p.remove();
+          seo.remove();
         });
         obs.observe(root, { childList: true, subtree: true });
       })();
     </script>`;
 
   const seoContent = `
-    <main id="${route.path === '/returns' ? 'merchant-return-policy' : 'seo-prerender'}"${route.htmlSitemap ? ' aria-label="Complete product directory"' : ''}>
+    <main data-prerender-fallback id="${route.path === '/returns' ? 'merchant-return-policy' : 'seo-prerender'}"${route.htmlSitemap ? ' aria-label="Complete product directory"' : ''}>
       ${mainBodyContent}
       <nav aria-label="Site navigation">
         <a href="/">Home</a> |

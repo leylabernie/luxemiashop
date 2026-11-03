@@ -178,7 +178,7 @@ test('visible prerendered products remain while a page chunk is loading', () => 
   const rootElement = { childElementCount: 3, querySelector: () => loading ? {} : null };
   const seo = { remove: () => { removed = true; } };
   require('node:vm').runInNewContext(script, {
-    document: { getElementById: id => id === 'root' ? rootElement : seo },
+    document: { getElementById: id => id === 'root' ? rootElement : null, querySelector: selector => selector === 'main[data-prerender-fallback]' ? seo : null },
     MutationObserver: class {
       constructor(handler) { callback = handler; }
       disconnect() {}
