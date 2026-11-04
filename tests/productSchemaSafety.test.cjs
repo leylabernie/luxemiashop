@@ -87,7 +87,11 @@ test('build policy rewriters use the safe serializer and keep legal/return guard
 test('incomplete optional product shipping and global return overrides remain absent', async () => {
   const { generateProductSchema, generateReturnPolicySchema } = await load('src/lib/schema.ts');
   const product = generateProductSchema({ name: 'Fixture', description: 'Fixture', url: 'https://luxemia.shop/product/fixture', image: [], sku: 'fixture', price: '100.00', currency: 'USD', availability: 'InStock' });
-  assert.equal('shippingDetails' in product.offers, false);
+  assert.equal(product.offers.shippingDetails.length, 5);
+  for (const reference of product.offers.shippingDetails) {
+    assert.deepEqual(Object.keys(reference).sort(), ['@type', 'hasShippingService']);
+    assert.deepEqual(Object.keys(reference.hasShippingService), ['@id']);
+  }
   assert.equal('merchantReturnLink' in product.offers, false);
   assert.equal(generateReturnPolicySchema(), null);
 });

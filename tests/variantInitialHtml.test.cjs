@@ -46,7 +46,7 @@ let generatorPromise;
 function generator() {
   return generatorPromise ||= (async () => {
     const original = fs.readFileSync(path.join(root, 'scripts/prerender.js'), 'utf8');
-    const source = original.replace(/main\(\)\.catch\(err => \{[\s\S]*$/, 'export { generateHtml };');
+    const source = original.replace(/main\(\)\.catch\(err => \{[\s\S]*$/, 'export { generateHtml, generateItemListJsonLd };');
     assert.notEqual(source, original, 'Load the real renderer without running its network/build entrypoint');
     const file = path.join(root, 'scripts', `.variant-initial-test-${process.pid}.mjs`);
     fs.writeFileSync(file, source);
@@ -412,4 +412,38 @@ test('missing static source falls through to correct live variant HTML with the 
     `https://luxemia.shop/_prerender/product/${handle}.html`,
     'https://luxemia.shop/index.html',
   ]);
+});
+
+test('prerender and live fallback attach only shared policy references to every variant offer', async () => {
+  const schema = await loadModule('src/lib/schema.ts');
+  const expected = schema.generateOfferShippingReferences();
+  const product = productFixture();
+  const { generateProductHtml } = await loadModule('src/middleware/htmlGenerator.ts');
+  const { generateHtml } = await generator();
+  const actualTemplate = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const staticHtml = generateHtml(actualTemplate, {
+    path: `/product/${product.handle}`, title: product.title, h1: product.title,
+    description: product.description, content: '', product,
+  }, new Map([[product.handle, product]]));
+  for (const html of [staticHtml, generateProductHtml(product, canonical)]) {
+    const nodes = [...html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+      .flatMap(match => { const node = JSON.parse(match[1]); return node['@graph'] || [node]; });
+    const group = nodes.find(node => node['@type'] === 'ProductGroup');
+    assert.equal(group.hasVariant.length, 4);
+    for (const variant of group.hasVariant) assert.deepEqual(variant.offers.shippingDetails, expected);
+  }
+});
+
+
+test('collection prerender offers use the same shared shipping references', async () => {
+  const { generateItemListJsonLd } = await generator();
+  const { generateOfferShippingReferences } = await loadModule('src/lib/schema.ts');
+  const product = productFixture();
+  const listing = generateItemListJsonLd([product], 'lehengas', '/lehengas');
+  assert.equal(listing.itemListElement.length, 1);
+  const offer = listing.itemListElement[0].item.offers;
+  assert.deepEqual(offer.shippingDetails, generateOfferShippingReferences());
+  assert.equal(offer.price, '59.99');
+  assert.equal(offer.priceCurrency, 'USD');
+  assert.equal(offer.url, canonical);
 });

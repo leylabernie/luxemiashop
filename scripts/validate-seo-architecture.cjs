@@ -167,7 +167,7 @@ const schema = read('src/lib/schema.ts');
 requireText(schema, "BRAND_LOGO_URL = `${SITE_URL}/og-image.jpg`", 'shared existing brand logo URL');
 forbidText(schema, "logo: `${SITE_URL}/favicon.ico`", 'Lovable favicon as Organization logo');
 forbidText(schema, 'merchantReturnLink:', 'misplaced return link on Offer');
-forbidText(schema, "'@type': 'OfferShippingDetails'", 'incomplete product shipping overrides');
+requireText(schema, 'shippingDetails: generateOfferShippingReferences()', 'shared product shipping policy references');
 forbidText(schema, 'transitTime:', 'invented carrier transit time');
 
 const prerender = read('scripts/prerender.js');
@@ -175,7 +175,8 @@ requireText(prerender, "src/config/seoArchitecture.json", 'shared prerender SEO 
 requireText(prerender, 'normalizeInternalNavigationHtml(route.content)', 'prerender internal-link normalization');
 requireText(prerender, 'would disappear after hydration', 'commercial collection hydration-stability guard');
 forbidText(prerender, 'merchantReturnLink:', 'misplaced prerender return link on Offer');
-forbidText(prerender, "'@type': 'OfferShippingDetails'", 'incomplete prerender shipping overrides');
+forbidText(prerender, "'@type': 'OfferShippingDetails'", 'duplicated prerender shipping overrides');
+requireText(prerender, 'shippingDetails: generateOfferShippingReferences()', 'shared prerender shipping policy references');
 forbidText(prerender, 'transitTime:', 'invented prerender carrier transit time');
 
 const schemaBundle = esbuild.buildSync({
@@ -188,10 +189,26 @@ const schemaBundle = esbuild.buildSync({
 }).outputFiles[0].text;
 const schemaModule = { exports: {} };
 new Function('module', 'exports', 'require', schemaBundle)(schemaModule, schemaModule.exports, require);
-const { generateUsShippingServiceSchema } = schemaModule.exports;
+const { generateUsShippingServiceSchema, generateProductSchema } = schemaModule.exports;
 const services = generateUsShippingServiceSchema();
 if (services.length !== 5 || services[0].shippingConditions[1].orderValue.minValue !== 150) {
   failures.push('Organization shipping policies must preserve the U.S. order-total threshold.');
+}
+
+// Allow only Google's documented reference form, not incomplete per-offer rates
+// or handling-only delivery estimates. Check rendered output, not type-name absence.
+const expectedShippingReferences = services.map(service => ({
+  '@type': 'OfferShippingDetails', hasShippingService: { '@id': service['@id'] },
+}));
+const fixtureOffer = generateProductSchema({
+  name: 'Shipping validator fixture', description: 'Fixture',
+  url: 'https://luxemia.shop/product/fixture', image: [], sku: 'fixture',
+  price: '99.00', currency: 'USD', availability: 'InStock',
+}).offers;
+try {
+  require('node:assert/strict').deepEqual(fixtureOffer.shippingDetails, expectedShippingReferences);
+} catch {
+  failures.push('Product shipping details must contain only references to all existing Organization shipping services.');
 }
 
 if (failures.length > 0) {
@@ -201,5 +218,5 @@ if (failures.length > 0) {
 }
 
 console.log(
-  `SEO architecture validation passed: ${requiredSharedRoutes.length} indexable routes share titles/H1s, navigation avoids crawlable noindex facets and redirects, brand schema uses the existing LuxeMia asset, SearchAction targets URL-initialized search, and optional incomplete product shipping overrides remain omitted.`,
+  `SEO architecture validation passed: ${requiredSharedRoutes.length} indexable routes share titles/H1s, navigation avoids crawlable noindex facets and redirects, brand schema uses the existing LuxeMia asset, SearchAction targets URL-initialized search, and product offers reference existing shipping policies without incomplete shipping overrides.`,
 );

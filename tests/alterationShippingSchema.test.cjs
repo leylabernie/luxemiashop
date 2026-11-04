@@ -18,7 +18,11 @@ function loadSchema(source = read('src/lib/schema.ts')) {
   return module.exports;
 }
 function assertOfferSafe(offer) {
-  assert.equal('shippingDetails' in offer, false);
+  const policies = loadSchema().generateUsShippingServiceSchema();
+  assert.deepEqual(offer.shippingDetails, policies.map(service => ({
+    '@type': 'OfferShippingDetails', hasShippingService: { '@id': service['@id'] },
+  })));
+  assert.doesNotMatch(JSON.stringify(offer.shippingDetails), /shippingRate|orderValue|deliveryTime|handlingTime|transitTime/);
   assert.equal('merchantReturnLink' in offer, false);
   assert.equal('hasMerchantReturnPolicy' in offer, false);
 }
@@ -27,7 +31,7 @@ const product = {
   image: [], sku: 'FIXTURE', price: '99.97', currency: 'USD', availability: 'InStock', shipsWithinDays: 4,
 };
 
-test('Product offers omit incomplete shipping and invalid return properties regardless of handling or alterations', () => {
+test('Product offers reference global policies without incomplete shipping and invalid return properties regardless of handling or alterations', () => {
   const { generateProductSchema, generateUsShippingServiceSchema, generateReturnPolicySchema } = loadSchema();
   for (const price of ['80.00', '149.99', '150.00', '173.60']) {
     for (const days of [undefined, 4, 6, 0, -1, NaN]) {
@@ -89,7 +93,8 @@ test('the real schema rewriter cannot reintroduce invalid offer properties after
       const prerenderSource = fs.readFileSync(path.join(fixture, 'scripts/prerender.js'), 'utf8');
       assertOfferSafe(loadSchema(schemaSource).generateProductSchema(product).offers);
       for (const source of [schemaSource, prerenderSource]) {
-        assert.doesNotMatch(source, /^\s*(?:merchantReturnLink|shippingDetails):|['"]@type['"]: ['"]OfferShippingDetails['"]/m);
+        assert.doesNotMatch(source, /^\s*merchantReturnLink:/m);
+        assert.match(source, /shippingDetails: generateOfferShippingReferences\(\)/);
       }
       const current = { schemaSource, prerenderSource };
       if (first) assert.deepEqual(current, first, 'second schema rewrite is idempotent');
@@ -98,4 +103,50 @@ test('the real schema rewriter cannot reintroduce invalid offer properties after
   } finally {
     fs.rmSync(fixture, { recursive: true, force: true });
   }
+});
+
+test('shipping references resolve to unchanged template policies covering exactly seven supported countries', () => {
+  const { generateOfferShippingReferences, generateUsShippingServiceSchema, SHIPPING_COUNTRIES } = loadSchema();
+  const policies = generateUsShippingServiceSchema();
+  const templateNodes = [...read('index.html').matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)]
+    .flatMap(match => { const node = JSON.parse(match[1]); return node['@graph'] || [node]; });
+  const references = generateOfferShippingReferences();
+  assert.equal(new Set(references.map(ref => ref.hasShippingService['@id'])).size, 5);
+  for (const policy of policies) {
+    const node = templateNodes.find(node => node['@type'] === 'ShippingService' && node['@id'] === policy['@id']);
+    assert(node, `template defines ${policy['@id']}`);
+    assert.deepEqual(node.shippingConditions, policy.shippingConditions, 'template and runtime retain identical rates and thresholds');
+  }
+  const countries = new Set(policies.flatMap(policy => policy.shippingConditions.flatMap(condition => condition.shippingDestination.addressCountry)));
+  assert.deepEqual([...countries].sort(), [...SHIPPING_COUNTRIES].sort());
+  for (const category of ['Sarees', 'Lehengas', 'Salwar Kameez', 'Menswear', 'Jewelry']) {
+    const result = loadSchema().generateProductSchema({ ...product, category });
+    assert.equal(result.category, category);
+    assert.deepEqual(result.offers.shippingDetails, references);
+  }
+});
+
+
+test('SEO build validation allows policy references and rejects incomplete overrides or unknown IDs', () => {
+  const source = read('scripts/validate-seo-architecture.cjs');
+  const start = source.indexOf('const expectedShippingReferences =');
+  const end = source.indexOf('\nif (failures.length > 0)', start);
+  assert(start > 0 && end > start);
+  const { generateProductSchema, generateUsShippingServiceSchema } = loadSchema();
+  const validate = transform => {
+    const failures = [];
+    new Function('require', 'failures', 'services', 'generateProductSchema', source.slice(start, end))(
+      require, failures, generateUsShippingServiceSchema(),
+      input => { const result = generateProductSchema(input); transform(result.offers); return result; },
+    );
+    return failures;
+  };
+  assert.equal(validate(() => {}).length, 0);
+  for (const mutate of [
+    offer => { offer.shippingDetails[0].shippingRate = { value: 0 }; },
+    offer => { offer.shippingDetails[0].deliveryTime = { handlingTime: { maxValue: 4 } }; },
+    offer => { offer.shippingDetails[0].hasShippingService['@id'] = 'https://example.com/#unknown'; },
+    offer => { offer.shippingDetails.pop(); },
+    offer => { delete offer.shippingDetails; },
+  ]) assert.equal(validate(mutate).length, 1);
 });
