@@ -29,7 +29,7 @@ const FAQ = () => {
         },
         {
           question: 'Can I modify or cancel my order after placing it?',
-          answer: 'Cancellation requests must be made within 24 hours of order placement. After that window, cancellation requests are not accepted. Email hello@luxemia.shop immediately with your order number.',
+          answer: 'Email hello@luxemia.shop with your order number as soon as possible. Cancellations within 24 hours of ordering receive a full refund. After 24 hours, requests are considered case by case and cancellation may not be possible. If cancellation is possible, the refund is reduced only by non-recoverable supplier costs, which will be disclosed before proceeding. This policy does not limit rights or remedies that cannot legally be excluded.',
         },
         {
           question: 'How do I apply a discount code?',
