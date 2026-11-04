@@ -136,7 +136,7 @@ const Returns = () => {
           <div className="prose prose-neutral max-w-none text-muted-foreground">
             <h2 className="text-foreground">Your legal rights</h2>
             <p>
-              Nothing in this policy limits any consumer rights or remedies that cannot legally be excluded under U.S. federal or state law (including the FTC Mail Order Rule, which gives you the right to refuse or return merchandise that was misdescribed, and to a refund if you exercise that right).
+              Nothing in this policy limits any consumer rights or remedies that cannot legally be excluded under applicable law.
             </p>
           </div>
         </section>

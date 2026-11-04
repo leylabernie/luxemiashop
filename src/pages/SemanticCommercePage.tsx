@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import { SHIPPING_ZONES } from '@/config/shippingPolicy';
+import { SUPPORT_CLAIM_SUMMARY } from '@/lib/returnPolicyCopy';
 
 type Definition = {
   title: string;
@@ -39,7 +40,7 @@ const DEFINITIONS: Record<string, Definition> = {
     sections: [
       { heading: 'Before ordering', body: 'Share the product link, destination, selected size or stitching option, measurements and event date. Support can help locate the relevant published details and identify anything that must be confirmed before purchase.' },
       { heading: 'After ordering', body: 'Include the order number when asking about processing, tracking, address corrections or a delivery issue. Address changes may not be possible after fulfillment begins.' },
-      { heading: 'Issue escalation', body: 'For damage, defects, a materially misdescribed item, an incorrect item or missing pieces, contact LuxeMia promptly. Keep all packaging and provide clear photos and a continuous unboxing video when available. The 48-hour request supports faster evidence review; it does not remove rights that cannot legally be excluded.' },
+      { heading: 'Issue escalation', body: SUPPORT_CLAIM_SUMMARY },
     ],
     links: [{ label: 'Contact LuxeMia', href: '/contact' }, { label: 'Frequently asked questions', href: '/faq' }, { label: 'Shipping policy', href: '/shipping' }, { label: 'Returns policy', href: '/returns' }],
   },

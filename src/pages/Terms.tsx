@@ -224,22 +224,23 @@ const Terms = () => {
                   <h2 className="text-xl font-serif text-foreground mb-4">8. Returns and Cancellations</h2>
                   <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-4 mb-4">
                     <p className="font-semibold text-destructive">
-                      All sales are final. Exchanges are not accepted.
+                      Voluntary change-of-mind returns and exchanges are not accepted, except where applicable law provides otherwise. Covered order issues remain eligible for the remedies in our Returns Policy.
                     </p>
                   </div>
                   <div className="space-y-4">
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">8.1 Final-Sale Policy</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li><strong>LuxeMia does not accept buyer-remorse returns or exchanges for fit, color preference, event changes, or a change of mind.</strong></li>
+                        <li><strong>Except where applicable law provides otherwise, LuxeMia does not accept buyer-remorse returns or exchanges for fit, color preference, event changes, or a change of mind.</strong></li>
                         <li>Please review all product details and sizing information carefully before purchasing.</li>
                       </ul>
                     </div>
                     <div>
                       <h3 className="font-semibold text-foreground mb-2">8.2 Covered Order Issues</h3>
                       <ul className="list-disc pl-6 space-y-2">
-                        <li>For genuine shipping damage or defect, an incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
+                        <li>For genuine shipping damage or defect, a materially misdescribed or incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
                         <li>Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</li>
+                        <li>For covered order issues, the Returns Policy provides a full refund or replacement, your choice, without return shipping charges. Rights and remedies that cannot legally be excluded remain unaffected.</li>
                         <li>Keep the item and all packaging until LuxeMia reviews the claim. Do not send an item back unless LuxeMia authorizes it and provides instructions.</li>
                       </ul>
                     </div>

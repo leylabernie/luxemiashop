@@ -408,3 +408,36 @@ test('alternate stitching chart and how-to-measure dialogs contain no universal 
   assert.doesNotMatch(read('src/components/SizeChartModal.tsx'),/sizeChart|row\.bust|row\.waist|row\.hip/);
   assert.match(read('src/components/HowToMeasureModal.tsx'),/Measure around the fullest part/);
 });
+
+test('support claim summary matches existing evidence policy in rendered and static views', async () => {
+  const { MemoryRouter } = require('react-router-dom');
+  const source = read('src/pages/SemanticCommercePage.tsx').replace(/^import (Header|Footer|SEOHead) from .*;$/gm, 'const $1 = () => null;');
+  const { outputFiles } = buildSync({stdin:{contents:source,loader:'tsx',resolveDir:root},bundle:true,write:false,format:'cjs',platform:'node',packages:'external',jsx:'automatic',alias:{'@':path.join(root,'src')}});
+  const m={exports:{}};new Function('require','module','exports',outputFiles[0].text)(require,m,m.exports);
+  const rendered = renderToStaticMarkup(React.createElement(MemoryRouter,{initialEntries:['/us-support']},React.createElement(m.exports.default)));
+  const { routes, generateHtml } = await prerender();
+  const raw = generateHtml(template, routes.find(r=>r.path==='/us-support'), new Map());
+  for (const html of [rendered,raw]) {
+    assert(html.includes(returns.SUPPORT_CLAIM_SUMMARY));
+    assert(html.includes(returns.RETURN_EVIDENCE_REQUIREMENT));
+    assert.match(html,/href="\/returns"/);
+    assert.doesNotMatch(html,/when available/);
+  }
+});
+
+test('claim summaries preserve materially misdescribed coverage and statutory rights without incorrect named-rule explanation', async () => {
+  for (const text of [returns.RETURN_POLICY_SUMMARY,returns.RETURN_POLICY_FAQ_ANSWER,returns.COVERED_ORDER_ISSUE_ANSWER,returns.SUPPORT_CLAIM_SUMMARY]) assert.match(text,/materially misdescribed/);
+  const terms=read('src/pages/Terms.tsx');
+  assert.doesNotMatch(terms,/All sales are final\. Exchanges are not accepted\./);
+  assert.match(terms,/Voluntary change-of-mind returns/);
+  assert.match(terms,/full refund or replacement, your choice/);
+  assert.match(terms,/Rights and remedies that cannot legally be excluded/);
+  assert.doesNotMatch(read('src/pages/Returns.tsx'),/FTC Mail Order Rule/);
+  assert.match(read('src/pages/Returns.tsx'),/Nothing in this policy limits any consumer rights or remedies that cannot legally be excluded under applicable law/);
+  const {routes,generateHtml}=await prerender();
+  for (const url of ['/returns','/terms','/faq']) assert.match(generateHtml(template,routes.find(r=>r.path===url),new Map()),/materially misdescribed/);
+  const faq=read('src/pages/FAQ.tsx');
+  assert.match(faq,/answer: RETURN_POLICY_FAQ_ANSWER/);
+  assert.match(faq,/answer: COVERED_ORDER_ISSUE_ANSWER/);
+  assert.match(faq,/These reporting steps do not remove rights that cannot legally be excluded/);
+});
