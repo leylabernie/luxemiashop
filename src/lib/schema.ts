@@ -72,9 +72,8 @@ export function generateReturnPolicySchema() {
   return null;
 }
 
-// Standard U.S. shipping terms are defined once at the Organization level.
-// Product-level shippingDetails should be added only for documented SKU-specific
-// exceptions, rather than copying policy data into every offer.
+// Shipping terms are defined once at the Organization level.
+// Offers reference these policies rather than copying rates or delivery estimates.
 export function generateUsShippingServiceSchema() {
   const createService = (id: string, name: string, countries: string | string[], rate: number, freeThreshold?: number) => ({
     '@type': 'ShippingService',
@@ -105,11 +104,15 @@ export function generateUsShippingServiceSchema() {
   ];
 }
 
-// Product offers intentionally omit optional shippingDetails. Order-total thresholds
-// belong on Organization ShippingService.shippingConditions, not OfferShippingDetails.
-// A product handling window alone cannot describe destination/service-specific transit
-// or optional tailoring. Keep Merchant Center and the published shipping policy as
-// the authoritative delivery configuration instead of inventing a universal estimate.
+// Google documents this reference-only form for linking an Offer to global policies:
+// https://developers.google.com/search/docs/appearance/structured-data/merchant-listing#shipping-details
+// Keep cart-value conditions on ShippingService; do not infer delivery times from handling.
+export function generateOfferShippingReferences() {
+  return generateUsShippingServiceSchema().map(service => ({
+    '@type': 'OfferShippingDetails',
+    hasShippingService: { '@id': service['@id'] },
+  }));
+}
 
 // ─── Product Schema ────────────────────────────────────────────────────────
 
@@ -216,6 +219,7 @@ function generateOfferSchema(
     availability: `https://schema.org/${input.availability}`,
     itemCondition: 'https://schema.org/NewCondition',
     seller: { '@id': `${SITE_URL}/#organization` },
+    shippingDetails: generateOfferShippingReferences(),
   };
 }
 

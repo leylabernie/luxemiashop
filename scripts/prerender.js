@@ -165,6 +165,7 @@ async function loadTsModule(relativeSrcPath, externalPackages = false) {
 }
 const { measurementTitle, measurementHtml, sizingNextStepsHtml } = await loadTsModule('scripts/render-sizing-content.tsx', true);
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
+const { generateOfferShippingReferences } = await loadTsModule('src/lib/schema.ts');
 const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
@@ -1347,8 +1348,8 @@ function generateApprovedProductDirectoryHtml(products) {
   return `<p>Browse all ${approvedProducts.length} current product listings by category. Open an individual listing for its exact fabric, included pieces, sizing, price and availability.</p>${sections}`;
 }
 
-// Offers omit optional shippingDetails: cart-value thresholds are represented by
-// Organization ShippingService, and SKU handling alone is not a delivery estimate.
+// Offers reference the shared Organization shipping policies without duplicating
+// order-total thresholds or inventing delivery estimates.
 
 function normalizeBrand(vendor) {
   const raw = (vendor || '').trim();
@@ -1405,6 +1406,7 @@ function generateItemListJsonLd(products, category, routePath) {
           availability,
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': `${SITE_URL}/#organization` },
+          shippingDetails: generateOfferShippingReferences(),
         },
       },
     };
@@ -2847,6 +2849,7 @@ function generateHtml(template, route, allShopifyProducts) {
       availability: `https://schema.org/${variant?.availableForSale === false ? 'OutOfStock' : 'InStock'}`,
       itemCondition: 'https://schema.org/NewCondition',
       seller: { '@id': `${SITE_URL}/#organization` },
+      shippingDetails: generateOfferShippingReferences(),
     });
     const schemaVariantProduct = (variant) => {
       const variantId = variant?.id?.split('/').pop() || '';
