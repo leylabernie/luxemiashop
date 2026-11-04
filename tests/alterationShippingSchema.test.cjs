@@ -125,3 +125,28 @@ test('shipping references resolve to unchanged template policies covering exactl
     assert.deepEqual(result.offers.shippingDetails, references);
   }
 });
+
+
+test('SEO build validation allows policy references and rejects incomplete overrides or unknown IDs', () => {
+  const source = read('scripts/validate-seo-architecture.cjs');
+  const start = source.indexOf('const expectedShippingReferences =');
+  const end = source.indexOf('\nif (failures.length > 0)', start);
+  assert(start > 0 && end > start);
+  const { generateProductSchema, generateUsShippingServiceSchema } = loadSchema();
+  const validate = transform => {
+    const failures = [];
+    new Function('require', 'failures', 'services', 'generateProductSchema', source.slice(start, end))(
+      require, failures, generateUsShippingServiceSchema(),
+      input => { const result = generateProductSchema(input); transform(result.offers); return result; },
+    );
+    return failures;
+  };
+  assert.equal(validate(() => {}).length, 0);
+  for (const mutate of [
+    offer => { offer.shippingDetails[0].shippingRate = { value: 0 }; },
+    offer => { offer.shippingDetails[0].deliveryTime = { handlingTime: { maxValue: 4 } }; },
+    offer => { offer.shippingDetails[0].hasShippingService['@id'] = 'https://example.com/#unknown'; },
+    offer => { offer.shippingDetails.pop(); },
+    offer => { delete offer.shippingDetails; },
+  ]) assert.equal(validate(mutate).length, 1);
+});
