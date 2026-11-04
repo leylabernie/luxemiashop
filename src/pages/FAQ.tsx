@@ -119,11 +119,11 @@ const FAQ = () => {
         },
         {
           question: 'Why do I need an unboxing video?',
-          answer: 'The continuous unboxing/opening video is required to verify genuine shipping damage, an incorrect item, or a missing item. It must show the unopened package, shipping label, opening process, contents, and item condition.',
+          answer: 'The continuous unboxing/opening video is required to review damage, defects, a materially misdescribed or incorrect item, or missing pieces. It must show the unopened package, shipping label, opening process, contents, and item condition. These reporting steps do not remove rights that cannot legally be excluded.',
         },
         {
           question: 'What items cannot be returned?',
-          answer: 'Under LuxeMia’s voluntary policy, change-of-mind, fit and preference returns are not accepted except where applicable law provides otherwise. Genuine damage, defect, incorrect-item or missing-item claims should be reported within 48 hours using the covered-order-issue process.',
+          answer: 'Under LuxeMia’s voluntary policy, change-of-mind, fit and preference returns are not accepted except where applicable law provides otherwise. Genuine damage, defect, materially-misdescribed-item, incorrect-item or missing-item claims should be reported within 48 hours using the covered-order-issue process.',
         },
         {
           question: 'What if my order arrives damaged, incorrect, or incomplete?',

@@ -167,7 +167,7 @@ const { measurementTitle, measurementHtml, sizingNextStepsHtml } = await loadTsM
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
 const { generateOfferShippingReferences } = await loadTsModule('src/lib/schema.ts');
 const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
-const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
+const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY, SUPPORT_CLAIM_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
@@ -1497,7 +1497,7 @@ const semanticCommerceRoutes = [
     title: 'U.S.-Based Online Customer Support | LuxeMia',
     description: 'Contact LuxeMia for product, sizing, order and issue-reporting support from its U.S.-based online retail team.',
     h1: 'U.S.-Based Online Customer Support',
-    content: '<p>LuxeMia is an online-only retailer. Contact support by email, phone, WhatsApp or the contact form for product, sizing and order questions.</p><h2>Before ordering</h2><p>Share the product link, destination, selected option, measurements and event date. Support can clarify published details but cannot guarantee event-date delivery.</p><h2>Issue escalation</h2><p>Report damage, defects, a materially misdescribed item, an incorrect item or missing pieces promptly. The 48-hour evidence request does not remove rights that cannot legally be excluded.</p>',
+    content: '<p>LuxeMia is an online-only retailer. Contact support by email, phone, WhatsApp or the contact form for product, sizing and order questions.</p><h2>Before ordering</h2><p>Share the product link, destination, selected option, measurements and event date. Support can clarify published details but cannot guarantee event-date delivery.</p><h2>Issue escalation</h2><p>' + escapeHtml(SUPPORT_CLAIM_SUMMARY) + '</p><p><a href="/returns">Returns policy</a></p>',
   },
   {
     path: '/editorial-policy',
@@ -2522,7 +2522,7 @@ const routes = [
     title: 'Terms of Service | LuxeMia',
     description: 'LuxeMia terms of service. Our policies for orders, shipping, returns, and use of the LuxeMia website.',
     h1: 'Terms of Service',
-    content: '<p>Read our terms of service for information about orders, shipping, returns, and use of the LuxeMia website.</p><h2>Order cancellations</h2><p>Email hello@luxemia.shop with your order number as soon as possible. Cancellations within 24 hours of ordering receive a full refund. After 24 hours, requests are considered case by case and cancellation may not be possible. If cancellation is possible, the refund is reduced only by non-recoverable supplier costs, which will be disclosed before proceeding. This policy does not limit rights or remedies that cannot legally be excluded.</p>',
+    content: '<p>Read our terms of service for information about orders, shipping, returns, and use of the LuxeMia website.</p>' + '<h2>Returns and covered order issues</h2><p>' + escapeHtml(RETURN_POLICY_FAQ_ANSWER) + '</p><p>For covered order issues, the Returns Policy provides a full refund or replacement, your choice, without return shipping charges. Rights and remedies that cannot legally be excluded remain unaffected. <a href="/returns">Read the complete Returns Policy</a>.</p><h2>Order cancellations</h2><p>Email hello@luxemia.shop with your order number as soon as possible. Cancellations within 24 hours of ordering receive a full refund. After 24 hours, requests are considered case by case and cancellation may not be possible. If cancellation is possible, the refund is reduced only by non-recoverable supplier costs, which will be disclosed before proceeding. This policy does not limit rights or remedies that cannot legally be excluded.</p>',
   },
   {
     path: '/press',
