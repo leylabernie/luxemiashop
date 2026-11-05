@@ -1,3 +1,4 @@
+import { getFulfillmentGuidanceRoutes } from '../src/lib/fulfillmentGuidance.cjs';
 import { renderReviewedShoppingLinks } from '../src/lib/reviewedShoppingLinks.cjs';
 import { stripPausedCustomizationLinks } from '../src/lib/pausedCollectionLinks.cjs';
 import { serializeJsonLd } from '../src/lib/serializeJsonLd.cjs';
@@ -1550,21 +1551,12 @@ const semanticCommerceRoutes = [
     description: 'Shop items classified as stocked while confirming selected-variant availability and processing.',
     content: '<p>A listed item still requires order processing before carrier transit; requested alterations or finishing add processing time.</p><h2>Confirm the selected variant</h2><p>Review product-level processing and destination details before ordering for an event.</p>',
   },
-  {
-    path: '/shop-by-fulfillment/made-to-order', title: 'Indian Outfits & Fit Requests | LuxeMia', h1: 'Indian Outfits & Fit Requests',
-    description: 'Understand measurements and timing for requested garment alterations.',
-    content: '<p>This legacy route describes requested alterations, not new garment production. Items retain their listed construction. Requested alterations or finishing add 3 business days once after complete details are confirmed; estimated standard delivery is 15–21 business days, not guaranteed.</p>',
-  },
-  {
-    path: '/shop-by-fulfillment/customizable-outfits', title: 'Customizable Indian Outfits | LuxeMia', h1: 'Customizable Indian Outfits',
-    description: 'Shop Indian outfits with only the customization options expressly supported by each listing.',
-    content: '<p>Customization is product-specific. Select only listed options and obtain confirmation for material fit or design requests before checkout.</p><h2>Shop verified options</h2><p><a href="/collections/customizable-indian-outfits">Browse customizable outfits</a> or use the <a href="/sizing-measurements-guide">measurement guide</a>.</p>',
-  },
 ];
 
 // Route definitions with SEO metadata
 const routes = [
   ...semanticCommerceRoutes,
+  ...getFulfillmentGuidanceRoutes(),
   {
     path: '/',
     title: getIndexableRouteSeo('/').title,
@@ -1976,11 +1968,11 @@ const routes = [
     description: getIndexableRouteSeo('/kids').description,
     h1: getIndexableRouteSeo('/kids').h1,
     content: `
-      <p>Festive Indian ethnic sets for girls, delivered in the USA. Every kids' listing states its fabric, included pieces and the sizes it is available in — review the exact product page before ordering.</p>
+      <p>Indian ethnic outfits for boys and girls — kurta pajama and salwar sets. Review each listing for fabric, included pieces, size options and current availability.</p>
       <h2>Shop Kids by Style</h2>
       <ul>
-        <li><a href="/kids?sub=salwar-set">Salwar Sets</a> — Kurta, farshi and dupatta sets for festive events</li>
-        <li><a href="/kids?sub=lehenga-set">Lehenga Sets</a> — Occasion lehenga styles for girls</li>
+        <li><a href="/kids?sub=salwar-set">Salwar Sets</a> — Review the listing for included pieces and size options</li>
+        <li><a href="/kids?sub=kurta-pajama">Kurta Pajama Sets</a> — Review the listing for included pieces and size options</li>
       </ul>
       <h2>Shop Kids by Occasion</h2>
       <ul>
@@ -1988,7 +1980,7 @@ const routes = [
         <li><a href="/kids?sub=wedding">Wedding Outfits</a> — Ceremonies and wedding-guest looks for kids</li>
       </ul>
       <h2>Kids' Sizing and Fit</h2>
-      <p>Kids' sets list the chest sizes they are stocked in. Compare the listed sizes with your child's current measurements before ordering, and contact LuxeMia if you are between sizes.</p>
+      <p>Check the size options and any measurements on the selected product page against your child's current measurements. Contact LuxeMia before ordering if sizing is unclear or your child is between sizes.</p>
     `,
   },
   {

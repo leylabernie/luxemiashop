@@ -1,0 +1,74 @@
+{
+  "/shop-by-fulfillment/made-to-order": {
+    "title": "Indian Outfits & Fit Requests | LuxeMia",
+    "description": "Understand measurements and timing for requested garment alterations.",
+    "eyebrow": "Shop by need",
+    "answer": "This legacy route describes fit requests, not new garment production. Requested alterations or finishing add 3 business days once after complete details are confirmed; standard estimated delivery is 15–21 business days, not guaranteed.",
+    "sections": [
+      {
+        "heading": "How to choose",
+        "body": "Start with the occasion and role, then compare the exact product listing for included pieces, fabric wording, stitching status, measurements, available variants, fulfillment classification and current price. Photographs provide styling context but do not replace the written specifications."
+      },
+      {
+        "heading": "Plan for a fixed event date",
+        "body": "Processing happens before carrier transit. A product being available for sale does not necessarily mean it is stocked for immediate dispatch. Review the product-level timing and contact LuxeMia before ordering when an event date is critical; delivery is not guaranteed."
+      },
+      {
+        "heading": "Support and order protection",
+        "body": "Use the measurement guide before selecting a size. Read the current shipping and returns pages, and report a damaged, incorrect, missing or materially misdescribed item promptly with the requested evidence. Mandatory consumer rights remain unaffected."
+      }
+    ],
+    "links": [
+      {
+        "label": "Bridal and wedding lehengas",
+        "href": "/lehengas"
+      },
+      {
+        "label": "Indian wedding sarees",
+        "href": "/sarees"
+      },
+      {
+        "label": "Salwar kameez and suits",
+        "href": "/suits"
+      },
+      {
+        "label": "Sherwanis and menswear",
+        "href": "/menswear"
+      }
+    ]
+  },
+  "/shop-by-fulfillment/customizable-outfits": {
+    "title": "Customizable Indian Outfits | LuxeMia",
+    "description": "Shop Indian outfits with only the customization options expressly supported by each listing.",
+    "eyebrow": "Shop by need",
+    "answer": "Customization is product-specific. Select only listed options and obtain confirmation for any material fit or design request before checkout; unsupported changes are not implied.",
+    "sections": [
+      {
+        "heading": "How to choose",
+        "body": "Start with the occasion and role, then compare the exact product listing for included pieces, fabric wording, stitching status, measurements, available variants, fulfillment classification and current price. Photographs provide styling context but do not replace the written specifications."
+      },
+      {
+        "heading": "Plan for a fixed event date",
+        "body": "Processing happens before carrier transit. A product being available for sale does not necessarily mean it is stocked for immediate dispatch. Review the product-level timing and contact LuxeMia before ordering when an event date is critical; delivery is not guaranteed."
+      },
+      {
+        "heading": "Support and order protection",
+        "body": "Use the measurement guide before selecting a size. Read the current shipping and returns pages, and report a damaged, incorrect, missing or materially misdescribed item promptly with the requested evidence. Mandatory consumer rights remain unaffected."
+      }
+    ],
+    "links": [
+      {
+        "label": "Browse customizable outfits",
+        "href": "/collections/customizable-indian-outfits"
+      },
+      {
+        "label": "Measurement guide",
+        "href": "/sizing-measurements-guide"
+      },
+      {
+        "label": "Contact support",
+        "href": "/contact"
+      }
+    ]
+  }
+}
