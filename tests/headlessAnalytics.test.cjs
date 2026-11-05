@@ -85,7 +85,7 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
   const originalCalls = globalThis.analyticsCheckoutCalls;
   const events = [];
   const storage = new Map();
-  globalThis.window = { gtag: (...args) => events.push(args) };
+  globalThis.window = { addEventListener() {}, gtag: (...args) => events.push(args) };
   globalThis.localStorage = {
     getItem: key => storage.get(key) ?? null,
     setItem: (key, value) => storage.set(key, value),

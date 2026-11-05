@@ -10,6 +10,7 @@ import { usePageTracking } from "./hooks/useAnalytics";
 import { initMarketingPixels } from "./lib/marketingPixels";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 import WhatsAppButton from "./components/WhatsAppButton";
+import MarketingConsent from "./components/MarketingConsent";
 import NewVisitorPopup from "./components/home/NewVisitorPopup";
 // Eagerly loaded: Homepage is the most visited page
 import Index from "./pages/Index";
@@ -269,6 +270,7 @@ const App = () => (
               <MobileBottomNav />
               <WhatsAppButton />
               <NewVisitorPopup />
+              <MarketingConsent />
             </PageTracker>
           </BrowserRouter>
         </TooltipProvider>
@@ -278,3 +280,4 @@ const App = () => (
 );
 
 export default App;
+
