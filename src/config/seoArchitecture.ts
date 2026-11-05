@@ -81,8 +81,8 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/kids": {
       "title": "Kids Indian Ethnic Wear Online USA | LuxeMia",
-      "description": "Shop kids Indian ethnic wear online in the USA. Festive girls salwar sets and occasion outfits with stated fabric, included pieces and sizes.",
-      "h1": "Kids Indian Ethnic Wear & Girls Festive Sets"
+      "description": "Shop Indian outfits for boys and girls in the USA. Browse kurta pajama and salwar sets; review each listing for fabric, pieces, sizes and availability.",
+      "h1": "Kids Indian Ethnic Wear for Boys & Girls"
     },
     "/videos": {
       "title": "Shop by Video | Lehenga, Saree & Suit Videos | LuxeMia",

@@ -991,7 +991,7 @@ const KIDS: CategoryConfig = {
   heroImageWebp: FEATURED_CATEGORY_PRODUCTS.kids.imageWebp,
   heroAlt: FEATURED_CATEGORY_PRODUCTS.kids.alt,
   heroTitle: getIndexableRouteSeo('/kids').h1,
-  heroSubtitle: 'Festive Indian ethnic sets for girls — salwar sets, lehenga sets and occasion wear for U.S. delivery. Review each listing for stated fabric, included pieces and available sizes.',
+  heroSubtitle: 'Indian ethnic outfits for boys and girls — kurta pajama and salwar sets. Review each listing for fabric, included pieces, size options and current availability.',
   seoTitle: getIndexableRouteSeo('/kids').title,
   seoDescription: getIndexableRouteSeo('/kids').description,
   canonical: 'https://luxemia.shop/kids',
@@ -1004,6 +1004,7 @@ const KIDS: CategoryConfig = {
   subcategories: [
     occasionSub('festive', 'Festive', ['festive', 'festival', 'occasion:festival']),
     occasionSub('wedding', 'Wedding', ['wedding', 'wedding guest', 'occasion:wedding']),
+    styleSub('kurta-pajama', 'Kurta Pajama Sets', ['kurta pajama']),
     styleSub('salwar-set', 'Salwar Sets', ['salwar set', 'salwar']),
     styleSub('lehenga-set', 'Lehenga Sets', ['lehenga', 'kids lehenga']),
     priceSub('under-100', 'Under $100', 0, 100),
@@ -1032,11 +1033,11 @@ const KIDS: CategoryConfig = {
   faqs: [
     {
       question: "What kids' ethnic wear does LuxeMia sell?",
-      answer: "LuxeMia stocks festive Indian outfits for girls, including embroidered salwar sets and lehenga-style sets. Each listing states the fabric, included pieces and the sizes available."
+      answer: "Browse Indian outfits for boys and girls, including kurta pajama and salwar sets. Check the selected product page for fabric, included pieces, size options and current availability."
     },
     {
-      question: "How do I choose a size for girls' ethnic wear?",
-      answer: "Check the size options on the product page and compare them to your child's current measurements. Salwar sets list the chest sizes each listing is available in; contact LuxeMia before ordering if you are between sizes."
+      question: "How do I choose a size for kids' ethnic wear?",
+      answer: "Check the size options and any measurements on the selected product page against your child's current measurements. Contact LuxeMia before ordering if sizing is unclear or your child is between sizes."
     },
     {
       question: "Do you ship kids' outfits to the United States?",
@@ -1152,7 +1153,7 @@ export const MEGA_MENUS: MegaMenuConfig[] = [
     label: 'Kids',
     href: '/kids',
     groups: [
-      { label: 'By Style', links: [{ name: 'Salwar Sets', href: '/kids?sub=salwar-set' }, { name: 'Lehenga Sets', href: '/kids?sub=lehenga-set' }] },
+      { label: 'By Style', links: [{ name: 'Salwar Sets', href: '/kids?sub=salwar-set' }, { name: 'Kurta Pajama Sets', href: '/kids?sub=kurta-pajama' }] },
       { label: 'By Occasion', links: [{ name: 'Festive', href: '/kids?sub=festive' }, { name: 'Wedding', href: '/kids?sub=wedding' }] },
     ],
   },

@@ -1,3 +1,4 @@
+import fulfillmentGuidance from '@/config/fulfillmentGuidance.json';
 import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { Link, useLocation } from 'react-router-dom';
 import Header from '@/components/layout/Header';
@@ -32,6 +33,7 @@ const hub = (title: string, description: string, answer: string, links = commonS
 });
 
 const DEFINITIONS: Record<string, Definition> = {
+  ...fulfillmentGuidance,
   '/us-support': {
     title: 'U.S.-Based Online Customer Support | LuxeMia',
     description: 'Contact LuxeMia for product, sizing, order and issue-reporting support from its U.S.-based online retail team.',
@@ -72,8 +74,6 @@ const DEFINITIONS: Record<string, Definition> = {
   '/wedding-events': hub('Shop Outfits by Indian Wedding Event', 'Find outfit guidance and collections for Mehendi, Haldi, Sangeet and reception events.', 'Event pages organize current products by shopping intent. They are not universal dress rules: hosts, region, religion, venue and family preferences can change what is appropriate.', [{ label: 'Mehendi outfits', href: '/collections/mehendi-outfits' }, { label: 'Haldi outfits', href: '/collections/haldi-outfits' }, { label: 'Sangeet and reception guest outfits', href: '/collections/wedding-guest-outfits' }]),
   '/shop-by-fulfillment': hub('Shop Indian Outfits by Fulfillment', 'Review supplied construction, fit requests and processing before ordering.', 'Fulfillment describes what happens before dispatch. Items retain their listed semi-stitched, ready-stitched or explicit fabric-only construction; requested alterations do not mean new garment manufacture. Availability for sale alone does not prove immediate stock.', [{ label: 'Ready-to-ship outfits', href: '/shop-by-fulfillment/ready-to-ship' }, { label: 'Fit requests', href: '/shop-by-fulfillment/made-to-order' }, { label: 'Customizable outfits', href: '/shop-by-fulfillment/customizable-outfits' }]),
   '/shop-by-fulfillment/ready-to-ship': hub('Ready-to-Ship Indian Outfits', 'Shop items classified as stocked while confirming selected-variant availability and processing.', 'A listed item still requires order processing before carrier transit; requested alterations or finishing add processing time. Confirm the exact selected variant, product-level processing estimate and destination before ordering for an event.', [{ label: 'Browse verified ready-to-ship items', href: '/ready-to-ship' }, ...commonShopLinks]),
-  '/shop-by-fulfillment/made-to-order': hub('Indian Outfits & Fit Requests', 'Understand measurements and timing for requested garment alterations.', 'This legacy route describes fit requests, not new garment production. Requested alterations or finishing add 3 business days once after complete details are confirmed; standard estimated delivery is 15–21 business days, not guaranteed.', commonShopLinks),
-  '/shop-by-fulfillment/customizable-outfits': hub('Customizable Indian Outfits', 'Shop Indian outfits with only the customization options expressly supported by each listing.', 'Customization is product-specific. Select only listed options and obtain confirmation for any material fit or design request before checkout; unsupported changes are not implied.', [{ label: 'Browse customizable outfits', href: '/collections/customizable-indian-outfits' }, { label: 'Measurement guide', href: '/sizing-measurements-guide' }, { label: 'Contact support', href: '/contact' }]),
 };
 
 const countryByPath: Record<string, { code: string; title: string }> = {
