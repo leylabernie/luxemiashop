@@ -7,5 +7,12 @@
   "sarees": [
     { "name": "Wedding Guest & Reception Sarees", "href": "/collections/wedding-sarees" },
     { "name": "Banarasi Sarees", "href": "/collections/banarasi-sarees" }
+  ],
+  "lehengas": [
+    { "name": "Bridal Lehengas", "href": "/collections/bridal-lehengas" },
+    { "name": "Party-Wear Lehengas", "href": "/collections/party-wear-lehengas" },
+    { "name": "Mehendi Outfits", "href": "/collections/mehendi-outfits" },
+    { "name": "Haldi Outfits", "href": "/collections/haldi-outfits" },
+    { "name": "Wedding Guest Outfits", "href": "/collections/wedding-guest-outfits" }
   ]
 }

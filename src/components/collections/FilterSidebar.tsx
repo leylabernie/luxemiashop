@@ -124,7 +124,7 @@ export function FilterSidebar({
 
                   return sub.landingPath ? (
                     <Link key={sub.slug} to={sub.landingPath} className={className}>
-                      {reviewedShoppingLinks.sarees.find(link => link.href === sub.landingPath)?.name || sub.label}
+                      {(reviewedShoppingLinks[config.slug as keyof typeof reviewedShoppingLinks] || []).find(link => link.href === sub.landingPath)?.name || sub.label}
                     </Link>
                   ) : (
                     <button

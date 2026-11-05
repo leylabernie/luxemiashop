@@ -210,15 +210,15 @@ const SEOHead = ({
       <meta property="og:title" content={seoTitle} />
       <meta property="og:description" content={seoDescription} />
       <meta property="og:image" content={product ? gmcSafeImage : absoluteImage} />
-      {/* og:image dimensions — declared as 1200x630 to match the evergreen
-          brand image used as the non-product social fallback. This
-          fixes WhatsApp/LinkedIn/Twitter share card rendering and removes
-          the "og:image dimensions missing" warning from social card
-          validators. Product pages may serve a product image; the dimensions
-          meta is a hint, not a constraint, so crawlers will fall back to
-          the actual image if it differs. */}
-      <meta property="og:image:width" content="1200" />
-      <meta property="og:image:height" content="630" />
+      <meta property="og:image:alt" content={product?.name || seoTitle} />
+      {/* Only the known brand fallback has verified fixed dimensions. Product
+          URLs may be resized or retain their original aspect ratio. */}
+      {!product && absoluteImage === 'https://luxemia.shop/images/social/luxemia-brand-preview-2026.jpg' && (
+        <>
+          <meta property="og:image:width" content="1200" />
+          <meta property="og:image:height" content="630" />
+        </>
+      )}
       <meta property="og:site_name" content="LuxeMia" />
       <meta property="og:locale" content="en_US" />
 
@@ -249,6 +249,7 @@ const SEOHead = ({
       <meta name="twitter:url" content={canonicalUrl} />
       <meta name="twitter:title" content={seoTitle} />
       <meta name="twitter:description" content={seoDescription} />
+      <meta name="twitter:image:alt" content={product?.name || seoTitle} />
       <meta name="twitter:image" content={product ? gmcSafeImage : absoluteImage} />
       <meta name="twitter:site" content="@LuxeMia" />
       {product && <meta name="twitter:label1" content="Price" />}
