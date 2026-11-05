@@ -20,6 +20,7 @@ import { hasNativeFullStitchingOptions } from '@/lib/serviceAddOns';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
+import { trackMarketingViewContent } from '@/lib/marketingPixels';
 import StickyAddToBag from '@/components/product/StickyAddToBag';
 import {
   applyCustomizableProductDetails,
@@ -149,6 +150,13 @@ const ProductDetail = () => {
         productGroupId: product.id,
         occasion: product.metadata?.occasion?.join(', ') || undefined,
       });
+      // Retargeting match key: the catalogue feed (meta-catalog.csv) uses
+      // the product handle as its id, so the pixel must send the handle.
+      trackMarketingViewContent(
+        product.handle,
+        parseFloat(defaultVariant?.node.price.amount || product.priceRange.minVariantPrice.amount),
+        defaultVariant?.node.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
+      );
     }
   }, [product, addToRecentlyViewed]);
 

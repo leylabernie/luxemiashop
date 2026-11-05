@@ -1570,7 +1570,6 @@ const routes = [
       <p><a href="/indian-ethnic-wear-usa">Indian ethnic wear in the USA — sarees, lehengas, shararas and USA delivery details</a></p>
       <nav>
         <ul>
-          <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
           <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
@@ -1587,6 +1586,19 @@ const routes = [
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
       <p>Free U.S. standard shipping at $150 and above. $14.99 below $150. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <h2>Frequently Asked Questions</h2>
+      <h3>Where does LuxeMia ship Indian ethnic wear?</h3>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.</p>
+      <h3>What is your return policy?</h3>
+      <p>Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. If your item arrives damaged, defective, materially misdescribed, incorrect, or incomplete, contact LuxeMia within 48 hours of delivery with clear photos and a continuous unboxing/opening video, and we will fix it. See the Returns page for the complete claim instructions.</p>
+      <h3>Where can I confirm a product's materials and details?</h3>
+      <p>Product pages state the available fabric, embroidery or embellishment work, stitching status, sizes, and package contents when those details are supplied. Contact LuxeMia before ordering if an important detail is not listed.</p>
+      <h3>Can I get custom sizing or alterations for my outfit?</h3>
+      <p>Sizing, stitching, and made-to-measure options vary by product. Use only the options shown on the selected product page, and contact LuxeMia before ordering if a size or stitching detail is unclear.</p>
+      <h3>How can I ensure the color of the outfit is accurate when viewing online?</h3>
+      <p>We strive for accurate color representation in our product photography. However, slight color variations may occur due to screen settings and lighting. We recommend reviewing all available product images and descriptions.</p>
+      <h3>How can I get styling advice for a specific occasion?</h3>
+      <p>Contact LuxeMia by WhatsApp with your occasion, date, preferred color, size, and budget. We can help you compare current listings, but the exact product page controls availability, included pieces, sizing, and stitching options.</p>
     `,
   },
   {
