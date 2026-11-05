@@ -1,3 +1,4 @@
+import { setProductSocialMetadata } from '../src/lib/productSocialMetadata.cjs';
 import { getFulfillmentGuidanceRoutes } from '../src/lib/fulfillmentGuidance.cjs';
 import { renderReviewedShoppingLinks } from '../src/lib/reviewedShoppingLinks.cjs';
 import { stripPausedCustomizationLinks } from '../src/lib/pausedCollectionLinks.cjs';
@@ -1666,52 +1667,10 @@ const routes = [
       <p>The Ready to Ship availability filter includes purchasable products unless Shopify identifies them as Made to Order or Made to Measure. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
       <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
       <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
-      <h2>Shop Lehengas by Occasion</h2>
-      <ul>
-        <li><a href="/lehengas?sub=bridal">Bridal Lehengas</a> — Heavily embroidered lehenga choli for your wedding day</li>
-        <li><a href="/lehengas?sub=wedding">Wedding Lehengas</a> — Elegant designs for wedding celebrations</li>
-        <li><a href="/lehengas?sub=engagement">Engagement Lehengas</a> — Statement pieces for the engagement ceremony</li>
-        <li><a href="/lehengas?sub=reception">Reception Lehengas</a> — Glamorous lehengas for the reception</li>
-        <li><a href="/lehengas?sub=mehendi">Mehendi Lehengas</a> — Vibrant lehengas for the henna ceremony</li>
-        <li><a href="/lehengas?sub=haldi">Haldi Lehengas</a> — Bright yellow & festive lehengas</li>
-        <li><a href="/lehengas?sub=sangeet">Sangeet Lehengas</a> — Dance-ready lehengas for the sangeet</li>
-        <li><a href="/lehengas?sub=party-wear">Party Wear Lehengas</a> — Stunning lehengas for festive occasions</li>
-      </ul>
-      <h2>Compare Reception and Wedding-Party Lehengas</h2>
-      <ul>
-        <li><a href="/maroon-lehenga-for-reception">Reception Lehengas</a> — Compare fabric, work, included pieces and stitching status</li>
-        <li><a href="/lehenga-for-bridesmaid">Bridesmaid Lehengas</a> — Current coordination and sizing considerations</li>
-        <li><a href="/lehenga-for-mother-of-bride">Mother-of-the-Bride Lehengas</a> — Compare current occasion styles</li>
-      </ul>
-      <h2>Shop Lehengas by Style</h2>
-      <ul>
-        <li><a href="/lehengas?sub=floral">Floral Lehengas</a> — Romantic floral embroidery</li>
-        <li><a href="/lehengas?sub=embroidered">Embroidered Lehengas</a> — Review each listing for its stated embroidery and work details</li>
-        <li><a href="/lehengas?sub=designer">Lehenga Styles</a> — Browse current listed designs</li>
-        <li><a href="/lehengas?sub=mirror-work">Mirror Work Lehengas</a> — Traditional Rajasthani mirror work</li>
-        <li><a href="/lehengas?sub=jacket-lehenga">Jacket Lehengas</a> — Layered lehenga with jacket</li>
-        <li><a href="/lehengas?sub=crop-top">Crop Top & Skirt Lehengas</a> — Modern indo-western silhouette</li>
-      </ul>
-      <h2>Shop Lehengas by Color</h2>
-      <ul>
-        <li><a href="/lehengas?sub=red">Red Lehengas</a> — Classic bridal red</li>
-        <li><a href="/lehengas?sub=pink">Pink Lehengas</a> — Soft & romantic</li>
-        <li><a href="/lehengas?sub=maroon">Maroon Lehengas</a> — Deep & rich</li>
-        <li><a href="/lehengas?sub=pastel">Pastel Lehengas</a> — Modern pastel shades</li>
-        <li><a href="/lehengas?sub=ivory">Ivory Lehengas</a> — Timeless & elegant</li>
-        <li><a href="/lehengas?sub=wine">Wine Lehengas</a> — Sophisticated & deep</li>
-      </ul>
-      <h2>Wedding Party & NRI Lehengas</h2>
-      <ul>
-        <li><a href="/lehengas?sub=bridesmaid">Bridesmaid Lehengas</a> — Coordinated looks for the bridal party</li>
-        <li><a href="/lehengas?sub=mother-of-bride">Mother of Bride Lehengas</a> — Elegant lehengas for mothers</li>
-        <li><a href="/lehengas?sub=nri-wedding">NRI Wedding Lehengas</a> — Destination wedding appropriate</li>
-      </ul>
-      <h2>Shop Lehengas by Price</h2>
-      <ul>
-        <li><a href="/lehengas?sub=under-200">Lehengas Under $200</a> — Current styles priced below $200</li>
-        <li><a href="/lehengas?sub=premium-300-plus">Premium Lehengas $300+</a> — Higher-priced and embellished options</li>
-      </ul>
+      <h2>Explore Lehenga and Occasion Collections</h2>
+      <ul>${renderReviewedShoppingLinks('lehengas')}</ul>
+      <h2>Choose by Color, Fabric, Work and Price</h2>
+      <p>Use the collection filters to narrow the available products. Open each listing to check its stated fabric, work, included pieces, sizing and price.</p>
     `,
   },
   {
@@ -2932,10 +2891,10 @@ function generateHtml(template, route, allShopifyProducts) {
     };
 
     const productOgImage = productImages[0];
-    html = html.replace(
-      /<meta property="og:image" content="[^"]*" \/>/,
-      () => `<meta property="og:image" content="${escapeHtml(productOgImage)}" />`
-    );
+    html = setProductSocialMetadata(html, {
+      image: productOgImage,
+      name: sanitizeProductTitle(live?.title || route.h1),
+    });
     html = html.replace(
       /<meta name="twitter:image" content="[^"]*" \/>/,
       () => `<meta name="twitter:image" content="${escapeHtml(productOgImage)}" />`

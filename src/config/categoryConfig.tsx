@@ -344,9 +344,7 @@ const LEHENGAS: CategoryConfig = {
       <h3>Bridal, Reception and Party-Wear Lehengas</h3>
       <p>
         Compare bridal lehengas with reception and party-wear styles by weight, work, included pieces and
-        stitching status. For related occasion ideas, see the <a href="/collections/party-wear-lehengas">reception lehenga selection</a>,
-        the <a href="/collections/bridal-party-outfits">bridal-party outfit collection</a> and the
-        <a href="/collections/party-wear-lehengas"> mother-of-the-bride lehenga selection</a>.
+        stitching status. For related occasion ideas, see the <a href="/collections/party-wear-lehengas">party-wear lehenga collection</a>.
       </p>
       <h3>Ready-to-Ship Bridal Lehengas in the USA</h3>
       <p>
@@ -1087,7 +1085,7 @@ function subcatLinks(catSlug: string, subcats: Subcategory[], group: Subcategory
   const filtered = subcats.filter(s => s.group === group);
   const indexableLinks = filtered.flatMap((subcategory) => {
     const href = getDedicatedSubcategoryPath(catSlug, subcategory.slug);
-    const reviewed = [...reviewedShoppingLinks.sarees, ...reviewedShoppingLinks.suits].find(link => link.href === href);
+    const reviewed = [...reviewedShoppingLinks.sarees, ...reviewedShoppingLinks.suits, ...reviewedShoppingLinks.lehengas].find(link => link.href === href);
     return href && canPromoteCollection(href) ? [{ name: reviewed?.name || subcategory.label, href }] : [];
   });
   const uniqueLinks = indexableLinks.filter((link, index, links) => links.findIndex(item => item.href === link.href) === index);

@@ -234,13 +234,13 @@ export function CategoryListing({ config, defaultSubcategory }: CategoryListingP
           )}
         </div>
 
-        {(['suits', 'sarees'] as string[]).includes(config.slug) && (
-          <nav aria-label={config.slug === 'suits' ? 'Shop suits by style' : 'Shop saree collections'}
+        {(['suits', 'sarees', 'lehengas'] as string[]).includes(config.slug) && (
+          <nav aria-label={config.slug === 'suits' ? 'Shop suits by style' : config.slug === 'lehengas' ? 'Explore Lehenga and Occasion Collections' : 'Shop saree collections'}
             className="container mx-auto mb-6 max-w-7xl px-4 lg:px-8">
-            <h2 className="font-serif text-lg mb-2">{config.slug === 'suits' ? 'Shop suits by style' : 'Shop saree collections'}</h2>
+            <h2 className="font-serif text-lg mb-2">{config.slug === 'suits' ? 'Shop suits by style' : config.slug === 'lehengas' ? 'Explore Lehenga and Occasion Collections' : 'Shop saree collections'}</h2>
             {config.slug === 'suits' && <p className="text-sm text-muted-foreground mb-3">Compare each listing’s included pieces, available sizes and current price.</p>}
             <div className="flex flex-wrap gap-2">
-              {reviewedShoppingLinks[config.slug as 'suits' | 'sarees'].filter(link => canPromoteCollection(link.href)).map(link => (
+              {reviewedShoppingLinks[config.slug as keyof typeof reviewedShoppingLinks].filter(link => canPromoteCollection(link.href)).map(link => (
                 <Link key={link.href} to={link.href} className="rounded-full border border-border px-4 py-2 text-sm hover:bg-secondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
                   {link.name}
                 </Link>

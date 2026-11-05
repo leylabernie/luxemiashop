@@ -147,8 +147,11 @@ for (const file of files) {
     html = setMeta(html, 'name', 'twitter:description', SHIPPING_DESCRIPTION);
   }
 
-  html = setMeta(html, 'property', 'og:image:alt', OG_IMAGE_ALT);
-  html = setMeta(html, 'name', 'twitter:image:alt', OG_IMAGE_ALT);
+  // Product image descriptions are supplied by the product prerender, not the brand template.
+  if (!/<meta\s+property=["']og:type["']\s+content=["']product["']/i.test(html)) {
+    html = setMeta(html, 'property', 'og:image:alt', OG_IMAGE_ALT);
+    html = setMeta(html, 'name', 'twitter:image:alt', OG_IMAGE_ALT);
+  }
 
   if (html !== before) {
     fs.writeFileSync(file, html, 'utf8');
