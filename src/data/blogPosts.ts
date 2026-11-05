@@ -252,14 +252,16 @@ export const blogPosts: BlogPost[] = [
       <p>Selecting all three adds <strong>$26</strong>. They are optional: if you already have suitable pieces or have arranged your own tailoring, choose only what you need. Do not assume the same charges or services apply to every LuxeMia product. Stitching feasibility depends on the available blouse fabric and your requested design.</p>
       <h2>What could one saree outfit cost before tax?</h2>
       <p>The table assumes one saree, all three optional extras, standard shipping to the United States and <strong>no discount</strong>. All figures are in USD. It excludes tax, separately purchased shoes, jewelry, outerwear and any other services you arrange elsewhere.</p>
-      <table>
-      <thead><tr><th>Saree and base price</th><th>With $26 extras</th><th>Standard shipping</th><th>Total before tax</th></tr></thead>
+      <div class="my-4 overflow-x-auto">
+      <table class="w-full text-left">
+      <thead><tr><th class="px-2 py-2 align-top border-b border-border">Saree and base price</th><th class="px-2 py-2 align-top border-b border-border">With $26 extras</th><th class="px-2 py-2 align-top border-b border-border">Standard shipping</th><th class="px-2 py-2 align-top border-b border-border">Total before tax</th></tr></thead>
       <tbody>
-      <tr><td><a href="/product/sky-blue-faux-soft-silk-zari-plain-banarasi-saree-102039">Sky Blue Faux Soft Silk Zari Plain Banarasi Saree</a><br>$57.87</td><td>$83.87</td><td>$14.99</td><td><strong>$98.86</strong></td></tr>
-      <tr><td><a href="/product/brown-faux-georgette-zari-buti-banarasi-saree-102041">Brown Faux Georgette Zari Buti Banarasi Saree</a><br>$97.07</td><td>$123.07</td><td>$14.99</td><td><strong>$138.06</strong></td></tr>
-      <tr><td><a href="/product/emerald-green-mashru-silk-blend-designer-border-banarasi-saree-106005">Emerald Green Mashru Silk Blend Designer Border Banarasi Saree</a><br>$173.60</td><td>$199.60</td><td>$0.00</td><td><strong>$199.60</strong></td></tr>
+      <tr><td class="px-2 py-2 align-top border-b border-border"><a href="/product/sky-blue-faux-soft-silk-zari-plain-banarasi-saree-102039">Sky Blue Faux Soft Silk Zari Plain Banarasi Saree</a><br>$57.87</td><td class="px-2 py-2 align-top border-b border-border">$83.87</td><td class="px-2 py-2 align-top border-b border-border">$14.99</td><td class="px-2 py-2 align-top border-b border-border"><strong>$98.86</strong></td></tr>
+      <tr><td class="px-2 py-2 align-top border-b border-border"><a href="/product/brown-faux-georgette-zari-buti-banarasi-saree-102041">Brown Faux Georgette Zari Buti Banarasi Saree</a><br>$97.07</td><td class="px-2 py-2 align-top border-b border-border">$123.07</td><td class="px-2 py-2 align-top border-b border-border">$14.99</td><td class="px-2 py-2 align-top border-b border-border"><strong>$138.06</strong></td></tr>
+      <tr><td class="px-2 py-2 align-top border-b border-border"><a href="/product/emerald-green-mashru-silk-blend-designer-border-banarasi-saree-106005">Emerald Green Mashru Silk Blend Designer Border Banarasi Saree</a><br>$173.60</td><td class="px-2 py-2 align-top border-b border-border">$199.60</td><td class="px-2 py-2 align-top border-b border-border">$0.00</td><td class="px-2 py-2 align-top border-b border-border"><strong>$199.60</strong></td></tr>
       </tbody>
       </table>
+      </div>
       <p>For example, the Sky Blue calculation is $57.87 + $10 + $8 + $8 + $14.99 = $98.86 before tax. The fabric names are deliberately different: faux soft silk, faux georgette and Mashru silk blend are not interchangeable material claims. Compare the listing's fabric, work and included pieces alongside the total.</p>
       <h2>How does shipping affect the budget?</h2>
       <p>The current <a href="/shipping">LuxeMia shipping policy</a> lists U.S. standard shipping at $14.99 below $150, with free standard shipping at $150 and above after discounts. A discount or a different combination of items can change the qualifying subtotal, so recheck the shipping line at checkout. Do not add an unwanted item merely to reach a threshold without comparing the overall amount.</p>
