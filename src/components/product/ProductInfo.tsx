@@ -563,9 +563,11 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
     }
     return lead;
   }, [product.description]);
+  // Keep the existing native timing scope; broader blouse measurement guidance
+  // must not change delivery estimates or duplicate service timing attributes.
   const requiresNativeTimingConfirmation = requiresNativeStitchingTimingConfirmation(
     product, purchasableVariant?.node.selectedOptions ?? [],
-  ) || needsBlouseServiceConfirmation;
+  ) || (isBanarasiSareeServiceProduct(product) && needsBlouseServiceConfirmation);
   const isUnstitchedDelivery = isUnstitchedDeliverySelection(
     product, purchasableVariant?.node.selectedOptions ?? [],
   );
@@ -811,8 +813,10 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
       ? { ...attribute, value: 'Customer supplied measurements for review; confirm before stitching' } : attribute);
     const configurationReference = measurementNow || (isMensSharedStockActive(rawProduct) && selectedAvailableServiceAddOnCodes.includes('garment-alteration'))
       ? crypto.randomUUID() : null;
-    const customAttributes: Array<{ key: string; value: string }> = measurementNow && !nativeMeasurementRequest
-      ? [] : [...blouseConfirmationAttributes];
+    // Optional blouse-service confirmations belong to the removable service,
+    // for both NOW and LATER. Keep genuine native tailoring on the garment.
+    const customAttributes: Array<{ key: string; value: string }> = nativeMeasurementRequest
+      ? [...blouseConfirmationAttributes] : [];
     if (configurationReference) customAttributes.push({ key: 'Configuration reference', value: configurationReference });
     if (isBanarasiSareeServiceProduct(product) && selectedAvailableServiceAddOnCodes.length > 0) {
       customAttributes.push({

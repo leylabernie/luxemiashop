@@ -359,10 +359,12 @@ export const isBanarasiSareeServiceProduct = (product: ServiceEligibleProduct): 
   product.productType?.trim().toLowerCase() === 'saree'
   && (product.tags?.includes('collection:banarasi-sarees') ?? false);
 
+/** Every already-eligible blouse-stitching selection needs the same measurement handoff. */
 export const requiresBlouseServiceConfirmation = (
   product: ServiceEligibleProduct,
   selected: ServiceAddOnCode[],
-): boolean => isBanarasiSareeServiceProduct(product) && selected.includes('blouse-stitching');
+): boolean => selected.includes('blouse-stitching')
+  && getEligibleServiceAddOns(product).includes('blouse-stitching');
 
 export const isBlouseServiceSelectionConfirmed = (
   product: ServiceEligibleProduct,

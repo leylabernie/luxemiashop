@@ -137,15 +137,15 @@ test('Blouse option offers all three services without inventing a finished-size 
   assert.equal(shouldRenderShopifyProductOption(option, { isStitchable: false }), true);
 });
 
-test('blouse acknowledgment is required only for the scoped selected service', () => {
+test('blouse acknowledgment follows eligible selected service, not collection tag', () => {
   const api = loadTypeScript('src/lib/serviceAddOns.ts');
   const product = { title: 'Banarasi Saree', productType: 'Saree', description: 'Unstitched blouse piece', tags: ['collection:banarasi-sarees'] };
   assert.equal(api.isBlouseServiceSelectionConfirmed(product, ['blouse-stitching'], false), false);
   assert.equal(api.isBlouseServiceSelectionConfirmed(product, ['blouse-stitching'], true), true);
   assert.equal(api.isBlouseServiceSelectionConfirmed(product, [], false), true);
   assert.equal(api.isBlouseServiceSelectionConfirmed(product, ['pico-fall', 'matching-petticoat'], false), true);
-  assert.equal(api.isBlouseServiceSelectionConfirmed({ ...product, tags: [] }, ['blouse-stitching'], false), true);
-  assert.equal(api.isBlouseServiceSelectionConfirmed({ ...product, productType: 'Lehenga' }, ['blouse-stitching'], false), true);
+  assert.equal(api.isBlouseServiceSelectionConfirmed({ ...product, tags: [] }, ['blouse-stitching'], false), false);
+  assert.equal(api.isBlouseServiceSelectionConfirmed({ ...product, title: 'Lehenga', productType: 'Lehenga' }, ['blouse-stitching'], false), true);
   assert.equal(api.blouseServiceConfirmationAttributes(product, ['blouse-stitching'], false).length, 0);
   const attributes = api.blouseServiceConfirmationAttributes(product, ['blouse-stitching'], true);
   assert.equal(attributes.length, 3);
@@ -172,7 +172,7 @@ test('all three add-ons are optional, deduplicated, and total the existing $26 c
   assert.match(handler, /Selected Service/);
   assert.match(handler, /code === 'blouse-stitching' \? blouseConfirmationAttributes/);
   assert.match(source, /code === 'blouse-stitching'\) setBlouseServiceConfirmed\(false\)/);
-  assert.match(source, /\) \|\| needsBlouseServiceConfirmation/);
+  assert.match(source, /\) \|\| \(isBanarasiSareeServiceProduct\(product\) && needsBlouseServiceConfirmation\)/);
   assert.match(source, /checked=\{blouseServiceConfirmed\}/);
   assert.match(read('src/lib/shopify.ts'), /attributes: item\.customAttributes\.map\(attr => \(\{ key: attr\.key, value: attr\.value \}\)\)/);
 });
