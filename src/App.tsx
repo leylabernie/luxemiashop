@@ -85,8 +85,8 @@ const queryClient = new QueryClient();
 
 // Component to handle page tracking inside router context
 const PageTracker = ({ children }: { children: React.ReactNode }) => {
-  usePageTracking();
   useEffect(() => { initMarketingPixels(); }, []);
+  usePageTracking();
   const location = useLocation();
   const navigationType = useNavigationType();
 

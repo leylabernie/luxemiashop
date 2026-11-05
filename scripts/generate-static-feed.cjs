@@ -737,15 +737,43 @@ function assertFeedSnapshotCoverage(xml, sourceLabel) {
   return stats;
 }
 
+// Remove feed items whose product link points at a retired (410) handle.
+// Used by every fallback path so a preserved snapshot can never publish
+// dead product URLs, even if it predates a retirement wave.
+function removeRetiredFeedItems(xml) {
+  let removed = 0;
+  const filtered = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
+    const handle = readProductHandleFromItem(itemXml);
+    if (handle && GONE_PRODUCT_HANDLES.has(handle)) {
+      removed += 1;
+      return '';
+    }
+    return itemXml;
+  });
+  return { xml: filtered, removed };
+}
+
 function copyValidatedFallbackFeed() {
   const existingFeed = path.resolve(__dirname, '../public/merchant-feed.xml');
   if (!fs.existsSync(existingFeed)) return false;
 
   const existingXml = fs.readFileSync(existingFeed, 'utf8');
-  const stats = assertFeedSnapshotCoverage(existingXml, 'Checked-in public/merchant-feed.xml');
+  // The checked-in snapshot can predate a retirement wave (the current one
+  // is 100% retired handles). Strip 410 items and validate what would
+  // actually be published; if nothing release-safe remains, fail loudly
+  // via the caller instead of shipping a feed of dead URLs.
+  const { xml: filteredXml, removed } = removeRetiredFeedItems(existingXml);
+  if (removed > 0) console.log(`[merchant-feed] Excluded ${removed} retired (410) items from the fallback snapshot`);
+  let stats;
+  try {
+    stats = assertFeedSnapshotCoverage(filteredXml, 'Checked-in public/merchant-feed.xml (after retired-item filtering)');
+  } catch (error) {
+    console.error(`[merchant-feed] Fallback snapshot is not publishable: ${error.message}`);
+    return false;
+  }
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), existingXml, 'utf8');
+  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), filteredXml, 'utf8');
   console.log(`[merchant-feed] Preserved validated local snapshot (${stats.offers} offers, ${stats.sizes} sizes, ${stats.materials} materials); public/ was not rewritten`);
   return true;
 }
