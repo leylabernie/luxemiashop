@@ -286,3 +286,85 @@ test('migrated mens NOW remains service-owned and missing paid service fails bef
   const missing=await migratedRun(0,measurements.emptyMeasurementDraft(),{serviceVariants:new Map(),selectedAvailableServiceAddOnCodes:[]});
   assert.equal(missing.added.length,0); assert.match(missing.errors[0],/alteration service could not be verified/);
 });
+
+// Regression: a blouse-fabric saree outside the Banarasi collection used to skip
+// both the measurement form and the confirmation gate. All data here is synthetic.
+const ordinarySaree = { id: 'plain-saree', title: 'Tissue Silk Saree', handle: 'fixture-tissue-saree', productType: 'Saree', description: 'Includes unstitched blouse fabric.', tags: [] };
+test('non-Banarasi blouse selection requires acknowledgment before any bag mutation', async () => {
+  const result = await run({ codes: ['blouse-stitching'], draft: measurements.emptyMeasurementDraft(), overrides: { product: ordinarySaree, blouseServiceConfirmed: false } });
+  assert.equal(result.added.length, 0);
+  assert.match(result.errors[0], /blouse measurement/);
+});
+test('non-Banarasi blouse NOW and LATER survive actual handler, bag and checkout adapter', async () => {
+  for (const draft of [now(), measurements.emptyMeasurementDraft()]) {
+    const result = await run({ codes: ['blouse-stitching', 'pico-fall', 'matching-petticoat'], draft, overrides: { product: ordinarySaree } });
+    assert.deepEqual(result.errors, []);
+    assert.equal(result.added.length, 4);
+    assert.equal(result.added[0].variantId, result.variant.id);
+    assert.deepEqual(result.added[0].price, result.variant.price);
+    assert.deepEqual(result.added[0].selectedOptions, result.variant.selectedOptions);
+    assert.deepEqual(result.added.slice(1).map(line => Number(line.price.amount)), [10, 8, 8]);
+    const service = result.added[1];
+    const submission = attrs(service).find(a => a.key === 'Measurement submission');
+    assert.match(submission.value, draft.choice === 'now' ? /Customer supplied/ : /after order/);
+    assert.equal(measurementRows(service).length, draft.choice === 'now' ? 1 : 0);
+    for (const line of [result.added[0], ...result.added.slice(2)]) assert.equal(measurementRows(line).length, 0);
+    const { store, requests } = testCart();
+    for (const line of result.added) store.getState().addItem(line);
+    await store.getState().createCheckout();
+    assert.equal(requests.length, 1);
+    for (let i = 0; i < result.added.length; i++) assert.deepEqual(requests[0][i].customAttributes, result.added[i].customAttributes);
+  }
+});
+test('non-Banarasi invalid NOW and Meta NOW block; Meta LATER carries handoff', async () => {
+  const invalid = await run({ codes: ['blouse-stitching'], draft: { ...now(), acknowledged: false }, overrides: { product: ordinarySaree } });
+  assert.equal(invalid.added.length, 0); assert.equal(invalid.validation.length, 1);
+  const overrides = { product: ordinarySaree, metaToken: 'fixture', metaRequestedLine: { quantity: 1 }, metaContentId: 'fixture-id' };
+  const blocked = await run({ codes: ['blouse-stitching'], overrides });
+  assert.match(blocked.errors[0], /Provide measurements after ordering/);
+  assert.equal(blocked.configured.length, 0);
+  const later = await run({ codes: ['blouse-stitching'], draft: measurements.emptyMeasurementDraft(), overrides });
+  assert.deepEqual(later.errors, []);
+  assert.equal(later.configured.length, 2);
+  assert.match(attrs(later.configured[1]).find(a => a.key === 'Measurement submission').value, /after order/);
+});
+
+test('removing non-native blouse service removes its NOW and LATER confirmations from checkout', async () => {
+  for (const draft of [now(), measurements.emptyMeasurementDraft()]) {
+    const result = await run({ codes: ['blouse-stitching', 'matching-petticoat'], draft, overrides: { product: ordinarySaree } });
+    assert.deepEqual(result.errors, []);
+    const confirmationKeys = ['Blouse Measurements', 'Blouse Confirmation', 'Measurement Acknowledgment', 'Measurement submission'];
+    for (const key of confirmationKeys) {
+      assert(attrs(result.added[1]).some(a => a.key === key), key + ' stays on service');
+      assert(!attrs(result.added[0]).some(a => a.key === key), key + ' does not leak onto garment');
+    }
+    const { store, requests } = testCart();
+    for (const line of result.added) store.getState().addItem(line);
+    store.getState().removeItem(result.added[1].variantId, result.added[1].customAttributes);
+    assert.equal(store.getState().items.length, 2);
+    assert.deepEqual(store.getState().items.map(line => line.variantId), [result.added[0].variantId, result.added[2].variantId]);
+    await store.getState().createCheckout();
+    assert.equal(requests.length, 1);
+    assert.equal(requests[0].length, 2);
+    for (const line of requests[0]) {
+      assert(!attrs(line).some(a => confirmationKeys.includes(a.key)));
+      assert.equal(measurementRows(line).length, 0);
+    }
+  }
+});
+test('native custom tailoring measurements remain on garment after optional service removal', async () => {
+  for (const draft of [now(), measurements.emptyMeasurementDraft()]) {
+    const result = await run({ native: true, draft, codes: ['blouse-stitching'], overrides: { product: ordinarySaree } });
+    assert.deepEqual(result.errors, []);
+    const { store, requests } = testCart();
+    for (const line of result.added) store.getState().addItem(line);
+    store.getState().removeItem(result.added[1].variantId, result.added[1].customAttributes);
+    await store.getState().createCheckout();
+    assert.equal(requests[0].length, 1);
+    const garmentAttributes = attrs(requests[0][0]);
+    assert(garmentAttributes.some(a => a.key === 'Custom Size'));
+    assert(garmentAttributes.some(a => a.key === 'Measurement Confirmation'));
+    assert(garmentAttributes.some(a => a.key === 'Measurement submission'));
+    assert.equal(measurementRows(requests[0][0]).length, draft.choice === 'now' ? 1 : 0);
+  }
+});
