@@ -52,6 +52,14 @@ const { getTitleDesignDetails } = loadTsModule('src/lib/merchantDesignDetails.ts
 const { selectMerchantImage } = loadTsModule('src/lib/merchantImages.ts');
 
 const SITE_URL = 'https://luxemia.shop';
+// Retired products return a real 410 from the storefront (see
+// src/data/legacyGoneProductHandles.json). A merchant feed item pointing at
+// a 410 wastes Merchant Center review and can trigger item disapprovals, so
+// retired handles are excluded at generation time in both the live-catalog
+// path and the checked-in snapshot fallback path.
+const GONE_PRODUCT_HANDLES = new Set(
+  JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8')),
+);
 // U.S. shipping is account-managed: $14.99 below $150, free at $150 and above.
 // Do not emit a U.S. price override: it suppresses the account's order-total
 // threshold (including multi-item carts) and delivery settings. Keep the other
@@ -578,6 +586,7 @@ function sanitizeExistingFeedXml(xml) {
   let sanitized = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
     itemCount += 1;
     const handle = readProductHandleFromItem(itemXml);
+    if (handle && GONE_PRODUCT_HANDLES.has(handle)) return '';
     const rawTitle = readItemTag(itemXml, 'g:title') || 'Indian ethnic wear';
     const rawGroupTitle = readItemTag(itemXml, 'g:item_group_title');
     const originalBaseTitle = rawGroupTitle || rawTitle.split(/\s+[—–]\s+/)[0] || rawTitle;
@@ -728,15 +737,43 @@ function assertFeedSnapshotCoverage(xml, sourceLabel) {
   return stats;
 }
 
+// Remove feed items whose product link points at a retired (410) handle.
+// Used by every fallback path so a preserved snapshot can never publish
+// dead product URLs, even if it predates a retirement wave.
+function removeRetiredFeedItems(xml) {
+  let removed = 0;
+  const filtered = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
+    const handle = readProductHandleFromItem(itemXml);
+    if (handle && GONE_PRODUCT_HANDLES.has(handle)) {
+      removed += 1;
+      return '';
+    }
+    return itemXml;
+  });
+  return { xml: filtered, removed };
+}
+
 function copyValidatedFallbackFeed() {
   const existingFeed = path.resolve(__dirname, '../public/merchant-feed.xml');
   if (!fs.existsSync(existingFeed)) return false;
 
   const existingXml = fs.readFileSync(existingFeed, 'utf8');
-  const stats = assertFeedSnapshotCoverage(existingXml, 'Checked-in public/merchant-feed.xml');
+  // The checked-in snapshot can predate a retirement wave (the current one
+  // is 100% retired handles). Strip 410 items and validate what would
+  // actually be published; if nothing release-safe remains, fail loudly
+  // via the caller instead of shipping a feed of dead URLs.
+  const { xml: filteredXml, removed } = removeRetiredFeedItems(existingXml);
+  if (removed > 0) console.log(`[merchant-feed] Excluded ${removed} retired (410) items from the fallback snapshot`);
+  let stats;
+  try {
+    stats = assertFeedSnapshotCoverage(filteredXml, 'Checked-in public/merchant-feed.xml (after retired-item filtering)');
+  } catch (error) {
+    console.error(`[merchant-feed] Fallback snapshot is not publishable: ${error.message}`);
+    return false;
+  }
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), existingXml, 'utf8');
+  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), filteredXml, 'utf8');
   console.log(`[merchant-feed] Preserved validated local snapshot (${stats.offers} offers, ${stats.sizes} sizes, ${stats.materials} materials); public/ was not rewritten`);
   return true;
 }
@@ -1046,10 +1083,14 @@ async function main() {
     titleCounts.set(t, (titleCounts.get(t) || 0) + 1);
   }
 
-  const navratriPriorityHandles = selectNavratriPriorityHandles(products);
+  const liveProducts = products.filter((product) => !GONE_PRODUCT_HANDLES.has(product.handle));
+  const retiredSkipped = products.length - liveProducts.length;
+  if (retiredSkipped > 0) console.log(`[merchant-feed] Excluded ${retiredSkipped} retired (410) products from the feed`);
+
+  const navratriPriorityHandles = selectNavratriPriorityHandles(liveProducts);
   console.log(`[merchant-feed] Prioritized ${navratriPriorityHandles.size} Navratri product groups for seasonal title relevance`);
 
-  const itemsXml = products
+  const itemsXml = liveProducts
     .flatMap((product) =>
       product.variants.edges.map((edge) =>
         generateProductItemXml(product, edge.node, titleCounts, navratriPriorityHandles)
@@ -1075,7 +1116,7 @@ ${itemsXml}
 
   const distPath = path.join(distDir, 'merchant-feed.xml');
   fs.writeFileSync(distPath, feed, 'utf8');
-  console.log(`[merchant-feed] Written feed to ${distPath} (${(feed.length / 1024).toFixed(1)} KB, ${products.length} products)`);
+  console.log(`[merchant-feed] Written feed to ${distPath} (${(feed.length / 1024).toFixed(1)} KB, ${liveProducts.length} products)`);
 
   console.log('[merchant-feed] Checked-in public/merchant-feed.xml was not changed; refresh it only with MERCHANT_FEED_REFRESH_SOURCE');
 }

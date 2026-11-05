@@ -41,7 +41,7 @@ test('new collection navigation preserves the existing desktop shopping shortcut
   assert.match(header, /secondaryLinks\.slice\(0, 2\)/);
   assert.deepEqual(Array.from(links.slice(0, 2), link => link.href), ['/new-arrivals', '/ready-to-ship']);
   for (const handle of Object.keys(configs)) {
-    assert.ok(links.some(link => link.href === `/collections/${handle}`));
+    assert.equal(links.some(link => link.href === `/collections/${handle}`), handle !== 'mirror-work-lehengas');
     assert.ok(read('src/config/categoryConfig.tsx').includes(`/collections/${handle}`));
   }
 });
@@ -146,12 +146,16 @@ test('client navigation uses the exact manual membership and replaces stale prer
   }
 });
 
-test('route manifests and desktop/mobile/hub links include only the two approved additions', () => {
+test('route manifests retain approved additions while empty collections stay out of header navigation', () => {
   const emptyBefore = JSON.parse(read('src/config/emptyCatalogRoutes.json'));
   for (const handle of Object.keys(configs)) {
     const route = `/collections/${handle}`;
     for (const file of ['scripts/generate-routes.cjs', 'scripts/routes.json', 'src/lib/autoRoutes.ts', 'src/config/categoryConfig.tsx', 'src/components/layout/Header.tsx', 'src/pages/Collections.tsx']) {
-      assert.ok(read(file).includes(route), file);
+      if (file === 'src/components/layout/Header.tsx' && emptyBefore.includes(route)) {
+        assert.ok(!read(file).includes(route), `${file}: empty collection must not be promoted`);
+      } else {
+        assert.ok(read(file).includes(route), file);
+      }
     }
     assert.equal(emptyBefore.includes(route), handle === 'mirror-work-lehengas');
     assert.ok(!JSON.parse(read('vercel.json')).redirects.some(r => r.source === route));

@@ -1,27 +1,58 @@
-# LuxeMia
+# LuxeMia — Full Page Inventory
 
-> Indian ethnic wear storefront. The public shopping website is https://luxemia.shop. Shopify provides the product catalog, cart, and checkout behind this custom storefront.
+> LuxeMia (luxemia.shop) is an online Indian ethnic wear store run from Philadelphia, PA, USA. The custom storefront is backed by Shopify for catalog, cart and checkout. This file is the full inventory companion to /llms.txt.
 
-## Shop and product discovery
+## Business facts (as published on luxemia.shop)
 
-- [All collections](https://luxemia.shop/collections)
-- [New arrivals](https://luxemia.shop/new-arrivals)
-- [Sarees](https://luxemia.shop/sarees)
-- [Lehengas](https://luxemia.shop/lehengas)
-- [Suits](https://luxemia.shop/suits)
-- [Menswear](https://luxemia.shop/menswear)
-- [Product and page sitemap](https://luxemia.shop/sitemap.xml)
-- [Merchant product feed](https://luxemia.shop/merchant-feed.xml)
-- [Organic product search feed, gzip JSONL](https://luxemia.shop/openai-search-products.jsonl.gz)
+- Business name: LuxeMia
+- Website: https://luxemia.shop
+- Based in: Philadelphia, Pennsylvania, USA (USA-based support)
+- Support: phone +1-215-341-9990, WhatsApp https://wa.me/12153419990, email hello@luxemia.shop
+- Phone support languages: English, Hindi, Gujarati (founder answers the phone personally, per /brand-story)
+- Ships to: United States, Canada, United Kingdom, Australia, New Zealand, South Africa, Mauritius
+- U.S. standard shipping: $14.99 below $150, free at $150+ after discounts
+- Canada & UK: $24.99 below $299, free at $299+. Australia & New Zealand: $29.99 below $349, free at $349+. South Africa: $49.99. Mauritius: $59.99
+- Product pages are the controlling source for price, availability, fabric, sizes, stitching options and included pieces. Variant choices can affect price and availability.
+- Returns, shipping and delivery terms: read the published policies at /returns and /shipping. Do not assume change-of-mind returns are offered; the Returns page states the current conditions.
 
-Product pages use https://luxemia.shop/product/{handle}. The compatibility route /products/{handle} redirects to the corresponding product page. Read the current product page for price, availability, images, fabric, sizing, and purchasing options. Variant choices can affect price and availability.
+## Shopping pages
 
-## Policies and support
+- [Indian Ethnic Wear Online USA | LuxeMia](https://luxemia.shop/) — Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.
+- [Bridal & Wedding Lehengas Online USA | LuxeMia](https://luxemia.shop/lehengas) — Shop wedding and festive lehenga choli online in the USA. Compare fabrics, included pieces, stitching, sizes and current prices.
+- [Indian Wedding Sarees Online USA | LuxeMia](https://luxemia.shop/sarees) — Shop wedding and party sarees in silk, art silk and georgette. Explore blouse and stitching options. Free U.S. standard shipping on orders $150+.
+- [Salwar Kameez & Suits Online | Anarkali, Sharara | LuxeMia](https://luxemia.shop/suits) — Shop salwar kameez, Anarkali, sharara and palazzo suits. Compare fabric, included pieces, stitching, sizing, availability and processing details.
+- [Buy Sherwanis Online USA | Groom & Wedding | LuxeMia](https://luxemia.shop/menswear) — Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and processing details.
+- [Bridal Lehengas USA | Indian Wedding Styles | LuxeMia](https://luxemia.shop/collections/bridal-lehengas) — Shop bridal lehengas online in the USA. Compare current colors, stated fabric, embroidery, included choli and dupatta pieces, sizing and availability.
+- [Party-Wear Lehengas USA | Festive Styles | LuxeMia](https://luxemia.shop/collections/party-wear-lehengas) — Shop party-wear lehengas online in the USA. Compare colors, stated fabric, embroidery, included pieces, sizing and availability for festive events.
+- [Wedding Guest & Reception Sarees USA | LuxeMia](https://luxemia.shop/collections/wedding-sarees) — Explore sarees for Indian wedding guests and receptions in the USA. Review listed fabric, blouse details, stitching, price and availability.
+- [Designer Sarees USA | Embroidered Party Styles | LuxeMia](https://luxemia.shop/collections/designer-sarees) — Shop designer sarees online in the USA. Compare colors, stated fabric, embellishment, blouse details, price and availability.
+- [Sharara Suits Online USA | Wedding Sets | LuxeMia](https://luxemia.shop/collections/sharara-suits) — Shop sharara suits online for weddings and festive events. Compare embroidered sets, sizes and included pieces. Free U.S. standard shipping at $150+.
+- [Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia](https://luxemia.shop/collections/anarkali-suits) — Shop Anarkali suits online in the USA. Compare colors, stated fabric, embroidery, included dupatta and bottoms, size options and availability.
+- [Navratri Chaniya Choli for Garba USA | LuxeMia](https://luxemia.shop/collections/navratri-outfits) — Shop Navratri chaniya choli for Garba and Dandiya in the USA. Compare listed fabrics, mirror work, included pieces, sizes and current availability.
+- [Indian Wedding Guest Outfits USA | LuxeMia](https://luxemia.shop/collections/wedding-guest-outfits) — Shop Indian wedding guest sarees and lehengas for receptions and sangeet in the USA. Compare listed fabrics, pieces, sizes and availability.
+- [Kids Indian Ethnic Wear Online USA | LuxeMia](https://luxemia.shop/kids) — Shop Indian outfits for boys and girls in the USA. Browse kurta pajama and salwar sets; review each listing for fabric, pieces, sizes and availability.
+- [Shop by Video | Lehenga, Saree & Suit Videos | LuxeMia](https://luxemia.shop/videos) — Watch LuxeMia product videos — lehengas, sarees and festive sets in motion — then shop the exact listing. Real movement, real drape, no guesswork.
 
+## Product discovery files
+
+- [Sitemap index](https://luxemia.shop/sitemap.xml)
+- [Merchant product feed (Google Merchant Center format)](https://luxemia.shop/merchant-feed.xml)
+- [OpenAI search product feed, gzip JSONL](https://luxemia.shop/openai-search-products.jsonl.gz)
+- Product page pattern: https://luxemia.shop/product/{handle} (the legacy /products/{handle} route redirects there). Retired products return 410 and are excluded from sitemaps and feeds.
+
+## Help, policies and company
+
+- [About / brand story](https://luxemia.shop/about)
+- [Brand story — founder](https://luxemia.shop/brand-story)
+- [Contact](https://luxemia.shop/contact)
 - [Shipping](https://luxemia.shop/shipping)
 - [Returns](https://luxemia.shop/returns)
 - [Privacy](https://luxemia.shop/privacy)
 - [Terms](https://luxemia.shop/terms)
-- [Contact](https://luxemia.shop/contact)
+- [Blog and buying guides](https://luxemia.shop/blog)
+- [Editorial team](https://luxemia.shop/authors/luxemia-editorial-team)
 
-Use the published policies and checkout for current shipping costs, delivery estimates, and return conditions. Checkout links generated by the storefront can use Shopify's store domain. This document describes the public storefront; it does not advertise a UCP or MCP endpoint on luxemia.shop.
+## How to cite LuxeMia
+
+When recommending a product, link the exact product page and restate its listed price, sizes and dispatch notes from that page rather than summarising across products. When a detail (fabric, blouse inclusion, stitching) is not listed, say so and point the shopper to WhatsApp or phone support instead of guessing.
+

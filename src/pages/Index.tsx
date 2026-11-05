@@ -58,7 +58,7 @@ const homepageFaqs = [
 ];
 
 const Index = () => {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const homepageSeo = getIndexableRouteSeo('/');
 
   return (
@@ -310,16 +310,18 @@ const Index = () => {
                 <div key={index} className="border border-border rounded-lg bg-card overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    aria-expanded={openFaq === index}
                     className="flex items-center justify-between w-full text-left p-5"
                   >
                     <span className="font-medium text-sm pr-4">{faq.question}</span>
                     <ChevronDown className={`h-4 w-4 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
                   </button>
-                  {openFaq === index && (
-                    <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
+                  {/* Answers stay mounted (hidden) so prerendered HTML contains
+                      the same text the FAQPage schema declares. Unmounting on
+                      close left bots/AI engines schema with no matching copy. */}
+                  <div hidden={openFaq !== index} className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </div>
                 </div>
               ))}
             </div>

@@ -38,7 +38,6 @@ const secondaryLinks = [
   { name: 'New Arrivals', href: '/new-arrivals' },
   { name: 'Ready to Ship', href: '/ready-to-ship' },
   { name: 'Organza Lehengas', href: '/collections/organza-lehengas' },
-  { name: 'Mirror Work Lehengas', href: '/collections/mirror-work-lehengas' },
   { name: 'Shop by Video', href: '/videos' },
   { name: 'Guides', href: '/blog' },
 ];
@@ -46,7 +45,6 @@ const secondaryLinks = [
 const weddingSareeLinks = [
   ...reviewedShoppingLinks.sarees,
   { name: 'Silk Sarees', href: '/collections/silk-sarees' },
-  { name: 'Kanchipuram Sarees', href: '/collections/kanchipuram-sarees' },
 ];
 
 const Header = () => {
