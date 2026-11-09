@@ -36,27 +36,6 @@ function patchSource() {
   let changes = 0;
 
   changes += Number(replaceOnce(
-    'index.html',
-    '<link rel="preload" as="image" href="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp" type="image/webp" media="(max-width: 639px)" fetchpriority="high">\n    <link rel="preload" as="image" href="/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp" type="image/webp" media="(min-width: 640px)" fetchpriority="high">',
-    '<link rel="preload" as="image" href="/images/campaigns/luxemia-diwali-2026-mobile.webp" type="image/webp" media="(max-width: 639px)" fetchpriority="high">\n    <link rel="preload" as="image" href="/images/campaigns/luxemia-diwali-2026-desktop.webp" type="image/webp" media="(min-width: 640px)" fetchpriority="high">',
-    'homepage LCP preload',
-  ));
-
-  changes += Number(replaceOnce(
-    'src/components/home/NewArrivalsBanner.tsx',
-    `  useEffect(() => {\n    const nextSlide = featuredSlides[(index + 1) % featuredSlides.length];\n    const source =\n      window.matchMedia('(min-width: 640px)').matches && nextSlide.desktopImage\n        ? nextSlide.desktopImage\n        : nextSlide.image;\n    const preloadedImage = new Image();\n    preloadedImage.src = \`\${source}.webp\`;\n  }, [index]);\n\n`,
-    '',
-    'eager next-slide preload removal',
-  ));
-
-  changes += Number(replaceOnce(
-    'src/components/home/NewArrivalsBanner.tsx',
-    '            fetchPriority="high"',
-    "            fetchPriority={index === 0 ? 'high' : 'low'}",
-    'active hero fetch priority',
-  ));
-
-  changes += Number(replaceOnce(
     'src/pages/Index.tsx',
     `                  loading="eager"\n                  decoding="async"\n                  className="h-full w-full object-cover object-top"`,
     `                  loading="lazy"\n                  fetchPriority="low"\n                  decoding="async"\n                  className="h-full w-full object-cover object-top"`,
@@ -160,9 +139,7 @@ function patchBuiltHomepage() {
     if (!fs.existsSync(absolutePath)) continue;
 
     const before = fs.readFileSync(absolutePath, 'utf8');
-    let after = before
-      .replaceAll('/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp', '/images/campaigns/luxemia-diwali-2026-mobile.webp')
-      .replaceAll('/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp', '/images/campaigns/luxemia-diwali-2026-desktop.webp');
+    let after = before;
 
     const compacted = compactHomepageProductSchema(after);
     after = compacted.output;

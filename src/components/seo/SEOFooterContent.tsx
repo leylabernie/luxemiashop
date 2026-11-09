@@ -96,7 +96,7 @@ const SEOFooterContent = () => {
                 <p>
                   Celebrate in style with our <Link to="/collections" className="text-foreground hover:text-primary transition-colors underline">festive wear</Link> collection. 
                   Shop <Link to="/collections/haldi-outfits" className="text-foreground hover:text-primary transition-colors underline">Haldi outfits for NRI guests</Link> and vibrant ensembles for 
-                  <strong className="text-foreground">Diwali and Karwa Chauth</strong>. From playful yellows to auspicious reds,
+                  <strong className="text-foreground">family gatherings and celebrations</strong>. From playful yellows to auspicious reds,
                   find the perfect look for every Indian celebration.
                 </p>
               </div>
