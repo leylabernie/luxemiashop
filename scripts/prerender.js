@@ -19,6 +19,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
 import catalogSource from './storefront-catalog.cjs';
+import merchantSizeOptions from '../merchant-feed-size.cjs';
+const { getSizeOption } = merchantSizeOptions;
 import reviewedLehengaCatalog from '../src/lib/reviewedLehengaCollections.cjs';
 const { reviewedLehengaCollections, isReviewedLehengaCollection, filterReviewedLehengaProducts } = reviewedLehengaCatalog;
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
@@ -2823,7 +2825,7 @@ function generateHtml(template, route, allShopifyProducts) {
       const variantId = variant?.id?.split('/').pop() || '';
       const selectedOptions = variant?.selectedOptions || [];
       const color = selectedOptions.find((option) => ['color', 'colour'].includes((option?.name || '').toLowerCase()))?.value || '';
-      const size = selectedOptions.find((option) => isSizeOptionName(option?.name))?.value || '';
+      const size = getSizeOption(selectedOptions)?.value || '';
       const visibleOptions = selectedOptions
         .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
         .map((option) => option.value);

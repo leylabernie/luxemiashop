@@ -220,6 +220,7 @@ if (
 }
 
 // Verified surviving multi-variant fixture after the 2026-11-09 age archive.
+// This verified fixture exposes Color and Size (plus an alteration service option).
 // Preserve exact Storefront / feed / ProductGroup parity checks.
 const VARIANT_PARITY_HANDLE = 'mustard-embroidered-blouse-draped-palazzo-set';
 const variantPrerenderPath = path.join(
@@ -295,7 +296,7 @@ const expectedVariesBy = [
 if (
   JSON.stringify(sortedIds(schemaVariantIds)) !== JSON.stringify(sortedIds(feedVariantIds))
   || JSON.stringify(productGroupSchema.variesBy || []) !== JSON.stringify(expectedVariesBy)
-  || JSON.stringify(expectedVariesBy) !== JSON.stringify(['https://schema.org/size'])
+  || JSON.stringify(expectedVariesBy) !== JSON.stringify(['https://schema.org/color', 'https://schema.org/size'])
 ) {
   throw new Error(`ProductGroup variant IDs/variesBy are not aligned for ${VARIANT_PARITY_HANDLE}`);
 }
