@@ -59,16 +59,6 @@
       "statusCode": 301
     },
     {
-      "source": "/product/designer-handwork-net-saree",
-      "destination": "/product/designer-embroidered-net-saree",
-      "statusCode": 301
-    },
-    {
-      "source": "/products/designer-handwork-net-saree",
-      "destination": "/product/designer-embroidered-net-saree",
-      "statusCode": 301
-    },
-    {
       "source": "/maroon-lehenga-for-reception",
       "destination": "/lehengas",
       "statusCode": 301
@@ -708,7 +698,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com https://connect.facebook.net https://analytics.tiktok.com https://s.pinimg.com https://ct.pinterest.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://www.facebook.com https://graph.facebook.com https://analytics.tiktok.com https://ct.pinterest.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
         },
         {
           "key": "X-Frame-Options",
@@ -760,7 +750,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com https://connect.facebook.net https://analytics.tiktok.com https://s.pinimg.com https://ct.pinterest.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://www.facebook.com https://graph.facebook.com https://analytics.tiktok.com https://ct.pinterest.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
         },
         {
           "key": "X-Frame-Options",

@@ -109,3 +109,25 @@ test('blog citations use typed publishers in client and prerender markup', () =>
     assert.equal(citation.name, fixture.title);
   }
 });
+
+test('current parity fixtures emit all source variants and factual size/color dimensions', async () => {
+  const file = path.join(root, 'scripts', `.variant-parity-test-${process.pid}.mjs`);
+  const original = fs.readFileSync(path.join(root, 'scripts/prerender.js'), 'utf8');
+  fs.writeFileSync(file, original.replace(/main\(\)\.catch\(err => \{[\s\S]*$/, 'export { generateHtml };'));
+  try {
+    const { generateHtml } = await import(require('node:url').pathToFileURL(file).href);
+    for (const product of require('./fixtures/variant-parity-20261109.json')) {
+      const route = { path: `/product/${product.handle}`, productHandle: product.handle, h1: product.title, title: product.title, description: product.description, product };
+      const html = generateHtml('<html><head><title>Fixture</title></head><body><div id="root"></div></body></html>', route, new Map([[product.handle, product]]));
+      const group = parseScripts(html).find(schema => schema['@type'] === 'ProductGroup');
+      assert.ok(group, product.handle);
+      assert.deepEqual(group.hasVariant.map(v => new URL(v.url).searchParams.get('variant')).sort(), product.variants.edges.map(v => v.node.id.split('/').pop()).sort());
+      const dimensions = product.handle.startsWith('kids-') ? ['https://schema.org/size'] : ['https://schema.org/color', 'https://schema.org/size'];
+      assert.deepEqual(group.variesBy, dimensions);
+      for (let i = 0; i < group.hasVariant.length; i++) {
+        const option = product.variants.edges[i].node.selectedOptions.find(o => ['Size', 'Age'].includes(o.name));
+        assert.equal(group.hasVariant[i].size, option.value);
+      }
+    }
+  } finally { fs.unlinkSync(file); }
+});

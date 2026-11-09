@@ -32,8 +32,13 @@ export function clampTitle(
 ): string {
   const cleaned = normalizeWhitespace(raw);
   const escapedBrand = brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const brandAtStart = new RegExp(`^${escapedBrand}\\s*(?:[|—–:\\-]\\s*)?`, 'i');
-  const brandAtEnd = new RegExp(`\\s*(?:[|—–:\\-]\\s*)?${escapedBrand}$`, 'i');
+  // Product titles arrive as "... | LuxeMia USA" (see ProductDetail.tsx).
+  // The plain brand regex does not match that suffix, so without stripping
+  // the geographic qualifier the brand was appended a second time:
+  // "Purple Palazzo Set | LuxeMia USA | LuxeMia".
+  const geoSuffix = brand === DEFAULT_BRAND ? '(?:\\s+USA)?' : '';
+  const brandAtStart = new RegExp(`^${escapedBrand}${geoSuffix}\\s*(?:[|\u2014\u2013:\\-]\\s*)?`, 'i');
+  const brandAtEnd = new RegExp(`\\s*(?:[|\u2014\u2013:\\-]\\s*)?${escapedBrand}${geoSuffix}$`, 'i');
   const withoutBrand = cleaned
     .replace(brandAtStart, '')
     .replace(brandAtEnd, '')

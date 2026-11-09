@@ -219,9 +219,10 @@ if (
   throw new Error('ProductInfo must render Shopify numeric size variants through the selectedOptions-wired native option picker');
 }
 
-// Verified surviving 15-variant fixture after the 2026-10-26 age archive.
+// Verified surviving multi-variant fixture after the 2026-11-09 age archive.
+// This verified fixture exposes Color and Size (plus an alteration service option).
 // Preserve exact Storefront / feed / ProductGroup parity checks.
-const VARIANT_PARITY_HANDLE = 'off-white-art-silk-sherwani-groomsmen';
+const VARIANT_PARITY_HANDLE = 'mustard-embroidered-blouse-draped-palazzo-set';
 const variantPrerenderPath = path.join(
   PROJECT_ROOT,
   'dist/_prerender/product',
@@ -295,7 +296,7 @@ const expectedVariesBy = [
 if (
   JSON.stringify(sortedIds(schemaVariantIds)) !== JSON.stringify(sortedIds(feedVariantIds))
   || JSON.stringify(productGroupSchema.variesBy || []) !== JSON.stringify(expectedVariesBy)
-  || JSON.stringify(expectedVariesBy) !== JSON.stringify(['https://schema.org/size'])
+  || JSON.stringify(expectedVariesBy) !== JSON.stringify(['https://schema.org/color', 'https://schema.org/size'])
 ) {
   throw new Error(`ProductGroup variant IDs/variesBy are not aligned for ${VARIANT_PARITY_HANDLE}`);
 }

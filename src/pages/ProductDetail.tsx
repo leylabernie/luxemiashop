@@ -20,6 +20,8 @@ import { hasNativeFullStitchingOptions } from '@/lib/serviceAddOns';
 import { Button } from '@/components/ui/button';
 import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
+import { trackMarketingViewContent } from '@/lib/marketingPixels';
+import { subscribeMarketingConsent } from '@/lib/marketingConsent';
 import StickyAddToBag from '@/components/product/StickyAddToBag';
 import {
   applyCustomizableProductDetails,
@@ -151,6 +153,23 @@ const ProductDetail = () => {
       });
     }
   }, [product, addToRecentlyViewed]);
+
+  // Only the currently mounted product is sent after opt-in. Never retain or
+  // replay the visitor's pre-consent browsing history.
+  useEffect(() => {
+    if (!product) return;
+    const defaultVariant = product.variants.edges.find((edge) => edge.node.availableForSale)
+      || product.variants.edges[0];
+    const trackCurrentProduct = () => trackMarketingViewContent(
+      product.handle,
+      parseFloat(defaultVariant?.node.price.amount || product.priceRange.minVariantPrice.amount),
+      defaultVariant?.node.price.currencyCode || product.priceRange.minVariantPrice.currencyCode,
+    );
+    trackCurrentProduct();
+    return subscribeMarketingConsent(consent => {
+      if (consent === 'granted') trackCurrentProduct();
+    });
+  }, [product]);
 
   // Get category URL from product type
   const getCategoryUrl = (productType?: string) => {
@@ -602,3 +621,4 @@ const ProductSkeleton = () => (
 );
 
 export default ProductDetail;
+

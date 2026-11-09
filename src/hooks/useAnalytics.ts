@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { trackMarketingPageView } from '../lib/marketingPixels';
 import { useLocation } from 'react-router-dom';
 
 const GA_MEASUREMENT_ID = 'G-D1NN0TC3Y0';
@@ -97,6 +98,7 @@ export const usePageTracking = () => {
         page_title: document.title,
       });
     }
+    trackMarketingPageView();
   }, [location]);
 };
 

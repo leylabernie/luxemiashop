@@ -1,14 +1,15 @@
 import { canPromoteCollection } from '@/lib/collectionPromotion';
 import { lazy, Suspense, useState } from 'react';
-import { ArrowRight, ChevronDown, Heart, Sparkles, Truck } from 'lucide-react';
+import { ArrowRight, ChevronDown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
 import SEOFooterContent from '@/components/seo/SEOFooterContent';
+import HomepageIntro from '@/components/home/HomepageIntro';
 import NewArrivalsBanner from '@/components/home/NewArrivalsBanner';
 import LazySection from '@/components/ui/LazySection';
-import { RETURN_POLICY_FAQ_ANSWER } from '@/lib/returnPolicyCopy';
+import { HOMEPAGE_VALUE_PROPOSITION } from '@/lib/homepageValueProposition';
 import { FEATURED_CATEGORY_PRODUCTS } from '@/config/featuredCategoryProducts';
 import { getIndexableRouteSeo } from '@/config/seoArchitecture';
 // FloatingSupport removed — WhatsAppButton renders globally in App.tsx
@@ -32,8 +33,8 @@ const homepageFaqs = [
     answer: "LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order."
   },
   {
-    question: "What is your return policy?",
-    answer: RETURN_POLICY_FAQ_ANSWER
+    question: "Why shop wedding guest outfits at LuxeMia?",
+    answer: HOMEPAGE_VALUE_PROPOSITION
   },
   {
     question: "Where can I confirm a product's materials and details?",
@@ -58,7 +59,7 @@ const homepageFaqs = [
 ];
 
 const Index = () => {
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [openFaq, setOpenFaq] = useState<number | null>(0);
   const homepageSeo = getIndexableRouteSeo('/');
 
   return (
@@ -72,24 +73,10 @@ const Index = () => {
       <Header />
       
       <main id="main-content" className="pt-[88px] lg:pt-[124px]">
+        <HomepageIntro />
         <NewArrivalsBanner />
 
-        <section aria-label="LuxeMia shopping promises" className="relative z-10 overflow-hidden bg-[linear-gradient(105deg,#3b2a2d_0%,#624044_52%,#3d2b2d_100%)] text-[#fff9f4]">
-          <div className="container mx-auto grid max-w-7xl grid-cols-1 divide-y divide-white/15 px-5 sm:grid-cols-3 sm:divide-x sm:divide-y-0 sm:px-8">
-            <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
-              <Truck className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
-              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Tracked delivery to 7 countries</span>
-            </div>
-            <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
-              <Sparkles className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
-              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Curated for every celebration</span>
-            </div>
-            <div className="flex items-center justify-center gap-3 py-4 text-center sm:py-5">
-              <Heart className="h-4 w-4 shrink-0 text-[#e7afad]" strokeWidth={1.5} />
-              <span className="text-xs uppercase tracking-[0.13em] text-white/85">Warm, personal styling help</span>
-            </div>
-          </div>
-        </section>
+
 
         <LazySection rootMargin="200px" placeholderHeight={500}>
           <Suspense fallback={null}><CategoryShowcase /></Suspense>
@@ -123,18 +110,18 @@ const Index = () => {
           </div>
         </section>
 
-        <section aria-labelledby="homepage-heading" className="relative overflow-hidden bg-[radial-gradient(circle_at_14%_18%,rgba(229,185,179,0.35),transparent_27%),radial-gradient(circle_at_88%_82%,rgba(223,191,152,0.3),transparent_24%),#f8f0e8] py-16 sm:py-20 lg:py-28">
+        <section aria-labelledby="saree-edit-heading" className="relative overflow-hidden bg-[radial-gradient(circle_at_14%_18%,rgba(229,185,179,0.35),transparent_27%),radial-gradient(circle_at_88%_82%,rgba(223,191,152,0.3),transparent_24%),#f8f0e8] py-16 sm:py-20 lg:py-28">
           <div className="container mx-auto grid max-w-7xl items-center gap-10 px-5 sm:px-8 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
             <div className="max-w-2xl">
               <p className="mb-5 flex items-center gap-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#a96f72]">
                 <span className="h-px w-9 bg-[#a96f72]" />
                 A boutique collection, chosen with care
               </p>
-              <h1 id="homepage-heading" className="font-serif text-[clamp(2.8rem,6vw,5.7rem)] leading-[0.9] tracking-[-0.035em] text-[#291f20]">
+              <h2 id="saree-edit-heading" className="font-serif text-[clamp(2.8rem,6vw,5.7rem)] leading-[0.9] tracking-[-0.035em] text-[#291f20]">
                 {homepageSeo.h1}
-              </h1>
+              </h2>
               <p className="mt-7 max-w-xl text-base leading-8 text-[#665a59] sm:text-lg">
-                Discover expressive silhouettes, handpicked for weddings, festivals, evening celebrations and every entrance worth remembering.
+                {HOMEPAGE_VALUE_PROPOSITION}
               </p>
               <div className="mt-8 flex flex-wrap items-center gap-5">
                 <Link
@@ -310,16 +297,18 @@ const Index = () => {
                 <div key={index} className="border border-border rounded-lg bg-card overflow-hidden">
                   <button
                     onClick={() => setOpenFaq(openFaq === index ? null : index)}
+                    aria-expanded={openFaq === index}
                     className="flex items-center justify-between w-full text-left p-5"
                   >
                     <span className="font-medium text-sm pr-4">{faq.question}</span>
                     <ChevronDown className={`h-4 w-4 flex-shrink-0 transition-transform ${openFaq === index ? 'rotate-180' : ''}`} />
                   </button>
-                  {openFaq === index && (
-                    <div className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">
-                      {faq.answer}
-                    </div>
-                  )}
+                  {/* Answers stay mounted (hidden) so prerendered HTML contains
+                      the same text the FAQPage schema declares. Unmounting on
+                      close left bots/AI engines schema with no matching copy. */}
+                  <div hidden={openFaq !== index} className="px-5 pb-5 text-sm text-muted-foreground leading-relaxed">
+                    {faq.answer}
+                  </div>
                 </div>
               ))}
             </div>

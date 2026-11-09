@@ -6,7 +6,7 @@ const path = require('path');
 const ROOT = path.resolve(__dirname, '..');
 const HOME_TITLE = 'Indian Ethnic Wear Online USA | LuxeMia';
 const HOME_DESCRIPTION = 'Shop authentic South Asian bridal wear, sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and supported markets.';
-const HOME_H1 = 'LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
+const HOME_H1 = 'Curated Indian Wedding & Festive Wear, Delivered to Your Door.';
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 
 const routeDescriptions = {
@@ -137,7 +137,7 @@ for (const [route, seo] of Object.entries(architecture.routes)) {
     throw new Error(`[approved-seo] Title exceeds 58 characters without approved exception: ${route}`);
   }
 }
-if (!architecture.routes['/'].h1.startsWith('LuxeMia')) throw new Error('[approved-seo] Homepage H1 is not branded');
+if (architecture.routes['/'].h1 !== HOME_H1) throw new Error('[approved-seo] Homepage H1 does not match the approved positioning');
 if (!seoHead.includes(HOME_DESCRIPTION)) throw new Error('[approved-seo] Runtime SEO default description was not updated');
 for (const relative of ['src/pages/Index.tsx', 'src/pages/FAQ.tsx', 'src/pages/Collections.tsx', 'src/pages/NewArrivals.tsx', 'src/data/blogPosts.ts', 'src/data/recoveredBlogPosts.ts', 'src/data/seoGrowthBlogPosts.ts']) {
   if (!exists(relative)) continue;

@@ -22,6 +22,7 @@ const {
 } = require('../merchant-feed-color.cjs');
 const {
   getSizeOption,
+  getMerchantAgeGroup,
   isSizeOptionName,
   normalizeOptionName,
 } = require('../merchant-feed-size.cjs');
@@ -52,6 +53,14 @@ const { getTitleDesignDetails } = loadTsModule('src/lib/merchantDesignDetails.ts
 const { selectMerchantImage } = loadTsModule('src/lib/merchantImages.ts');
 
 const SITE_URL = 'https://luxemia.shop';
+// Retired products return a real 410 from the storefront (see
+// src/data/legacyGoneProductHandles.json). A merchant feed item pointing at
+// a 410 wastes Merchant Center review and can trigger item disapprovals, so
+// retired handles are excluded at generation time in both the live-catalog
+// path and the checked-in snapshot fallback path.
+const GONE_PRODUCT_HANDLES = new Set(
+  [...JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8')), ...require('../src/data/reversiblyArchivedProductHandles.json')],
+);
 // U.S. shipping is account-managed: $14.99 below $150, free at $150 and above.
 // Do not emit a U.S. price override: it suppresses the account's order-total
 // threshold (including multi-item carts) and delivery settings. Keep the other
@@ -516,7 +525,7 @@ function readSizeOptionFromDescription(description) {
     if (separatorIndex < 1) continue;
     const optionName = detail.slice(0, separatorIndex);
     const optionValue = detail.slice(separatorIndex + 1).trim();
-    if (isSizeOptionName(optionName) && optionValue) return optionValue;
+    if (getSizeOption([{ name: optionName, value: optionValue }])) return optionValue;
   }
 
   return '';
@@ -578,6 +587,7 @@ function sanitizeExistingFeedXml(xml) {
   let sanitized = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
     itemCount += 1;
     const handle = readProductHandleFromItem(itemXml);
+    if (handle && GONE_PRODUCT_HANDLES.has(handle)) return '';
     const rawTitle = readItemTag(itemXml, 'g:title') || 'Indian ethnic wear';
     const rawGroupTitle = readItemTag(itemXml, 'g:item_group_title');
     const originalBaseTitle = rawGroupTitle || rawTitle.split(/\s+[—–]\s+/)[0] || rawTitle;
@@ -602,6 +612,7 @@ function sanitizeExistingFeedXml(xml) {
       || readMaterialFromDescription(existingDescription);
     const size = readItemTag(itemXml, 'g:size')
       || readSizeOptionFromDescription(existingDescription);
+    const ageGroup = getMerchantAgeGroup([{ name: 'Age', value: size }]);
     const pattern = readItemTag(itemXml, 'g:pattern');
     const fallbackProduct = {
       title,
@@ -654,8 +665,13 @@ function sanitizeExistingFeedXml(xml) {
     if (size && !/<g:size>/i.test(item)) {
       item = item.replace(
         /\s*<\/item>/i,
-        `\n    <g:size>${escapeXml(size)}</g:size>\n    <g:size_type>regular</g:size_type>\n    <g:size_system>US</g:size_system>\n  </item>`
+        `\n    <g:size>${escapeXml(size)}</g:size>\n    <g:size_type>regular</g:size_type>${ageGroup === 'adult' ? '\n    <g:size_system>US</g:size_system>' : ''}\n  </item>`
       );
+    }
+
+    if (ageGroup === 'kids') {
+      item = item.replace(/<g:age_group>[^<]*<\/g:age_group>/i, '<g:age_group>kids</g:age_group>')
+        .replace(/\s*<g:size_system>[^<]*<\/g:size_system>/i, '');
     }
 
     if (material && !/<g:material>/i.test(item)) {
@@ -728,15 +744,43 @@ function assertFeedSnapshotCoverage(xml, sourceLabel) {
   return stats;
 }
 
+// Remove feed items whose product link points at a retired (410) handle.
+// Used by every fallback path so a preserved snapshot can never publish
+// dead product URLs, even if it predates a retirement wave.
+function removeRetiredFeedItems(xml) {
+  let removed = 0;
+  const filtered = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
+    const handle = readProductHandleFromItem(itemXml);
+    if (handle && GONE_PRODUCT_HANDLES.has(handle)) {
+      removed += 1;
+      return '';
+    }
+    return itemXml;
+  });
+  return { xml: filtered, removed };
+}
+
 function copyValidatedFallbackFeed() {
   const existingFeed = path.resolve(__dirname, '../public/merchant-feed.xml');
   if (!fs.existsSync(existingFeed)) return false;
 
   const existingXml = fs.readFileSync(existingFeed, 'utf8');
-  const stats = assertFeedSnapshotCoverage(existingXml, 'Checked-in public/merchant-feed.xml');
+  // The checked-in snapshot can predate a retirement wave (the current one
+  // is 100% retired handles). Strip 410 items and validate what would
+  // actually be published; if nothing release-safe remains, fail loudly
+  // via the caller instead of shipping a feed of dead URLs.
+  const { xml: filteredXml, removed } = removeRetiredFeedItems(existingXml);
+  if (removed > 0) console.log(`[merchant-feed] Excluded ${removed} retired (410) items from the fallback snapshot`);
+  let stats;
+  try {
+    stats = assertFeedSnapshotCoverage(filteredXml, 'Checked-in public/merchant-feed.xml (after retired-item filtering)');
+  } catch (error) {
+    console.error(`[merchant-feed] Fallback snapshot is not publishable: ${error.message}`);
+    return false;
+  }
   const distDir = path.resolve(__dirname, '../dist');
   if (!fs.existsSync(distDir)) fs.mkdirSync(distDir, { recursive: true });
-  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), existingXml, 'utf8');
+  fs.writeFileSync(path.join(distDir, 'merchant-feed.xml'), filteredXml, 'utf8');
   console.log(`[merchant-feed] Preserved validated local snapshot (${stats.offers} offers, ${stats.sizes} sizes, ${stats.materials} materials); public/ was not rewritten`);
   return true;
 }
@@ -994,13 +1038,13 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
     <g:product_type>${escapeXml(productType)}</g:product_type>
     ${generateProductHighlights(product, color, material, productType, displayTitle, size)}
     <g:gender>${gender}</g:gender>
-    <g:age_group>adult</g:age_group>
+    <g:age_group>${getMerchantAgeGroup(selectedOptions)}</g:age_group>
     <g:color>${escapeXml(color || 'Multi-Color')}</g:color>
     ${material ? `<g:material>${escapeXml(material)}</g:material>` : ''}
     ${patternTag ? `<g:pattern>${escapeXml(patternTag)}</g:pattern>` : ''}
     ${size ? `<g:size>${escapeXml(size)}</g:size>` : ''}
     ${size ? '<g:size_type>regular</g:size_type>' : ''}
-    ${size ? '<g:size_system>US</g:size_system>' : ''}
+    ${size && getMerchantAgeGroup(selectedOptions) === 'adult' ? '<g:size_system>US</g:size_system>' : ''}
     ${identifiers}
     <g:custom_label_0>${escapeXml(rawProductType)}</g:custom_label_0>
     ${navratriPriorityHandles.has(handle) ? '<g:custom_label_1>navratri_2026_priority</g:custom_label_1>' : ''}
@@ -1046,10 +1090,14 @@ async function main() {
     titleCounts.set(t, (titleCounts.get(t) || 0) + 1);
   }
 
-  const navratriPriorityHandles = selectNavratriPriorityHandles(products);
+  const liveProducts = products.filter((product) => !GONE_PRODUCT_HANDLES.has(product.handle));
+  const retiredSkipped = products.length - liveProducts.length;
+  if (retiredSkipped > 0) console.log(`[merchant-feed] Excluded ${retiredSkipped} retired (410) products from the feed`);
+
+  const navratriPriorityHandles = selectNavratriPriorityHandles(liveProducts);
   console.log(`[merchant-feed] Prioritized ${navratriPriorityHandles.size} Navratri product groups for seasonal title relevance`);
 
-  const itemsXml = products
+  const itemsXml = liveProducts
     .flatMap((product) =>
       product.variants.edges.map((edge) =>
         generateProductItemXml(product, edge.node, titleCounts, navratriPriorityHandles)
@@ -1075,7 +1123,7 @@ ${itemsXml}
 
   const distPath = path.join(distDir, 'merchant-feed.xml');
   fs.writeFileSync(distPath, feed, 'utf8');
-  console.log(`[merchant-feed] Written feed to ${distPath} (${(feed.length / 1024).toFixed(1)} KB, ${products.length} products)`);
+  console.log(`[merchant-feed] Written feed to ${distPath} (${(feed.length / 1024).toFixed(1)} KB, ${liveProducts.length} products)`);
 
   console.log('[merchant-feed] Checked-in public/merchant-feed.xml was not changed; refresh it only with MERCHANT_FEED_REFRESH_SOURCE');
 }

@@ -12,6 +12,7 @@ import {
   isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
   resolveIncludedPieces,
+  getWhatsIncludedItems,
   selectedOptionsFromVariant,
   selectionRequiresSeparateMeasurements,
 } from '../src/lib/productPurchaseFlow.ts';
@@ -364,4 +365,20 @@ test('native Age option preserves exact age labels and resolves real variants wi
   for(const age of option.values) assert.equal(resolveAvailableVariantForOption(variants,{Age:'1Y'},'Age',age).id,'age-'+age);
   assert.equal(hasNativeProductSizeOption([{name:'Color',values:['S','M']}]),false);
   assert.equal(hasNativeProductSizeOption([{name:'Age',values:['Default Title']}]),false);
+});
+
+
+test('explicit included bullets preserve all fifteen verified listings without inventing pieces', () => {
+  const fixtures = JSON.parse(readFileSync(new URL('./fixtures/catalog-included-bullets-20261109.json', import.meta.url), 'utf8')).products;
+  assert.equal(fixtures.length, 15);
+  for (const product of fixtures) assert.deepEqual(getWhatsIncludedItems(product.descriptionHtml), product.expected, product.id);
+});
+
+test('included bullet rendering rejects ambiguous or unsupported markup and retains safe text', () => {
+  for (const html of ['', '<h3>Details</h3><ul><li>Dupatta</li></ul>', "<h3>What's included</h3><p>Ask us</p>", "<h3>What's included</h3><ul><li><img src=x onerror=alert(1)>Dupatta</li></ul>", "<h3>What's included</h3><ul><li>Top</li></ul><h3>What's included</h3><ul><li>Skirt</li></ul>"]) assert.deepEqual(getWhatsIncludedItems(html), []);
+  assert.deepEqual(getWhatsIncludedItems("<h3>What's included</h3><ul><li><strong>Top</strong> &amp; lining</li><li>Dupatta</li></ul><p>Shipping details follow.</p>"), ['Top & lining', 'Dupatta']);
+  const source = readFileSync(new URL('../src/components/product/ProductInfo.tsx', import.meta.url), 'utf8');
+  assert.ok(source.indexOf('{/* Price */}') < source.indexOf('id="whats-included-heading"'));
+  assert.ok(source.indexOf('id="whats-included-heading"') < source.indexOf('<ProductDeliverySummary'));
+  assert.match(source, /!includedBulletItems.length && productSpecs.includedPieces/);
 });

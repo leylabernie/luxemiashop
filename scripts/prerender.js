@@ -19,6 +19,8 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
 import catalogSource from './storefront-catalog.cjs';
+import merchantSizeOptions from '../merchant-feed-size.cjs';
+const { getSizeOption } = merchantSizeOptions;
 import reviewedLehengaCatalog from '../src/lib/reviewedLehengaCollections.cjs';
 const { reviewedLehengaCollections, isReviewedLehengaCollection, filterReviewedLehengaProducts } = reviewedLehengaCatalog;
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
@@ -170,6 +172,7 @@ const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
 const { generateOfferShippingReferences } = await loadTsModule('src/lib/schema.ts');
 const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY, SUPPORT_CLAIM_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
+const { HOMEPAGE_HEADLINE, HOMEPAGE_VALUE_PROPOSITION, HOMEPAGE_TRUST_ITEMS, HOMEPAGE_WEDDING_COPY, HOMEPAGE_WEDDING_LINK } = await loadTsModule('src/lib/homepageValueProposition.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
@@ -1562,15 +1565,17 @@ const routes = [
     path: '/',
     title: getIndexableRouteSeo('/').title,
     description: getIndexableRouteSeo('/').description,
-    h1: getIndexableRouteSeo('/').h1,
+    h1: HOMEPAGE_HEADLINE,
     content: `
-      <p>Shop bridal lehengas, wedding sarees, salwar kameez, menswear and jewelry with tracked shipping to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Browse Indian wedding guest outfits with U.S.-based support.</p>
+      <p>${escapeHtml(HOMEPAGE_VALUE_PROPOSITION)}</p>
+      <p><a href="/collections/wedding-guest-outfits">Shop Wedding Guest Outfits</a> | <a href="/wedding-party-orders">Custom Group &amp; Bridal Party Orders</a></p>
+      <section aria-label="LuxeMia shopping promises">${HOMEPAGE_TRUST_ITEMS.map(item => `<h2>${escapeHtml(item.title)}</h2><p>${escapeHtml(item.body)}</p>`).join('')}</section>
+      <aside aria-label="Destination wedding coordination"><p>${escapeHtml(HOMEPAGE_WEDDING_COPY)}</p><a href="${HOMEPAGE_WEDDING_LINK}">Explore CeremonyVerse India Wedding Sourcing</a></aside>
       <h2>What can I shop at LuxeMia?</h2>
       <p>LuxeMia offers lehengas, sarees, salwar kameez, and menswear for weddings, festivals, and special occasions.</p>
       <p><a href="/indian-ethnic-wear-usa">Indian ethnic wear in the USA — sarees, lehengas, shararas and USA delivery details</a></p>
       <nav>
         <ul>
-          <li><a href="/collections/customizable-indian-outfits">Customizable Indian Outfits</a> — Verified custom-color and made-to-measure designs</li>
           <li><a href="/lehengas">Lehengas</a> — Bridal & wedding lehenga choli collections</li>
           <li><a href="/sarees">Sarees</a> — Browse by fabric and occasion</li>
           <li><a href="/suits">Salwar Kameez</a> — Anarkali, sharara & palazzo suits</li>
@@ -1587,6 +1592,20 @@ const routes = [
       </ul>
       <h2>How much is LuxeMia shipping?</h2>
       <p>Free U.S. standard shipping at $150 and above. $14.99 below $150. Tracking details are emailed when the shipping label is created for dispatch.</p>
+      <h2>Frequently Asked Questions</h2>
+      <h3>Where does LuxeMia ship Indian ethnic wear?</h3>
+      <p>LuxeMia ships to the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. U.S. standard shipping is $14.99 below $150 and free at $150+. Canada and the UK are $24.99 below $299 and free at $299+. Australia and New Zealand are $29.99 below $349 and free at $349+. South Africa is $49.99 and Mauritius is $59.99 per order.</p>
+      <h3>Why shop wedding guest outfits at LuxeMia?</h3>
+      <p>${escapeHtml(HOMEPAGE_VALUE_PROPOSITION)}</p>
+      <h3>Where can I confirm a product's materials and details?</h3>
+      <p>Product pages state the available fabric, embroidery or embellishment work, stitching status, sizes, and package contents when those details are supplied. Contact LuxeMia before ordering if an important detail is not listed.</p>
+      <h3>Can I get custom sizing or alterations for my outfit?</h3>
+      <p>Sizing, stitching, and made-to-measure options vary by product. Use only the options shown on the selected product page, and contact LuxeMia before ordering if a size or stitching detail is unclear.</p>
+      <h3>How can I ensure the color of the outfit is accurate when viewing online?</h3>
+      <p>We strive for accurate color representation in our product photography. However, slight color variations may occur due to screen settings and lighting. We recommend reviewing all available product images and descriptions.</p>
+      <h3>How can I get styling advice for a specific occasion?</h3>
+      <p>Contact LuxeMia by WhatsApp with your occasion, date, preferred color, size, and budget. We can help you compare current listings, but the exact product page controls availability, included pieces, sizing, and stitching options.</p>
+      <p><a href="/returns">Read the full Returns &amp; Cancellations policy</a></p>
     `,
   },
   {
@@ -2806,7 +2825,7 @@ function generateHtml(template, route, allShopifyProducts) {
       const variantId = variant?.id?.split('/').pop() || '';
       const selectedOptions = variant?.selectedOptions || [];
       const color = selectedOptions.find((option) => ['color', 'colour'].includes((option?.name || '').toLowerCase()))?.value || '';
-      const size = selectedOptions.find((option) => isSizeOptionName(option?.name))?.value || '';
+      const size = getSizeOption(selectedOptions)?.value || '';
       const visibleOptions = selectedOptions
         .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
         .map((option) => option.value);

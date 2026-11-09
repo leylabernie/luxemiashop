@@ -11,6 +11,13 @@ test('long product titles retain one brand and fit the search limit', () => {
   assert.equal(clampTitle(title), title);
 });
 
+test('titles already suffixed with LuxeMia USA do not get a second brand', () => {
+  assert.equal(clampTitle('Purple Palazzo Set | LuxeMia USA'), 'Purple Palazzo Set | LuxeMia');
+  assert.equal(clampTitle('Black Georgette Sequin Floral Sharara Suit | LuxeMia USA'), 'Black Georgette Sequin Floral Sharara Suit | LuxeMia');
+  assert.equal((clampTitle('Purple Palazzo Set | LuxeMia USA').match(/LuxeMia/g) || []).length, 1);
+  assert.equal((clampTitle('Designer Hand-Embroidered Net Saree with Bead and Pearl Work | LuxeMia USA').match(/LuxeMia/g) || []).length, 1);
+});
+
 test('short descriptive titles remain intact', () => {
   assert.equal(clampTitle('Yellow Chinon Palazzo Set | LuxeMia'), 'Yellow Chinon Palazzo Set | LuxeMia');
 });

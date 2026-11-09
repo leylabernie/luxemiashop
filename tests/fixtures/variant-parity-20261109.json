@@ -1,0 +1,605 @@
+[
+  {
+    "id": "gid://shopify/Product/9135425290411",
+    "title": "Mustard Embroidered Blouse and Draped Palazzo Set",
+    "handle": "mustard-embroidered-blouse-draped-palazzo-set",
+    "description": "A mustard three-piece set with multicolor floral embroidery across the blouse and a flowing draped-front palazzo silhouette. A coordinating bordered dupatta completes the look.Design details Long-sleeve crop blouse with a shaped neckline and multicolor floral embroidery. Palazzo pants with a softly draped front and embroidered hem detail. Matching dupatta finished with a floral embroidered border. Fabric and included piecesViscose jacquard fabric with embroidery. Includes one stitched blouse, one pair of palazzo pants and one dupatta. Jewelry and footwear shown are styling accessories and are not included.Size and fitChoose your standard size: 32, 34, 36, 38, 40, 42 or 44. LuxeMia manages fitting for the selected size. These selections describe your requested fit, not separate garment measurements. Standard Fit: $83.30 in every listed size. Made to Fit (+$10): $93.30. Choose this optional alteration service and share your measurements with LuxeMia after ordering. Occasions and careStyle for haldi, mehendi, festive celebrations. Handle embroidered areas gently and follow the garment care label. Colors may appear slightly different with lighting and screen settings.",
+    "productType": "Palazzo Set",
+    "vendor": "LuxeMia",
+    "tags": [
+      "Embroidered Blouse",
+      "fabric:Viscose",
+      "facts:source-verified",
+      "Festive Celebrations",
+      "Haldi",
+      "included:Blouse Palazzo Dupatta",
+      "Indo-Western",
+      "Long sleeves",
+      "LuxeMia",
+      "Mehendi",
+      "Mustard Yellow",
+      "New Arrivals",
+      "Palazzo Set",
+      "Stitched",
+      "Three Piece Set",
+      "Viscose Jacquard",
+      "work:Embroidery"
+    ],
+    "options": [
+      {
+        "name": "Color",
+        "values": [
+          "Mustard Yellow"
+        ]
+      },
+      {
+        "name": "Size",
+        "values": [
+          "32",
+          "34",
+          "36",
+          "38",
+          "40",
+          "42",
+          "44"
+        ]
+      },
+      {
+        "name": "Alteration",
+        "values": [
+          "Standard Fit",
+          "Made to Fit"
+        ]
+      }
+    ],
+    "variants": {
+      "edges": [
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414922997931",
+            "title": "Mustard Yellow / 32 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-32-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "32"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923030699",
+            "title": "Mustard Yellow / 32 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-32-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "32"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923063467",
+            "title": "Mustard Yellow / 34 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-34-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "34"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923096235",
+            "title": "Mustard Yellow / 34 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-34-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "34"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923129003",
+            "title": "Mustard Yellow / 36 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-36-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "36"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923161771",
+            "title": "Mustard Yellow / 36 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-36-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "36"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923194539",
+            "title": "Mustard Yellow / 38 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-38-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "38"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923227307",
+            "title": "Mustard Yellow / 38 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-38-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "38"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923260075",
+            "title": "Mustard Yellow / 40 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-40-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "40"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923292843",
+            "title": "Mustard Yellow / 40 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-40-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "40"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923325611",
+            "title": "Mustard Yellow / 42 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-42-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "42"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923358379",
+            "title": "Mustard Yellow / 42 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-42-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "42"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923391147",
+            "title": "Mustard Yellow / 44 / Standard Fit",
+            "price": {
+              "amount": "83.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-44-STD",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "44"
+              },
+              {
+                "name": "Alteration",
+                "value": "Standard Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48414923423915",
+            "title": "Mustard Yellow / 44 / Made to Fit",
+            "price": {
+              "amount": "93.30",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "LM-EP-MUS-44-MTF",
+            "selectedOptions": [
+              {
+                "name": "Color",
+                "value": "Mustard Yellow"
+              },
+              {
+                "name": "Size",
+                "value": "44"
+              },
+              {
+                "name": "Alteration",
+                "value": "Made to Fit"
+              }
+            ],
+            "availableForSale": true
+          }
+        }
+      ]
+    },
+    "images": {
+      "edges": [
+        {
+          "node": {
+            "url": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-mustard-hero.png?v=1793063428",
+            "altText": "Mustard embroidered long-sleeve blouse, draped palazzo pants and dupatta, worn by a model"
+          }
+        }
+      ]
+    },
+    "priceRange": {
+      "minVariantPrice": {
+        "amount": "83.30",
+        "currencyCode": "USD"
+      }
+    },
+    "availableForSale": true
+  },
+  {
+    "id": "gid://shopify/Product/9075974668459",
+    "title": "Purple Malai Satin Kids Boy Kurta Pajama with Koti Jacket",
+    "handle": "kids-kurta-set-purple",
+    "description": "Purple Malai Satin Kids Boy Kurta Pajama with Koti Jacket. Dress for festive celebrations with the coordinated pieces in this set.Included PiecesKurta + Pajama + Koti JacketFabric and DetailsFabric: Malai SatinSize and FitSelect your size and available finish from the product options. Check the size chart before ordering.Available options: 6Y, 7Y, 8Y, 9Y, 10Y.OccasionsFestive CelebrationsAccessories shown are for styling unless listed among the included pieces. Colors may appear slightly different across screens.",
+    "productType": "Kids Boy Set",
+    "vendor": "Luxemia",
+    "tags": [
+      "10Y boys festive set",
+      "copy:reviewed-2026-10-09",
+      "double digit birthday outfit",
+      "festive celebrations",
+      "kids boy set",
+      "malai satin",
+      "mature 10 year old dress",
+      "milestone kids outfit",
+      "purple koti set teenager",
+      "purple kurta 10 year",
+      "purple malai satin kids boy kurta pajama with koti jacket",
+      "young man ethnic wear"
+    ],
+    "options": [
+      {
+        "name": "Age",
+        "values": [
+          "6Y",
+          "7Y",
+          "8Y",
+          "9Y",
+          "10Y"
+        ]
+      }
+    ],
+    "variants": {
+      "edges": [
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48120788943019",
+            "title": "6Y",
+            "price": {
+              "amount": "66.99",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "WS-KURTA-PUR-6Y",
+            "selectedOptions": [
+              {
+                "name": "Age",
+                "value": "6Y"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48121824575659",
+            "title": "7Y",
+            "price": {
+              "amount": "66.99",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "WS-KURTA-PUR-7Y",
+            "selectedOptions": [
+              {
+                "name": "Age",
+                "value": "7Y"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48121824608427",
+            "title": "8Y",
+            "price": {
+              "amount": "66.99",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "WS-KURTA-PUR-8Y",
+            "selectedOptions": [
+              {
+                "name": "Age",
+                "value": "8Y"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48121824641195",
+            "title": "9Y",
+            "price": {
+              "amount": "66.99",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "WS-KURTA-PUR-9Y",
+            "selectedOptions": [
+              {
+                "name": "Age",
+                "value": "9Y"
+              }
+            ],
+            "availableForSale": true
+          }
+        },
+        {
+          "node": {
+            "id": "gid://shopify/ProductVariant/48121824673963",
+            "title": "10Y",
+            "price": {
+              "amount": "66.99",
+              "currencyCode": "USD"
+            },
+            "compareAtPrice": null,
+            "sku": "WS-KURTA-PUR-10Y",
+            "selectedOptions": [
+              {
+                "name": "Age",
+                "value": "10Y"
+              }
+            ],
+            "availableForSale": true
+          }
+        }
+      ]
+    },
+    "images": {
+      "edges": [
+        {
+          "node": {
+            "url": "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/kids-kurta-purple-img-01_f5249780-50cb-4287-bf29-744a98411ba9.jpg?v=1791220305",
+            "altText": "Purple 10Y young man milestone kurta set - front view"
+          }
+        }
+      ]
+    },
+    "priceRange": {
+      "minVariantPrice": {
+        "amount": "66.99",
+        "currencyCode": "USD"
+      }
+    },
+    "availableForSale": true
+  }
+]

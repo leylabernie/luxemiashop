@@ -62,7 +62,7 @@ test('app and generated product HTML have identical host/session policy',()=>{
 });
 test('all analytics helpers, including SPA page views, respect QA guard even with another gtag function',()=>{
   const code=buildSync({entryPoints:[path.join(root,'src/hooks/useAnalytics.ts')],bundle:true,write:false,platform:'node',format:'cjs',external:['react','react-router-dom']}).outputFiles[0].text;
-  const events=[];const window={luxemiaAnalyticsEnabled:false,location:{href:'https://luxemia.shop/'},gtag:(...x)=>events.push(x)};
+  const events=[];const window={addEventListener() {},luxemiaAnalyticsEnabled:false,location:{href:'https://luxemia.shop/'},gtag:(...x)=>events.push(x)};
   const module={exports:{}};
   const req=name=>name==='react'?{useEffect:cb=>cb()}:{useLocation:()=>({pathname:'/',search:''})};
   new Function('require','module','exports','window','document',code)(req,module,module.exports,window,{title:'Test'});

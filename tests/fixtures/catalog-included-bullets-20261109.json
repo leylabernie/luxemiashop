@@ -1,0 +1,136 @@
+{
+  "verifiedOn": "2026-11-09",
+  "source": "Shopify product descriptions reread after owner-requested content updates",
+  "products": [
+    {
+      "id": "gid://shopify/Product/9150324703403",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>Unstitched lehenga material</li>\n<li>Unstitched choli material</li>\n<li>Dupatta</li>\n</ul><p>A grey Georgette lehenga choli with embroidery for wedding celebrations.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Grey</li>\n<li>Fabric: Georgette</li>\n<li>Work: Embroidery</li>\n</ul><h3>Stitching and Fit</h3><p>This listing is for the unstitched option. Tailoring is required before wear.</p><h3>Included Pieces</h3><p>Unstitched lehenga and choli material with dupatta. This is not the finished, stitched outfit shown on the model; tailoring is required before wear.</p><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+      "expected": [
+        "Unstitched lehenga material",
+        "Unstitched choli material",
+        "Dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9150324605099",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>Tunic (top)</li>\n<li>Palazzo pants</li>\n<li>Dupatta</li>\n</ul><p>An olive green Chinon readymade palazzo suit with embroidery for festive occasions.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Olive Green</li>\n<li>Fabric: Chinon</li>\n<li>Work: Embroidery</li>\n<li>Construction: Readymade</li>\n</ul><h3>Size and Fit</h3><p>Available size labels: 38, 40, 42 and 44. These are supplier size labels, not body measurements.</p><h3>Included Pieces</h3><ul>\n<li>Tunic (top)</li>\n<li>Palazzo pants</li>\n<li>Dupatta</li>\n</ul><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+      "expected": [
+        "Tunic (top)",
+        "Palazzo pants",
+        "Dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9150324572331",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>Kameez (top)</li>\n<li>Sharara bottoms</li>\n<li>Dupatta</li>\n</ul><p>An off-white Crepe readymade sharara suit with embroidery for festive occasions.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Off-White</li>\n<li>Fabric: Crepe</li>\n<li>Work: Embroidery</li>\n<li>Construction: Readymade</li>\n</ul><h3>Size and Fit</h3><p>Available size labels: 38, 40, 42 and 44. These are supplier size labels, not body measurements.</p><h3>Included Pieces</h3><ul>\n<li>Kameez (top)</li>\n<li>Sharara bottoms</li>\n<li>Dupatta</li>\n</ul><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+      "expected": [
+        "Kameez (top)",
+        "Sharara bottoms",
+        "Dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9150324375723",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>Kameez (top)</li>\n<li>Salwar-style bottom</li>\n<li>Dupatta</li>\n</ul><p>A teal blue Chanderi readymade salwar suit with embroidery for festive occasions.</p><h3>Fabric and Design</h3><ul>\n<li>Color: Teal Blue</li>\n<li>Fabric: Chanderi</li>\n<li>Work: Embroidery</li>\n<li>Construction: Readymade</li>\n</ul><h3>Size and Fit</h3><p>Available size labels: 38, 40, 42 and 44. These are supplier size labels, not body measurements.</p><h3>Included Pieces</h3><ul>\n<li>Kameez (top)</li>\n<li>Salwar-style bottom</li>\n<li>Dupatta</li>\n</ul><h3>Care</h3><p>Dry clean for the first wash.</p><p>Accessories shown are for styling. Colors may vary slightly by screen.</p>",
+      "expected": [
+        "Kameez (top)",
+        "Salwar-style bottom",
+        "Dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9145546047659",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One 5.5-metre saree</li>\n<li>One 1.20-metre unstitched embroidered blouse fabric piece</li>\n</ul><p>Soft onion-pink silk and white floral embroidery give this saree a softly lustrous finish. A scalloped cutwork border and embroidered pallu add detail for wedding-guest and festive dressing.</p><h3>Fabric and design</h3><ul>\n<li>Soft silk saree and matching silk blouse fabric</li>\n<li>Floral embroidery with a scalloped cutwork border</li>\n<li>Embroidered decorative pallu</li>\n<li>Saree length: 5.5 metres</li>\n<li>Blouse fabric length: 1.20 metres</li>\n</ul><h3>What is included</h3><p>One saree and one matching unstitched embroidered blouse fabric piece. The stitched blouse shown on the model is styling inspiration, not a finished blouse included in the base price. Jewelry, footwear and petticoat are not included.</p><h3>Fit and finishing</h3><p>This saree requires traditional draping; it is not pre-stitched. The blouse fabric requires tailoring. Select optional blouse stitching separately if required.</p><h3>Optional services</h3><p>Blouse stitching or alteration is available separately for $10, Pico &amp; Fall finishing for $8, and a matching petticoat for $8. These optional services are not included in the $55 base price.</p><h3>Care</h3><p>Follow the garment care label and handle the embroidery and cutwork gently. Colors may vary slightly with lighting and screen settings.</p>",
+      "expected": [
+        "One 5.5-metre saree",
+        "One 1.20-metre unstitched embroidered blouse fabric piece"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135425290411",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One stitched embroidered blouse</li>\n<li>One pair of palazzo pants</li>\n<li>One dupatta</li>\n</ul><p>A mustard three-piece set with multicolor floral embroidery across the blouse and a flowing draped-front palazzo silhouette. A coordinating bordered dupatta completes the look.</p><h2>Design details</h2><ul>\n<li>Long-sleeve crop blouse with a shaped neckline and multicolor floral embroidery.</li>\n<li>Palazzo pants with a softly draped front and embroidered hem detail.</li>\n<li>Matching dupatta finished with a floral embroidered border.</li>\n</ul><h2>Fabric and included pieces</h2><p>Viscose jacquard fabric with embroidery. Includes one stitched blouse, one pair of palazzo pants and one dupatta. Jewelry and footwear shown are styling accessories and are not included.</p><h2>Size and fit</h2><p>Choose your standard size: 32, 34, 36, 38, 40, 42 or 44. LuxeMia manages fitting for the selected size. These selections describe your requested fit, not separate garment measurements.</p><ul>\n<li>\n<strong>Standard Fit:</strong> $83.30 in every listed size.</li>\n<li>\n<strong>Made to Fit (+$10):</strong> $93.30. Choose this optional alteration service and share your measurements with LuxeMia after ordering.</li>\n</ul><h2>Occasions and care</h2><p>Style for haldi, mehendi, festive celebrations. Handle embroidered areas gently and follow the garment care label. Colors may appear slightly different with lighting and screen settings.</p>",
+      "expected": [
+        "One stitched embroidered blouse",
+        "One pair of palazzo pants",
+        "One dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135425028267",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One stitched embroidered blouse</li>\n<li>One pair of palazzo pants</li>\n<li>One dupatta</li>\n</ul><p>Deep purple palazzo pants meet a gold-tone embroidered blouse and a floral jacquard dupatta in this three-piece occasion set. The cropped blouse balances the fluid, wide-leg silhouette.</p><h2>Design details</h2><ul>\n<li>Sleeveless V-neck blouse with all-over gold-tone zigzag embroidery.</li>\n<li>Purple wide-leg palazzo pants with decorative zigzag detailing at the sides.</li>\n<li>Floral-patterned purple dupatta with a coordinating border.</li>\n</ul><h2>Fabric and included pieces</h2><p>Viscose jacquard fabric with embroidery. Includes one stitched blouse, one pair of palazzo pants and one dupatta. Jewelry and footwear shown are styling accessories and are not included.</p><h2>Size and fit</h2><p>Choose your standard size: 32, 34, 36, 38, 40, 42 or 44. LuxeMia manages fitting for the selected size. These selections describe your requested fit, not separate garment measurements.</p><ul>\n<li>\n<strong>Standard Fit:</strong> $83.30 in every listed size.</li>\n<li>\n<strong>Made to Fit (+$10):</strong> $93.30. Choose this optional alteration service and share your measurements with LuxeMia after ordering.</li>\n</ul><h2>Occasions and care</h2><p>Style for wedding guest, reception, festive celebrations. Handle embroidered areas gently and follow the garment care label. Colors may appear slightly different with lighting and screen settings.</p>",
+      "expected": [
+        "One stitched embroidered blouse",
+        "One pair of palazzo pants",
+        "One dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135424897195",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One stitched embroidered blouse</li>\n<li>One pair of palazzo pants</li>\n<li>One dupatta</li>\n</ul><p>A fuchsia three-piece outfit with a floral embroidered crop blouse, wide-leg palazzo pants and a matching motif-detailed dupatta. The draped styling brings a flowing finish to the coordinated silhouette.</p><h2>Design details</h2><ul>\n<li>Sleeveless blouse with a curved V neckline and floral embroidery.</li>\n<li>Wide-leg palazzo pants with coordinating side embroidery.</li>\n<li>Matching dupatta with small gold-tone motifs and an embellished border.</li>\n</ul><h2>Fabric and included pieces</h2><p>Viscose jacquard fabric with embroidery. Includes one stitched blouse, one pair of palazzo pants and one dupatta. Jewelry and footwear shown are styling accessories and are not included.</p><h2>Size and fit</h2><p>Choose your standard size: 32, 34, 36, 38, 40, 42 or 44. LuxeMia manages fitting for the selected size. These selections describe your requested fit, not separate garment measurements.</p><ul>\n<li>\n<strong>Standard Fit:</strong> $83.30 in every listed size.</li>\n<li>\n<strong>Made to Fit (+$10):</strong> $93.30. Choose this optional alteration service and share your measurements with LuxeMia after ordering.</li>\n</ul><h2>Occasions and care</h2><p>Style for wedding guest, sangeet, festive celebrations. Handle embroidered areas gently and follow the garment care label. Colors may appear slightly different with lighting and screen settings.</p>",
+      "expected": [
+        "One stitched embroidered blouse",
+        "One pair of palazzo pants",
+        "One dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135416574123",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One saree in your selected color</li>\n<li>One unstitched blouse fabric piece</li>\n</ul><p>A softly lustrous silk saree with a finely woven border and patterned pallu, finished with knotted tassels. Choose Purple, Chartreuse, Turquoise, Bright Pink, Blue or Magenta for festive celebrations and party dressing.</p><h3>Design details</h3><ul>\n<li>Silk saree with a plain body and narrow woven border</li>\n<li>Decorative woven bands across the pallu with a tasselled edge</li>\n<li>Coordinating blouse fabric with floral handwork detailing</li>\n</ul><h3>What is included</h3><p>One saree and one unstitched blouse fabric piece in your selected color. The stitched blouse shown on the model demonstrates styling and is not included as a finished garment. Belts, jewelry, petticoats and other styling accessories are not included in the base price.</p><h3>Fit and finishing</h3><p>The saree is supplied for traditional draping, not pre-stitched. The blouse fabric requires tailoring. Blouse sizing is determined during tailoring; this is not a standard-size stitched outfit.</p><h3>Optional services</h3><p>Blouse stitching or alteration is available separately for $10, Pico &amp; Fall finishing for $8, and a matching petticoat for $8. These optional services are not included in the $52.50 base price.</p><h3>Care</h3><p>Follow the fabric care label and handle the blouse handwork and tassels gently. Colors may vary slightly with lighting and screen settings.</p>",
+      "expected": [
+        "One saree in your selected color",
+        "One unstitched blouse fabric piece"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135412412587",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>Fully stitched embroidered top with cotton lining</li>\n<li>Palazzo trousers with an elastic waist</li>\n<li>Lace-edged dupatta</li>\n</ul><p>Delicate floral and bird embroidery gives this purple palazzo suit a graceful focal point. The straight tunic pairs with flowing wide-leg trousers and a matching lace-edged dupatta for a coordinated festive outfit.</p><h3>Design and included pieces</h3><ul>\n<li>Fully stitched embroidered top with cotton lining.</li>\n<li>Matching palazzo trousers with an elastic waist.</li>\n<li>Coordinating dupatta finished with lace along all four sides.</li>\n<li>Three-piece outfit: top, palazzo trousers and dupatta.</li>\n</ul><h3>Approximate garment dimension</h3><p>Top length: up to 32 inches. This is a garment length, not a body-measurement size chart.</p><h3>Size and fit</h3><p>Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit; the $10 is included in that option's price.</p><p>This is a fully stitched outfit. Select your size and fit option above.</p><h3>Styling notes</h3><p>Jewelry, footwear and other accessories shown are for styling and are not included. Colors may vary slightly with screen and lighting.</p>",
+      "expected": [
+        "Fully stitched embroidered top with cotton lining",
+        "Palazzo trousers with an elastic waist",
+        "Lace-edged dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135411593387",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>Fully stitched top</li>\n<li>Matching georgette sharara trousers</li>\n<li>Black georgette dupatta</li>\n</ul><p>Bright floral print and multicolored embroidered borders stand out against this black georgette sharara suit. Sequin accents add detail to the tunic, wide flared trousers and coordinating dupatta.</p><h3>Design and included pieces</h3><ul>\n<li>Fully stitched top with an embroidered neckline, scattered motifs and decorative cuffs and hem.</li>\n<li>Matching georgette sharara trousers with floral digital print and embroidered sequin detailing.</li>\n<li>Black georgette dupatta with embroidered sequin motifs and a decorative edge.</li>\n<li>Three-piece outfit: top, trousers and dupatta.</li>\n</ul><h3>Approximate garment dimensions</h3><p>Top length: 40 inches. Trouser length: 39 inches. Dupatta length: 2.10\u20132.20 meters. These are garment lengths, not a body-measurement size chart.</p><h3>Size and fit</h3><p>Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit; the $10 is included in that option's price.</p><p>This is a fully stitched outfit. Select your size and fit option above.</p><h3>Styling notes</h3><p>Jewelry, footwear and other accessories shown are for styling and are not included. Colors may vary slightly with screen and lighting.</p>",
+      "expected": [
+        "Fully stitched top",
+        "Matching georgette sharara trousers",
+        "Black georgette dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9135401566379",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One embroidered silk top</li>\n<li>One pair of silk palazzo trousers</li>\n<li>One shaded dupatta</li>\n</ul><p>Pink floral embroidery and contrast leaf motifs bring a fresh finish to this three-piece silk palazzo suit. Choose Black, Teal, Plum or Mustard, each paired with a shaded dupatta that fades into pink.</p><h3>Design details</h3><ul>\n<li>Silk top and coordinating silk palazzo trousers</li>\n<li>Floral embroidery, a V-neckline and scalloped cutwork edging</li>\n<li>Long sleeves with embroidered cuffs</li>\n<li>Shaded dupatta with tassel detailing</li>\n</ul><h3>Construction</h3><p>Supplied stitched and ready to wear.</p><h3>Size and fit</h3><p>Available in standard sizes 32, 34, 36, 38, 40, 42 and 44. LuxeMia handles sizing adjustments for your selected standard size. Choose Made to Fit (+$10) for a personalized fit.</p><h3>Set contents</h3><p>Includes one embroidered top, one pair of palazzo trousers and one dupatta in your selected color.</p><h3>Care</h3><p>Follow the garment care label and handle embroidery gently.</p><p>Jewelry, footwear and other styling accessories are not included. Colors may vary slightly with lighting and screen settings.</p>",
+      "expected": [
+        "One embroidered silk top",
+        "One pair of silk palazzo trousers",
+        "One shaded dupatta"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9134774878379",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One saree</li>\n<li>One unstitched blouse piece</li>\n</ul><p>Botanical circular motifs with a patterned border and pallu (decorative draped end) define this banarasi silk saree. The pista green palette makes it an expressive option for wedding celebrations.</p><h2>Fabric and design</h2><ul>\n<li>Saree fabric: Banarasi Silk.</li>\n<li>Color: Pista Green.</li>\n<li>Detailing: hand work.</li>\n<li>Design: Botanical circular motifs with a patterned border and pallu.</li>\n</ul><h2>Included pieces</h2><p>One saree with an unstitched blouse piece. The fitted blouse shown on the model illustrates styling; the included blouse fabric requires tailoring. Jewelry and other styling accessories are not included.</p><h2>Fit and styling</h2><p>This is a draped saree and blouse-fabric offering, not a standard-size stitched outfit. Blouse stitching, a petticoat and pre-pleating are not included in the base price. For an event-ready look, pair the detailed border with simple jewelry and arrange the pallu to show its pattern.</p><h2>Before ordering</h2><p>Confirm blouse-fabric measurements and any tailoring requirements before ordering. For a fixed event date, check current availability and delivery timing with LuxeMia. Colors can appear slightly different with lighting and screen settings.</p><h2>Optional finishing services</h2><p>The base price covers the saree and unstitched blouse piece. Blouse Stitching / Alteration, Pico &amp; Fall (edge finishing and fall attachment), and a Matching Petticoat are separate paid options in LuxeMia's service selector; they are not included in the base price. Confirm blouse measurements before stitching. Pre-pleating is not included.</p>",
+      "expected": [
+        "One saree",
+        "One unstitched blouse piece"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9134774780075",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One saree</li>\n<li>One unstitched blouse piece</li>\n</ul><p>Small body motifs, a decorative border and teardrop motifs across the pallu (decorative draped end) define this banarasi silk saree. The maroon palette makes it an expressive option for wedding celebrations.</p><h2>Fabric and design</h2><ul>\n<li>Saree fabric: Banarasi Silk.</li>\n<li>Color: Maroon.</li>\n<li>Detailing: hand work.</li>\n<li>Design: Small body motifs, a decorative border and teardrop motifs across the pallu.</li>\n</ul><h2>Included pieces</h2><p>One saree with an unstitched blouse piece. The fitted blouse shown on the model illustrates styling; the included blouse fabric requires tailoring. Jewelry and other styling accessories are not included.</p><h2>Fit and styling</h2><p>This is a draped saree and blouse-fabric offering, not a standard-size stitched outfit. Blouse stitching, a petticoat and pre-pleating are not included in the base price. For an event-ready look, pair the detailed border with simple jewelry and arrange the pallu to show its pattern.</p><h2>Before ordering</h2><p>Confirm blouse-fabric measurements and any tailoring requirements before ordering. For a fixed event date, check current availability and delivery timing with LuxeMia. Colors can appear slightly different with lighting and screen settings.</p><h2>Optional finishing services</h2><p>The base price covers the saree and unstitched blouse piece. Blouse Stitching / Alteration, Pico &amp; Fall (edge finishing and fall attachment), and a Matching Petticoat are separate paid options in LuxeMia's service selector; they are not included in the base price. Confirm blouse measurements before stitching. Pre-pleating is not included.</p>",
+      "expected": [
+        "One saree",
+        "One unstitched blouse piece"
+      ]
+    },
+    {
+      "id": "gid://shopify/Product/9134774550699",
+      "descriptionHtml": "<h3>What's included</h3><ul>\n<li>One saree</li>\n<li>One unstitched blouse piece</li>\n</ul><p>Large medallion motifs with an ornate decorative border define this banarasi silk saree. The lilac palette makes it an expressive option for wedding celebrations.</p><h2>Fabric and design</h2><ul>\n<li>Saree fabric: Banarasi Silk.</li>\n<li>Color: Lilac.</li>\n<li>Detailing: hand work.</li>\n<li>Design: Large medallion motifs with an ornate decorative border.</li>\n</ul><h2>Included pieces</h2><p>One saree with an unstitched blouse piece. The fitted blouse shown on the model illustrates styling; the included blouse fabric requires tailoring. Jewelry and other styling accessories are not included.</p><h2>Fit and styling</h2><p>This is a draped saree and blouse-fabric offering, not a standard-size stitched outfit. Blouse stitching, a petticoat and pre-pleating are not included in the base price. For an event-ready look, pair the detailed border with simple jewelry and arrange the pallu (decorative draped end) to show its pattern.</p><h2>Before ordering</h2><p>Confirm blouse-fabric measurements and any tailoring requirements before ordering. For a fixed event date, check current availability and delivery timing with LuxeMia. Colors can appear slightly different with lighting and screen settings.</p><h2>Optional finishing services</h2><p>The base price covers the saree and unstitched blouse piece. Blouse Stitching / Alteration, Pico &amp; Fall (edge finishing and fall attachment), and a Matching Petticoat are separate paid options in LuxeMia's service selector; they are not included in the base price. Confirm blouse measurements before stitching. Pre-pleating is not included.</p>",
+      "expected": [
+        "One saree",
+        "One unstitched blouse piece"
+      ]
+    }
+  ]
+}

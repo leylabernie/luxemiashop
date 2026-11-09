@@ -14,8 +14,7 @@ const SEOFooterContent = () => {
               Welcome to <strong className="text-foreground">LuxeMia</strong>, your destination for Indian ethnic wear online. 
               Buy <Link to="/sarees" className="text-foreground hover:text-primary transition-colors underline">sarees</Link>, 
               <Link to="/lehengas" className="text-foreground hover:text-primary transition-colors underline"> bridal lehengas</Link>, 
-              <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link>, and 
-              <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry</Link> that 
+              <Link to="/suits" className="text-foreground hover:text-primary transition-colors underline">salwar kameez</Link> that 
               are held in a tighter in-stock edit for weddings and festivals coming up soon.
             </p>
 
@@ -51,11 +50,10 @@ const SEOFooterContent = () => {
               </div>
 
               <div>
-                <h3 className="font-serif text-lg text-foreground mb-3">Buy Indian Jewelry Online</h3>
+                <h3 className="font-serif text-lg text-foreground mb-3">Ready-to-Ship Indian Outfits</h3>
                 <p>
-                  Shop <Link to="/jewelry" className="text-foreground hover:text-primary transition-colors underline">Indian jewelry online</Link> at LuxeMia. 
-                  Discover <strong className="text-foreground">kundan necklace sets</strong>, bridal jewelry, 
-                  <strong className="text-foreground"> jhumka earrings</strong>, bangles, and maang tikka. 
+                  Need an outfit sooner? Browse <Link to="/ready-to-ship" className="text-foreground hover:text-primary transition-colors underline">ready-to-ship styles</Link> at LuxeMia
+                  and review each listing for its stated dispatch timing, sizes and included pieces before ordering.
                   Perfect for weddings, festivals, and celebrations. Free U.S. standard shipping at $150 and above; $14.99 below that.
                 </p>
               </div>

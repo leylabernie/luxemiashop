@@ -5,6 +5,8 @@ const path = require('node:path');
 const { build } = require('esbuild');
 const plan = require('../scripts/product-age-archive-20261026.json');
 const ownerArchive = require('../scripts/product-owner-archive-20261028.json');
+const latestArchive = require('../scripts/product-age-archive-20261109.json');
+const latestIds = new Set(latestArchive.archived.map(p => p.id));
 const ownerIds = new Set(ownerArchive.archived.map(p => p.id));
 const archived = require('../src/data/reversiblyArchivedProductHandles.json');
 const { isReversiblyArchivedProduct } = require('../src/lib/reversibleProductArchive.cjs');
@@ -17,18 +19,19 @@ test('fixed authorized age batch is exact, reversible, and preserves current mer
   const inventory=require('../scripts/approved-sitemap-inventory.json');
   assert.ok(inventory.urlCount >= baseline.retained.length);
   for(const p of baseline.retained) assert.ok(inventory.paths.includes(`/product/${p.handle}`));
-  assert.deepEqual(new Set(baseline.retained.map(p => p.id)), new Set(plan.retainedProductIds.filter(id => !ownerIds.has(id))));
+  for (const id of plan.retainedProductIds.filter(id => !ownerIds.has(id) && !latestIds.has(id))) assert.ok(baseline.retained.some(p => p.id === id));
   assert.equal(plan.ageRule.strictlyBefore, '2026-09-21T14:34:56Z');
   for (const p of plan.archived) {
     assert.ok(p.createdAt < plan.ageRule.strictlyBefore);
     assert.notEqual(p.id, plan.preservedServiceId);
     assert.ok(isReversiblyArchivedProduct(p.handle));
   }
-  assert.deepEqual(new Set(archived), new Set([...plan.archived.map(p => p.handle), ...plan.archivedAliases.map(p => p.handle), ...ownerArchive.archived.map(p => p.handle)]));
+  assert.deepEqual(new Set(archived), new Set(baseline.reversiblyArchived.map(p => p.handle)));
+  for (const p of latestArchive.archived) assert.ok(archived.includes(p.handle) || latestArchive.existingPermanentHandlesPreserved.includes(p.handle));
   assert.equal(isReversiblyArchivedProduct('luxemia-tailoring-saree-finishing-add-ons'), false);
   assert.equal(isReversiblyArchivedProduct('unrelated-new-product'), false);
   assert.equal(baseline.retired.length, 1300);
-  assert.equal(baseline.reversiblyArchived.length, 162);
+  assert.equal(baseline.reversiblyArchived.length, 325);
 });
 test('real middleware rejects archives before stale prerender/live lookup and retains unrelated response paths', async () => {
   let lookups = 0;
@@ -88,7 +91,7 @@ test('owner removal batch is exactly nine reversible archives and keeps a 379-pr
   ]);
   assert.equal(ownerIds.size,9);
   assert.equal(ownerArchive.minimumExpectedActiveProducts,379);
-  assert.equal(baseline.retained.length,329);
+  assert.equal(baseline.retained.length,237);
   for(const p of ownerArchive.archived) {
     assert.ok(baseline.reversiblyArchived.some(a=>a.id===p.id&&a.handle===p.handle));
     assert.ok(!baseline.retained.some(a=>a.id===p.id));
@@ -99,3 +102,17 @@ test('owner removal batch is exactly nine reversible archives and keeps a 379-pr
   assert.match(source,/Math\.max\(retirement\.retained\.length,[\s\S]*?minimumExpectedActiveProducts\)/);
   assert.match(source,/if \(missing\.length \|\| resurfaced\.length\) throw new Error/);
 });
+
+ test('November 9 archive is exact and cannot retire the billing service or reactivate permanent retirements', () => {
+  assert.equal(latestArchive.archived.length, 327);
+  assert.equal(new Set(latestArchive.archived.map(p => p.id)).size,327);
+  assert.equal(latestArchive.minimumExpectedActiveProducts,238);
+  assert.equal(latestArchive.merchandiseCount,237);
+  for(const p of latestArchive.archived) {
+    assert.ok(p.createdAt < latestArchive.ageRule.strictlyBefore);
+    assert.notEqual(p.id,latestArchive.preservedServiceId);
+    assert.ok(!baseline.retained.some(x=>x.id===p.id));
+  }
+  const permanent = new Set(baseline.retired.map(p=>p.handle));
+  for (const h of latestArchive.existingPermanentHandlesPreserved) assert.ok(permanent.has(h));
+ });

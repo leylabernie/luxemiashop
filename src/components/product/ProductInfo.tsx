@@ -35,6 +35,7 @@ import {
   isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
   resolveIncludedPieces,
+  getWhatsIncludedItems,
   selectedOptionsFromVariant,
   selectionRequiresSeparateMeasurements,
 } from '@/lib/productPurchaseFlow';
@@ -533,6 +534,8 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   const isAvailable = purchasableVariant?.node.availableForSale ?? false;
   const sku = purchasableVariant?.node.sku || product.variants.edges[0]?.node.sku;
   
+  const includedBulletItems = useMemo(() => getWhatsIncludedItems(product.descriptionHtml || ''), [product.descriptionHtml]);
+
   const productSpecs = useMemo(
     () => extractProductSpecs(
       product.tags,
@@ -1018,10 +1021,19 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         )}
       </div>
 
-      {(productSpecs.fabric || productSpecs.includedPieces || productSpecs.work) && (
+      {includedBulletItems.length > 0 && (
+        <section aria-labelledby="whats-included-heading" className="rounded-sm bg-secondary/30 p-4 text-sm">
+          <h2 id="whats-included-heading" className="font-semibold">What's included</h2>
+          <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
+            {includedBulletItems.map(item => <li key={item}>{item}</li>)}
+          </ul>
+        </section>
+      )}
+
+      {(productSpecs.fabric || (!includedBulletItems.length && productSpecs.includedPieces) || productSpecs.work) && (
         <dl className="space-y-2 rounded-sm bg-secondary/30 p-4 text-sm">
           {productSpecs.fabric && <div><dt className="font-medium">Fabric</dt><dd className="text-muted-foreground">{productSpecs.fabric}</dd></div>}
-          {productSpecs.includedPieces && <div><dt className="font-medium">Included pieces</dt><dd className="text-muted-foreground">{productSpecs.includedPieces}</dd></div>}
+          {!includedBulletItems.length && productSpecs.includedPieces && <div><dt className="font-medium">Included pieces</dt><dd className="text-muted-foreground">{productSpecs.includedPieces}</dd></div>}
           {productSpecs.work && <div><dt className="font-medium">Work &amp; embellishment</dt><dd className="text-muted-foreground">{productSpecs.work}</dd></div>}
         </dl>
       )}

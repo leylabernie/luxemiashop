@@ -394,6 +394,9 @@ export function generateOrganizationSchema() {
     description: 'LuxeMia is an online Indian ethnic wear store serving shoppers in seven countries with product details, sizing guidance and tracking after dispatch.',
     address: {
       '@type': 'PostalAddress',
+      // Locality is public on-site (Footer: "Philadelphia, PA"). No street
+      // address is published on luxemia.shop, so none is declared here.
+      addressLocality: 'Philadelphia',
       addressCountry: 'US',
       addressRegion: 'Pennsylvania',
     },
@@ -404,7 +407,8 @@ export function generateOrganizationSchema() {
       contactType: 'customer service',
       email: 'hello@luxemia.shop',
       areaServed: SHIPPING_COUNTRIES,
-      availableLanguage: ['English'],
+      // Stated on-site (BrandStory, Returns): phone support in all three.
+      availableLanguage: ['English', 'Hindi', 'Gujarati'],
     },
     brand: { '@id': `${SITE_URL}/#brand` },
     // Verified owner-operated profiles. `sameAs` is an entity-identity signal,
