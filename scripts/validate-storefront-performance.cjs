@@ -15,23 +15,12 @@ function assert(condition, message) {
 }
 
 const sourceIndex = read('index.html');
-assert(
-  sourceIndex.includes('/images/campaigns/luxemia-diwali-2026-mobile.webp') &&
-    sourceIndex.includes('/images/campaigns/luxemia-diwali-2026-desktop.webp'),
-  'The current Diwali LCP images are not preloaded in index.html.',
-);
-assert(
-  !sourceIndex.includes('href="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp"') &&
-    !sourceIndex.includes('href="/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp"'),
-  'The retired New Arrivals campaign image is still preloaded on the homepage.',
-);
-
+const activeImage = 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Grey-Georgette-Wedding-Wear-Embroidery-Work-Lehenga-Choli-4797-321-B_1.jpg?v=1793569611';
+assert(sourceIndex.includes(activeImage), 'The current editorial photo is not preloaded.');
+assert(!/luxemia-diwali|luxemia-new-arrivals-2026/.test(sourceIndex), 'Expired campaign artwork is preloaded.');
 const banner = read('src/components/home/NewArrivalsBanner.tsx');
-assert(!banner.includes('const preloadedImage = new Image();'), 'The hero still eagerly preloads its next slide.');
-assert(
-  banner.includes("fetchPriority={index === 0 ? 'high' : 'low'}"),
-  'Hero fetch priority is not restricted to the first LCP slide.',
-);
+assert(banner.includes('NewArrivalsEditorial'), 'Homepage must use evergreen editorial.');
+assert(read('src/components/home/NewArrivalsEditorial.tsx').includes('fetchPriority="high"'), 'Editorial photo must retain LCP priority.');
 
 const hook = read('src/hooks/useShopifyProducts.ts');
 assert(
@@ -59,16 +48,8 @@ assert(builtFiles.length > 0, 'No built homepage HTML was found.');
 
 for (const relativePath of builtFiles) {
   const html = read(relativePath);
-  assert(
-    html.includes('/images/campaigns/luxemia-diwali-2026-mobile.webp') ||
-      html.includes('/images/campaigns/luxemia-diwali-2026-desktop.webp'),
-    `${relativePath} does not preload the active Diwali hero.`,
-  );
-  assert(
-    !html.includes('href="/images/campaigns/new-indian-ethnic-wear-2026-mobile.webp"') &&
-      !html.includes('href="/images/campaigns/new-indian-ethnic-wear-2026-desktop.webp"'),
-    `${relativePath} still preloads an inactive campaign image.`,
-  );
+  assert(html.includes(activeImage), `${relativePath} does not preload the active editorial image.`);
+  assert(!/luxemia-diwali|luxemia-new-arrivals-2026/.test(html), `${relativePath} includes retired seasonal artwork.`);
 
   const scriptPattern = /<script\b[^>]*type=["']application\/ld\+json["'][^>]*>([\s\S]*?)<\/script>/gi;
   let productSchema = null;

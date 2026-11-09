@@ -22,25 +22,25 @@ test('approved artwork bytes/dimensions match manifest and use active non-retire
  const assets=manifest.assets.filter(a=>/\.(webp|jpg)$/.test(a.filename));assert.equal(assets.length,8);
  for(const a of assets){const b=fs.readFileSync(path.join(root,'public/images/campaigns',a.filename));assert.equal(crypto.createHash('sha256').update(b).digest('hex'),a.sha256);const m=await sharp(b).metadata();assert.deepEqual([m.width,m.height],a.dimensions);assert.ok(b.length<800000,a.filename);}
 });
-test('homepage starts with responsive Diwali artwork and accessible live CTA without old overlay', async()=>{
+test('homepage and New Arrivals use evergreen current-product copy with working CTAs', async()=>{
  const html=render(await component('src/components/home/NewArrivalsBanner.tsx'));
- assert.match(html,/href="\/collections\/diwali-outfits"/);assert.match(html,/aria-label="Diwali - Shop Diwali styles"/);
- assert.match(html,/<h2 class="sr-only">Diwali<\/h2>/);assert.equal((html.match(/data-hero-image/g)||[]).length,1);
- assert.match(html,/luxemia-diwali-2026-desktop.webp/);assert.match(html,/luxemia-diwali-2026-mobile.jpg/);assert.match(html,/media="\(min-width: 640px\)"/);
- assert.doesNotMatch(html,/Dussehra|navratri-lehenga|arrivals-editorial__copy|data-hero-content/);
- assert.match(html,/focus-visible:outline-offset-\[-5px\]/);assert.match(html,/Previous banner/);assert.match(html,/Next banner/);assert.match(html,/New Arrivals/);
- assert.match(read('src/components/home/NewArrivalsBanner.tsx'),/aspect-\[2\/3\].*sm:aspect-\[3\/1\]/);
-});
-test('New Arrivals page preserves h1, full image and in-page product CTA',async()=>{
- const C=await component('src/components/home/NewArrivalsEditorial.tsx');const html=render(C,{pageHero:true});
- assert.match(html,/<h1 class="sr-only">New Arrivals<\/h1>/);assert.match(html,/href="#new-arrivals-products"/);
- assert.match(html,/luxemia-new-arrivals-2026-desktop.webp/);assert.match(html,/luxemia-new-arrivals-2026-mobile.jpg/);
+ assert.match(html,/href="\/new-arrivals"/);
+ assert.match(html,/<h2>New Arrivals<\/h2>/);
+ assert.match(html,/grey-georgette-embroidered-wedding-lehenga-choli/);
+ assert.match(html,/unstitched/);
+ assert.doesNotMatch(html,/Diwali|Dussehra|luxemia-new-arrivals-2026|luxemia-diwali|Next banner|Previous banner/);
+ const C=await component('src/components/home/NewArrivalsEditorial.tsx');const page=render(C,{pageHero:true});
+ assert.match(page,/<h1>New Arrivals<\/h1>/);assert.match(page,/href="#new-arrivals-products"/);
  assert.match(read('src/components/home/NewArrivalsEditorial.css'),/object-fit:contain/);
- assert.match(read('src/components/home/NewArrivalsEditorial.css'),/aspect-ratio:2\/3/);
- assert.match(render(C),/href="\/new-arrivals"/);assert.doesNotMatch(html,/arrivals-editorial__copy/);
+ assert.match(read('src/components/home/NewArrivalsEditorial.css'),/grid-template-columns:1fr/);
 });
-test('preload finalizer and performance gate agree on the active first creative',()=>{
- for(const p of ['index.html','scripts/apply-storefront-performance-fix.cjs','scripts/validate-storefront-performance.cjs']){
- const s=read(p);assert.ok(s.includes('/images/campaigns/luxemia-diwali-2026-mobile.webp'),p);assert.ok(s.includes('/images/campaigns/luxemia-diwali-2026-desktop.webp'),p);assert.ok(!s.includes('/images/hero-carousel/navratri-lehenga'),p);
- }
+test('preload and performance gate cannot reintroduce retired seasonal creative',()=>{
+ const index=read('index.html');
+ assert.match(index,/Grey-Georgette-Wedding-Wear-Embroidery-Work-Lehenga-Choli/);
+ assert.doesNotMatch(index,/luxemia-diwali|luxemia-new-arrivals-2026/);
+ assert.match(index,/\[data-home-hero\]\{height:auto;min-height:0/);
+ assert.doesNotMatch(index,/\[data-home-hero\]\{height:(?:620px|min\(78vh)/);
+ assert.doesNotMatch(read('scripts/apply-storefront-performance-fix.cjs'),/luxemia-diwali|luxemia-new-arrivals-2026/);
+ for(const p of ['src/components/seo/InternalLinkBlock.tsx','src/components/seo/RelatedOccasions.tsx','src/components/seo/SEOFooterContent.tsx']) assert.doesNotMatch(read(p),/diwali/i,p);
+ assert.match(read('src/App.tsx'),/diwali-outfits/);
 });

@@ -9,7 +9,6 @@ const OCCASIONS = [
   { slug: 'haldi', label: 'Haldi Ceremony', path: '/collections/haldi-outfits' },
   { slug: 'mehendi', label: 'Mehendi Ceremony', path: '/collections/mehendi-outfits' },
   { slug: 'wedding-guest', label: 'Wedding Guest', path: '/collections/wedding-guest-outfits' },
-  { slug: 'diwali', label: 'Diwali', path: '/collections/diwali-outfits' },
   { slug: 'eid', label: 'Eid', path: '/collections/eid-outfits' },
 ];
 

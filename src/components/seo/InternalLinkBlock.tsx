@@ -40,7 +40,6 @@ const SHOP_LINKS: LinkItem[] = [
 ];
 
 const OCCASION_LINKS: LinkItem[] = [
-  { to: "/collections/diwali-outfits", label: "Diwali Outfits" },
   { to: "/collections/wedding-guest-outfits", label: "Wedding Guest Outfits" },
   { to: "/collections/mehendi-outfits", label: "Mehendi Ceremony Outfits" },
   { to: "/collections/eid-outfits", label: "Eid Outfits" },
