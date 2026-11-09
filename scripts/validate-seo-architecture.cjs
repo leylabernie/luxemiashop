@@ -39,8 +39,8 @@ const homepage = architecture.routes['/'];
 if (homepage?.title !== APPROVED_HOME_TITLE && !homepage?.title?.endsWith('| LuxeMia')) {
   failures.push('Homepage title must use the approved LuxeMia title or retain the normalized brand suffix.');
 }
-if (!homepage?.h1?.startsWith('LuxeMia')) {
-  failures.push('Homepage H1 must lead with the LuxeMia brand.');
+if (homepage?.h1 !== 'Curated Indian Wedding & Festive Wear, Delivered to Your Door.') {
+  failures.push('Homepage H1 must match the owner-approved wedding and festive positioning.');
 }
 
 const requiredSharedRoutes = [

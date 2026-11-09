@@ -26,6 +26,25 @@ export function selectedOptionsFromVariant(
   );
 }
 
+/** Preserve an explicit catalog bullet list as text, never infer missing pieces. */
+export function getWhatsIncludedItems(html: string): string[] {
+  const lists: string[][] = [];
+  const decode = (value: string) => value.replace(/&amp;/gi, '&').replace(/&nbsp;|&#160;/gi, ' ')
+    .replace(/&apos;|&#39;|&#x27;/gi, "'").replace(/&rsquo;|&#8217;/gi, '’')
+    .replace(/&quot;/gi, '"').replace(/\s+/g, ' ').trim();
+  for (const match of html.matchAll(/<h([1-6])\b[^>]*>\s*What(?:'|’|&#39;|&apos;)s included\s*:?\s*<\/h\1\s*>\s*<(ul|ol)\b[^>]*>([\s\S]*?)<\/\2\s*>/gi)) {
+    const body = match[3];
+    const items = [...body.matchAll(/<li\b[^>]*>([\s\S]*?)<\/li\s*>/gi)];
+    if (!items.length || items.length > 12 || body.replace(/<li\b[^>]*>[\s\S]*?<\/li\s*>/gi, '').trim()) return [];
+    const text = items.map(item => decode(item[1].replace(/<[^>]*>/g, ' ')));
+    if (items.some(item => /<\/?(?!strong\b|b\b|em\b|i\b|span\b|br\b)[a-z]/i.test(item[1]))
+      || text.some(item => !item || item.length > 200 || /&(?:#\w+|\w+);/.test(item))) return [];
+    lists.push(text);
+  }
+  if (!lists.length || lists.some(list => JSON.stringify(list) !== JSON.stringify(lists[0]))) return [];
+  return [...new Set(lists[0])];
+}
+
 /** Read only explicitly labeled catalog sections; never complete a set from its title. */
 function includedPiecesFromHeadedDescription(html: string): string | undefined {
   const plain = (value: string) => value.replace(/<[^>]*>/g, ' ')

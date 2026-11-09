@@ -219,9 +219,9 @@ if (
   throw new Error('ProductInfo must render Shopify numeric size variants through the selectedOptions-wired native option picker');
 }
 
-// Verified surviving 15-variant fixture after the 2026-10-26 age archive.
+// Verified surviving multi-variant fixture after the 2026-11-09 age archive.
 // Preserve exact Storefront / feed / ProductGroup parity checks.
-const VARIANT_PARITY_HANDLE = 'off-white-art-silk-sherwani-groomsmen';
+const VARIANT_PARITY_HANDLE = 'mustard-embroidered-blouse-draped-palazzo-set';
 const variantPrerenderPath = path.join(
   PROJECT_ROOT,
   'dist/_prerender/product',

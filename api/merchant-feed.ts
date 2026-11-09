@@ -1,3 +1,5 @@
+import merchantSize from '../merchant-feed-size.cjs';
+const { getSizeOption, getMerchantAgeGroup, normalizeOptionName, isSizeOptionName } = merchantSize;
 import { getCatalogMaterial } from '../src/lib/catalogMaterial.js';
 import { getTitleDesignDetails } from '../src/lib/merchantDesignDetails.js';
 import { selectMerchantImage } from '../src/lib/merchantImages.js';
@@ -225,33 +227,8 @@ function getGender(productType: string, title: string): string {
 
 // ─── Size Extraction ─────────────────────────────────────────────────
 
-const SIZE_OPTION_NAMES = new Set([
-  "size",
-  "standard size",
-  "blouse size",
-  "bust size",
-  "chest size",
-  "stitching size",
-]);
-
-function normalizeOptionName(value: string): string {
-  return (value || "").trim().replace(/\s+/g, " ").toLowerCase();
-}
-
-function isSizeOptionName(value: string): boolean {
-  return SIZE_OPTION_NAMES.has(normalizeOptionName(value));
-}
-
-function getSizeFromVariant(
-  selectedOptions: ShopifySelectedOption[]
-): string {
-  for (const option of selectedOptions) {
-    if (isSizeOptionName(option.name) && option.value.trim()) {
-      return option.value.trim();
-    }
-  }
-
-  return "";
+function getSizeFromVariant(selectedOptions: ShopifySelectedOption[]): string {
+  return getSizeOption(selectedOptions)?.value || '';
 }
 
 // ─── Force JPEG on image URLs ────────────────────────────────────────
@@ -631,7 +608,7 @@ function generateItem(
   if (gender) xml += `
     <g:gender>${gender}</g:gender>`;
   if (isApparel) xml += `
-    <g:age_group>adult</g:age_group>`;
+    <g:age_group>${getMerchantAgeGroup(variant.selectedOptions)}</g:age_group>`;
   if (color) xml += `
     <g:color>${escapeXml(color)}</g:color>`;
   if (material) xml += `
@@ -641,8 +618,7 @@ function generateItem(
   if (size) {
     xml += `
     <g:size>${escapeXml(size)}</g:size>
-    <g:size_type>regular</g:size_type>
-    <g:size_system>US</g:size_system>`;
+    <g:size_type>regular</g:size_type>${getMerchantAgeGroup(variant.selectedOptions) === 'adult' ? '\n    <g:size_system>US</g:size_system>' : ''}`;
   }
 
   if (gtin) {

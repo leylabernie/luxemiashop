@@ -1,0 +1,3122 @@
+{
+  "asOf": "2026-11-09",
+  "ageRule": {
+    "field": "createdAt",
+    "strictlyBefore": "2026-10-05T15:21:44Z"
+  },
+  "reason": "Owner-requested one-time reversible removal of merchandise more than five weeks old. No rolling policy. Existing permanent retirements are preserved.",
+  "archived": [
+    {
+      "id": "gid://shopify/Product/8982913712299",
+      "title": "Red Chinon Silk Pearl Sharara Suit for Garba & Sangeet",
+      "handle": "red-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:33Z",
+      "updatedAt": "2026-09-22T23:47:54Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982913777835",
+      "title": "Green Chinon Silk Pearl Sharara Suit for Mehndi & Garba",
+      "handle": "green-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:34Z",
+      "updatedAt": "2026-09-22T23:47:55Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982913810603",
+      "title": "Teal Chinon Silk Embroidered Sharara Suit for Mehndi",
+      "handle": "teal-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:36Z",
+      "updatedAt": "2026-09-22T23:47:56Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982914105515",
+      "title": "Purple Chinon Silk Sequin Sharara Suit for Garba",
+      "handle": "purple-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:38Z",
+      "updatedAt": "2026-09-22T23:47:57Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982914269355",
+      "title": "Royal Blue Chinon Silk Pearl Sharara Suit for Sangeet",
+      "handle": "royal-blue-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:40Z",
+      "updatedAt": "2026-09-22T23:47:58Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982914334891",
+      "title": "Rani Pink Chinon Silk Sharara Suit with Pearl Work",
+      "handle": "rani-pink-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:42Z",
+      "updatedAt": "2026-09-22T23:47:59Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982914367659",
+      "title": "Maroon Art Silk Pearl Sharara Suit for Wedding Guests",
+      "handle": "maroon-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:44Z",
+      "updatedAt": "2026-09-22T23:48:00Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915088555",
+      "title": "Black Art Silk Embroidered Sharara Suit for Reception",
+      "handle": "black-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:46Z",
+      "updatedAt": "2026-09-22T23:48:02Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915252395",
+      "title": "Ivory Art Silk Embroidered Sharara Suit for Day Weddings",
+      "handle": "ivory-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:48Z",
+      "updatedAt": "2026-09-22T23:48:03Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915350699",
+      "title": "Rani Pink Art Silk Pearl Sharara Suit for Sangeet",
+      "handle": "rani-pink-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:50Z",
+      "updatedAt": "2026-09-22T23:48:04Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915481771",
+      "title": "Brown Chinon Silk Pearl Sharara Suit for Wedding Guests",
+      "handle": "brown-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:52Z",
+      "updatedAt": "2026-09-22T23:48:05Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915547307",
+      "title": "Navy Blue Chinon Silk Sharara Suit with Pearl Work",
+      "handle": "navy-blue-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:54Z",
+      "updatedAt": "2026-09-22T23:48:06Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915580075",
+      "title": "Black Chinon Silk Sequin Sharara Suit for Evening Events",
+      "handle": "black-chinon-silk-pearl-sharara-suit-for-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:55Z",
+      "updatedAt": "2026-09-22T23:48:07Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915612843",
+      "title": "Olive Green Art Silk Pearl Sharara Suit for Mehndi",
+      "handle": "olive-green-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:57Z",
+      "updatedAt": "2026-09-22T23:48:08Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915645611",
+      "title": "Rust Orange Art Silk Sharara Suit for Garba & Mehndi",
+      "handle": "rust-orange-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:08:59Z",
+      "updatedAt": "2026-09-22T23:48:10Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915678379",
+      "title": "Lavender Art Silk Sequin Sharara Suit for Reception",
+      "handle": "lavender-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:09:01Z",
+      "updatedAt": "2026-09-22T23:48:11Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982915711147",
+      "title": "Teal Blue Art Silk Pearl Sharara Suit for Sangeet",
+      "handle": "teal-blue-art-silk-pearl-sharara-suit-for-indian-weddings",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:09:03Z",
+      "updatedAt": "2026-09-22T23:48:12Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982919545003",
+      "title": "Turquoise Chinon Silk Indo-Western Dress for Mehndi",
+      "handle": "turquoise-chinon-silk-indo-western-dress-for-mehndi",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:24:46Z",
+      "updatedAt": "2026-09-22T23:48:13Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982919643307",
+      "title": "Lavender Chinon Silk Indo-Western Dress for Reception",
+      "handle": "lavender-chinon-silk-indo-western-dress-for-reception",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:24:49Z",
+      "updatedAt": "2026-09-22T23:48:14Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/8982919676075",
+      "title": "Dusty Rose Chinon Silk Indo-Western Dress for Sangeet",
+      "handle": "dusty-rose-chinon-silk-indo-western-dress-for-sangeet",
+      "status": "DRAFT",
+      "createdAt": "2026-09-09T19:24:51Z",
+      "updatedAt": "2026-09-22T23:48:15Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017391644843",
+      "title": "Gold Kundan Work Necklace Set with Green Enamel (Meenakari) Detailing",
+      "handle": "jwl-001",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:07:47Z",
+      "updatedAt": "2026-09-22T23:48:17Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017391743147",
+      "title": "Gold Mirror Work Necklace Set with Green Enamel Detailing",
+      "handle": "jwl-002",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:07:50Z",
+      "updatedAt": "2026-09-22T23:48:18Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017391808683",
+      "title": "Maroon Embroidered Necklace Set with Heavy Kundan Jewelry",
+      "handle": "jwl-017",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:07:52Z",
+      "updatedAt": "2026-09-22T23:48:19Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017391874219",
+      "title": "Gold Kundan Work Necklace Set with Red Bead Drops",
+      "handle": "jwl-003",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:07:53Z",
+      "updatedAt": "2026-09-22T23:48:20Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392038059",
+      "title": "Navy Blue Embroidered Silk Blend Sherwani with White Churidar Pants",
+      "handle": "navy-silk-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:07:56Z",
+      "updatedAt": "2026-09-22T23:48:21Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392136363",
+      "title": "Light Pink Digital Print Cotton Kurta Pajama",
+      "handle": "baby-pink-cotton-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:07:58Z",
+      "updatedAt": "2026-09-22T23:48:23Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392169131",
+      "title": "Light blue Digital Print Kurta Pajama with Father-Son Matching Set",
+      "handle": "blue-cotton-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:00Z",
+      "updatedAt": "2026-09-22T23:48:24Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392234667",
+      "title": "Black Embroidered Art Silk Sherwani with Mandarin Collar",
+      "handle": "black-art-silk-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:02Z",
+      "updatedAt": "2026-09-22T23:48:25Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392300203",
+      "title": "Off-White or Digital Print Kurta Pajama",
+      "handle": "white-viscose-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:03Z",
+      "updatedAt": "2026-09-22T23:48:26Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392365739",
+      "title": "Dusty Rose Mirror Work Saree with Scalloped Hem With Intricate Border",
+      "handle": "silk-light-pink-occasional-embroidery-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:06Z",
+      "updatedAt": "2026-09-22T23:48:28Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392464043",
+      "title": "Sage green Embroidered Saree with Scalloped Hem With Intricate Border",
+      "handle": "silk-green-occasional-embroidery-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:08Z",
+      "updatedAt": "2026-09-22T23:48:29Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392529579",
+      "title": "Magenta Saree",
+      "handle": "magenta-art-silk-festive-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:10Z",
+      "updatedAt": "2026-09-20T18:56:25Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392562347",
+      "title": "Yellow Mirror Work Silk Blend Saree with Scalloped Kundan Border",
+      "handle": "silk-yellow-occasional-embroidery-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:12Z",
+      "updatedAt": "2026-09-22T23:48:30Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392627883",
+      "title": "Pastel green Embroidered Banarasi Saree with Contrasting Pink Blouse",
+      "handle": "banarasi-silk-mint-green-festival-weaving-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:14Z",
+      "updatedAt": "2026-09-22T23:48:31Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392726187",
+      "title": "Royal Blue Saree",
+      "handle": "royal-blue-georgette-party-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:16Z",
+      "updatedAt": "2026-09-20T18:56:27Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392791723",
+      "title": "Wine Saree",
+      "handle": "wine-georgette-party-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:18Z",
+      "updatedAt": "2026-09-20T18:56:28Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392824491",
+      "title": "Emerald Green Saree",
+      "handle": "emerald-green-georgette-party-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:20Z",
+      "updatedAt": "2026-09-20T18:56:29Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392890027",
+      "title": "Maroon Embroidered Silk Anarkali Suit",
+      "handle": "maroon-roman-silk-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:22Z",
+      "updatedAt": "2026-09-22T23:48:33Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017392955563",
+      "title": "Sage green Embroidered Silk Anarkali Suit with Contrast Teal Dupatta",
+      "handle": "green-fendy-silk-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:24Z",
+      "updatedAt": "2026-09-22T23:48:34Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393021099",
+      "title": "Yellow Anarkali Suit with Dupatta",
+      "handle": "yellow-georgette-anarkali-gown",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:25Z",
+      "updatedAt": "2026-09-20T18:56:32Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393086635",
+      "title": "Lavender Embroidered Silk Anarkali Suit with Matching Ombre Dupatta",
+      "handle": "dusty-pink-fendy-silk-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:27Z",
+      "updatedAt": "2026-09-22T23:48:35Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393184939",
+      "title": "Sky Blue Anarkali Suit with Dupatta",
+      "handle": "sky-blue-georgette-anarkali-gown",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:29Z",
+      "updatedAt": "2026-09-20T18:56:34Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393250475",
+      "title": "Maroon Embroidered Necklace Set with Elaborate Kundan Jewelry Set",
+      "handle": "jwl-008",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:31Z",
+      "updatedAt": "2026-09-22T23:48:36Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393316011",
+      "title": "Gold Mirror Work Necklace Set with Green Bead",
+      "handle": "jwl-004",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:32Z",
+      "updatedAt": "2026-09-22T23:48:38Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393381547",
+      "title": "Mustard Yellow Embroidered Necklace Set with Dupatta",
+      "handle": "jwl-005",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:34Z",
+      "updatedAt": "2026-09-22T23:48:39Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393447083",
+      "title": "Emerald Green Embroidered Necklace Set",
+      "handle": "jwl-006",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:36Z",
+      "updatedAt": "2026-09-22T23:48:40Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393479851",
+      "title": "Sage green Embroidered Necklace Set with Matching Potli Bag",
+      "handle": "jwl-007",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:38Z",
+      "updatedAt": "2026-09-22T23:48:42Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393578155",
+      "title": "Red Embroidered Necklace Set with Heavy Kundan Jewelry Set",
+      "handle": "jwl-009",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:40Z",
+      "updatedAt": "2026-09-22T23:48:43Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393676459",
+      "title": "Emerald Green Embroidered Necklace Set with Dupatta",
+      "handle": "jwl-010",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:41Z",
+      "updatedAt": "2026-09-22T23:48:44Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393741995",
+      "title": "Yellow Zari Work Necklace Set with Kundan Border",
+      "handle": "jwl-016",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:43Z",
+      "updatedAt": "2026-09-22T23:48:45Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393807531",
+      "title": "Silver/White Kundan Work Necklace Set",
+      "handle": "jwl-023",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:45Z",
+      "updatedAt": "2026-09-22T23:48:47Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393873067",
+      "title": "Teal Kundan Work Necklace Set with Elaborate Matching Jewelry Set",
+      "handle": "jwl-024",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:47Z",
+      "updatedAt": "2026-09-22T23:48:48Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017393938603",
+      "title": "Teal Mirror Work Necklace Set with Matching Kundan Necklace Set",
+      "handle": "jwl-014",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:49Z",
+      "updatedAt": "2026-09-22T23:48:49Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394004139",
+      "title": "Mustard Yellow Kundan Work Necklace Set",
+      "handle": "jwl-013",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:51Z",
+      "updatedAt": "2026-09-22T23:48:50Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394069675",
+      "title": "Maroon Mirror Work Earring Set with Red Bead And Pearl Tassels",
+      "handle": "jwl-033",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:53Z",
+      "updatedAt": "2026-09-22T23:48:52Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394135211",
+      "title": "Red and Kundan Work Earring Set with Dangling Crystal Beads",
+      "handle": "jwl-035",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:55Z",
+      "updatedAt": "2026-09-22T23:48:53Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394233515",
+      "title": "Antique gold Kundan Work Earring Set with Cascading Crystal Drops",
+      "handle": "jwl-037",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:57Z",
+      "updatedAt": "2026-09-22T23:48:54Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394299051",
+      "title": "Antique gold Mirror Work Jewelry Set",
+      "handle": "jwl-052",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:08:59Z",
+      "updatedAt": "2026-09-22T23:48:56Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394364587",
+      "title": "Gold and Kundan Work Necklace Set with Pastel Bead Drops",
+      "handle": "jwl-011",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:01Z",
+      "updatedAt": "2026-09-22T23:48:57Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394430123",
+      "title": "Green and Kundan Work Necklace Set with Green Bead Drops",
+      "handle": "jwl-012",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:02Z",
+      "updatedAt": "2026-09-22T23:48:58Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394495659",
+      "title": "Navy Blue Mirror Work Necklace Set with Coordinated Jewelry Set",
+      "handle": "jwl-015",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:04Z",
+      "updatedAt": "2026-09-22T23:48:59Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394561195",
+      "title": "Emerald Green Bridal Necklace Set with Heavy Pearl",
+      "handle": "jwl-018",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:07Z",
+      "updatedAt": "2026-09-22T23:49:00Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394626731",
+      "title": "Cream Embroidered Jewelry Set with Heavy Kundan And Pearl Bridal",
+      "handle": "jwl-019",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:09Z",
+      "updatedAt": "2026-09-22T23:49:01Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394692267",
+      "title": "Mint Green Embroidered Necklace Set with Heavy Kundan",
+      "handle": "jwl-020",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:10Z",
+      "updatedAt": "2026-09-22T23:49:03Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394757803",
+      "title": "Maroon Embroidered Necklace Set with Contrast Red Dupatta",
+      "handle": "jwl-021",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:12Z",
+      "updatedAt": "2026-09-22T23:49:04Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394823339",
+      "title": "Emerald Green Heavy Kundan Bridal Necklace Set",
+      "handle": "jwl-022",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:14Z",
+      "updatedAt": "2026-09-22T23:49:05Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394888875",
+      "title": "Green Kundan Work Necklace Set with Pearl Drop Detailing",
+      "handle": "jwl-025",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:16Z",
+      "updatedAt": "2026-09-22T23:49:06Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017394987179",
+      "title": "Maroon (or Kundan Work Necklace Set with Maroon Bead",
+      "handle": "jwl-026",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:18Z",
+      "updatedAt": "2026-09-22T23:49:07Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395052715",
+      "title": "Gold and Mirror Work Necklace Set with Pearl Drop Embellishments",
+      "handle": "jwl-027",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:20Z",
+      "updatedAt": "2026-09-22T23:49:09Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395118251",
+      "title": "Maroon Kundan Party Necklace Set",
+      "handle": "jwl-028",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:21Z",
+      "updatedAt": "2026-09-22T23:49:10Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395183787",
+      "title": "Gold and Kundan Work Necklace Set with Pink Bead Drops",
+      "handle": "jwl-029",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:23Z",
+      "updatedAt": "2026-09-22T23:49:11Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395249323",
+      "title": "Gold and Kundan Work Necklace Set with Pearl Embellishments",
+      "handle": "jwl-030",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:24Z",
+      "updatedAt": "2026-09-22T23:49:13Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395314859",
+      "title": "Gold Mirror Work Earring Set with Pearl Tassels",
+      "handle": "jwl-031",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:26Z",
+      "updatedAt": "2026-09-22T23:49:14Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395380395",
+      "title": "Antique Gold Kundan Work Earring Set with Elaborate Pearl Tassels",
+      "handle": "jwl-032",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:28Z",
+      "updatedAt": "2026-09-22T23:49:15Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395413163",
+      "title": "Navy Blue Kundan Work Earring Set with Pearl And Bead Tassels",
+      "handle": "jwl-034",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:29Z",
+      "updatedAt": "2026-09-22T23:49:17Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395478699",
+      "title": "Purple and Kundan Work Earring Set with Cascading Amber Crystal Drops",
+      "handle": "jwl-036",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:31Z",
+      "updatedAt": "2026-09-22T23:49:18Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395511467",
+      "title": "Antique Gold Kundan Work Earring Set",
+      "handle": "jwl-038",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:33Z",
+      "updatedAt": "2026-09-22T23:47:41Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395577003",
+      "title": "Magenta and Kundan Work Earring Set",
+      "handle": "jwl-039",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:34Z",
+      "updatedAt": "2026-09-22T23:49:19Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395642539",
+      "title": "Pastel pink Mirror Work Earring Set",
+      "handle": "jwl-040",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:36Z",
+      "updatedAt": "2026-09-22T23:49:20Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395740843",
+      "title": "Gold Kundan Work Jewelry Set with Dangling Ghungroo Bells",
+      "handle": "jwl-041",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:38Z",
+      "updatedAt": "2026-09-22T23:49:22Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395773611",
+      "title": "Maroon Kundan Jhumka Earrings with Ghungroo Bells",
+      "handle": "jwl-042",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:39Z",
+      "updatedAt": "2026-09-22T23:49:23Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395839147",
+      "title": "Black Kundan Jhumka Earrings with Ghungroo Bells",
+      "handle": "jwl-043",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:41Z",
+      "updatedAt": "2026-09-22T23:49:24Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017395937451",
+      "title": "Gold Mirror Work Earring Set with Dangling Golden Bells (Ghungroos)",
+      "handle": "jwl-044",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:43Z",
+      "updatedAt": "2026-09-22T23:49:26Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396068523",
+      "title": "Gold Mirror Work Earring Set with Green Stone And Pearl Detailing",
+      "handle": "jwl-045",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:48Z",
+      "updatedAt": "2026-09-22T23:49:27Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396134059",
+      "title": "Gold Kundan Work Bangle Set with Scalloped, Wavy Edge Design",
+      "handle": "jwl-046",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:50Z",
+      "updatedAt": "2026-09-22T23:49:28Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396199595",
+      "title": "Gold Kundan Work Bangle Set with Greek Key Geometric Cutout Design",
+      "handle": "jwl-047",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:51Z",
+      "updatedAt": "2026-09-22T23:49:29Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396265131",
+      "title": "Gold Kundan Work Bangle Set with Open-Ended Cuff Design",
+      "handle": "jwl-048",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:53Z",
+      "updatedAt": "2026-09-22T23:49:30Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396330667",
+      "title": "Gold Bangle Set with Open, Multi-Layered Geometric Design",
+      "handle": "jwl-049",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:54Z",
+      "updatedAt": "2026-09-22T23:49:32Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396428971",
+      "title": "Gold Bangle Set with Openwork Geometric Design With Interlocking",
+      "handle": "jwl-050",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:56Z",
+      "updatedAt": "2026-09-22T23:49:34Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396461739",
+      "title": "Gold Bangle Set with Open-Ended Cuff Design",
+      "handle": "jwl-051",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:58Z",
+      "updatedAt": "2026-09-22T23:49:35Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396527275",
+      "title": "Gold Mirror Work Jewelry Set with Dangling Jhumka Bells",
+      "handle": "jwl-053",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:09:59Z",
+      "updatedAt": "2026-09-22T23:49:36Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396592811",
+      "title": "Emerald Green Kundan Work Jewelry Set",
+      "handle": "jwl-054",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:01Z",
+      "updatedAt": "2026-09-22T23:49:38Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396691115",
+      "title": "Green Kundan Work Jewelry Set with Pearl Jhumka Drops",
+      "handle": "jwl-055",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:02Z",
+      "updatedAt": "2026-09-22T23:49:39Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396756651",
+      "title": "Gold Mirror Work Jewelry Set with Small Golden Ghungroo (Bell) Tassels",
+      "handle": "jwl-056",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:04Z",
+      "updatedAt": "2026-09-22T23:49:40Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396822187",
+      "title": "Gold Kundan Work Jewelry Set with Pearl And Ghungroo Tassels",
+      "handle": "jwl-057",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:06Z",
+      "updatedAt": "2026-09-22T23:49:41Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396887723",
+      "title": "Gold Kundan Work Jewelry Set with Pearl And Gold Bell Tassels",
+      "handle": "jwl-058",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:08Z",
+      "updatedAt": "2026-09-22T23:49:43Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396920491",
+      "title": "Cream Kurta Pajama with Asymmetrical Draped Hem With Side",
+      "handle": "beige-cotton-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:09Z",
+      "updatedAt": "2026-09-22T23:49:44Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017396986027",
+      "title": "Sky Blue Zari Work Sherwani with Mandarin Collar And Side Button",
+      "handle": "blue-banarasi-jacquard-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:11Z",
+      "updatedAt": "2026-09-22T23:49:46Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397084331",
+      "title": "Teal Embroidered Cotton Kurta Pajama with Contrast Red Churidar Pants",
+      "handle": "teal-blue-cotton-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:13Z",
+      "updatedAt": "2026-09-22T23:49:47Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397117099",
+      "title": "Brown Zari Work Sherwani with Mandarin Collar",
+      "handle": "black-banarasi-jacquard-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:15Z",
+      "updatedAt": "2026-09-22T23:49:48Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397149867",
+      "title": "Black Zari Work Kurta Pajama with Contrast Maroon Churidar Pants",
+      "handle": "black-cotton-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:16Z",
+      "updatedAt": "2026-09-22T23:49:49Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397182635",
+      "title": "Yellow Embroidered Cotton Kurta Pajama with Father-Son Matching Set",
+      "handle": "yellow-cotton-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:18Z",
+      "updatedAt": "2026-09-22T23:49:51Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397215403",
+      "title": "Light Pink Embroidered Art Silk Sherwani with Mandarin Collar",
+      "handle": "light-pink-art-silk-groom-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:19Z",
+      "updatedAt": "2026-09-22T23:49:52Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397280939",
+      "title": "Navy Blue Velvet Sherwani with Churidar",
+      "handle": "navy-blue-velvet-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:21Z",
+      "updatedAt": "2026-09-22T23:49:53Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397346475",
+      "title": "Maroon Embroidered Velvet Sherwani with White Churidar Pants",
+      "handle": "magenta-velvet-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:23Z",
+      "updatedAt": "2026-09-22T23:49:54Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397379243",
+      "title": "Maroon Embroidered Art Silk Sherwani with White Trousers",
+      "handle": "wine-art-silk-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:25Z",
+      "updatedAt": "2026-09-22T23:49:56Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397444779",
+      "title": "Beige Digital Print Silk Blend Kurta Pajama",
+      "handle": "brown-silk-kurta-pajama",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:26Z",
+      "updatedAt": "2026-09-22T23:49:57Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397510315",
+      "title": "Black Embroidered Sherwani with Intricate Floral Embroidery On The",
+      "handle": "black-velvet-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:28Z",
+      "updatedAt": "2026-09-22T23:49:58Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397608619",
+      "title": "White Sequin Sherwani with Mandarin Collar And Button-Down Front",
+      "handle": "white-art-silk-groom-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:29Z",
+      "updatedAt": "2026-09-22T23:50:00Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397674155",
+      "title": "Lavender Zari Work Art Silk Sherwani with White Churidar Pants",
+      "handle": "purple-art-silk-groom-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:31Z",
+      "updatedAt": "2026-09-22T23:50:01Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397739691",
+      "title": "Cream/Off-white Digital Print Art Silk Sherwani with Mandarin Collar",
+      "handle": "off-white-art-silk-groom-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:32Z",
+      "updatedAt": "2026-09-22T23:50:02Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397805227",
+      "title": "Silver/Grey Zari Work Art Silk Sherwani",
+      "handle": "grey-art-silk-groom-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:34Z",
+      "updatedAt": "2026-09-22T23:50:03Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397870763",
+      "title": "Dusty Rose Zari Work Sherwani with A Matching Turban",
+      "handle": "maroon-banarasi-jacquard-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:36Z",
+      "updatedAt": "2026-09-22T23:50:05Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017397936299",
+      "title": "Pink Embroidered Sherwani with Contrast Dupatta",
+      "handle": "pink-banarasi-jacquard-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:37Z",
+      "updatedAt": "2026-09-22T23:50:06Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398034603",
+      "title": "Peach Zari Work Sherwani with Contrast White Dupatta",
+      "handle": "peach-banarasi-jacquard-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:39Z",
+      "updatedAt": "2026-09-22T23:50:07Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398100139",
+      "title": "Mustard Yellow Embroidered Sherwani with Matching Turban",
+      "handle": "mustard-banarasi-jacquard-sherwani",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:41Z",
+      "updatedAt": "2026-09-22T23:50:08Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398198443",
+      "title": "Teal Mirror Work Saree with Heavily Embellished Scalloped Border On",
+      "handle": "silk-sea-green-occasional-embroidery-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:44Z",
+      "updatedAt": "2026-09-22T23:50:09Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398526123",
+      "title": "Pink Zari Work Tissue Silk Saree with Contrast Pink Border",
+      "handle": "pink-tissue-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:53Z",
+      "updatedAt": "2026-09-22T23:50:11Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398591659",
+      "title": "Teal Embroidered Silk Blend Saree with Ornate, Wide Embroidered Border",
+      "handle": "mint-green-kanchipuram-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:54Z",
+      "updatedAt": "2026-09-22T23:50:12Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398657195",
+      "title": "Pink Embroidered Silk Blend Saree with Scalloped Hem",
+      "handle": "royal-pink-kanchipuram-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:56Z",
+      "updatedAt": "2026-09-22T23:50:14Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398722731",
+      "title": "Gold Embroidered Silk Blend Saree with Heavily Embellished Border",
+      "handle": "antique-gold-kanchipuram-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:58Z",
+      "updatedAt": "2026-09-22T23:50:15Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398788267",
+      "title": "Magenta Embroidered Saree with Matching Embroidered Border On The",
+      "handle": "silk-rani-pink-casual-sequins-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:10:59Z",
+      "updatedAt": "2026-09-22T23:50:16Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398821035",
+      "title": "Teal blue Embroidered Silk Blend Saree with Scalloped Gold Border",
+      "handle": "silk-blue-casual-sequins-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:01Z",
+      "updatedAt": "2026-09-22T23:50:18Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398919339",
+      "title": "Sea Green Zari Work Tissue Silk Saree with Off-Shoulder Blouse",
+      "handle": "sea-green-tissue-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:02Z",
+      "updatedAt": "2026-09-22T23:50:19Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017398984875",
+      "title": "Orange Zari Work Tissue Silk Saree with Red Contrast Border On The",
+      "handle": "sunset-orange-tissue-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:04Z",
+      "updatedAt": "2026-09-22T23:50:21Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399214251",
+      "title": "Gold Embroidered Silk Blend Saree with Scalloped Hem",
+      "handle": "ivory-beige-kanchipuram-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:11Z",
+      "updatedAt": "2026-09-22T23:50:22Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399279787",
+      "title": "Copper/Beige Zari Work Saree with Contrasting Red Border On The",
+      "handle": "beige-gold-tissue-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:12Z",
+      "updatedAt": "2026-09-22T23:50:24Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399410859",
+      "title": "Green Embroidered Silk Blend Saree with Contrast Green Dupatta",
+      "handle": "multicolor-kanchipuram-silk-wedding-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:16Z",
+      "updatedAt": "2026-09-22T23:50:25Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399443627",
+      "title": "Rust Orange Embroidered Silk Blend Saree with Scalloped Hem And Border",
+      "handle": "silk-rust-orange-casual-sequins-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:18Z",
+      "updatedAt": "2026-09-22T23:50:26Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399509163",
+      "title": "Emerald Green Embroidered Saree",
+      "handle": "fendy-satin-teal-green-occasional-embroidery-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:19Z",
+      "updatedAt": "2026-09-22T23:50:27Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399771307",
+      "title": "Wine Sharara Suit with Dupatta",
+      "handle": "wine-georgette-sharara-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:26Z",
+      "updatedAt": "2026-09-22T23:50:29Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399804075",
+      "title": "Pink Embroidered Anarkali Suit with Contrasting Blue Ombre Dupatta",
+      "handle": "dusty-rose-silk-party-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:27Z",
+      "updatedAt": "2026-09-22T23:50:30Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399935147",
+      "title": "Peach Embroidered Silk Anarkali Suit with Matching Embroidered Dupatta",
+      "handle": "peach-fendy-silk-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:30Z",
+      "updatedAt": "2026-09-22T23:50:31Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017399967915",
+      "title": "Red Embroidered Anarkali Suit with Matching Embroidered Cape/Dupatta",
+      "handle": "red-silk-eid-anarkali-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:32Z",
+      "updatedAt": "2026-09-22T23:50:33Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400033451",
+      "title": "Emerald Green Embroidered Silk Blend Anarkali Suit",
+      "handle": "green-silk-eid-anarkali-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:34Z",
+      "updatedAt": "2026-09-22T23:50:34Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400098987",
+      "title": "Pink Mirror Work Silk Anarkali Suit with Matching Embroidered Dupatta",
+      "handle": "baby-pink-roman-silk-festival-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:35Z",
+      "updatedAt": "2026-09-22T23:50:35Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400164523",
+      "title": "Lavender Embroidered Anarkali Suit with Sheer, Matching Dupatta",
+      "handle": "lavender-viscose-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:37Z",
+      "updatedAt": "2026-09-22T23:50:37Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400230059",
+      "title": "Silver-grey Embroidered Silk Anarkali Suit with Matching Ombre Dupatta",
+      "handle": "grey-fendy-silk-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:39Z",
+      "updatedAt": "2026-09-22T23:50:38Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400262827",
+      "title": "Purple Mirror Work Anarkali Suit with Dupatta",
+      "handle": "purple-chanderi-silk-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:40Z",
+      "updatedAt": "2026-09-22T23:50:39Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400328363",
+      "title": "Light green Embroidered Anarkali Suit with Sheer Net Sleeves",
+      "handle": "pista-viscose-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:42Z",
+      "updatedAt": "2026-09-22T23:50:40Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400361131",
+      "title": "Black Anarkali Suit with Heavily Embellished Pearl Net Dupatta",
+      "handle": "black-roman-silk-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:43Z",
+      "updatedAt": "2026-09-22T23:50:42Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400426667",
+      "title": "Red Mirror Work Anarkali Suit with Scalloped Hem On The Dupatta",
+      "handle": "red-chanderi-cotton-casual-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:45Z",
+      "updatedAt": "2026-09-22T23:50:43Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400492203",
+      "title": "Beige Sequin Anarkali Suit with Matching Sequined Dupatta",
+      "handle": "champagne-beige-chanderi-anarkali",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:46Z",
+      "updatedAt": "2026-09-22T23:51:15Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9017400557739",
+      "title": "Pale gold Embroidered Saree with Bright Pink Contrast Blouse And",
+      "handle": "banarasi-silk-mustard-festival-weaving-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-17T20:11:48Z",
+      "updatedAt": "2026-09-22T23:51:16Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022852628651",
+      "title": "Cream Embroidered Silk Palazzo Suit with Dupatta",
+      "handle": "chanderi-silk-cream-casual-wear-embroidery-work-readymade-palazzo-suit-404571",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:31Z",
+      "updatedAt": "2026-09-22T23:51:17Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022852759723",
+      "title": "Blue Embroidered Silk Palazzo Suit with Dupatta",
+      "handle": "chanderi-silk-teal-blue-casual-wear-embroidery-work-readymade-palazzo-suit-404570",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:33Z",
+      "updatedAt": "2026-09-22T23:51:19Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022852923563",
+      "title": "Sea Green Embroidered Silk Palazzo Suit with Dupatta",
+      "handle": "chanderi-silk-sea-green-casual-wear-embroidery-work-readymade-palazzo-suit-404569",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:35Z",
+      "updatedAt": "2026-09-22T23:51:20Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022853021867",
+      "title": "Orange Embroidered Silk Palazzo Suit with Dupatta - Chanderi",
+      "handle": "chanderi-silk-orange-casual-wear-embroidery-work-readymade-palazzo-suit-404568",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:37Z",
+      "updatedAt": "2026-09-22T23:51:21Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022853152939",
+      "title": "Lavender Embroidered Silk Palazzo Suit with Dupatta",
+      "handle": "chanderi-silk-lavender-casual-wear-embroidery-work-readymade-palazzo-suit-404567",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:39Z",
+      "updatedAt": "2026-09-22T23:51:22Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022853316779",
+      "title": "Embroidered Silk Palazzo Suit with Dupatta",
+      "handle": "chanderi-silk-dark-marron-casual-wear-embroidery-work-readymade-palazzo-suit-404566",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:41Z",
+      "updatedAt": "2026-09-22T23:51:24Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022853447851",
+      "title": "Pink Embroidered Silk Palazzo Suit with Dupatta - Chanderi",
+      "handle": "chanderi-silk-pink-casual-wear-embroidery-work-readymade-palazzo-suit-404565",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:42Z",
+      "updatedAt": "2026-09-22T23:51:25Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9022853546155",
+      "title": "Peach Embroidered Silk Palazzo Suit with Dupatta",
+      "handle": "chanderi-silk-peach-casual-wear-embroidery-work-readymade-palazzo-suit-404564",
+      "status": "DRAFT",
+      "createdAt": "2026-09-19T02:18:44Z",
+      "updatedAt": "2026-09-22T23:51:26Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026587263147",
+      "title": "Cotton Garba Chaniya Choli — Navratri & Festive Wear",
+      "handle": "multi-cotton-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:35:44Z",
+      "updatedAt": "2026-09-21T17:16:37Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026587918507",
+      "title": "Sequence Work Net Lehenga Choli — Bridal & Wedding Wear",
+      "handle": "multi-net-lehenga-choli-0019",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:01Z",
+      "updatedAt": "2026-09-22T23:51:27Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588049579",
+      "title": "Designer Georgette Lehenga Choli — Party & Festive Wear",
+      "handle": "multi-faux-georgette-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:05Z",
+      "updatedAt": "2026-09-22T23:51:28Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588115115",
+      "title": "Green Silk Lehenga Choli – Designer",
+      "handle": "green-silk-lehenga-choli-0022",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:06Z",
+      "updatedAt": "2026-09-22T23:51:29Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588147883",
+      "title": "Blue Georgette Lehenga Choli – Wedding & Reception Wear",
+      "handle": "blue-georgette-sequin-lehenga-choli-0023",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:07Z",
+      "updatedAt": "2026-09-22T23:51:30Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588180651",
+      "title": "Pink Georgette Lehenga Choli – Wedding & Reception Wear",
+      "handle": "pink-georgette-sequin-lehenga-choli-0024",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:09Z",
+      "updatedAt": "2026-09-22T23:51:31Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588278955",
+      "title": "Yellow Dola Silk Jacquard Lehenga Choli – Wedding & Reception Wear",
+      "handle": "yellow-dola-silk-jacquard-sequin-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:10Z",
+      "updatedAt": "2026-09-22T23:51:32Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588311723",
+      "title": "Navratri Rayon Lehenga Choli — Garba & Festive Wear",
+      "handle": "multi-rayon-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:11Z",
+      "updatedAt": "2026-09-22T23:51:33Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588377259",
+      "title": "Kanchipuram Silk Zari Lehenga Choli — Designer Collection",
+      "handle": "multi-kanchipuram-silk-zari-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:13Z",
+      "updatedAt": "2026-09-22T23:51:34Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588410027",
+      "title": "Tussar Silk Embroidered Lehenga Choli — Festive Wear",
+      "handle": "multi-tussar-silk-embroidery-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:14Z",
+      "updatedAt": "2026-09-22T23:51:35Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588508331",
+      "title": "Tussar Silk Lehenga Choli — Festive & Occasion Wear",
+      "handle": "multi-tussar-silk-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:16Z",
+      "updatedAt": "2026-09-22T23:51:35Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9026588541099",
+      "title": "Rayon Cotton Navratri Lehenga Choli — Festive Wear",
+      "handle": "multi-rayon-cotton-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-09-20T23:36:17Z",
+      "updatedAt": "2026-09-22T23:51:37Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031946141867",
+      "title": "Blush Beige Crafted Border Tissue Silk Saree",
+      "handle": "blush-beige-tissue-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:31Z",
+      "updatedAt": "2026-10-21T19:34:36Z",
+      "publishedAt": "2026-09-23T19:17:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946174635",
+      "title": "Rose Pink Crafted Border Tissue Silk Saree",
+      "handle": "rose-pink-tissue-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:34Z",
+      "updatedAt": "2026-10-21T19:34:37Z",
+      "publishedAt": "2026-09-23T19:17:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946207403",
+      "title": "Cream Crafted Border Tissue Silk Saree",
+      "handle": "cream-tissue-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:38Z",
+      "updatedAt": "2026-10-21T19:34:37Z",
+      "publishedAt": "2026-09-23T19:17:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946240171",
+      "title": "Light Gold Crafted Border Tissue Silk Saree",
+      "handle": "light-gold-tissue-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:41Z",
+      "updatedAt": "2026-10-21T19:34:37Z",
+      "publishedAt": "2026-09-23T19:17:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946272939",
+      "title": "Mint Green Crafted Border Tissue Silk Saree",
+      "handle": "mint-green-tissue-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:44Z",
+      "updatedAt": "2026-10-21T19:34:37Z",
+      "publishedAt": "2026-09-23T19:17:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946305707",
+      "title": "Mustard Yellow Crafted Border Tissue Silk Saree",
+      "handle": "mustard-yellow-tissue-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:47Z",
+      "updatedAt": "2026-10-21T19:34:37Z",
+      "publishedAt": "2026-09-23T19:17:31Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946404011",
+      "title": "Pink Beads Work Designer Saree",
+      "handle": "pink-designer-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:50Z",
+      "updatedAt": "2026-10-29T08:55:27Z",
+      "publishedAt": "2026-09-23T19:17:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946436779",
+      "title": "Mauve Beads Work Designer Saree",
+      "handle": "mauve-designer-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:54Z",
+      "updatedAt": "2026-10-29T08:55:27Z",
+      "publishedAt": "2026-09-23T19:17:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946469547",
+      "title": "Teal Beads Work Designer Saree in Green",
+      "handle": "teal-green-designer-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:44:57Z",
+      "updatedAt": "2026-10-29T08:55:28Z",
+      "publishedAt": "2026-09-23T19:17:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946502315",
+      "title": "Gold Patch Work Designer Saree in Bronze",
+      "handle": "bronze-gold-designer-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:00Z",
+      "updatedAt": "2026-10-29T08:55:29Z",
+      "publishedAt": "2026-09-23T19:17:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946567851",
+      "title": "Navy Blue Patch Work Designer Saree",
+      "handle": "navy-blue-designer-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:03Z",
+      "updatedAt": "2026-10-29T08:55:28Z",
+      "publishedAt": "2026-09-23T19:17:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946600619",
+      "title": "Green Crafted Patola Silk Saree",
+      "handle": "green-patola-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:06Z",
+      "updatedAt": "2026-10-21T19:34:39Z",
+      "publishedAt": "2026-09-23T19:17:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946633387",
+      "title": "Mustard Crafted Patola Silk Saree in Orange",
+      "handle": "mustard-orange-patola-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:10Z",
+      "updatedAt": "2026-10-21T19:34:39Z",
+      "publishedAt": "2026-09-23T19:17:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946666155",
+      "title": "Cream Patola Silk Saree",
+      "handle": "cream-patola-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:13Z",
+      "updatedAt": "2026-10-21T19:34:39Z",
+      "publishedAt": "2026-09-23T19:17:41Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946698923",
+      "title": "Rani Pink Patola Silk Saree",
+      "handle": "rani-pink-patola-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:17Z",
+      "updatedAt": "2026-10-21T19:34:40Z",
+      "publishedAt": "2026-09-23T19:17:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946797227",
+      "title": "Teal Patola Silk Saree in Green",
+      "handle": "teal-patola-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:22Z",
+      "updatedAt": "2026-10-21T19:34:40Z",
+      "publishedAt": "2026-09-23T19:17:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946829995",
+      "title": "Olive Lime Patola Silk Saree",
+      "handle": "olive-lime-patola-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:25Z",
+      "updatedAt": "2026-10-21T19:34:40Z",
+      "publishedAt": "2026-09-23T19:17:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946862763",
+      "title": "Cream Zari Khaddi Georgette Saree",
+      "handle": "cream-khaddi-georgette-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:29Z",
+      "updatedAt": "2026-10-21T19:34:40Z",
+      "publishedAt": "2026-09-23T19:17:45Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946895531",
+      "title": "Navy Blue Zari Khaddi Georgette Saree",
+      "handle": "navy-blue-khaddi-georgette-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:31Z",
+      "updatedAt": "2026-10-21T19:34:41Z",
+      "publishedAt": "2026-09-23T19:17:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946928299",
+      "title": "Rani Pink Zari Khaddi Georgette Saree",
+      "handle": "rani-pink-khaddi-georgette-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:34Z",
+      "updatedAt": "2026-10-21T19:34:41Z",
+      "publishedAt": "2026-09-23T19:17:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946961067",
+      "title": "Green Zari Khaddi Georgette Saree",
+      "handle": "green-khaddi-georgette-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:37Z",
+      "updatedAt": "2026-10-21T19:34:41Z",
+      "publishedAt": "2026-09-23T19:17:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031946993835",
+      "title": "Pink Zari Khaddi Georgette Saree",
+      "handle": "pink-khaddi-georgette-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:41Z",
+      "updatedAt": "2026-10-21T19:34:41Z",
+      "publishedAt": "2026-09-23T19:17:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947059371",
+      "title": "Black Zari Khaddi Georgette Saree",
+      "handle": "black-khaddi-georgette-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:45:44Z",
+      "updatedAt": "2026-10-21T19:34:42Z",
+      "publishedAt": "2026-09-23T19:17:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947124907",
+      "title": "Handwoven Khaddi Georgette Saree in Rani Pink",
+      "handle": "rani-pink-handwoven-khaddi-georgette-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:45:47Z",
+      "updatedAt": "2026-09-24T02:45:56Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947190443",
+      "title": "Handwoven Khaddi Georgette Saree in Royal Blue",
+      "handle": "royal-blue-handwoven-khaddi-georgette-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:45:52Z",
+      "updatedAt": "2026-09-24T02:46:01Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947223211",
+      "title": "Handwoven Khaddi Georgette Saree in Lilac Purple",
+      "handle": "lilac-purple-handwoven-khaddi-georgette-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:45:55Z",
+      "updatedAt": "2026-09-24T02:46:09Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947255979",
+      "title": "Handwoven Khaddi Georgette Saree in Grey Silver",
+      "handle": "grey-silver-handwoven-khaddi-georgette-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:45:59Z",
+      "updatedAt": "2026-09-24T02:46:05Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947354283",
+      "title": "Handwoven Khaddi Georgette Saree in Red",
+      "handle": "red-handwoven-khaddi-georgette-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:46:02Z",
+      "updatedAt": "2026-09-24T02:46:09Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947387051",
+      "title": "Zari Woven Kanjivaram Silk Saree in Rani Pink",
+      "handle": "rani-pink-kanjivaram-silk-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:46:05Z",
+      "updatedAt": "2026-09-24T02:46:14Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947452587",
+      "title": "Zari Woven Kanjivaram Silk Saree in Yellow",
+      "handle": "yellow-kanjivaram-silk-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:46:09Z",
+      "updatedAt": "2026-09-24T02:46:16Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947518123",
+      "title": "Zari Woven Kanjivaram Silk Saree in Mint Green",
+      "handle": "mint-green-kanjivaram-silk-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:46:13Z",
+      "updatedAt": "2026-09-24T02:46:19Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947616427",
+      "title": "Zari Woven Kanjivaram Silk Saree in Peach Maroon",
+      "handle": "peach-maroon-kanjivaram-silk-saree",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T14:46:17Z",
+      "updatedAt": "2026-09-24T02:46:23Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9031947681963",
+      "title": "White Red Ready to Wear Jacquard Silk Saree",
+      "handle": "white-red-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:21Z",
+      "updatedAt": "2026-10-21T19:34:42Z",
+      "publishedAt": "2026-09-23T19:17:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947714731",
+      "title": "Ivory Green Ready to Wear Jacquard Silk Saree",
+      "handle": "ivory-green-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:24Z",
+      "updatedAt": "2026-10-21T19:34:42Z",
+      "publishedAt": "2026-09-23T19:17:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947747499",
+      "title": "Violet Ready to Wear Jacquard Silk Saree",
+      "handle": "violet-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:28Z",
+      "updatedAt": "2026-10-21T19:34:42Z",
+      "publishedAt": "2026-09-23T19:17:54Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947780267",
+      "title": "Sage Green Ready to Wear Jacquard Silk Saree",
+      "handle": "sage-green-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:32Z",
+      "updatedAt": "2026-10-21T19:34:43Z",
+      "publishedAt": "2026-09-23T19:17:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947845803",
+      "title": "Rani Pink Ready to Wear Jacquard Silk Saree",
+      "handle": "rani-pink-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:35Z",
+      "updatedAt": "2026-10-21T19:34:43Z",
+      "publishedAt": "2026-09-23T19:17:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031947878571",
+      "title": "Pistachio Gold Ready to Wear Jacquard Silk Saree",
+      "handle": "pistachio-gold-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:39Z",
+      "updatedAt": "2026-10-21T19:34:43Z",
+      "publishedAt": "2026-09-23T19:17:58Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031948009643",
+      "title": "Mustard Gold Ready to Wear Jacquard Silk Saree",
+      "handle": "mustard-gold-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:43Z",
+      "updatedAt": "2026-10-21T19:34:44Z",
+      "publishedAt": "2026-09-23T19:17:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9031948107947",
+      "title": "Aqua Blue Ready to Wear Jacquard Silk Saree",
+      "handle": "aqua-blue-ready-to-wear-jacquard-silk-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T14:46:47Z",
+      "updatedAt": "2026-10-21T19:34:44Z",
+      "publishedAt": "2026-09-23T19:18:00Z"
+    },
+    {
+      "id": "gid://shopify/Product/9032482685099",
+      "title": "Red Embroidered Art Silk Anarkali Gown, Evening Party Wear",
+      "handle": "red-art-silk-anarkali-gown",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T16:34:07Z",
+      "updatedAt": "2026-10-21T19:34:44Z",
+      "publishedAt": "2026-09-23T19:18:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9032482717867",
+      "title": "Purple Embroidered Art Silk Anarkali Gown, Evening Party Wear",
+      "handle": "purple-art-silk-anarkali-gown",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-23T16:34:13Z",
+      "updatedAt": "2026-10-21T19:34:44Z",
+      "publishedAt": "2026-09-23T19:18:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9032482750635",
+      "title": "Embroidered Corduroy Silk Salwar Suit in Teal Blue",
+      "handle": "teal-blue-corduroy-silk-salwar-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T16:34:16Z",
+      "updatedAt": "2026-09-24T04:34:22Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9032482783403",
+      "title": "Embroidered Corduroy Silk Salwar Suit in Rose Pink",
+      "handle": "rose-pink-corduroy-silk-salwar-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T16:34:20Z",
+      "updatedAt": "2026-09-24T04:34:26Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9032482914475",
+      "title": "Embroidered Corduroy Silk Salwar Suit in Mustard",
+      "handle": "mustard-corduroy-silk-salwar-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T16:34:24Z",
+      "updatedAt": "2026-09-24T04:34:32Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9032483045547",
+      "title": "Mirror Work Designer Salwar Suit in Sea Green",
+      "handle": "sea-green-designer-salwar-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T16:34:27Z",
+      "updatedAt": "2026-09-24T04:34:36Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9032483176619",
+      "title": "Mirror Work Designer Salwar Suit in Rose Pink",
+      "handle": "rose-pink-designer-salwar-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T16:34:30Z",
+      "updatedAt": "2026-09-24T04:34:39Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9032483340459",
+      "title": "Mirror Work Designer Salwar Suit in Mustard Gold",
+      "handle": "mustard-gold-designer-salwar-suit",
+      "status": "DRAFT",
+      "createdAt": "2026-09-23T16:34:33Z",
+      "updatedAt": "2026-09-24T04:34:39Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9035068309675",
+      "title": "Beige Embroidered Georgette Palazzo Suit",
+      "handle": "embroidered-georgette-palazzo-suit-beige",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:18Z",
+      "updatedAt": "2026-10-21T19:34:45Z",
+      "publishedAt": "2026-09-25T15:41:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068342443",
+      "title": "Pink Embroidered Georgette Palazzo Suit",
+      "handle": "embroidered-georgette-palazzo-suit-pink",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:20Z",
+      "updatedAt": "2026-10-21T19:34:45Z",
+      "publishedAt": "2026-09-25T15:41:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068440747",
+      "title": "Lavender Embroidered Georgette Palazzo Suit",
+      "handle": "embroidered-georgette-palazzo-suit-lavender",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:22Z",
+      "updatedAt": "2026-10-21T19:34:45Z",
+      "publishedAt": "2026-09-25T15:41:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068506283",
+      "title": "Black Crepe Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-black-tanvi",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:24Z",
+      "updatedAt": "2026-10-21T19:34:46Z",
+      "publishedAt": "2026-09-25T15:41:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068571819",
+      "title": "Cream Crepe Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-cream-tanvi",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:26Z",
+      "updatedAt": "2026-10-21T19:34:46Z",
+      "publishedAt": "2026-09-25T15:41:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068670123",
+      "title": "Green Simar Silk Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-green-mehar",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:28Z",
+      "updatedAt": "2026-10-21T19:34:46Z",
+      "publishedAt": "2026-09-25T15:41:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068735659",
+      "title": "Pink Simar Silk Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-pink-mehar",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:30Z",
+      "updatedAt": "2026-10-21T19:34:46Z",
+      "publishedAt": "2026-09-25T15:41:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068801195",
+      "title": "Teal Simar Silk Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-teal-mehar",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:32Z",
+      "updatedAt": "2026-10-21T19:34:47Z",
+      "publishedAt": "2026-09-25T15:41:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068866731",
+      "title": "Lavender and Cream Simar Silk Mirror Work Sharara Suit",
+      "handle": "mirror-work-sharara-suit-lavender-cream",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:34Z",
+      "updatedAt": "2026-11-04T14:14:36Z",
+      "publishedAt": "2026-09-25T15:41:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068932267",
+      "title": "Blue Simar Silk Mirror Work Sharara Suit",
+      "handle": "mirror-work-sharara-suit-blue",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:36Z",
+      "updatedAt": "2026-10-21T19:34:47Z",
+      "publishedAt": "2026-09-25T15:41:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035068997803",
+      "title": "Pink Chinon Silk Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-pink-mahira",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:38Z",
+      "updatedAt": "2026-11-04T02:12:19Z",
+      "publishedAt": "2026-09-25T15:41:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069063339",
+      "title": "Black Chinon Silk Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-black-mahira",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:40Z",
+      "updatedAt": "2026-11-04T02:12:15Z",
+      "publishedAt": "2026-09-25T15:41:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069161643",
+      "title": "Hot Pink Georgette Bead Embroidered Sharara Suit",
+      "handle": "bead-embroidered-sharara-suit-hot-pink-divya",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:42Z",
+      "updatedAt": "2026-10-21T19:34:48Z",
+      "publishedAt": "2026-09-25T15:41:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069292715",
+      "title": "Peach Georgette Bead Embroidered Sharara Suit",
+      "handle": "bead-embroidered-sharara-suit-peach-divya",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:46Z",
+      "updatedAt": "2026-10-21T19:34:48Z",
+      "publishedAt": "2026-09-25T15:41:46Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069358251",
+      "title": "Cream Georgette Bead Embroidered Sharara Suit",
+      "handle": "bead-embroidered-sharara-suit-cream-divya",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:47Z",
+      "updatedAt": "2026-10-21T19:34:48Z",
+      "publishedAt": "2026-09-25T15:41:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069391019",
+      "title": "Hot Pink Georgette Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-hot-pink-banno",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:50Z",
+      "updatedAt": "2026-11-04T02:12:09Z",
+      "publishedAt": "2026-09-25T15:41:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069456555",
+      "title": "Orange Georgette Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-orange-banno",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:51Z",
+      "updatedAt": "2026-11-04T02:12:04Z",
+      "publishedAt": "2026-09-25T15:41:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069554859",
+      "title": "Violet Georgette Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-violet-banno",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:53Z",
+      "updatedAt": "2026-11-04T02:11:58Z",
+      "publishedAt": "2026-09-25T15:41:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069620395",
+      "title": "Fuchsia Georgette Embroidered Sharara Suit",
+      "handle": "embroidered-sharara-suit-fuchsia-banno",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:56Z",
+      "updatedAt": "2026-11-04T02:11:34Z",
+      "publishedAt": "2026-09-25T15:41:55Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069685931",
+      "title": "Beige Silk Blend Mirror Work Kurti Set",
+      "handle": "mirror-work-kurti-set-beige-cosmos",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:57Z",
+      "updatedAt": "2026-10-21T19:34:50Z",
+      "publishedAt": "2026-09-25T15:41:57Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069751467",
+      "title": "Magenta Silk Blend Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-magenta-9954",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:41:59Z",
+      "updatedAt": "2026-10-21T19:34:50Z",
+      "publishedAt": "2026-09-25T15:41:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069817003",
+      "title": "Yellow Silk Blend Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-yellow-9954",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:01Z",
+      "updatedAt": "2026-10-21T19:34:50Z",
+      "publishedAt": "2026-09-25T15:42:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069882539",
+      "title": "Maroon Silk Blend Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-maroon-9954",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:03Z",
+      "updatedAt": "2026-10-21T19:34:50Z",
+      "publishedAt": "2026-09-25T15:42:03Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069948075",
+      "title": "Green Satin Embroidered Cape Palazzo Set",
+      "handle": "embroidered-cape-palazzo-set-green-amoha",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:05Z",
+      "updatedAt": "2026-10-21T19:34:51Z",
+      "publishedAt": "2026-09-25T15:42:05Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035069980843",
+      "title": "Black Satin Embroidered Cape Palazzo Set",
+      "handle": "embroidered-cape-palazzo-set-black-amoha",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:07Z",
+      "updatedAt": "2026-10-21T19:34:51Z",
+      "publishedAt": "2026-09-25T15:42:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070046379",
+      "title": "Maroon Chinon Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-maroon-9827",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:09Z",
+      "updatedAt": "2026-10-21T19:34:51Z",
+      "publishedAt": "2026-09-25T15:42:09Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070111915",
+      "title": "Mustard Chinon Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-mustard-9827",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:11Z",
+      "updatedAt": "2026-10-21T19:34:51Z",
+      "publishedAt": "2026-09-25T15:42:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070177451",
+      "title": "Rust Red Chinon Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-rust-9827",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:13Z",
+      "updatedAt": "2026-10-21T19:34:52Z",
+      "publishedAt": "2026-09-25T15:42:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070242987",
+      "title": "Magenta Chinon Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-magenta-9827",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:14Z",
+      "updatedAt": "2026-10-21T19:34:52Z",
+      "publishedAt": "2026-09-25T15:42:14Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070341291",
+      "title": "Orange Art Silk Embroidered Gown",
+      "handle": "embroidered-gown-orange-jiyanshi-9",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:16Z",
+      "updatedAt": "2026-10-21T19:34:52Z",
+      "publishedAt": "2026-09-25T15:42:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070374059",
+      "title": "Purple Art Silk Embroidered Gown",
+      "handle": "embroidered-gown-purple-jiyanshi-10",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:18Z",
+      "updatedAt": "2026-10-21T19:34:52Z",
+      "publishedAt": "2026-09-25T15:42:18Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070505131",
+      "title": "Maroon Chinon Sequin Embroidered Palazzo Set",
+      "handle": "sequin-embroidered-palazzo-set-maroon-50002",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:20Z",
+      "updatedAt": "2026-10-21T19:34:52Z",
+      "publishedAt": "2026-09-25T15:42:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070603435",
+      "title": "Magenta Chinon Sequin Embroidered Palazzo Set",
+      "handle": "sequin-embroidered-palazzo-set-magenta-50002",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:22Z",
+      "updatedAt": "2026-10-21T19:34:53Z",
+      "publishedAt": "2026-09-25T15:42:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070668971",
+      "title": "Blue Fandy Silk Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-blue-on5166",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:24Z",
+      "updatedAt": "2026-10-21T19:34:53Z",
+      "publishedAt": "2026-09-25T15:42:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070734507",
+      "title": "Pink Fandy Silk Embroidered Kurti Set",
+      "handle": "embroidered-kurti-set-pink-on5166",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:26Z",
+      "updatedAt": "2026-10-21T19:34:53Z",
+      "publishedAt": "2026-09-25T15:42:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070832811",
+      "title": "Beige and Purple Silk Blend Embroidered Anarkali Kurti Pant Set",
+      "handle": "embroidered-kurti-pant-set-beige-purple",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:28Z",
+      "updatedAt": "2026-10-21T19:34:53Z",
+      "publishedAt": "2026-09-25T15:42:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070931115",
+      "title": "Pink and Teal Silk Blend Embroidered Anarkali Kurti Pant Set",
+      "handle": "embroidered-kurti-pant-set-pink-teal",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:30Z",
+      "updatedAt": "2026-10-21T19:34:54Z",
+      "publishedAt": "2026-09-25T15:42:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035070963883",
+      "title": "Purple and Lime Silk Blend Embroidered Anarkali Kurti Pant Set",
+      "handle": "embroidered-kurti-pant-set-purple-lime",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:32Z",
+      "updatedAt": "2026-10-21T19:34:54Z",
+      "publishedAt": "2026-09-25T15:42:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035071029419",
+      "title": "Teal Silk Blend Embroidered Anarkali Kurti Pant Set",
+      "handle": "embroidered-kurti-pant-set-teal",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:34Z",
+      "updatedAt": "2026-10-21T19:34:54Z",
+      "publishedAt": "2026-09-25T15:42:34Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035071127723",
+      "title": "Rust Red Chinon Embroidered Palazzo Set",
+      "handle": "embroidered-palazzo-set-rust-red-2611",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:36Z",
+      "updatedAt": "2026-10-21T19:34:55Z",
+      "publishedAt": "2026-09-25T15:42:36Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035071193259",
+      "title": "Yellow Chinon Embroidered Palazzo Set",
+      "handle": "embroidered-palazzo-set-yellow-2612",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:38Z",
+      "updatedAt": "2026-10-21T19:34:55Z",
+      "publishedAt": "2026-09-25T15:42:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035071226027",
+      "title": "Magenta Chinon Embroidered Palazzo Set",
+      "handle": "embroidered-palazzo-set-magenta-2613",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:40Z",
+      "updatedAt": "2026-10-21T19:34:55Z",
+      "publishedAt": "2026-09-25T15:42:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9035071357099",
+      "title": "Chinon Ready to Wear Embroidered Saree",
+      "handle": "ready-to-wear-embroidered-saree-a536",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-25T15:42:42Z",
+      "updatedAt": "2026-11-04T14:14:20Z",
+      "publishedAt": "2026-09-25T15:42:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041724440747",
+      "title": "Black Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-black-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T14:58:10Z",
+      "updatedAt": "2026-10-21T19:34:56Z",
+      "publishedAt": "2026-09-29T14:58:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041724833963",
+      "title": "Black Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-black-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T14:59:55Z",
+      "updatedAt": "2026-10-21T19:34:56Z",
+      "publishedAt": "2026-09-29T14:59:56Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041724997803",
+      "title": "Blue Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-blue-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T14:59:57Z",
+      "updatedAt": "2026-10-21T19:34:56Z",
+      "publishedAt": "2026-09-29T14:59:59Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725194411",
+      "title": "Cream Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-cream-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:00Z",
+      "updatedAt": "2026-10-21T19:34:56Z",
+      "publishedAt": "2026-09-29T15:00:01Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725325483",
+      "title": "Cream Silk Mirror Work Kurta Pajama Set with Dupatta, Men’s Indian Festive Wear",
+      "handle": "luxemia-cream-silk-mirror-work-kurta-pajama-set-with-dupatta",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:05Z",
+      "updatedAt": "2026-10-21T19:34:57Z",
+      "publishedAt": "2026-09-29T15:00:06Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725358251",
+      "title": "Green Zari Work Art Silk Lehenga Choli",
+      "handle": "luxemia-green-zari-work-art-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:10Z",
+      "updatedAt": "2026-10-21T19:34:57Z",
+      "publishedAt": "2026-09-29T15:00:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725423787",
+      "title": "Ivory Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-ivory-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:17Z",
+      "updatedAt": "2026-10-21T19:34:57Z",
+      "publishedAt": "2026-09-29T15:00:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725456555",
+      "title": "Light Green Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-light-green-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:22Z",
+      "updatedAt": "2026-10-21T19:34:57Z",
+      "publishedAt": "2026-09-29T15:00:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725554859",
+      "title": "Light Purple Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-light-purple-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:27Z",
+      "updatedAt": "2026-10-21T19:34:57Z",
+      "publishedAt": "2026-09-29T15:00:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725587627",
+      "title": "Mustard Silk Mirror Work Kurta Pajama Set with Dupatta, Men’s Indian Festive Wear",
+      "handle": "luxemia-mustard-silk-mirror-work-kurta-pajama-set-with-dupatta",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:29Z",
+      "updatedAt": "2026-10-21T19:34:58Z",
+      "publishedAt": "2026-09-29T15:00:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725653163",
+      "title": "Mustard Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-mustard-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:31Z",
+      "updatedAt": "2026-10-21T19:34:58Z",
+      "publishedAt": "2026-09-29T15:00:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725685931",
+      "title": "Navy Blue Silk Mirror Work Kurta Pajama Set with Dupatta, Men’s Indian Festive Wear",
+      "handle": "luxemia-navy-blue-silk-mirror-work-kurta-pajama-set-with-dupatta",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:33Z",
+      "updatedAt": "2026-10-21T19:34:58Z",
+      "publishedAt": "2026-09-29T15:00:35Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725718699",
+      "title": "Navy Blue Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-navy-blue-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:38Z",
+      "updatedAt": "2026-10-21T19:34:58Z",
+      "publishedAt": "2026-09-29T15:00:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725751467",
+      "title": "Navy Blue Zari Work Art Silk Lehenga Choli",
+      "handle": "luxemia-navy-blue-zari-work-art-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:41Z",
+      "updatedAt": "2026-10-21T19:34:59Z",
+      "publishedAt": "2026-09-29T15:00:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725784235",
+      "title": "Off White Hand Printed Cotton Navratri Lehenga Choli, Garba Outfit",
+      "handle": "luxemia-off-white-hand-printed-cotton-navratri-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:44Z",
+      "updatedAt": "2026-10-21T19:34:59Z",
+      "publishedAt": "2026-09-29T15:00:45Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725817003",
+      "title": "Peach Zari Work Art Silk Lehenga Choli",
+      "handle": "luxemia-peach-zari-work-art-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:46Z",
+      "updatedAt": "2026-10-21T19:34:59Z",
+      "publishedAt": "2026-09-29T15:00:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725849771",
+      "title": "Pink Beads Work Silk Lehenga Choli",
+      "handle": "luxemia-pink-beads-work-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:48Z",
+      "updatedAt": "2026-10-21T19:34:59Z",
+      "publishedAt": "2026-09-29T15:00:49Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041725882539",
+      "title": "Pista Green Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-pista-green-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:50Z",
+      "updatedAt": "2026-10-21T19:35:00Z",
+      "publishedAt": "2026-09-29T15:00:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726013611",
+      "title": "Purple Silk Mirror Work Kurta Pajama Set with Dupatta, Men’s Indian Festive Wear",
+      "handle": "luxemia-purple-silk-mirror-work-kurta-pajama-set-with-dupatta",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:00:58Z",
+      "updatedAt": "2026-10-21T19:35:00Z",
+      "publishedAt": "2026-09-29T15:01:02Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726111915",
+      "title": "Rani Pink Zari Work Art Silk Lehenga Choli",
+      "handle": "luxemia-rani-pink-zari-work-art-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:03Z",
+      "updatedAt": "2026-10-21T19:35:00Z",
+      "publishedAt": "2026-09-29T15:01:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726144683",
+      "title": "Red Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-red-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:05Z",
+      "updatedAt": "2026-10-21T19:35:00Z",
+      "publishedAt": "2026-09-29T15:01:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726177451",
+      "title": "Red Zari Work Art Silk Lehenga Choli",
+      "handle": "luxemia-red-zari-work-art-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:09Z",
+      "updatedAt": "2026-10-21T19:35:01Z",
+      "publishedAt": "2026-09-29T15:01:12Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726242987",
+      "title": "Sage Green Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-sage-green-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:14Z",
+      "updatedAt": "2026-10-21T19:35:01Z",
+      "publishedAt": "2026-09-29T15:01:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726308523",
+      "title": "Silver Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-silver-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:16Z",
+      "updatedAt": "2026-10-21T19:35:01Z",
+      "publishedAt": "2026-09-29T15:01:17Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726341291",
+      "title": "Steel Grey Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-steel-grey-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:19Z",
+      "updatedAt": "2026-10-21T19:35:01Z",
+      "publishedAt": "2026-09-29T15:01:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726374059",
+      "title": "Turquoise Lace Work Rayon Lehenga Choli",
+      "handle": "luxemia-turquoise-lace-work-rayon-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:21Z",
+      "updatedAt": "2026-10-21T19:35:02Z",
+      "publishedAt": "2026-09-29T15:01:23Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726439595",
+      "title": "White Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-white-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:25Z",
+      "updatedAt": "2026-10-21T19:35:02Z",
+      "publishedAt": "2026-09-29T15:01:26Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726505131",
+      "title": "White Silk Embroidered Kurta Pajama Set with Dupatta, Men’s Indian Festive Wear",
+      "handle": "white-silk-embroidered-kurta-pajama-set-with-dupatta-bt4602",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:27Z",
+      "updatedAt": "2026-10-21T19:35:02Z",
+      "publishedAt": "2026-09-29T15:01:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726537899",
+      "title": "White Silk Embroidered Kurta Pajama Set with Dupatta, Men’s Indian Festive Wear",
+      "handle": "white-silk-embroidered-kurta-pajama-set-with-dupatta-bt4603",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:29Z",
+      "updatedAt": "2026-10-21T19:35:02Z",
+      "publishedAt": "2026-09-29T15:01:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726603435",
+      "title": "White Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-white-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:33Z",
+      "updatedAt": "2026-10-21T19:35:02Z",
+      "publishedAt": "2026-09-29T15:01:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726668971",
+      "title": "Wine Silk Embroidered Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-wine-silk-embroidered-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:38Z",
+      "updatedAt": "2026-10-21T19:35:03Z",
+      "publishedAt": "2026-09-29T15:01:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726701739",
+      "title": "Wine Silk Readymade Kurta Pajama Set, Men’s Indian Festive Wear",
+      "handle": "luxemia-wine-silk-readymade-kurta-pajama-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:40Z",
+      "updatedAt": "2026-10-21T19:35:03Z",
+      "publishedAt": "2026-09-29T15:01:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9041726734507",
+      "title": "Yellow Zari Work Art Silk Lehenga Choli",
+      "handle": "luxemia-yellow-zari-work-art-silk-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-29T15:01:43Z",
+      "updatedAt": "2026-10-21T19:35:03Z",
+      "publishedAt": "2026-09-29T15:01:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9044584038571",
+      "title": "Rani Pink Cotton Navratri Lehenga with Mirror Work Choli, Garba Outfit",
+      "handle": "rani-pink-cotton-navratri-lehenga-ta329",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-30T16:13:31Z",
+      "updatedAt": "2026-10-21T19:35:03Z",
+      "publishedAt": "2026-09-30T16:15:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/9044657373355",
+      "title": "Ivory Silk Lehenga Choli with Sequin Work and Net Dupatta",
+      "handle": "ivory-silk-lehenga-choli-al9028",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-30T17:29:02Z",
+      "updatedAt": "2026-10-21T19:35:04Z",
+      "publishedAt": "2026-09-30T17:29:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9044657406123",
+      "title": "Blush Pink Silk Lehenga Choli with Sequin Work and Net Dupatta",
+      "handle": "blush-pink-silk-lehenga-choli-al9030",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-30T17:29:09Z",
+      "updatedAt": "2026-10-21T19:35:04Z",
+      "publishedAt": "2026-09-30T17:29:10Z"
+    },
+    {
+      "id": "gid://shopify/Product/9044657438891",
+      "title": "Mint Green Silk Lehenga Choli with Sequin Work and Net Dupatta",
+      "handle": "mint-green-silk-lehenga-choli-al9029",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-30T17:29:14Z",
+      "updatedAt": "2026-10-21T19:35:04Z",
+      "publishedAt": "2026-09-30T17:29:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/9044657537195",
+      "title": "Yellow Silk Lehenga Choli with Sequin Work and Net Dupatta",
+      "handle": "yellow-silk-lehenga-choli-al9027",
+      "status": "ACTIVE",
+      "createdAt": "2026-09-30T17:29:21Z",
+      "updatedAt": "2026-10-21T19:35:04Z",
+      "publishedAt": "2026-09-30T17:29:22Z"
+    },
+    {
+      "id": "gid://shopify/Product/9051850145963",
+      "title": "Navy Blue Crepe Indo-Western Suit with Embroidery Work",
+      "handle": "navy-blue-crepe-indo-western-suit",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-01T23:56:30Z",
+      "updatedAt": "2026-10-21T19:35:05Z",
+      "publishedAt": "2026-10-01T23:56:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9051851063467",
+      "title": "Pink Crepe Indo-Western Suit with Embroidery Work",
+      "handle": "pink-crepe-indo-western-suit",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-01T23:56:35Z",
+      "updatedAt": "2026-10-21T19:35:05Z",
+      "publishedAt": "2026-10-01T23:56:37Z"
+    },
+    {
+      "id": "gid://shopify/Product/9051851161771",
+      "title": "Rust Orange Crepe Indo-Western Suit with Embroidery Work",
+      "handle": "rust-orange-crepe-indo-western-suit",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-01T23:56:41Z",
+      "updatedAt": "2026-10-21T19:35:05Z",
+      "publishedAt": "2026-10-01T23:56:42Z"
+    },
+    {
+      "id": "gid://shopify/Product/9051852079275",
+      "title": "Gold Georgette Indo-Western Palazzo Set with Embroidery Work",
+      "handle": "gold-georgette-indo-western-palazzo-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-01T23:56:47Z",
+      "updatedAt": "2026-10-21T19:35:06Z",
+      "publishedAt": "2026-10-01T23:56:48Z"
+    },
+    {
+      "id": "gid://shopify/Product/9051852406955",
+      "title": "Magenta Georgette Indo-Western Palazzo Set with Embroidery Work",
+      "handle": "magenta-georgette-indo-western-palazzo-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-01T23:56:51Z",
+      "updatedAt": "2026-10-21T19:35:06Z",
+      "publishedAt": "2026-10-01T23:56:53Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052015296683",
+      "title": "Olive Green Salsa Handwork Indo Western Set with Cape and Palazzo",
+      "handle": "olive-green-salsa-handwork-cape-indo-western-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T00:41:32Z",
+      "updatedAt": "2026-10-21T19:35:06Z",
+      "publishedAt": "2026-10-02T00:41:33Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052016083115",
+      "title": "Dusty Blue Salsa Handwork Indo Western Set with Cape and Palazzo",
+      "handle": "dusty-blue-salsa-handwork-cape-indo-western-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T00:41:36Z",
+      "updatedAt": "2026-10-21T19:35:06Z",
+      "publishedAt": "2026-10-02T00:41:38Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052016378027",
+      "title": "Champagne Beige Salsa Handwork Indo Western Set with Cape and Palazzo",
+      "handle": "champagne-beige-salsa-handwork-cape-indo-western-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T00:41:42Z",
+      "updatedAt": "2026-10-21T19:35:07Z",
+      "publishedAt": "2026-10-02T00:41:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052016640171",
+      "title": "Dusty Rose Salsa Handwork Indo Western Set with Cape and Palazzo",
+      "handle": "dusty-rose-salsa-handwork-cape-indo-western-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T00:41:46Z",
+      "updatedAt": "2026-10-21T19:35:07Z",
+      "publishedAt": "2026-10-02T00:41:47Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052281536683",
+      "title": "Pista Green Art Silk Indo Western Sherwani for Groomsmen and Weddings",
+      "handle": "pista-green-art-silk-sherwani-groomsmen",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T01:45:42Z",
+      "updatedAt": "2026-10-21T19:35:07Z",
+      "publishedAt": "2026-10-02T01:45:44Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052281897131",
+      "title": "Off White Art Silk Indo Western Sherwani for Groomsmen and Weddings",
+      "handle": "off-white-art-silk-sherwani-groomsmen",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T01:45:49Z",
+      "updatedAt": "2026-10-21T19:35:07Z",
+      "publishedAt": "2026-10-02T01:45:51Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052393668779",
+      "title": "Pink Pure Crepe Embroidered Indo Western Set with Cape",
+      "handle": "pink-pure-crepe-embroidered-indo-western-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T02:08:41Z",
+      "updatedAt": "2026-10-21T19:35:08Z",
+      "publishedAt": "2026-10-02T02:08:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9052393832619",
+      "title": "Green Pure Georgette Embroidered Indo Western Set with Cape",
+      "handle": "green-pure-georgette-embroidered-indo-western-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T02:08:51Z",
+      "updatedAt": "2026-10-21T19:35:08Z",
+      "publishedAt": "2026-10-02T02:08:52Z"
+    },
+    {
+      "id": "gid://shopify/Product/9055757959339",
+      "title": "Georgette Bandhani Printed Lehenga Choli",
+      "handle": "georgette-bandhani-printed-lehenga-choli",
+      "status": "DRAFT",
+      "createdAt": "2026-10-02T15:50:11Z",
+      "updatedAt": "2026-10-06T00:43:15Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9055798329515",
+      "title": "4-Piece Embroidered Jacket Set – Chinon Silk Wedding Outfit",
+      "handle": "embroidered-chinon-silk-4-piece-jacket-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T17:12:47Z",
+      "updatedAt": "2026-10-21T19:35:08Z",
+      "publishedAt": "2026-10-02T17:48:25Z"
+    },
+    {
+      "id": "gid://shopify/Product/9055798624427",
+      "title": "Peacock Design Corset Blouse – Real Mirror and Cowrie Shell Work Navratri Blouse, Garba Outfit",
+      "handle": "peacock-mirror-corset-blouse",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T17:12:53Z",
+      "updatedAt": "2026-10-21T19:35:08Z",
+      "publishedAt": "2026-10-02T17:48:30Z"
+    },
+    {
+      "id": "gid://shopify/Product/9055921963179",
+      "title": "Rust Orange Art Silk Embroidered 3-Piece Suit Set",
+      "handle": "art-silk-embroidered-suit-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T18:01:15Z",
+      "updatedAt": "2026-10-21T19:35:09Z",
+      "publishedAt": "2026-10-02T18:01:16Z"
+    },
+    {
+      "id": "gid://shopify/Product/9055922487467",
+      "title": "Designer Hand-Embroidered Net Saree with Bead and Pearl Work",
+      "handle": "designer-embroidered-net-saree",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-02T18:01:37Z",
+      "updatedAt": "2026-10-21T19:35:09Z",
+      "publishedAt": "2026-10-02T18:01:39Z"
+    },
+    {
+      "id": "gid://shopify/Product/9060962599083",
+      "title": "Beige Art Silk Embroidered 3-Piece Suit Set",
+      "handle": "art-silk-embroidered-suit-set-in-ivory",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T16:28:22Z",
+      "updatedAt": "2026-10-25T08:05:42Z",
+      "publishedAt": "2026-10-03T16:28:29Z"
+    },
+    {
+      "id": "gid://shopify/Product/9060963123371",
+      "title": "Magenta Pink Art Silk Embroidered 3-Piece Suit Set",
+      "handle": "art-silk-embroidered-suit-set-in-pink",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T16:28:32Z",
+      "updatedAt": "2026-10-25T07:17:46Z",
+      "publishedAt": "2026-10-03T16:28:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9061129093291",
+      "title": "Mustard Yellow Art Silk Embroidered 3-Piece Suit Set",
+      "handle": "art-silk-embroidered-suit-set-in-yellow",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T17:03:33Z",
+      "updatedAt": "2026-10-21T19:35:10Z",
+      "publishedAt": "2026-10-03T17:03:43Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062012059819",
+      "title": "Orange Yellow Pink Embroidered Chinon Kids Salwar Set",
+      "handle": "embroidered-chinon-kids-salwar-set",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T21:01:54Z",
+      "updatedAt": "2026-10-21T19:35:10Z",
+      "publishedAt": "2026-10-03T21:30:04Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062012944555",
+      "title": "Green Cotton Ribbon Lace Lehenga with Printed Choli",
+      "handle": "cotton-ribbon-lace-lehenga-green",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T21:02:06Z",
+      "updatedAt": "2026-10-21T19:35:11Z",
+      "publishedAt": "2026-10-03T21:30:08Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062049087659",
+      "title": "Teal Blue Butterfly Net Embroidered Lehenga Choli",
+      "handle": "butterfly-net-embroidered-lehenga-choli",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T21:09:28Z",
+      "updatedAt": "2026-10-21T19:35:11Z",
+      "publishedAt": "2026-10-03T21:30:27Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062355796139",
+      "title": "White and Peach Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-white-peach",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:43:58Z",
+      "updatedAt": "2026-10-21T19:35:11Z",
+      "publishedAt": "2026-10-04T01:34:07Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062356222123",
+      "title": "Orange Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-orange",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:44:06Z",
+      "updatedAt": "2026-10-21T19:35:11Z",
+      "publishedAt": "2026-10-04T01:34:11Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062356353195",
+      "title": "Black Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-black",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:44:14Z",
+      "updatedAt": "2026-10-21T19:35:12Z",
+      "publishedAt": "2026-10-04T01:34:15Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062356648107",
+      "title": "Dove Blue Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-dove-blue",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:44:23Z",
+      "updatedAt": "2026-10-21T19:35:12Z",
+      "publishedAt": "2026-10-04T01:34:20Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062356680875",
+      "title": "Green Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-green",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:44:31Z",
+      "updatedAt": "2026-10-21T19:35:12Z",
+      "publishedAt": "2026-10-04T01:34:24Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062357500075",
+      "title": "Teal Blue Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-teal-blue",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:44:39Z",
+      "updatedAt": "2026-10-21T19:35:12Z",
+      "publishedAt": "2026-10-04T01:34:28Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062358352043",
+      "title": "Red Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-red",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:44:47Z",
+      "updatedAt": "2026-10-21T19:35:13Z",
+      "publishedAt": "2026-10-04T01:34:32Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062358909099",
+      "title": "Floral Printed Organza Lehenga Choli - Purple",
+      "handle": "floral-printed-organza-lehenga-choli-purple",
+      "status": "DRAFT",
+      "createdAt": "2026-10-03T22:44:55Z",
+      "updatedAt": "2026-10-06T00:43:23Z",
+      "publishedAt": null
+    },
+    {
+      "id": "gid://shopify/Product/9062359531691",
+      "title": "Sky Blue Floral Printed Organza Lehenga Choli",
+      "handle": "floral-printed-organza-lehenga-choli-sky-blue",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:45:01Z",
+      "updatedAt": "2026-10-21T19:35:13Z",
+      "publishedAt": "2026-10-04T01:34:40Z"
+    },
+    {
+      "id": "gid://shopify/Product/9062361890987",
+      "title": "Orange and Pink Patola Silk Saree",
+      "handle": "patola-silk-saree-orange-pink",
+      "status": "ACTIVE",
+      "createdAt": "2026-10-03T22:45:52Z",
+      "updatedAt": "2026-10-21T19:35:13Z",
+      "publishedAt": "2026-10-04T01:34:48Z"
+    }
+  ],
+  "preservedServiceId": "gid://shopify/Product/8945285660843",
+  "minimumExpectedActiveProducts": 238,
+  "merchandiseCount": 237,
+  "existingPermanentHandlesPreserved": [
+    "antique-gold-kanchipuram-silk-wedding-saree",
+    "baby-pink-cotton-kurta-pajama",
+    "baby-pink-roman-silk-festival-anarkali",
+    "banarasi-silk-mint-green-festival-weaving-saree",
+    "banarasi-silk-mustard-festival-weaving-saree",
+    "beige-cotton-kurta-pajama",
+    "beige-gold-tissue-silk-wedding-saree",
+    "black-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "black-art-silk-sherwani",
+    "black-banarasi-jacquard-sherwani",
+    "black-chinon-silk-pearl-sharara-suit-for-weddings",
+    "black-cotton-kurta-pajama",
+    "black-roman-silk-anarkali",
+    "black-velvet-sherwani",
+    "blue-banarasi-jacquard-sherwani",
+    "blue-cotton-kurta-pajama",
+    "blue-georgette-sequin-lehenga-choli-0023",
+    "brown-chinon-silk-pearl-sharara-suit-for-weddings",
+    "brown-silk-kurta-pajama",
+    "champagne-beige-chanderi-anarkali",
+    "chanderi-silk-cream-casual-wear-embroidery-work-readymade-palazzo-suit-404571",
+    "chanderi-silk-dark-marron-casual-wear-embroidery-work-readymade-palazzo-suit-404566",
+    "chanderi-silk-lavender-casual-wear-embroidery-work-readymade-palazzo-suit-404567",
+    "chanderi-silk-orange-casual-wear-embroidery-work-readymade-palazzo-suit-404568",
+    "chanderi-silk-peach-casual-wear-embroidery-work-readymade-palazzo-suit-404564",
+    "chanderi-silk-pink-casual-wear-embroidery-work-readymade-palazzo-suit-404565",
+    "chanderi-silk-sea-green-casual-wear-embroidery-work-readymade-palazzo-suit-404569",
+    "chanderi-silk-teal-blue-casual-wear-embroidery-work-readymade-palazzo-suit-404570",
+    "dusty-pink-fendy-silk-casual-anarkali",
+    "dusty-rose-chinon-silk-indo-western-dress-for-sangeet",
+    "dusty-rose-silk-party-anarkali",
+    "emerald-green-georgette-party-saree",
+    "fendy-satin-teal-green-occasional-embroidery-saree",
+    "green-chinon-silk-pearl-sharara-suit-for-weddings",
+    "green-fendy-silk-casual-anarkali",
+    "green-silk-eid-anarkali-suit",
+    "green-silk-lehenga-choli-0022",
+    "grey-art-silk-groom-sherwani",
+    "grey-fendy-silk-casual-anarkali",
+    "ivory-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "ivory-beige-kanchipuram-silk-wedding-saree",
+    "jwl-001",
+    "jwl-002",
+    "jwl-003",
+    "jwl-004",
+    "jwl-005",
+    "jwl-006",
+    "jwl-007",
+    "jwl-008",
+    "jwl-009",
+    "jwl-010",
+    "jwl-011",
+    "jwl-012",
+    "jwl-013",
+    "jwl-014",
+    "jwl-015",
+    "jwl-016",
+    "jwl-017",
+    "jwl-018",
+    "jwl-019",
+    "jwl-020",
+    "jwl-021",
+    "jwl-022",
+    "jwl-023",
+    "jwl-024",
+    "jwl-025",
+    "jwl-026",
+    "jwl-027",
+    "jwl-028",
+    "jwl-029",
+    "jwl-030",
+    "jwl-031",
+    "jwl-032",
+    "jwl-033",
+    "jwl-034",
+    "jwl-035",
+    "jwl-036",
+    "jwl-037",
+    "jwl-038",
+    "jwl-039",
+    "jwl-040",
+    "jwl-041",
+    "jwl-042",
+    "jwl-043",
+    "jwl-044",
+    "jwl-045",
+    "jwl-046",
+    "jwl-047",
+    "jwl-048",
+    "jwl-049",
+    "jwl-050",
+    "jwl-051",
+    "jwl-052",
+    "jwl-053",
+    "jwl-054",
+    "jwl-055",
+    "jwl-056",
+    "jwl-057",
+    "jwl-058",
+    "lavender-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "lavender-chinon-silk-indo-western-dress-for-reception",
+    "lavender-viscose-casual-anarkali",
+    "light-pink-art-silk-groom-sherwani",
+    "magenta-art-silk-festive-saree",
+    "magenta-velvet-sherwani",
+    "maroon-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "maroon-banarasi-jacquard-sherwani",
+    "maroon-roman-silk-anarkali",
+    "mint-green-kanchipuram-silk-wedding-saree",
+    "multi-cotton-lehenga-choli",
+    "multi-faux-georgette-lehenga-choli",
+    "multi-kanchipuram-silk-zari-lehenga-choli",
+    "multi-net-lehenga-choli-0019",
+    "multi-rayon-cotton-lehenga-choli",
+    "multi-rayon-lehenga-choli",
+    "multi-tussar-silk-embroidery-lehenga-choli",
+    "multi-tussar-silk-lehenga-choli",
+    "multicolor-kanchipuram-silk-wedding-saree",
+    "mustard-banarasi-jacquard-sherwani",
+    "navy-blue-chinon-silk-pearl-sharara-suit-for-weddings",
+    "navy-blue-velvet-sherwani",
+    "navy-silk-sherwani",
+    "off-white-art-silk-groom-sherwani",
+    "olive-green-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "peach-banarasi-jacquard-sherwani",
+    "peach-fendy-silk-casual-anarkali",
+    "pink-banarasi-jacquard-sherwani",
+    "pink-georgette-sequin-lehenga-choli-0024",
+    "pink-tissue-silk-wedding-saree",
+    "pista-viscose-casual-anarkali",
+    "purple-art-silk-groom-sherwani",
+    "purple-chanderi-silk-casual-anarkali",
+    "purple-chinon-silk-pearl-sharara-suit-for-weddings",
+    "rani-pink-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "rani-pink-chinon-silk-pearl-sharara-suit-for-weddings",
+    "red-chanderi-cotton-casual-anarkali",
+    "red-chinon-silk-pearl-sharara-suit-for-weddings",
+    "red-silk-eid-anarkali-suit",
+    "royal-blue-chinon-silk-pearl-sharara-suit-for-weddings",
+    "royal-blue-georgette-party-saree",
+    "royal-pink-kanchipuram-silk-wedding-saree",
+    "rust-orange-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "sea-green-tissue-silk-wedding-saree",
+    "silk-blue-casual-sequins-saree",
+    "silk-green-occasional-embroidery-saree",
+    "silk-light-pink-occasional-embroidery-saree",
+    "silk-rani-pink-casual-sequins-saree",
+    "silk-rust-orange-casual-sequins-saree",
+    "silk-sea-green-occasional-embroidery-saree",
+    "silk-yellow-occasional-embroidery-saree",
+    "sky-blue-georgette-anarkali-gown",
+    "sunset-orange-tissue-silk-wedding-saree",
+    "teal-blue-art-silk-pearl-sharara-suit-for-indian-weddings",
+    "teal-blue-cotton-kurta-pajama",
+    "teal-chinon-silk-pearl-sharara-suit-for-weddings",
+    "turquoise-chinon-silk-indo-western-dress-for-mehndi",
+    "white-art-silk-groom-sherwani",
+    "white-viscose-kurta-pajama",
+    "wine-art-silk-sherwani",
+    "wine-georgette-party-saree",
+    "wine-georgette-sharara-suit",
+    "yellow-cotton-kurta-pajama",
+    "yellow-dola-silk-jacquard-sequin-lehenga-choli",
+    "yellow-georgette-anarkali-gown"
+  ]
+}

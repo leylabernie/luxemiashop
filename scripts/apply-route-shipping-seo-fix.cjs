@@ -9,7 +9,7 @@ const write = (relativePath, content) => fs.writeFileSync(path.join(root, relati
 
 const HOME_TITLE = 'Indian Wedding Sarees & Bridal Lehengas | LuxeMia';
 const HOME_DESCRIPTION = 'Shop South Asian bridal wear, wedding sarees, lehengas, suits and menswear with tracked shipping to the USA, Canada, UK and other supported markets.';
-const HOME_H1 = 'LuxeMia Indian Wedding Sarees, Bridal Lehengas & Ethnic Wear';
+const HOME_H1 = 'Curated Indian Wedding & Festive Wear, Delivered to Your Door.';
 const MENSWEAR_DESCRIPTION = 'Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and U.S. shipping.';
 const DESTINATION_LIST = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 const US_RATE_SUMMARY = 'U.S. standard shipping is $14.99 below $150 and free at $150 and above.';
@@ -158,7 +158,7 @@ for (const relativePath of [
 if (HOME_TITLE.length > 58 || HOME_DESCRIPTION.length > 155 || MENSWEAR_DESCRIPTION.length > 155) {
   throw new Error('[route-shipping-seo] Emitted metadata exceeds release limits.');
 }
-if (!HOME_TITLE.endsWith('| LuxeMia') || !HOME_H1.startsWith('LuxeMia')) {
+if (!HOME_TITLE.endsWith('| LuxeMia') || HOME_H1 !== 'Curated Indian Wedding & Festive Wear, Delivered to Your Door.') {
   throw new Error('[route-shipping-seo] LuxeMia brand placement is invalid.');
 }
 

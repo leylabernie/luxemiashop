@@ -22,6 +22,7 @@ const {
 } = require('../merchant-feed-color.cjs');
 const {
   getSizeOption,
+  getMerchantAgeGroup,
   isSizeOptionName,
   normalizeOptionName,
 } = require('../merchant-feed-size.cjs');
@@ -58,7 +59,7 @@ const SITE_URL = 'https://luxemia.shop';
 // retired handles are excluded at generation time in both the live-catalog
 // path and the checked-in snapshot fallback path.
 const GONE_PRODUCT_HANDLES = new Set(
-  JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8')),
+  [...JSON.parse(fs.readFileSync(path.resolve(__dirname, '../src/data/legacyGoneProductHandles.json'), 'utf8')), ...require('../src/data/reversiblyArchivedProductHandles.json')],
 );
 // U.S. shipping is account-managed: $14.99 below $150, free at $150 and above.
 // Do not emit a U.S. price override: it suppresses the account's order-total
@@ -524,7 +525,7 @@ function readSizeOptionFromDescription(description) {
     if (separatorIndex < 1) continue;
     const optionName = detail.slice(0, separatorIndex);
     const optionValue = detail.slice(separatorIndex + 1).trim();
-    if (isSizeOptionName(optionName) && optionValue) return optionValue;
+    if (getSizeOption([{ name: optionName, value: optionValue }])) return optionValue;
   }
 
   return '';
@@ -611,6 +612,7 @@ function sanitizeExistingFeedXml(xml) {
       || readMaterialFromDescription(existingDescription);
     const size = readItemTag(itemXml, 'g:size')
       || readSizeOptionFromDescription(existingDescription);
+    const ageGroup = getMerchantAgeGroup([{ name: 'Age', value: size }]);
     const pattern = readItemTag(itemXml, 'g:pattern');
     const fallbackProduct = {
       title,
@@ -663,8 +665,13 @@ function sanitizeExistingFeedXml(xml) {
     if (size && !/<g:size>/i.test(item)) {
       item = item.replace(
         /\s*<\/item>/i,
-        `\n    <g:size>${escapeXml(size)}</g:size>\n    <g:size_type>regular</g:size_type>\n    <g:size_system>US</g:size_system>\n  </item>`
+        `\n    <g:size>${escapeXml(size)}</g:size>\n    <g:size_type>regular</g:size_type>${ageGroup === 'adult' ? '\n    <g:size_system>US</g:size_system>' : ''}\n  </item>`
       );
+    }
+
+    if (ageGroup === 'kids') {
+      item = item.replace(/<g:age_group>[^<]*<\/g:age_group>/i, '<g:age_group>kids</g:age_group>')
+        .replace(/\s*<g:size_system>[^<]*<\/g:size_system>/i, '');
     }
 
     if (material && !/<g:material>/i.test(item)) {
@@ -1031,13 +1038,13 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
     <g:product_type>${escapeXml(productType)}</g:product_type>
     ${generateProductHighlights(product, color, material, productType, displayTitle, size)}
     <g:gender>${gender}</g:gender>
-    <g:age_group>adult</g:age_group>
+    <g:age_group>${getMerchantAgeGroup(selectedOptions)}</g:age_group>
     <g:color>${escapeXml(color || 'Multi-Color')}</g:color>
     ${material ? `<g:material>${escapeXml(material)}</g:material>` : ''}
     ${patternTag ? `<g:pattern>${escapeXml(patternTag)}</g:pattern>` : ''}
     ${size ? `<g:size>${escapeXml(size)}</g:size>` : ''}
     ${size ? '<g:size_type>regular</g:size_type>' : ''}
-    ${size ? '<g:size_system>US</g:size_system>' : ''}
+    ${size && getMerchantAgeGroup(selectedOptions) === 'adult' ? '<g:size_system>US</g:size_system>' : ''}
     ${identifiers}
     <g:custom_label_0>${escapeXml(rawProductType)}</g:custom_label_0>
     ${navratriPriorityHandles.has(handle) ? '<g:custom_label_1>navratri_2026_priority</g:custom_label_1>' : ''}

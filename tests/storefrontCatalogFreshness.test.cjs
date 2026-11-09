@@ -5,16 +5,7 @@ const path = require('node:path');
 const vm = require('node:vm');
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = require('../scripts/storefront-catalog.cjs');
 
-const archivedHandles = [
-  ...require('../scripts/product-owner-archive-20261028.json').archived.map(p => p.handle),
-  ...require('../scripts/product-age-archive-20261026.json').archived.map(p => p.handle),
-  'bead-embroidered-sharara-suit-mauve-maroon-divya',
-  'embroidered-silk-sharara-suit-georgette-dupatta-mt1079',
-  'net-beige-festival-wear-beads-work-readymade-lehenga-choli-400564',
-  'premium-wedding-bridal-lehenga-collection-silk-zardozi-cutdana-pearl-embroidery-with-4-50m-flair',
-  'embroidered-bridal-lehenga-olive-green',
-  'patola-silk-saree-red-orange',
-];
+const archivedHandles = require('../src/data/reversiblyArchivedProductHandles.json');
 const response = (products, hasNextPage = false, endCursor = null) => ({
   ok: true,
   json: async () => ({ data: { products: { edges: products.map(node => ({ node })), pageInfo: { hasNextPage, endCursor } } } }),
@@ -125,10 +116,10 @@ test('authorized archives supersede old retained-product and offer baselines wit
       assert.ok(!archivedIds.has(offerId.match(/^p(\d+)(?:-v|$)/)?.[1]), `${field}: ${offerId}`);
     }
   }
-  assert.equal(retirement.retained.length, 329, 'Exact surviving merchandise baseline');
-  assert.equal(retirement.feedBaseline.offerIds.length, 2245, 'Every verified surviving current offer remains required');
-  assert.equal(retirement.feedBaseline.sizeOfferIds.length, 2164);
-  assert.equal(retirement.feedBaseline.materialOfferIds.length, 2175);
+  assert.equal(retirement.retained.length, 237, 'Exact surviving merchandise baseline');
+  assert.equal(retirement.feedBaseline.offerIds.length, 1700, 'Every verified surviving current offer remains required');
+  assert.equal(retirement.feedBaseline.sizeOfferIds.length, 1626);
+  assert.equal(retirement.feedBaseline.materialOfferIds.length, 1588);
   const goneHandles = new Set(require('../src/data/legacyGoneProductHandles.json'));
   for (const handle of archivedHandles) assert.ok(!goneHandles.has(handle), handle);
 });

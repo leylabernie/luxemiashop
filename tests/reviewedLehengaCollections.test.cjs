@@ -6,6 +6,8 @@ const vm = require('node:vm');
 const { pathToFileURL } = require('node:url');
 const { transformSync, buildSync } = require('esbuild');
 const { reviewedLehengaCollections: configs, filterReviewedLehengaProducts: filter } = require('../src/lib/reviewedLehengaCollections.cjs');
+const archived = new Set(require('../src/data/reversiblyArchivedProductHandles.json'));
+const currentMembers = config => config.products.filter(p => !archived.has(p.handle));
 const root = path.resolve(__dirname, '..');
 const read = file => fs.readFileSync(path.join(root, file), 'utf8');
 const product = (member, overrides = {}) => ({
@@ -50,12 +52,14 @@ for (const [handle, config] of Object.entries(configs)) {
   test(`${handle}: exact reviewed assortment, exclusions, availability and images`, () => {
     assert.equal(config.products.length, handle === 'organza-lehengas' ? 9 : 8);
     assert.equal(new Set(config.products.map(p => p.id)).size, config.products.length);
-    const expected = config.products.map(p => product(p));
+    const expected = currentMembers(config).map(p => product(p));
+    assert.equal(expected.length, handle === 'organza-lehengas' ? 1 : 0);
+    assert.deepEqual(filter(handle, config.products.filter(p => archived.has(p.handle)).map(p => product(p))), [], 'Archived reviewed products must not revive');
     if (handle === 'mirror-work-lehengas') {
       assert.deepEqual(filter(handle, expected), [], 'Explicit archives must not revive from stale availableForSale records');
       return;
     }
-    assert.deepEqual(filter(handle, [...expected, expected[0]]).map(p => p.id), config.products.map(p => p.id));
+    assert.deepEqual(filter(handle, [...expected, expected[0]]).map(p => p.id), currentMembers(config).map(p => p.id));
     assert.equal(filter(handle, expected.map(node => ({ node }))).length, expected.length);
     for (const change of [
       { id: 'gid://shopify/Product/unreviewed', tags: ['organza', 'mirror work'] },
@@ -63,8 +67,8 @@ for (const [handle, config] of Object.entries(configs)) {
       { availableForSale: false }, { variants: { edges: [] } },
       { variants: { edges: [{ node: { availableForSale: false } }] } },
       { images: { edges: [{ node: { url: 'https://cdn.shopify.com/flatlay-unreviewed.jpg' } }] } },
-    ]) assert.equal(filter(handle, [product(config.products[0], change)]).length, 0, JSON.stringify(change));
-    assert.equal(filter(handle, [product(config.products[0], { images: { edges: [{ node: { url: config.products[0].image + '&width=400' } }] } })]).length, 1);
+    ]) assert.equal(filter(handle, [product(currentMembers(config)[0] || config.products[0], change)]).length, 0, JSON.stringify(change));
+    assert.equal(filter(handle, [product(currentMembers(config)[0] || config.products[0], { images: { edges: [{ node: { url: (currentMembers(config)[0] || config.products[0]).image + '&width=400' } }] } })]).length, 1);
     assert.equal(filter('unreviewed-route', expected).length, 0);
   });
 
@@ -84,12 +88,12 @@ for (const [handle, config] of Object.entries(configs)) {
     }
     assert.match(html, /name="robots" content="index, follow"/);
     assert.ok(html.includes(`rel="canonical" href="${config.canonical}"`));
-    assert.deepEqual(payload(html).products.map(p => p.node.id), config.products.map(p => p.id));
+    assert.deepEqual(payload(html).products.map(p => p.node.id), currentMembers(config).map(p => p.id));
     assert.equal(payload(html).category, `collection:${handle}`);
     const graph = schemas(html);
     assert.equal(graph.filter(s => s['@type'] === 'CollectionPage').length, 1);
-    assert.equal(graph.find(s => s['@type'] === 'ItemList').numberOfItems, config.products.length);
-    for (const p of config.products) assert.ok(html.includes(`/product/${p.handle}`));
+    assert.equal(graph.find(s => s['@type'] === 'ItemList').numberOfItems, currentMembers(config).length);
+    for (const p of currentMembers(config)) assert.ok(html.includes(`/product/${p.handle}`));
     assert.ok(html.includes('href="/lehengas"'));
     assert.ok(config.title.length <= 60);
     assert.ok(config.description.length <= 155);
@@ -140,9 +144,9 @@ test('client navigation uses the exact manual membership and replaces stale prer
     const [empty] = await hookResult(handle, { initial: stale, collection: { products: [] }, catalog: [] });
     assert.equal(empty.length, 0, 'Live unavailable members must not reappear from stale HTML');
     const [fallback] = await hookResult(handle, { initial: null, collection: null, catalog: [...products, { node: product({ ...config.products[0], id: 'unrelated', handle: 'unrelated' }) }] });
-    assert.deepEqual(fallback.map(p => p.node.id), (handle === 'mirror-work-lehengas' ? [] : config.products.map(p => p.id)));
+    assert.deepEqual(fallback.map(p => p.node.id), (handle === 'mirror-work-lehengas' ? [] : currentMembers(config).map(p => p.id)));
     const [otherRoute] = await hookResult(handle, { initial: { category: 'collection:other', products }, collection: { products }, catalog: [] });
-    assert.equal(otherRoute.length, handle === 'mirror-work-lehengas' ? 0 : products.length);
+    assert.equal(otherRoute.length, handle === 'mirror-work-lehengas' ? 0 : currentMembers(config).length);
   }
 });
 

@@ -1,5 +1,6 @@
 /**
  * Banner products verified against live Shopify on 2026-09-08.
+ * Kids and menswear refreshed against the active catalog on 2026-11-09.
  *
  * Selection rule: highest-priced active, published product with at least one
  * available variant in each storefront category. The local images below are
@@ -50,24 +51,24 @@ export const FEATURED_CATEGORY_PRODUCTS = {
     alt: "Powder Blue Premium Viscose Crepe Embroidered Palazzo Suit with Dupatta",
   },
   kids: {
-    category: 'Kids',
-    title: "Embroidered Chinon Kids Salwar Set - Orange Yellow Pink",
-    handle: "embroidered-chinon-kids-salwar-set",
-    price: 49,
+    category: "Kids",
+    title: "Purple Malai Satin Kids Boy Kurta Pajama with Koti Jacket",
+    handle: "kids-kurta-set-purple",
+    price: 66.99,
     href: '/kids',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-embroidered-chinon-kids-salwar-set-01.jpg?v=1791061322&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-embroidered-chinon-kids-salwar-set-01.jpg?v=1791061322&width=900&format=webp",
-    alt: "Embroidered chinon kids salwar set in orange, yellow and pink",
+    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/kids-kurta-purple-img-01_f5249780-50cb-4287-bf29-744a98411ba9.jpg?v=1791220305&width=900",
+    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/kids-kurta-purple-img-01_f5249780-50cb-4287-bf29-744a98411ba9.jpg?v=1791220305&width=900&format=webp",
+    alt: "Purple 10Y young man milestone kurta set - front view",
   },
   menswear: {
-    category: 'Menswear',
-    title: "Off White Art Silk Indo Western Sherwani for Groomsmen and Weddings",
-    handle: "off-white-art-silk-sherwani-groomsmen",
-    price: 254.99,
+    category: "Menswear",
+    title: "Navy Blue Embroidered Silk Kurta Pajama with Jacket",
+    handle: "navy-blue-embroidered-silk-kurta-pajama-with-jacket",
+    price: 55.77,
     href: '/menswear',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/off-white-art-silk-indo-western-sherwani-2.jpg?v=1790905552&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/off-white-art-silk-indo-western-sherwani-2.jpg?v=1790905552&width=900&format=webp",
-    alt: "Off White Art Silk Indo Western Sherwani for Groomsmen and Weddings",
+    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-navy-blue-embroidered-silk-kurta-pajama-with-jacket-navy-blue-1.jpg?v=1793034301&width=900",
+    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-navy-blue-embroidered-silk-kurta-pajama-with-jacket-navy-blue-1.jpg?v=1793034301&width=900&format=webp",
+    alt: "Navy Blue silk kurta pajama with jacket, full-length model view",
   },
   indowestern: {
     category: 'Indo-Western',

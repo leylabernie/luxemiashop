@@ -23,8 +23,9 @@ const IS_RELEASE_BUILD = ['1', 'true'].includes((process.env.CI || '').toLowerCa
   || process.env.NETLIFY === 'true'
   || process.env.CF_PAGES === '1';
 const retirement = require('./product-retirement-20260908.json');
+const latestArchive = require('./product-age-archive-20261109.json');
 const MIN_EXPECTED_ACTIVE_PRODUCTS = Math.max(retirement.retained.length,
-  require('./product-owner-archive-20261028.json').minimumExpectedActiveProducts);
+  latestArchive.minimumExpectedActiveProducts);
 const MIN_EXPECTED_READY_PRODUCTS = 90;
 // The exact owner-approved archive removed the last product-level MTO garment.
 // Optional custom variants and all fulfillment-consistency checks stay intact.
@@ -333,6 +334,9 @@ async function main() {
   }
 
   const products = await fetchAllProducts();
+  if (!products.some(product => product.id === latestArchive.preservedServiceId)) {
+    throw new Error('[shopify-catalog] Preserved tailoring service is missing from the active catalog.');
+  }
   const handles = new Set(products.map(product => product.handle));
   const missing = retirement.retained.filter(product => !handles.has(product.handle));
   const resurfaced = [...retirement.retired, ...(retirement.reversiblyArchived || [])]
