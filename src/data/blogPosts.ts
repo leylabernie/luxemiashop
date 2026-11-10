@@ -350,6 +350,11 @@ export const blogPosts: BlogPost[] = [
         </tbody>
       </table>
 
+      <h2>What is Indian shirt size 42 in US sizing?</h2>
+      <p>A shirt label marked 42 does not establish a U.S. size. First check the seller's chart: does 42 refer to a body chest measurement, a finished-shirt measurement, or a size code? Only if the chart explicitly says <strong>42-inch chest</strong> can you convert that measurement to <strong>106.68 cm</strong>. It still does not establish a universal U.S. L or XL.</p>
+      <p>For U.S. shirts versus Indian shirts or kurtas, compare chest, shoulder, sleeve and garment length in the same units. Keep body measurements separate from finished-garment measurements, and check the fit allowance described by the seller rather than adding a guessed number of inches.</p>
+      <p>Shopping for a kurta or wedding outfit? Browse <a href="/menswear">current men's Indian occasionwear</a>, then <a href="/contact">ask LuxeMia about the exact product's sizing</a> if the listing does not define its numeric labels. Include the product link and the size label you are comparing; a general conversion guide cannot confirm that item's fit.</p>
+
       <h2>Convert inches to centimeters before comparing charts</h2>
       <p>Multiply inches by 2.54 to get centimeters. For example, 38 inches equals 96.52 cm, 40 inches equals 101.6 cm, and 42 inches equals 106.68 cm. These are measurement conversions, not U.S. dress-size equivalents.</p>
 
