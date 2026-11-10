@@ -81,3 +81,16 @@ test('fallback cannot collect values that createRoot would discard; mounted clie
     assert.ok(measurementHtml.includes(label));
   }
 });
+
+
+test('size conversion article answers numeric shirt queries without inventing US equivalence', () => {
+  const source = fs.readFileSync(path.join(root, 'src/data/blogPosts.ts'), 'utf8');
+  const article = source.split("slug: 'indian-to-us-clothing-size-conversion-guide'")[1].split("id: '10'")[0];
+  assert.match(article, /What is Indian shirt size 42 in US sizing/);
+  assert.match(article, /Only if the chart explicitly says/);
+  assert.match(article, /42-inch chest/);
+  assert.match(article, /106\.68 cm/);
+  assert.match(article, /does not establish a universal U.S. L or XL/);
+  assert.match(article, /href="\/menswear"/);
+  assert.match(article, /href="\/contact"/);
+});
