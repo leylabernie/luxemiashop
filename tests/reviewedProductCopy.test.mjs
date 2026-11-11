@@ -26,4 +26,6 @@ test('generic suit details do not invent a kameez for blouse and palazzo sets', 
   const source = readFileSync(new URL('../src/components/product/ProductTabs.tsx', import.meta.url), 'utf8');
   assert.doesNotMatch(source, /identify the listed kameez, bottom, dupatta/);
   assert.match(source, /identify the listed pieces, fabric, and work/);
+  assert.match(source, /shopifyDescriptionHtml = descriptionHtml/);
+  assert.doesNotMatch(source, /hasReviewedProductCopy/);
 });

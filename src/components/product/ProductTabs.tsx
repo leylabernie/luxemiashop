@@ -1,5 +1,5 @@
 import DOMPurify from 'dompurify';
-import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
+import { renderReviewedProductHtml } from '@/lib/reviewedProductCopy.mjs';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Shirt, Sparkles, Droplets, Scissors, Info, CheckCircle2, Clock, Palette, PenTool, Truck, Shield, RotateCcw, Gem, Crown, Sparkle, Heart } from 'lucide-react';
 import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnPolicyCopy';
@@ -7,7 +7,6 @@ import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnP
 interface ProductTabsProps {
   description?: string;
   descriptionHtml?: string;
-  productId?: string;
   productType?: string;
   /** Whether this product supports stitching (controls Tailoring Services tab visibility) */
   isStitchable?: boolean;
@@ -398,9 +397,13 @@ function getLabel(key: string): string {
   return labels[key] || titleCase(key);
 }
 
-export const ProductTabs = ({ description, descriptionHtml, productId, productType, isStitchable, tags, blouseSizeValues }: ProductTabsProps) => {
-  const verifiedHtml = hasReviewedProductCopy(tags, productId) && descriptionHtml
-    ? DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'em', 'b', 'ul', 'ol', 'li', 'br', 'table', 'tbody', 'tr', 'th', 'td', 'a'], ALLOWED_ATTR: ['href'] })
+export const ProductTabs = ({ description, descriptionHtml, productType, isStitchable, tags, blouseSizeValues }: ProductTabsProps) => {
+  // Shopify is the source of truth for visible listing details. The API client
+  // sanitizes the source, and DOMPurify preserves only safe catalog markup.
+  const shopifyDescriptionHtml = descriptionHtml
+    ? (typeof window === 'undefined'
+      ? renderReviewedProductHtml(descriptionHtml)
+      : DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'em', 'b', 'ul', 'ol', 'li', 'br', 'table', 'tbody', 'tr', 'th', 'td', 'a'], ALLOWED_ATTR: ['href'] }))
     : '';
   const showTailoringTab = isStitchable ?? isStitchableType(productType);
   const category = classifyProduct(productType);
@@ -498,7 +501,7 @@ export const ProductTabs = ({ description, descriptionHtml, productId, productTy
       {/* ─── Details Tab ─── */}
       <TabsContent value="details" className="pt-6">
         <div className="prose prose-sm max-w-none text-muted-foreground">
-          {verifiedHtml ? <div dangerouslySetInnerHTML={{ __html: verifiedHtml }} /> : <p className="leading-relaxed">
+          {shopifyDescriptionHtml ? <div dangerouslySetInnerHTML={{ __html: shopifyDescriptionHtml }} /> : <p className="leading-relaxed">
             {description || (
               isJewelry
                 ? 'Review the product images and listed details for the exact pieces, finish, colors, measurements, and closure.'

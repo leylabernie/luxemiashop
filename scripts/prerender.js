@@ -1174,7 +1174,11 @@ function buildInitialProductPayload(product) {
     ...buildHydrationProductNode(product),
     description: appendReviewedFitCopy(buildVerifiedProductCopy(product), product),
     seo: product.seo || { title: null, description: null },
-    descriptionHtml: hasReviewedProductCopy(product.tags, product.id) ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml || '')) : undefined,
+    // Visible product details come directly from the current Shopify record;
+    // renderReviewedProductHtml strips unsafe markup and link protocols.
+    descriptionHtml: product.descriptionHtml
+      ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml))
+      : undefined,
     media: product.media,
   };
   return toSafeInlineJson({ handle: product.handle, product: slim });
@@ -3011,13 +3015,13 @@ function generateHtml(template, route, allShopifyProducts) {
         })()
       : '';
 
-    const reviewedHtml = hasReviewedProductCopy(p.tags, p.id)
-      ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml || ''))
+    const productDescriptionHtml = p.descriptionHtml
+      ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml))
       : '';
-    const descHtml = (reviewedHtml
-      ? `<h2>Product Description</h2>${reviewedHtml}`
-      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags, p.id) ? 6000 : 2000))}</p>` : '')
-      + (reviewedHtml ? '' : renderReviewedFitCopy(p));
+    const descHtml = (productDescriptionHtml
+      ? `<h2>Product Description</h2>${productDescriptionHtml}`
+      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, 2000))}</p>` : '')
+      + renderReviewedFitCopy(p);
 
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';

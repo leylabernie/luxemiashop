@@ -531,7 +531,6 @@ const ProductDetail = () => {
                 <ProductTabs 
                   description={enrichedDescription || product.description}
                   descriptionHtml={product.descriptionHtml}
-                  productId={product.id}
                   productType={product.productType}
                   isStitchable={!madeToOrderProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
