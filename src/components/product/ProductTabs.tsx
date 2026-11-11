@@ -7,6 +7,7 @@ import { COVERED_ORDER_ISSUE_ANSWER, RETURN_POLICY_SUMMARY } from '@/lib/returnP
 interface ProductTabsProps {
   description?: string;
   descriptionHtml?: string;
+  productId?: string;
   productType?: string;
   /** Whether this product supports stitching (controls Tailoring Services tab visibility) */
   isStitchable?: boolean;
@@ -397,8 +398,8 @@ function getLabel(key: string): string {
   return labels[key] || titleCase(key);
 }
 
-export const ProductTabs = ({ description, descriptionHtml, productType, isStitchable, tags, blouseSizeValues }: ProductTabsProps) => {
-  const verifiedHtml = hasReviewedProductCopy(tags) && descriptionHtml
+export const ProductTabs = ({ description, descriptionHtml, productId, productType, isStitchable, tags, blouseSizeValues }: ProductTabsProps) => {
+  const verifiedHtml = hasReviewedProductCopy(tags, productId) && descriptionHtml
     ? DOMPurify.sanitize(descriptionHtml, { ALLOWED_TAGS: ['p', 'h2', 'h3', 'strong', 'em', 'b', 'ul', 'ol', 'li', 'br', 'table', 'tbody', 'tr', 'th', 'td', 'a'], ALLOWED_ATTR: ['href'] })
     : '';
   const showTailoringTab = isStitchable ?? isStitchableType(productType);

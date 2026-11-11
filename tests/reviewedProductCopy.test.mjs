@@ -8,6 +8,8 @@ test('copy approval remains separate from supplier verification and leaves legac
   assert.equal(hasReviewedProductCopy(['facts:source-verified']), true);
   assert.equal(hasReviewedProductCopy(['in stock', 'silk']), false);
   assert.equal(hasReviewedProductCopy(), false);
+  assert.equal(hasReviewedProductCopy([], 'gid://shopify/Product/9174664151211'), true);
+  assert.equal(hasReviewedProductCopy([], 'gid://shopify/Product/9999999999999'), false);
 });
 
 test('preserves the listing sections instead of flattening garment and size details', () => {

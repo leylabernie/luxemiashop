@@ -470,7 +470,7 @@ function buildVerifiedProductCopy(product) {
     );
   }
 
-  const sourceVerifiedDescription = hasReviewedProductCopy(product.tags)
+  const sourceVerifiedDescription = hasReviewedProductCopy(product.tags, product.id)
     ? textFromListing(sanitizeProductCopy(product.descriptionHtml || product.description))
     : '';
   if (sourceVerifiedDescription.length >= 80) {
@@ -1174,7 +1174,7 @@ function buildInitialProductPayload(product) {
     ...buildHydrationProductNode(product),
     description: appendReviewedFitCopy(buildVerifiedProductCopy(product), product),
     seo: product.seo || { title: null, description: null },
-    descriptionHtml: hasReviewedProductCopy(product.tags) ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml || '')) : undefined,
+    descriptionHtml: hasReviewedProductCopy(product.tags, product.id) ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml || '')) : undefined,
     media: product.media,
   };
   return toSafeInlineJson({ handle: product.handle, product: slim });
@@ -3011,12 +3011,12 @@ function generateHtml(template, route, allShopifyProducts) {
         })()
       : '';
 
-    const reviewedHtml = hasReviewedProductCopy(p.tags)
+    const reviewedHtml = hasReviewedProductCopy(p.tags, p.id)
       ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml || ''))
       : '';
     const descHtml = (reviewedHtml
       ? `<h2>Product Description</h2>${reviewedHtml}`
-      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags) ? 6000 : 2000))}</p>` : '')
+      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags, p.id) ? 6000 : 2000))}</p>` : '')
       + (reviewedHtml ? '' : renderReviewedFitCopy(p));
 
     const fabricDetails = productAttributes.material
@@ -3483,7 +3483,7 @@ async function main() {
         // the live Search-engine listing whenever it is present and the
         // listing carries a reviewed-copy or source-verified tag.
         const liveSeoTitle = sanitizeProductTitle((live.seo?.title || '').trim());
-        const liveSeoDescription = hasReviewedProductCopy(live.tags)
+        const liveSeoDescription = hasReviewedProductCopy(live.tags, live.id)
           ? (live.seo?.description || '')
           : '';
         if (liveSeoTitle) route.title = liveSeoTitle;
@@ -3506,7 +3506,7 @@ async function main() {
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
-    const seoDescription = hasReviewedProductCopy(p.tags) ? (p.seo?.description || '') : '';
+    const seoDescription = hasReviewedProductCopy(p.tags, p.id) ? (p.seo?.description || '') : '';
 
     // ─── USP-enhanced title generation ──────────────────────────────────────
     // When no Shopify SEO title is set, inject fabric/color USP into the title

@@ -260,7 +260,7 @@ const ProductDetail = () => {
   })();
   // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
   // copy. The field-backed generator below is the crawler and shopper source.
-  const seoDescription = hasReviewedProductCopy(product?.tags) ? product?.seo?.description || '' : '';
+  const seoDescription = hasReviewedProductCopy(product?.tags, product?.id) ? product?.seo?.description || '' : '';
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
@@ -531,6 +531,7 @@ const ProductDetail = () => {
                 <ProductTabs 
                   description={enrichedDescription || product.description}
                   descriptionHtml={product.descriptionHtml}
+                  productId={product.id}
                   productType={product.productType}
                   isStitchable={!madeToOrderProduct && hasExplicitTailoringOffer(product.productType, product.tags)}
                   tags={product.tags ?? undefined}
@@ -621,4 +622,3 @@ const ProductSkeleton = () => (
 );
 
 export default ProductDetail;
-
