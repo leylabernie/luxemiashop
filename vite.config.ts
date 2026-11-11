@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { createRequire } from "module";
 
 let componentTagger: (() => Plugin) | undefined;
 try {
@@ -35,13 +36,71 @@ function deferCssPlugin(): import('vite').Plugin {
   };
 }
 
+const nodeRequire = createRequire(import.meta.url);
+
+// Vite plugin: serve the shared src/**/*.cjs modules as ES modules in dev.
+// The dev server ships source files to the browser as native ES modules and
+// only converts CommonJS for pre-bundled dependencies, so the .cjs modules
+// shared with the Node scripts, tests and Edge rendering expose no named
+// exports there and the app never mounts. Production builds are unaffected:
+// Rollup's CommonJS plugin already converts these files, so this plugin is
+// limited to `vite` (serve).
+function devCommonJsSourcePlugin(): Plugin {
+  const srcRoot = path.resolve(__dirname, "src") + path.sep;
+  return {
+    name: "dev-commonjs-source",
+    apply: "serve",
+    enforce: "pre",
+    transform(code, id) {
+      const file = id.split("?", 1)[0];
+      if (!file.endsWith(".cjs") || !file.startsWith(srcRoot)) return null;
+
+      const imports: string[] = [];
+      const body = code.replace(
+        /\brequire\(\s*(['"])([^'"]+)\1\s*\)/g,
+        (_match, _quote, specifier: string) => {
+          const local = `__cjsRequire${imports.length}`;
+          imports.push(`import ${local} from ${JSON.stringify(specifier)};`);
+          return local;
+        },
+      );
+
+      // Read the export names from Node itself, dropping cached copies so an
+      // edited module reports its current exports.
+      for (const cached of Object.keys(nodeRequire.cache)) {
+        if (cached.startsWith(srcRoot)) delete nodeRequire.cache[cached];
+      }
+      const names = Object.keys(Object(nodeRequire(file))).filter(
+        (name) => /^[A-Za-z_$][\w$]*$/.test(name) && name !== "default",
+      );
+
+      return {
+        code: [
+          ...imports,
+          "const module = { exports: {} };",
+          // The function scope keeps the module's own top-level declarations
+          // from colliding with the named exports re-declared below.
+          "(function (module, exports) {",
+          body,
+          "})(module, module.exports);",
+          "export default module.exports;",
+          names.length ? `export const { ${names.join(", ")} } = module.exports;` : "",
+        ].join("\n"),
+        map: null,
+      };
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
   server: {
     host: isReplit ? "0.0.0.0" : "localhost",
     port: isReplit ? 5000 : 8080,
-    allowedHosts: isReplit ? true : undefined,
+    // Vite rejects requests whose Host header is not localhost unless the
+    // host is listed here; the v0 workspace preview is served from this one.
+    allowedHosts: isReplit ? true : ["workspace-s7trrlyy.v0.build"],
   },
-  plugins: [react(), mode === "development" && componentTagger?.(), deferCssPlugin()].filter(Boolean),
+  plugins: [devCommonJsSourcePlugin(), react(), mode === "development" && componentTagger?.(), deferCssPlugin()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
