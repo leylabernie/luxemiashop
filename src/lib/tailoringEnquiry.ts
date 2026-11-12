@@ -1,4 +1,4 @@
-import { isTailoringRequestValue } from './productOptionNames.ts';
+import { isTailoringRequestValue } from './productOptionNames.js';
 
 /** Catalogue facts supplied for this bounded correction; no supplier quote exists. */
 export const TAILORING_ENQUIRY_PRODUCTS = [
