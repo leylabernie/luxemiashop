@@ -1330,6 +1330,21 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         ))}
       </div>
 
+      {productHasNativeSizes && (
+        <section className="space-y-2 rounded-sm border border-border bg-muted/40 p-4 text-sm" aria-labelledby="sizing-explainer-heading">
+          <h3 id="sizing-explainer-heading" className="font-medium">How sizing and stitching work</h3>
+          {isSareeListing ? (
+            <>
+              <p>The saree is one size. The <strong>Blouse Size</strong> you choose applies to the stitched blouse only; the saree itself is not sized. Choose the <strong>Petticoat Size</strong> separately.</p>
+              <p><strong>Blouse stitching and a matching petticoat are included in the price shown</strong> for every blouse and petticoat size. No stitching charge is added at checkout.</p>
+            </>
+          ) : (
+            <p>Every size shown is stitched to our size chart. <strong>Stitching is included in the price shown</strong> for that size; no stitching charge is added at checkout.</p>
+          )}
+          <p><strong>Custom Fit:</strong> select it, then either enter your measurements in the form that appears before you add to bag, or choose to provide them after ordering. We confirm measurements before cutting. Standard sizes need no measurements.</p>
+        </section>
+      )}
+
       {tailoringEnquiryOnly && (
         <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="tailoring-enquiry-heading">
           <h3 id="tailoring-enquiry-heading" className="font-serif text-xl">Garment alteration / custom size enquiry</h3>
@@ -1459,6 +1474,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
       {measurementEligible && !metaToken && <MeasurementRequestForm
         key={measurementContext}
         value={measurementDraft}
+        variant={isCustomSizeSelected ? 'custom-fit' : 'default'}
         onChange={draft => {
           if (draft.choice !== measurementDraft.choice) { setStitchingSize(null); setBlouseServiceConfirmed(false); }
           setMeasurementState({ context: measurementContext, draft }); setMeasurementValidation(undefined);

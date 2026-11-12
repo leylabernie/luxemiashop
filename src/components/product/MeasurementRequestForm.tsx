@@ -5,15 +5,19 @@ interface Props {
   value: MeasurementDraft;
   onChange: (draft: MeasurementDraft) => void;
   error?: string;
+  variant?: 'custom-fit' | 'default';
 }
 
 /** Controlled by the selected product/variant/service context in the purchase flow. */
-export function MeasurementRequestForm({ value, onChange, error }: Props) {
+export function MeasurementRequestForm({ value, onChange, error, variant = 'default' }: Props) {
   const id = useId();
   const update = (patch: Partial<MeasurementDraft>) => onChange({ ...value, ...patch, acknowledged: false });
+  const isCustomFit = variant === 'custom-fit';
   return <section className="space-y-3 rounded-lg border p-4" aria-labelledby={`${id}-title`}>
-    <h3 id={`${id}-title`} className="font-medium">Optional measurement details</h3>
-    <p className="text-sm">Share details now or provide them after ordering. LuxeMia must review the measurements and alteration scope before work begins; these details do not confirm fit or availability. Changing the product, size or service clears these unsaved details.</p>
+    <h3 id={`${id}-title`} className="font-medium">{isCustomFit ? 'Your Custom Fit measurements' : 'Optional measurement details'}</h3>
+    <p className="text-sm">{isCustomFit
+      ? 'Custom Fit is stitched to the measurements you provide. Enter them here for review before you add to bag, or choose to provide them after ordering. LuxeMia confirms measurements before cutting; these details do not confirm fit on their own. Changing the product, size or service clears these unsaved details.'
+      : 'Share details now or provide them after ordering. LuxeMia must review the measurements and alteration scope before work begins; these details do not confirm fit or availability. Changing the product, size or service clears these unsaved details.'}</p>
     <label className="block text-sm">When would you like to provide details?
       <select className="mt-1 block w-full rounded border p-2" value={value.choice} onChange={event => onChange({ ...emptyMeasurementDraft(), choice: event.target.value as MeasurementDraft['choice'] })}>
         <option value="later">Provide after ordering</option>
