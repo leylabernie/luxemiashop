@@ -6,11 +6,14 @@ function isTailoringRequestValue(value?: string | null): boolean {
 }
 
 /** Catalogue facts supplied for this bounded correction; no supplier quote exists. */
-export const TAILORING_ENQUIRY_PRODUCTS = [
-  { handle: 'orange-bead-embroidered-chinon-suit-dupatta', baseVariantId: 'gid://shopify/ProductVariant/48399143141547', customVariantId: 'gid://shopify/ProductVariant/48399143174315' },
-  { handle: 'black-bead-embroidered-chinon-suit-dupatta', baseVariantId: 'gid://shopify/ProductVariant/48399143338155', customVariantId: 'gid://shopify/ProductVariant/48399143370923' },
-  { handle: 'teal-bead-embroidered-chinon-suit-dupatta', baseVariantId: 'gid://shopify/ProductVariant/48399143436459', customVariantId: 'gid://shopify/ProductVariant/48399143469227' },
-] as const;
+export type TailoringEnquiryProduct = {
+  handle: string;
+  baseVariantId: string;
+  customVariantId: string;
+};
+// The three bead-embroidered Chinon suits now offer standard sizes 32–46 plus a
+// priced Custom Fit option, so they no longer need the enquiry-only override.
+export const TAILORING_ENQUIRY_PRODUCTS: ReadonlyArray<TailoringEnquiryProduct> = [];
 export const TAILORING_ENQUIRY_NOTICE =
   'Enquiry only: written confirmation of measurements, alteration feasibility, cost and timing is required before ordering tailoring for this style. A generic service price or customer acknowledgment is not approval.';
 export const TAILORING_CATALOG_SIZE_NOTICE =
