@@ -46,7 +46,9 @@ test('real cart checkout never injects an assumed discount, including repeated c
       for (let attempt=0;attempt<2;attempt++) {
         assert.equal(await store.getState().createCheckout(),'https://shop.example/checkout');
         const args = globalThis.checkoutCalls.at(-1);
-        assert.equal(args.length,1,'Checkout receives lines only, without guessed code');
+        assert.equal(args[0].length,2,'Checkout receives the selected lines only');
+        assert.equal(args[1] ?? null, null, 'no discount code is guessed');
+        if (args[2]) for (const line of [garment,service]) assert.deepEqual(args[2][line.variantId], line.price);
         assert.deepEqual(args[0], [garment,service].map(item=>({variantId:item.variantId,quantity:item.quantity,handle:item.product.node.handle,customAttributes:item.customAttributes})));
         assert.equal(store.getState().isLoading,false);
         assert.equal(store.getState().items.length,2);
