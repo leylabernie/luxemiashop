@@ -1335,8 +1335,8 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
           <h3 id="sizing-explainer-heading" className="font-medium">How sizing and stitching work</h3>
           {isSareeListing ? (
             <>
-              <p>The saree is one size. The <strong>Blouse Size</strong> you choose applies to the stitched blouse only; the saree itself is not sized. Choose the <strong>Petticoat Size</strong> separately.</p>
-              <p><strong>Blouse stitching and a matching petticoat are included in the price shown</strong> for every blouse and petticoat size. No stitching charge is added at checkout.</p>
+              <p>The saree is one size and comes with an <strong>unstitched blouse piece</strong>. The <strong>Blouse Size</strong> you choose is the size the blouse will be stitched to if you add blouse stitching; the saree itself is not sized. Choose the <strong>Petticoat Size</strong> separately if you are adding a stitched petticoat.</p>
+              <p><strong>Blouse stitching is not included in the saree price.</strong> Stitching and any petticoat are separate services; add them from the options on this page or confirm the charge with LuxeMia before ordering.</p>
             </>
           ) : (
             <p>Every size shown is stitched to our size chart. <strong>Stitching is included in the price shown</strong> for that size; no stitching charge is added at checkout.</p>
