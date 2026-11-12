@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect, useCallback, forwardRef, useImperativeHandle, useMemo, memo } from 'react';
 import { motion } from 'framer-motion';
 import { Heart, Plus, Eye } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import QuickViewModal from '@/components/ui/QuickViewModal';
@@ -14,6 +14,7 @@ import { cn } from '@/lib/utils';
 import { getShipByLabel } from '@/lib/shipBy';
 import { isMadeToOrderProduct } from '@/lib/customizableProducts';
 import { hasNativeStitchingChoices } from '@/lib/serviceAddOns';
+import { getDirectCardVariant, requiresProductPageSelection } from '@/lib/purchaseOptions';
 
 interface ProductCardProps {
   product: ShopifyProduct;
@@ -106,6 +107,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   useImperativeHandle(ref, () => cardRef.current!);
   
   
+  const navigate = useNavigate();
   const addItem = useCartStore((state) => state.addItem);
   const { addItem: addToWishlist, removeItem: removeFromWishlist, isInWishlist } = useWishlistStore();
 
@@ -191,11 +193,11 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const handleQuickAdd = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (product.node.variants.edges.length > 1) {
-      setIsQuickViewOpen(true);
+    if (requiresProductPageSelection(product.node)) {
+      navigate(`/product/${product.node.handle}`);
       return;
     }
-    const firstVariant = product.node.variants.edges.find((edge) => edge.node.availableForSale)?.node || product.node.variants.edges[0]?.node;
+    const firstVariant = getDirectCardVariant(product.node);
     if (!firstVariant) return;
 
     addItem({
@@ -258,7 +260,7 @@ export const ProductCard = memo(forwardRef<HTMLDivElement, ProductCardProps>(({
   const isMadeToOrder = isMadeToOrderProduct(product.node.handle, product.node.tags);
   const hasStitchingChoices = hasNativeStitchingChoices(product.node);
   const isAvailable = product.node.variants.edges.some((edge) => edge.node.availableForSale !== false);
-  const requiresOptionSelection = product.node.variants.edges.length > 1;
+  const requiresOptionSelection = requiresProductPageSelection(product.node);
   const shipByLabel = hasStitchingChoices ? null : getShipByLabel(product.node);
 
   // "New" badge — products added within the last 30 days

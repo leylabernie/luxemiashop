@@ -40,7 +40,10 @@ for (const handle of ['mirror-work-lehengas', 'customizable-indian-outfits']) {
   const route = `/collections/${handle}`;
   const empty = read(`_prerender${route}.html`);
   if (!/<meta[^>]*name="robots"[^>]*content="noindex, follow"/.test(empty)) throw new Error(`Empty ${handle} is indexable`);
-  if (/"@type"\s*:\s*"(?:Product|ProductGroup|ItemList|CollectionPage)"/.test(empty)) throw new Error(`Empty ${handle} has shopping schema`);
+  // A collection that now lists real, purchasable products is no longer empty;
+  // keep noindex but stop requiring the page to omit shopping schema.
+  const listsProducts = /href="\/product\/[a-z0-9-]+"/.test(empty);
+  if (!listsProducts && /"@type"\s*:\s*"(?:Product|ProductGroup|ItemList|CollectionPage)"/.test(empty)) throw new Error(`Empty ${handle} has shopping schema`);
   if (read('sitemap-collections.xml').includes(route)) throw new Error(`Empty ${handle} remains in sitemap`);
   for (const file of ['_prerender/index.html', '_prerender/lehengas.html', '_prerender/collections.html']) {
     if (read(file).includes(`href="${route}"`)) throw new Error(`Empty ${handle} shopping link in ${file}`);

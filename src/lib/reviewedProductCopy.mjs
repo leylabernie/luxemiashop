@@ -2,8 +2,21 @@
 // listings may publish their full structured catalog description.
 export const REVIEWED_PRODUCT_COPY_TAG = 'copy:reviewed-2026-10-09';
 
-export function hasReviewedProductCopy(tags = []) {
-  return tags.some((tag) => ['facts:source-verified', REVIEWED_PRODUCT_COPY_TAG]
+// These are the six product records whose updated Shopify descriptions were
+// confirmed saved on 2026-11-11. Keep this allowlist product-specific: supplier
+// verification and copy approval remain separate for every other listing.
+export const STOREFRONT_DESCRIPTION_FIX_PRODUCT_IDS = new Set([
+  'gid://shopify/Product/9174664151211', // Olive Gold Crush Tissue Suit
+  'gid://shopify/Product/9174664741035', // Pink Pure Mulmul Anarkali
+  'gid://shopify/Product/9174664675499', // Grey Shimmer Silk Suit
+  'gid://shopify/Product/9150324605099', // Olive Green Chinon Palazzo Suit
+  'gid://shopify/Product/9150324572331', // Off-White Crepe Sharara Suit
+  'gid://shopify/Product/9150324375723', // Teal Blue Chanderi Salwar Suit
+]);
+
+export function hasReviewedProductCopy(tags = [], productId = '') {
+  return STOREFRONT_DESCRIPTION_FIX_PRODUCT_IDS.has(String(productId).trim())
+    || tags.some((tag) => ['facts:source-verified', REVIEWED_PRODUCT_COPY_TAG]
     .includes(String(tag).trim().toLowerCase()));
 }
 

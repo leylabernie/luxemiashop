@@ -69,7 +69,7 @@ export const SHIPPING_POLICY_SUMMARY =
 export const SHIPPING_ORIGIN_NOTICE = 'Orders ship from India.';
 
 export const SHIPPING_PROCESSING_NOTICE =
-  'Items are supplied semi-stitched or ready stitched as described on each listing; any explicitly listed fabric-only or unstitched blouse pieces remain as described. Without alterations, estimated dispatch is within 3–4 business days. Requested alterations or finishing add 3 business days once, after complete measurements and service details are confirmed.';
+  'Each listing states the construction actually supplied — fully stitched, semi-stitched, or unstitched fabric, including unstitched lehenga, blouse or dupatta pieces. Where a listing is fully unstitched, garment assembly and any tailoring are not included; request a quote and allow processing time. The individual listing is the source of truth for construction and included pieces. Without alterations, estimated dispatch is within 3–4 business days. Requested alterations or finishing add 3 business days once, after complete measurements and service details are confirmed.';
 
 export { alterationShippingTimingNotice, BASE_SHIPPING_TIMING_NOTICE, ALTERATION_TIMING_NOTICE, SHIPPING_TIMING_NOTICE, productShippingTimingNotice } from './shippingTiming.cjs';
 

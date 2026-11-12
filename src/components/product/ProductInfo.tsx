@@ -26,11 +26,15 @@ import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel, getProductShipsWithin } from '@/lib/shipBy';
 import { getCustomizableProduct, isMadeToOrderProduct } from '@/lib/customizableProducts';
 import {
-  getCustomerFacingProductOptionName,
+  getProductOptionDisplayGroups,
+  getActualProductSizeValues,
+  NO_FINISHED_GARMENT_SIZE_NOTICE,
+  SIZING_GUIDANCE_LABEL,
   hasNativeProductSizeOption,
   isProductSizeOptionName,
   shouldRenderShopifyProductOption,
 } from '@/lib/productOptionNames';
+import { requiresTailoringEnquiry, isEnquiryOnlyVariant, TAILORING_ENQUIRY_NOTICE, TAILORING_ENQUIRY_CONTACT_PATH } from '@/lib/tailoringEnquiry';
 import {
   isVariantOptionValueAvailable,
   resolveAvailableVariantForOption,
@@ -52,7 +56,6 @@ import {
   selectedEligibleServiceAddOns,
   SERVICE_ADD_ON_PRODUCT_HANDLE,
   SERVICE_ADD_ONS,
-  serviceAddOnTotal,
   isBanarasiSareeServiceProduct,
   requiresBlouseServiceConfirmation,
   isBlouseServiceSelectionConfirmed,
@@ -314,6 +317,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   const metaRequestedLine = metaContext?.request.lines.find(line => line.contentId === metaContentId);
   const customizableProduct = getCustomizableProduct(product.handle);
   const madeToOrderProduct = isMadeToOrderProduct(product.handle, product.tags);
+  const tailoringEnquiryOnly = requiresTailoringEnquiry(product.handle);
   const hasNativeFullStitching = hasNativeFullStitchingOptions(product);
   const hasFixedStitchedLehenga = hasFixedStitchedLehengaOptions(product);
   const colorways = getColorwaysForHandle(product.handle);
@@ -330,8 +334,8 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   const isReadyMadeOnly = product.tags?.some((tag) =>
     /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
   ) ?? false;
-  const isStitchable = !hasNativeFullStitching && !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
-  const isMenswear = !hasNativeFullStitching && !madeToOrderProduct && isMenswearProduct(product.productType, product.tags);
+  const isStitchable = !hasNativeFullStitching && !tailoringEnquiryOnly && !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
+  const isMenswear = !hasNativeFullStitching && !tailoringEnquiryOnly && !madeToOrderProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !hasNativeFullStitching && !madeToOrderProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
@@ -441,13 +445,16 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
     for (const code of eligibleServiceAddOnCodes) {
       // Exact hidden product + shared billing ID accepts old/new checkout copy.
       const variant = serviceAddOnProduct.variants.edges.find(({ node }) =>
-        node.availableForSale && matchesServiceAddOnVariant(serviceAddOnProduct.handle, code, node),
+        node.availableForSale && matchesServiceAddOnVariant(serviceAddOnProduct.handle, code, node)
+        && node.price.currencyCode === product.priceRange.minVariantPrice.currencyCode
+        && Number.isFinite(Number(node.price.amount)) && Number(node.price.amount) > 0,
       )?.node;
       if (variant) variants.set(code, variant);
     }
     return variants;
-  }, [eligibleServiceAddOnCodes, serviceAddOnProduct]);
-  const availableServiceAddOnCodes = eligibleServiceAddOnCodes.filter((code) => serviceVariants.has(code));
+  }, [eligibleServiceAddOnCodes, serviceAddOnProduct, product.priceRange.minVariantPrice.currencyCode]);
+  const availableServiceAddOnCodes = eligibleServiceAddOnCodes.filter((code) => serviceVariants.has(code)
+    && !(tailoringEnquiryOnly && code === 'garment-alteration'));
   const selectedAvailableServiceAddOnCodes = selectedEligibleServiceAddOns(
     product, selectedServiceAddOnCodes, availableServiceAddOnCodes,
   );
@@ -476,6 +483,9 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   ) ?? (
     product.variants.edges.length === 1 ? product.variants.edges[0] : undefined
   );
+  const selectionRequiresEnquiry = isEnquiryOnlyVariant(product.handle, purchasableVariant?.node.id,
+    purchasableVariant?.node.selectedOptions ?? Object.entries(selectedOptions).map(([name, value]) => ({ name, value })))
+    || (tailoringEnquiryOnly && selectedServiceAddOnCodes.includes('garment-alteration'));
 
   // Find the best-matching variant for price display even when not all options are selected.
   const bestMatchVariant = useMemo(() => {
@@ -517,8 +527,8 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
 
   const basePrice = bestMatchVariant?.node.price || product.priceRange.minVariantPrice;
   const selectedServiceAddOnCharge = useMemo(
-    () => serviceAddOnTotal(selectedAvailableServiceAddOnCodes),
-    [selectedAvailableServiceAddOnCodes],
+    () => selectedAvailableServiceAddOnCodes.reduce((total, code) => total + Number(serviceVariants.get(code)?.price.amount ?? 0), 0),
+    [selectedAvailableServiceAddOnCodes, serviceVariants],
   );
   const currentPrice = useMemo(() => {
     const baseAmount = parseFloat(basePrice.amount);
@@ -574,15 +584,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   const isUnstitchedDelivery = isUnstitchedDeliverySelection(
     product, purchasableVariant?.node.selectedOptions ?? [],
   );
-  const listedSizeOptions = useMemo(() => {
-    const sizeOption = product.options.find((option) => isProductSizeOptionName(option.name));
-    if (!sizeOption) return null;
-
-    const values = sizeOption.values.filter((value) =>
-      value.trim() && value.toLowerCase() !== 'default title',
-    );
-    return values.length > 0 ? values.join(', ') : null;
-  }, [product.options]);
+  const listedSizeOptions = useMemo(() => getActualProductSizeValues(product.options).join(', ') || null, [product.options]);
 
   // A purchasable Custom size must be explicitly acknowledged before it is
   // carried into Shopify checkout. This preserves the shopper's selected
@@ -603,6 +605,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
+    if (tailoringEnquiryOnly) return false;
     // The native matrix supplies standard sizes and the existing Custom Fit
     // acknowledgment. It does not promise neckline or other design changes.
     if (hasNativeFullStitching) return false;
@@ -627,7 +630,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
       selectionRequiresSeparateMeasurements(key, val)
       || (!productHasNativeSizes && /\bmade[-\s]+to[-\s]+fit\b/i.test(val)),
     );
-  }, [hasNativeFullStitching, productHasNativeSizes, selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
+  }, [tailoringEnquiryOnly, hasNativeFullStitching, productHasNativeSizes, selectedOptions, selectedStitchingType, isStitchable, isReadyMadeOnly, product.variants.edges.length]);
 
   // Whether blouse neckline selector should show
   const showNeckline = useMemo(() => {
@@ -664,7 +667,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
 
   // Only existing measurement-based selections expose this optional request.
   // Service-only measurements stay on that removable service line, not the garment.
-  const nativeMeasurementRequest = Boolean(isCustomSizeSelected || customizableProduct || madeToOrderProduct
+  const nativeMeasurementRequest = !tailoringEnquiryOnly && Boolean(isCustomSizeSelected || customizableProduct || madeToOrderProduct
     || (needsStitchingSize && !productHasNativeSizes) || (isMenswear && !productHasNativeSizes)
     || Object.entries(selectedOptions).some(([name, value]) =>
       (isProductSizeOptionName(name) || /^(?:blouse|alteration|stitching|tailoring)$/i.test(name.trim()))
@@ -749,6 +752,10 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   };
 
   const handleAddToCart = async () => {
+    if (selectionRequiresEnquiry) {
+      toast.error(TAILORING_ENQUIRY_NOTICE);
+      return;
+    }
     if (isMensSharedStockActive(rawProduct) && selectedServiceAddOnCodes.includes('garment-alteration')) {
       const alteration = serviceVariants.get('garment-alteration');
       if (!alteration || alteration.id !== ALTERATION_SERVICE_ID || alteration.requiresComponents !== false
@@ -814,7 +821,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
       product, selectedAvailableServiceAddOnCodes, blouseServiceConfirmed,
     ).map(attribute => measurementNow && attribute.key === 'Blouse Measurements'
       ? { ...attribute, value: 'Customer supplied measurements for review; confirm before stitching' } : attribute);
-    const configurationReference = measurementNow || (isMensSharedStockActive(rawProduct) && selectedAvailableServiceAddOnCodes.includes('garment-alteration'))
+    const configurationReference = measurementNow || selectedAvailableServiceAddOnCodes.length > 0
       ? crypto.randomUUID() : null;
     // Optional blouse-service confirmations belong to the removable service,
     // for both NOW and LATER. Keep genuine native tailoring on the garment.
@@ -915,6 +922,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
           selectedOptions: serviceVariant.selectedOptions,
           customAttributes: [
             { key: 'Applies To', value: product.title },
+            { key: 'Applies To Handle', value: product.handle },
             ...(configurationReference ? [{ key: 'Configuration reference', value: configurationReference }] : []),
             ...(measurementServiceCodes.includes(code) ? measurementAttributes(measurementDraft) : []),
             ...(selectedServicesRequireProcessing([code])
@@ -1267,21 +1275,23 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
             isCustomizable: Boolean(customizableProduct),
             isStitchable,
           }))
+          .flatMap(getProductOptionDisplayGroups)
           .map((option) => (
-          <div key={option.name} className="space-y-3">
+          <div key={`${option.name}:${option.kind}`} className={option.kind === 'tailoring-request' ? 'space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4' : 'space-y-3'}>
             <div className="flex items-center justify-between">
               <label className="text-sm font-medium uppercase tracking-wide">
-                {getCustomerFacingProductOptionName(option)}
-                {selectedOptions[option.name] && (
+                {option.label}
+                {option.values.includes(selectedOptions[option.name]) && (
                   <span className="font-normal text-muted-foreground ml-2">
                     — {selectedOptions[option.name]}
                   </span>
                 )}
               </label>
-              {getCustomerFacingProductOptionName(option) === 'Size' && (
+              {option.kind === 'size' && (
                 <SizeGuideModal category={product.productType} />
               )}
             </div>
+            {option.kind === 'tailoring-request' && <p className="text-sm text-muted-foreground">A tailoring request is not an additional supplied garment size.</p>}
             <div className="flex flex-wrap gap-2">
               {option.values.map((value) => {
                 const optionValueAvailable = isVariantOptionValueAvailable(
@@ -1319,6 +1329,16 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
           </div>
         ))}
       </div>
+
+      {tailoringEnquiryOnly && (
+        <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="tailoring-enquiry-heading">
+          <h3 id="tailoring-enquiry-heading" className="font-serif text-xl">Garment alteration / custom size enquiry</h3>
+          <p className="text-sm text-muted-foreground">{TAILORING_ENQUIRY_NOTICE}</p>
+          <p className="text-sm">The garment with listed catalog size label 32 can be purchased without a tailoring request. This label is not a supplier-verified measurement, inches or a US size. No additional garment sizes, measurements or alteration allowance are confirmed here.</p>
+          <Link to={TAILORING_ENQUIRY_CONTACT_PATH} className="inline-flex rounded-sm border border-primary px-4 py-2 text-sm font-medium text-primary">Request written tailoring confirmation</Link>
+          {selectionRequiresEnquiry && <p role="status" className="text-sm font-medium">Quote required — this request cannot be added to bag.</p>}
+        </section>
+      )}
 
       {availableServiceAddOnCodes.length > 0 && (
         <section className="space-y-3 rounded-sm border border-primary/25 bg-primary/5 p-4" aria-labelledby="listing-service-add-ons-heading">
@@ -1369,7 +1389,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
                       <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{service.description}</span>
                     </span>
                   </span>
-                  <span className="shrink-0 text-sm font-semibold text-foreground">+${service.price.toFixed(2)}</span>
+                  <span className="shrink-0 text-sm font-semibold text-foreground">+{formatPrice(serviceVariants.get(code)!.price.amount, serviceVariants.get(code)!.price.currencyCode)}</span>
                 </button>
               );
             })}
@@ -1401,7 +1421,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         </section>
       )}
 
-      {isCustomSizeSelected && !customizableProduct && (
+      {isCustomSizeSelected && !customizableProduct && !tailoringEnquiryOnly && (
         <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Custom size selected</p>
@@ -1536,7 +1556,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         <motion.div className="flex-1" whileTap={{ scale: 0.98 }}>
           <Button
             onClick={handleAddToCart}
-            disabled={!isAvailable || isAdding}
+            disabled={!isAvailable || isAdding || selectionRequiresEnquiry}
             className="w-full h-14 text-base relative overflow-hidden group"
             variant="luxury"
           >
@@ -1547,7 +1567,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
               className="flex items-center gap-2"
             >
               <ShoppingBag className="h-5 w-5" />
-              {isAvailable ? 'Add to Bag' : hasAvailableVariant ? 'Select Options' : 'Out of Stock'}
+              {selectionRequiresEnquiry ? 'Quote Required' : isAvailable ? 'Add to Bag' : hasAvailableVariant ? 'Select Options' : 'Out of Stock'}
             </motion.span>
             <motion.span
               initial={false}
@@ -1587,7 +1607,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
 
       <nav aria-label="Purchase help" className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
         <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
-          Size guide
+          {SIZING_GUIDANCE_LABEL}
         </Link>
         <Link to="/shipping" className="font-medium text-primary underline underline-offset-4">
           Shipping details
@@ -1625,16 +1645,20 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
             {productSpecs.includedPieces || 'See the product description and images. Contact LuxeMia before ordering if the set contents are not stated.'}
           </dd>
 
-          <dt className="font-medium text-foreground">Sizing & Chart</dt>
+          <dt className="font-medium text-foreground">Sizing & Measurements</dt>
           <dd className="text-muted-foreground">
-            {currentSelectionIsMadeToOrder
+            {!listedSizeOptions
+              ? `${NO_FINISHED_GARMENT_SIZE_NOTICE} `
+              : tailoringEnquiryOnly
+              ? `Listed catalog size label: ${listedSizeOptions}. Not supplier-verified measurements or a US size. Tailoring requests require written confirmation before ordering. `
+              : currentSelectionIsMadeToOrder
               ? 'Alteration measurements must be confirmed with LuxeMia. '
-              : listedSizeOptions ? `Listed options: ${listedSizeOptions}. ` : 'Available sizing varies by product. '}
+              : `Listed garment sizes: ${listedSizeOptions}. `}
             {hasStitchedBlouse ? (
               <span>The size applies to the stitched blouse. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance; these labels do not specify bra cup sizes.</span>
             ) : (
               <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
-                View the sizing chart
+                {SIZING_GUIDANCE_LABEL}
               </Link>
             )}
           </dd>

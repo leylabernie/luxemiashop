@@ -14,7 +14,7 @@ test('merchandising build rewrite preserves approved alteration copy and is idem
     // Simulate obsolete copy restored by earlier build migrations. The finalizer
     // must repair it, not merely pass when given already-correct source.
     const readyPath = path.join(fixture, 'src/pages/ReadyToShip.tsx');
-    fs.writeFileSync(readyPath, read('src/pages/ReadyToShip.tsx').replace(/Items are supplied semi-stitched or ready stitched[^<\n]*/, 'Every purchasable LuxeMia catalog item is Ready to Ship unless explicitly made to order.'));
+    fs.writeFileSync(readyPath, read('src/pages/ReadyToShip.tsx').replace(/Ready to Ship means the style is stocked[^<\n]*/, 'Every purchasable LuxeMia catalog item is Ready to Ship unless explicitly made to order.'));
     const cardPath = path.join(fixture, 'src/components/ui/ProductCard.tsx');
     fs.writeFileSync(cardPath, read('src/components/ui/ProductCard.tsx').replace("Fit confirmation required' : 'Available to order'", "Made to Order' : 'Ready to Ship'"));
 
@@ -24,7 +24,7 @@ test('merchandising build rewrite preserves approved alteration copy and is idem
       execFileSync(process.execPath, ['scripts/finalize-competitor-merchandising.cjs'], { cwd: fixture, stdio: 'pipe' });
       for (const relative of ['src/pages/ReadyToShip.tsx', 'scripts/prerender.js']) {
         const source = read(relative);
-        assert.match(source, /Items are supplied semi-stitched or ready stitched/);
+        assert.match(source, /Ready to Ship means the style is stocked/);
         assert.match(source, /12–18 business days total/);
         assert.match(source, /15–21 business days total/);
         assert.doesNotMatch(source, /Every purchasable LuxeMia catalog item is Ready to Ship|Fully custom products are shown separately as Made to Order/);
@@ -34,7 +34,7 @@ test('merchandising build rewrite preserves approved alteration copy and is idem
       assert.match(read('src/pages/ProductDetail.tsx'), /productShippingTimingNotice\(productShipsWithinDays\)/);
       assert.match(read('src/components/ui/ProductCard.tsx'), /Fit confirmation required' : 'Available to order'/);
       for (const relative of ['scripts/validate-trust-source-of-truth.cjs', 'scripts/validate-built-trust.cjs']) {
-        assert.match(read(relative), /Items are supplied semi-stitched or ready stitched/);
+        assert.match(read(relative), /Ready to Ship means the style is stocked/);
         assert.doesNotMatch(read(relative), /Every purchasable LuxeMia catalog item is Ready to Ship/);
       }
       const current = Object.fromEntries(surfaces.map(relative => [relative, read(relative)]));

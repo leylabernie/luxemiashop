@@ -25,6 +25,7 @@ function collectionFilter() {
   const end = source.indexOf('function filterProductsForCollectionRoute(', start);
   assert.ok(start >= 0 && end > start);
   const context = vm.createContext({
+      crypto: require('node:crypto').webcrypto,
     MAX_COLLECTION_PRODUCTS: 250,
     EXCLUDED_TITLE_KEYWORDS: /this-fixture-is-excluded/i,
   });
@@ -205,9 +206,11 @@ test('real add-to-cart handler blocks unchecked blouse, permits fabric-only, and
       hasNativeFullStitching: false, customAlteration: '', quantity: 1,
       serviceAddOnProduct: { handle: api.SERVICE_ADD_ON_PRODUCT_HANDLE }, serviceVariants,
       toast: { error(message) { errors.push(message); } },
+      tailoringEnquiryOnly: false, selectionRequiresEnquiry: false,
       setIsAdding() {}, setShowSizeValidation() {}, openCart() {},
       setTimeout(callback) { callback(); }, addItem(line) { lines.push(line); },
     });
+    context.crypto ??= require('node:crypto').webcrypto;
     vm.runInContext(code, context);
     await context.addToCart();
     return { lines, errors, configured, destinations };

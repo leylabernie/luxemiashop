@@ -94,7 +94,8 @@ test('all six preserve exact reviewed fit in static HTML, initial React details 
       assert(!buildVerifiedProductCopy(p).includes(text), 'global feed/SEO copy builder is unchanged');
     }
     for (const output of [staticHtml, dynamicHtml, dynamicPlainHtml, JSON.stringify(initial)]) assert(!output.includes('PRIVATE_REVIEW_SENTINEL'));
-    assert.equal(initial.descriptionHtml, undefined, 'do not approve entire HTML body');
+    assert.match(initial.descriptionHtml, /Design details/, 'current Shopify HTML is retained for visible product details');
+    assert(!initial.descriptionHtml.includes('PRIVATE_REVIEW_SENTINEL'));
     assert.equal(JSON.stringify(p), original, 'rendering must never mutate the source record');
   }
 });
@@ -110,14 +111,14 @@ test('source drift fails closed; body-only changes leave metadata/schema/other p
     assert(!staticChanged.includes('data-reviewed-fit-copy'));
     const head = html => html.split('</head>')[0].replace(/<script>window\.__INITIAL_PRODUCT_DATA__[\s\S]*?<\/script>/g, '');
     assert.equal(head(staticReviewed), head(staticChanged), 'schema, meta and canonical remain unchanged');
-    assert.equal(removeReviewedSection(generateProductHtml(p, 'https://luxemia.shop/product/fixture')),
-      generateProductHtml(changed, 'https://luxemia.shop/product/fixture'), 'dynamic renderer only gains reviewed visible section');
+    assert.notEqual(generateProductHtml(p, 'https://luxemia.shop/product/fixture'),
+      generateProductHtml(changed, 'https://luxemia.shop/product/fixture'), 'dynamic renderer reflects current Shopify description HTML');
     const initial = JSON.parse(buildInitialProductPayload(changed)).product;
-    assert(!initial.description.includes('Available in standard sizes'));
+    assert(initial.descriptionHtml.includes('Changed standard sizes'));
   }
   const unrelated = { ...product(fixtures[0]), id: 'gid://shopify/Product/999' };
   assert(!((await render(unrelated)).includes('data-reviewed-fit-copy')));
-  assert(!JSON.parse(buildInitialProductPayload(unrelated)).product.description.includes('Available in standard sizes'));
+  assert.match(JSON.parse(buildInitialProductPayload(unrelated)).product.descriptionHtml, /Design details/);
 });
 
 test('long body and hostile appended content cannot truncate or inject into the reviewed fit section', async () => {
@@ -128,6 +129,6 @@ test('long body and hostile appended content cannot truncate or inject into the 
   assert(html.includes('data-reviewed-fit-copy="2026-10-26"'));
   assert(html.includes('Choose Made to Fit (+$10) for a personalized fit'));
   assert(!html.includes('BAD_SCRIPT_SENTINEL'));
-  assert(!html.includes('UNREVIEWED_BODY_SENTINEL'));
+  assert(html.includes('UNREVIEWED_BODY_SENTINEL'));
   assert(!renderReviewedFitCopy(p).includes('<script'));
 });

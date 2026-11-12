@@ -19,8 +19,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
 import catalogSource from './storefront-catalog.cjs';
-import merchantSizeOptions from '../merchant-feed-size.cjs';
-const { getSizeOption } = merchantSizeOptions;
 import reviewedLehengaCatalog from '../src/lib/reviewedLehengaCollections.cjs';
 const { reviewedLehengaCollections, isReviewedLehengaCollection, filterReviewedLehengaProducts } = reviewedLehengaCatalog;
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
@@ -90,23 +88,6 @@ const RETIRED_PRODUCT_HANDLES = new Set(
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
 ]);
-const SIZE_OPTION_NAMES = new Set([
-  'size',
-  'standard size',
-  'blouse size',
-  'bust size',
-  'chest size',
-  'stitching size',
-]);
-
-
-function normalizeOptionName(value) {
-  return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
-}
-
-function isSizeOptionName(value) {
-  return SIZE_OPTION_NAMES.has(normalizeOptionName(value));
-}
 
 function getCustomProductDescription(title) {
   return `${title}. Fit or color changes are requests requiring LuxeMia confirmation; no custom color or new construction is promised. ${ALTERATION_TIMING_NOTICE} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
@@ -174,6 +155,8 @@ const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NO
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY, SUPPORT_CLAIM_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { HOMEPAGE_HEADLINE, HOMEPAGE_VALUE_PROPOSITION, HOMEPAGE_TRUST_ITEMS, HOMEPAGE_WEDDING_COPY, HOMEPAGE_WEDDING_LINK } = await loadTsModule('src/lib/homepageValueProposition.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
+const { getActualProductSizeValues, NO_FINISHED_GARMENT_SIZE_NOTICE, SIZING_GUIDANCE_LABEL } = await loadTsModule('src/lib/productOptionNames.ts');
+const { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_SIZE_NOTICE } = await loadTsModule('src/lib/tailoringEnquiry.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
@@ -395,10 +378,7 @@ function getListedProductAttributes(product) {
   const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
   const listedMaterial = getLabeledListingFact(product?.descriptionHtml || product?.description, ['Fabric', 'Material']);
   const listedWork = getLabeledListingFact(product?.descriptionHtml || product?.description, ['Work', 'Embroidery', 'Embellishment']);
-  const sizeValues = product?.options
-    ?.find(option => isSizeOptionName(option?.name))
-    ?.values
-    ?.filter(value => value && value.toLowerCase() !== 'default title') || [];
+  const sizeValues = getActualProductSizeValues(product?.options || []);
   const includedPiecePrefixes = [
     'included:',
     'included pieces:',
@@ -470,7 +450,7 @@ function buildVerifiedProductCopy(product) {
     );
   }
 
-  const sourceVerifiedDescription = hasReviewedProductCopy(product.tags)
+  const sourceVerifiedDescription = hasReviewedProductCopy(product.tags, product.id)
     ? textFromListing(sanitizeProductCopy(product.descriptionHtml || product.description))
     : '';
   if (sourceVerifiedDescription.length >= 80) {
@@ -1174,7 +1154,11 @@ function buildInitialProductPayload(product) {
     ...buildHydrationProductNode(product),
     description: appendReviewedFitCopy(buildVerifiedProductCopy(product), product),
     seo: product.seo || { title: null, description: null },
-    descriptionHtml: hasReviewedProductCopy(product.tags) ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml || '')) : undefined,
+    // Visible product details come directly from the current Shopify record;
+    // renderReviewedProductHtml strips unsafe markup and link protocols.
+    descriptionHtml: product.descriptionHtml
+      ? renderReviewedProductHtml(sanitizeProductCopy(product.descriptionHtml))
+      : undefined,
     media: product.media,
   };
   return toSafeInlineJson({ handle: product.handle, product: slim });
@@ -1683,7 +1667,7 @@ const routes = [
     content: `
       <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter for stocked non-custom products, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
       <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
-      <p>The Ready to Ship availability filter includes purchasable products unless Shopify identifies them as Made to Order or Made to Measure. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
+      <p>The Ready to Ship availability filter shows stocked, purchasable styles unless Shopify identifies them as Made to Order or Made to Measure. It reflects availability only: it does not promise same-day dispatch, and it does not mean the outfit arrives finished and wearable. Stitching status is stated on each listing, and dispatch timing is shown separately. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
       <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
       <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
       <h2>Explore Lehenga and Occasion Collections</h2>
@@ -2227,7 +2211,7 @@ const routes = [
     description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
-      <p>Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
+      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
       <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>
@@ -2825,7 +2809,7 @@ function generateHtml(template, route, allShopifyProducts) {
       const variantId = variant?.id?.split('/').pop() || '';
       const selectedOptions = variant?.selectedOptions || [];
       const color = selectedOptions.find((option) => ['color', 'colour'].includes((option?.name || '').toLowerCase()))?.value || '';
-      const size = getSizeOption(selectedOptions)?.value || '';
+      const size = productAttributes.sizes.find(value => selectedOptions.some(option => option.value === value)) || '';
       const visibleOptions = selectedOptions
         .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
         .map((option) => option.value);
@@ -3011,22 +2995,26 @@ function generateHtml(template, route, allShopifyProducts) {
         })()
       : '';
 
-    const reviewedHtml = hasReviewedProductCopy(p.tags)
-      ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml || ''))
+    const productDescriptionHtml = p.descriptionHtml
+      ? renderReviewedProductHtml(sanitizeProductCopy(p.descriptionHtml))
       : '';
-    const descHtml = (reviewedHtml
-      ? `<h2>Product Description</h2>${reviewedHtml}`
-      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, hasReviewedProductCopy(p.tags) ? 6000 : 2000))}</p>` : '')
-      + (reviewedHtml ? '' : renderReviewedFitCopy(p));
+    const descHtml = (productDescriptionHtml
+      ? `<h2>Product Description</h2>${productDescriptionHtml}`
+      : description ? `<h2>Product Description</h2><p>${escapeHtml(description.slice(0, 2000))}</p>` : '')
+      + renderReviewedFitCopy(p);
 
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';
     const includedPieces = productAttributes.includedPieces;
-    const sizingDetails = isCustomizable
+    const sizingDetails = productAttributes.sizes.length === 0
+      ? NO_FINISHED_GARMENT_SIZE_NOTICE
+      : requiresTailoringEnquiry(p.handle)
+      ? `${TAILORING_CATALOG_SIZE_NOTICE} ${TAILORING_ENQUIRY_NOTICE}`
+      : isCustomizable
       ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
-      ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
-      : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
+      ? `Listed garment sizes: ${productAttributes.sizes.join(', ')}. Review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`
+      : NO_FINISHED_GARMENT_SIZE_NOTICE;
     const nativeStitching = hasNativeFullStitchingOptions(p);
     const shippingEstimate = productShippingTimingNotice(productAttributes.shipsWithinDays) + (nativeStitching
       ? ' The Fabric Only selection retains its listed semi-stitched / unstitched pieces and requires finishing before wearing. Standard Stitched and Custom Stitched fitting selections use the alteration allowance.'
@@ -3038,7 +3026,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const detailRows = [
       ['Fabric Details', fabricDetails],
       ...(includedPieces ? [['Included Pieces', includedPieces]] : []),
-      ['Sizing & Chart', sizingDetails],
+      ['Sizing & Measurements', sizingDetails],
       ['Shipping Estimate', shippingEstimate],
       ['Ships from', 'India'],
       ...(productType ? [['Type', productType]] : []),
@@ -3049,11 +3037,15 @@ function generateHtml(template, route, allShopifyProducts) {
       ['Ships to', 'United States'],
     ];
 
-    const sizeAnswer = isCustomizable
+    const sizeAnswer = productAttributes.sizes.length === 0
+      ? NO_FINISHED_GARMENT_SIZE_NOTICE
+      : requiresTailoringEnquiry(p.handle)
+      ? `${TAILORING_CATALOG_SIZE_NOTICE} ${TAILORING_ENQUIRY_NOTICE}`
+      : isCustomizable
       ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
-      ? `Available choices shown for this listing are ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
-      : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
+      ? `Listed garment sizes: ${productAttributes.sizes.join(', ')}. Review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`
+      : NO_FINISHED_GARMENT_SIZE_NOTICE;
     const careAnswer = productAttributes.jewelry
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : nativeStitching
@@ -3483,7 +3475,7 @@ async function main() {
         // the live Search-engine listing whenever it is present and the
         // listing carries a reviewed-copy or source-verified tag.
         const liveSeoTitle = sanitizeProductTitle((live.seo?.title || '').trim());
-        const liveSeoDescription = hasReviewedProductCopy(live.tags)
+        const liveSeoDescription = hasReviewedProductCopy(live.tags, live.id)
           ? (live.seo?.description || '')
           : '';
         if (liveSeoTitle) route.title = liveSeoTitle;
@@ -3506,7 +3498,7 @@ async function main() {
     // Shopify itself often auto-populates it as "{productTitle} | {shopName}",
     // so appending " | LuxeMia" here would produce "... | LuxeMia | LuxeMia".
     const seoTitle = sanitizeProductTitle((p.seo?.title || '').trim());
-    const seoDescription = hasReviewedProductCopy(p.tags) ? (p.seo?.description || '') : '';
+    const seoDescription = hasReviewedProductCopy(p.tags, p.id) ? (p.seo?.description || '') : '';
 
     // ─── USP-enhanced title generation ──────────────────────────────────────
     // When no Shopify SEO title is set, inject fabric/color USP into the title

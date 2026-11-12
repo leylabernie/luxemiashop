@@ -1,5 +1,6 @@
 import './fabricOnlyServices.test.mjs';
 import './shoppingApp.test.mjs';
+import './storefrontSizingEnquiry.test.mjs';
 import assert from 'node:assert/strict';
 import test from 'node:test';
 import { readFileSync } from 'node:fs';

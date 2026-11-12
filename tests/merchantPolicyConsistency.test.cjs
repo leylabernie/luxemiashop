@@ -202,7 +202,7 @@ test('build-time route rewriting retains shared timing expressions on repeated r
 
 test('shipping processing clarification is identical in rendered shopper and initial HTML', async () => {
   const expected = shipping.SHIPPING_PROCESSING_NOTICE;
-  assert.match(expected, /semi-stitched or ready stitched/);
+  assert.match(expected, /listing states the construction actually supplied/);
   assert.match(expected, /add 3 business days once/);
   assert.doesNotMatch(expected, /made-to-order/);
   assert.equal(shipping.SHIPPING_PROCESSING_NOTICE, expected);

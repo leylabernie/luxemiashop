@@ -1,7 +1,8 @@
 import { normalizeMensCheckoutLines } from './mensSharedStock';
+import { hasUnconfirmedTargetTailoring, TAILORING_ENQUIRY_NOTICE } from './tailoringEnquiry';
 import { toast } from 'sonner';
 import { loadCatalogPages } from './catalogPagination';
-import { assertCheckoutCartMatches, assertCheckoutCartPrices, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
+import { assertCheckoutCartMatches, assertCheckoutCartPrices, CheckoutCartChangedError, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
 
@@ -815,6 +816,7 @@ export async function fetchCollectionByHandle(
 // The storefront does not guess or automatically apply discounts; Shopify confirms
 // eligibility, combinations, and final amounts at checkout.
 export async function createStorefrontCheckout(items: Array<{ variantId: string; quantity: number; handle?: string; customAttributes?: Array<{ key: string; value: string }> }>, discountCode?: string | null, expectedPrices?: Record<string, { amount: string; currencyCode: string }>): Promise<string | null> {
+  if (hasUnconfirmedTargetTailoring(items)) throw new CheckoutCartChangedError(TAILORING_ENQUIRY_NOTICE);
    // Check if any variant ID is "fake" (doesn't look like a Shopify GID)
   // Shopify GIDs look like: gid://shopify/ProductVariant/123456789
   const hasFakeIds = items.some(item => !item.variantId.startsWith('gid://shopify/ProductVariant/'));
@@ -825,7 +827,29 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     return null;
   }
 
-  items = await normalizeMensCheckoutLines(items, handle => fetchProductByHandle(handle, { allowHiddenBillingProduct: true, fresh: true }));
+  const originalItems = items;
+  const verifiedVariantPrices = new Map<string, { amount: string; currencyCode: string }>();
+  items = await normalizeMensCheckoutLines(items, async handle => {
+    const product = await fetchProductByHandle(handle, { allowHiddenBillingProduct: true, fresh: true });
+    product?.variants.edges.forEach(({ node }) => verifiedVariantPrices.set(node.id, node.price));
+    return product;
+  });
+  if (expectedPrices) {
+    // Existing mens migration may replace a historical garment+alteration ID
+    // with its verified base/service IDs. Check the old displayed price first,
+    // then use the real resolved prices for only the newly introduced IDs.
+    const normalizedIds = new Set(items.map(item => item.variantId));
+    for (const original of originalItems.filter(item => !normalizedIds.has(item.variantId))) {
+      assertCheckoutCartPrices(expectedPrices, [{ quantity: original.quantity,
+        merchandise: { id: original.variantId, price: verifiedVariantPrices.get(original.variantId) } }]);
+    }
+    expectedPrices = { ...expectedPrices };
+    for (const item of items) {
+      if (!expectedPrices[item.variantId] && verifiedVariantPrices.has(item.variantId)) {
+        expectedPrices[item.variantId] = verifiedVariantPrices.get(item.variantId)!;
+      }
+    }
+  }
 
   const lines = items.map(item => ({
     quantity: item.quantity,

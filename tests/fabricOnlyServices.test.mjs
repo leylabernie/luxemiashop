@@ -176,7 +176,7 @@ test('native UI guard preserves Custom Fit confirmation and blocks unsupported s
   assert.match(source, /if \(isCustomSizeSelected && !customSizeConfirmed\)/);
   assert.match(source, /Measurement Confirmation.*Customer acknowledged before checkout/);
   assert.match(source, /const selectedAvailableServiceAddOnCodes = selectedEligibleServiceAddOns\(/);
-  assert.match(source, /serviceAddOnTotal\(selectedAvailableServiceAddOnCodes\)/);
+  assert.match(source, /selectedAvailableServiceAddOnCodes.reduce\([\s\S]*?serviceVariants.get\(code\)\?\.price.amount/);
   assert.match(source, /for \(const code of selectedAvailableServiceAddOnCodes\)/);
   assert.match('Custom Fit', /\bcustom(?:\s*size)?\b/i);
 });

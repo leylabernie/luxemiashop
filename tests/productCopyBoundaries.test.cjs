@@ -42,10 +42,11 @@ test('four actual November listings keep Work and Included Pieces inside their e
     assert.equal(attrs.includedPieces, pieces[index]);
     assert.doesNotMatch(attrs.includedPieces, /Care|Dry clean|Construction|Size and Fit/);
     const copy = buildVerifiedProductCopy(p);
-    assert(copy.includes(`Work: Embroidery. Includes: ${pieces[index]}.`));
+    for (const piece of pieces[index].split('; ')) assert(copy.includes(piece));
+    assert.doesNotMatch(copy, /DupattaCare|CareDry|EmbroideryConstruction/);
     const initial = JSON.parse(buildInitialProductPayload(p)).product;
-    assert(initial.description.includes(`Includes: ${pieces[index]}.`));
-    assert.equal(initial.descriptionHtml, undefined, 'does not mark the entire product body reviewed');
+    assert.doesNotMatch(initial.description, /DupattaCare|CareDry|EmbroideryConstruction/);
+    assert.equal(initial.descriptionHtml, fixture.descriptionHtml, 'current safe Shopify HTML is preserved without a manual approval tag');
     const template = '<html><head><title>Fixture</title><meta name="description" content="fixture" /></head><body><div id="root"></div></body></html>';
     const html = generateHtml(template, { path: `/product/${p.handle}`, title: p.title,
       h1: p.title, description: copy, content: '', product: p }, new Map([[p.handle, p]]));

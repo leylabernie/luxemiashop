@@ -29,7 +29,8 @@ import {
   isMadeToOrderProduct,
 } from '@/lib/customizableProducts';
 import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandName } from '@/lib/schema';
-import { isProductSizeOptionName } from '@/lib/productOptionNames';
+import { getActualProductSizeValues, NO_FINISHED_GARMENT_SIZE_NOTICE, SIZING_GUIDANCE_LABEL } from '@/lib/productOptionNames';
+import { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_SIZE_NOTICE } from '@/lib/tailoringEnquiry';
 import { getProductShipsWithin } from '@/lib/shipBy';
 import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
@@ -260,7 +261,7 @@ const ProductDetail = () => {
   })();
   // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
   // copy. The field-backed generator below is the crawler and shopper source.
-  const seoDescription = hasReviewedProductCopy(product?.tags) ? product?.seo?.description || '' : '';
+  const seoDescription = hasReviewedProductCopy(product?.tags, product?.id) ? product?.seo?.description || '' : '';
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
@@ -287,16 +288,18 @@ const ProductDetail = () => {
 
   // Product-specific FAQs are also rendered visibly below, so the structured
   // data and on-page content remain consistent.
-  const productSizeValues = product?.options
-    ?.find((option) => isProductSizeOptionName(option.name))
-    ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
-  const sizeAnswer = madeToOrderProduct
+  const productSizeValues = getActualProductSizeValues(product?.options ?? []);
+  const sizeAnswer = productSizeValues.length === 0
+    ? NO_FINISHED_GARMENT_SIZE_NOTICE
+    : requiresTailoringEnquiry(product?.handle)
+    ? `${TAILORING_CATALOG_SIZE_NOTICE} ${TAILORING_ENQUIRY_NOTICE}`
+    : madeToOrderProduct
     ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
     : product?.tags?.includes('construction:Saree with stitched blouse') && productSizeValues.length > 0
     ? `Choose blouse size ${productSizeValues.join(', ')}. The size applies to the stitched blouse; the saree needs draping. These are blouse size labels, not complete bra sizes. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance.`
     : productSizeValues.length > 0
-    ? `Available choices shown for this listing are ${productSizeValues.join(', ')}. Select a size on the product page and review the Size Guide before ordering.`
-    : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if a listed option is unclear.';
+    ? `Listed garment sizes: ${productSizeValues.join(', ')}. Select a listed size and review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`
+    : NO_FINISHED_GARMENT_SIZE_NOTICE;
 
   const productFaqs = product ? [
     ...(isJewelryProduct ? [{
@@ -355,7 +358,7 @@ const ProductDetail = () => {
     const description = enrichedDescription || product.description || product.title;
     const variants = product.variants.edges.map(({ node: variant }) => {
       const color = variant.selectedOptions.find((option) => ['color', 'colour'].includes(option.name.toLowerCase()))?.value;
-      const size = variant.selectedOptions.find((option) => isProductSizeOptionName(option.name))?.value;
+      const size = productSizeValues.find(value => variant.selectedOptions.some(option => option.value === value));
       const variantId = variant.id.split('/').pop() || '';
       const optionLabel = variant.selectedOptions
         .filter((option) => option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
@@ -621,4 +624,3 @@ const ProductSkeleton = () => (
 );
 
 export default ProductDetail;
-
