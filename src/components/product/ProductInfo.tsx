@@ -340,6 +340,8 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
   const isSareeListing = /\b(?:saree|sari)\b/i.test(`${product.title} ${product.productType || ''}`);
   const hasStitchedBlouse = product.tags?.includes('construction:Saree with stitched blouse') ?? false;
+  const isReadyToWearSaree = isSareeListing && (/\bready[-\s]?to[-\s]?wear\b/i.test(product.title)
+    || (product.tags || []).some(tag => /ready-to-wear|saree-with-jacket/i.test(tag)));
 
   // Honor Merchant Center variant links while preserving the first available
   // variant as the normal default when no variant query parameter is present.
@@ -1333,7 +1335,12 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
       {productHasNativeSizes && (
         <section className="space-y-2 rounded-sm border border-border bg-muted/40 p-4 text-sm" aria-labelledby="sizing-explainer-heading">
           <h3 id="sizing-explainer-heading" className="font-medium">How sizing and stitching work</h3>
-          {isSareeListing ? (
+          {isReadyToWearSaree ? (
+            <>
+              <p>This saree is supplied <strong>ready to wear</strong>, as described in Included Pieces. The size options record your preferred fit; they do not add a separate unstitched blouse.</p>
+              <p>Confirm blouse inclusion with LuxeMia if it is not listed. Alterations, if needed, are charged separately.</p>
+            </>
+          ) : isSareeListing ? (
             <>
               <p>The saree is one size and comes with an <strong>unstitched blouse piece</strong>. The <strong>Blouse Size</strong> you choose is the size the blouse will be stitched to if you add blouse stitching; the saree itself is not sized. Choose the <strong>Petticoat Size</strong> separately if you are adding a stitched petticoat.</p>
               <p><strong>Blouse stitching is not included in the saree price.</strong> Stitching and any petticoat are separate services; add them from the options on this page or confirm the charge with LuxeMia before ordering.</p>
