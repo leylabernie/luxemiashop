@@ -113,7 +113,7 @@ inspectJsonLd('shipping', shipping, true);
 const ready = readPrerender('/ready-to-ship');
 requireAll('ready-to-ship', ready, [
   'Ready-to-Ship Indian Ethnic Wear',
-  'Items are supplied semi-stitched or ready stitched',
+  'Ready to Ship means the style is stocked',
   'Custom Size, Custom Stitching or Made-to-Measure selection',
   'Processing and carrier transit are separate',
   'View route-based rates',

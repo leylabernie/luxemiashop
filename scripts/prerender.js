@@ -1667,7 +1667,7 @@ const routes = [
     content: `
       <p>Discover bridal, wedding guest, reception and festive lehengas for U.S. delivery. Use the Ready to Ship filter for stocked non-custom products, then review the exact fabric, included pieces, sizing and product-specific shipping estimate.</p>
       <h2>Ready-to-Ship Bridal Lehengas in the USA</h2>
-      <p>The Ready to Ship availability filter includes purchasable products unless Shopify identifies them as Made to Order or Made to Measure. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
+      <p>The Ready to Ship availability filter shows stocked, purchasable styles unless Shopify identifies them as Made to Order or Made to Measure. It reflects availability only: it does not promise same-day dispatch, and it does not mean the outfit arrives finished and wearable. Stitching status is stated on each listing, and dispatch timing is shown separately. Confirm the selected size, included pieces and shipping estimate before ordering for a fixed wedding date.</p>
       <h2>Adjustable-Waist and Cape-Dupatta Sangeet Lehengas</h2>
       <p>Select active listings state an adjustable waist or a cape-style pre-draped dupatta. If you are comparing an adjustable-waist lehenga choli for sangeet dancing or a cape-dupatta lehenga for a sangeet or reception, open the exact product page to confirm the waist allowance, stitching status, included pieces and dispatch timing.</p>
       <h2>Explore Lehenga and Occasion Collections</h2>
@@ -2211,7 +2211,7 @@ const routes = [
     description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
-      <p>Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
+      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
       <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>

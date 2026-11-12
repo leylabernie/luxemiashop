@@ -23,7 +23,7 @@ const changed = [];
 
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 const PRODUCT_SHIPPING_ANSWER = `LuxeMia ships to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.`;
-const PRODUCT_READY_DELIVERY_ANSWER = 'Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.';
+const PRODUCT_READY_DELIVERY_ANSWER = 'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.';
 const READY_PAGE_DESCRIPTION = 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.';
 const READY_ROUTE_CONTENT = `  {
     path: '/ready-to-ship',
@@ -32,7 +32,7 @@ const READY_ROUTE_CONTENT = `  {
     description: '${READY_PAGE_DESCRIPTION}',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: \`
-      <p>Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
+      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
       <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>
@@ -102,7 +102,7 @@ function patchReadyToShipPage() {
     .replace(/Verified shorter processing/g, 'Stocked catalog styles')
     .replace(
       /These products have a verified semi-stitched processing window of up to five business days\.[\s\S]*?Review the exact product option and contact LuxeMia before ordering for a fixed event date\./,
-      'Items are supplied semi-stitched or ready stitched as described on each listing; explicit fabric-only and unstitched blouse pieces remain as listed. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.',
+      'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.',
     )
     .replace(/styles with verified shorter processing/g, 'ready-to-ship styles')
     .replace(
@@ -543,7 +543,7 @@ function isMadeToOrderProduct(product) {
     .split('Use the Ready to Ship filter only for listings explicitly tagged that way')
       .join('Use the Ready to Ship filter for stocked non-custom products')
     .split('The Ready to Ship availability filter requires an explicit catalog tag and an available variant.')
-      .join('The Ready to Ship availability filter includes purchasable products unless Shopify identifies them as Made to Order or Made to Measure.');
+      .join('The Ready to Ship availability filter shows stocked, purchasable styles unless Shopify identifies them as Made to Order or Made to Measure. It reflects availability only: it does not promise same-day dispatch, and it does not mean the outfit arrives finished and wearable. Stitching status is stated on each listing, and dispatch timing is shown separately.');
 
   source = source.replace(
     /return `\$\{getCustomProductDescription\(matched\.title\)\} Checkout accepts [^`]*`;/,
@@ -561,7 +561,7 @@ function patchTrustSourceValidator() {
     /requireAll\('src\/pages\/ReadyToShip\.tsx', \[[\s\S]*?\]\);/,
     `requireAll('src/pages/ReadyToShip.tsx', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
-  'Items are supplied semi-stitched or ready stitched',
+  'Ready to Ship means the style is stocked',
   'Requested alterations or finishing add 3 business days once',
   'View route-based rates',
 ]);`,
@@ -599,7 +599,7 @@ function patchBuiltTrustValidator() {
     /requireAll\('ready-to-ship', ready, \[[\s\S]*?\]\);/,
     `requireAll('ready-to-ship', ready, [
   'Ready-to-Ship Indian Ethnic Wear',
-  'Items are supplied semi-stitched or ready stitched',
+  'Ready to Ship means the style is stocked',
   'Custom Size, Custom Stitching or Made-to-Measure selection',
   'Processing and carrier transit are separate',
   'View route-based rates',
@@ -624,7 +624,7 @@ function patchBuiltTrustValidator() {
 function validateFinalState() {
   const ready = read('src/pages/ReadyToShip.tsx');
   requireMatch('src/pages/ReadyToShip.tsx', ready, /isMadeToOrderProduct\(product\.node\.handle, product\.node\.tags\)/, 'tag-aware Made-to-Order exclusion');
-  requireMatch('src/pages/ReadyToShip.tsx', ready, /Items are supplied semi-stitched or ready stitched/, 'owner-approved Ready-to-Ship rule');
+  requireMatch('src/pages/ReadyToShip.tsx', ready, /Ready to Ship means the style is stocked/, 'owner-approved Ready-to-Ship rule');
   requireAbsent('src/pages/ReadyToShip.tsx', ready, /processingDays\s*<=\s*5|verified semi-stitched processing window/i, 'retired five-day gate');
 
   const detail = read('src/pages/ProductDetail.tsx');
@@ -656,7 +656,7 @@ function validateFinalState() {
 
   const prerender = read('scripts/prerender.js');
   requireMatch('scripts/prerender.js', prerender, /category === 'ready-to-ship'[\s\S]*?!isMadeToOrderProduct\(product\)/, 'prerender Ready-to-Ship filter');
-  requireMatch('scripts/prerender.js', prerender, /Items are supplied semi-stitched or ready stitched/, 'prerender Ready-to-Ship copy');
+  requireMatch('scripts/prerender.js', prerender, /Ready to Ship means the style is stocked/, 'prerender Ready-to-Ship copy');
   requireAbsent('scripts/prerender.js', prerender, /days >= 1 && days <= 5|semi-stitched option has a verified processing window/i, 'retired prerender five-day rule');
 
   const trustValidator = read('scripts/validate-trust-source-of-truth.cjs');
