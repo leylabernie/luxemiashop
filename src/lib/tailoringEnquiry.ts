@@ -1,4 +1,9 @@
-import { isTailoringRequestValue } from './productOptionNames.js';
+// Local copy: this module is bundled into the edge middleware, where a
+// cross-file TypeScript import is not resolvable at runtime. Keep in sync
+// with isTailoringRequestValue in productOptionNames.ts.
+function isTailoringRequestValue(value?: string | null): boolean {
+  return /\b(?:custom|bespoke|alteration|made[-\s]+to[-\s]+(?:measure|fit))\b/i.test(value || '');
+}
 
 /** Catalogue facts supplied for this bounded correction; no supplier quote exists. */
 export const TAILORING_ENQUIRY_PRODUCTS = [
