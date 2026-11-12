@@ -3,6 +3,7 @@ import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
 import { getProductShipsWithin } from '@/lib/shipBy';
+import { hasUnconfirmedTargetTailoring, isEnquiryOnlyVariant, requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE } from '@/lib/tailoringEnquiry';
 import { normalizeFulfillmentAttributes } from '@/lib/fulfillmentAttributes';
 import { redactMeasurementAttributes, hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import {
@@ -156,6 +157,11 @@ export const useCartStore = create<CartStore>()(
       checkoutError: null,
 
       addItem: (item) => {
+        if (isEnquiryOnlyVariant(item.product.node.handle, item.variantId, item.selectedOptions)) {
+          set({ checkoutError: TAILORING_ENQUIRY_NOTICE, checkoutUrl: null, cartId: null });
+          toast.error(TAILORING_ENQUIRY_NOTICE);
+          return;
+        }
         const items = normalizeCartItems(get().items);
         const normalizedItem = { ...item, customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)) };
         const existingItem = items.find((current) => (
@@ -263,6 +269,11 @@ export const useCartStore = create<CartStore>()(
         const { setLoading, setCheckoutUrl } = get();
         const items = normalizeCartItems(get().items);
         if (items.length === 0) return null;
+        if (hasUnconfirmedTargetTailoring(items.map(item => ({ ...item, handle: item.product.node.handle, title: item.product.node.title })))) {
+          set({ items, checkoutError: TAILORING_ENQUIRY_NOTICE, checkoutUrl: null, cartId: null, isLoading: false });
+          toast.error(TAILORING_ENQUIRY_NOTICE);
+          return null;
+        }
         if (items.some(item => hasPendingMeasurementAttributes(item.customAttributes))) {
           const message = 'Re-enter your measurement details on the product page before checkout. They are not saved on this device.';
           set({ items, checkoutError: message, checkoutUrl: null, cartId: null, isLoading: false });
@@ -283,6 +294,14 @@ export const useCartStore = create<CartStore>()(
 
         set({ isLoading: true, checkoutError: null });
         try {
+          const expectedPrices: Record<string, CartItem['price']> = {};
+          for (const item of items) {
+            const previous = expectedPrices[item.variantId];
+            if (previous && (Number(previous.amount) !== Number(item.price.amount) || previous.currencyCode !== item.price.currencyCode)) {
+              throw new CheckoutCartChangedError('A selected product price changed. Reload the product page to review its current price before checkout.');
+            }
+            expectedPrices[item.variantId] = item.price;
+          }
           const checkoutUrl = await createStorefrontCheckout(
             items.map((item) => ({
               variantId: item.variantId,
@@ -290,6 +309,8 @@ export const useCartStore = create<CartStore>()(
               handle: item.product.node.handle,
               customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)),
             })),
+            undefined,
+            expectedPrices,
           );
 
           if (checkoutUrl) {
@@ -347,7 +368,8 @@ export const useCartStore = create<CartStore>()(
             return;
           }
 
-          if (state.items.some(item => hasPendingMeasurementAttributes(item.customAttributes))) {
+          if (state.items.some(item => hasPendingMeasurementAttributes(item.customAttributes))
+            || hasUnconfirmedTargetTailoring(state.items.map(item => ({ ...item, handle: item.product.node.handle, title: item.product.node.title })))) {
             state.cartId = null;
             state.checkoutUrl = null;
           }
@@ -359,7 +381,8 @@ export const useCartStore = create<CartStore>()(
           state.items = normalizeCartItems(state.items.map((item) => ({
             ...item,
             customAttributes: normalizeFulfillmentAttributes(item.customAttributes?.filter((attribute) => {
-              if (attribute.key === 'Related Product Handle') return false;
+              // Retain exact-target legacy linkage until the unconfirmed service is removed.
+              if (attribute.key === 'Related Product Handle') return requiresTailoringEnquiry(attribute.value);
               if (!isServiceLine(item) && attribute.key === 'Selected Paid Services') return false;
               return true;
             }), getProductShipsWithin(item.product.node)),

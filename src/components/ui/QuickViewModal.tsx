@@ -8,6 +8,7 @@ import { useWishlistStore } from '@/stores/wishlistStore';
 import { toast } from 'sonner';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getOptimizedImage } from '@/lib/imageUtils';
+import { getDirectCardVariant, requiresProductPageSelection } from '@/lib/purchaseOptions';
 
 interface QuickViewModalProps {
   product: ShopifyProduct | null;
@@ -35,17 +36,19 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
   const price = parseFloat(selectedVariant?.price?.amount || product.node.priceRange.minVariantPrice.amount);
   const inWishlist = isInWishlist(product.node.id);
 
+  const needsProductPage = requiresProductPageSelection(product.node);
   const hasMultipleVariants = variants.length > 1 && !(variants.length === 1 && variants[0].node.title === 'Default Title');
 
   const handleAddToBag = () => {
-    if (!selectedVariant) return;
+    const directVariant = getDirectCardVariant(product.node);
+    if (!directVariant) return;
     addItem({
       product,
-      variantId: selectedVariant.id,
-      variantTitle: selectedVariant.title,
-      price: selectedVariant.price,
+      variantId: directVariant.id,
+      variantTitle: directVariant.title,
+      price: directVariant.price,
       quantity: 1,
-      selectedOptions: selectedVariant.selectedOptions,
+      selectedOptions: directVariant.selectedOptions,
     });
     toast.success('Added to bag', { description: title });
     onClose();
@@ -131,7 +134,7 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
               </div>
 
               {/* Variant selector */}
-              {hasMultipleVariants && (
+              {hasMultipleVariants && !needsProductPage && (
                 <div className="mb-4">
                   <p className="text-xs uppercase tracking-wide text-muted-foreground mb-2">
                     {variants[0]?.node.selectedOptions?.[0]?.name || 'Option'}
@@ -167,6 +170,11 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
               )}
 
               <div className="mt-auto space-y-2.5">
+                {needsProductPage ? (
+                  <Button asChild className="w-full">
+                    <Link to={`/product/${product.node.handle}`} onClick={onClose} data-testid="quick-view-choose-options">Choose options on product page</Link>
+                  </Button>
+                ) : (
                 <Button
                   onClick={handleAddToBag}
                   data-testid="quick-view-add-to-bag"
@@ -176,6 +184,7 @@ const QuickViewModal = ({ product, onClose }: QuickViewModalProps) => {
                   <Plus className="w-4 h-4 mr-2" />
                   {selectedVariant?.availableForSale !== false ? 'Add to Bag' : 'Sold Out'}
                 </Button>
+                )}
 
                 <div className="flex gap-2">
                   <button

@@ -19,8 +19,6 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import esbuild from 'esbuild';
 import catalogSource from './storefront-catalog.cjs';
-import merchantSizeOptions from '../merchant-feed-size.cjs';
-const { getSizeOption } = merchantSizeOptions;
 import reviewedLehengaCatalog from '../src/lib/reviewedLehengaCollections.cjs';
 const { reviewedLehengaCollections, isReviewedLehengaCollection, filterReviewedLehengaProducts } = reviewedLehengaCatalog;
 const { fetchCompleteStorefrontCatalog, retainLiveProductRoutes } = catalogSource;
@@ -90,23 +88,6 @@ const RETIRED_PRODUCT_HANDLES = new Set(
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
 ]);
-const SIZE_OPTION_NAMES = new Set([
-  'size',
-  'standard size',
-  'blouse size',
-  'bust size',
-  'chest size',
-  'stitching size',
-]);
-
-
-function normalizeOptionName(value) {
-  return String(value || '').trim().replace(/\s+/g, ' ').toLowerCase();
-}
-
-function isSizeOptionName(value) {
-  return SIZE_OPTION_NAMES.has(normalizeOptionName(value));
-}
 
 function getCustomProductDescription(title) {
   return `${title}. Fit or color changes are requests requiring LuxeMia confirmation; no custom color or new construction is promised. ${ALTERATION_TIMING_NOTICE} Contact LuxeMia before ordering for a fixed event date. Custom orders are final sale, subject to applicable law.`;
@@ -174,6 +155,8 @@ const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NO
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY, SUPPORT_CLAIM_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { HOMEPAGE_HEADLINE, HOMEPAGE_VALUE_PROPOSITION, HOMEPAGE_TRUST_ITEMS, HOMEPAGE_WEDDING_COPY, HOMEPAGE_WEDDING_LINK } = await loadTsModule('src/lib/homepageValueProposition.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
+const { getActualProductSizeValues, NO_FINISHED_GARMENT_SIZE_NOTICE, SIZING_GUIDANCE_LABEL } = await loadTsModule('src/lib/productOptionNames.ts');
+const { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_SIZE_NOTICE } = await loadTsModule('src/lib/tailoringEnquiry.ts');
 const FALLBACK_CURRENCY = 'USD';
 let generateProductMetaDescription;
 let rankCommercialProducts = (products) => [...products];
@@ -395,10 +378,7 @@ function getListedProductAttributes(product) {
   const taggedWork = prefixedTagValue('work', 'embroidery', 'embellishment');
   const listedMaterial = getLabeledListingFact(product?.descriptionHtml || product?.description, ['Fabric', 'Material']);
   const listedWork = getLabeledListingFact(product?.descriptionHtml || product?.description, ['Work', 'Embroidery', 'Embellishment']);
-  const sizeValues = product?.options
-    ?.find(option => isSizeOptionName(option?.name))
-    ?.values
-    ?.filter(value => value && value.toLowerCase() !== 'default title') || [];
+  const sizeValues = getActualProductSizeValues(product?.options || []);
   const includedPiecePrefixes = [
     'included:',
     'included pieces:',
@@ -2829,7 +2809,7 @@ function generateHtml(template, route, allShopifyProducts) {
       const variantId = variant?.id?.split('/').pop() || '';
       const selectedOptions = variant?.selectedOptions || [];
       const color = selectedOptions.find((option) => ['color', 'colour'].includes((option?.name || '').toLowerCase()))?.value || '';
-      const size = getSizeOption(selectedOptions)?.value || '';
+      const size = productAttributes.sizes.find(value => selectedOptions.some(option => option.value === value)) || '';
       const visibleOptions = selectedOptions
         .filter((option) => option?.value && (option?.name || '').toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
         .map((option) => option.value);
@@ -3026,11 +3006,15 @@ function generateHtml(template, route, allShopifyProducts) {
     const fabricDetails = productAttributes.material
       || 'Review the product description for the fabric or material supplied with this listing.';
     const includedPieces = productAttributes.includedPieces;
-    const sizingDetails = isCustomizable
+    const sizingDetails = productAttributes.sizes.length === 0
+      ? NO_FINISHED_GARMENT_SIZE_NOTICE
+      : requiresTailoringEnquiry(p.handle)
+      ? `${TAILORING_CATALOG_SIZE_NOTICE} ${TAILORING_ENQUIRY_NOTICE}`
+      : isCustomizable
       ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
-      ? `Listed options: ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
-      : 'Available sizing varies by product. Review the options shown for this listing and the Size Guide before ordering.';
+      ? `Listed garment sizes: ${productAttributes.sizes.join(', ')}. Review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`
+      : NO_FINISHED_GARMENT_SIZE_NOTICE;
     const nativeStitching = hasNativeFullStitchingOptions(p);
     const shippingEstimate = productShippingTimingNotice(productAttributes.shipsWithinDays) + (nativeStitching
       ? ' The Fabric Only selection retains its listed semi-stitched / unstitched pieces and requires finishing before wearing. Standard Stitched and Custom Stitched fitting selections use the alteration allowance.'
@@ -3042,7 +3026,7 @@ function generateHtml(template, route, allShopifyProducts) {
     const detailRows = [
       ['Fabric Details', fabricDetails],
       ...(includedPieces ? [['Included Pieces', includedPieces]] : []),
-      ['Sizing & Chart', sizingDetails],
+      ['Sizing & Measurements', sizingDetails],
       ['Shipping Estimate', shippingEstimate],
       ['Ships from', 'India'],
       ...(productType ? [['Type', productType]] : []),
@@ -3053,11 +3037,15 @@ function generateHtml(template, route, allShopifyProducts) {
       ['Ships to', 'United States'],
     ];
 
-    const sizeAnswer = isCustomizable
+    const sizeAnswer = productAttributes.sizes.length === 0
+      ? NO_FINISHED_GARMENT_SIZE_NOTICE
+      : requiresTailoringEnquiry(p.handle)
+      ? `${TAILORING_CATALOG_SIZE_NOTICE} ${TAILORING_ENQUIRY_NOTICE}`
+      : isCustomizable
       ? 'Any requested alterations use measurements confirmed with LuxeMia. Contact LuxeMia before ordering if you need help taking or submitting them.'
       : productAttributes.sizes.length > 0
-      ? `Available choices shown for this listing are ${productAttributes.sizes.join(', ')}. Review the Size Guide before ordering.`
-      : 'Any available size or tailoring choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
+      ? `Listed garment sizes: ${productAttributes.sizes.join(', ')}. Review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`
+      : NO_FINISHED_GARMENT_SIZE_NOTICE;
     const careAnswer = productAttributes.jewelry
       ? 'Keep jewelry away from water, perfume, lotion, and household chemicals. Wipe gently after wear and store pieces separately in a soft pouch.'
       : nativeStitching

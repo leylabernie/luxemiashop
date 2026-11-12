@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
+import { SIZING_GUIDANCE_LABEL } from '@/lib/productOptionNames';
 
 interface SizeGuideModalProps {
   category?: string;
@@ -32,12 +33,12 @@ export const SizeGuideModal = ({ category = '' }: SizeGuideModalProps) => {
       <DialogTrigger asChild>
         <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 p-0 h-auto font-normal underline underline-offset-4">
           <Ruler className="h-4 w-4 mr-1" />
-          Size Guide
+          {SIZING_GUIDANCE_LABEL}
         </Button>
       </DialogTrigger>
       <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="font-serif text-2xl">Size Guide</DialogTitle>
+          <DialogTitle className="font-serif text-2xl">{SIZING_GUIDANCE_LABEL}</DialogTitle>
           <DialogDescription>Fit varies by design. Use the selected product’s size options and verified measurements, not a universal chart.</DialogDescription>
         </DialogHeader>
 

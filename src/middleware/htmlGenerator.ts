@@ -13,7 +13,8 @@ import { hasNativeFullStitchingOptions, mayRequireAlterationProcessing } from '.
 import { getCatalogMaterial } from '../lib/catalogMaterial.js';
 import type { ShopifyProduct } from './shopifyProxy.js';
 import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, generateProductGroupSchema, generateBreadcrumbSchema, generateFaqSchema, generateWebPageSchema, getGoogleProductCategory, normalizeBrandName, SITE_URL } from '../lib/schema.js';
-import { isProductSizeOptionName } from '../lib/productOptionNames.js';
+import { getActualProductSizeValues, NO_FINISHED_GARMENT_SIZE_NOTICE, SIZING_GUIDANCE_LABEL } from '../lib/productOptionNames.js';
+import { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_SIZE_NOTICE } from '../lib/tailoringEnquiry.js';
 import { clampTitle, clampDescription } from '../lib/meta/clamp.js';
 import { renderSelectedOptions, selectInitialVariant } from './variantPrerender.js';
 import { getVariantReferencePrice } from '../lib/variantReferencePrice.js';
@@ -128,9 +129,7 @@ function getListedProductAttributes(product: ShopifyProduct) {
   const blouseFabric = product.blouseFabricMetafield?.value || undefined;
   const occasions = parseMetafieldList(product.occasionMetafield?.value);
   const components = parseMetafieldList(product.includedComponentsMetafield?.value);
-  const sizeValues = product.options
-    ?.find((option: { name?: string }) => isProductSizeOptionName(option.name))
-    ?.values?.filter((value: string) => value && value.toLowerCase() !== 'default title') || [];
+  const sizeValues = getActualProductSizeValues(product.options || []);
   const includedPiecePrefixes = [
     'included:',
     'included pieces:',
@@ -301,7 +300,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     const variantId = variant.id.split('/').pop() || '';
     const selectedOptions = variant.selectedOptions || [];
     const colorValue = selectedOptions.find(option => ['color', 'colour'].includes(option.name.toLowerCase()))?.value || '';
-    const sizeValue = selectedOptions.find(option => isProductSizeOptionName(option.name))?.value || '';
+    const sizeValue = productAttributes.sizes.find(value => selectedOptions.some(option => option.value === value)) || '';
     const optionLabel = [...new Set(selectedOptions
       .filter(option => option.value && option.name.toLowerCase() !== 'title' && option.value.toLowerCase() !== 'default title')
       .map(option => option.value))].join(' / ');
@@ -391,9 +390,9 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     : '') + (product.tags?.includes('availability:Confirm before ordering')
     ? ' Confirm the selected size and current availability before ordering.' : '');
 
-  const sizeAnswer = sizes.length > 0
-    ? `Available choices shown for this listing are ${sizes.join(', ')}. Review the Size Guide before ordering.`
-    : 'Any available size or variant choices are shown on this product page. Contact LuxeMia before ordering if an option is unclear.';
+  const sizeAnswer = sizes.length === 0 ? NO_FINISHED_GARMENT_SIZE_NOTICE
+    : requiresTailoringEnquiry(product.handle) ? `${TAILORING_CATALOG_SIZE_NOTICE} ${TAILORING_ENQUIRY_NOTICE}`
+    : `Listed garment sizes: ${sizes.join(', ')}. Review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`;
   const productFaqs = [
     ...(productAttributes.jewelry ? [{
       question: `What is included with the ${displayTitle}?`,
@@ -584,7 +583,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           ${includedPieces ? `<div><dt>Included Pieces</dt><dd>${escapeHtml(includedPieces)}</dd></div>` : ''}
           ${careInstructions ? `<div><dt>Care</dt><dd>${escapeHtml(careInstructions)}</dd></div>` : ''}
           ${shopifyCategory ? `<div><dt>Product Category</dt><dd>${escapeHtml(shopifyCategory)}</dd></div>` : ''}
-          <div><dt>Sizing &amp; Chart</dt><dd>${escapeHtml(sizes.length > 0 ? `Listed options: ${sizes.join(', ')}. Review the Size Guide before ordering.` : 'Available sizing varies by product. Review the listed options and Size Guide before ordering.')}</dd></div>
+          <div><dt>Sizing &amp; Measurements</dt><dd>${escapeHtml(sizeAnswer)}</dd></div>
           <div><dt>Ships from</dt><dd>India</dd></div>
           <div><dt>Shipping Estimate</dt><dd>${escapeHtml(shippingEstimate)}</dd></div>
           ${vendor ? `<div><dt>Brand</dt><dd>${escapeHtml(vendor)}</dd></div>` : ''}

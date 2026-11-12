@@ -15,6 +15,7 @@ function load(file) {
 const measurements = load('src/lib/measurementRequest.ts');
 const services = load('src/lib/serviceAddOns.ts');
 const mens = load('src/lib/mensSharedStock.ts');
+const enquiry = load('src/lib/tailoringEnquiry.ts');
 const timing = require('../src/config/shippingTiming.cjs');
 const source = read('src/components/product/ProductInfo.tsx');
 const start = source.indexOf('const handleAddToCart = async () => {');
@@ -35,7 +36,8 @@ async function run({ draft = now(), native = false, codes = [], overrides = {} }
   const variant = { id: 'fixture-size-s', title: 'S', price: { amount: '103.00', currencyCode: 'USD' }, selectedOptions: [{ name: 'Size', value: 'S' }] };
 
   const scope = {
-    ...measurements, ...services, ...timing, ...mens, rawProduct: product, selectedServiceAddOnCodes: codes, basePrice: variant.price, crypto: webcrypto,
+    ...measurements, ...services, ...timing, ...mens, ...enquiry, tailoringEnquiryOnly: false, selectionRequiresEnquiry: false,
+    rawProduct: product, selectedServiceAddOnCodes: codes, basePrice: variant.price, crypto: webcrypto,
     measurementDraft: draft,
     setMeasurementValidation: error => validation.push(error),
     purchasableVariant: { node: variant }, product, selectedAvailableServiceAddOnCodes: codes,
@@ -200,7 +202,10 @@ test('actual eligibility excludes ordinary sizes and generic alteration/pico/pet
   for (const codes of [[], ['garment-alteration'], ['pico-fall'], ['matching-petticoat'], ['garment-alteration', 'pico-fall', 'matching-petticoat']]) {
     const result = await run({ codes });
     assert.deepEqual(result.errors, []);
-    assert(result.added.every(line => !attrs(line).some(a => /^(?:Measurement submission|Provided measurement|Configuration reference)/.test(a.key))));
+    assert(result.added.every(line => !attrs(line).some(a => /^(?:Measurement submission|Provided measurement)/.test(a.key))));
+    const references = result.added.flatMap(line => attrs(line).filter(a => a.key === 'Configuration reference').map(a => a.value));
+    assert.equal(references.length, codes.length ? result.added.length : 0);
+    if (codes.length) assert.equal(new Set(references).size, 1, 'ordinary paid services share their garment configuration without measurements');
   }
   const unscoped = await run({ codes: ['blouse-stitching'], overrides: { product: { id: 'plain', title: 'Plain outfit', productType: 'Dress', handle: 'plain', tags: [] } } });
   assert(unscoped.added.every(line => measurementRows(line).length === 0));

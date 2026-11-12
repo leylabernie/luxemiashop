@@ -1,4 +1,5 @@
 import type { ShopifyProduct } from '@/lib/shopify';
+import { requiresTailoringEnquiry, isEnquiryOnlyVariant } from './tailoringEnquiry.ts';
 
 type ProductNode = ShopifyProduct['node'];
 
@@ -9,7 +10,9 @@ type ProductNode = ShopifyProduct['node'];
  * silently choose the first Shopify variant for those listings.
  */
 export const requiresProductPageSelection = (product: ProductNode): boolean =>
-  product.options.some((option) => {
+  requiresTailoringEnquiry(product.handle)
+  || product.variants.edges.some(({ node }) => isEnquiryOnlyVariant(product.handle, node.id, node.selectedOptions))
+  || product.options.some((option) => {
     const values = option.values.filter((value) =>
       value.trim() && value.trim().toLowerCase() !== 'default title',
     );
