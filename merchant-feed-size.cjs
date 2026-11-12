@@ -5,6 +5,8 @@ const SIZE_OPTION_NAMES = new Set([
   'bust size',
   'chest size',
   'stitching size',
+  "men's size",
+  "women's size",
 ]);
 
 function normalizeOptionName(value) {

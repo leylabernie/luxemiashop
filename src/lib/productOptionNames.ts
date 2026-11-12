@@ -1,5 +1,6 @@
 const SIZE_OPTION_NAMES = new Set([
   'size', 'age', 'standard size', 'blouse size', 'bust size', 'chest size', 'stitching size',
+  'petticoat size', "men's size", "women's size",
 ]);
 const MERCHANDISING_OPTION_NAMES = /^(?:colou?r|fabric|material|style|design|pattern)$/;
 const COLOR_VALUE_PATTERN = /\b(?:beige|black|blue|brown|coral|cream|fuchsia|gold|gray|green|grey|ivory|lavender|magenta|maroon|mint|multicolou?r|mustard|navy|olive|orange|peach|pink|purple|red|silver|teal|turquoise|white|wine|yellow)\b/i;

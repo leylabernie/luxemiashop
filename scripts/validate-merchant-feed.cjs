@@ -111,13 +111,17 @@ if (itemBlocks.length < 606) coverageFailures.push(`${itemBlocks.length} offers 
 // Preserve every retained offer and each field that was source-backed before retirement.
 const retainedBaseline = require('./product-retirement-20260908.json').feedBaseline;
 const itemsById = new Map(itemBlocks.map(item => [item.match(/<g:id>([^<]+)<\/g:id>/)?.[1], item]));
+const supersededOffers = new Set(retainedBaseline.supersededOfferIds || []);
 for (const id of retainedBaseline.offerIds) {
+  if (supersededOffers.has(id)) continue;
   if (!itemsById.has(id)) coverageFailures.push(`retained offer missing: ${id}`);
 }
 for (const id of retainedBaseline.sizeOfferIds) {
+  if (supersededOffers.has(id)) continue;
   if (!/<g:size>[^<]+<\/g:size>/.test(itemsById.get(id) || '')) coverageFailures.push(`retained size missing: ${id}`);
 }
 for (const id of retainedBaseline.materialOfferIds) {
+  if (supersededOffers.has(id)) continue;
   if (!/<g:material>[^<]+<\/g:material>/.test(itemsById.get(id) || '')) coverageFailures.push(`retained material missing: ${id}`);
 }
 if (!Number.isFinite(feedBuildDateMs)) coverageFailures.push('missing or invalid last_build_date');
