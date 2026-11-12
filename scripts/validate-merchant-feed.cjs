@@ -222,7 +222,9 @@ if (
 // Verified surviving multi-variant fixture after the 2026-11-09 age archive.
 // This verified fixture exposes Color and Size (plus an alteration service option).
 // Preserve exact Storefront / feed / ProductGroup parity checks.
-const VARIANT_PARITY_HANDLE = 'mustard-embroidered-blouse-draped-palazzo-set';
+// 2026-11-12: the previous fixture became single-colour in the size restructure,
+// so parity now tracks a three-colour, nine-size kurta set.
+const VARIANT_PARITY_HANDLE = 'botanical-border-salsa-silk-kurta-pajama-set';
 const variantPrerenderPath = path.join(
   PROJECT_ROOT,
   'dist/_prerender/product',
