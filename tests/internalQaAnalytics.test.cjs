@@ -7,15 +7,16 @@ const { buildSync } = require('esbuild');
 const root = path.resolve(__dirname, '..');
 const read = p => fs.readFileSync(path.join(root,p),'utf8');
 const scripts = [read('index.html'), read('src/middleware/htmlGenerator.ts')].map(source => [...source.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)].map(m=>m[1]).find(s=>s.includes('window.luxemiaAnalyticsEnabled')));
-function run(script, { host='luxemia.shop', search='', storage=new Map(), blocked=false, idle=true }={}) {
+function run(script, { host='luxemia.shop', search='', storage=new Map(), blocked=false, idle=true, previewHost='' }={}) {
   const scheduled=[], loaded=[];
   const consent=['consent','default',{analytics_storage:'denied'}];
+  const configuredScript=script.replaceAll('__LUXEMIA_GA4_PREVIEW_HOST__',previewHost);
   const context={URLSearchParams, location:{hostname:host,search}, dataLayer:[consent],
     sessionStorage:{getItem(k){if(blocked)throw Error('blocked');return storage.get(k)},setItem(k,v){if(blocked)throw Error('blocked');storage.set(k,v)},removeItem(k){if(blocked)throw Error('blocked');storage.delete(k)}},
     document:{createElement:()=>({}),head:{appendChild:s=>loaded.push(s)}},
     addEventListener:(_n,cb)=>scheduled.push(cb),setTimeout:cb=>scheduled.push(cb)};
   context.window=context;if(idle)context.requestIdleCallback=cb=>scheduled.push(cb);
-  vm.runInNewContext(script,context);
+  vm.runInNewContext(configuredScript,context);
   while(scheduled.length)scheduled.shift()();
   return {context, loaded, consent, storage};
 }
@@ -27,14 +28,46 @@ for(const [i,script] of scripts.entries()) {
     assert.equal(context.dataLayer[0],consent);
     assert.equal(loaded.length,1);
     assert.equal(loaded[0].src,'https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0');
-    const config=Array.from(context.dataLayer[2]);assert.equal(config[1],'G-D1NN0TC3Y0');
+    const linker=Array.from(context.dataLayer[2]);assert.equal(linker[1],'linker');
+    assert.deepEqual(Array.from(linker[2].domains),['luxemia.shop','lovable-project-zlh0w.myshopify.com']);
+    const config=Array.from(context.dataLayer[3]);assert.equal(config[1],'G-D1NN0TC3Y0');
     assert.equal(config[2].send_page_view,Boolean(i));assert.equal(config[2].allow_google_signals,true);
-    context.gtag('event','add_to_cart',{value:10});assert.equal(context.dataLayer.length,4);
+    context.gtag('event','add_to_cart',{value:10});assert.equal(context.dataLayer.length,5);
   });
   for(const host of ['luxemiashop-preview.vercel.app','luxemiashop.vercel.app','localhost','127.0.0.1','luxemia.shop.example.com','example.com'])test(`${surface}: ${host} never loads or queues GA`,()=>{
     const {context,loaded,consent}=run(script,{host,search:'?luxemia_qa=0'});
     context.gtag('event','page_view',{});context.gtag('event','purchase',{});
     assert.equal(context.luxemiaAnalyticsEnabled,false);assert.equal(loaded.length,0);assert.deepEqual(context.dataLayer,[consent]);
+  });
+  test(`${surface}: exact-host preview opt-in survives same-tab full-page navigation only on the approved host`,()=>{
+    const previewHost='checkout-link-test.vercel.app';
+    const storage=new Map();
+    assert.equal(run(script,{host:previewHost,previewHost,storage}).context.luxemiaAnalyticsEnabled,false);
+    const enabled=run(script,{host:previewHost,previewHost,search:'?luxemia_preview_analytics=1',storage});
+    assert.equal(enabled.context.luxemiaAnalyticsEnabled,true);
+    assert.equal(enabled.loaded.length,1);
+    assert.equal(storage.get('luxemia.analytics.preview'),'1');
+    assert.deepEqual(Array.from(enabled.context.dataLayer[2][2].domains),[
+      'luxemia.shop','lovable-project-zlh0w.myshopify.com',previewHost,
+    ]);
+
+    // A separate document load with a clean URL models a browser full-page navigation.
+    const navigated=run(script,{host:previewHost,previewHost,storage});
+    assert.equal(navigated.context.luxemiaAnalyticsEnabled,true);
+    assert.equal(navigated.loaded.length,1);
+    assert.deepEqual(Array.from(navigated.context.dataLayer[2][2].domains),[
+      'luxemia.shop','lovable-project-zlh0w.myshopify.com',previewHost,
+    ]);
+    assert.equal(run(script,{host:'another-preview.vercel.app',previewHost,storage,search:'?luxemia_preview_analytics=1'}).context.luxemiaAnalyticsEnabled,false);
+
+    // QA opt-out has priority over a previously granted preview-session opt-in.
+    assert.equal(run(script,{host:previewHost,previewHost,storage,search:'?luxemia_qa=1'}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(run(script,{host:previewHost,previewHost,storage}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(run(script,{host:previewHost,previewHost,storage,search:'?luxemia_qa=0'}).context.luxemiaAnalyticsEnabled,true);
+
+    // The preview grant is temporary and can be explicitly cleared too.
+    assert.equal(run(script,{host:previewHost,previewHost,storage,search:'?luxemia_preview_analytics=0'}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(storage.has('luxemia.analytics.preview'),false);
   });
   test(`${surface}: explicit opt-in persists only in session and clear restores next load`,()=>{
     const storage=new Map();let state=run(script,{search:'?luxemia_qa=1',storage});

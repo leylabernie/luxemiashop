@@ -231,15 +231,36 @@ test('rehydration clears a stale persisted URL and cart ID when a pending line e
   assert.deepEqual(globalThis.measurementAssociationCheckout, []);
 });
 
+test('legacy persisted checkout URL is cleared, then rebuilt for the rehydrated cart through checkout validation', async () => {
+  const ordinary = garment(undefined, 'SYNTHETIC non-measurement line', 2);
+  storage.set('shopify-cart', JSON.stringify({ version: 0, state: {
+    items: [ordinary], cartId: 'legacy-cart-id', checkoutUrl: 'https://shop.example/old-cart-checkout',
+  } }));
+
+  await store.persist.rehydrate();
+  assert.deepEqual(items(), [ordinary]);
+  assert.equal(store.getState().checkoutUrl, null, 'the old URL is never exposed as a checkout link');
+  assert.equal(await store.getState().createCheckout(), 'https://shop.example/checkout');
+  assert.equal(store.getState().checkoutUrl, 'https://shop.example/checkout');
+  assert.deepEqual(globalThis.measurementAssociationCheckout.at(-1), [{
+    variantId: ordinary.variantId,
+    quantity: 2,
+    handle: 'synthetic-garment',
+    customAttributes: ordinary.customAttributes,
+  }]);
+  assert.equal(savedCart().checkoutUrl, null, 'rebuilt URLs remain in memory and are not persisted');
+});
+
 for (const customAttributes of [[], [{ key: 'Measurement submission', value: 'Provide after order — review required before alterations' }]]) {
   test(`ordinary ${customAttributes.length ? 'LATER' : 'non-measurement'} carts preserve persistence and checkout behavior`, async () => {
     const ordinary = { ...garment(undefined), customAttributes };
     add(ordinary);
     store.getState().setCartId('ordinary-cart-id');
     store.getState().setCheckoutUrl('https://shop.example/ordinary-checkout');
-    assert.deepEqual(savedCart(), { items: [ordinary], cartId: 'ordinary-cart-id', checkoutUrl: 'https://shop.example/ordinary-checkout' });
+    assert.deepEqual(savedCart(), { items: [ordinary], cartId: 'ordinary-cart-id', checkoutUrl: null });
     await store.persist.rehydrate();
     assert.deepEqual(items(), [ordinary]);
+    assert.equal(store.getState().checkoutUrl, null, 'prepared URLs are cleared after full reload');
     assert.equal(await store.getState().createCheckout(), 'https://shop.example/checkout');
     assert.deepEqual(globalThis.measurementAssociationCheckout.at(-1)[0].customAttributes, customAttributes);
     assert.equal(store.getState().checkoutError, null);

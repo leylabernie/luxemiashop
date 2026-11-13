@@ -1,5 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { build } from 'esbuild';
 import { createRequire } from 'node:module';
 import { resolve } from 'node:path';
@@ -21,7 +22,7 @@ const result = await build({
       else if(a.path.includes('serviceAddOns')) contents=`export const isGarmentAlterationCartLine=()=>false; export const isHiddenBillingProductHandle=()=>false;`;
       else if(a.path.includes('shipBy')) contents=`export const getProductShipsWithin=p=>Number(p.shipsWithinMetafield?.value || p.shipsWithin) || null;`;
       else if(a.path.includes('imageUtils')) contents=`export const getOptimizedImage=x=>x;`;
-      else if(a.path.includes('/button')) contents=`import React from 'react'; export const Button=({children})=>React.createElement('button',null,children);`;
+      else if(a.path.includes('/button')) contents=`import React from 'react'; export const Button=({children,asChild,variant,size,...props})=>asChild?React.cloneElement(React.Children.only(children),props):React.createElement('button',props,children);`;
       else contents=`export default ()=>null;`;
       return {contents, loader:'js'};
     });
@@ -30,9 +31,9 @@ const result = await build({
 const m = {exports:{}};
 new Function('require','module','exports',result.outputFiles[0].text)(require,m,m.exports);
 const CartDrawer=m.exports.default;
-function render(amount, quantity=1, date='2026-10-16T12:00:00Z') {
+function render(amount, quantity=1, date='2026-10-16T12:00:00Z', checkoutUrl=null) {
  const original=Date.now; Date.now=()=>Date.parse(date);
- globalThis.fixtureStore={items:[{variantId:'v',variantTitle:'M',selectedOptions:[],quantity,price:{amount:String(amount),currencyCode:'USD'},product:{node:{handle:'test-suit',title:'Test suit',images:{edges:[]},variants:{edges:[]}}}}],isLoading:false,checkoutError:null};
+ globalThis.fixtureStore={items:[{variantId:'v',variantTitle:'M',selectedOptions:[],quantity,price:{amount:String(amount),currencyCode:'USD'},product:{node:{handle:'test-suit',title:'Test suit',images:{edges:[]},variants:{edges:[]}}}}],isLoading:false,checkoutError:null,checkoutUrl,trackCheckoutClick(){}};
  try{return renderToStaticMarkup(React.createElement(CartDrawer,{isOpen:true,onClose:()=>{}}));}finally{Date.now=original;}
 }
 test('two $79.99 suits show the real $159.98 subtotal without fictitious discounts',()=>{
@@ -60,6 +61,17 @@ test('free-shipping progress uses the $150 undiscounted boundary and qualifies t
  assert.ok(render(149.99).includes('$0.01 below'));
  assert.ok(render(150).includes('before checkout discounts'));
  assert.ok(render(150).includes('Discounts are applied before shipping eligibility.'));
+});
+
+test('prepared Shopify checkout uses a native anchor for the Google linker click',()=>{
+ const destination='https://lovable-project-zlh0w.myshopify.com/cart/c/opaque-token?channel=online_store';
+ const html=render(79.99,1,'2026-10-16T12:00:00Z',destination);
+ assert.ok(html.includes(`href="${destination}"`));
+ assert.match(html,/<a[^>]*data-testid="button-checkout"/);
+ const source=readFileSync('src/components/cart/CartDrawer.tsx','utf8');
+ assert.match(source,/href=\{checkoutUrl\}/);
+ assert.match(source,/onClick=\{trackCheckoutClick\}/);
+ assert.doesNotMatch(source,/window\.location\.href|preventDefault\s*\(/);
 });
 
 

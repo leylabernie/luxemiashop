@@ -35,13 +35,35 @@ function deferCssPlugin(): import('vite').Plugin {
   };
 }
 
+const GA4_PREVIEW_HOST_MARKER = '__LUXEMIA_GA4_PREVIEW_HOST__';
+
+function getConfiguredGa4PreviewHost(): string {
+  if (process.env.VERCEL_ENV !== 'preview') return '';
+  const host = process.env.LUXEMIA_GA4_PREVIEW_HOST?.trim().toLowerCase() || '';
+  const labels = host.split('.');
+  if (!host.endsWith('.vercel.app') || !/^[a-z0-9.-]+$/.test(host)
+    || labels.some(label => !label || label.length > 63 || label.startsWith('-') || label.endsWith('-'))) return '';
+  return host;
+}
+
+function ga4PreviewHostPlugin(): Plugin {
+  return {
+    name: 'luxemia-ga4-preview-host',
+    transformIndexHtml(html) {
+      // Fail closed unless a single exact .vercel.app host is explicitly
+      // configured for a Vercel Preview deployment.
+      return html.replace(GA4_PREVIEW_HOST_MARKER, getConfiguredGa4PreviewHost());
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
   server: {
     host: isReplit ? "0.0.0.0" : "localhost",
     port: isReplit ? 5000 : 8080,
     allowedHosts: isReplit ? true : undefined,
   },
-  plugins: [react(), mode === "development" && componentTagger?.(), deferCssPlugin()].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger?.(), ga4PreviewHostPlugin(), deferCssPlugin()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
