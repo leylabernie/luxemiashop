@@ -43,11 +43,12 @@ for (const idleCallbackAvailable of [true, false]) {
     context.gtag('event', 'view_item', { items: [{ item_id: 'synthetic-variant' }] });
     const queue = context.dataLayer.map(command => Array.from(command));
     assert.equal(context.dataLayer[0], consent, 'Existing consent queue must not be reset');
-    assert.deepEqual(queue.map(command => command[0]), ['consent', 'js', 'config', 'event']);
-    assert.equal(queue[2][1], measurementId);
-    assert.equal(queue[2][2].send_page_view, false, 'SPA page tracking remains authoritative');
-    assert.equal(queue[2][2].allow_google_signals, true);
-    assert.deepEqual(Array.from(queue[2][2].linked_domains), ['luxemia.shop']);
+    assert.deepEqual(queue.map(command => command[0]), ['consent', 'js', 'set', 'config', 'event']);
+    assert.equal(queue[2][1], 'linker');
+    assert.deepEqual(Array.from(queue[2][2].domains), ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com']);
+    assert.equal(queue[3][1], measurementId);
+    assert.equal(queue[3][2].send_page_view, false, 'SPA page tracking remains authoritative');
+    assert.equal(queue[3][2].allow_google_signals, true);
     assert.equal(scripts.length, 0, 'Loading the external library must remain deferred');
 
     if (idleCallbackAvailable) {
@@ -75,7 +76,7 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
     plugins: [{ name: 'no-network-checkout', setup(builder) {
       builder.onResolve({ filter: /^@\/lib\/shopify$/ }, args => ({ path: args.path, namespace: 'fixture' }));
       builder.onLoad({ filter: /.*/, namespace: 'fixture' }, () => ({
-        contents: 'export const createStorefrontCheckout = async (...args) => { globalThis.analyticsCheckoutCalls.push(args); return "https://shop.example/checkout"; };',
+        contents: 'export const createStorefrontCheckout = async (...args) => { globalThis.analyticsCheckoutCalls.push(args); if (globalThis.analyticsCheckoutDeferred) return globalThis.analyticsCheckoutDeferred; return "https://shop.example/checkout"; };',
         loader: 'js',
       }));
     } }],
@@ -83,6 +84,7 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
   const originalWindow = globalThis.window;
   const originalStorage = globalThis.localStorage;
   const originalCalls = globalThis.analyticsCheckoutCalls;
+  const originalDeferredCheckout = globalThis.analyticsCheckoutDeferred;
   const events = [];
   const storage = new Map();
   globalThis.window = { addEventListener() {}, gtag: (...args) => events.push(args) };
@@ -92,6 +94,7 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
     removeItem: key => storage.delete(key),
   };
   globalThis.analyticsCheckoutCalls = [];
+  globalThis.analyticsCheckoutDeferred = null;
   try {
     const module = { exports: {} };
     new Function('require', 'module', 'exports', result.outputFiles[0].text)(require, module, module.exports);
@@ -121,11 +124,22 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
       await store.getState().createCheckout();
       assert.deepEqual(store.getState().items[0].customAttributes, customAttributes);
       assert.deepEqual(globalThis.analyticsCheckoutCalls.at(-1)[0][0].customAttributes, customAttributes);
-      store.getState().removeItem(line.variantId, customAttributes);
+      assert.equal(store.getState().checkoutUrl, 'https://shop.example/checkout');
       assert.deepEqual(events.map(event => event[1]), [
         'add_to_cart', 'view_cart', 'add_to_cart', 'remove_from_cart',
-        'begin_checkout', 'checkout_handoff_success', 'remove_from_cart',
+        'begin_checkout', 'checkout_handoff_success',
       ]);
+
+      store.getState().updateQuantity(line.variantId, 2, customAttributes);
+      assert.equal(store.getState().checkoutUrl, null, 'cart edits invalidate the previously approved link');
+      const eventCountBeforePreparation = events.length;
+      await store.getState().createCheckout({ trackEvents: false });
+      assert.equal(store.getState().checkoutUrl, 'https://shop.example/checkout', 'the edited cart gets a fresh URL');
+      assert.equal(events.length, eventCountBeforePreparation, 'preparing the anchor does not report checkout intent');
+      store.getState().trackCheckoutClick();
+      assert.deepEqual(events.slice(-2).map(event => event[1]), ['begin_checkout', 'checkout_handoff_success']);
+      store.getState().removeItem(line.variantId, customAttributes);
+      assert.equal(store.getState().checkoutUrl, null, 'removing a line also invalidates the checkout link');
       for (const [, , payload] of events) {
         assert.equal(payload.items[0].item_tailoring_option, undefined, customAttributes?.[0]?.key);
         assert.equal(payload.items[0].item_id, line.variantId);
@@ -133,6 +147,25 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
         assert.doesNotMatch(JSON.stringify(payload), /test@example|SYNTHETIC-MEASUREMENT|fit note/);
       }
     }
+
+    // An in-flight response for the previous cart must never restore its URL
+    // after a shopper changes quantity; the UI can then prepare a fresh link.
+    const raceLine = {
+      variantId: 'gid://shopify/ProductVariant/1', variantTitle: 'M', quantity: 1,
+      price: { amount: '100', currencyCode: 'USD' }, selectedOptions: [],
+      product: { node: { id: 'gid://shopify/Product/1', handle: 'synthetic-menswear', title: 'Synthetic garment' } },
+    };
+    store.setState({ items: [raceLine], checkoutUrl: null, cartId: null, checkoutError: null, isLoading: false });
+    let resolveDeferredCheckout;
+    globalThis.analyticsCheckoutDeferred = new Promise(resolve => { resolveDeferredCheckout = resolve; });
+    const staleRequest = store.getState().createCheckout({ trackEvents: false });
+    store.getState().updateQuantity(raceLine.variantId, 2);
+    resolveDeferredCheckout('https://shop.example/stale-checkout');
+    assert.equal(await staleRequest, null);
+    assert.equal(store.getState().checkoutUrl, null);
+    globalThis.analyticsCheckoutDeferred = null;
+    assert.equal(await store.getState().createCheckout({ trackEvents: false }), 'https://shop.example/checkout');
+    assert.equal(store.getState().checkoutUrl, 'https://shop.example/checkout');
 
     // Old carts are not exempt: the persisted fulfillment notes survive
     // rehydration but cannot become event dimensions when the bag is reopened.
@@ -177,5 +210,6 @@ test('cart analytics exclude free-text notes and body measurements but checkout 
     globalThis.window = originalWindow;
     globalThis.localStorage = originalStorage;
     globalThis.analyticsCheckoutCalls = originalCalls;
+    globalThis.analyticsCheckoutDeferred = originalDeferredCheckout;
   }
 });

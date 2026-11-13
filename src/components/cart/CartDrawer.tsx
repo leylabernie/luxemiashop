@@ -1,6 +1,6 @@
 import { hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
@@ -22,10 +22,12 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const {
     items,
     isLoading,
+    checkoutUrl,
     checkoutError,
     updateQuantity,
     removeItem,
     createCheckout,
+    trackCheckoutClick,
     trackCartView,
   } = useCartStore();
 
@@ -44,26 +46,48 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     const variant = item.product.node.variants?.edges?.find((edge) => edge.node.id === item.variantId);
     return variant?.node.availableForSale === false;
   });
+  // The checkout URL is only valid for the exact cart snapshot Shopify
+  // approved. Keep a stable key in the component so failed preparation is not
+  // retried on every render, while a cart edit immediately requests a rebuild.
+  const checkoutRequestKey = JSON.stringify(items.map((item) => ({
+    variantId: item.variantId,
+    quantity: item.quantity,
+    handle: item.product.node.handle,
+    price: item.price,
+    customAttributes: item.customAttributes || [],
+  })));
+  const attemptedCheckoutKey = useRef<string | null>(null);
+
+  useEffect(() => {
+    if (!isOpen) {
+      attemptedCheckoutKey.current = null;
+      return;
+    }
+    if (!items.length || unavailableItems.length > 0 || isLoading || checkoutUrl
+      || attemptedCheckoutKey.current === checkoutRequestKey) return;
+
+    attemptedCheckoutKey.current = checkoutRequestKey;
+    // Prepare the destination before the shopper clicks so the CTA can be a
+    // native anchor for Google's automatic cross-domain linker.
+    void createCheckout({ trackEvents: false });
+  }, [
+    isOpen,
+    items.length,
+    unavailableItems.length,
+    isLoading,
+    checkoutUrl,
+    checkoutRequestKey,
+    createCheckout,
+  ]);
 
   const formatPrice = (amount: number, _currency: string) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
 
-  const handleCheckoutClick = () => {
-    // Preserve checkout intent: the bag moves directly to secure checkout
-    // without inserting a promotional or email-capture interruption.
-    proceedToCheckout();
-  };
-
-  const proceedToCheckout = async () => {
-    if (unavailableItems.length > 0) {
-      return;
-    }
-    const checkoutUrl = await createCheckout();
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
-      onClose();
-    }
+  const handleCheckoutRetry = () => {
+    if (unavailableItems.length > 0 || isLoading) return;
+    attemptedCheckoutKey.current = checkoutRequestKey;
+    void createCheckout({ trackEvents: false });
   };
 
   return (
@@ -278,27 +302,51 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       {checkoutError}
                     </p>
                   )}
-                  <Button
-                    variant="luxury"
-                    size="lg"
-                    className="w-full"
-                    onClick={handleCheckoutClick}
-                    disabled={isLoading || unavailableItems.length > 0}
-                    data-testid="button-checkout"
-                    aria-describedby={checkoutError ? 'cart-checkout-error' : undefined}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Creating Checkout...
-                      </>
-                    ) : (
-                      <>
+                  {checkoutUrl && unavailableItems.length === 0 ? (
+                    <Button
+                      asChild
+                      variant="luxury"
+                      size="lg"
+                      className="w-full"
+                    >
+                      <a
+                        href={checkoutUrl}
+                        onClick={trackCheckoutClick}
+                        data-testid="button-checkout"
+                        aria-describedby={checkoutError ? 'cart-checkout-error' : undefined}
+                      >
                         <ArrowRight className="mr-2 h-4 w-4" />
                         Proceed to Secure Checkout
-                      </>
-                    )}
-                  </Button>
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="luxury"
+                      size="lg"
+                      className="w-full"
+                      onClick={handleCheckoutRetry}
+                      disabled={isLoading || unavailableItems.length > 0 || (!checkoutError && !checkoutUrl)}
+                      data-testid="button-checkout"
+                      aria-describedby={checkoutError ? 'cart-checkout-error' : undefined}
+                    >
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Creating Checkout...
+                        </>
+                      ) : checkoutError ? (
+                        <>
+                          <ArrowRight className="mr-2 h-4 w-4" />
+                          Retry Secure Checkout
+                        </>
+                      ) : (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Preparing Secure Checkout...
+                        </>
+                      )}
+                    </Button>
+                  )}
                   <p className="text-center text-[11px] leading-relaxed text-muted-foreground">Payment is completed securely on LuxeMia’s checkout page.</p>
                   <button
                     onClick={onClose}

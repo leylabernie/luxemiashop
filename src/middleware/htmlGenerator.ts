@@ -19,6 +19,18 @@ import { clampTitle, clampDescription } from '../lib/meta/clamp.js';
 import { renderSelectedOptions, selectInitialVariant } from './variantPrerender.js';
 import { getVariantReferencePrice } from '../lib/variantReferencePrice.js';
 
+const GA4_PREVIEW_HOST_MARKER = '__LUXEMIA_GA4_PREVIEW_HOST__';
+
+function getConfiguredGa4PreviewHost(): string {
+  const environment = typeof process === 'undefined' ? {} : process.env;
+  if (environment.VERCEL_ENV !== 'preview') return '';
+  const host = environment.LUXEMIA_GA4_PREVIEW_HOST?.trim().toLowerCase() || '';
+  const labels = host.split('.');
+  if (!host.endsWith('.vercel.app') || !/^[a-z0-9.-]+$/.test(host)
+    || labels.some(label => !label || label.length > 63 || label.startsWith('-') || label.endsWith('-'))) return '';
+  return host;
+}
+
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
     .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
@@ -448,7 +460,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     return vTitle ? `<span style="display:inline-block;padding:4px 12px;margin:2px;border:1px solid #ccc;border-radius:4px;font-size:13px;">${escapeHtml(vTitle)}</span>` : '';
   }).filter(Boolean).join('');
 
-  return `<!DOCTYPE html>
+  const generatedHtml = `<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -495,11 +507,13 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(webPageSchema)}</script>
   ${faqSchema ? `<script type="application/ld+json" data-prerender-schema>${serializeJsonLd(faqSchema)}</script>` : ''}
   <script>
-      // Analytics runs only on customer production hosts. Opt-in QA mode is
-      // tab-scoped and contains no identity, measurement or customer data.
+      // Production domains track normally. A single explicitly configured
+      // Vercel preview can be tested only with ?luxemia_preview_analytics=1.
       window.luxemiaAnalyticsEnabled = false;
       (function () {
         var host = window.location.hostname.toLowerCase();
+        var previewHost = '__LUXEMIA_GA4_PREVIEW_HOST__'.toLowerCase();
+        var previewOptIn = new URLSearchParams(window.location.search).get('luxemia_preview_analytics') === '1';
         var qa = false;
         var choice = new URLSearchParams(window.location.search).get('luxemia_qa');
         try {
@@ -511,13 +525,18 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           if (choice === '1') qa = true;
           if (choice === '0') qa = false;
         }
-        window.luxemiaAnalyticsEnabled = !qa && (host === 'luxemia.shop' || host === 'www.luxemia.shop');
+        window.luxemiaAnalyticsEnabled = !qa && (
+          host === 'luxemia.shop'
+          || host === 'www.luxemia.shop'
+          || (previewHost !== '' && host === previewHost && previewOptIn)
+        );
       })();
     window.dataLayer = window.dataLayer || [];
     function gtag(){if(window.luxemiaAnalyticsEnabled)dataLayer.push(arguments);}
     window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true, linked_domains: ['luxemia.shop'] });
+    gtag('set', 'linker', { domains: ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com'] });
+    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true });
     if(window.luxemiaAnalyticsEnabled){var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0';s.async=true;document.head.appendChild(s);}
   </script>
   <style>
@@ -616,6 +635,7 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   </div>
 </body>
 </html>`;
+  return generatedHtml.replace(GA4_PREVIEW_HOST_MARKER, getConfiguredGa4PreviewHost());
 }
 
 // ─── 404 Response ──────────────────────────────────────────────────────────

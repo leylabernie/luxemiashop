@@ -58,7 +58,8 @@ interface CartStore {
   openCart: () => void;
   closeCart: () => void;
   trackCartView: () => void;
-  createCheckout: () => Promise<string | null>;
+  createCheckout: (options?: { trackEvents?: boolean }) => Promise<string | null>;
+  trackCheckoutClick: () => void;
 }
 
 const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[], days?: number | null) => (
@@ -79,6 +80,19 @@ const normalizeCartItems = (items: CartItem[]): CartItem[] => {
   }
   return normalized;
 };
+
+function checkoutRequestSignature(items: CartItem[]): string {
+  return JSON.stringify(items.map(item => ({
+    variantId: item.variantId,
+    quantity: item.quantity,
+    handle: item.product.node.handle,
+    price: item.price,
+    customAttributes: normalizeFulfillmentAttributes(
+      item.customAttributes,
+      getProductShipsWithin(item.product.node),
+    ) || [],
+  })));
+}
 
 // Cart attributes also contain free-text fit/color requests and measurements.
 // Keep those for fulfillment only; never infer an analytics value from a key
@@ -176,6 +190,8 @@ export const useCartStore = create<CartStore>()(
         if (existingItem) {
           set({
             checkoutError: null,
+            checkoutUrl: null,
+            cartId: null,
             items: items.map((current) => (
               current.variantId === item.variantId
               && sameAttributes(current.customAttributes, item.customAttributes, getProductShipsWithin(item.product.node))
@@ -184,7 +200,7 @@ export const useCartStore = create<CartStore>()(
             )),
           });
         } else {
-          set({ items: [...items, normalizedItem], checkoutError: null });
+          set({ items: [...items, normalizedItem], checkoutError: null, checkoutUrl: null, cartId: null });
         }
       },
 
@@ -211,6 +227,8 @@ export const useCartStore = create<CartStore>()(
 
         set({
           checkoutError: null,
+          checkoutUrl: null,
+          cartId: null,
           items: get().items.map((item) => {
             const isCurrentLine = item.variantId === variantId
               && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node));
@@ -243,6 +261,8 @@ export const useCartStore = create<CartStore>()(
         linesToRemove.forEach((item) => trackRemoveFromCart(toAnalyticsItem(item)));
         set({
           checkoutError: null,
+          checkoutUrl: null,
+          cartId: null,
           items: get().items.filter((item) => !linesToRemove.includes(item)),
         });
       },
@@ -265,10 +285,26 @@ export const useCartStore = create<CartStore>()(
         );
       },
 
-      createCheckout: async () => {
-        const { setLoading, setCheckoutUrl } = get();
+      trackCheckoutClick: () => {
+        const { items, checkoutUrl } = get();
+        if (!checkoutUrl || items.length === 0) return;
+        const normalizedItems = normalizeCartItems(items);
+        const totalValue = normalizedItems.reduce(
+          (sum, item) => sum + Number(item.price.amount) * item.quantity,
+          0,
+        );
+        const analyticsItems = normalizedItems.map((item) => toAnalyticsItem(item));
+        trackBeginCheckout(analyticsItems, totalValue, normalizedItems[0]?.price.currencyCode);
+        trackCheckoutHandoffSuccess(analyticsItems, totalValue, normalizedItems[0]?.price.currencyCode);
+      },
+
+      createCheckout: async (options) => {
+        const { setLoading } = get();
         const items = normalizeCartItems(get().items);
-        if (items.length === 0) return null;
+        if (items.length === 0) {
+          set({ checkoutUrl: null, cartId: null, checkoutError: null });
+          return null;
+        }
         if (hasUnconfirmedTargetTailoring(items.map(item => ({ ...item, handle: item.product.node.handle, title: item.product.node.title })))) {
           set({ items, checkoutError: TAILORING_ENQUIRY_NOTICE, checkoutUrl: null, cartId: null, isLoading: false });
           toast.error(TAILORING_ENQUIRY_NOTICE);
@@ -280,19 +316,22 @@ export const useCartStore = create<CartStore>()(
           toast.error(message);
           return null;
         }
-        set({ items });
+        if (get().isLoading) return null;
 
+        const requestSignature = checkoutRequestSignature(items);
         const totalValue = items.reduce(
           (sum, item) => sum + Number(item.price.amount) * item.quantity,
           0,
         );
-        trackBeginCheckout(
-          items.map((item) => toAnalyticsItem(item)),
-          totalValue,
-          items[0]?.price.currencyCode,
-        );
+        if (options?.trackEvents !== false) {
+          trackBeginCheckout(
+            items.map((item) => toAnalyticsItem(item)),
+            totalValue,
+            items[0]?.price.currencyCode,
+          );
+        }
 
-        set({ isLoading: true, checkoutError: null });
+        set({ items, checkoutUrl: null, cartId: null, isLoading: true, checkoutError: null });
         try {
           const expectedPrices: Record<string, CartItem['price']> = {};
           for (const item of items) {
@@ -313,13 +352,19 @@ export const useCartStore = create<CartStore>()(
             expectedPrices,
           );
 
+          if (checkoutRequestSignature(normalizeCartItems(get().items)) !== requestSignature) {
+            return null;
+          }
+
           if (checkoutUrl) {
-            trackCheckoutHandoffSuccess(
-              items.map((item) => toAnalyticsItem(item)),
-              totalValue,
-              items[0]?.price.currencyCode,
-            );
-            setCheckoutUrl(checkoutUrl);
+            if (options?.trackEvents !== false) {
+              trackCheckoutHandoffSuccess(
+                items.map((item) => toAnalyticsItem(item)),
+                totalValue,
+                items[0]?.price.currencyCode,
+              );
+            }
+            set({ checkoutUrl, checkoutError: null });
             return checkoutUrl;
           }
 
@@ -329,11 +374,14 @@ export const useCartStore = create<CartStore>()(
           toast.error(message);
           return null;
         } catch (error) {
+          if (checkoutRequestSignature(normalizeCartItems(get().items)) !== requestSignature) {
+            return null;
+          }
           console.error('Failed to create checkout:', error);
           const message = error instanceof CheckoutCartChangedError
             ? error.message
             : 'Checkout is temporarily unavailable. Your bag is saved — please try again.';
-          set({ checkoutError: message });
+          set({ checkoutError: message, checkoutUrl: null, cartId: null });
           toast.error(message);
           return null;
         } finally {
