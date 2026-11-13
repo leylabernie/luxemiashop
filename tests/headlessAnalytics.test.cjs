@@ -11,13 +11,14 @@ const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
 const bootstrap = [...html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script>/g)]
   .map(match => match[1]).find(script => script.includes('googletagmanager.com/gtag/js'));
 
-function runBootstrap(idleCallbackAvailable) {
+function runBootstrap(idleCallbackAvailable, { host = 'luxemia.shop', search = '', previewHost = '' } = {}) {
   const callbacks = {};
   const scripts = [];
   const consent = ['consent', 'default', { analytics_storage: 'denied' }];
+  const configuredBootstrap = bootstrap.replaceAll('__LUXEMIA_GA4_PREVIEW_HOST__', previewHost);
   const context = {
     dataLayer: [consent],
-    location: { hostname: 'luxemia.shop', search: '' },
+    location: { hostname: host, search },
     URLSearchParams,
     document: {
       createElement: tag => ({ tag }),
@@ -33,7 +34,7 @@ function runBootstrap(idleCallbackAvailable) {
       callbacks.idleOptions = options;
     };
   }
-  vm.runInNewContext(bootstrap, context);
+  vm.runInNewContext(configuredBootstrap, context);
   return { context, callbacks, scripts, consent };
 }
 
@@ -67,6 +68,22 @@ for (const idleCallbackAvailable of [true, false]) {
     assert.equal(context.dataLayer.filter(command => command[0] === 'event').length, 1);
   });
 }
+
+test('approved Vercel preview host is included in the linker domain list', () => {
+  const previewHost = 'luxemiashop-git-arena-preview.vercel.app';
+  const { context } = runBootstrap(true, {
+    host: previewHost,
+    search: '?luxemia_preview_analytics=1',
+    previewHost,
+  });
+  const linker = Array.from(context.dataLayer[2]);
+  assert.equal(linker[1], 'linker');
+  assert.deepEqual(Array.from(linker[2].domains), [
+    'luxemia.shop',
+    'lovable-project-zlh0w.myshopify.com',
+    previewHost,
+  ]);
+});
 
 test('cart analytics exclude free-text notes and body measurements but checkout retains them', async () => {
   const result = await build({

@@ -47,11 +47,17 @@ for(const [i,script] of scripts.entries()) {
     assert.equal(enabled.context.luxemiaAnalyticsEnabled,true);
     assert.equal(enabled.loaded.length,1);
     assert.equal(storage.get('luxemia.analytics.preview'),'1');
+    assert.deepEqual(Array.from(enabled.context.dataLayer[2][2].domains),[
+      'luxemia.shop','lovable-project-zlh0w.myshopify.com',previewHost,
+    ]);
 
     // A separate document load with a clean URL models a browser full-page navigation.
     const navigated=run(script,{host:previewHost,previewHost,storage});
     assert.equal(navigated.context.luxemiaAnalyticsEnabled,true);
     assert.equal(navigated.loaded.length,1);
+    assert.deepEqual(Array.from(navigated.context.dataLayer[2][2].domains),[
+      'luxemia.shop','lovable-project-zlh0w.myshopify.com',previewHost,
+    ]);
     assert.equal(run(script,{host:'another-preview.vercel.app',previewHost,storage,search:'?luxemia_preview_analytics=1'}).context.luxemiaAnalyticsEnabled,false);
 
     // QA opt-out has priority over a previously granted preview-session opt-in.

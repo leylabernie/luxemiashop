@@ -508,10 +508,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <script>
       // Production domains track normally. A single explicitly configured
       // Vercel preview can be tested only with ?luxemia_preview_analytics=1.
+      var previewHost = '__LUXEMIA_GA4_PREVIEW_HOST__'.toLowerCase();
       window.luxemiaAnalyticsEnabled = false;
       (function () {
         var host = window.location.hostname.toLowerCase();
-        var previewHost = '__LUXEMIA_GA4_PREVIEW_HOST__'.toLowerCase();
         var previewChoice = new URLSearchParams(window.location.search).get('luxemia_preview_analytics');
         var previewOptIn = false;
         var qa = false;
@@ -548,7 +548,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     function gtag(){if(window.luxemiaAnalyticsEnabled)dataLayer.push(arguments);}
     window.gtag = gtag;
     gtag('js', new Date());
-    gtag('set', 'linker', { domains: ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com'] });
+    var linkerDomains = ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com'];
+    // A branch preview must also be a participant in the cross-domain journey.
+    // The runtime substitutes only the approved exact host; production gets ''.
+    if (previewHost) linkerDomains.push(previewHost);
+    gtag('set', 'linker', { domains: linkerDomains });
     gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true });
     if(window.luxemiaAnalyticsEnabled){var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0';s.async=true;document.head.appendChild(s);}
   </script>
