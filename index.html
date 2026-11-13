@@ -10,17 +10,31 @@
       (function () {
         var host = window.location.hostname.toLowerCase();
         var previewHost = '__LUXEMIA_GA4_PREVIEW_HOST__'.toLowerCase();
-        var previewOptIn = new URLSearchParams(window.location.search).get('luxemia_preview_analytics') === '1';
+        var previewChoice = new URLSearchParams(window.location.search).get('luxemia_preview_analytics');
+        var previewOptIn = false;
         var qa = false;
         var choice = new URLSearchParams(window.location.search).get('luxemia_qa');
         try {
           qa = window.sessionStorage.getItem('luxemia.analytics.qa') === '1';
           if (choice === '1') { qa = true; window.sessionStorage.setItem('luxemia.analytics.qa', '1'); }
           if (choice === '0') { qa = false; window.sessionStorage.removeItem('luxemia.analytics.qa'); }
+          if (previewHost !== '' && host === previewHost) {
+            previewOptIn = window.sessionStorage.getItem('luxemia.analytics.preview') === '1';
+            if (previewChoice === '1') {
+              previewOptIn = true;
+              window.sessionStorage.setItem('luxemia.analytics.preview', '1');
+            }
+            if (previewChoice === '0') {
+              previewOptIn = false;
+              window.sessionStorage.removeItem('luxemia.analytics.preview');
+            }
+          }
         } catch (_) {
-          // Explicit choice still applies to this document if storage is blocked.
+          // Explicit choices still apply to this document if storage is blocked.
           if (choice === '1') qa = true;
           if (choice === '0') qa = false;
+          if (host === previewHost && previewChoice === '1') previewOptIn = true;
+          if (host === previewHost && previewChoice === '0') previewOptIn = false;
         }
         window.luxemiaAnalyticsEnabled = !qa && (
           host === 'luxemia.shop'

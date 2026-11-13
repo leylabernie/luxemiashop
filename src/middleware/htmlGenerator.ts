@@ -22,9 +22,8 @@ import { getVariantReferencePrice } from '../lib/variantReferencePrice.js';
 const GA4_PREVIEW_HOST_MARKER = '__LUXEMIA_GA4_PREVIEW_HOST__';
 
 function getConfiguredGa4PreviewHost(): string {
-  const environment = typeof process === 'undefined' ? {} : process.env;
-  if (environment.VERCEL_ENV !== 'preview') return '';
-  const host = environment.LUXEMIA_GA4_PREVIEW_HOST?.trim().toLowerCase() || '';
+  if (process.env.VERCEL_ENV !== 'preview') return '';
+  const host = process.env.LUXEMIA_GA4_PREVIEW_HOST?.trim().toLowerCase() || '';
   const labels = host.split('.');
   if (!host.endsWith('.vercel.app') || !/^[a-z0-9.-]+$/.test(host)
     || labels.some(label => !label || label.length > 63 || label.startsWith('-') || label.endsWith('-'))) return '';
@@ -513,17 +512,31 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       (function () {
         var host = window.location.hostname.toLowerCase();
         var previewHost = '__LUXEMIA_GA4_PREVIEW_HOST__'.toLowerCase();
-        var previewOptIn = new URLSearchParams(window.location.search).get('luxemia_preview_analytics') === '1';
+        var previewChoice = new URLSearchParams(window.location.search).get('luxemia_preview_analytics');
+        var previewOptIn = false;
         var qa = false;
         var choice = new URLSearchParams(window.location.search).get('luxemia_qa');
         try {
           qa = window.sessionStorage.getItem('luxemia.analytics.qa') === '1';
           if (choice === '1') { qa = true; window.sessionStorage.setItem('luxemia.analytics.qa', '1'); }
           if (choice === '0') { qa = false; window.sessionStorage.removeItem('luxemia.analytics.qa'); }
+          if (previewHost !== '' && host === previewHost) {
+            previewOptIn = window.sessionStorage.getItem('luxemia.analytics.preview') === '1';
+            if (previewChoice === '1') {
+              previewOptIn = true;
+              window.sessionStorage.setItem('luxemia.analytics.preview', '1');
+            }
+            if (previewChoice === '0') {
+              previewOptIn = false;
+              window.sessionStorage.removeItem('luxemia.analytics.preview');
+            }
+          }
         } catch (_) {
-          // Explicit choice still applies to this document if storage is blocked.
+          // Explicit choices still apply to this document if storage is blocked.
           if (choice === '1') qa = true;
           if (choice === '0') qa = false;
+          if (host === previewHost && previewChoice === '1') previewOptIn = true;
+          if (host === previewHost && previewChoice === '0') previewOptIn = false;
         }
         window.luxemiaAnalyticsEnabled = !qa && (
           host === 'luxemia.shop'

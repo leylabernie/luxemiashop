@@ -403,7 +403,9 @@ export const useCartStore = create<CartStore>()(
         return {
           items,
           cartId: requiresMeasurementReentry ? null : state.cartId,
-          checkoutUrl: requiresMeasurementReentry ? null : state.checkoutUrl,
+          // Checkout links are prepared for one in-memory cart snapshot only.
+          // Never persist a hosted URL that could bypass fresh checks after a reload.
+          checkoutUrl: null,
         };
       },
       onRehydrateStorage: () => (state) => {
@@ -416,10 +418,14 @@ export const useCartStore = create<CartStore>()(
             return;
           }
 
+          // A persisted checkout URL may have been prepared for an older cart,
+          // even when this local cart appears unchanged. Rebuild on demand through
+          // createCheckout so live inventory, price and cart-integrity checks run.
+          state.checkoutUrl = null;
+
           if (state.items.some(item => hasPendingMeasurementAttributes(item.customAttributes))
             || hasUnconfirmedTargetTailoring(state.items.map(item => ({ ...item, handle: item.product.node.handle, title: item.product.node.title })))) {
             state.cartId = null;
-            state.checkoutUrl = null;
           }
 
           // Remove legacy implementation details from carts created before the

@@ -39,14 +39,29 @@ for(const [i,script] of scripts.entries()) {
     context.gtag('event','page_view',{});context.gtag('event','purchase',{});
     assert.equal(context.luxemiaAnalyticsEnabled,false);assert.equal(loaded.length,0);assert.deepEqual(context.dataLayer,[consent]);
   });
-  test(`${surface}: only the exact configured Vercel preview opts in with the temporary query flag`,()=>{
+  test(`${surface}: exact-host preview opt-in survives same-tab full-page navigation only on the approved host`,()=>{
     const previewHost='checkout-link-test.vercel.app';
-    assert.equal(run(script,{host:previewHost,previewHost}).context.luxemiaAnalyticsEnabled,false);
-    const enabled=run(script,{host:previewHost,previewHost,search:'?luxemia_preview_analytics=1'});
+    const storage=new Map();
+    assert.equal(run(script,{host:previewHost,previewHost,storage}).context.luxemiaAnalyticsEnabled,false);
+    const enabled=run(script,{host:previewHost,previewHost,search:'?luxemia_preview_analytics=1',storage});
     assert.equal(enabled.context.luxemiaAnalyticsEnabled,true);
     assert.equal(enabled.loaded.length,1);
-    assert.equal(run(script,{host:'another-preview.vercel.app',previewHost,search:'?luxemia_preview_analytics=1'}).context.luxemiaAnalyticsEnabled,false);
-    assert.equal(run(script,{host:previewHost,previewHost,search:'?luxemia_qa=1&luxemia_preview_analytics=1'}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(storage.get('luxemia.analytics.preview'),'1');
+
+    // A separate document load with a clean URL models a browser full-page navigation.
+    const navigated=run(script,{host:previewHost,previewHost,storage});
+    assert.equal(navigated.context.luxemiaAnalyticsEnabled,true);
+    assert.equal(navigated.loaded.length,1);
+    assert.equal(run(script,{host:'another-preview.vercel.app',previewHost,storage,search:'?luxemia_preview_analytics=1'}).context.luxemiaAnalyticsEnabled,false);
+
+    // QA opt-out has priority over a previously granted preview-session opt-in.
+    assert.equal(run(script,{host:previewHost,previewHost,storage,search:'?luxemia_qa=1'}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(run(script,{host:previewHost,previewHost,storage}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(run(script,{host:previewHost,previewHost,storage,search:'?luxemia_qa=0'}).context.luxemiaAnalyticsEnabled,true);
+
+    // The preview grant is temporary and can be explicitly cleared too.
+    assert.equal(run(script,{host:previewHost,previewHost,storage,search:'?luxemia_preview_analytics=0'}).context.luxemiaAnalyticsEnabled,false);
+    assert.equal(storage.has('luxemia.analytics.preview'),false);
   });
   test(`${surface}: explicit opt-in persists only in session and clear restores next load`,()=>{
     const storage=new Map();let state=run(script,{search:'?luxemia_qa=1',storage});
