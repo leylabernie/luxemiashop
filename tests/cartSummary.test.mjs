@@ -10,7 +10,7 @@ const result = await build({
   entryPoints: [resolve('src/components/cart/CartDrawer.tsx')], bundle: true, write: false,
   platform: 'node', format: 'cjs', jsx: 'automatic', external: ['react', 'react/jsx-runtime'],
   plugins: [{ name: 'isolated-ui-fixtures', setup(b) {
-    b.onResolve({filter: /^@\/lib\/measurementRequest$/}, () => ({path: resolve('src/lib/measurementRequest.ts')}));
+    b.onResolve({filter: /^@\/lib\/(measurementRequest|cartCheckoutSnapshot|fulfillmentAttributes)$/}, a => ({path: resolve('src/lib', a.path.split('/').at(-1)+'.ts')}));
     b.onResolve({filter: /^@\/config\/(shippingPolicy)$/}, a => ({path: resolve('src/config', a.path.split('/').at(-1)+'.ts')}));
     b.onResolve({filter: /^(framer-motion|lucide-react|@\/)/}, a => ({path:a.path, namespace:'fixture'}));
     b.onLoad({filter:/.*/,namespace:'fixture'}, a => {

@@ -194,9 +194,9 @@ export const trackAddPaymentInfo = (
   });
 };
 
-// The purchase event is sent only from OrderConfirmation after an order ID is
-// available. This prevents the generic app shell from creating empty or duplicate
-// purchases when a shopper returns from Shopify checkout.
+// Reserved for a future verified order integration. OrderConfirmation does not
+// call this helper: that route has no authenticated order data. A checkout return
+// URL or query-string order ID is not proof of purchase and must not trigger it.
 export const trackPurchase = (data: AnalyticsPurchase) => {
   if (window.luxemiaAnalyticsEnabled === false || typeof window.gtag !== 'function' || !data.transactionId || !Number.isFinite(data.value)) return;
 

@@ -1,6 +1,7 @@
 import { defineConfig, type Plugin } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
+import { getPreviewAnalyticsConfig, injectPreviewAnalyticsConfig } from "./src/config/previewAnalytics";
 
 let componentTagger: (() => Plugin) | undefined;
 try {
@@ -10,6 +11,17 @@ try {
 }
 
 const isReplit = !!process.env.REPL_ID;
+
+function previewAnalyticsPlugin(): Plugin {
+  const config = getPreviewAnalyticsConfig(process.env);
+  return {
+    name: 'analytics-preview-bootstrap',
+    apply: 'build',
+    transformIndexHtml(html: string) {
+      return injectPreviewAnalyticsConfig(html, config);
+    },
+  };
+}
 
 // Vite plugin: make CSS links non-render-blocking using the media="print" trick.
 // PageSpeed flags <link rel="stylesheet"> as render-blocking. This plugin
@@ -41,7 +53,7 @@ export default defineConfig(({ mode }) => ({
     port: isReplit ? 5000 : 8080,
     allowedHosts: isReplit ? true : undefined,
   },
-  plugins: [react(), mode === "development" && componentTagger?.(), deferCssPlugin()].filter(Boolean),
+  plugins: [react(), mode === "development" && componentTagger?.(), previewAnalyticsPlugin(), deferCssPlugin()].filter(Boolean),
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

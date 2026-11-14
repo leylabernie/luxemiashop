@@ -4,6 +4,7 @@ import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
 import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
 import { getProductShipsWithin } from '@/lib/shipBy';
 import { hasUnconfirmedTargetTailoring, isEnquiryOnlyVariant, requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE } from '@/lib/tailoringEnquiry';
+import { getCartCheckoutSignature, normalizeCartItems, sameCartAttributes as sameAttributes } from '@/lib/cartCheckoutSnapshot';
 import { normalizeFulfillmentAttributes } from '@/lib/fulfillmentAttributes';
 import { redactMeasurementAttributes, hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import {
@@ -47,6 +48,11 @@ interface CartStore {
   isLoading: boolean;
   isCartOpen: boolean;
   checkoutError: string | null;
+  cartRevision: number;
+  preparedShopifyCheckoutUrl: string | null;
+  preparedCheckoutSignature: string | null;
+  preparedCheckoutRevision: number | null;
+  checkoutPreparationStatus: 'idle' | 'preparing' | 'ready' | 'error';
 
   addItem: (item: CartItem) => void;
   updateQuantity: (variantId: string, quantity: number, customAttributes?: CartAttribute[]) => void;
@@ -58,27 +64,16 @@ interface CartStore {
   openCart: () => void;
   closeCart: () => void;
   trackCartView: () => void;
-  createCheckout: () => Promise<string | null>;
+  createCheckout: (options?: { trackIntent?: boolean; retry?: boolean }) => Promise<string | null>;
+  prepareCheckout: (retry?: boolean) => Promise<string | null>;
+  trackPreparedCheckoutIntent: () => void;
 }
 
-const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[], days?: number | null) => (
-  JSON.stringify(normalizeFulfillmentAttributes(left, days) || []) === JSON.stringify(normalizeFulfillmentAttributes(right, days) || [])
-);
+export { getCartCheckoutSignature } from '@/lib/cartCheckoutSnapshot';
 
-// Multiple tabs can leave old and current automatic-copy versions in storage.
-// Collapse only lines with the existing variant/attribute identity, summing all
-// quantities once and retaining the first line's product, options and price.
-const normalizeCartItems = (items: CartItem[]): CartItem[] => {
-  const normalized: CartItem[] = [];
-  for (const item of items) {
-    const candidate = { ...item, customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)) };
-    const existing = normalized.find(current => current.variantId === candidate.variantId
-      && sameAttributes(current.customAttributes, candidate.customAttributes, getProductShipsWithin(candidate.product.node)));
-    if (existing) existing.quantity += candidate.quantity;
-    else normalized.push(candidate);
-  }
-  return normalized;
-};
+const hasLocallyUnavailableItems = (items: CartItem[]): boolean => items.some(item => (
+  item.product.node.variants?.edges?.find(edge => edge.node.id === item.variantId)?.node.availableForSale === false
+));
 
 // Cart attributes also contain free-text fit/color requests and measurements.
 // Keep those for fulfillment only; never infer an analytics value from a key
@@ -123,6 +118,18 @@ const isDependentServiceFor = (service: CartItem, garment: CartItem): boolean =>
   return true;
 };
 
+const getCheckoutInvalidation = (state: CartStore) => ({
+  cartRevision: (state.cartRevision ?? 0) + 1,
+  cartId: null,
+  checkoutUrl: null,
+  preparedShopifyCheckoutUrl: null,
+  preparedCheckoutSignature: null,
+  preparedCheckoutRevision: null,
+  checkoutPreparationStatus: 'idle' as const,
+  checkoutError: null,
+  isLoading: false,
+});
+
 const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsItem => {
   const serviceLine = isServiceLine(item);
   const serviceVariant = item.variantTitle.replace(/\s*\(\+\$[\d.]+\)\s*$/, '');
@@ -148,17 +155,33 @@ const toAnalyticsItem = (item: CartItem, quantity = item.quantity): AnalyticsIte
 
 export const useCartStore = create<CartStore>()(
   persist(
-    (set, get) => ({
+    (set, get) => {
+      let requestRevision = 0;
+      let activeCheckout: Promise<string | null> | null = null;
+      let pendingPreparation: { cartRevision: number; signature: string; promise: Promise<string | null> } | null = null;
+      const invalidateCheckout = () => {
+        // Advance even for A -> B -> A edits; a matching signature alone cannot
+        // authorize a response from an earlier version of the bag.
+        requestRevision += 1;
+        pendingPreparation = null;
+        return getCheckoutInvalidation(get());
+      };
+      return {
       items: [],
       cartId: null,
       checkoutUrl: null,
       isLoading: false,
       isCartOpen: false,
       checkoutError: null,
+      cartRevision: 0,
+      preparedShopifyCheckoutUrl: null,
+      preparedCheckoutSignature: null,
+      preparedCheckoutRevision: null,
+      checkoutPreparationStatus: 'idle',
 
       addItem: (item) => {
         if (isEnquiryOnlyVariant(item.product.node.handle, item.variantId, item.selectedOptions)) {
-          set({ checkoutError: TAILORING_ENQUIRY_NOTICE, checkoutUrl: null, cartId: null });
+          set({ ...invalidateCheckout(), checkoutError: TAILORING_ENQUIRY_NOTICE });
           toast.error(TAILORING_ENQUIRY_NOTICE);
           return;
         }
@@ -175,7 +198,7 @@ export const useCartStore = create<CartStore>()(
 
         if (existingItem) {
           set({
-            checkoutError: null,
+            ...invalidateCheckout(),
             items: items.map((current) => (
               current.variantId === item.variantId
               && sameAttributes(current.customAttributes, item.customAttributes, getProductShipsWithin(item.product.node))
@@ -184,7 +207,7 @@ export const useCartStore = create<CartStore>()(
             )),
           });
         } else {
-          set({ items: [...items, normalizedItem], checkoutError: null });
+          set({ ...invalidateCheckout(), items: [...items, normalizedItem] });
         }
       },
 
@@ -201,6 +224,7 @@ export const useCartStore = create<CartStore>()(
         }
 
         const quantityDelta = quantity - current.quantity;
+        if (quantityDelta === 0) return;
         if (quantityDelta > 0) {
           trackAddToCart(toAnalyticsItem(current, quantityDelta));
         } else if (quantityDelta < 0) {
@@ -210,7 +234,7 @@ export const useCartStore = create<CartStore>()(
         const shouldSyncServiceQuantities = !isServiceLine(current);
 
         set({
-          checkoutError: null,
+          ...invalidateCheckout(),
           items: get().items.map((item) => {
             const isCurrentLine = item.variantId === variantId
               && sameAttributes(item.customAttributes, customAttributes, getProductShipsWithin(item.product.node));
@@ -242,17 +266,18 @@ export const useCartStore = create<CartStore>()(
 
         linesToRemove.forEach((item) => trackRemoveFromCart(toAnalyticsItem(item)));
         set({
-          checkoutError: null,
+          ...getCheckoutInvalidation(get()),
           items: get().items.filter((item) => !linesToRemove.includes(item)),
         });
       },
 
       clearCart: () => {
-        set({ items: [], cartId: null, checkoutUrl: null, checkoutError: null });
+        set({ ...invalidateCheckout(), items: [] });
       },
 
       setCartId: (cartId) => set({ cartId }),
-      setCheckoutUrl: (checkoutUrl) => set({ checkoutUrl }),
+      // Legacy setters remain available, but cannot enable the prepared link.
+      setCheckoutUrl: (checkoutUrl) => set({ ...invalidateCheckout(), cartId: get().cartId, checkoutUrl }),
       setLoading: (isLoading) => set({ isLoading }),
       openCart: () => set({ isCartOpen: true }),
       closeCart: () => set({ isCartOpen: false }),
@@ -265,82 +290,130 @@ export const useCartStore = create<CartStore>()(
         );
       },
 
-      createCheckout: async () => {
-        const { setLoading, setCheckoutUrl } = get();
+      prepareCheckout: (retry = false) => get().createCheckout({ trackIntent: false, retry }),
+
+      trackPreparedCheckoutIntent: () => {
+        const state = get();
+        if (state.checkoutPreparationStatus !== 'ready' || !state.preparedShopifyCheckoutUrl
+          || state.preparedCheckoutRevision !== state.cartRevision
+          || state.preparedCheckoutSignature !== getCartCheckoutSignature(state.items)
+          || hasLocallyUnavailableItems(state.items)) return;
+        const totalValue = state.items.reduce((sum, item) => sum + Number(item.price.amount) * item.quantity, 0);
+        // Called by a real anchor activation only. No navigation, cancellation,
+        // synthetic clicks or drawer closing is performed here.
+        trackBeginCheckout(state.items.map(item => toAnalyticsItem(item)), totalValue, state.items[0]?.price.currencyCode);
+        trackCheckoutHandoffSuccess(state.items.map(item => toAnalyticsItem(item)), totalValue, state.items[0]?.price.currencyCode);
+      },
+
+      createCheckout: async ({ trackIntent = true, retry = false } = {}) => {
         const items = normalizeCartItems(get().items);
-        if (items.length === 0) return null;
+        const signature = getCartCheckoutSignature(items);
+        const cartRevision = get().cartRevision;
+        const preparation = !trackIntent;
+        if (preparation && get().preparedCheckoutRevision === cartRevision && get().preparedCheckoutSignature === signature) {
+          if (get().checkoutPreparationStatus === 'ready') return get().preparedShopifyCheckoutUrl;
+          if (pendingPreparation?.cartRevision === cartRevision && pendingPreparation.signature === signature) return pendingPreparation.promise;
+          if (get().checkoutPreparationStatus === 'error' && !retry) return null;
+        }
+        if (items.length === 0) {
+          set(invalidateCheckout());
+          return null;
+        }
+        const revision = ++requestRevision;
+        const isCurrent = () => revision === requestRevision && cartRevision === get().cartRevision
+          && signature === getCartCheckoutSignature(get().items);
+        const fail = (message: string) => {
+          if (!isCurrent()) return;
+          set({ checkoutError: message, checkoutUrl: null, preparedShopifyCheckoutUrl: null,
+            cartId: null, isLoading: false, checkoutPreparationStatus: 'error' });
+          if (trackIntent) toast.error(message);
+        };
+        set({ items, isLoading: true, checkoutError: null, checkoutUrl: null, cartId: null,
+          preparedShopifyCheckoutUrl: null, preparedCheckoutSignature: signature,
+          preparedCheckoutRevision: cartRevision, checkoutPreparationStatus: 'preparing' });
+        if (hasLocallyUnavailableItems(items)) {
+          fail('One or more items is no longer available. Remove it from your bag to continue.');
+          return null;
+        }
         if (hasUnconfirmedTargetTailoring(items.map(item => ({ ...item, handle: item.product.node.handle, title: item.product.node.title })))) {
-          set({ items, checkoutError: TAILORING_ENQUIRY_NOTICE, checkoutUrl: null, cartId: null, isLoading: false });
-          toast.error(TAILORING_ENQUIRY_NOTICE);
+          fail(TAILORING_ENQUIRY_NOTICE);
           return null;
         }
         if (items.some(item => hasPendingMeasurementAttributes(item.customAttributes))) {
           const message = 'Re-enter your measurement details on the product page before checkout. They are not saved on this device.';
-          set({ items, checkoutError: message, checkoutUrl: null, cartId: null, isLoading: false });
-          toast.error(message);
+          fail(message);
           return null;
         }
-        set({ items });
 
         const totalValue = items.reduce(
           (sum, item) => sum + Number(item.price.amount) * item.quantity,
           0,
         );
-        trackBeginCheckout(
-          items.map((item) => toAnalyticsItem(item)),
-          totalValue,
-          items[0]?.price.currencyCode,
-        );
-
-        set({ isLoading: true, checkoutError: null });
-        try {
-          const expectedPrices: Record<string, CartItem['price']> = {};
-          for (const item of items) {
-            const previous = expectedPrices[item.variantId];
-            if (previous && (Number(previous.amount) !== Number(item.price.amount) || previous.currencyCode !== item.price.currencyCode)) {
-              throw new CheckoutCartChangedError('A selected product price changed. Reload the product page to review its current price before checkout.');
-            }
-            expectedPrices[item.variantId] = item.price;
-          }
-          const checkoutUrl = await createStorefrontCheckout(
-            items.map((item) => ({
-              variantId: item.variantId,
-              quantity: item.quantity,
-              handle: item.product.node.handle,
-              customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)),
-            })),
-            undefined,
-            expectedPrices,
-          );
-
-          if (checkoutUrl) {
-            trackCheckoutHandoffSuccess(
-              items.map((item) => toAnalyticsItem(item)),
-              totalValue,
-              items[0]?.price.currencyCode,
-            );
-            setCheckoutUrl(checkoutUrl);
-            return checkoutUrl;
-          }
-
-          console.error('Shopify returned no checkout URL; preserving the cart');
-          const message = 'Checkout could not be created. Your bag is saved — please try again.';
-          set({ checkoutError: message });
-          toast.error(message);
-          return null;
-        } catch (error) {
-          console.error('Failed to create checkout:', error);
-          const message = error instanceof CheckoutCartChangedError
-            ? error.message
-            : 'Checkout is temporarily unavailable. Your bag is saved — please try again.';
-          set({ checkoutError: message });
-          toast.error(message);
-          return null;
-        } finally {
-          setLoading(false);
+        if (trackIntent) {
+          trackBeginCheckout(items.map((item) => toAnalyticsItem(item)), totalValue, items[0]?.price.currencyCode);
         }
+
+        // Serialize Shopify creation, coalescing edits while an older request is
+        // pending. Re-renders/reopens reuse one request per stable bag; superseded
+        // queued snapshots never create their own abandoned Shopify carts.
+        const previousCheckout = activeCheckout;
+        const promise = (async () => {
+          try {
+            await previousCheckout;
+            if (!isCurrent()) return null;
+            const expectedPrices: Record<string, CartItem['price']> = {};
+            for (const item of items) {
+              const previous = expectedPrices[item.variantId];
+              if (previous && (Number(previous.amount) !== Number(item.price.amount) || previous.currencyCode !== item.price.currencyCode)) {
+                throw new CheckoutCartChangedError('A selected product price changed. Reload the product page to review its current price before checkout.');
+              }
+              expectedPrices[item.variantId] = item.price;
+            }
+            const checkoutUrl = await createStorefrontCheckout(
+              items.map((item) => ({
+                variantId: item.variantId,
+                quantity: item.quantity,
+                handle: item.product.node.handle,
+                customAttributes: normalizeFulfillmentAttributes(item.customAttributes, getProductShipsWithin(item.product.node)),
+              })),
+              undefined,
+              expectedPrices,
+            );
+
+            if (!isCurrent()) return null;
+            if (checkoutUrl) {
+              if (trackIntent) {
+                trackCheckoutHandoffSuccess(items.map((item) => toAnalyticsItem(item)), totalValue, items[0]?.price.currencyCode);
+              }
+              set({ checkoutUrl, preparedShopifyCheckoutUrl: checkoutUrl, checkoutPreparationStatus: 'ready' });
+              return checkoutUrl;
+            }
+
+            console.error('Shopify returned no checkout URL; preserving the cart');
+            const message = 'Checkout could not be created. Your bag is saved — please try again.';
+            fail(message);
+            return null;
+          } catch (error) {
+            if (!isCurrent()) return null;
+            console.error('Failed to create checkout:', error);
+            const message = error instanceof CheckoutCartChangedError
+              ? error.message
+              : 'Checkout is temporarily unavailable. Your bag is saved — please try again.';
+            fail(message);
+            return null;
+          } finally {
+            if (isCurrent()) set({ isLoading: false });
+          }
+        })();
+        activeCheckout = promise;
+        if (preparation) pendingPreparation = { cartRevision, signature, promise };
+        const checkoutUrl = await promise;
+        if (activeCheckout === promise) activeCheckout = null;
+        if (pendingPreparation?.promise === promise) pendingPreparation = null;
+        return checkoutUrl;
       },
-    }),
+      };
+    },
     {
       name: 'shopify-cart',
       storage: createJSONStorage(() => localStorage),
@@ -352,12 +425,28 @@ export const useCartStore = create<CartStore>()(
           customAttributes: redactMeasurementAttributes(item.customAttributes),
         }));
         const requiresMeasurementReentry = items.some(item => hasPendingMeasurementAttributes(item.customAttributes));
+        // Prepared URLs/signatures are ephemeral. Preserve legacy setter
+        // serialization for API compatibility, but discard it on every reload.
+        const hasPreparedCheckout = state.preparedCheckoutSignature !== null;
         return {
           items,
-          cartId: requiresMeasurementReentry ? null : state.cartId,
-          checkoutUrl: requiresMeasurementReentry ? null : state.checkoutUrl,
+          cartId: requiresMeasurementReentry || hasPreparedCheckout ? null : state.cartId,
+          checkoutUrl: requiresMeasurementReentry || hasPreparedCheckout ? null : state.checkoutUrl,
         };
       },
+      merge: (persistedState, currentState) => ({
+        ...currentState,
+        items: (persistedState as Partial<CartStore>)?.items ?? currentState.items,
+        cartRevision: currentState.cartRevision + 1,
+        cartId: null,
+        checkoutUrl: null,
+        preparedShopifyCheckoutUrl: null,
+        preparedCheckoutSignature: null,
+        preparedCheckoutRevision: null,
+        checkoutPreparationStatus: 'idle',
+        isLoading: false,
+        checkoutError: null,
+      }),
       onRehydrateStorage: () => (state) => {
         if (state) {
           const serialized = JSON.stringify(state.items) + (state.checkoutUrl || '');

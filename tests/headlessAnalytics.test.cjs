@@ -43,11 +43,17 @@ for (const idleCallbackAvailable of [true, false]) {
     context.gtag('event', 'view_item', { items: [{ item_id: 'synthetic-variant' }] });
     const queue = context.dataLayer.map(command => Array.from(command));
     assert.equal(context.dataLayer[0], consent, 'Existing consent queue must not be reset');
-    assert.deepEqual(queue.map(command => command[0]), ['consent', 'js', 'config', 'event']);
-    assert.equal(queue[2][1], measurementId);
-    assert.equal(queue[2][2].send_page_view, false, 'SPA page tracking remains authoritative');
-    assert.equal(queue[2][2].allow_google_signals, true);
-    assert.deepEqual(Array.from(queue[2][2].linked_domains), ['luxemia.shop']);
+    const linkerIndex = queue.findIndex(command => command[0] === 'set' && command[1] === 'linker');
+    const configIndex = queue.findIndex(command => command[0] === 'config' && command[1] === measurementId);
+    const eventIndex = queue.findIndex(command => command[0] === 'event' && command[1] === 'view_item');
+    assert.ok(queue.some(command => command[0] === 'js'));
+    assert.ok(linkerIndex > -1 && configIndex > linkerIndex && eventIndex > configIndex);
+    const config = queue[configIndex];
+    assert.equal(config[1], measurementId);
+    assert.equal(config[2].send_page_view, false, 'SPA page tracking remains authoritative');
+    assert.equal(config[2].allow_google_signals, true);
+    assert.equal(Object.hasOwn(config[2], 'linked_domains'), false);
+    assert.deepEqual(Array.from(queue[linkerIndex][2].domains), ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com']);
     assert.equal(scripts.length, 0, 'Loading the external library must remain deferred');
 
     if (idleCallbackAvailable) {

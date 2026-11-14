@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
+import { getCartCheckoutSignature } from '@/lib/cartCheckoutSnapshot';
 import { getProductShipsWithin } from '@/lib/shipBy';
 import { normalizeFulfillmentAttributes } from '../../lib/fulfillmentAttributes';
 import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
@@ -23,9 +24,15 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     items,
     isLoading,
     checkoutError,
+    cartRevision,
+    preparedShopifyCheckoutUrl,
+    preparedCheckoutSignature,
+    preparedCheckoutRevision,
+    checkoutPreparationStatus,
     updateQuantity,
     removeItem,
-    createCheckout,
+    prepareCheckout,
+    trackPreparedCheckoutIntent,
     trackCartView,
   } = useCartStore();
 
@@ -34,6 +41,14 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
       trackCartView();
     }
   }, [isOpen, trackCartView]);
+
+  // Depend on a stable normalized snapshot, not the items array: checkout
+  // preparation itself normalizes that array. Store revisions also catch an
+  // edit followed by a reversal before React renders again.
+  const checkoutSignature = getCartCheckoutSignature(items);
+  useEffect(() => {
+    if (isOpen && items.length > 0) void prepareCheckout();
+  }, [isOpen, items.length, checkoutSignature, cartRevision, prepareCheckout]);
   
   const subtotal = items.reduce((sum, item) => sum + parseFloat(item.price.amount) * item.quantity, 0);
   const currencyCode = items[0]?.price.currencyCode || 'USD';
@@ -44,26 +59,14 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     const variant = item.product.node.variants?.edges?.find((edge) => edge.node.id === item.variantId);
     return variant?.node.availableForSale === false;
   });
+  const checkoutReady = Boolean(preparedShopifyCheckoutUrl)
+    && checkoutPreparationStatus === 'ready'
+    && preparedCheckoutRevision === cartRevision
+    && preparedCheckoutSignature === checkoutSignature
+    && !isLoading && unavailableItems.length === 0;
 
   const formatPrice = (amount: number, _currency: string) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
-  };
-
-  const handleCheckoutClick = () => {
-    // Preserve checkout intent: the bag moves directly to secure checkout
-    // without inserting a promotional or email-capture interruption.
-    proceedToCheckout();
-  };
-
-  const proceedToCheckout = async () => {
-    if (unavailableItems.length > 0) {
-      return;
-    }
-    const checkoutUrl = await createCheckout();
-    if (checkoutUrl) {
-      window.location.href = checkoutUrl;
-      onClose();
-    }
   };
 
   return (
@@ -278,27 +281,36 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       {checkoutError}
                     </p>
                   )}
-                  <Button
-                    variant="luxury"
-                    size="lg"
-                    className="w-full"
-                    onClick={handleCheckoutClick}
-                    disabled={isLoading || unavailableItems.length > 0}
-                    data-testid="button-checkout"
-                    aria-describedby={checkoutError ? 'cart-checkout-error' : undefined}
-                  >
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                        Creating Checkout...
-                      </>
-                    ) : (
-                      <>
+                  {checkoutReady && preparedShopifyCheckoutUrl ? (
+                    <Button asChild variant="luxury" size="lg" className="w-full">
+                      <a
+                        href={preparedShopifyCheckoutUrl}
+                        data-testid="button-checkout"
+                        onClick={trackPreparedCheckoutIntent}
+                        onAuxClick={(event) => { if (event.button === 1) trackPreparedCheckoutIntent(); }}
+                      >
                         <ArrowRight className="mr-2 h-4 w-4" />
                         Proceed to Secure Checkout
-                      </>
-                    )}
-                  </Button>
+                      </a>
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="luxury"
+                      size="lg"
+                      className="w-full"
+                      onClick={() => { void prepareCheckout(true); }}
+                      disabled={isLoading || unavailableItems.length > 0 || !checkoutError}
+                      data-testid="button-checkout"
+                      aria-describedby={checkoutError ? 'cart-checkout-error' : undefined}
+                    >
+                      {isLoading || !checkoutError ? (
+                        <>
+                          <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                          Preparing Checkout...
+                        </>
+                      ) : 'Retry Secure Checkout'}
+                    </Button>
+                  )}
                   <p className="text-center text-[11px] leading-relaxed text-muted-foreground">Payment is completed securely on LuxeMia’s checkout page.</p>
                   <button
                     onClick={onClose}

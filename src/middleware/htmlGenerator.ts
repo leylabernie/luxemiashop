@@ -18,6 +18,15 @@ import { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_S
 import { clampTitle, clampDescription } from '../lib/meta/clamp.js';
 import { renderSelectedOptions, selectInitialVariant } from './variantPrerender.js';
 import { getVariantReferencePrice } from '../lib/variantReferencePrice.js';
+import { getPreviewAnalyticsConfig, serializePreviewAnalyticsConfig } from '../config/previewAnalytics.js';
+
+// Snapshot this deployment's environment, never request-derived preview aliases.
+// Vercel's middleware bundle provides the same scoped values as the Vite build.
+const previewAnalyticsConfig = serializePreviewAnalyticsConfig(getPreviewAnalyticsConfig({
+  VERCEL_ENV: process.env.VERCEL_ENV,
+  VERCEL_GIT_COMMIT_REF: process.env.VERCEL_GIT_COMMIT_REF,
+  VERCEL_URL: process.env.VERCEL_URL,
+}));
 
 function sanitizeSeoTitle(value: string): string {
   return (value || '')
@@ -495,13 +504,14 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
   <script type="application/ld+json" data-prerender-schema>${serializeJsonLd(webPageSchema)}</script>
   ${faqSchema ? `<script type="application/ld+json" data-prerender-schema>${serializeJsonLd(faqSchema)}</script>` : ''}
   <script>
-      // Analytics runs only on customer production hosts. Opt-in QA mode is
-      // tab-scoped and contains no identity, measurement or customer data.
+      // Production hosts plus one build-approved, expiring preview opt-in.
+      // QA suppression and preview opt-in are tab-scoped, with no customer data.
       window.luxemiaAnalyticsEnabled = false;
       (function () {
         var host = window.location.hostname.toLowerCase();
         var qa = false;
-        var choice = new URLSearchParams(window.location.search).get('luxemia_qa');
+        var query = new URLSearchParams(window.location.search);
+        var choice = query.get('luxemia_qa');
         try {
           qa = window.sessionStorage.getItem('luxemia.analytics.qa') === '1';
           if (choice === '1') { qa = true; window.sessionStorage.setItem('luxemia.analytics.qa', '1'); }
@@ -511,13 +521,40 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           if (choice === '1') qa = true;
           if (choice === '0') qa = false;
         }
-        window.luxemiaAnalyticsEnabled = !qa && (host === 'luxemia.shop' || host === 'www.luxemia.shop');
+        var preview = /* luxemia-preview-analytics-config */ ${previewAnalyticsConfig};
+        var previewEnabled = false;
+        var expiresAt = preview ? Date.parse(preview.expiresAt) : 0;
+        if (preview && host === preview.hostname && Date.now() < expiresAt) {
+          var optIn = query.get('luxemia_linker_test') === preview.optIn;
+          var storedChoice = host + '|' + preview.optIn;
+          try {
+            previewEnabled = window.sessionStorage.getItem('luxemia.analytics.linker-test') === storedChoice;
+            if (optIn) { previewEnabled = true; window.sessionStorage.setItem('luxemia.analytics.linker-test', storedChoice); }
+          } catch (_) {
+            previewEnabled = optIn;
+          }
+        }
+        var productionHost = host === 'luxemia.shop' || host === 'www.luxemia.shop';
+        window.luxemiaAnalyticsEnabled = !qa && (productionHost || previewEnabled);
+        if (!qa && !productionHost && previewEnabled) {
+          // Recheck the deadline on every send/load, including an already-open tab.
+          Object.defineProperty(window, 'luxemiaAnalyticsEnabled', {
+            configurable: true,
+            get: function () { return Date.now() < expiresAt; }
+          });
+          var disablePreviewAnalytics = function () {
+            if (Date.now() >= expiresAt) window['ga-disable-G-D1NN0TC3Y0'] = true;
+          };
+          window.setTimeout(disablePreviewAnalytics, Math.max(0, expiresAt - Date.now()));
+          window.addEventListener('visibilitychange', disablePreviewAnalytics);
+        }
       })();
     window.dataLayer = window.dataLayer || [];
     function gtag(){if(window.luxemiaAnalyticsEnabled)dataLayer.push(arguments);}
     window.gtag = gtag;
     gtag('js', new Date());
-    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true, linked_domains: ['luxemia.shop'] });
+    gtag('set','linker',{domains:['luxemia.shop','lovable-project-zlh0w.myshopify.com']});
+    gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true });
     if(window.luxemiaAnalyticsEnabled){var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0';s.async=true;document.head.appendChild(s);}
   </script>
   <style>
