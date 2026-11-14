@@ -66,3 +66,46 @@ For an actual optimization preview, repeat this matrix with current in-stock fix
 - This report.
 
 Rollback: close the diagnostic PR or revert its single diagnostic commit. There is no runtime change, migration or tracking configuration to undo. Any later optimization requires its own measured before/after preview evidence and production remains subject to separate owner approval.
+
+
+## Follow-up: measured preview build evidence
+
+The earlier access limitations remain for direct production HTTP and browser testing, but **preview build-output attribution is now available**. The connector was initially scoped to the other project referenced by the GitHub bot; discovery located the authorized `labbhamini-7947s-projects/luxemiashop` project. The deployed-file tree endpoint returned 404, so an additional read-only build-end diagnostic now logs the measurements during Vercel preview builds only. It skips outside preview and never rewrites the generated HTML.
+
+Evidence deployment: https://vercel.com/labbhamini-7947s-projects/luxemiashop/8dxaw8j1voqLFNKbV7etNKv6UQZV
+
+Immutable preview: https://luxemiashop-9i0vpnjvx-labbhamini-7947s-projects.vercel.app
+
+Measured commit: `3fd6f68b355f815c8563a94c09d1bc54e6155082`. Vercel reports READY/STAGED, not promoted to production. Audit log timestamps: `1794615496418` and `1794615496419` milliseconds since epoch. These are actual final prerender build files from the full preview build, **not a reproduction of the production HTTP response or measured transfer**.
+
+| Measure, bytes | `/collections` | `/collections/banarasi-sarees` |
+| --- | ---: | ---: |
+| Uncompressed final prerender HTML | 1,027,301 | 1,282,499 |
+| Initial-data script element | 738,713 | 1,094,251 |
+| Variant fields, JSON reserialized | 602,607 | 1,016,112 |
+| Description fields, JSON reserialized | 48,256 | 32,518 |
+| Image fields, JSON reserialized | 43,820 | 16,317 |
+| Structured-data script elements | 164,389 | 116,324 |
+| Non-script HTML | 120,211 | 67,936 |
+| Hydration product count | 50 | 34 |
+| Product link occurrences | 253 | 34 |
+| Estimated gzip body (Node defaults) | 78,155 | 68,658 |
+| Estimated Brotli body (Node defaults) | 40,514 | 29,108 |
+| Measured encoded HTTP transfer | unavailable | unavailable |
+
+Variant data is approximately 59% and 79% of total decoded HTML respectively (field reserialization measure). The build-output magnitudes corroborate the reported observations, but must not be relabeled as live production measurements. Both pages parsed without JSON-LD or hydration JSON errors. Each contains one ItemList and one CollectionPage; that does not constitute a complete schema validator result. Compression is substantial, so decoded size alone does not prove excessive transfer cost or a CWV regression.
+
+### Safety decision
+
+No products, variants, options, prices, images, descriptions, structured data, cards or overflow links were removed. The largest contributor is purchasing-related variant data. A collection-specific representation or lossless encoding needs round-trip/consumer tests and real browser checks before it can be called a safe optimization. Merely deleting this data is not justified by these measurements. The request's fail-safe applies: report the measured cause rather than force an unverified optimization. No before/after reduction is claimed.
+
+### Additional files and checks
+
+- `package.json`: appends `node tools/audit-built-collections.mjs` after the existing full build; diagnostic script skips outside preview. The preceding build pipeline is unchanged.
+- `tools/audit-built-collections.mjs`: reads only the two generated prerender files, emits attribution and explicitly labeled compression estimates, does not fetch or mutate catalog/store/order data.
+- `tests/builtCollectionAudit.test.mjs`: 3 tests for nonmutation, skipping production and missing files. Together with the existing audit tests, 6/6 passed.
+- Re-ran `npm test`, lint and TypeScript successfully after adding this hook.
+- The **full Vercel preview build succeeded**, including final validation steps. Logs explicitly confirm IndexNow submission was skipped for preview. This supersedes the earlier statement that only a development-mode bundle had been verified; a local full build was still not run.
+- Build logs also report an existing seasonal Navratri validation skip for archived inventory and an existing deprecated edge-runtime warning. Neither was altered.
+
+Browser/checkout/CWV checks remain NOT executed, and no production deployment was performed. Rollback additionally removes the appended package build command and the two new built-audit files; no deployed runtime logic or tracking settings require restoration.
