@@ -1,3 +1,4 @@
+import { encodeCollectionImages } from '../src/lib/collectionHydration.cjs';
 import { setProductSocialMetadata } from '../src/lib/productSocialMetadata.cjs';
 import { getFulfillmentGuidanceRoutes } from '../src/lib/fulfillmentGuidance.cjs';
 import { renderReviewedShoppingLinks } from '../src/lib/reviewedShoppingLinks.cjs';
@@ -1143,7 +1144,7 @@ function buildInitialDataPayload(products, category, routePath) {
   const slim = products.map((product) => ({
     node: buildHydrationProductNode(product),
   }));
-  return toSafeInlineJson({ category: category || 'all', path: routePath, products: slim });
+  return encodeCollectionImages({ category: category || 'all', path: routePath, products: slim });
 }
 
 // Product pages have materially higher purchase intent than category pages. Give
@@ -3179,7 +3180,7 @@ function generateHtml(template, route, allShopifyProducts) {
     }
 
     const initialDataPayload = buildInitialDataPayload(collectionProducts, route.category, route.path);
-    html = html.replace('</head>', () => `    <script>window.__INITIAL_DATA__ = ${initialDataPayload};</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script>window.__INITIAL_DATA__ = ${initialDataPayload.json};</script>${initialDataPayload.script ? `<script>${initialDataPayload.script}</script>` : ''}\n</head>`);
 
     // Visible product cards for crawlers (removed by MutationObserver once React hydrates)
     const productCardsHtml = collectionProducts.length === 0 && isReviewedLehengaCollection(route.category.replace(/^collection:/, ''))
@@ -3202,7 +3203,7 @@ function generateHtml(template, route, allShopifyProducts) {
       true,
     ).slice(0, 12);
     const homepagePayload = buildInitialDataPayload(homepageProducts, 'all', route.path);
-    html = html.replace('</head>', () => `    <script>window.__INITIAL_DATA__ = ${homepagePayload};</script>\n</head>`);
+    html = html.replace('</head>', () => `    <script>window.__INITIAL_DATA__ = ${homepagePayload.json};</script>\n</head>`);
     const itemListJsonLd = generateItemListJsonLd(homepageProducts, 'all', route.path);
     html = html.replace('</head>', () => `    <script type="application/ld+json">${serializeJsonLd(itemListJsonLd)}</script>\n</head>`);
     mainBodyContent = `
