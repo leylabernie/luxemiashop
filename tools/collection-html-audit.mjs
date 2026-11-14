@@ -1,3 +1,4 @@
+import hydration from '../src/lib/collectionHydration.cjs';
 import https from 'node:https';
 import { readFile } from 'node:fs/promises';
 import { pathToFileURL } from 'node:url';
@@ -16,7 +17,7 @@ export function analyzeHtml(html) {
   let payload;
   let hydrationParseError = null;
   if (json) {
-    try { payload = JSON.parse(json.replace(/;\s*$/, '')); }
+    try { payload = hydration.restoreCollectionImages(JSON.parse(json.replace(/;\s*$/, ''))); }
     catch (error) { hydrationParseError = error.message; }
   }
   const products = payload?.products;
