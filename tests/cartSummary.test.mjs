@@ -84,3 +84,10 @@ test('reloaded measurement configuration has an explicit re-entry action without
  assert.match(html,/Remove this configuration and reopen the product/);
  assert.doesNotMatch(html,/private-reference/);
 });
+
+test('one garment line at two units has one drawer line and the two-unit subtotal',()=>{
+ const html=render(23.30,2);
+ assert.match(html,/Your Bag/);
+ assert.match(html,/\(1\)/);
+ assert.ok(html.includes('$46.60'));
+});
