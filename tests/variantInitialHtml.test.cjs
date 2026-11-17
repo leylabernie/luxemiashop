@@ -367,7 +367,7 @@ test('Merchant cart checkout redirect selects the exact numeric variant and forw
   const checkout = new URL(response.headers.get('Location'));
   assert.equal(checkout.origin, 'https://lovable-project-zlh0w.myshopify.com');
   assert.equal(checkout.pathname, '/cart/987654321:1');
-  assert.equal(checkout.searchParams.get('checkout'), '');
+  assert.equal(checkout.searchParams.has('checkout'), false);
   assert.equal(checkout.searchParams.get('gclid'), 'google-click');
   assert.equal(checkout.searchParams.get('_gl'), 'linker-token');
   assert.equal(checkout.searchParams.get('utm_source'), 'merchant');

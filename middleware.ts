@@ -320,7 +320,6 @@ async function routeRequest(request: Request): Promise<Response> {
         checkout.searchParams.append(name, value);
       }
     }
-    checkout.searchParams.set('checkout', '');
     return new Response(null, {
       status: 302,
       headers: {
