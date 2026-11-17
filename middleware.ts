@@ -306,7 +306,8 @@ async function routeRequest(request: Request): Promise<Response> {
   // Keep the cart permalink on LuxeMia's origin for the feed, then hand off to
   // Shopify's hosted checkout. Only forward known attribution parameters; never
   // pass user-controlled return URLs or arbitrary redirect targets to Shopify.
-  const merchantCartMatch = pathname.match(/^\/cart\/(\d+):1$/);
+  // Feed IDs may be numeric or composite; pass only their trailing variant ID to Shopify.
+  const merchantCartMatch = pathname.match(/^\/cart\/(?:[a-z0-9][a-z0-9-]*-(?:v)?)?(\d+):1$/i);
   if (merchantCartMatch && (request.method === 'GET' || request.method === 'HEAD')) {
     const variantId = merchantCartMatch[1];
     const checkout = new URL(`https://lovable-project-zlh0w.myshopify.com/cart/${variantId}:1`);

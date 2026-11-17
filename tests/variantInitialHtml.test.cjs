@@ -357,7 +357,7 @@ test('middleware returns a transient no-store failure instead of a successful wr
   }
 });
 
-test('Merchant cart checkout redirect selects the exact numeric variant and forwards only attribution parameters', async () => {
+test('Merchant cart checkout redirect extracts numeric variants from bare and composite IDs', async () => {
   const run = await middleware();
   const response = await run(new Request(
     'https://luxemia.shop/cart/987654321:1?gclid=google-click&_gl=linker-token&utm_source=merchant&gad_campaignid=campaign-42&return_to=https%3A%2F%2Fevil.example&coupon=private',
@@ -375,7 +375,26 @@ test('Merchant cart checkout redirect selects the exact numeric variant and forw
   assert.equal(checkout.searchParams.has('return_to'), false);
   assert.equal(checkout.searchParams.has('coupon'), false);
 
-  for (const pathname of ['/cart/not-numeric:1', '/cart/987654321:2']) {
+  for (const [compositeId, expectedVariantId] of [
+    ['blue-silk-saree-987654321', '987654321'],
+    ['p9150324605099-v48493121437867', '48493121437867'],
+  ]) {
+    const compositeResponse = await run(new Request(
+      `https://luxemia.shop/cart/${compositeId}:1?utm_campaign=merchant-feed`,
+    ));
+    assert.equal(compositeResponse.status, 302, compositeId);
+    const compositeCheckout = new URL(compositeResponse.headers.get('Location'));
+    assert.equal(compositeCheckout.pathname, `/cart/${expectedVariantId}:1`, compositeId);
+    assert.equal(compositeCheckout.searchParams.get('utm_campaign'), 'merchant-feed');
+    assert.equal(compositeCheckout.searchParams.has('checkout'), false);
+  }
+
+  for (const pathname of [
+    '/cart/not-numeric:1',
+    '/cart/p9150324605099-vnot-numeric:1',
+    '/cart/blue-silk-saree:1',
+    '/cart/987654321:2',
+  ]) {
     const unmatched = await run(new Request(`https://luxemia.shop${pathname}`));
     assert.equal(unmatched.headers.get('Location'), null, `${pathname} is not a checkout redirect`);
   }
