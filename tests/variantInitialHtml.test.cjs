@@ -357,6 +357,30 @@ test('middleware returns a transient no-store failure instead of a successful wr
   }
 });
 
+test('Merchant cart checkout redirect selects the exact numeric variant and forwards only attribution parameters', async () => {
+  const run = await middleware();
+  const response = await run(new Request(
+    'https://luxemia.shop/cart/987654321:1?gclid=google-click&_gl=linker-token&utm_source=merchant&gad_campaignid=campaign-42&return_to=https%3A%2F%2Fevil.example&coupon=private',
+  ));
+  assert.equal(response.status, 302);
+  assert.equal(response.headers.get('Cache-Control'), 'no-store');
+  const checkout = new URL(response.headers.get('Location'));
+  assert.equal(checkout.origin, 'https://lovable-project-zlh0w.myshopify.com');
+  assert.equal(checkout.pathname, '/cart/987654321:1');
+  assert.equal(checkout.searchParams.get('checkout'), '');
+  assert.equal(checkout.searchParams.get('gclid'), 'google-click');
+  assert.equal(checkout.searchParams.get('_gl'), 'linker-token');
+  assert.equal(checkout.searchParams.get('utm_source'), 'merchant');
+  assert.equal(checkout.searchParams.get('gad_campaignid'), 'campaign-42');
+  assert.equal(checkout.searchParams.has('return_to'), false);
+  assert.equal(checkout.searchParams.has('coupon'), false);
+
+  for (const pathname of ['/cart/not-numeric:1', '/cart/987654321:2']) {
+    const unmatched = await run(new Request(`https://luxemia.shop${pathname}`));
+    assert.equal(unmatched.headers.get('Location'), null, `${pathname} is not a checkout redirect`);
+  }
+});
+
 test('live HTML fallback selects the requested price, options, reference and hero without changing the ProductGroup', async () => {
   const { generateProductHtml } = await loadModule('src/middleware/htmlGenerator.ts');
   const product = productFixture();

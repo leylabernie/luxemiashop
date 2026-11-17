@@ -375,6 +375,16 @@ for (const relativePath of [
   if (!source.includes('getMerchantGoogleProductCategory')) {
     throw new Error(`${relativePath} does not use the shared merchant taxonomy classifier`);
   }
+  if (
+    relativePath !== 'src/lib/schema.ts'
+    && (
+      !source.includes('<g:checkout_link_template>')
+      || !source.includes('checkoutLinkTemplate = `${SITE_URL}/cart/${encodeURIComponent(variantId)}:1`')
+      || !source.includes('if (!/^\\d+$/.test(variantId))')
+    )
+  ) {
+    throw new Error(`${relativePath} must emit a per-variant numeric checkout_link_template consistently`);
+  }
 }
 
 function expectedGender(productType, title) {
@@ -488,7 +498,7 @@ for (const rawItem of itemBlocks) {
   // counting and value checks must consider the item's own tags only.
   const item = rawItem.replace(/<g:shipping>[\s\S]*?<\/g:shipping>/gi, '');
   const id = item.match(/<g:id>([^<]+)<\/g:id>/i)?.[1] || '(unknown id)';
-  for (const tag of ['g:id', 'g:title', 'g:description', 'g:link', 'g:image_link', 'g:availability', 'g:price', 'g:condition', 'g:brand', 'g:google_product_category']) {
+  for (const tag of ['g:id', 'g:title', 'g:description', 'g:link', 'g:checkout_link_template', 'g:image_link', 'g:availability', 'g:price', 'g:condition', 'g:brand', 'g:google_product_category']) {
     const count = tagCount(item, tag);
     if (count !== 1) requiredTagFailures.push(`${id}: <${tag}> appears ${count} time(s)`);
   }
@@ -496,6 +506,13 @@ for (const rawItem of itemBlocks) {
   const availability = item.match(/<g:availability>([^<]+)<\/g:availability>/i)?.[1] || '';
   if (!['in_stock', 'out_of_stock', 'preorder', 'backorder'].includes(availability)) {
     requiredTagFailures.push(`${id}: invalid availability ${availability || '(missing)'}`);
+  }
+
+  const checkoutLinkTemplate = decodeXmlEntities(
+    item.match(/<g:checkout_link_template>([\s\S]*?)<\/g:checkout_link_template>/i)?.[1]?.trim() || '',
+  );
+  if (!/^https:\/\/luxemia\.shop\/cart\/\d+:1$/.test(checkoutLinkTemplate)) {
+    requiredTagFailures.push(`${id}: checkout_link_template must target its numeric Shopify variant cart on https://luxemia.shop`);
   }
 
   const gtins = [...item.matchAll(/<g:gtin>([^<]+)<\/g:gtin>/gi)].map((match) => match[1].trim());
@@ -725,5 +742,5 @@ for (const pattern of staleClaimPatterns) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 Navratri priority product groups, current Google taxonomy mappings, hierarchical product types, Merchant title limits, required attributes, identifiers, product-specific HTTPS images, and variant-aligned policy-safe descriptions/highlights`
+  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 Navratri priority product groups, current Google taxonomy mappings, hierarchical product types, Merchant title limits, required attributes, per-variant checkout link templates, identifiers, product-specific HTTPS images, and variant-aligned policy-safe descriptions/highlights`
 );

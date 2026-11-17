@@ -453,6 +453,10 @@ function generateItem(
 ): string {
   const listingTitle = sanitizeProductTitle(product.title);
   const variantId = shortenId(variant.id);
+  if (!/^\d+$/.test(variantId)) {
+    throw new Error(`Invalid Shopify variant ID for checkout link: ${variant.id || "(missing)"}`);
+  }
+  const checkoutLinkTemplate = `${SITE_URL}/cart/${encodeURIComponent(variantId)}:1`;
   const productId = shortenId(product.id);
   const googleCategory = getMerchantGoogleProductCategory(product.productType, product.title);
   // g:product_type must end in the taxonomy leaf that matches the emitted
@@ -549,6 +553,7 @@ function generateItem(
     <g:title>${escapeXml(listingTitle)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
     <g:link>${SITE_URL}/product/${escapeXml(product.handle)}</g:link>
+    <g:checkout_link_template>${escapeXml(checkoutLinkTemplate)}</g:checkout_link_template>
     <g:image_link>${escapeXml(mainImageUrl)}</g:image_link>`;
 
   for (const imageUrl of additionalImages) {
