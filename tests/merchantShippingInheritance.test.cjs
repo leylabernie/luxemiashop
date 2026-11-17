@@ -21,9 +21,9 @@ const expectedInternational = [
 ];
 const shippingEntries = xml => [...xml.matchAll(/<g:shipping><g:country>([^<]+)<\/g:country><g:service>([^<]+)<\/g:service><g:price>([^<]+)<\/g:price><\/g:shipping>/g)]
   .map(([, country, service, price]) => [country, service, price]);
-const render = (amount, compareAt) => {
+const render = (amount, compareAt, variantId = 'gid://shopify/ProductVariant/123') => {
   const variant = {
-    id: 'gid://shopify/ProductVariant/123', sku: 'LM-SHIPPING-FIXTURE',
+    id: variantId, sku: 'LM-SHIPPING-FIXTURE',
     selectedOptions: [{ name: 'Size', value: 'Standard' }], availableForSale: true,
     price: { amount: amount.toFixed(2), currencyCode: 'USD' },
     compareAtPrice: compareAt ? { amount: compareAt.toFixed(2), currencyCode: 'USD' } : null,
@@ -38,6 +38,38 @@ const render = (amount, compareAt) => {
   };
   return generateProductItemXml(product, variant, new Map(), new Set());
 };
+
+test('each static feed offer gets its numeric variant-specific checkout link and all generators stay aligned', () => {
+  const xml = render(84.99, null, 'gid://shopify/ProductVariant/987654321');
+  assert.match(xml, /<g:checkout_link_template>https:\/\/luxemia\.shop\/cart\/987654321:1<\/g:checkout_link_template>/);
+  assert.equal((xml.match(/<g:checkout_link_template>/g) || []).length, 1);
+  assert.throws(() => render(84.99, null, 'gid://shopify/ProductVariant/not-numeric'), /Invalid Shopify variant ID/);
+
+  for (const relativePath of [
+    'scripts/generate-static-feed.cjs',
+    'api/merchant-feed.ts',
+    'supabase/functions/merchant-feed/index.ts',
+  ]) {
+    const source = fs.readFileSync(path.join(root, relativePath), 'utf8');
+    assert.ok(source.includes('<g:checkout_link_template>'), `${relativePath}: emits the checkout field`);
+    assert.ok(source.includes('checkoutLinkTemplate = `${SITE_URL}/cart/${encodeURIComponent(variantId)}:1`'), `${relativePath}: uses a per-variant cart permalink`);
+    assert.ok(source.includes('if (!/^\\d+$/.test(variantId))'), `${relativePath}: rejects non-numeric variant IDs`);
+  }
+  const validator = fs.readFileSync(path.join(root, 'scripts/validate-merchant-feed.cjs'), 'utf8');
+  assert.ok(validator.includes("'g:checkout_link_template'"));
+  const validationStart = validator.indexOf('const checkoutLinkTemplate = decodeXmlEntities(');
+  const validationEnd = validator.indexOf('\n\n  const gtins', validationStart);
+  assert(validationStart >= 0 && validationEnd > validationStart, 'validator retains its checkout URL check');
+  const validateCheckoutLink = item => {
+    const requiredTagFailures = [];
+    vm.runInNewContext(validator.slice(validationStart, validationEnd), {
+      item, id: 'fixture', requiredTagFailures, decodeXmlEntities: value => value,
+    });
+    return requiredTagFailures;
+  };
+  assert.deepEqual(validateCheckoutLink(xml), []);
+  assert.match(validateCheckoutLink(xml.replace('/cart/987654321:1', '/cart/not-numeric:1'))[0], /checkout_link_template/);
+});
 
 test('every U.S. offer inherits the account order-total threshold and delivery settings', () => {
   for (const amount of [84.99, 149.99, 150, 150.01, 173.6]) {

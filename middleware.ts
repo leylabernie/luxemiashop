@@ -302,6 +302,34 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(canonical.toString(), 301);
   }
 
+  // Merchant Center checkout links select the exact feed variant and quantity.
+  // Keep the cart permalink on LuxeMia's origin for the feed, then hand off to
+  // Shopify's hosted checkout. Only forward known attribution parameters; never
+  // pass user-controlled return URLs or arbitrary redirect targets to Shopify.
+  const merchantCartMatch = pathname.match(/^\/cart\/(\d+):1$/);
+  if (merchantCartMatch && (request.method === 'GET' || request.method === 'HEAD')) {
+    const variantId = merchantCartMatch[1];
+    const checkout = new URL(`https://lovable-project-zlh0w.myshopify.com/cart/${variantId}:1`);
+    for (const [name, value] of url.searchParams) {
+      const normalizedName = name.toLowerCase();
+      if (
+        normalizedName === '_gl'
+        || ['gclid', 'gbraid', 'wbraid', 'gclsrc', 'gad_source', 'gad_campaignid', 'srsltid', 'dclid', 'msclkid', 'fbclid'].includes(normalizedName)
+        || /^utm_[a-z0-9_]+$/.test(normalizedName)
+      ) {
+        checkout.searchParams.append(name, value);
+      }
+    }
+    checkout.searchParams.set('checkout', '');
+    return new Response(null, {
+      status: 302,
+      headers: {
+        'Location': checkout.toString(),
+        'Cache-Control': 'no-store',
+      },
+    });
+  }
+
   // Featured duplicated New Arrivals product-for-product. Consolidate the old
   // URL so shoppers and search engines have one current discovery page.
   if (pathname === '/bestsellers') {

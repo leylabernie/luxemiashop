@@ -931,6 +931,10 @@ function fitMerchantId(rawId, stableFallback) {
 function generateProductItemXml(product, variant, titleCounts, navratriPriorityHandles) {
   const handle = product.handle;
   const variantId = variant.id?.split('/').pop() || '';
+  if (!/^\d+$/.test(variantId)) {
+    throw new Error(`Invalid Shopify variant ID for checkout link: ${variant.id || '(missing)'}`);
+  }
+  const checkoutLinkTemplate = `${SITE_URL}/cart/${encodeURIComponent(variantId)}:1`;
   const variants = product.variants.edges.map((edge) => edge.node);
   const isVariantGroup = variants.length > 1;
   const selectedOptions = variant.selectedOptions || [];
@@ -1026,6 +1030,7 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
     <g:title>${escapeXml(displayTitle)}</g:title>
     <g:description>${escapeXml(description)}</g:description>
     <g:link>${escapeXml(link)}</g:link>
+    <g:checkout_link_template>${escapeXml(checkoutLinkTemplate)}</g:checkout_link_template>
     <g:image_link>${escapeXml(imageUrl)}</g:image_link>
     ${additionalImages.map((image) => `<g:additional_image_link>${escapeXml(image)}</g:additional_image_link>`).join('\n    ')}
     <g:availability>${availability}</g:availability>
