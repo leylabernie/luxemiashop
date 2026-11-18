@@ -23,7 +23,7 @@ export const META_PILOT_PRODUCTS: ReadonlyArray<MetaPilotProduct> = [
   family('anarkali-green-chinon', 'Green', [
     ['48120657903787', 'S'], ['48121669583019', 'M'], ['48121669615787', 'L'],
     ['48121669648555', 'XL'], ['48121669681323', 'XXL'],
-  ], true),
+  ]),
   family('dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear', 'Dusty Peach', [
     ['48210922504363', 'S'], ['48210922537131', 'M'], ['48210922569899', 'L'],
     ['48210922602667', 'XL'], ['48210922635435', 'XXL'], ['48210922668203', 'XS'],

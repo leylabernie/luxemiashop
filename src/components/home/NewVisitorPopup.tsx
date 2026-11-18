@@ -61,8 +61,9 @@ const recordAttempt = () => {
 // load delay). New behavior: trigger on exit-intent (desktop) OR
 // scroll-past-50% (mobile) OR a 15-second backstop. The popup image is
 // also lazy + low fetchpriority so it can never become the LCP candidate.
-const BACKSTOP_MS = 15000;
-const SCROLL_TRIGGER_FRACTION = 0.5; // 50% of viewport
+const BACKSTOP_MS = 45000;
+const MIN_ENGAGEMENT_MS = 25000;
+const SCROLL_TRIGGER_FRACTION = 1.6; // 1.6 viewports after initial browsing
 
 const NewVisitorPopup = () => {
   const location = useLocation();
@@ -93,34 +94,43 @@ const NewVisitorPopup = () => {
     // Server-side / unsupported — bail without listeners
     if (typeof window === 'undefined') return;
 
+    const startedAt = Date.now();
+    let deferTimer: number | undefined;
+
     const trigger = () => {
       if (triggeredRef.current) return;
+      // Do not stack the discount offer over an active privacy consent prompt.
+      if (document.getElementById('marketing-privacy-choices')) {
+        window.clearTimeout(deferTimer);
+        deferTimer = window.setTimeout(trigger, 15000);
+        return;
+      }
       triggeredRef.current = true;
       cleanup();
       setIsOpen(true);
     };
 
-    // Desktop: exit intent (mouse leaves top of viewport)
+    // Desktop: exit intent after a brief browse window
     const onMouseLeave = (e: MouseEvent) => {
-      // Only trigger when cursor exits through the TOP of the window
-      // (real exit-intent signal, not just moving to the address bar)
-      if (e.clientY <= 0) trigger();
+      if (e.clientY <= 0 && Date.now() - startedAt >= 12000) trigger();
     };
 
-    // Mobile: scroll past 50% of viewport
+    // Mobile/desktop: only after meaningful scrolling AND initial engagement
     const onScroll = () => {
+      if (Date.now() - startedAt < MIN_ENGAGEMENT_MS) return;
       const scrolled = window.scrollY;
       const viewport = window.innerHeight;
       if (scrolled > viewport * SCROLL_TRIGGER_FRACTION) trigger();
     };
 
-    // Backstop: 15s idle, only if no exit-intent / scroll yet
+    // Backstop: 45s idle, only if no exit-intent / scroll yet
     const idleTimer = window.setTimeout(trigger, BACKSTOP_MS);
 
     const cleanup = () => {
       document.removeEventListener('mouseleave', onMouseLeave);
       window.removeEventListener('scroll', onScroll);
       window.clearTimeout(idleTimer);
+      window.clearTimeout(deferTimer);
     };
 
     document.addEventListener('mouseleave', onMouseLeave);
@@ -225,23 +235,23 @@ const NewVisitorPopup = () => {
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.96, y: 16 }}
               transition={{ duration: 0.28, ease: [0.23, 1, 0.32, 1] }}
-              className="w-full max-w-3xl max-h-[calc(100dvh-1.5rem)] overflow-y-auto overscroll-contain rounded-lg bg-background shadow-2xl sm:max-h-[calc(100dvh-3rem)]"
+              className="w-full max-w-sm sm:max-w-3xl max-h-[calc(100dvh-2rem)] overflow-y-auto overscroll-contain rounded-lg bg-background shadow-2xl sm:max-h-[calc(100dvh-3rem)]"
             >
             <div className="relative">
               {/* Close button — 44x44px touch target for mobile */}
               <button
                 onClick={handleClose}
-                className="absolute top-3 right-3 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-foreground/5 rounded-full transition-colors z-20 bg-background/80 backdrop-blur-sm"
+                className="absolute top-2.5 right-2.5 p-2.5 min-w-[44px] min-h-[44px] flex items-center justify-center hover:bg-foreground/5 rounded-full transition-colors z-20 bg-background/80 backdrop-blur-sm"
                 aria-label="Close popup"
               >
                 <X className="w-5 h-5" />
               </button>
 
-              {/* Two-column layout on desktop, stacked on mobile */}
+              {/* Compact single-card on mobile; two-column editorial on desktop */}
               <div className="grid grid-cols-1 sm:grid-cols-2">
 
-                {/* ─── Image Panel ─────────────────────────────────────── */}
-                <div className="relative order-1 h-52 overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent sm:h-auto sm:min-h-[420px]">
+                {/* ─── Image Panel (desktop/tablet only so mobile stays compact) ─── */}
+                <div className="relative order-1 hidden overflow-hidden bg-gradient-to-br from-primary/10 via-primary/5 to-transparent sm:block sm:h-auto sm:min-h-[400px]">
                   <img
                     src="/images/popup-image.webp"
                     alt="LuxeMia Indian ethnic wear — bridal lehenga collection"
@@ -257,50 +267,48 @@ const NewVisitorPopup = () => {
                     width={768}
                     height={768}
                   />
-                  {/* Overlay gradient for text readability if needed */}
-                  <div className="absolute inset-0 bg-gradient-to-t from-foreground/30 via-transparent to-transparent sm:hidden" />
 
                   {/* Floating discount badge on the image */}
-                  <div className="absolute top-4 left-4 sm:top-6 sm:left-6">
+                  <div className="absolute top-6 left-6">
                     <motion.div
                       initial={{ scale: 0, rotate: -15 }}
                       animate={{ scale: 1, rotate: -8 }}
                       transition={{ delay: 0.3, type: 'spring', stiffness: 200 }}
-                      className="bg-primary text-primary-foreground rounded-full w-20 h-20 sm:w-24 sm:h-24 flex flex-col items-center justify-center shadow-lg"
+                      className="bg-primary text-primary-foreground rounded-full w-24 h-24 flex flex-col items-center justify-center shadow-lg"
                     >
-                      <span className="font-serif text-2xl sm:text-3xl font-bold leading-none">10%</span>
-                      <span className="text-[10px] sm:text-xs uppercase tracking-wider mt-1">OFF</span>
+                      <span className="font-serif text-3xl font-bold leading-none">10%</span>
+                      <span className="text-xs uppercase tracking-wider mt-1">OFF</span>
                     </motion.div>
                   </div>
                 </div>
 
                 {/* ─── Content Panel ──────────────────────────────────── */}
-                <div className="order-2 sm:order-2 p-6 sm:p-8 flex flex-col justify-center">
+                <div className="order-2 p-5 sm:p-8 flex flex-col justify-center">
 
                   {!isSuccess ? (
                     <>
-                      {/* Pre-header with urgency cue */}
-                      <div className="flex items-center justify-center sm:justify-start gap-2 mb-3">
-                        <Clock className="w-4 h-4 text-primary" />
-                        <p className="text-xs tracking-[0.15em] uppercase text-primary font-semibold">
-                          Limited Time Welcome Offer
+                      {/* Pre-header */}
+                      <div className="flex items-center gap-2 mb-2 pr-10">
+                        <Clock className="w-3.5 h-3.5 text-primary shrink-0" />
+                        <p className="text-[11px] tracking-[0.14em] uppercase text-primary font-semibold">
+                          Welcome Offer
                         </p>
                       </div>
 
                       {/* Main headline — specific and benefit-driven */}
-                      <h3 id="welcome-offer-heading" className="font-serif text-2xl sm:text-3xl text-center sm:text-left mb-3 leading-tight">
-                        Get <span className="text-primary font-bold">10% Off</span> Your First Indian Ethnic Wear Order
+                      <h3 id="welcome-offer-heading" className="font-serif text-xl sm:text-3xl text-left mb-2.5 leading-tight">
+                        Get <span className="text-primary font-bold">10% Off</span> Your First Order
                       </h3>
 
-                      {/* Benefit bullets — what they get, specifically */}
-                      <ul className="space-y-2 mb-6 text-sm text-foreground/70">
+                      {/* Benefit bullets — compact on mobile, full on desktop */}
+                      <ul className="space-y-1.5 mb-4 sm:mb-6 text-xs sm:text-sm text-foreground/70">
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
                           <span><strong className="text-foreground">Instant discount code</strong> — one use per customer at checkout</span>
                         </li>
-                        <li className="flex items-start gap-2">
+                        <li className="hidden sm:flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
-                          <span><strong className="text-foreground">Early access</strong> to new arrivals & festive collections</span>
+                          <span><strong className="text-foreground">Early access</strong> to new arrivals &amp; festive collections</span>
                         </li>
                         <li className="flex items-start gap-2">
                           <Check className="w-4 h-4 text-green-600 mt-0.5 flex-shrink-0" />
@@ -353,13 +361,16 @@ const NewVisitorPopup = () => {
                         </Button>
                       </form>
 
-                      {/* Trust signals */}
-                      <div className="flex items-center justify-center sm:justify-start gap-4 mt-4 text-[11px] text-foreground/40">
-                        <span>No spam, ever</span>
-                        <span>·</span>
-                        <span>Unsubscribe anytime</span>
-                        <span className="hidden sm:inline">·</span>
-                        <span className="hidden sm:inline">USA-based customer support</span>
+                      {/* Dismiss + trust signals */}
+                      <div className="mt-3 flex items-center justify-between text-[11px] text-foreground/50">
+                        <span>No spam · Unsubscribe anytime</span>
+                        <button
+                          type="button"
+                          onClick={handleClose}
+                          className="min-h-8 px-1 font-medium text-foreground/70 underline underline-offset-2 hover:text-foreground"
+                        >
+                          No thanks
+                        </button>
                       </div>
                     </>
                   ) : (
