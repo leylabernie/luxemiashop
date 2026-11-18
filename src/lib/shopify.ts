@@ -2,7 +2,7 @@ import { normalizeMensCheckoutLines } from './mensSharedStock';
 import { hasUnconfirmedTargetTailoring, TAILORING_ENQUIRY_NOTICE } from './tailoringEnquiry';
 import { toast } from 'sonner';
 import { loadCatalogPages } from './catalogPagination';
-import { assertCheckoutCartMatches, assertCheckoutCartPrices, CheckoutCartChangedError, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
+import { assertCheckoutCartMatches, assertCheckoutCartPrices, CheckoutCartChangedError, CheckoutUrlError, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
 
@@ -16,96 +16,85 @@ const SHOPIFY_CHECKOUT_CHANNEL = 'online_store';
 const SHOPIFY_STOREFRONT_URL = `https://${SHOPIFY_STORE_PERMANENT_DOMAIN}/api/${SHOPIFY_API_VERSION}/graphql.json`;
 const SHOPIFY_STOREFRONT_TOKEN = import.meta.env.VITE_SHOPIFY_STOREFRONT_TOKEN || '';
 
-/**
- * Keep hosted checkout on Shopify's permanent domain until the branded
- * checkout hostname has been configured and its DNS has been verified.
- * Deliberately accept hostnames, not URLs or hostname suffixes.
- */
+// Only these exact domains are verified Shopify checkout destinations.
+const VERIFIED_CHECKOUT_HOSTS = new Set([SHOPIFY_STORE_PERMANENT_DOMAIN, SHOPIFY_BRANDED_CHECKOUT_DOMAIN]);
+const LEGACY_CHECKOUT_HOSTS = new Set([
+  SHOPIFY_LEGACY_MYSHOPIFY_DOMAIN, 'luxemia.shop', 'www.luxemia.shop', 'luxemiashop.lovable.app',
+]);
+
+export type CheckoutUrlValidationCode = 'empty_url' | 'invalid_url' | 'non_https' | 'disallowed_authority' | 'unallowed_host' | 'invalid_path';
+export type CheckoutUrlValidationResult = { ok: true; url: string } | { ok: false; code: CheckoutUrlValidationCode };
+
+/** The optional override applies only to legacy or permanent-host fallback links. */
 export function resolveShopifyCheckoutHost(configuredHost?: string | null): string {
-  const normalizedHost = configuredHost?.trim().toLowerCase();
-
-  return normalizedHost === SHOPIFY_BRANDED_CHECKOUT_DOMAIN
-    ? SHOPIFY_BRANDED_CHECKOUT_DOMAIN
-    : SHOPIFY_STORE_PERMANENT_DOMAIN;
+  return configuredHost?.trim().toLowerCase() === SHOPIFY_BRANDED_CHECKOUT_DOMAIN
+    ? SHOPIFY_BRANDED_CHECKOUT_DOMAIN : SHOPIFY_STORE_PERMANENT_DOMAIN;
 }
 
-function isAllowedCheckoutSourceHost(hostname: string, checkoutHost: string): boolean {
-  const allowedHosts = new Set([
-    SHOPIFY_STORE_PERMANENT_DOMAIN,
-    SHOPIFY_LEGACY_MYSHOPIFY_DOMAIN,
-    'luxemia.shop',
-    'www.luxemia.shop',
-    'luxemiashop.lovable.app',
-    checkoutHost,
-  ]);
-
-  return allowedHosts.has(hostname.toLowerCase());
-}
-
-function setRequiredCheckoutParams(url: URL): void {
-  url.searchParams.set('channel', SHOPIFY_CHECKOUT_CHANNEL);
-  url.searchParams.set('return_url', SHOPIFY_CHECKOUT_RETURN_URL);
-}
-
-function isCartCheckoutPath(pathname: string): boolean {
-  return /^\/cart\/c\/[^/?#]+\/?$/.test(pathname);
-}
-
-/**
- * Normalizes a Shopify-hosted cart URL without ever trusting a partial
- * hostname match. Relative cart URLs are supported as a defensive fallback;
- * their query string is retained before the required channel and return URL
- * are applied.
- */
-export function normalizeShopifyCheckoutUrl(
-  rawCheckoutUrl: string,
-  configuredHost?: string | null,
-): string | null {
-  const checkoutHost = resolveShopifyCheckoutHost(configuredHost);
-  let parsedUrl: URL;
-
-  try {
-    parsedUrl = new URL(rawCheckoutUrl);
-
-    if (
-      parsedUrl.protocol !== 'https:'
-      || !isAllowedCheckoutSourceHost(parsedUrl.hostname, checkoutHost)
-    ) {
-      return null;
-    }
-  } catch {
-    // Accept only a same-origin relative path. Protocol-relative and
-    // backslash-prefixed inputs can otherwise be interpreted as another host.
-    if (!/^\/(?![\\/])/.test(rawCheckoutUrl)) {
-      return null;
-    }
-
+function safeCheckoutPath(pathname: string): boolean {
+  if (!pathname.startsWith('/') || pathname.startsWith('//') || pathname.includes('\\')) return false;
+  const normalized = pathname.endsWith('/') ? pathname.slice(0, -1) : pathname;
+  const segments = normalized.slice(1).split('/');
+  for (const segment of segments) {
     try {
-      parsedUrl = new URL(rawCheckoutUrl, `https://${checkoutHost}`);
+      const decoded = decodeURIComponent(segment);
+      // Reject percent as well, so a second decode cannot introduce traversal or slashes.
+      if (!decoded || decoded === '.' || decoded === '..' || /[\\/%]/.test(decoded) || [...decoded].some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127)) return false;
     } catch {
-      return null;
+      return false;
     }
   }
+  const localeOffset = segments.length > 3 && /^[a-z]{2}(?:-[a-z]{2})?$/i.test(segments[0]) ? 1 : 0;
+  const route = segments.slice(localeOffset);
+  return (route.length === 3 && route[0] === 'cart' && route[1] === 'c')
+    || (route.length >= 3 && route.length <= 5 && route[0] === 'checkouts' && ['c', 'cn', 'co', 'do'].includes(route[1]))
+    || (localeOffset === 0 && segments.length === 3 && /^\d+$/.test(segments[0]) && segments[1] === 'checkouts');
+}
 
-  if (!isCartCheckoutPath(parsedUrl.pathname)) {
-    return null;
+/** Validate before redirecting; never log the returned URL or cart key. */
+export function validateShopifyCheckoutUrl(rawCheckoutUrl: string, configuredHost?: string | null): CheckoutUrlValidationResult {
+  if (typeof rawCheckoutUrl !== 'string' || !rawCheckoutUrl.trim()) return { ok: false, code: 'empty_url' };
+  const candidate = rawCheckoutUrl.trim();
+  const fallbackHost = resolveShopifyCheckoutHost(configuredHost);
+  let parsed: URL;
+  let targetHost: string;
+  let rawPath: string;
+
+  if (candidate.startsWith('/')) {
+    if (!/^\/(?![\\/])/.test(candidate)) return { ok: false, code: 'invalid_url' };
+    rawPath = candidate.split(/[?#]/, 1)[0];
+    // Relative fallback is intentionally limited to the existing cart route.
+    if (!/^\/cart\/c\//.test(rawPath)) return { ok: false, code: 'invalid_path' };
+    try { parsed = new URL(candidate, `https://${fallbackHost}`); } catch { return { ok: false, code: 'invalid_url' }; }
+    targetHost = fallbackHost;
+  } else {
+    try { parsed = new URL(candidate); } catch { return { ok: false, code: 'invalid_url' }; }
+    if (parsed.protocol !== 'https:') return { ok: false, code: 'non_https' };
+    // Examine the raw authority and path before URL normalizes dot segments,
+    // default ports, backslashes or control characters.
+    const match = /^https:\/\/([^/?#]+)(\/[^?#]*)?(?:[?#]|$)/i.exec(candidate);
+    if (!match || match[1].includes('\\') || [...match[1]].some(char => char.charCodeAt(0) <= 32 || char.charCodeAt(0) === 127)) return { ok: false, code: 'invalid_url' };
+    if (parsed.username || parsed.password || parsed.port || /[@:]/.test(match[1])) return { ok: false, code: 'disallowed_authority' };
+    rawPath = match[2] || '/';
+    const sourceHost = parsed.hostname.toLowerCase();
+    if (sourceHost === SHOPIFY_BRANDED_CHECKOUT_DOMAIN) targetHost = sourceHost;
+    else if (sourceHost === SHOPIFY_STORE_PERMANENT_DOMAIN || LEGACY_CHECKOUT_HOSTS.has(sourceHost)) targetHost = fallbackHost;
+    else return { ok: false, code: 'unallowed_host' };
   }
-
-  parsedUrl.protocol = 'https:';
-  parsedUrl.hostname = checkoutHost;
-  parsedUrl.port = '';
-  parsedUrl.username = '';
-  parsedUrl.password = '';
-  parsedUrl.hash = '';
-  setRequiredCheckoutParams(parsedUrl);
-
-  // This exact comparison is the final redirect boundary. In particular,
-  // `*.myshopify.com.evil.example` must never be treated as a Shopify host.
-  if (parsedUrl.hostname !== checkoutHost) {
-    return null;
+  if (!safeCheckoutPath(rawPath) || !safeCheckoutPath(parsed.pathname)) return { ok: false, code: 'invalid_path' };
+  parsed.hostname = targetHost;
+  parsed.hash = '';
+  parsed.searchParams.set('channel', SHOPIFY_CHECKOUT_CHANNEL);
+  parsed.searchParams.set('return_url', SHOPIFY_CHECKOUT_RETURN_URL);
+  if (parsed.protocol !== 'https:' || !VERIFIED_CHECKOUT_HOSTS.has(parsed.hostname) || parsed.hostname !== targetHost) {
+    return { ok: false, code: 'unallowed_host' };
   }
+  return { ok: true, url: parsed.toString() };
+}
 
-  return parsedUrl.toString();
+export function normalizeShopifyCheckoutUrl(rawCheckoutUrl: string, configuredHost?: string | null): string | null {
+  const result = validateShopifyCheckoutUrl(rawCheckoutUrl, configuredHost);
+  return result.ok ? result.url : null;
 }
 
 // Product metadata for filtering
@@ -866,21 +855,20 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     },
   });
   if (!cartData || !cartData.data) {
-    console.error('Failed to create cart - no data from Shopify', cartData);
+    console.error('Shopify cartCreate: empty_response');
     return null;
   }
 
   if (cartData.data?.cartCreate?.userErrors && cartData.data.cartCreate.userErrors.length > 0) {
-    const errorMessages = cartData.data.cartCreate.userErrors.map((e: { message: string }) => e.message).join(', ');
-    console.error('Shopify cart creation errors:', errorMessages);
-    throw new Error(`Cart creation failed: ${errorMessages}`);
+    console.error('Shopify cartCreate: user_errors');
+    throw new Error('Cart creation failed');
   }
 
   const cart = cartData.data?.cartCreate?.cart;
 
-  if (!cart || !cart.checkoutUrl) {
-    console.error('Cart response:', cart);
-    throw new Error('No checkout URL returned from Shopify');
+  if (!cart || typeof cart.checkoutUrl !== 'string' || !cart.checkoutUrl.trim()) {
+    console.error('Shopify cartCreate: missing_checkout_url');
+    throw new CheckoutUrlError('missing_checkout_url', 'Checkout link was not returned. Your bag is saved — please try again.');
   }
 
   // Shopify may silently reduce or omit unavailable cart lines without a
@@ -893,23 +881,10 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
 
   if (expectedPrices) assertCheckoutCartPrices(expectedPrices, cart.lines.edges.map(edge => edge.node));
 
-  // Shopify can return the Vercel storefront hostname even though hosted
-  // checkout must remain on Shopify. The permanent myshopify.com host is the
-  // default; checkout.luxemia.shop is used only when explicitly configured
-  // after DNS verification.
-  const checkoutUrl = normalizeShopifyCheckoutUrl(
-    cart.checkoutUrl as string,
-    import.meta.env.VITE_SHOPIFY_CHECKOUT_HOST,
-  );
-
-  if (!checkoutUrl) {
-    // Do not send customers to the store homepage: that discards their cart
-    // and creates a silent conversion failure. Let the cart UI preserve the
-    // bag and show a retryable checkout error instead.
-    console.error('Unable to normalize Shopify checkout URL');
-    return null;
+  const validation = validateShopifyCheckoutUrl(cart.checkoutUrl, import.meta.env.VITE_SHOPIFY_CHECKOUT_HOST);
+  if (!validation.ok) {
+    console.error(`Shopify cartCreate: invalid_checkout_url (${validation.code})`);
+    throw new CheckoutUrlError('invalid_checkout_url', 'Checkout link could not be verified. Your bag is saved — please try again.');
   }
-
-  // Checkout URL created successfully
-  return checkoutUrl;
+  return validation.url;
 }

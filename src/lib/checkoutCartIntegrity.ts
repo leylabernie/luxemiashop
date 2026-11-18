@@ -17,6 +17,18 @@ export class CheckoutCartChangedError extends Error {
   }
 }
 
+export type CheckoutUrlFailureReason = 'missing_checkout_url' | 'invalid_checkout_url';
+
+export class CheckoutUrlError extends Error {
+  readonly reason: CheckoutUrlFailureReason;
+
+  constructor(reason: CheckoutUrlFailureReason, message: string) {
+    super(message);
+    this.name = 'CheckoutUrlError';
+    this.reason = reason;
+  }
+}
+
 // Only explicit reads may share cached responses. Named mutations such as
 // `mutation cartCreate(...)` must always reach Shopify.
 export function isCacheableStorefrontOperation(query: string): boolean {

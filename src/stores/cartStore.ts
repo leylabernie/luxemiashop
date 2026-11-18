@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 import { ShopifyProduct, createStorefrontCheckout } from '@/lib/shopify';
-import { CheckoutCartChangedError } from '@/lib/checkoutCartIntegrity';
+import { CheckoutCartChangedError, CheckoutUrlError } from '@/lib/checkoutCartIntegrity';
 import { getProductShipsWithin } from '@/lib/shipBy';
 import { hasUnconfirmedTargetTailoring, isEnquiryOnlyVariant, requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE } from '@/lib/tailoringEnquiry';
 import { normalizeFulfillmentAttributes } from '@/lib/fulfillmentAttributes';
@@ -369,15 +369,20 @@ export const useCartStore = create<CartStore>()(
           }
 
           console.error('Shopify returned no checkout URL; preserving the cart');
-          const message = 'Checkout could not be created. Your bag is saved — please try again.';
-          set({ checkoutError: message });
+          const message = 'Checkout link was not returned. Your bag is saved — please try again.';
+          set({ checkoutError: message, checkoutUrl: null, cartId: null });
           toast.error(message);
           return null;
         } catch (error) {
           if (checkoutRequestSignature(normalizeCartItems(get().items)) !== requestSignature) {
             return null;
           }
-          console.error('Failed to create checkout:', error);
+          if (error instanceof CheckoutUrlError) {
+            set({ checkoutError: error.message, checkoutUrl: null, cartId: null });
+            toast.error(error.message);
+            return null;
+          }
+          console.error('Failed to create checkout; preserving the cart');
           const message = error instanceof CheckoutCartChangedError
             ? error.message
             : 'Checkout is temporarily unavailable. Your bag is saved — please try again.';
