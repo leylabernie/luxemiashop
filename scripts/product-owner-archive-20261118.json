@@ -1,0 +1,75 @@
+{
+  "userInstructionAt": "2026-11-18T00:00:00Z",
+  "reason": "Owner-confirmed reversible archive of 17 inactive catalog products",
+  "minimumExpectedActiveProducts": 221,
+  "archived": [
+    {
+      "id": "gid://shopify/Product/9134769504427",
+      "handle": "pista-green-embroidered-silk-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134769897643",
+      "handle": "cream-garden-border-embroidered-silk-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134770323627",
+      "handle": "beige-floral-border-embroidered-silk-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134770749611",
+      "handle": "grey-geometric-embroidered-cotton-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134772158635",
+      "handle": "mint-green-embroidered-silk-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134772682923",
+      "handle": "off-white-neckline-embroidered-silk-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134772846763",
+      "handle": "dusty-peach-floral-embroidered-linen-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134773108907",
+      "handle": "sage-green-paisley-embroidered-cotton-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134773272747",
+      "handle": "multicolor-striped-cotton-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9134773502123",
+      "handle": "handworked-lachaka-kurta-pajama-set"
+    },
+    {
+      "id": "gid://shopify/Product/9135401566379",
+      "handle": "floral-embroidered-silk-palazzo-suit-shaded-dupatta"
+    },
+    {
+      "id": "gid://shopify/Product/9135411593387",
+      "handle": "black-georgette-sequin-floral-sharara-suit"
+    },
+    {
+      "id": "gid://shopify/Product/9135412412587",
+      "handle": "purple-floral-bird-embroidered-palazzo-suit"
+    },
+    {
+      "id": "gid://shopify/Product/9135416574123",
+      "handle": "woven-saree-embroidered-blouse-fabric"
+    },
+    {
+      "id": "gid://shopify/Product/9135424897195",
+      "handle": "fuchsia-embroidered-blouse-palazzo-set-with-dupatta"
+    },
+    {
+      "id": "gid://shopify/Product/9135425028267",
+      "handle": "purple-palazzo-set-embroidered-blouse-floral-dupatta"
+    },
+    {
+      "id": "gid://shopify/Product/9135425290411",
+      "handle": "mustard-embroidered-blouse-draped-palazzo-set"
+    }
+  ]
+}
