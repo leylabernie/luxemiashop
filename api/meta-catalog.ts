@@ -50,12 +50,22 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (!token) return res.status(503).send('Catalog temporarily unavailable');
   try {
     const read = async (operation: string, variables: Record<string, string | null>): Promise<unknown> => {
-      const response = await fetch('https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json', {
-        method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':token},
-        body:JSON.stringify({query:operation,variables}),signal:AbortSignal.timeout(20000),
-      });
-      if (!response.ok) throw new Error('Shopify catalog request failed');
-      return response.json();
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          const response = await fetch('https://lovable-project-zlh0w.myshopify.com/api/2025-10/graphql.json', {
+            method:'POST',headers:{'Content-Type':'application/json','X-Shopify-Storefront-Access-Token':token},
+            body:JSON.stringify({query:operation,variables}),signal:AbortSignal.timeout(15000),
+          });
+          if (!response.ok) {
+            if (attempt === 0 && (response.status === 429 || response.status >= 500)) continue;
+            throw new Error(`Shopify catalog request failed (${response.status})`);
+          }
+          return await response.json();
+        } catch (err) {
+          if (attempt === 1) throw err;
+        }
+      }
+      throw new Error('Shopify catalog request failed');
     };
     const pilots = new Map<string, PilotProduct>();
     for (const family of META_PILOT_PRODUCTS) {
@@ -83,9 +93,12 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     if (!rows.length || seenPilots.size !== META_PILOT_PRODUCTS.length) throw new Error('Catalog incomplete');
     res.setHeader('Content-Type','text/csv; charset=utf-8');
-    res.setHeader('Cache-Control','public, max-age=0, s-maxage=300');
+    res.setHeader('Cache-Control','public, max-age=0, s-maxage=300, stale-while-revalidate=600');
     res.setHeader('X-Catalog-Products',String(rows.length));
     res.setHeader('X-Robots-Tag','noindex');
     return res.status(200).send([META_CATALOG_FIELDS,...rows].map(row=>row.map(quote).join(',')).join('\r\n')+'\r\n');
-  } catch { return res.status(503).send('Catalog temporarily unavailable; retry later'); }
+  } catch (error) {
+    console.error('[meta-catalog]', error instanceof Error ? error.message : 'Catalog generation failed');
+    return res.status(503).send('Catalog temporarily unavailable; retry later');
+  }
 }

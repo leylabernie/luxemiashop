@@ -75,3 +75,34 @@ test('lining-only material is not a garment fabric filter match', () => {
   assert.equal(filterSearchResults([{ ...products[1], fabric }], { ...defaults, selectedFabrics: ['Silk'] }).length, 1);
   assert.equal(filterSearchResults([{ ...products[1], fabric }], { ...defaults, selectedFabrics: ['Cotton'] }).length, 0);
 });
+
+test('multi-word queries match individual words across title, category, fabric, and color regardless of word order', () => {
+  const catalog = [
+    { title: 'Ready to Wear Embroidered Saree in Light Pink', category: 'Sarees', price: '113.30', fabric: 'Satin', sizes: ['36', '38'], color: 'Light Pink' },
+    { title: 'Pink Banarasi Silk Saree with Rose Motifs', category: 'Sarees', price: '101.25', fabric: 'Silk', sizes: ['38', '40'], color: 'Pink' },
+    { title: 'Pink Silk Lehenga Choli', category: 'Lehengas', price: '180.00', fabric: 'Silk', sizes: ['38'], color: 'Pink' },
+    { title: 'Green Digital Printed Anarkali', category: 'Suits', price: '108.99', fabric: 'Chinon', sizes: ['S', 'M'], color: 'Green' },
+    { title: 'Magenta Layered Bridal Necklace Set', category: 'Jewelry', price: '95.00', fabric: '', sizes: [], color: 'Pink' },
+  ];
+  assert.deepEqual(
+    filterSearchResults(catalog, { ...defaults, query: 'pink saree' }).map(p => p.title),
+    ['Ready to Wear Embroidered Saree in Light Pink', 'Pink Banarasi Silk Saree with Rose Motifs'],
+  );
+  assert.deepEqual(
+    filterSearchResults(catalog, { ...defaults, query: 'light pink sarees' }).map(p => p.title),
+    ['Ready to Wear Embroidered Saree in Light Pink'],
+  );
+  assert.deepEqual(
+    filterSearchResults(catalog, { ...defaults, query: 'silk saree' }).map(p => p.title),
+    ['Pink Banarasi Silk Saree with Rose Motifs'],
+  );
+  assert.deepEqual(
+    filterSearchResults(catalog, { ...defaults, query: 'chinon suit' }).map(p => p.title),
+    ['Green Digital Printed Anarkali'],
+  );
+  assert.deepEqual(
+    filterSearchResults(catalog, { ...defaults, query: 'pink sari' }).map(p => p.title),
+    ['Ready to Wear Embroidered Saree in Light Pink', 'Pink Banarasi Silk Saree with Rose Motifs'],
+  );
+  assert.deepEqual(filterSearchResults(catalog, { ...defaults, query: '   ' }), []);
+});

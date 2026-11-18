@@ -139,8 +139,8 @@ const pilotFixture = (peach = false) => {
  const handle = peach ? 'dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear' : 'anarkali-green-chinon';
  const id = peach ? '48210922504363' : '48120657903787';
  const p = product(handle); p.productType = peach ? 'Palazzo Suit' : 'Anarkali';
- p.options=[{name:'Size',values:['S','M']},...(!peach?[{name:'Alteration',values:['Standard','Custom']}]:[])];
- p.variants.edges=[{node:{id:`gid://shopify/ProductVariant/${id}`,title:peach?'S':'S / Standard',availableForSale:true,requiresComponents:false,price:{amount:peach?'77.49':'108.99',currencyCode:'USD'},selectedOptions:[{name:'Size',value:'S'},...(!peach?[{name:'Alteration',value:'Standard'}]:[])]}}];
+ p.options=[{name:'Size',values:['S','M']}];
+ p.variants.edges=[{node:{id:`gid://shopify/ProductVariant/${id}`,title:'S',availableForSale:true,requiresComponents:false,price:{amount:peach?'77.49':'108.99',currencyCode:'USD'},selectedOptions:[{name:'Size',value:'S'}]}}];
  return p;
 };
 test('exact pilot IDs resolve actual Meta-selected sizes and496.44 basket without choosing defaults',async()=>{

@@ -22,7 +22,7 @@ import { useRecentlyViewedStore } from '@/stores/recentlyViewedStore';
 import { trackViewItem } from '@/hooks/useAnalytics';
 import { trackMarketingViewContent } from '@/lib/marketingPixels';
 import { subscribeMarketingConsent } from '@/lib/marketingConsent';
-import StickyAddToBag from '@/components/product/StickyAddToBag';
+import StickyAddToBag, { type StickyPurchaseState } from '@/components/product/StickyAddToBag';
 import {
   applyCustomizableProductDetails,
   getCustomizableProduct,
@@ -84,6 +84,7 @@ const ProductDetail = () => {
   const selectionKey = `${handle}:${requestedVariantId ?? ''}`;
   const { product: shopifyProduct, isLoading: shopifyLoading, error: shopifyError } = useShopifyProduct(handle);
   const [selectedVariantImageUrl, setSelectedVariantImageUrl] = useState<string | null>(null);
+  const [stickyPurchaseState, setStickyPurchaseState] = useState<StickyPurchaseState | null>(null);
   const [variantSelection, setVariantSelection] = useState<{ key: string; id: string | null } | null>(null);
   const handleSelectedVariantChange = useCallback((variant: ShopifyProduct['node']['variants']['edges'][number]['node'] | null) => {
     const id = variant?.id ?? null;
@@ -473,15 +474,15 @@ const ProductDetail = () => {
 
       <Header />
       
-      <main id="main-content" className="pt-[90px] lg:pt-[132px] pb-16">
+      <main id="main-content" className="pt-[84px] lg:pt-[128px] pb-16">
         <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
           {/* Breadcrumb */}
-          <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-muted-foreground mb-8">
-            <Link to="/" className="hover:text-foreground transition-colors">Home</Link>
-            <ChevronRight className="h-4 w-4" />
-            <Link to={categoryUrl} className="hover:text-foreground transition-colors">{categoryName}</Link>
-            <ChevronRight className="h-4 w-4" />
-            <span className="text-foreground">{product?.title || 'Product'}</span>
+          <nav aria-label="Breadcrumb" className="flex items-center gap-1.5 text-xs sm:text-sm text-muted-foreground mb-4 sm:mb-6 overflow-hidden">
+            <Link to="/" className="shrink-0 hover:text-foreground transition-colors">Home</Link>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+            <Link to={categoryUrl} className="shrink-0 hover:text-foreground transition-colors">{categoryName}</Link>
+            <ChevronRight className="h-3.5 w-3.5 shrink-0" />
+            <span className="truncate text-foreground">{product?.title || 'Product'}</span>
           </nav>
 
           {isLoading ? (
@@ -526,6 +527,7 @@ const ProductDetail = () => {
                     description: enrichedDescription || product.description,
                   }}
                   onSelectedVariantChange={handleSelectedVariantChange}
+                  onStickyPurchaseStateChange={setStickyPurchaseState}
                 />
               </div>
 
@@ -590,7 +592,7 @@ const ProductDetail = () => {
       </main>
 
       <Footer />
-      {product && <StickyAddToBag product={product} />}
+      {product && <StickyAddToBag product={product} purchaseState={stickyPurchaseState} />}
     </div>
   );
 };

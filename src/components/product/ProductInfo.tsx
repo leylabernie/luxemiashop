@@ -99,9 +99,12 @@ const STITCHING_TYPE_OPTIONS: StitchingTypeOption[] = [
 
 type ShopifyVariant = ShopifyProduct['node']['variants']['edges'][number]['node'];
 
+import type { StickyPurchaseState } from './StickyAddToBag';
+
 interface ProductInfoProps {
   product: ShopifyProduct['node'];
   onSelectedVariantChange?: (variant: ShopifyVariant | null) => void;
+  onStickyPurchaseStateChange?: (state: StickyPurchaseState | null) => void;
 }
 
 // Helper to extract product specs from tags
@@ -306,7 +309,7 @@ const isMenswearProduct = (productType?: string, tags?: string[]): boolean => {
   return false;
 };
 
-export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: ProductInfoProps) => {
+export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onStickyPurchaseStateChange }: ProductInfoProps) => {
   const [searchParams] = useSearchParams();
   const presentation = useMemo(() => mensPurchasePresentation(rawProduct, searchParams.get('variant')), [rawProduct, searchParams]);
   const product = presentation.product;
@@ -985,34 +988,88 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
     }
   };
 
-  return (
-    <div id="product-purchase" className="scroll-mt-28 lg:scroll-mt-36 space-y-6">
-      {/* Style No / SKU */}
-      {sku && (
-        <p className="text-xs tracking-wider text-muted-foreground font-mono">
-          Style No: {sku}
-        </p>
-      )}
+  const canStickyDirectAdd = Boolean(
+    purchasableVariant
+      && isAvailable
+      && !selectionRequiresEnquiry
+      && !metaToken
+      && !customizableProduct
+      && !isCustomSizeSelected
+      && !measurementEligible
+      && !needsBlouseServiceConfirmation
+      && !isStitchable
+      && !(needsStitchingSize && !productHasNativeSizes)
+      && !(isMenswear && !productHasNativeSizes)
+      && !(isMensSharedStockActive(rawProduct) && selectedServiceAddOnCodes.includes('garment-alteration')),
+  );
 
-      {/* Vendor */}
-      {product.vendor && (
-        <p className="text-sm tracking-luxury uppercase text-primary font-medium">
-          {product.vendor}
-        </p>
+  const selectedOptionSummary = useMemo(() => {
+    const entries = Object.entries(selectedOptions).filter(
+      ([name, value]) => Boolean(value) && name.toLowerCase() !== 'title' && value.toLowerCase() !== 'default title',
+    );
+    return entries.map(([name, value]) => `${name}: ${value}`).join(' · ');
+  }, [selectedOptions]);
+
+  const handleAddToCartRef = useRef(handleAddToCart);
+  handleAddToCartRef.current = handleAddToCart;
+
+  useEffect(() => {
+    if (!onStickyPurchaseStateChange) return;
+    onStickyPurchaseStateChange({
+      priceAmount: currentPrice.amount,
+      compareAtAmount: currentReferencePrice?.amount ?? null,
+      selectedLabel: selectedOptionSummary,
+      imageUrl: purchasableVariant?.node.image?.url ?? product.images.edges[0]?.node.url ?? null,
+      isAvailable,
+      canDirectAdd: canStickyDirectAdd,
+      isAdding,
+      onDirectAdd: () => {
+        void handleAddToCartRef.current();
+      },
+    });
+    return () => onStickyPurchaseStateChange(null);
+  }, [
+    onStickyPurchaseStateChange,
+    currentPrice.amount,
+    currentReferencePrice?.amount,
+    selectedOptionSummary,
+    purchasableVariant?.node.image?.url,
+    product.images,
+    isAvailable,
+    canStickyDirectAdd,
+    isAdding,
+  ]);
+
+  return (
+    <div id="product-purchase" className="scroll-mt-24 lg:scroll-mt-32 space-y-5">
+      {/* Vendor & Style No — compact single header row */}
+      {(product.vendor || sku) && (
+        <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+          {product.vendor && (
+            <p className="text-xs tracking-luxury uppercase text-primary font-medium">
+              {product.vendor}
+            </p>
+          )}
+          {sku && (
+            <p className="text-xs tracking-wider text-muted-foreground font-mono">
+              Style No: {sku}
+            </p>
+          )}
+        </div>
       )}
 
       {/* Title */}
       {metaToken && metaContext && <div className="border rounded p-3 text-sm"><p>Review or re-enter all options for this item; saving replaces its previous configuration. Then use Add to Bag to return to your complete Meta selection. Your other products and discount code stay saved; your regular bag is unchanged.</p><Link className="underline" to={metaReturnPath(metaToken)}>Return to my Meta selection without changing this item</Link></div>}
-      <h1 className="text-3xl lg:text-4xl font-serif leading-tight">{product.title}</h1>
+      <h1 className="text-2xl sm:text-3xl lg:text-4xl font-serif leading-tight">{product.title}</h1>
 
       {/* Price */}
-      <div className="space-y-2">
+      <div className="space-y-1">
         <div className="flex items-baseline gap-3">
           <p className="text-2xl font-medium text-foreground">
             {formatPrice(currentPrice.amount, currentPrice.currencyCode)}
           </p>
           {currentReferencePrice && (
-            <p className="text-lg text-muted-foreground line-through">
+            <p className="text-base sm:text-lg text-muted-foreground line-through">
               {formatPrice(
                 currentReferencePrice.amount,
                 currentReferencePrice.currencyCode
@@ -1021,7 +1078,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
           )}
         </div>
         {currentReferencePrice && (
-          <p className="text-sm text-primary font-medium">
+          <p className="text-xs sm:text-sm text-primary font-medium">
             {Math.round((1 - parseFloat(currentPrice.amount) /
               parseFloat(currentReferencePrice.amount)) * 100)}% off — You save {formatPrice(
               (parseFloat(currentReferencePrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
@@ -1031,20 +1088,572 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         )}
       </div>
 
+      {/* ─── Essential Purchase Controls (kept directly under price) ─── */}
+      <div id="product-options" className="scroll-mt-24 space-y-4">
+        {/* ─── More Colors (same design, other color listings) ─── */}
+        {colorways.swatches.length > 1 && (
+          <div className="flex items-center gap-3">
+            <span className="text-xs sm:text-sm font-medium uppercase tracking-wide text-muted-foreground">
+              More Colors
+            </span>
+            <div className="flex items-center gap-2">
+              {colorways.swatches.map((swatch) => {
+                const isCurrent = colorways.current?.handle === swatch.handle;
+                const circle = (
+                  <span
+                    aria-hidden="true"
+                    className={`block h-7 w-7 rounded-full border border-black/10 shadow-sm transition-transform duration-200 ${
+                      isCurrent ? 'ring-2 ring-foreground ring-offset-2' : 'group-hover/link:scale-110'
+                    }`}
+                    style={{ backgroundColor: swatch.hex }}
+                  />
+                );
+                return isCurrent ? (
+                  <span key={swatch.handle} title={`${swatch.color} — current selection`}>
+                    {circle}
+                  </span>
+                ) : (
+                  <Link
+                    key={swatch.handle}
+                    to={`/product/${swatch.handle}`}
+                    className="group/link"
+                    title={`View ${swatch.color}`}
+                    aria-label={`View ${swatch.color} colorway`}
+                  >
+                    {circle}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+        )}
+
+        {/* ─── Product Options (Color, Size from Shopify) ─── */}
+        <div className="space-y-4">
+          {product.options
+            .filter((option) => shouldRenderShopifyProductOption(option, {
+              isCustomizable: Boolean(customizableProduct),
+              isStitchable,
+            }))
+            .flatMap(getProductOptionDisplayGroups)
+            .map((option) => (
+            <div key={`${option.name}:${option.kind}`} className={option.kind === 'tailoring-request' ? 'space-y-2.5 rounded-sm border border-primary/30 bg-primary/5 p-3.5' : 'space-y-2'}>
+              <div className="flex items-center justify-between gap-2">
+                <label className="text-xs sm:text-sm font-medium uppercase tracking-wide">
+                  {option.label}
+                  {option.values.includes(selectedOptions[option.name]) && (
+                    <span className="font-normal text-muted-foreground ml-2">
+                      — {selectedOptions[option.name]}
+                    </span>
+                  )}
+                </label>
+                {option.kind === 'size' && (
+                  <SizeGuideModal category={product.productType} />
+                )}
+              </div>
+              {option.kind === 'tailoring-request' && <p className="text-xs sm:text-sm text-muted-foreground">A tailoring request is not an additional supplied garment size.</p>}
+              <div className="flex flex-wrap gap-2">
+                {option.values.map((value) => {
+                  const optionValueAvailable = isVariantOptionValueAvailable(
+                    variantNodes,
+                    option.name,
+                    value,
+                  );
+                  const priceDelta = optionValuePriceDeltas.get(`${option.name}::${value}`);
+                  const deltaLabel = priceDelta
+                    ? ` +$${priceDelta % 1 === 0 ? priceDelta : priceDelta.toFixed(2)}`
+                    : '';
+                  return (
+                    <button
+                      key={value}
+                      type="button"
+                      onClick={() => handleOptionSelect(option.name, value)}
+                      disabled={!optionValueAvailable}
+                      aria-label={`${value}${deltaLabel}${optionValueAvailable ? '' : ' — unavailable'}`}
+                      className={`px-3.5 py-2 min-h-10 text-sm border rounded-sm transition-all duration-200 ${
+                        selectedOptions[option.name] === value
+                          ? 'border-foreground bg-foreground text-background'
+                          : optionValueAvailable
+                          ? 'border-border hover:border-foreground/50'
+                          : 'cursor-not-allowed border-border text-muted-foreground opacity-45'
+                      }`}
+                    >
+                      {value}
+                      {deltaLabel && (
+                        <span className="ml-1.5 text-xs opacity-75">{deltaLabel}</span>
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* ─── Stitching Type Selector (for stitchable products) ─── */}
+        {isStitchable && (
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Scissors className="h-4 w-4 text-primary" />
+                <label className="text-sm font-medium uppercase tracking-wide">
+                  Stitching Type
+                </label>
+              </div>
+              <button
+                onClick={() => setShowStitchingInfo(showStitchingInfo ? null : 'main')}
+                className="text-xs text-primary hover:text-primary/80 underline underline-offset-4"
+              >
+                What's this?
+              </button>
+            </div>
+
+            {showStitchingInfo && (
+              <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
+                <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed with adjustable side seams. Select only a size offered on this listing and plan local alterations if needed.</p>
+                <p><strong className="text-foreground">Ready to Wear:</strong> A listing-specific request that requires LuxeMia to confirm the stated size, availability, timing, and any charge.</p>
+                <p><strong className="text-foreground">Made to Measure (UDesign):</strong> The design choices, measurements, timing, and charge require LuxeMia confirmation before alterations.</p>
+              </div>
+            )}
+
+            <div className="space-y-2.5">
+              {STITCHING_TYPE_OPTIONS.map((option) => (
+                <button
+                  key={option.id}
+                  type="button"
+                  onClick={() => {
+                    handleStitchingTypeSelect(option.id);
+                  }}
+                  className={`w-full text-left p-3.5 border rounded-sm transition-all duration-200 ${
+                    selectedStitchingType === option.id
+                      ? 'border-primary bg-primary/5 ring-1 ring-primary'
+                      : 'border-border hover:border-foreground/30'
+                  }`}
+                >
+                  <div className="flex items-center justify-between mb-1">
+                    <div className="flex items-center gap-2">
+                      <span className={`text-sm font-medium ${
+                        selectedStitchingType === option.id ? 'text-primary' : 'text-foreground'
+                      }`}>
+                        {option.label}
+                      </span>
+                      {option.id === 'semi-stitched' && (
+                        <span className="text-[10px] font-medium uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded">Popular</span>
+                      )}
+                      {option.id === 'made-to-measure' && (
+                        <span className="text-[10px] font-medium uppercase tracking-wider bg-[#D4AF37]/15 text-[#D4AF37] px-2 py-0.5 rounded">UDesign</span>
+                      )}
+                    </div>
+                    <span className={`text-xs sm:text-sm font-medium ${
+                      option.requiresQuote
+                        ? 'text-foreground'
+                        : 'text-green-600 dark:text-green-400'
+                    }`}>
+                      {option.requiresQuote ? 'Confirmation required' : 'Included'}
+                    </span>
+                  </div>
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    {option.description}
+                  </p>
+                </button>
+              ))}
+            </div>
+
+            {selectedStitchingType === 'made-to-measure' && (
+              <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm">
+                <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
+                  After checkout, LuxeMia will use the order contact details to confirm whether tailoring is available, the exact measurements, timing, and any charge before alterations. Contact LuxeMia before ordering for a fixed event date.
+                </p>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* ─── Menswear Size Selector ─── */}
+        {isMenswear && !productHasNativeSizes && !measurementNow && (
+          <StitchingSizeSelector
+            selectedSize={stitchingSize}
+            onSizeChange={setStitchingSize}
+            showValidation={showSizeValidation}
+          />
+        )}
+
+        {customizableProduct && (
+          <section className="space-y-4 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="made-to-order-heading">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Fit and color requests require confirmation</p>
+              <h2 id="made-to-order-heading" className="mt-1 font-serif text-xl sm:text-2xl">Custom color and measurements</h2>
+            </div>
+            <ul className="list-disc space-y-1.5 pl-5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
+              <li>Request a color only if LuxeMia confirms availability in writing; a custom color is not guaranteed.</li>
+              <li>The listed semi-stitched or ready-stitched item may be altered to confirmed measurements; the supplied construction remains as described.</li>
+              <li>{alterationShippingTimingNotice(shipsWithinDays)}</li>
+              <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
+              <li>For deliveries outside the United States, import-charge treatment must be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
+              <li>Custom orders are final sale, subject to applicable law.</li>
+            </ul>
+            <p className="text-xs sm:text-sm text-foreground">
+              Before ordering for a fixed event date, send the product link, requested color, event date, and country to LuxeMia for confirmation.
+            </p>
+            <div className="space-y-2">
+              <label htmlFor="requested-custom-color" className="text-sm font-medium">Requested color</label>
+              <input
+                id="requested-custom-color"
+                value={requestedCustomColor}
+                onChange={(event) => setRequestedCustomColor(event.target.value)}
+                placeholder="For example: emerald green"
+                className="w-full rounded-sm border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary"
+              />
+              <p className="text-xs text-muted-foreground">Your request is subject to fabric availability and is not final until LuxeMia confirms it.</p>
+            </div>
+            <div className="flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  const message = encodeURIComponent(`Hi LuxeMia, I would like to confirm a custom color and measurements for ${product.title} (${window.location.href}). My requested color is: `);
+                  window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
+                }}
+                className="inline-flex items-center gap-2 rounded-sm bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
+              >
+                <MessageCircle className="h-4 w-4" /> Confirm custom details
+              </button>
+              <Link to="/contact" className="inline-flex items-center rounded-sm border border-border px-4 py-2.5 text-sm font-medium hover:border-primary">
+                Contact options
+              </Link>
+            </div>
+          </section>
+        )}
+
+        {tailoringEnquiryOnly && (
+          <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="tailoring-enquiry-heading">
+            <h3 id="tailoring-enquiry-heading" className="font-serif text-xl">Garment alteration / custom size enquiry</h3>
+            <p className="text-sm text-muted-foreground">{TAILORING_ENQUIRY_NOTICE}</p>
+            <p className="text-sm">The garment with listed catalog size label 32 can be purchased without a tailoring request. This label is not a supplier-verified measurement, inches or a US size. No additional garment sizes, measurements or alteration allowance are confirmed here.</p>
+            <Link to={TAILORING_ENQUIRY_CONTACT_PATH} className="inline-flex rounded-sm border border-primary px-4 py-2 text-sm font-medium text-primary">Request written tailoring confirmation</Link>
+            {selectionRequiresEnquiry && <p role="status" className="text-sm font-medium">Quote required — this request cannot be added to bag.</p>}
+          </section>
+        )}
+
+        {availableServiceAddOnCodes.length > 0 && (
+          <details
+            open={selectedAvailableServiceAddOnCodes.length > 0 || undefined}
+            className="group rounded-sm border border-primary/25 bg-primary/5 p-3"
+            aria-labelledby="listing-service-add-ons-heading"
+          >
+            <summary className="flex cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
+              <div>
+                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
+                  {isSareeListing ? 'Optional saree finishing' : 'Optional services'}
+                </span>
+                <h3 id="listing-service-add-ons-heading" className="font-serif text-base sm:text-lg leading-snug">
+                  {isSareeListing ? 'Finish your saree' : 'Optional finishing & tailoring'}
+                </h3>
+              </div>
+              <span className="shrink-0 text-xs font-medium text-primary underline underline-offset-4">
+                {selectedAvailableServiceAddOnCodes.length > 0
+                  ? `+${formatPrice(selectedServiceAddOnCharge.toFixed(2), basePrice.currencyCode)}`
+                  : 'View options'}
+              </span>
+            </summary>
+            <div className="mt-3 space-y-2.5">
+              <p className="text-xs leading-relaxed text-muted-foreground">
+                {isSareeListing
+                  ? 'Choose from the finishing and accessory options shown for this saree before adding it to bag. The selected options are included with this saree order.'
+                  : 'Only services supported by this product’s stated construction are shown and included with this garment order.'}
+              </p>
+              <div className="space-y-2">
+                {availableServiceAddOnCodes.map((code) => {
+                  const service = SERVICE_ADD_ONS[code];
+                  const selected = selectedAvailableServiceAddOnCodes.includes(code);
+                  return (
+                    <button
+                      key={code}
+                      type="button"
+                      aria-pressed={selected}
+                      onClick={() => {
+                        if (code === 'blouse-stitching') setBlouseServiceConfirmed(false);
+                        setStitchingSize(null);
+                        setShowSizeValidation(false);
+                        setSelectedServiceAddOnCodes((current) =>
+                          current.includes(code)
+                            ? current.filter((currentCode) => currentCode !== code)
+                            : [...current, code],
+                        );
+                      }}
+                      className={`flex w-full items-start justify-between gap-3 rounded-sm border p-3 text-left transition-colors ${
+                        selected ? 'border-primary bg-background ring-1 ring-primary' : 'border-border bg-background hover:border-primary/60'
+                      }`}
+                    >
+                      <span className="flex items-start gap-2.5">
+                        <span className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border ${
+                          selected ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/50'
+                        }`}>
+                          {selected && <Check className="h-3 w-3" aria-hidden="true" />}
+                        </span>
+                        <span>
+                          <span className="block text-sm font-medium text-foreground">{service.label}</span>
+                          <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{service.description}</span>
+                        </span>
+                      </span>
+                      <span className="shrink-0 text-sm font-semibold text-foreground">+{formatPrice(serviceVariants.get(code)!.price.amount, serviceVariants.get(code)!.price.currencyCode)}</span>
+                    </button>
+                  );
+                })}
+              </div>
+              {needsBlouseServiceConfirmation && (
+                <div className="space-y-2 rounded-sm border border-primary/30 bg-background p-3">
+                  <p className="text-sm font-medium">Blouse measurements and design confirmation</p>
+                  <p className="text-xs leading-relaxed text-muted-foreground">
+                    The included blouse piece is unstitched. No finished blouse size is guaranteed by this listing.
+                    LuxeMia will confirm what can be made from the supplied fabric before stitching starts.
+                    Contact us before ordering if you need to confirm a particular fit, design or event date.
+                  </p>
+                  <label className="flex items-start gap-3 text-sm">
+                    <input
+                      type="checkbox"
+                      checked={blouseServiceConfirmed}
+                      onChange={(event) => setBlouseServiceConfirmed(event.target.checked)}
+                      className="mt-1 h-4 w-4 accent-primary"
+                    />
+                    <span>{measurementNow ? 'I have provided measurements for review. LuxeMia must confirm fabric suitability, design and fit feasibility, and dispatch timing before stitching begins.' : BLOUSE_SERVICE_CONFIRMATION_NOTICE}</span>
+                  </label>
+                </div>
+              )}
+              {selectedAvailableServiceAddOnCodes.length > 0 && (
+                <p className="text-sm font-medium text-foreground">
+                  Selected services: +{formatPrice(selectedServiceAddOnCharge.toFixed(2), basePrice.currencyCode)}
+                </p>
+              )}
+            </div>
+          </details>
+        )}
+
+        {isCustomSizeSelected && !customizableProduct && !tailoringEnquiryOnly && (
+          <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
+            <div>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Custom size selected</p>
+              <h3 id="custom-size-confirmation-heading" className="mt-1 font-serif text-xl">Measurements must be confirmed before alterations</h3>
+            </div>
+            <p className="text-sm leading-relaxed text-muted-foreground">
+              Your selected Custom size is recorded with this order. LuxeMia will confirm measurements before tailoring begins; do not assume other design changes are included unless confirmed in writing.
+            </p>
+            <label className="flex items-start gap-3 rounded-sm border border-border bg-background p-3 text-sm text-foreground">
+              <input
+                type="checkbox"
+                checked={customSizeConfirmed}
+                onChange={(event) => setCustomSizeConfirmed(event.target.checked)}
+                className="mt-1 h-4 w-4 accent-primary"
+              />
+              <span>I understand that LuxeMia must confirm my measurements before alterations begin.</span>
+            </label>
+            <div className="flex flex-wrap gap-3 text-sm">
+              <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">View the sizing guide</Link>
+              <button
+                type="button"
+                onClick={() => {
+                  const message = encodeURIComponent(`Hi LuxeMia, I selected Custom size for ${product.title} (${window.location.href}) and would like to confirm measurements before ordering.`);
+                  window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
+                }}
+                className="font-medium text-primary underline underline-offset-4"
+              >
+                Confirm measurements by WhatsApp
+              </button>
+            </div>
+          </section>
+        )}
+
+        {measurementEligible && metaToken && <p className="text-sm">For this shopping-link checkout, provide measurements after ordering. To provide them now, open this product directly from the store and add it to your bag.</p>}
+        {measurementEligible && !metaToken && <MeasurementRequestForm
+          key={measurementContext}
+          value={measurementDraft}
+          variant={isCustomSizeSelected ? 'custom-fit' : 'default'}
+          onChange={draft => {
+            if (draft.choice !== measurementDraft.choice) { setStitchingSize(null); setBlouseServiceConfirmed(false); }
+            setMeasurementState({ context: measurementContext, draft }); setMeasurementValidation(undefined);
+          }}
+          error={measurementValidation}
+        />}
+
+        {/* ─── Stitching Size Selector (when product doesn't have Shopify size variants) ─── */}
+        {showStitchingSizeSelector && !isMenswear && !measurementNow && (
+          <StitchingSizeSelector
+            selectedSize={stitchingSize}
+            onSizeChange={setStitchingSize}
+            showValidation={showSizeValidation}
+          />
+        )}
+
+        {/* ─── Bottom / Lower Style Selector ─── */}
+        {showBottomStyleOption && needsStitchingSize && (
+          <BottomStyleSelector
+            selected={selectedBottomStyle}
+            onChange={setSelectedBottomStyle}
+          />
+        )}
+
+        {/* ─── Blouse Neckline Selector ─── */}
+        {showNeckline && (
+          <NecklineSelector selected={selectedNeckline} onChange={setSelectedNeckline} />
+        )}
+
+        {/* ─── Sleeve Style Selector (Made to Measure only) ─── */}
+        {showSleeveStyle && (
+          <SleeveStyleSelector
+            selected={selectedSleeveStyle}
+            onChange={setSelectedSleeveStyle}
+          />
+        )}
+
+        {/* ─── Optional Fit Request ─── */}
+        {(isStitchable || isMenswear) && (
+          <details className="rounded-sm border border-border/70 bg-card/30 px-3.5 py-2.5 text-sm">
+            <summary className="cursor-pointer font-medium text-foreground">
+              Add an optional fit request
+            </summary>
+            <div className="mt-2.5 space-y-2">
+              <textarea
+                value={customAlteration}
+                onChange={(e) => setCustomAlteration(e.target.value)}
+                placeholder="Describe a fit request you would like LuxeMia to review..."
+                className="w-full min-h-[72px] p-3 text-sm bg-background border border-border rounded-sm focus:border-primary outline-none transition-colors resize-none"
+              />
+              <p className="text-[11px] text-muted-foreground italic">
+                * Requests are not guaranteed. Contact LuxeMia before ordering to confirm feasibility, timing, and any additional charge.
+              </p>
+            </div>
+          </details>
+        )}
+
+        {/* Quantity + Add to Cart — inline so Add to Bag stays high in view */}
+        <div id="product-add-to-bag" className="space-y-2.5 pt-1">
+          <div className="flex items-center gap-2.5">
+            <div className="flex items-center border border-border rounded-sm h-14 shrink-0" role="group" aria-label="Quantity">
+              <button
+                type="button"
+                aria-label="Decrease quantity"
+                onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                className="p-3 hover:bg-secondary transition-colors h-full"
+              >
+                <Minus className="h-4 w-4" />
+              </button>
+              <span className="w-8 text-center text-sm font-medium">{quantity}</span>
+              <button
+                type="button"
+                aria-label="Increase quantity"
+                disabled={!!metaToken && quantity >= 99}
+                onClick={() => setQuantity(metaToken ? Math.min(99, quantity + 1) : quantity + 1)}
+                className="p-3 hover:bg-secondary transition-colors h-full"
+              >
+                <Plus className="h-4 w-4" />
+              </button>
+            </div>
+
+            <motion.div className="flex-1 min-w-0" whileTap={{ scale: 0.98 }}>
+              <Button
+                onClick={handleAddToCart}
+                disabled={!isAvailable || isAdding || selectionRequiresEnquiry}
+                className="w-full h-14 text-base relative overflow-hidden group"
+                variant="luxury"
+              >
+                <motion.span
+                  initial={false}
+                  animate={{ y: isAdding ? -30 : 0, opacity: isAdding ? 0 : 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="flex items-center gap-2"
+                >
+                  <ShoppingBag className="h-5 w-5 shrink-0" />
+                  {selectionRequiresEnquiry ? 'Quote Required' : isAvailable ? 'Add to Bag' : hasAvailableVariant ? 'Select Options' : 'Out of Stock'}
+                </motion.span>
+                <motion.span
+                  initial={false}
+                  animate={{ y: isAdding ? 0 : 30, opacity: isAdding ? 1 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 flex items-center justify-center gap-2"
+                >
+                  <Check className="h-5 w-5" />
+                  Added!
+                </motion.span>
+              </Button>
+            </motion.div>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="h-14 w-12 sm:w-14 shrink-0"
+              aria-label={isWishlisted ? 'Remove product from wishlist' : 'Save product to wishlist'}
+              aria-pressed={isWishlisted}
+              onClick={handleWishlistToggle}
+            >
+              <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-primary text-primary' : ''}`} />
+            </Button>
+
+            <Button
+              type="button"
+              variant="outline"
+              size="icon"
+              className="hidden sm:inline-flex h-14 w-14 shrink-0"
+              aria-label="Share this product"
+              onClick={handleShare}
+            >
+              <Share2 className="h-5 w-5" />
+            </Button>
+          </div>
+
+          {/* Trust micro-strip */}
+          <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs text-muted-foreground">
+            <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Tracked U.S. shipping</span>
+            <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
+            <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
+          </div>
+        </div>
+
+        {productHasNativeSizes && (
+          <details className="rounded-sm border border-border/70 bg-muted/30 px-3.5 py-2.5 text-xs sm:text-sm" aria-labelledby="sizing-explainer-heading">
+            <summary id="sizing-explainer-heading" className="cursor-pointer font-medium text-foreground">
+              {isReadyToWearSaree
+                ? 'Supplied ready to wear — how sizing works'
+                : isSareeListing
+                ? 'One-size saree with unstitched blouse — how sizing & stitching work'
+                : 'How sizing & stitching work'}
+            </summary>
+            <div className="mt-2 space-y-2 text-muted-foreground leading-relaxed">
+              {isReadyToWearSaree ? (
+                <>
+                  <p>This saree is supplied <strong className="text-foreground">ready to wear</strong>, as described in Included Pieces. The size options record your preferred fit; they do not add a separate unstitched blouse.</p>
+                  <p>Confirm blouse inclusion with LuxeMia if it is not listed. Alterations, if needed, are charged separately.</p>
+                </>
+              ) : isSareeListing ? (
+                <>
+                  <p>The saree is one size and comes with an <strong className="text-foreground">unstitched blouse piece</strong>. The <strong className="text-foreground">Blouse Size</strong> you choose is the size the blouse will be stitched to if you add blouse stitching; the saree itself is not sized. Choose the <strong className="text-foreground">Petticoat Size</strong> separately if you are adding a stitched petticoat.</p>
+                  <p><strong className="text-foreground">Blouse stitching is not included in the saree price.</strong> Stitching and any petticoat are separate services; add them from the options on this page or confirm the charge with LuxeMia before ordering.</p>
+                </>
+              ) : (
+                <p>Every size shown is stitched to our size chart. <strong className="text-foreground">Stitching is included in the price shown</strong> for that size; no stitching charge is added at checkout.</p>
+              )}
+              <p><strong className="text-foreground">Custom Fit:</strong> select it, then either enter your measurements in the form that appears before you add to bag, or choose to provide them after ordering. We confirm measurements before cutting. Standard sizes need no measurements.</p>
+            </div>
+          </details>
+        )}
+      </div>
+
+      <Separator />
+
       {includedBulletItems.length > 0 && (
-        <section aria-labelledby="whats-included-heading" className="rounded-sm bg-secondary/30 p-4 text-sm">
+        <section aria-labelledby="whats-included-heading" className="rounded-sm bg-secondary/30 p-3.5 text-sm">
           <h2 id="whats-included-heading" className="font-semibold">What's included</h2>
-          <ul className="mt-2 list-disc space-y-1 pl-5 text-muted-foreground">
+          <ul className="mt-1.5 list-disc space-y-1 pl-5 text-muted-foreground">
             {includedBulletItems.map(item => <li key={item}>{item}</li>)}
           </ul>
         </section>
       )}
 
       {(productSpecs.fabric || (!includedBulletItems.length && productSpecs.includedPieces) || productSpecs.work) && (
-        <dl className="space-y-2 rounded-sm bg-secondary/30 p-4 text-sm">
+        <dl className="grid gap-2 rounded-sm bg-secondary/30 p-3.5 text-sm sm:grid-cols-2">
           {productSpecs.fabric && <div><dt className="font-medium">Fabric</dt><dd className="text-muted-foreground">{productSpecs.fabric}</dd></div>}
           {!includedBulletItems.length && productSpecs.includedPieces && <div><dt className="font-medium">Included pieces</dt><dd className="text-muted-foreground">{productSpecs.includedPieces}</dd></div>}
-          {productSpecs.work && <div><dt className="font-medium">Work &amp; embellishment</dt><dd className="text-muted-foreground">{productSpecs.work}</dd></div>}
+          {productSpecs.work && <div className="sm:col-span-2"><dt className="font-medium">Work &amp; embellishment</dt><dd className="text-muted-foreground">{productSpecs.work}</dd></div>}
         </dl>
       )}
 
@@ -1067,566 +1676,17 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
 
       </ProductDeliverySummary>
 
-      <Separator />
-
-      {customizableProduct && (
-        <section className="space-y-4 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="made-to-order-heading">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Fit and color requests require confirmation</p>
-            <h2 id="made-to-order-heading" className="mt-1 font-serif text-2xl">Custom color and measurements</h2>
-          </div>
-          <ul className="list-disc space-y-2 pl-5 text-sm leading-relaxed text-muted-foreground">
-            <li>Request a color only if LuxeMia confirms availability in writing; a custom color is not guaranteed.</li>
-            <li>The listed semi-stitched or ready-stitched item may be altered to confirmed measurements; the supplied construction remains as described.</li>
-            <li>{alterationShippingTimingNotice(shipsWithinDays)}</li>
-            <li>Other design changes are not included unless LuxeMia confirms them in writing.</li>
-            <li>For deliveries outside the United States, import-charge treatment must be confirmed in writing before the order is accepted; do not assume duty-free delivery.</li>
-            <li>Custom orders are final sale, subject to applicable law.</li>
-          </ul>
-          <p className="text-sm text-foreground">
-            Before ordering for a fixed event date, send the product link, requested color, event date, and country to LuxeMia for confirmation.
-          </p>
-          <div className="space-y-2">
-            <label htmlFor="requested-custom-color" className="text-sm font-medium">Requested color</label>
-            <input
-              id="requested-custom-color"
-              value={requestedCustomColor}
-              onChange={(event) => setRequestedCustomColor(event.target.value)}
-              placeholder="For example: emerald green"
-              className="w-full rounded-sm border border-border bg-background px-3 py-2.5 text-sm outline-none focus:border-primary"
-            />
-            <p className="text-xs text-muted-foreground">Your request is subject to fabric availability and is not final until LuxeMia confirms it.</p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <button
-              type="button"
-              onClick={() => {
-                const message = encodeURIComponent(`Hi LuxeMia, I would like to confirm a custom color and measurements for ${product.title} (${window.location.href}). My requested color is: `);
-                window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
-              }}
-              className="inline-flex items-center gap-2 rounded-sm bg-primary px-4 py-2.5 text-sm font-medium text-primary-foreground hover:bg-primary/90"
-            >
-              <MessageCircle className="h-4 w-4" /> Confirm custom details
-            </button>
-            <Link to="/contact" className="inline-flex items-center rounded-sm border border-border px-4 py-2.5 text-sm font-medium hover:border-primary">
-              Contact options
-            </Link>
-          </div>
-        </section>
-      )}
-
-      {customizableProduct && <Separator />}
-
       {/* ─── Utsav-style "Customize" Section ─── */}
       {showCustomizeHeader && (
-        <div className="space-y-4">
-          {/* Customize Header */}
-          <div className="space-y-2">
-            <h3 className="text-sm font-semibold uppercase tracking-wide text-foreground">
-              Customize: {product.title}
-            </h3>
-            <div className="border-b border-border" />
-            {/* Base product line item */}
-            <div className="flex items-center justify-between py-1">
-              <div className="flex items-center gap-2">
-                <span className="text-primary text-sm">☑</span>
-                <span className="text-sm text-foreground font-medium">{product.title}</span>
-              </div>
-              <span className="text-sm text-foreground font-medium">
-                {formatPrice(basePrice.amount, basePrice.currencyCode)}
-              </span>
-            </div>
+        <div className="rounded-sm border border-border/60 px-3.5 py-2.5">
+          <div className="flex items-center justify-between gap-3">
+            <span className="text-xs sm:text-sm text-foreground font-medium truncate">Selected: {product.title}</span>
+            <span className="text-xs sm:text-sm text-foreground font-medium shrink-0">
+              {formatPrice(basePrice.amount, basePrice.currencyCode)}
+            </span>
           </div>
         </div>
       )}
-
-      {/* ─── Stitching Type Selector (for stitchable products) ─── */}
-      {isStitchable && (
-        <div className="space-y-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2">
-              <Scissors className="h-4 w-4 text-primary" />
-              <label className="text-sm font-medium uppercase tracking-wide">
-                Stitching Type
-              </label>
-            </div>
-            <button
-              onClick={() => setShowStitchingInfo(showStitchingInfo ? null : 'main')}
-              className="text-xs text-primary hover:text-primary/80 underline underline-offset-4"
-            >
-              What's this?
-            </button>
-          </div>
-
-          {/* Stitching Info Popover */}
-          {showStitchingInfo && (
-            <div className="bg-secondary/50 border border-border rounded-sm p-4 text-sm text-muted-foreground space-y-3">
-              <p><strong className="text-foreground">Semi Stitched:</strong> Pre-constructed with adjustable side seams. Select only a size offered on this listing and plan local alterations if needed.</p>
-              <p><strong className="text-foreground">Ready to Wear:</strong> A listing-specific request that requires LuxeMia to confirm the stated size, availability, timing, and any charge.</p>
-              <p><strong className="text-foreground">Made to Measure (UDesign):</strong> The design choices, measurements, timing, and charge require LuxeMia confirmation before alterations.</p>
-            </div>
-          )}
-
-          <div className="space-y-3">
-            {STITCHING_TYPE_OPTIONS.map((option) => (
-              <button
-                key={option.id}
-                type="button"
-                onClick={() => {
-                  handleStitchingTypeSelect(option.id);
-                }}
-                className={`w-full text-left p-4 border rounded-sm transition-all duration-300 ${
-                  selectedStitchingType === option.id
-                    ? 'border-primary bg-primary/5 ring-1 ring-primary'
-                    : 'border-border hover:border-foreground/30'
-                }`}
-              >
-                <div className="flex items-center justify-between mb-1">
-                  <div className="flex items-center gap-2">
-                    <span className={`text-sm font-medium ${
-                      selectedStitchingType === option.id ? 'text-primary' : 'text-foreground'
-                    }`}>
-                      {option.label}
-                    </span>
-                    {option.id === 'semi-stitched' && (
-                      <span className="text-[10px] font-medium uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded">Popular</span>
-                    )}
-                    {option.id === 'made-to-measure' && (
-                      <span className="text-[10px] font-medium uppercase tracking-wider bg-[#D4AF37]/15 text-[#D4AF37] px-2 py-0.5 rounded">UDesign</span>
-                    )}
-                  </div>
-                  <span className={`text-sm font-medium ${
-                    option.requiresQuote
-                      ? 'text-foreground'
-                      : 'text-green-600 dark:text-green-400'
-                  }`}>
-                    {option.requiresQuote ? 'Confirmation required' : 'Included'}
-                  </span>
-                </div>
-                <p className="text-xs text-muted-foreground leading-relaxed">
-                  {option.description}
-
-                </p>
-              </button>
-            ))}
-          </div>
-
-          {/* Made to Measure — source-backed confirmation process */}
-          {selectedStitchingType === 'made-to-measure' && (
-            <div className="flex items-start gap-2 p-3 bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800 rounded-sm">
-              <Info className="h-4 w-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
-              <p className="text-xs text-amber-700 dark:text-amber-300 leading-relaxed">
-                After checkout, LuxeMia will use the order contact details to confirm whether tailoring is available, the exact measurements, timing, and any charge before alterations. Contact LuxeMia before ordering for a fixed event date.
-              </p>
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* ─── Menswear Size Selector ─── */}
-      {isMenswear && !productHasNativeSizes && !measurementNow && (
-        <StitchingSizeSelector
-          selectedSize={stitchingSize}
-          onSizeChange={setStitchingSize}
-          showValidation={showSizeValidation}
-        />
-      )}
-
-      {/* ─── More Colors (same design, other color listings) ─── */}
-      {colorways.swatches.length > 1 && (
-        <div className="flex items-center gap-3">
-          <span className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-            More Colors
-          </span>
-          <div className="flex items-center gap-2">
-            {colorways.swatches.map((swatch) => {
-              const isCurrent = colorways.current?.handle === swatch.handle;
-              const circle = (
-                <span
-                  aria-hidden="true"
-                  className={`block h-7 w-7 rounded-full border border-black/10 shadow-sm transition-transform duration-200 ${
-                    isCurrent ? 'ring-2 ring-foreground ring-offset-2' : 'group-hover/link:scale-110'
-                  }`}
-                  style={{ backgroundColor: swatch.hex }}
-                />
-              );
-              return isCurrent ? (
-                <span key={swatch.handle} title={`${swatch.color} — current selection`}>
-                  {circle}
-                </span>
-              ) : (
-                <Link
-                  key={swatch.handle}
-                  to={`/product/${swatch.handle}`}
-                  className="group/link"
-                  title={`View ${swatch.color}`}
-                  aria-label={`View ${swatch.color} colorway`}
-                >
-                  {circle}
-                </Link>
-              );
-            })}
-          </div>
-        </div>
-      )}
-
-      {/* ─── Product Options (Color, Size from Shopify) ─── */}
-      <div className="space-y-5">
-        {product.options
-          .filter((option) => shouldRenderShopifyProductOption(option, {
-            isCustomizable: Boolean(customizableProduct),
-            isStitchable,
-          }))
-          .flatMap(getProductOptionDisplayGroups)
-          .map((option) => (
-          <div key={`${option.name}:${option.kind}`} className={option.kind === 'tailoring-request' ? 'space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4' : 'space-y-3'}>
-            <div className="flex items-center justify-between">
-              <label className="text-sm font-medium uppercase tracking-wide">
-                {option.label}
-                {option.values.includes(selectedOptions[option.name]) && (
-                  <span className="font-normal text-muted-foreground ml-2">
-                    — {selectedOptions[option.name]}
-                  </span>
-                )}
-              </label>
-              {option.kind === 'size' && (
-                <SizeGuideModal category={product.productType} />
-              )}
-            </div>
-            {option.kind === 'tailoring-request' && <p className="text-sm text-muted-foreground">A tailoring request is not an additional supplied garment size.</p>}
-            <div className="flex flex-wrap gap-2">
-              {option.values.map((value) => {
-                const optionValueAvailable = isVariantOptionValueAvailable(
-                  variantNodes,
-                  option.name,
-                  value,
-                );
-                const priceDelta = optionValuePriceDeltas.get(`${option.name}::${value}`);
-                const deltaLabel = priceDelta
-                  ? ` +$${priceDelta % 1 === 0 ? priceDelta : priceDelta.toFixed(2)}`
-                  : '';
-                return (
-                  <button
-                    key={value}
-                    type="button"
-                    onClick={() => handleOptionSelect(option.name, value)}
-                    disabled={!optionValueAvailable}
-                    aria-label={`${value}${deltaLabel}${optionValueAvailable ? '' : ' — unavailable'}`}
-                    className={`px-4 py-2.5 text-sm border rounded-sm transition-all duration-300 ${
-                      selectedOptions[option.name] === value
-                        ? 'border-foreground bg-foreground text-background'
-                        : optionValueAvailable
-                        ? 'border-border hover:border-foreground/50'
-                        : 'cursor-not-allowed border-border text-muted-foreground opacity-45'
-                    }`}
-                  >
-                    {value}
-                    {deltaLabel && (
-                      <span className="ml-1.5 text-xs opacity-75">{deltaLabel}</span>
-                    )}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        ))}
-      </div>
-
-      {productHasNativeSizes && (
-        <section className="space-y-2 rounded-sm border border-border bg-muted/40 p-4 text-sm" aria-labelledby="sizing-explainer-heading">
-          <h3 id="sizing-explainer-heading" className="font-medium">How sizing and stitching work</h3>
-          {isReadyToWearSaree ? (
-            <>
-              <p>This saree is supplied <strong>ready to wear</strong>, as described in Included Pieces. The size options record your preferred fit; they do not add a separate unstitched blouse.</p>
-              <p>Confirm blouse inclusion with LuxeMia if it is not listed. Alterations, if needed, are charged separately.</p>
-            </>
-          ) : isSareeListing ? (
-            <>
-              <p>The saree is one size and comes with an <strong>unstitched blouse piece</strong>. The <strong>Blouse Size</strong> you choose is the size the blouse will be stitched to if you add blouse stitching; the saree itself is not sized. Choose the <strong>Petticoat Size</strong> separately if you are adding a stitched petticoat.</p>
-              <p><strong>Blouse stitching is not included in the saree price.</strong> Stitching and any petticoat are separate services; add them from the options on this page or confirm the charge with LuxeMia before ordering.</p>
-            </>
-          ) : (
-            <p>Every size shown is stitched to our size chart. <strong>Stitching is included in the price shown</strong> for that size; no stitching charge is added at checkout.</p>
-          )}
-          <p><strong>Custom Fit:</strong> select it, then either enter your measurements in the form that appears before you add to bag, or choose to provide them after ordering. We confirm measurements before cutting. Standard sizes need no measurements.</p>
-        </section>
-      )}
-
-      {tailoringEnquiryOnly && (
-        <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="tailoring-enquiry-heading">
-          <h3 id="tailoring-enquiry-heading" className="font-serif text-xl">Garment alteration / custom size enquiry</h3>
-          <p className="text-sm text-muted-foreground">{TAILORING_ENQUIRY_NOTICE}</p>
-          <p className="text-sm">The garment with listed catalog size label 32 can be purchased without a tailoring request. This label is not a supplier-verified measurement, inches or a US size. No additional garment sizes, measurements or alteration allowance are confirmed here.</p>
-          <Link to={TAILORING_ENQUIRY_CONTACT_PATH} className="inline-flex rounded-sm border border-primary px-4 py-2 text-sm font-medium text-primary">Request written tailoring confirmation</Link>
-          {selectionRequiresEnquiry && <p role="status" className="text-sm font-medium">Quote required — this request cannot be added to bag.</p>}
-        </section>
-      )}
-
-      {availableServiceAddOnCodes.length > 0 && (
-        <section className="space-y-3 rounded-sm border border-primary/25 bg-primary/5 p-4" aria-labelledby="listing-service-add-ons-heading">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">
-              {isSareeListing ? 'Saree options' : 'Listing-appropriate services'}
-            </p>
-            <h3 id="listing-service-add-ons-heading" className="mt-1 font-serif text-xl">
-              {isSareeListing ? 'Finish your saree' : 'Optional finishing & tailoring'}
-            </h3>
-            <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
-              {isSareeListing
-                ? 'Choose from the finishing and accessory options shown for this saree before adding it to bag. The selected options are included with this saree order.'
-                : 'Only services supported by this product’s stated construction are shown and included with this garment order.'}
-            </p>
-          </div>
-          <div className="space-y-2">
-            {availableServiceAddOnCodes.map((code) => {
-              const service = SERVICE_ADD_ONS[code];
-              const selected = selectedAvailableServiceAddOnCodes.includes(code);
-              return (
-                <button
-                  key={code}
-                  type="button"
-                  aria-pressed={selected}
-                  onClick={() => {
-                    if (code === 'blouse-stitching') setBlouseServiceConfirmed(false);
-                    setStitchingSize(null);
-                    setShowSizeValidation(false);
-                    setSelectedServiceAddOnCodes((current) =>
-                      current.includes(code)
-                        ? current.filter((currentCode) => currentCode !== code)
-                        : [...current, code],
-                    );
-                  }}
-                  className={`flex w-full items-start justify-between gap-4 rounded-sm border p-3 text-left transition-colors ${
-                    selected ? 'border-primary bg-background ring-1 ring-primary' : 'border-border bg-background hover:border-primary/60'
-                  }`}
-                >
-                  <span className="flex items-start gap-3">
-                    <span className={`mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded border ${
-                      selected ? 'border-primary bg-primary text-primary-foreground' : 'border-muted-foreground/50'
-                    }`}>
-                      {selected && <Check className="h-3 w-3" aria-hidden="true" />}
-                    </span>
-                    <span>
-                      <span className="block text-sm font-medium text-foreground">{service.label}</span>
-                      <span className="mt-0.5 block text-xs leading-relaxed text-muted-foreground">{service.description}</span>
-                    </span>
-                  </span>
-                  <span className="shrink-0 text-sm font-semibold text-foreground">+{formatPrice(serviceVariants.get(code)!.price.amount, serviceVariants.get(code)!.price.currencyCode)}</span>
-                </button>
-              );
-            })}
-          </div>
-          {needsBlouseServiceConfirmation && (
-            <div className="space-y-2 rounded-sm border border-primary/30 bg-background p-3">
-              <p className="text-sm font-medium">Blouse measurements and design confirmation</p>
-              <p className="text-xs leading-relaxed text-muted-foreground">
-                The included blouse piece is unstitched. No finished blouse size is guaranteed by this listing.
-                LuxeMia will confirm what can be made from the supplied fabric before stitching starts.
-                Contact us before ordering if you need to confirm a particular fit, design or event date.
-              </p>
-              <label className="flex items-start gap-3 text-sm">
-                <input
-                  type="checkbox"
-                  checked={blouseServiceConfirmed}
-                  onChange={(event) => setBlouseServiceConfirmed(event.target.checked)}
-                  className="mt-1 h-4 w-4 accent-primary"
-                />
-                <span>{measurementNow ? 'I have provided measurements for review. LuxeMia must confirm fabric suitability, design and fit feasibility, and dispatch timing before stitching begins.' : BLOUSE_SERVICE_CONFIRMATION_NOTICE}</span>
-              </label>
-            </div>
-          )}
-          {selectedAvailableServiceAddOnCodes.length > 0 && (
-            <p className="text-sm font-medium text-foreground">
-              Selected services: +{formatPrice(selectedServiceAddOnCharge.toFixed(2), basePrice.currencyCode)}
-            </p>
-          )}
-        </section>
-      )}
-
-      {isCustomSizeSelected && !customizableProduct && !tailoringEnquiryOnly && (
-        <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Custom size selected</p>
-            <h3 id="custom-size-confirmation-heading" className="mt-1 font-serif text-xl">Measurements must be confirmed before alterations</h3>
-          </div>
-          <p className="text-sm leading-relaxed text-muted-foreground">
-            Your selected Custom size is recorded with this order. LuxeMia will confirm measurements before tailoring begins; do not assume other design changes are included unless confirmed in writing.
-          </p>
-          <label className="flex items-start gap-3 rounded-sm border border-border bg-background p-3 text-sm text-foreground">
-            <input
-              type="checkbox"
-              checked={customSizeConfirmed}
-              onChange={(event) => setCustomSizeConfirmed(event.target.checked)}
-              className="mt-1 h-4 w-4 accent-primary"
-            />
-            <span>I understand that LuxeMia must confirm my measurements before alterations begin.</span>
-          </label>
-          <div className="flex flex-wrap gap-3 text-sm">
-            <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">View the sizing guide</Link>
-            <button
-              type="button"
-              onClick={() => {
-                const message = encodeURIComponent(`Hi LuxeMia, I selected Custom size for ${product.title} (${window.location.href}) and would like to confirm measurements before ordering.`);
-                window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
-              }}
-              className="font-medium text-primary underline underline-offset-4"
-            >
-              Confirm measurements by WhatsApp
-            </button>
-          </div>
-        </section>
-      )}
-
-      {measurementEligible && metaToken && <p className="text-sm">For this shopping-link checkout, provide measurements after ordering. To provide them now, open this product directly from the store and add it to your bag.</p>}
-      {measurementEligible && !metaToken && <MeasurementRequestForm
-        key={measurementContext}
-        value={measurementDraft}
-        variant={isCustomSizeSelected ? 'custom-fit' : 'default'}
-        onChange={draft => {
-          if (draft.choice !== measurementDraft.choice) { setStitchingSize(null); setBlouseServiceConfirmed(false); }
-          setMeasurementState({ context: measurementContext, draft }); setMeasurementValidation(undefined);
-        }}
-        error={measurementValidation}
-      />}
-
-      {/* ─── Stitching Size Selector (when product doesn't have Shopify size variants) ─── */}
-      {showStitchingSizeSelector && !isMenswear && !measurementNow && (
-        <StitchingSizeSelector
-          selectedSize={stitchingSize}
-          onSizeChange={setStitchingSize}
-          showValidation={showSizeValidation}
-        />
-      )}
-
-      {/* ─── Bottom / Lower Style Selector ─── */}
-      {showBottomStyleOption && needsStitchingSize && (
-        <BottomStyleSelector
-          selected={selectedBottomStyle}
-          onChange={setSelectedBottomStyle}
-        />
-      )}
-
-      {/* ─── Blouse Neckline Selector ─── */}
-      {showNeckline && (
-        <NecklineSelector selected={selectedNeckline} onChange={setSelectedNeckline} />
-      )}
-
-      {/* ─── Sleeve Style Selector (Made to Measure only) ─── */}
-      {showSleeveStyle && (
-        <SleeveStyleSelector
-          selected={selectedSleeveStyle}
-          onChange={setSelectedSleeveStyle}
-        />
-      )}
-
-      {/* ─── Optional Fit Request ─── */}
-      {(isStitchable || isMenswear) && (
-        <div className="space-y-3">
-        <div className="flex items-center justify-between">
-          <label className="text-sm font-medium uppercase tracking-wide">Optional Fit Request</label>
-          <span className="text-[10px] text-primary font-medium uppercase tracking-wider bg-primary/10 px-2 py-0.5 rounded">Optional</span>
-        </div>
-        <textarea
-          value={customAlteration}
-          onChange={(e) => setCustomAlteration(e.target.value)}
-          placeholder="Describe a fit request you would like LuxeMia to review..."
-          className="w-full min-h-[80px] p-3 text-sm bg-background border border-border rounded-sm focus:border-primary outline-none transition-colors resize-none"
-        />
-        <p className="text-[11px] text-muted-foreground italic">
-          * Requests are not guaranteed. Contact LuxeMia before ordering to confirm feasibility, timing, and any additional charge.
-        </p>
-        </div>
-      )}
-
-      {/* Quantity */}
-      <div className="space-y-3">
-        <label className="text-sm font-medium uppercase tracking-wide">Quantity</label>
-        <div className="flex items-center gap-4">
-          <div className="flex items-center border border-border rounded-sm">
-            <button
-              onClick={() => setQuantity(Math.max(1, quantity - 1))}
-              className="p-3 hover:bg-secondary transition-colors"
-            >
-              <Minus className="h-4 w-4" />
-            </button>
-            <span className="w-12 text-center font-medium">{quantity}</span>
-            <button
-              disabled={!!metaToken && quantity >= 99}
-              onClick={() => setQuantity(metaToken ? Math.min(99, quantity + 1) : quantity + 1)}
-              className="p-3 hover:bg-secondary transition-colors"
-            >
-              <Plus className="h-4 w-4" />
-            </button>
-          </div>
-        </div>
-      </div>
-
-      {shipByLabel && !currentSelectionIsMadeToOrder && (
-        <div className="rounded-md border border-green-200 bg-green-50 px-4 py-3 text-sm font-medium text-green-800 dark:border-green-800 dark:bg-green-950/30 dark:text-green-300">
-          {shipByLabel}
-        </div>
-      )}
-
-      {/* Trust micro-strip — shown directly above CTA so buyers see it before clicking */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-muted-foreground py-1">
-        <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Tracked U.S. shipping</span>
-        <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
-        <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
-      </div>
-
-      {/* Add to Cart */}
-      <div className="flex gap-3 pt-2">
-        <motion.div className="flex-1" whileTap={{ scale: 0.98 }}>
-          <Button
-            onClick={handleAddToCart}
-            disabled={!isAvailable || isAdding || selectionRequiresEnquiry}
-            className="w-full h-14 text-base relative overflow-hidden group"
-            variant="luxury"
-          >
-            <motion.span
-              initial={false}
-              animate={{ y: isAdding ? -30 : 0, opacity: isAdding ? 0 : 1 }}
-              transition={{ duration: 0.3 }}
-              className="flex items-center gap-2"
-            >
-              <ShoppingBag className="h-5 w-5" />
-              {selectionRequiresEnquiry ? 'Quote Required' : isAvailable ? 'Add to Bag' : hasAvailableVariant ? 'Select Options' : 'Out of Stock'}
-            </motion.span>
-            <motion.span
-              initial={false}
-              animate={{ y: isAdding ? 0 : 30, opacity: isAdding ? 1 : 0 }}
-              transition={{ duration: 0.3 }}
-              className="absolute inset-0 flex items-center justify-center gap-2"
-            >
-              <Check className="h-5 w-5" />
-              Added!
-            </motion.span>
-          </Button>
-        </motion.div>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          className="h-14 w-14"
-          aria-label={isWishlisted ? 'Remove product from wishlist' : 'Save product to wishlist'}
-          aria-pressed={isWishlisted}
-          onClick={handleWishlistToggle}
-        >
-          <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-primary text-primary' : ''}`} />
-        </Button>
-
-        <Button
-          type="button"
-          variant="outline"
-          size="icon"
-          className="h-14 w-14"
-          aria-label="Share this product"
-          onClick={handleShare}
-        >
-          <Share2 className="h-5 w-5" />
-        </Button>
-      </div>
 
       <nav aria-label="Purchase help" className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
         <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
@@ -1638,6 +1698,13 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange }: Pr
         <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
           Returns &amp; cancellations
         </Link>
+        <button
+          type="button"
+          onClick={handleShare}
+          className="sm:hidden font-medium text-primary underline underline-offset-4"
+        >
+          Share
+        </button>
       </nav>
 
       <button

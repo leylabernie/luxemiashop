@@ -17,6 +17,7 @@ interface SearchResult {
   image: string;
   fabric: string;
   sizes: string[];
+  color: string;
 }
 
 interface ProductSearchProps {
@@ -54,12 +55,20 @@ const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProp
         const products: SearchResult[] = shopifyProducts.map(({ node }) => {
           const desc = (node.description || '').toLowerCase();
           const title = (node.title || '').toLowerCase();
+          const type = (node.productType || '').toLowerCase();
+          const tags = node.tags || [];
 
-          // Determine category
+          // Determine category from explicit productType/title first so accessories and kids aren't mislabeled as Suits
           let category = 'Suits';
-          if (desc.includes('saree') || title.includes('saree')) category = 'Sarees';
-          else if (desc.includes('lehenga') || title.includes('lehenga')) category = 'Lehengas';
-          else if (desc.includes('sherwani') || desc.includes('kurta') || title.includes('sherwani') || title.includes('kurta pajama')) category = 'Menswear';
+          if (/\b(?:jewel|jewellery|necklace|earring|bangle|choker|bracelet|tikka)\b/.test(`${type} ${title}`)) category = 'Jewelry';
+          else if (/\bkids?\b/.test(`${type} ${title}`)) category = 'Kids';
+          else if (type.includes('saree') || type.includes('sari') || title.includes('saree') || desc.includes('saree')) category = 'Sarees';
+          else if (type.includes('lehenga') || title.includes('lehenga') || desc.includes('lehenga')) category = 'Lehengas';
+          else if (/\b(?:sherwani|menswear)\b/.test(`${type} ${title} ${desc}`) || title.includes('kurta pajama') || desc.includes('kurta pajama')) category = 'Menswear';
+          else if (/indo[-\s]?western/.test(`${type} ${title}`)) category = 'Indo-Western';
+
+          const color = node.metadata?.color?.trim()
+            || tags.filter(tag => /^color\s*:/i.test(tag)).map(tag => tag.replace(/^[^:]*:\s*/, '').trim()).filter(Boolean).join(', ');
 
           return {
             id: node.id,
@@ -70,6 +79,7 @@ const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProp
             image: node.images.edges[0]?.node.url || '',
             fabric: getSearchFabric(node),
             sizes: getSearchSizes(node),
+            color,
           };
         });
         if (!cancelled) setAllProducts(products);
@@ -315,7 +325,7 @@ const ProductSearch = ({ isOpen, onClose, initialQuery = '' }: ProductSearchProp
                       ))}
                     </div>
                   </div>
-                ) : query.length >= 2 || hasActiveFilters ? (
+                ) : query.trim().length >= 2 || hasActiveFilters ? (
                   <div className="text-center py-8">
                     <p className="text-muted-foreground">No products found</p>
                     <p className="text-sm text-muted-foreground mt-2">
