@@ -9,6 +9,10 @@ import SEOFooterContent from '@/components/seo/SEOFooterContent';
 import HomepageIntro from '@/components/home/HomepageIntro';
 import CategoryShowcase from '@/components/home/CategoryShowcase';
 import LazySection from '@/components/ui/LazySection';
+import {
+  useLatestHomepageImagery,
+  type PromoSlotId,
+} from '@/hooks/useLatestHomepageImagery';
 import { HOMEPAGE_VALUE_PROPOSITION } from '@/lib/homepageValueProposition';
 import { getIndexableRouteSeo } from '@/config/seoArchitecture';
 
@@ -55,27 +59,39 @@ const homepageFaqs = [
   },
 ];
 
-const PROMO_BANNERS = [
+const PROMO_BANNERS: readonly {
+  slot: PromoSlotId;
+  eyebrow: string;
+  title: string;
+  copy: string;
+  href: string;
+  cta: string;
+  fallbackImage: string;
+  fallbackAlt: string;
+}[] = [
   {
+    slot: 'ready-to-ship',
     eyebrow: 'Fast Tracked Dispatch',
     title: 'Ready to Ship',
     copy: 'Ready-stock orders dispatch within 3–4 business days. Optional stitching and made-to-measure selections take additional processing time.',
     href: '/ready-to-ship',
     cta: 'Shop Ready to Ship',
-    image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-4584171319-1.jpg?v=1791590961&width=900',
-    alt: 'Embroidered ready-to-wear three-piece palazzo suit set with dupatta',
+    fallbackImage:
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/maroon-banarasi-silk-saree-with-ornate-pallu-original-1.jpg?v=1793034566&width=960',
+    fallbackAlt: 'Maroon Banarasi Silk Handwork Saree with Ornate Pallu',
   },
   {
+    slot: 'bridal-party',
     eyebrow: 'Tailoring & Coordinated Sets',
     title: 'Bridal Party & Custom Fit',
     copy: 'Coordinate bridesmaids, family, and wedding party outfits, or review size and stitching guidance before ordering.',
     href: '/wedding-party-orders',
     cta: 'Plan Group & Fit Orders',
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-embroidered-jacket-blouse-palazzo-set-01_80b7865b-266f-4fc9-9e68-33cfb7b8089d.jpg?v=1790972159&width=900',
-    alt: 'Three-piece embroidered festive jacket, blouse, and palazzo set',
+    fallbackImage:
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lilac-banarasi-silk-saree-with-medallion-motifs-original-1.jpg?v=1793034556&width=960',
+    fallbackAlt: 'Lilac Banarasi Silk Handwork Saree with Medallion Motifs',
   },
-] as const;
+];
 
 const SHOPPING_GUIDES = [
   {
@@ -94,6 +110,7 @@ const SHOPPING_GUIDES = [
 
 const Index = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const latestImagery = useLatestHomepageImagery();
   const homepageSeo = getIndexableRouteSeo('/');
 
   return (
@@ -133,15 +150,19 @@ const Index = () => {
             </div>
 
             <div className="grid gap-5 md:grid-cols-2 lg:gap-6">
-              {PROMO_BANNERS.filter((banner) => canPromoteCollection(banner.href)).map((banner) => (
+              {PROMO_BANNERS.filter((banner) => canPromoteCollection(banner.href)).map((banner) => {
+                const livePromo = latestImagery.promos[banner.slot];
+                const promoSrc = livePromo?.webpUrl || livePromo?.url || banner.fallbackImage;
+                const promoAlt = livePromo?.alt || banner.fallbackAlt;
+                return (
                 <Link
                   key={banner.href}
                   to={banner.href}
                   className="group relative flex min-h-[340px] flex-col justify-end overflow-hidden rounded-sm border border-[#e3d2c8] bg-[#2f1f23] shadow-sm sm:min-h-[390px]"
                 >
                   <img
-                    src={banner.image}
-                    alt={banner.alt}
+                    src={promoSrc}
+                    alt={promoAlt}
                     width={720}
                     height={900}
                   loading="lazy"
@@ -168,7 +189,8 @@ const Index = () => {
                     </span>
                   </div>
                 </Link>
-              ))}
+                );
+              })}
             </div>
 
             {canPromoteCollection('/collections/customizable-indian-outfits') && (

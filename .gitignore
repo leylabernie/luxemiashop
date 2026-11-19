@@ -73,3 +73,4 @@ public/sitemap-pages.xml
 public/sitemap-products.xml
 scripts/backups/
 !scripts/validate-navigation-parity.cjs
+!scripts/refresh-latest-homepage-imagery.cjs

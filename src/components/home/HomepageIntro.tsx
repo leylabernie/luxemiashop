@@ -2,6 +2,10 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ArrowRight, ChevronLeft, ChevronRight, Heart, Pause, Play, Sparkles, Truck } from 'lucide-react';
 import {
+  useLatestHomepageImagery,
+  type HeroSlideId,
+} from '@/hooks/useLatestHomepageImagery';
+import {
   HOMEPAGE_HEADLINE,
   HOMEPAGE_TRUST_ITEMS,
   HOMEPAGE_VALUE_PROPOSITION,
@@ -10,17 +14,12 @@ import {
 } from '@/lib/homepageValueProposition';
 
 interface HeroSlide {
-  id: string;
+  id: HeroSlideId;
   eyebrow: string;
   heading: string;
   description: string;
-  note?: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
-  image: string;
-  alt: string;
-  width: number;
-  height: number;
   theme: 'ivory' | 'plum';
   isPrimaryH1?: boolean;
 }
@@ -30,18 +29,12 @@ const SWIPE_THRESHOLD_PX = 44;
 
 const HERO_SLIDES: readonly HeroSlide[] = [
   {
-    id: 'wedding-festive',
+    id: 'wedding-edit',
     eyebrow: 'Wedding & Celebration Edit',
     heading: HOMEPAGE_HEADLINE,
     description: HOMEPAGE_VALUE_PROPOSITION,
-    note: 'Featured: embroidered grey georgette lehenga choli (supplied unstitched with dupatta).',
     primaryCta: { label: 'Shop Wedding Guest Outfits', href: '/collections/wedding-guest-outfits' },
     secondaryCta: { label: 'Bridal Party & Group Orders', href: '/wedding-party-orders' },
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/Grey-Georgette-Wedding-Wear-Embroidery-Work-Lehenga-Choli-4797-321-B_1.jpg?v=1793569611',
-    alt: 'Grey embroidered georgette wedding lehenga choli with pink blouse and dupatta',
-    width: 800,
-    height: 1100,
     theme: 'ivory',
     isPrimaryH1: true,
   },
@@ -53,11 +46,6 @@ const HERO_SLIDES: readonly HeroSlide[] = [
       'Discover newly added sarees, lehengas, stitched suits, and festive ensembles. Review each product page for exact fabric, included pieces, sizing, and delivery estimates.',
     primaryCta: { label: 'Shop New Arrivals', href: '/new-arrivals' },
     secondaryCta: { label: 'Browse All Collections', href: '/collections' },
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/onion-pink-floral-cutwork-saree-model-1.jpg?v=1793381669&width=960',
-    alt: 'Onion pink floral embroidered silk saree with cutwork border for wedding celebrations',
-    width: 800,
-    height: 1200,
     theme: 'plum',
   },
   {
@@ -68,11 +56,6 @@ const HERO_SLIDES: readonly HeroSlide[] = [
       'Shop woven Banarasi drapes, embroidered celebration sarees, and pre-draped styles, with optional blouse stitching and saree finishing where shown on the listing.',
     primaryCta: { label: 'Shop All Sarees', href: '/sarees' },
     secondaryCta: { label: 'Explore Banarasi Sarees', href: '/collections/banarasi-sarees' },
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/emerald-green-mashru-silk-resham-and-zari-designer-border-work-banarasi-saree-106005-0.jpg?v=1792514047&width=960',
-    alt: 'Emerald green Mashru silk blend Banarasi saree with resham and zari border',
-    width: 800,
-    height: 1100,
     theme: 'ivory',
   },
   {
@@ -80,14 +63,9 @@ const HERO_SLIDES: readonly HeroSlide[] = [
     eyebrow: 'Sangeet · Reception · Festive',
     heading: 'Designer Lehengas & Salwar Suits',
     description:
-      'Compare floral organza and embroidered wedding lehengas alongside Anarkali, sharara, and palazzo three-piece suits with clear listing-specific size details.',
+      'Compare embroidered wedding lehengas alongside Anarkali, sharara, and palazzo three-piece suits with clear listing-specific size details.',
     primaryCta: { label: 'Shop Lehengas', href: '/lehengas' },
     secondaryCta: { label: 'Shop Salwar Suits', href: '/suits' },
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-15065-1.jpg?v=1792438580&width=960',
-    alt: 'Lavender organza lehenga choli with floral embroidered blouse and dupatta',
-    width: 800,
-    height: 1100,
     theme: 'plum',
   },
   {
@@ -98,16 +76,12 @@ const HERO_SLIDES: readonly HeroSlide[] = [
       'Ready-stock styles dispatch within 3–4 business days with tracked delivery from India to seven supported countries. Optional stitching and alterations add processing time.',
     primaryCta: { label: 'Shop Ready to Ship', href: '/ready-to-ship' },
     secondaryCta: { label: 'View Shipping Rates', href: '/shipping' },
-    image:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/anarkali-green-chinon-01_634e85ec-3bf4-4727-b966-0e704a8d9129.jpg?v=1791219948&width=960',
-    alt: 'Green printed chinon Anarkali suit set with dupatta',
-    width: 800,
-    height: 1067,
     theme: 'ivory',
   },
 ];
 
 export default function HomepageIntro() {
+  const latestImagery = useLatestHomepageImagery();
   const [activeIndex, setActiveIndex] = useState(0);
   const [userPaused, setUserPaused] = useState(false);
   const [interactionPaused, setInteractionPaused] = useState(false);
@@ -262,29 +236,38 @@ export default function HomepageIntro() {
                     </Link>
                   </div>
 
-                  {slide.note && (
+                  {latestImagery.hero[slide.id]?.title && (
                     <p
                       className={`mt-3 hidden max-w-lg text-[11px] leading-relaxed lg:block ${
                         slideIsPlum ? 'text-[#fff9f4]/65' : 'text-[#6e605e]'
                       }`}
                     >
-                      {slide.note}
+                      Shown: {latestImagery.hero[slide.id]?.title}
                     </p>
                   )}
                 </div>
 
                 {/* Image column — full-bleed backdrop on mobile, crisp right editorial frame on desktop */}
                 <div className="absolute inset-0 z-10 overflow-hidden lg:relative lg:h-full">
-                  <img
-                    src={slide.image}
-                    alt={slide.alt}
-                    width={slide.width}
-                    height={slide.height}
-                    loading={index === 0 ? 'eager' : 'lazy'}
-                    fetchPriority={index === 0 ? 'high' : undefined}
-                    decoding="async"
-                    className="h-full w-full object-cover object-top"
-                  />
+                  {(() => {
+                    const media = latestImagery.hero[slide.id];
+                    if (!media) return null;
+                    return (
+                      <picture className="block h-full w-full">
+                        {media.webpUrl && <source srcSet={media.webpUrl} type="image/webp" />}
+                        <img
+                          src={media.url}
+                          alt={media.alt}
+                          width={media.width}
+                          height={media.height}
+                          loading={index === 0 ? 'eager' : 'lazy'}
+                          fetchPriority={index === 0 ? 'high' : undefined}
+                          decoding="async"
+                          className="h-full w-full object-cover object-top"
+                        />
+                      </picture>
+                    );
+                  })()}
                   {/* Mobile legibility scrim — leaves top of garment & face clear */}
                   <div
                     className="absolute inset-0 bg-gradient-to-t from-[#1f1315]/90 via-[#1f1315]/45 to-transparent lg:hidden"
