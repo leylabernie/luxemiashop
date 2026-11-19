@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { selectLatestArrivals } from '@/lib/catalogCategories.mjs';
+import { selectDistinctHomepageProducts } from '@/lib/selectLatestHomepageImagery.mjs';
+import { useLatestHomepageImagery } from '@/hooks/useLatestHomepageImagery';
 import { useShopifyProducts } from '@/hooks/useShopifyProducts';
 import ProductCard from '@/components/ui/ProductCard';
 
@@ -13,14 +15,23 @@ const RECENT_PRODUCT_QUERY = `created_at:>='${new Date(
 
 export const NewArrivals = () => {
   const { products, isLoading } = useShopifyProducts(undefined, false, RECENT_PRODUCT_QUERY);
+  const latestImagery = useLatestHomepageImagery();
 
   const displayedProducts = useMemo(() => {
     const cutoff = Date.now() - NEW_ARRIVAL_WINDOW_DAYS * 86400000;
     const recent = products.filter(
       (product) => new Date(product.node.createdAt).getTime() > cutoff,
     );
-    return selectLatestArrivals(recent).slice(0, 10);
-  }, [products]);
+    const sorted = selectLatestArrivals(recent, Date.now(), 120);
+    return selectDistinctHomepageProducts(sorted, {
+      limit: 10,
+      hardAvoid: Object.values(latestImagery.promos),
+      softAvoid: [
+        ...Object.values(latestImagery.hero),
+        ...Object.values(latestImagery.categories),
+      ],
+    });
+  }, [products, latestImagery]);
 
   if (isLoading) {
     return (

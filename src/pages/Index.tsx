@@ -77,8 +77,8 @@ const PROMO_BANNERS: readonly {
     href: '/ready-to-ship',
     cta: 'Shop Ready to Ship',
     fallbackImage:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/maroon-banarasi-silk-saree-with-ornate-pallu-original-1.jpg?v=1793034566&width=960',
-    fallbackAlt: 'Maroon Banarasi Silk Handwork Saree with Ornate Pallu',
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/multicolor-crepe-saree-with-geometric-and-medallion-motifs-original-1.jpg?v=1793034479&width=960',
+    fallbackAlt: 'Multicolor Crepe Saree with Geometric and Medallion Motifs',
   },
   {
     slot: 'bridal-party',
@@ -88,8 +88,8 @@ const PROMO_BANNERS: readonly {
     href: '/wedding-party-orders',
     cta: 'Plan Group & Fit Orders',
     fallbackImage:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/lilac-banarasi-silk-saree-with-medallion-motifs-original-1.jpg?v=1793034556&width=960',
-    fallbackAlt: 'Lilac Banarasi Silk Handwork Saree with Medallion Motifs',
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-6032-blue-1.jpg?v=1792438550&width=960',
+    fallbackAlt: 'Midnight Blue Net Floral Embroidered Lehenga Choli with Dupatta',
   },
 ];
 
@@ -172,10 +172,10 @@ const Index = () => {
                     style={{ position: 'absolute', inset: 0 }}
                   />
                   <div
-                    className="absolute inset-0 bg-gradient-to-t from-[#201315]/92 via-[#201315]/45 to-transparent transition-opacity duration-300 group-hover:opacity-95"
+                    className="absolute inset-0 bg-gradient-to-t from-[#1c1013]/92 via-[#1c1013]/50 to-transparent transition-opacity duration-300 group-hover:opacity-95"
                     aria-hidden="true"
                   />
-                  <div className="relative z-10 p-6 text-[#fff9f4] sm:p-8">
+                  <div className="relative z-10 p-6 text-[#fff9f4] [text-shadow:0_1px_10px_rgba(20,10,12,0.5)] sm:p-8">
                     <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#f2c6b6] sm:text-[11px]">
                       {banner.eyebrow}
                     </p>

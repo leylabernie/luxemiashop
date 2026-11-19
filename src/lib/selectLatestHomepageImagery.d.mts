@@ -6,7 +6,7 @@ export interface SelectedImageEntry {
   price: number;
   url: string;
   webpUrl: string;
-  rawUrl: string;
+  rawUrl?: string;
   alt: string;
   width: number;
   height: number;
@@ -36,11 +36,40 @@ export interface SelectedHomepageImagery {
   };
 }
 
+export interface DesignSignature {
+  handle: string;
+  imageKey: string;
+  category: string | null;
+  price: number;
+  createdMs: number;
+  vendorCode: string;
+  fileKey: string;
+  handleTokens: string[];
+  titleTokens: string[];
+  handleKey: string;
+  coreHandleKey: string;
+  titleKey: string;
+  coreTitleKey: string;
+}
+
 export function toSizedShopifyImageUrl(
   rawUrl: string,
   width?: number,
   format?: string | null,
 ): string;
+
+export function buildDesignSignature(input: unknown): DesignSignature;
+
+export function isSameDesignFamily(left: unknown, right: unknown): boolean;
+
+export function selectDistinctHomepageProducts<T>(
+  products: T[],
+  options?: {
+    limit?: number;
+    hardAvoid?: Array<Partial<SelectedImageEntry> | null | undefined>;
+    softAvoid?: Array<Partial<SelectedImageEntry> | null | undefined>;
+  },
+): T[];
 
 export function selectLatestHomepageImagery(
   data: Record<string, unknown>,
