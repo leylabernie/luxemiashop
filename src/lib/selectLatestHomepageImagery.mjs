@@ -242,6 +242,13 @@ function extractVendorStyleCode(rawUrl) {
   const filePart = (getImageIdentity(rawUrl).split('/').pop() || '').replace(/\.[a-z0-9]+$/, '');
   if (!filePart) return '';
 
+  // Matches LuxeMia Royal Bridal Vol-3 motif family filenames:
+  // e.g. `luxemia-bv3-172-magenta-palace-1` & `luxemia-bv3-173-crimson-palace-1` -> `luxemia-bv3-palace`
+  const bv3Match = filePart.match(/^luxemia-bv3-\d{3}-[a-z]+-([a-z]+)(?:-\d+)?$/);
+  if (bv3Match) {
+    return `luxemia-bv3-${bv3Match[1]}`;
+  }
+
   // Matches e.g. `luxemia-6032-blue-1` -> `luxemia-6032` (ignores unique 6+ digit item IDs unless followed by a color word)
   const luxemiaColored = filePart.match(/^luxemia-(\d{3,6})-([a-z]+)/);
   if (luxemiaColored && COLOR_AND_SHADE_TOKENS.has(luxemiaColored[2])) {
@@ -321,6 +328,26 @@ export function buildDesignSignature(input) {
   const coreTitleTokens = extractDesignTokens(stripModifierClause(rawTitle));
 
   const sortedKey = (tokens) => (tokens.length >= 2 ? [...tokens].sort().join(' ') : '');
+  const tagFamily = (Array.isArray(node.tags) ? node.tags : [])
+    .map((t) => String(t || '').trim().toLowerCase())
+    .find((t) => t.startsWith('design-family:'));
+  const urlBv3 = (getImageIdentity(rawUrl).split('/').pop() || '').match(
+    /^luxemia-bv3-\d{3}-[a-z]+-([a-z]+)(?:-\d+)?\.[a-z0-9]+$/,
+  );
+  const bv3FamilyMap = {
+    arch: 'royal-arch-scalloped-lotus',
+    peacock: 'peacock-scallop-mihrab',
+    paisley: 'mughal-paisley-geometric',
+    palace: 'rajputana-palace-baraat',
+    jharokha: 'heritage-jharokha-chevron',
+  };
+  const explicitFamily = node.designFamily
+    ? String(node.designFamily).trim().toLowerCase()
+    : tagFamily
+      ? tagFamily.slice('design-family:'.length)
+      : urlBv3 && bv3FamilyMap[urlBv3[1]]
+        ? bv3FamilyMap[urlBv3[1]]
+        : '';
 
   return {
     handle,
@@ -328,6 +355,7 @@ export function buildDesignSignature(input) {
     category,
     price,
     createdMs,
+    explicitFamily,
     vendorCode: extractVendorStyleCode(rawUrl),
     fileKey: extractFileDesignKey(rawUrl),
     handleTokens,
@@ -351,6 +379,9 @@ export function isSameDesignFamily(leftInput, rightInput) {
 
   if (left.handle && right.handle && left.handle === right.handle) return true;
   if (left.imageKey && right.imageKey && left.imageKey === right.imageKey) return true;
+  if (left.explicitFamily && right.explicitFamily) {
+    return left.explicitFamily === right.explicitFamily;
+  }
   if (left.vendorCode && right.vendorCode && left.vendorCode === right.vendorCode) return true;
 
   if (left.handleKey && right.handleKey && left.handleKey === right.handleKey) return true;
@@ -1054,3 +1085,109 @@ export function selectLatestHomepageImagery(data, options = {}) {
     },
   };
 }
+
+/**
+ * Curated debranded Royal Bridal Silk Vol-3 portraits for the homepage's four
+ * bridal & lehenga feature slots. Every slot represents a completely distinct
+ * embroidery design family and shade (zero shared items or colorways):
+ *   1. hero['wedding-edit']   -> Heritage Bridal Jharokha (Sindoori Red, $443.89)
+ *   2. hero['lehengas-suits'] -> Royal Arch & Scalloped Lotus (Marigold Saffron, $436.11)
+ *   3. categories.lehengas    -> Mughal Paisley & Geometric (Royal Fuchsia, $356.78)
+ *   4. promos['bridal-party'] -> Rajputana Palace & Motifs (Rani Magenta, $415.44)
+ */
+export const CURATED_BRIDAL_VOL3_HOMEPAGE_SLOTS = {
+  heroWeddingEdit: {
+    handle: 'sindoori-red-silk-heritage-jharokha-bridal-lehenga-double-dupatta',
+    title: 'Sindoori Red Silk Heritage Jharokha Zardosi Bridal Lehenga Choli with Double Dupatta',
+    price: 443.89,
+    url: '/images/bridal-vol3/luxemia-bv3-175-sindoori-jharokha-1.jpg',
+    webpUrl: '/images/bridal-vol3/luxemia-bv3-175-sindoori-jharokha-1.webp',
+    alt: 'Sindoori Red Silk Heritage Jharokha Zardosi Bridal Lehenga Choli with Double Dupatta — full-length bridal portrait',
+    width: 1280,
+    height: 1706,
+    createdAt: '2026-11-18T12:00:00Z',
+  },
+  heroLehengasSuits: {
+    handle: 'marigold-saffron-silk-royal-arch-bridal-lehenga-double-dupatta',
+    title: 'Marigold Saffron Silk Royal Arch Zardosi Bridal Lehenga Choli with Double Dupatta',
+    price: 436.11,
+    url: '/images/bridal-vol3/luxemia-bv3-178-marigold-arch-1.jpg',
+    webpUrl: '/images/bridal-vol3/luxemia-bv3-178-marigold-arch-1.webp',
+    alt: 'Marigold Saffron Silk Royal Arch Zardosi Bridal Lehenga Choli with Double Dupatta — full-length bridal portrait',
+    width: 1280,
+    height: 1706,
+    createdAt: '2026-11-18T12:00:00Z',
+  },
+  categoryLehengas: {
+    handle: 'royal-fuchsia-silk-mughal-paisley-bridal-lehenga-double-dupatta',
+    title: 'Royal Fuchsia Silk Mughal Paisley Zardosi Bridal Lehenga Choli with Double Dupatta',
+    price: 356.78,
+    url: '/images/bridal-vol3/luxemia-bv3-171-fuchsia-paisley-1.jpg',
+    webpUrl: '/images/bridal-vol3/luxemia-bv3-171-fuchsia-paisley-1.webp',
+    alt: 'Royal Fuchsia Silk Mughal Paisley Zardosi Bridal Lehenga Choli with Double Dupatta — full-length bridal view',
+    width: 1280,
+    height: 1706,
+    createdAt: '2026-11-18T12:00:00Z',
+  },
+  promoBridalParty: {
+    handle: 'rani-magenta-silk-rajputana-palace-bridal-lehenga-double-dupatta',
+    title: 'Rani Magenta Silk Rajputana Palace Zardosi Bridal Lehenga Choli with Double Dupatta',
+    price: 415.44,
+    url: '/images/bridal-vol3/luxemia-bv3-172-magenta-palace-1.jpg',
+    webpUrl: '/images/bridal-vol3/luxemia-bv3-172-magenta-palace-1.webp',
+    alt: 'Rani Magenta Silk Rajputana Palace Zardosi Bridal Lehenga Choli with Double Dupatta — full-length studio portrait',
+    width: 1280,
+    height: 1706,
+    createdAt: '2026-11-18T12:00:00Z',
+  },
+};
+
+/**
+ * Overlays the four curated, brand-free Royal Bridal Silk Vol-3 designs onto a
+ * selected homepage imagery object while adopting live Shopify CDN media automatically
+ * whenever any curated handle has already been imported into Shopify.
+ */
+export function applyCuratedBridalVol3Slots(imagery, livePayload = null) {
+  if (!imagery) return imagery;
+
+  const liveByHandle = new Map();
+  if (livePayload && typeof livePayload === 'object') {
+    const edges = livePayload?.products?.edges || livePayload?.data?.products?.edges || [];
+    for (const edge of edges) {
+      const node = edge?.node;
+      const img = node?.images?.edges?.[0]?.node;
+      if (!node?.handle || node.availableForSale === false || !img?.url) continue;
+      liveByHandle.set(node.handle, {
+        handle: node.handle,
+        title: node.title,
+        price: Number.parseFloat(node.priceRange?.minVariantPrice?.amount || '0') || undefined,
+        url: toSizedShopifyImageUrl(img.url, 1120),
+        webpUrl: toSizedShopifyImageUrl(img.url, 1120, 'webp'),
+        alt: img.altText || node.title,
+        width: img.width || 1280,
+        height: img.height || 1706,
+        createdAt: node.createdAt || null,
+      });
+    }
+  }
+
+  const resolveCurated = (curated) => liveByHandle.get(curated.handle) || { ...curated };
+
+  return {
+    ...imagery,
+    hero: {
+      ...imagery.hero,
+      'wedding-edit': resolveCurated(CURATED_BRIDAL_VOL3_HOMEPAGE_SLOTS.heroWeddingEdit),
+      'lehengas-suits': resolveCurated(CURATED_BRIDAL_VOL3_HOMEPAGE_SLOTS.heroLehengasSuits),
+    },
+    categories: {
+      ...imagery.categories,
+      lehengas: resolveCurated(CURATED_BRIDAL_VOL3_HOMEPAGE_SLOTS.categoryLehengas),
+    },
+    promos: {
+      ...imagery.promos,
+      'bridal-party': resolveCurated(CURATED_BRIDAL_VOL3_HOMEPAGE_SLOTS.promoBridalParty),
+    },
+  };
+}
+

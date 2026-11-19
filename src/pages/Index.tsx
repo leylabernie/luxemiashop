@@ -87,9 +87,9 @@ const PROMO_BANNERS: readonly {
     copy: 'Coordinate bridesmaids, family, and wedding party outfits, or review size and stitching guidance before ordering.',
     href: '/wedding-party-orders',
     cta: 'Plan Group & Fit Orders',
-    fallbackImage:
-      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-6032-blue-1.jpg?v=1792438550&width=960',
-    fallbackAlt: 'Midnight Blue Net Floral Embroidered Lehenga Choli with Dupatta',
+    fallbackImage: '/images/bridal-vol3/luxemia-bv3-172-magenta-palace-1.webp',
+    fallbackAlt:
+      'Rani Magenta Silk Rajputana Palace Zardosi Bridal Lehenga Choli with Double Dupatta',
   },
 ];
 

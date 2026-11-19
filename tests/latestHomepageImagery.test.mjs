@@ -478,7 +478,20 @@ test('committed latestHomepageImagery snapshot contains zero archived handles an
   for (const [, entry] of entries) {
     assert.equal(archived.has(entry.handle), false, `archived handle in snapshot: ${entry.handle}`);
     assert.equal(gone.has(entry.handle), false, `gone handle in snapshot: ${entry.handle}`);
-    assert.match(entry.url, /^https:\/\/cdn\.shopify\.com\//);
+    if (entry.url.startsWith('/images/bridal-vol3/')) {
+      assert.equal(
+        fs.existsSync(path.join(root, 'public', entry.url)),
+        true,
+        `missing local bridal image: ${entry.url}`,
+      );
+      assert.equal(
+        fs.existsSync(path.join(root, 'public', entry.webpUrl)),
+        true,
+        `missing local bridal webp image: ${entry.webpUrl}`,
+      );
+    } else {
+      assert.match(entry.url, /^https:\/\/cdn\.shopify\.com\//);
+    }
   }
 
   for (let i = 0; i < entries.length; i += 1) {

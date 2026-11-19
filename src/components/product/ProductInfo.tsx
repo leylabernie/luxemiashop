@@ -22,6 +22,14 @@ import { ProductDeliverySummary } from './ProductDeliverySummary';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
+import { UtsavBridalTailoringPanel } from './UtsavBridalTailoringPanel';
+import {
+  buildUtsavTailoringAttributes,
+  createDefaultUtsavTailoringState,
+  isPreviewOnlyBridalProduct,
+  isUtsavTailoringBridalProduct,
+  type UtsavBridalTailoringState,
+} from '@/lib/bridalVol3Products';
 import type { ShopifyProduct } from '@/lib/shopify';
 import { getShipByLabel, getProductShipsWithin } from '@/lib/shipBy';
 import { getCustomizableProduct, isMadeToOrderProduct } from '@/lib/customizableProducts';
@@ -337,7 +345,15 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
   const isReadyMadeOnly = product.tags?.some((tag) =>
     /^(?:tailoring|stitching):\s*ready[-\s]?made(?:\s*(?:only|blouse))?\b/i.test(tag.trim()),
   ) ?? false;
-  const isStitchable = !hasNativeFullStitching && !tailoringEnquiryOnly && !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags);
+  const isUtsavBridal = isUtsavTailoringBridalProduct(product);
+  const isPreviewCatalogListing = isPreviewOnlyBridalProduct(product);
+  const [utsavTailoring, setUtsavTailoring] = useState<UtsavBridalTailoringState>(
+    () => createDefaultUtsavTailoringState(),
+  );
+  useEffect(() => {
+    setUtsavTailoring(createDefaultUtsavTailoringState());
+  }, [product.id]);
+  const isStitchable = !hasNativeFullStitching && !tailoringEnquiryOnly && !madeToOrderProduct && !isReadyMadeOnly && hasExplicitTailoringStatus && isStitchableProduct(product.productType, product.tags) && !isUtsavBridal;
   const isMenswear = !hasNativeFullStitching && !tailoringEnquiryOnly && !madeToOrderProduct && isMenswearProduct(product.productType, product.tags);
   const showBottomStyleOption = !hasNativeFullStitching && !madeToOrderProduct && shouldShowBottomStyle(product.productType, product.tags);
   const productHasNativeSizes = hasNativeProductSizeOption(product.options);
@@ -371,7 +387,14 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
     const requestedPurchasable = requestedVariant?.node.availableForSale !== false
       ? requestedVariant
       : undefined;
-    const firstPurchasable = requestedPurchasable ?? product.variants.edges.find(
+    const readymadeBaseVariant = !requestedPurchasable && isUtsavBridal
+      ? product.variants.edges.find(
+          (edge) =>
+            edge.node.availableForSale !== false
+            && edge.node.selectedOptions.some((o) => o.name === 'Size' && o.value === '38'),
+        )
+      : undefined;
+    const firstPurchasable = requestedPurchasable ?? readymadeBaseVariant ?? product.variants.edges.find(
       (edge) => edge.node.availableForSale !== false
     ) ?? product.variants.edges[0];
 
@@ -380,7 +403,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
     });
 
     return defaults;
-  }, [product.variants.edges, product.options, requestedVariantId, metaToken, presentation.alteration]);
+  }, [product.variants.edges, product.options, requestedVariantId, metaToken, presentation.alteration, isUtsavBridal]);
 
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>(defaultOptions);
   const [quantity, setQuantity] = useState(metaRequestedLine?.quantity || 1);
@@ -699,6 +722,10 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
 
   // Whether to show the Customize header (all stitchable products + menswear)
   const showCustomizeHeader = isStitchable || isMenswear;
+  const utsavTailoringAttributes = useMemo(
+    () => (isUtsavBridal ? buildUtsavTailoringAttributes(utsavTailoring, isCustomSizeSelected) : []),
+    [isUtsavBridal, utsavTailoring, isCustomSizeSelected],
+  );
 
   const handleOptionSelect = (optionName: string, value: string) => {
     const resolvedVariant = resolveAvailableVariantForOption(
@@ -757,6 +784,10 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
   };
 
   const handleAddToCart = async () => {
+    if (typeof isPreviewCatalogListing !== 'undefined' && isPreviewCatalogListing && typeof handlePreviewBridalOrder === 'function') {
+      handlePreviewBridalOrder();
+      return;
+    }
     if (selectionRequiresEnquiry) {
       toast.error(TAILORING_ENQUIRY_NOTICE);
       return;
@@ -894,6 +925,9 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
     if (!hasNativeFullStitching && customAlteration.trim()) {
       customAttributes.push({ key: 'Custom Alteration Instructions', value: customAlteration.trim() });
     }
+    if (typeof utsavTailoringAttributes !== 'undefined' && Array.isArray(utsavTailoringAttributes) && utsavTailoringAttributes.length > 0) {
+      customAttributes.push(...utsavTailoringAttributes);
+    }
 
     if (nativeMeasurementRequest) {
       if (measurementNow) {
@@ -956,6 +990,36 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
       style: 'currency',
       currency,
     }).format(parseFloat(amount));
+  };
+
+  const handlePreviewBridalOrder = () => {
+    if (!purchasableVariant) {
+      toast.error('Please select a size');
+      return;
+    }
+    if (isCustomSizeSelected && !customSizeConfirmed) {
+      toast.error('Confirm the custom-size measurement requirement');
+      return;
+    }
+    const sizeLabel = selectedOptions.Size || purchasableVariant.node.title;
+    const priceLabel = formatPrice(purchasableVariant.node.price.amount, purchasableVariant.node.price.currencyCode);
+    const detailLines = [
+      `Hi LuxeMia, I would like to order ${product.title} (${priceLabel}, Qty ${quantity}).`,
+      `Selected Size: ${sizeLabel}${purchasableVariant.node.sku ? ` (SKU ${purchasableVariant.node.sku})` : ''}`,
+      ...utsavTailoringAttributes.map((attr) => `${attr.key}: ${attr.value}`),
+      ...(measurementNow
+        ? measurementAttributes(measurementDraft).map((attr) => `${attr.key}: ${attr.value}`)
+        : []),
+      `Product Link: https://luxemia.shop/product/${product.handle}`,
+    ];
+    window.open(
+      `https://wa.me/12153419990?text=${encodeURIComponent(detailLines.join('\n'))}`,
+      '_blank',
+      'noopener,noreferrer',
+    );
+    toast.success('Opened custom bridal order summary', {
+      description: `${product.title} — Size ${sizeLabel} (${priceLabel})`,
+    });
   };
 
   const handleWishlistToggle = () => {
@@ -1189,6 +1253,17 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
             </div>
           ))}
         </div>
+
+        {/* ─── Utsav-Style Bridal Sizing & Custom Tailoring Studio ─── */}
+        {isUtsavBridal && (
+          <UtsavBridalTailoringPanel
+            selectedSize={selectedOptions.Size || purchasableVariant?.node.title || '38'}
+            isCustomFit={isCustomSizeSelected}
+            value={utsavTailoring}
+            onChange={setUtsavTailoring}
+            onSelectSize={(size) => handleOptionSelect('Size', size)}
+          />
+        )}
 
         {/* ─── Stitching Type Selector (for stitchable products) ─── */}
         {isStitchable && (
@@ -1563,7 +1638,15 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
                   className="flex items-center gap-2"
                 >
                   <ShoppingBag className="h-5 w-5 shrink-0" />
-                  {selectionRequiresEnquiry ? 'Quote Required' : isAvailable ? 'Add to Bag' : hasAvailableVariant ? 'Select Options' : 'Out of Stock'}
+                  {selectionRequiresEnquiry
+                    ? 'Quote Required'
+                    : isAvailable
+                      ? isPreviewCatalogListing
+                        ? 'Order Selected Fit'
+                        : 'Add to Bag'
+                      : hasAvailableVariant
+                        ? 'Select Options'
+                        : 'Out of Stock'}
                 </motion.span>
                 <motion.span
                   initial={false}

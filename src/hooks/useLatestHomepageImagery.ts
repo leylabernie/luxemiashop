@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import latestSnapshot from '@/data/latestHomepageImagery.json';
 import {
   LATEST_HOMEPAGE_IMAGERY_QUERY,
+  applyCuratedBridalVol3Slots,
   selectLatestHomepageImagery,
 } from '@/lib/selectLatestHomepageImagery.mjs';
 
@@ -97,7 +98,10 @@ async function loadLiveLatestImagery(): Promise<LatestHomepageImagery | null> {
         archivedHandles,
       }) as LatestHomepageImagery | null;
       if (!selected) return null;
-      const merged = mergeImagery(INITIAL_IMAGERY, selected);
+      const merged = applyCuratedBridalVol3Slots(
+        mergeImagery(INITIAL_IMAGERY, selected),
+        response.data,
+      ) as LatestHomepageImagery;
       cachedImagery = merged;
       cachedAt = Date.now();
       return merged;

@@ -30,6 +30,7 @@ async function main() {
     ).href;
     const {
       LATEST_HOMEPAGE_IMAGERY_QUERY,
+      applyCuratedBridalVol3Slots,
       isSameDesignFamily,
       selectLatestHomepageImagery,
     } = await import(selectorUrl);
@@ -87,29 +88,32 @@ async function main() {
       return null;
     };
 
-    const merged = {
-      generatedAt: new Date().toISOString(),
-      hero: {
-        'wedding-edit': takeSlot(selected.hero['wedding-edit'], existing.hero['wedding-edit']),
-        'new-arrivals': takeSlot(selected.hero['new-arrivals'], existing.hero['new-arrivals']),
-        'sarees-edit': takeSlot(selected.hero['sarees-edit'], existing.hero['sarees-edit']),
-        'lehengas-suits': takeSlot(selected.hero['lehengas-suits'], existing.hero['lehengas-suits']),
-        'ready-to-ship': takeSlot(selected.hero['ready-to-ship'], existing.hero['ready-to-ship']),
+    const merged = applyCuratedBridalVol3Slots(
+      {
+        generatedAt: new Date().toISOString(),
+        hero: {
+          'wedding-edit': takeSlot(selected.hero['wedding-edit'], existing.hero['wedding-edit']),
+          'new-arrivals': takeSlot(selected.hero['new-arrivals'], existing.hero['new-arrivals']),
+          'sarees-edit': takeSlot(selected.hero['sarees-edit'], existing.hero['sarees-edit']),
+          'lehengas-suits': takeSlot(selected.hero['lehengas-suits'], existing.hero['lehengas-suits']),
+          'ready-to-ship': takeSlot(selected.hero['ready-to-ship'], existing.hero['ready-to-ship']),
+        },
+        categories: {
+          sarees: takeSlot(selected.categories.sarees, existing.categories.sarees),
+          lehengas: takeSlot(selected.categories.lehengas, existing.categories.lehengas),
+          suits: takeSlot(selected.categories.suits, existing.categories.suits),
+          indowestern: takeSlot(selected.categories.indowestern, existing.categories.indowestern),
+          menswear: takeSlot(selected.categories.menswear, existing.categories.menswear),
+          kids: takeSlot(selected.categories.kids, existing.categories.kids),
+          jewelry: takeSlot(selected.categories.jewelry, existing.categories.jewelry),
+        },
+        promos: {
+          'ready-to-ship': takeSlot(selected.promos['ready-to-ship'], existing.promos['ready-to-ship']),
+          'bridal-party': takeSlot(selected.promos['bridal-party'], existing.promos['bridal-party']),
+        },
       },
-      categories: {
-        sarees: takeSlot(selected.categories.sarees, existing.categories.sarees),
-        lehengas: takeSlot(selected.categories.lehengas, existing.categories.lehengas),
-        suits: takeSlot(selected.categories.suits, existing.categories.suits),
-        indowestern: takeSlot(selected.categories.indowestern, existing.categories.indowestern),
-        menswear: takeSlot(selected.categories.menswear, existing.categories.menswear),
-        kids: takeSlot(selected.categories.kids, existing.categories.kids),
-        jewelry: takeSlot(selected.categories.jewelry, existing.categories.jewelry),
-      },
-      promos: {
-        'ready-to-ship': takeSlot(selected.promos['ready-to-ship'], existing.promos['ready-to-ship']),
-        'bridal-party': takeSlot(selected.promos['bridal-party'], existing.promos['bridal-party']),
-      },
-    };
+      payload.data,
+    );
 
     fs.writeFileSync(OUTPUT_PATH, `${JSON.stringify(merged, null, 2)}\n`, 'utf8');
 

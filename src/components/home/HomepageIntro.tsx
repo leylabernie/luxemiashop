@@ -236,14 +236,19 @@ export default function HomepageIntro() {
                     </Link>
                   </div>
 
-                  {latestImagery.hero[slide.id]?.title && (
-                    <p
-                      className={`mt-3 hidden max-w-lg text-[11px] leading-relaxed lg:block ${
-                        slideIsPlum ? 'text-[#fff9f4]/65' : 'text-[#6e605e]'
+                  {latestImagery.hero[slide.id]?.title && latestImagery.hero[slide.id]?.handle && (
+                    <Link
+                      to={`/product/${latestImagery.hero[slide.id]?.handle}`}
+                      tabIndex={isActive ? 0 : -1}
+                      className={`mt-3 hidden max-w-lg text-[11px] leading-relaxed underline-offset-4 hover:underline lg:inline-block ${
+                        slideIsPlum ? 'text-[#fff9f4]/75 hover:text-[#fff9f4]' : 'text-[#5b4d4c] hover:text-[#291f20]'
                       }`}
                     >
                       Shown: {latestImagery.hero[slide.id]?.title}
-                    </p>
+                      {typeof latestImagery.hero[slide.id]?.price === 'number'
+                        ? ` · $${latestImagery.hero[slide.id]?.price?.toFixed(2)}`
+                        : ''}
+                    </Link>
                   )}
                 </div>
 
