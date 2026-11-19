@@ -70,12 +70,12 @@ const CustomerStories = () => {
               className="bg-card p-6 lg:p-8 border border-border/50"
             >
               {'icon' in reason && reason.icon ? (
-                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                  <reason.icon className="w-5 h-5 text-primary" />
+                <div className="w-10 h-10 bg-primary/15 rounded-full flex items-center justify-center mb-4">
+                  <reason.icon className="w-5 h-5 text-link" />
                 </div>
               ) : (
-                <div className="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center mb-4">
-                  <span className="text-primary font-serif text-lg">✓</span>
+                <div className="w-10 h-10 bg-primary/15 rounded-full flex items-center justify-center mb-4">
+                  <span className="text-link font-serif text-lg">✓</span>
                 </div>
               )}
               <h3 className="font-medium text-foreground mb-2">
