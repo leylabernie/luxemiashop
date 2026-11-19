@@ -24,7 +24,7 @@ const changed = [];
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 const PRODUCT_SHIPPING_ANSWER = `LuxeMia ships to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.`;
 const PRODUCT_READY_DELIVERY_ANSWER = 'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.';
-const READY_PAGE_DESCRIPTION = 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.';
+const READY_PAGE_DESCRIPTION = 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (3–4 business day dispatch; alterations extra). Free U.S. standard shipping $150+.';
 const READY_ROUTE_CONTENT = `  {
     path: '/ready-to-ship',
     category: 'ready-to-ship',

@@ -802,6 +802,10 @@
       "destination": "/merchant-feed.xml"
     },
     {
+      "source": "/gmc-images/:file.jpg",
+      "destination": "/api/gmc-image?file=:file"
+    },
+    {
       "source": "/api/meta-catalog",
       "destination": "/api/meta-catalog"
     },

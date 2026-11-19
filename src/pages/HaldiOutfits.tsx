@@ -76,7 +76,7 @@ const HaldiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Haldi Ceremony Outfits — Current Listings | LuxeMia"
-        description="Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms."
+        description="Shop yellow, mustard & marigold haldi ceremony outfits—sarees, lehengas and suits for Indian weddings. Free U.S. standard shipping on orders $150+."
         canonical="https://luxemia.shop/collections/haldi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },

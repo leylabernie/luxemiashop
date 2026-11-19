@@ -211,11 +211,29 @@ const WEBP_SOURCE_LOCAL_JPG = {
   '178704753992368782': '/images/gmc/178704753992368782.jpg',
 };
 
+const SHOPIFY_STORE_FILES_WEBP_RE =
+  /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0746\/4707\/7035\/files\/([A-Za-z0-9][A-Za-z0-9._-]{0,200})\.webp(?:\?(.*))?$/i;
+
+function rewriteShopifyWebpToGmcJpg(url) {
+  const match = url.match(SHOPIFY_STORE_FILES_WEBP_RE);
+  if (!match || match[1].includes('..')) return null;
+  const basename = match[1];
+  if (WEBP_SOURCE_LOCAL_JPG[basename]) {
+    return `${SITE_URL}${WEBP_SOURCE_LOCAL_JPG[basename]}`;
+  }
+  const query = match[2] || '';
+  const versionMatch = query.match(/(?:^|&)v=(\d{1,15})(?:&|$)/);
+  const versionSuffix = versionMatch ? `?v=${versionMatch[1]}` : '';
+  return `${SITE_URL}/gmc-images/${basename}.jpg${versionSuffix}`;
+}
+
 function forceJpeg(url) {
   if (!url) return url;
   if (/\.webp(\?|$)/i.test(url)) {
     const basename = (url.match(/\/([^/?]+)\.webp/i) || [])[1] || '';
     if (WEBP_SOURCE_LOCAL_JPG[basename]) return `${SITE_URL}${WEBP_SOURCE_LOCAL_JPG[basename]}`;
+    const proxiedJpg = rewriteShopifyWebpToGmcJpg(url);
+    if (proxiedJpg) return proxiedJpg;
     console.warn(`[merchant-feed] .webp image URL has no local JPG conversion: ${url}`);
   }
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
@@ -331,13 +349,23 @@ function sanitizeFeedTitle(text) {
 }
 
 const MERCHANT_TITLE_MAX_LENGTH = 150;
-const NAVRATRI_PRIORITY_PRODUCT_LIMIT = 30;
+const WEDDING_PRIORITY_PRODUCT_LIMIT = 30;
 
 function trimMerchantTitle(text, maxLength = MERCHANT_TITLE_MAX_LENGTH) {
   const clean = sanitizeFeedTitle(text);
   if (clean.length <= maxLength) return clean;
   const shortened = clean.slice(0, maxLength + 1).replace(/\s+\S*$/, '').trim();
   return shortened || clean.slice(0, maxLength).trim();
+}
+
+function stripInjectedNavratriSuffix(title, handle = '') {
+  if (/\b(?:navratri|garba|chaniya|dandiya)\b/i.test(handle || '')) {
+    return title;
+  }
+  return String(title || '')
+    .replace(/\s+[—–-]\s+(?:Navratri\s+)?Garba Outfit\b/gi, '')
+    .replace(/\s+[—–-]\s+Navratri\b/gi, '')
+    .trim();
 }
 
 function merchantProductSearchText(product) {
@@ -349,45 +377,57 @@ function merchantProductSearchText(product) {
   ].join(' ').toLowerCase();
 }
 
-function navratriPriorityScore(product) {
+function isExplicitNavratriProduct(product) {
+  const text = `${product.handle || ''} ${stripInjectedNavratriSuffix(product.title || '', product.handle)}`.toLowerCase();
+  return /\b(?:navratri|garba|chaniya|dandiya)\b/.test(text);
+}
+
+function weddingSeasonPriorityScore(product) {
+  if (isExplicitNavratriProduct(product)) return 0;
   const text = merchantProductSearchText(product);
   let score = 0;
-  if (/\bnavratri\b/.test(text)) score += 12;
-  if (/\bgarba\b/.test(text)) score += 8;
-  if (/\bchaniya\b/.test(text)) score += 6;
-  if (/\bdandiya\b/.test(text)) score += 4;
-  if (/\bmirror\b/.test(text)) score += 2;
-  if (/\b(?:lehenga|choli)\b/.test(text)) score += 1;
+  if (/\bbridal\b/.test(text)) score += 14;
+  if (/\b(?:wedding|reception|sangeet|mehendi|mehndi|baraat|groom|ceremony)\b/.test(text)) score += 10;
+  if (/\b(?:sherwani|banarasi|couple)\b/.test(text)) score += 8;
+  if (/\b(?:lehenga|anarkali|sharara|gharara)\b/.test(text)) score += 6;
+  if (/\b(?:saree|palazzo|plazzo|salwar|indo[- ]?western)\b/.test(text)) score += 4;
+  if (/\b(?:silk|velvet|organza|chinon|tissue|brocade|satin|georgette)\b/.test(text)) score += 3;
+  if (/\b(?:zardozi|zardosi|zari|sequin|embroider|kundan|pearl|cutdana)\b/.test(text)) score += 2;
   return score;
 }
 
-function selectNavratriPriorityHandles(products) {
+function selectWeddingPriorityHandles(products) {
   const uniqueProducts = new Map();
   for (const product of products) {
     if (!product?.handle || uniqueProducts.has(product.handle)) continue;
-    const score = navratriPriorityScore(product);
+    const score = weddingSeasonPriorityScore(product);
     if (score > 0) uniqueProducts.set(product.handle, { product, score });
   }
 
   return new Set(
     [...uniqueProducts.values()]
       .sort((a, b) => b.score - a.score || a.product.handle.localeCompare(b.product.handle))
-      .slice(0, NAVRATRI_PRIORITY_PRODUCT_LIMIT)
+      .slice(0, WEDDING_PRIORITY_PRODUCT_LIMIT)
       .map(({ product }) => product.handle)
   );
 }
 
-function buildMerchantBaseTitle(baseTitle, handle, navratriPriorityHandles) {
-  let title = sanitizeFeedTitle(baseTitle);
-  if (!navratriPriorityHandles.has(handle)) return trimMerchantTitle(title);
-
-  const missingSeasonalTerms = [];
-  if (!/\bnavratri\b/i.test(title)) missingSeasonalTerms.push('Navratri');
-  if (!/\bgarba\b/i.test(title)) missingSeasonalTerms.push('Garba Outfit');
-  if (missingSeasonalTerms.length > 0) {
-    title = `${title} — ${missingSeasonalTerms.join(' ')}`;
+function getSeasonalCustomLabel(product, weddingPriorityHandles) {
+  if (product?.handle && weddingPriorityHandles.has(product.handle)) {
+    return 'wedding_season_2026_priority';
   }
-  return trimMerchantTitle(title);
+  if (product && isExplicitNavratriProduct(product)) {
+    return 'navratri_2026_classic';
+  }
+  return '';
+}
+
+// Keep Merchant titles strictly aligned with the product's actual landing-page
+// name so Google Merchant Center never flags synthetic seasonal suffixes and
+// wedding/bridal styles rank for their true garment terms.
+function buildMerchantBaseTitle(baseTitle, handle) {
+  const cleaned = stripInjectedNavratriSuffix(baseTitle, handle);
+  return trimMerchantTitle(cleaned);
 }
 
 function composeMerchantVariantTitle(baseTitle, variantLabel) {
@@ -582,7 +622,7 @@ function sanitizeExistingFeedXml(xml) {
     productType: readItemTag(itemXml, 'g:custom_label_0') || readItemTag(itemXml, 'g:product_type'),
     tags: [],
   }));
-  const navratriPriorityHandles = selectNavratriPriorityHandles(fallbackProducts);
+  const weddingPriorityHandles = selectWeddingPriorityHandles(fallbackProducts);
 
   let sanitized = xml.replace(/<item>[\s\S]*?<\/item>/gi, (itemXml) => {
     itemCount += 1;
@@ -591,7 +631,7 @@ function sanitizeExistingFeedXml(xml) {
     const rawTitle = readItemTag(itemXml, 'g:title') || 'Indian ethnic wear';
     const rawGroupTitle = readItemTag(itemXml, 'g:item_group_title');
     const originalBaseTitle = rawGroupTitle || rawTitle.split(/\s+[—–]\s+/)[0] || rawTitle;
-    const merchantBaseTitle = buildMerchantBaseTitle(originalBaseTitle, handle, navratriPriorityHandles);
+    const merchantBaseTitle = buildMerchantBaseTitle(originalBaseTitle, handle);
     const variantLabel = rawGroupTitle && rawTitle.startsWith(rawGroupTitle)
       ? rawTitle.slice(rawGroupTitle.length).replace(/^\s*[—–-]\s*/, '')
       : rawTitle.match(/\s+[—–]\s+(.+)$/)?.[1]?.trim() || '';
@@ -655,10 +695,14 @@ function sanitizeExistingFeedXml(xml) {
       );
     }
 
-    if (navratriPriorityHandles.has(handle)) {
+    const seasonalLabel = getSeasonalCustomLabel(
+      { handle, title: merchantBaseTitle, productType: rawProductType, tags: [] },
+      weddingPriorityHandles,
+    );
+    if (seasonalLabel) {
       item = item.replace(
         /\s*<g:custom_label_0>/i,
-        '\n    <g:custom_label_1>navratri_2026_priority</g:custom_label_1>\n    <g:custom_label_0>'
+        `\n    <g:custom_label_1>${seasonalLabel}</g:custom_label_1>\n    <g:custom_label_0>`
       );
     }
 
@@ -693,7 +737,7 @@ function sanitizeExistingFeedXml(xml) {
     throw new Error('Fallback merchant feed contains no products');
   }
 
-  console.log(`[merchant-feed] Prioritized ${navratriPriorityHandles.size} Navratri product groups for seasonal title relevance`);
+  console.log(`[merchant-feed] Prioritized ${weddingPriorityHandles.size} wedding & celebration product groups in fallback feed`);
 
   sanitized = sanitized
     .replace(
@@ -813,6 +857,93 @@ function getStructuredTagValues(product, prefix) {
     .filter(Boolean))];
 }
 
+function getVerifiedCategorySearchPhrase(product, rawProductType, title) {
+  const probe = `${product?.handle || ''} ${rawProductType || ''} ${title || ''}`.toLowerCase();
+  if (/\b(?:boy|girl|kids?)\b/.test(probe)) {
+    return 'Indian kids ethnic outfit for family weddings, receptions, and festive celebrations.';
+  }
+  if (/\bcouple\b/.test(probe)) {
+    return 'Coordinated Indian couple outfit set for weddings, receptions, and festive celebrations.';
+  }
+  if (/\b(?:navratri|garba|chaniya|dandiya)\b/.test(probe)) {
+    return /\bblouse\b/.test(probe)
+      ? 'Indian festive Navratri and Garba blouse designed to pair with sarees and lehenga skirts.'
+      : 'Indian Navratri chaniya choli and Garba outfit for festive dance celebrations.';
+  }
+  if (/\bsherwani\b/.test(probe)) {
+    return 'Indian wedding and groom sherwani suited to ceremonies, baraat, and formal receptions.';
+  }
+  if (/\b(?:kurta\s?pajama|modi\s?jacket|nehru\s?jacket|jodhpuri|menswear|men'?s)\b/.test(probe)) {
+    return 'Indian menswear ensemble for weddings, sangeet nights, receptions, and festive gatherings.';
+  }
+  if (/\bbridal\b/.test(probe) && /\b(?:lehenga|lehnga)\b/.test(probe)) {
+    return 'Indian bridal lehenga choli ensemble designed for wedding ceremonies and grand receptions.';
+  }
+  if (/\b(?:lehenga|lehnga)\b/.test(probe)) {
+    return 'Indian lehenga choli outfit suited to weddings, sangeet, reception, and festive celebrations.';
+  }
+  if (/\bbanarasi\b/.test(probe) && /\b(?:saree|sari)\b/.test(probe)) {
+    return 'Banarasi Indian saree for weddings, receptions, pujas, and traditional celebrations.';
+  }
+  if (/\b(?:ready[- ]to[- ]wear|pre[- ]draped)\b/.test(probe) && /\b(?:saree|sari)\b/.test(probe)) {
+    return 'Ready-to-wear Indian saree for wedding guests, cocktail evenings, receptions, and festive wear.';
+  }
+  if (/\b(?:saree|sari)\b/.test(probe)) {
+    return 'Indian saree suited to wedding guests, receptions, cultural ceremonies, and festive wear.';
+  }
+  if (/\bblouse\b/.test(probe)) {
+    return 'Indian ethnic blouse to style with sarees and lehenga skirts for weddings and celebrations.';
+  }
+  if (/\b(?:sharara|gharara)\b/.test(probe)) {
+    return 'Indian sharara salwar kameez suit for sangeet, mehendi, wedding guests, and festive events.';
+  }
+  if (/\b(?:anarkali|gown)\b/.test(probe)) {
+    return 'Indian Anarkali occasion silhouette for weddings, sangeet, receptions, and festive celebrations.';
+  }
+  if (/\b(?:palazzo|plazzo)\b/.test(probe)) {
+    return 'Indian palazzo salwar kameez suit for wedding guests, family celebrations, and festive wear.';
+  }
+  if (/\b(?:indo[- ]?western|fusion|co-?ord|jumpsuit|cape)\b/.test(probe)) {
+    return 'Contemporary Indo-Western outfit for sangeet nights, cocktail receptions, and festive events.';
+  }
+  if (/\b(?:suit|salwar|kameez|pakistani|kurti)\b/.test(probe)) {
+    return 'Indian salwar kameez suit set for wedding events, family gatherings, and festive celebrations.';
+  }
+  return '';
+}
+
+function getVerifiedOccasionHighlight(product, rawProductType, title) {
+  const probe = `${product?.handle || ''} ${rawProductType || ''} ${title || ''}`.toLowerCase();
+  if (/\bcouple\b/.test(probe)) return 'Coordinated couple set for Indian weddings & receptions';
+  if (/\b(?:navratri|garba|chaniya|dandiya)\b/.test(probe)) return 'Festive Indian style for Navratri & Garba events';
+  if (/\bsherwani\b/.test(probe)) return 'Indian groom & wedding ceremony menswear';
+  if (/\b(?:kurta\s?pajama|modi\s?jacket|nehru\s?jacket|jodhpuri|menswear|men'?s)\b/.test(probe)) {
+    return 'Indian wedding, sangeet & festive menswear';
+  }
+  if (/\bbridal\b/.test(probe) && /\b(?:lehenga|lehnga)\b/.test(probe)) {
+    return 'Indian bridal lehenga choli for wedding & reception wear';
+  }
+  if (/\b(?:lehenga|lehnga)\b/.test(probe)) {
+    return 'Indian lehenga choli for weddings, sangeet & receptions';
+  }
+  if (/\bbanarasi\b/.test(probe) && /\b(?:saree|sari)\b/.test(probe)) {
+    return 'Banarasi saree for Indian weddings, receptions & pujas';
+  }
+  if (/\b(?:saree|sari)\b/.test(probe)) {
+    return 'Indian saree for wedding guests, receptions & celebrations';
+  }
+  if (/\b(?:sharara|gharara)\b/.test(probe)) {
+    return 'Sharara suit for sangeet, mehendi & wedding guest wear';
+  }
+  if (/\b(?:anarkali|gown)\b/.test(probe)) {
+    return 'Anarkali style for Indian weddings, sangeet & receptions';
+  }
+  if (/\b(?:palazzo|plazzo|suit|salwar|kameez|pakistani)\b/.test(probe)) {
+    return 'Indian salwar suit for wedding guests & festive occasions';
+  }
+  return '';
+}
+
 function buildDescription(product, color, material, productType, displayTitle = '', selectedOptions = []) {
   // Merchant descriptions are rebuilt from structured catalog fields. Shopify
   // prose is intentionally excluded because old marketing and policy claims can
@@ -825,6 +956,8 @@ function buildDescription(product, color, material, productType, displayTitle = 
     || '';
   const work = getStructuredTagValues(product, 'work')[0] || getTitleDesignDetails(product.title);
   const includedPieces = getStructuredTagValues(product, 'included');
+  const construction = getStructuredTagValues(product, 'construction')[0] || '';
+  const categorySearchPhrase = getVerifiedCategorySearchPhrase(product, rawProductType, title);
   const sizeSelection = getSizeOption(selectedOptions);
   const optionDetails = [...new Map((selectedOptions || [])
     .filter((option) => option?.name && option?.value)
@@ -834,6 +967,9 @@ function buildDescription(product, color, material, productType, displayTitle = 
     .values()];
   const parts = [];
   parts.push(`${title} from LuxeMia.`);
+  if (categorySearchPhrase) {
+    parts.push(categorySearchPhrase);
+  }
 
   const detailsParts = [];
   if (rawProductType) detailsParts.push(`Style: ${rawProductType}`);
@@ -841,6 +977,7 @@ function buildDescription(product, color, material, productType, displayTitle = 
   if (structuredMaterial) detailsParts.push(`Material: ${structuredMaterial}`);
   if (sizeSelection?.value) detailsParts.push(`Size: ${sizeSelection.value}`);
   if (work) detailsParts.push(`Design detail: ${work}`);
+  if (construction) detailsParts.push(`Supplied finish: ${construction}`);
   if (detailsParts.length > 0) {
     parts.push(`${detailsParts.join('. ')}.`);
   }
@@ -893,8 +1030,11 @@ function generateProductHighlights(product, color, material, productType, title,
   const work = workTypes.find(({ pattern }) => pattern.test(source));
   if (work) highlights.push(`Features ${work.label.toLowerCase()}`);
 
-  if (productType) highlights.push(`Product type: ${productType}`);
+  const rawProductType = product?.productType || productType.split('>').at(-1) || '';
+  const occasionHighlight = getVerifiedOccasionHighlight(product, rawProductType, title);
+  if (occasionHighlight) highlights.push(occasionHighlight);
   if (size) highlights.push(`Size option: ${size}`);
+  if (productType) highlights.push(`Product type: ${productType}`);
   highlights.push('Tracked shipping to seven supported countries; current rates are shown at checkout');
 
   return highlights.slice(0, 5).map((highlight) =>
@@ -928,7 +1068,7 @@ function fitMerchantId(rawId, stableFallback) {
   return `${rawId.slice(0, prefixLength)}-${hash}`.slice(0, 50);
 }
 
-function generateProductItemXml(product, variant, titleCounts, navratriPriorityHandles) {
+function generateProductItemXml(product, variant, titleCounts, weddingPriorityHandles) {
   const handle = product.handle;
   const variantId = variant.id?.split('/').pop() || '';
   if (!/^\d+$/.test(variantId)) {
@@ -995,7 +1135,7 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
   ) || '';
 
   const baseTitle = product.title || '';
-  const merchantBaseTitle = buildMerchantBaseTitle(baseTitle, handle, navratriPriorityHandles);
+  const merchantBaseTitle = buildMerchantBaseTitle(baseTitle, handle);
   let displayTitle = merchantBaseTitle;
   if (variantLabel) {
     displayTitle = composeMerchantVariantTitle(merchantBaseTitle, variantLabel);
@@ -1052,7 +1192,10 @@ function generateProductItemXml(product, variant, titleCounts, navratriPriorityH
     ${size && getMerchantAgeGroup(selectedOptions) === 'adult' ? '<g:size_system>US</g:size_system>' : ''}
     ${identifiers}
     <g:custom_label_0>${escapeXml(rawProductType)}</g:custom_label_0>
-    ${navratriPriorityHandles.has(handle) ? '<g:custom_label_1>navratri_2026_priority</g:custom_label_1>' : ''}
+    ${(() => {
+      const seasonalLabel = getSeasonalCustomLabel(product, weddingPriorityHandles);
+      return seasonalLabel ? `<g:custom_label_1>${seasonalLabel}</g:custom_label_1>` : '';
+    })()}
   </item>`;
 }
 
@@ -1099,13 +1242,13 @@ async function main() {
   const retiredSkipped = products.length - liveProducts.length;
   if (retiredSkipped > 0) console.log(`[merchant-feed] Excluded ${retiredSkipped} retired (410) products from the feed`);
 
-  const navratriPriorityHandles = selectNavratriPriorityHandles(liveProducts);
-  console.log(`[merchant-feed] Prioritized ${navratriPriorityHandles.size} Navratri product groups for seasonal title relevance`);
+  const weddingPriorityHandles = selectWeddingPriorityHandles(liveProducts);
+  console.log(`[merchant-feed] Prioritized ${weddingPriorityHandles.size} wedding & celebration product groups (clean landing-page-matched titles)`);
 
   const itemsXml = liveProducts
     .flatMap((product) =>
       product.variants.edges.map((edge) =>
-        generateProductItemXml(product, edge.node, titleCounts, navratriPriorityHandles)
+        generateProductItemXml(product, edge.node, titleCounts, weddingPriorityHandles)
       )
     )
     .join('\n');

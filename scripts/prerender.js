@@ -760,6 +760,14 @@ function buildResponsiveImageAttrs(url, widths, sizes) {
 
 function forceJpegForGmc(url) {
   if (!url) return url;
+  const shopifyWebp = url.match(
+    /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0746\/4707\/7035\/files\/([A-Za-z0-9][A-Za-z0-9._-]{0,200})\.webp(?:\?(.*))?$/i
+  );
+  if (shopifyWebp && !shopifyWebp[1].includes('..')) {
+    const versionMatch = (shopifyWebp[2] || '').match(/(?:^|&)v=(\d{1,15})(?:&|$)/);
+    const versionSuffix = versionMatch ? `?v=${versionMatch[1]}` : '';
+    return `${SITE_URL}/gmc-images/${shopifyWebp[1]}.jpg${versionSuffix}`;
+  }
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
     const clean = url.replace(/[&?]format=\w+/g, '');
     const sep = clean.includes('?') ? '&' : '?';
@@ -1732,18 +1740,18 @@ const routes = [
     `,
   },
   {
-    path: '/collections/blouses', category: 'blouses', noIndexFollow: true,
-    title: 'Blouses | LuxeMia',
-    description: 'Browse current blouses at LuxeMia.',
-    h1: 'Blouses',
-    content: '<p>Browse current blouses and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
+    path: '/collections/blouses', category: 'blouses',
+    title: 'Saree & Lehenga Blouses Online USA | LuxeMia',
+    description: 'Shop embroidered saree and lehenga blouses in art silk with mirror & bead work. Multiple size options & free U.S. standard shipping on orders $150+.',
+    h1: 'Embroidered Saree & Lehenga Blouses',
+    content: '<p>Pair your favorite saree or lehenga skirt with richly embroidered blouses featuring mirror work, bead detailing, and festive borders. Review each listing for stated fabric, size options, and current availability. Free U.S. standard shipping applies at $150 and above ($14.99 below $150).</p><p><a href="/sarees">Wedding &amp; Party Sarees</a> · <a href="/collections/banarasi-sarees">Banarasi Sarees</a> · <a href="/lehengas">Lehengas</a> · <a href="/size-guide">Size Guide</a> · <a href="/collections">All Collections</a></p>',
   },
   {
-    path: '/collections/couple-outfits', category: 'couple-outfits', noIndexFollow: true,
-    title: 'Couple Sets | LuxeMia',
-    description: 'Browse current couple sets at LuxeMia.',
-    h1: 'Couple Sets',
-    content: '<p>Browse current couple sets and review each product for available sizes, fabric and included pieces.</p><p><a href="/collections">All Collections</a></p>',
+    path: '/collections/couple-outfits', category: 'couple-outfits',
+    title: 'Indian Couple Outfits USA | Wedding Sets | LuxeMia',
+    description: 'Shop matching Indian couple outfits with saree and kurta pajama sets for weddings, receptions & festivals. Free U.S. standard shipping at $150+.',
+    h1: 'Indian Couple Outfits — Saree & Kurta Pajama Sets',
+    content: '<p>Explore coordinated Indian couple sets pairing a woven or embroidered saree with a matching men’s kurta pajama for wedding receptions, engagements, pujas, and festive celebrations. Open each listing to confirm exact included pieces, blouse details, and men’s sizing. Free U.S. standard shipping applies at $150 and above.</p><p><a href="/sarees">Wedding &amp; Party Sarees</a> · <a href="/menswear">Menswear &amp; Sherwanis</a> · <a href="/collections/wedding-guest-outfits">Wedding Guest Outfits</a> · <a href="/shipping">Shipping &amp; Timing</a> · <a href="/collections">All Collections</a></p>',
   },
   ...Object.values(reviewedLehengaCollections).map((config) => ({
     path: `/collections/${config.handle}`,
@@ -1760,8 +1768,8 @@ const routes = [
   {
     path: '/collections/banarasi-sarees',
     category: 'collection:banarasi-sarees',
-    title: 'Banarasi Sarees | Fabric & Blouse Details | LuxeMia',
-    description: 'Shop Banarasi sarees in satin silk blends, Mashru silk blends and other labelled fabrics. Compare colors, zari details and matching unstitched blouse pieces.',
+    title: 'Banarasi Sarees Online USA | Silk & Zari Styles | LuxeMia',
+    description: 'Shop Banarasi sarees in silk blends & georgette with woven zari borders and unstitched blouse fabric. Free U.S. standard shipping on orders $150+.',
     h1: 'Banarasi Sarees',
     content: '<p>Shop satin silk blends, Mashru silk blends and other clearly labelled fabrics, with zari work and matching unstitched blouse pieces. Open each design to compare its color, current price and woven details.</p><h2>Choosing Your Banarasi Saree</h2><p>Compare the drape, color and zari details across the collection, then review the stated fabric composition and weaving method on your chosen product page.</p><p>Each saree includes matching unstitched blouse fabric for separate tailoring. If you need blouse stitching, contact LuxeMia before ordering to confirm fabric suitability for your measurements and chosen design.</p><p><a href="/sarees">Browse all sarees</a> · <a href="/contact">Ask about blouse tailoring</a> · <a href="/shipping">Shipping rates and timing</a></p>',
   },
@@ -1769,16 +1777,16 @@ const routes = [
     path: '/collections/ready-to-wear-palazzo-suits',
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-4584171319-1.jpg?v=1791590961',
     category: 'collection:ready-to-wear-palazzo-suits',
-    title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece Sets | LuxeMia',
-    description: 'Shop embroidered ready-to-wear palazzo suits with a stitched top, trousers and dupatta. Compare colors, current prices, size options and dispatch details.',
+    title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece | LuxeMia',
+    description: 'Shop stitched 3-piece ready-to-wear palazzo suits with embroidered top, trousers & dupatta. 3–4 day dispatch & free U.S. standard shipping at $150+.',
     h1: 'Ready-to-Wear Palazzo Suits',
     content: '<p>Explore embroidered three-piece sets in blush pink, aqua blue, lavender purple, green and rani pink. Each selected listing includes a stitched top, palazzo trousers and dupatta.</p><p>Compare current prices and listed sizes on each product page. Stocked, non-custom selections dispatch within 3–4 business days; carrier transit is additional.</p><p><a href="/size-guide">Check your measurements</a> · <a href="/shipping">Shipping rates and timing</a> · <a href="/ready-to-ship">All ready-to-ship outfits</a></p>',
   },
   {
     path: '/collections/silk-sarees',
     category: 'collection:silk-sarees',
-    title: 'Silk Sarees Online for Weddings & Festivals | LuxeMia',
-    description: 'Shop silk sarees online for Indian weddings, receptions and festivals. Review each listing for its stated weave, fabric composition, blouse details and care instructions.',
+    title: 'Silk Sarees Online USA | Wedding & Festive | LuxeMia',
+    description: 'Shop silk & silk-blend sarees for Indian weddings, receptions and pujas. Optional blouse stitching & free U.S. standard shipping on orders $150+.',
     h1: 'Silk Sarees',
     content: `
       <p>Browse silk sarees listed for weddings, receptions, pujas and festive celebrations. Each product page states the supplied fabric details so you can compare drape, finish, work and blouse options before ordering.</p>
@@ -1976,8 +1984,8 @@ const routes = [
   {
     path: '/collections',
     category: 'all',
-    title: 'All Collections | Indian Ethnic Wear | LuxeMia',
-    description: 'Browse all LuxeMia collections. Bridal lehengas, wedding sarees, reception outfits, festive wear & more. Curated for every occasion.',
+    title: 'Shop Indian Wedding & Festive Collections | LuxeMia',
+    description: 'Shop Indian bridal lehengas, Banarasi sarees, Anarkali & sharara suits, menswear and couple sets online. Free U.S. standard shipping at $150+.',
     h1: 'All Collections',
     content: `
       <p>Browse our curated collections of Indian ethnic wear, thoughtfully organized for every occasion.</p>
@@ -2208,7 +2216,7 @@ const routes = [
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.',
+    description: 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (3–4 business day dispatch; alterations extra). Free U.S. standard shipping $150+.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
       <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
@@ -2280,8 +2288,8 @@ const routes = [
   {
     path: '/new-arrivals',
     category: 'all',
-    title: 'New Arrivals — Latest Indian Ethnic Wear Collection | LuxeMia',
-    description: "Browse products added to LuxeMia's online catalog during the past 30 days. Review each listing for exact details and availability. Free U.S. standard shipping at $150 and above.",
+    title: 'New Arrivals | Latest Indian Wedding Wear | LuxeMia',
+    description: 'Shop new Indian wedding lehengas, Banarasi sarees, Anarkali suits & groom menswear at LuxeMia. Free U.S. standard shipping on orders $150+.',
     h1: 'New Arrivals',
     content: `
       <p>Browse recently added Indian ethnic wear, including lehengas, sarees, sharara sets, salwar suits, menswear, and jewelry with shipping to addresses in the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius.</p>
@@ -2293,8 +2301,8 @@ const routes = [
   {
     path: '/indowestern',
     category: 'indowestern',
-    title: 'Indo-Western Collection — Fusion Ethnic Wear | LuxeMia',
-    description: 'Shop Indo-Western fusion wear at LuxeMia. Modern ethnic suits, fusion lehengas & contemporary Indian outfits. Free U.S. standard shipping at $150 and above.',
+    title: 'Indo-Western Outfits USA | Fusion Wedding Wear | LuxeMia',
+    description: 'Shop Indo-Western outfits, embroidered gown sets & contemporary fusion wear for sangeet and receptions. Free U.S. standard shipping on orders $150+.',
     h1: 'Indo-Western Collection',
     content: `
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>
@@ -2336,7 +2344,7 @@ const routes = [
     path: '/collections/diwali-outfits',
     category: 'occasion:diwali',
     title: 'Diwali Outfits — Current Festive Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for Diwali or festive occasions. Review exact product details and U.S. shipping terms.',
+    description: 'Shop festive Diwali sarees, embroidered lehengas, salwar suits & menswear for celebrations and pujas. Free U.S. standard shipping on orders $150+.',
     h1: 'Diwali Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Diwali, festive, or festival.</p>
@@ -2356,7 +2364,7 @@ const routes = [
     path: '/collections/wedding-guest-outfits',
     category: 'occasion:wedding-guest',
     title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Browse currently available products explicitly marked for wedding guests, bridesmaids, sangeet, or receptions. Review exact listing details and U.S. shipping terms.',
+    description: 'Shop Indian wedding guest lehengas, sarees & suits for sangeet, mehendi and receptions. Tracked delivery & free U.S. standard shipping on orders $150+.',
     h1: 'Indian Wedding Guest Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception.</p>
@@ -2376,7 +2384,7 @@ const routes = [
     path: '/collections/mehendi-outfits',
     category: 'occasion:mehendi',
     title: 'Mehendi Ceremony Outfits — Current Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for mehendi or mehndi. Review exact product details and U.S. shipping terms.',
+    description: 'Shop green, lime & festive mehendi outfits—lehengas, sharara suits and sarees for Indian wedding celebrations. Free U.S. standard shipping at $150+.',
     h1: 'Mehendi Ceremony Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention mehendi or mehndi.</p>
@@ -2394,7 +2402,7 @@ const routes = [
     path: '/collections/haldi-outfits',
     category: 'occasion:haldi',
     title: 'Haldi Ceremony Outfits — Current Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for haldi or turmeric. Review exact product details and U.S. shipping terms.',
+    description: 'Shop yellow, mustard & marigold haldi ceremony outfits—sarees, lehengas and suits for Indian weddings. Free U.S. standard shipping on orders $150+.',
     h1: 'Haldi Ceremony Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention haldi or turmeric.</p>
@@ -2412,7 +2420,7 @@ const routes = [
     path: '/collections/eid-outfits',
     category: 'occasion:eid',
     title: 'Eid Outfits — Current Listings | LuxeMia',
-    description: 'Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms.',
+    description: 'Shop embroidered Eid salwar suits, Anarkalis, sharara sets & chikankari styles for festive gatherings. Free U.S. standard shipping on orders $150+.',
     h1: 'Eid Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention Eid, Ramadan, or chikankari.</p>

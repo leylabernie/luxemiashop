@@ -2,6 +2,7 @@
 User-agent: *
 Allow: /
 Allow: /merchant-feed.xml
+Allow: /gmc-images/
 Allow: /openai-search-products.jsonl.gz
 Disallow: /admin
 Disallow: /account
@@ -35,6 +36,7 @@ Allow: /indowestern
 Allow: /new-arrivals
 Allow: /nri
 Allow: /merchant-feed.xml
+Allow: /gmc-images/
 Disallow: /admin
 Disallow: /account
 Disallow: /auth
@@ -51,6 +53,7 @@ Disallow: /_prerender/
 # their own robots.txt — we only control crawling on luxemia.shop itself.
 User-agent: Googlebot-Image
 Allow: /
+Allow: /gmc-images/
 Allow: /*.jpg
 Allow: /*.jpeg
 Allow: /*.png

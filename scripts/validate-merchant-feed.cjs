@@ -455,8 +455,8 @@ if (genderFailures.length > 0) {
   throw new Error(`Merchant feed has gender-classification failures: ${genderFailures.slice(0, 10).join('; ')}`);
 }
 
-const navratriPriorityItems = itemBlocks.filter((item) => /<g:custom_label_1>navratri_2026_priority<\/g:custom_label_1>/i.test(item));
-const navratriPriorityHandles = new Set(navratriPriorityItems.map((item) => {
+const weddingPriorityItems = itemBlocks.filter((item) => /<g:custom_label_1>wedding_season_2026_priority<\/g:custom_label_1>/i.test(item));
+const weddingPriorityHandles = new Set(weddingPriorityItems.map((item) => {
   const link = decodeXmlEntities(item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1] || '');
   try {
     return new URL(link).pathname.replace(/^\/product\//, '').replace(/\/+$/, '');
@@ -464,15 +464,24 @@ const navratriPriorityHandles = new Set(navratriPriorityItems.map((item) => {
     return '';
   }
 }).filter(Boolean));
-if (navratriPriorityHandles.size !== 30) {
-  throw new Error(`Merchant feed must contain exactly 30 Navratri priority product groups; found ${navratriPriorityHandles.size}`);
+if (weddingPriorityHandles.size !== 30) {
+  throw new Error(`Merchant feed must contain exactly 30 wedding-season priority product groups; found ${weddingPriorityHandles.size}`);
 }
-const weakNavratriPriorityTitles = navratriPriorityItems.filter((item) => {
+// Never append synthetic "— Navratri Garba Outfit" suffixes to non-Navratri
+// wedding/bridal/festive listings (prevents Merchant Center title mismatch).
+const mislabeledNavratriItems = itemBlocks.filter((item) => {
   const title = decodeXmlEntities(item.match(/<g:title>([\s\S]*?)<\/g:title>/i)?.[1] || '');
-  return !/\bnavratri\b/i.test(title) || !/\bgarba\b/i.test(title);
+  if (!/[—–-]\s*(?:Navratri\s+)?Garba Outfit\b/i.test(title)) return false;
+  const link = decodeXmlEntities(item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1] || '');
+  try {
+    const handle = new URL(link).pathname.replace(/^\/product\//, '').replace(/\/+$/, '');
+    return !/\b(?:navratri|garba|chaniya|dandiya)\b/i.test(handle);
+  } catch {
+    return true;
+  }
 });
-if (weakNavratriPriorityTitles.length > 0) {
-  throw new Error(`Merchant feed contains ${weakNavratriPriorityTitles.length} Navratri priority title(s) missing Navratri or Garba relevance`);
+if (mislabeledNavratriItems.length > 0) {
+  throw new Error(`Merchant feed contains ${mislabeledNavratriItems.length} non-Navratri item(s) falsely suffixed with Navratri Garba Outfit`);
 }
 
 function tagCount(item, tag) {
@@ -569,6 +578,9 @@ for (const item of itemBlocks) {
 
     try {
       const parsedImage = new URL(normalizedImage);
+      if (/\.webp$/i.test(parsedImage.pathname)) {
+        imageAttributeFailures.push(`${id}: image URL ends in .webp (${parsedImage.pathname}); use .jpg or /gmc-images/*.jpg`);
+      }
       if (/^(?:cdn\.shopify\.com|[^.]+\.myshopify\.com)$/i.test(parsedImage.hostname)) {
         if (parsedImage.searchParams.get('width') !== '1500' || parsedImage.searchParams.get('format') !== 'jpg') {
           imageAttributeFailures.push(`${id}: Shopify image is not requested as 1500px JPEG`);
@@ -742,5 +754,5 @@ for (const pattern of staleClaimPatterns) {
 }
 
 console.log(
-  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 Navratri priority product groups, current Google taxonomy mappings, hierarchical product types, Merchant title limits, required attributes, per-variant checkout link templates, identifiers, product-specific HTTPS images, and variant-aligned policy-safe descriptions/highlights`
+  `[merchant-feed] Validated ${itemIds.length} unique offers, ${groupIds.length} group IDs, 30 wedding-season priority product groups, zero .webp feed URLs, current Google taxonomy mappings, hierarchical product types, Merchant title limits, required attributes, per-variant checkout link templates, identifiers, product-specific HTTPS images, and variant-aligned policy-safe descriptions/highlights`
 );

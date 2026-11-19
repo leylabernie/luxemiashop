@@ -53,7 +53,7 @@ const DiwaliOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Diwali Outfits — Current Festive Listings | LuxeMia"
-        description="Browse currently available LuxeMia products explicitly marked for Diwali or festive occasions. Review exact product details and U.S. shipping terms."
+        description="Shop festive Diwali sarees, embroidered lehengas, salwar suits & menswear for celebrations and pujas. Free U.S. standard shipping on orders $150+."
         canonical="https://luxemia.shop/collections/diwali-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },

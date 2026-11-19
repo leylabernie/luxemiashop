@@ -643,7 +643,7 @@ function main() {
   ];
   for (const { route, category, pattern } of catalogCategoryRoutes) {
     if (!routes.includes(route)) throw new Error(`${route}: missing middleware route registration`);
-    const failure = parseCommercialCollectionHtml(route, category, true);
+    const failure = parseCommercialCollectionHtml(route, category);
     if (failure) throw new Error(failure);
     const html = fs.readFileSync(routeToFilePath(route), 'utf8');
     const payload = JSON.parse(html.match(/window\.__INITIAL_DATA__\s*=\s*([\s\S]*?);<\/script>/)[1]);

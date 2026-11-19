@@ -233,8 +233,18 @@ function getSizeFromVariant(selectedOptions: ShopifySelectedOption[]): string {
 
 // ─── Force JPEG on image URLs ────────────────────────────────────────
 
+const SHOPIFY_STORE_FILES_WEBP_RE =
+  /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0746\/4707\/7035\/files\/([A-Za-z0-9][A-Za-z0-9._-]{0,200})\.webp(?:\?(.*))?$/i;
+
 function forceJpeg(url: string): string {
   if (!url) return url;
+
+  const shopifyWebp = url.match(SHOPIFY_STORE_FILES_WEBP_RE);
+  if (shopifyWebp && !shopifyWebp[1].includes("..")) {
+    const versionMatch = (shopifyWebp[2] || "").match(/(?:^|&)v=(\d{1,15})(?:&|$)/);
+    const versionSuffix = versionMatch ? `?v=${versionMatch[1]}` : "";
+    return `${SITE_URL}/gmc-images/${shopifyWebp[1]}.jpg${versionSuffix}`;
+  }
 
   if (url.includes("cdn.shopify.com") || url.includes("myshopify.com")) {
     try {
@@ -460,6 +470,41 @@ function getStructuredTagValues(tags: string[], prefix: string): string[] {
 
 // Raw Shopify descriptions are intentionally excluded because legacy policy text can conflict with the live store policy.
 
+function getVerifiedCategorySearchPhrase(handle: string, productType: string, title: string): string {
+  const probe = `${handle} ${productType} ${title}`.toLowerCase();
+  if (/\b(?:boy|girl|kids?)\b/.test(probe)) return "Indian kids ethnic outfit for family weddings, receptions, and festive celebrations.";
+  if (/\bcouple\b/.test(probe)) return "Coordinated Indian couple outfit set for weddings, receptions, and festive celebrations.";
+  if (/\b(?:navratri|garba|chaniya|dandiya)\b/.test(probe)) {
+    return /\bblouse\b/.test(probe)
+      ? "Indian festive Navratri and Garba blouse designed to pair with sarees and lehenga skirts."
+      : "Indian Navratri chaniya choli and Garba outfit for festive dance celebrations.";
+  }
+  if (/\bsherwani\b/.test(probe)) return "Indian wedding and groom sherwani suited to ceremonies, baraat, and formal receptions.";
+  if (/\b(?:kurta\s?pajama|modi\s?jacket|nehru\s?jacket|jodhpuri|menswear|men'?s)\b/.test(probe)) {
+    return "Indian menswear ensemble for weddings, sangeet nights, receptions, and festive gatherings.";
+  }
+  if (/\bbridal\b/.test(probe) && /\b(?:lehenga|lehnga)\b/.test(probe)) {
+    return "Indian bridal lehenga choli ensemble designed for wedding ceremonies and grand receptions.";
+  }
+  if (/\b(?:lehenga|lehnga)\b/.test(probe)) return "Indian lehenga choli outfit suited to weddings, sangeet, reception, and festive celebrations.";
+  if (/\bbanarasi\b/.test(probe) && /\b(?:saree|sari)\b/.test(probe)) return "Banarasi Indian saree for weddings, receptions, pujas, and traditional celebrations.";
+  if (/\b(?:ready[- ]to[- ]wear|pre[- ]draped)\b/.test(probe) && /\b(?:saree|sari)\b/.test(probe)) {
+    return "Ready-to-wear Indian saree for wedding guests, cocktail evenings, receptions, and festive wear.";
+  }
+  if (/\b(?:saree|sari)\b/.test(probe)) return "Indian saree suited to wedding guests, receptions, cultural ceremonies, and festive wear.";
+  if (/\bblouse\b/.test(probe)) return "Indian ethnic blouse to style with sarees and lehenga skirts for weddings and celebrations.";
+  if (/\b(?:sharara|gharara)\b/.test(probe)) return "Indian sharara salwar kameez suit for sangeet, mehendi, wedding guests, and festive events.";
+  if (/\b(?:anarkali|gown)\b/.test(probe)) return "Indian Anarkali occasion silhouette for weddings, sangeet, receptions, and festive celebrations.";
+  if (/\b(?:palazzo|plazzo)\b/.test(probe)) return "Indian palazzo salwar kameez suit for wedding guests, family celebrations, and festive wear.";
+  if (/\b(?:indo[- ]?western|fusion|co-?ord|jumpsuit|cape)\b/.test(probe)) {
+    return "Contemporary Indo-Western outfit for sangeet nights, cocktail receptions, and festive events.";
+  }
+  if (/\b(?:suit|salwar|kameez|pakistani|kurti)\b/.test(probe)) {
+    return "Indian salwar kameez suit set for wedding events, family gatherings, and festive celebrations.";
+  }
+  return "";
+}
+
 function enrichDescription(
   product: ShopifyProduct,
   title: string,
@@ -469,6 +514,8 @@ function enrichDescription(
   const work = getStructuredTagValues(product.tags, "work")[0] || getWorkFromTags(product.tags) || getTitleDesignDetails(product.title);
   const color = getColorFromProduct(product, selectedOptions);
   const includedPieces = getStructuredTagValues(product.tags, "included");
+  const construction = getStructuredTagValues(product.tags, "construction")[0] || "";
+  const categorySearchPhrase = getVerifiedCategorySearchPhrase(product.handle || "", product.productType || "", title);
   const size = getSizeFromVariant(selectedOptions);
   const optionDetails = [...new Map(selectedOptions
     .filter((option) => option.name && option.value)
@@ -478,11 +525,13 @@ function enrichDescription(
     .values()];
 
   const details = [`${title} from LuxeMia.`];
+  if (categorySearchPhrase) details.push(categorySearchPhrase);
   if (product.productType) details.push(`Style: ${product.productType}.`);
   if (color) details.push(`Color: ${color}.`);
   if (fabric) details.push(`Material: ${fabric}.`);
   if (size) details.push(`Size: ${size}.`);
   if (work) details.push(`Design detail: ${work}.`);
+  if (construction) details.push(`Supplied finish: ${construction}.`);
   if (includedPieces.length > 0) details.push(`Included pieces: ${includedPieces.join("; ")}.`);
   if (optionDetails.length > 0) details.push(`Selected options: ${optionDetails.join("; ")}.`);
   details.push(

@@ -53,7 +53,7 @@ const MehendiOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Mehendi Ceremony Outfits — Current Listings | LuxeMia"
-        description="Browse currently available LuxeMia products explicitly marked for mehendi or mehndi. Review exact product details and U.S. shipping terms."
+        description="Shop green, lime & festive mehendi outfits—lehengas, sharara suits and sarees for Indian wedding celebrations. Free U.S. standard shipping at $150+."
         canonical="https://luxemia.shop/collections/mehendi-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
