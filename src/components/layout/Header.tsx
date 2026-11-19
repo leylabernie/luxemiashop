@@ -127,16 +127,22 @@ const Header = () => {
             </button>
 
             {/* Center Logo — CSS-only fade-in (PSI 2026-07-22: removed framer-motion) */}
-            <Link to="/" className="flex-shrink-0 mx-6 lg:ml-0 lg:mr-10">
-              <div
-                className="font-serif text-2xl lg:text-3xl tracking-wide"
+            <Link
+              to="/"
+              className="flex-shrink-0 mx-3 sm:mx-4 lg:ml-0 lg:mr-8 flex h-full items-center"
+            >
+              <img
+                src="https://cdn.shopify.com/s/files/1/0746/4707/7035/files/LuxeMia__Timeless_Indian_Elegance.png?v=1795049270"
+                alt="LuxeMia"
+                width={1536}
+                height={1024}
+                decoding="async"
+                className="block h-16 w-24 -my-1 lg:h-[76px] lg:w-[114px] lg:-my-1.5 aspect-[3/2] object-contain"
                 style={{
                   animation: 'heroFadeIn 0.6s ease-out',
                   willChange: 'opacity',
                 }}
-              >
-                <span>LuxeMia</span>
-              </div>
+              />
             </Link>
 
             <button

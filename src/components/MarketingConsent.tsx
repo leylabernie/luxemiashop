@@ -36,7 +36,7 @@ export default function MarketingConsent() {
         className={
           visible
             ? 'sr-only focus:not-sr-only focus:fixed focus:bottom-20 focus:left-3 focus:z-50 focus:rounded-md focus:border focus:border-foreground/30 focus:bg-background focus:px-3 focus:py-2 focus:text-xs focus:text-foreground focus:shadow-md'
-            : 'fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-3 z-40 rounded-full border border-foreground/25 bg-background/95 px-3 py-1.5 text-[11px] text-foreground/85 shadow-sm backdrop-blur-sm transition-colors hover:text-foreground focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:bottom-4'
+            : 'fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-3 z-40 rounded-full border border-foreground/30 bg-background px-3 py-1.5 text-[11px] text-foreground shadow-md transition-colors hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:bottom-4'
         }
       >
         Privacy choices
@@ -45,7 +45,7 @@ export default function MarketingConsent() {
         <section
           id="marketing-privacy-choices"
           aria-labelledby="marketing-privacy-title"
-          className="fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-2.5 right-2.5 z-50 max-h-[45dvh] overflow-y-auto rounded-lg border border-foreground/25 bg-background/98 p-3.5 text-foreground shadow-xl backdrop-blur-sm sm:left-4 sm:right-auto sm:max-w-md sm:p-4 lg:bottom-4"
+          className="fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-2.5 right-2.5 z-50 isolate max-h-[45dvh] overflow-y-auto rounded-lg border border-foreground/30 bg-background p-3.5 text-foreground shadow-2xl sm:left-4 sm:right-auto sm:max-w-md sm:p-4 lg:bottom-4"
         >
           <div className="flex items-start justify-between gap-2">
             <h2 ref={title} tabIndex={-1} id="marketing-privacy-title" className="text-sm font-medium leading-snug">

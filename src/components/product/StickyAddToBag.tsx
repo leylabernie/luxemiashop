@@ -74,7 +74,7 @@ const StickyAddToBag = ({ product, purchaseState }: StickyAddToBagProps) => {
           animate={{ y: 0, opacity: 1 }}
           exit={{ y: 80, opacity: 0 }}
           transition={{ duration: 0.22, ease: 'easeOut' }}
-          className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] md:bottom-0 md:pb-[env(safe-area-inset-bottom,0px)] left-0 right-0 z-40 lg:hidden bg-background/98 backdrop-blur-sm border-t border-border/60 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]"
+          className="fixed bottom-[calc(4rem+env(safe-area-inset-bottom,0px))] md:bottom-0 md:pb-[env(safe-area-inset-bottom,0px)] left-0 right-0 z-40 lg:hidden bg-background border-t border-border shadow-[0_-4px_20px_rgba(0,0,0,0.08)]"
         >
           <div className="flex items-center gap-3 px-3 py-2.5 max-w-screen-sm mx-auto">
             {imageUrl && (

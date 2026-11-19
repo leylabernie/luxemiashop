@@ -7,6 +7,7 @@ import {
   applyCustomizableProductDetails,
   isMadeToOrderProduct,
 } from '@/lib/customizableProducts';
+import { mergeBridalVol3Catalog } from '@/lib/bridalVol3Products';
 
 // Shopify productType values mapped to category page routes
 // Updated to include 'Wedding Suit', 'Designer Suit', 'Gharara Suit', 'Anarkali Suit', 'Gown'
@@ -387,6 +388,11 @@ const enrichProducts = (products: ShopifyProduct[]): ShopifyProduct[] =>
   });
 
 export const useShopifyProducts = (category?: string, revalidate = false, storefrontQuery?: string) => {
+  const withBridalVol3 = useCallback((source: ShopifyProduct[]): ShopifyProduct[] => (
+    !storefrontQuery || storefrontQuery.startsWith("created_at:>='")
+      ? mergeBridalVol3Catalog(source)
+      : source
+  ), [storefrontQuery]);
   const prepareProducts = useCallback((source: ShopifyProduct[]): ShopifyProduct[] => {
     const allowed = source.filter(p => !isReversiblyArchivedProduct(p.node.handle) && !isOldBatchProduct(p) && !EXCLUDED_TITLE_KEYWORDS.test(p.node.title ?? ''));
     return enrichProducts(category ? filterByCategory(allowed, category) : allowed);
@@ -399,9 +405,10 @@ export const useShopifyProducts = (category?: string, revalidate = false, storef
 
   useEffect(() => {
     let cancelled = false;
+    let includeVol3 = false;
     const applyProducts = (source: ShopifyProduct[], partial = false) => {
       if (cancelled) return;
-      const next = prepareProducts(source);
+      const next = prepareProducts(includeVol3 && !partial ? withBridalVol3(source) : source);
       // A partial global page might contain no items in this category yet.
       // Keep its prerendered cards until that category arrives in a later page.
       if (partial && !next.length) return;
@@ -414,16 +421,25 @@ export const useShopifyProducts = (category?: string, revalidate = false, storef
       setProducts([]);
       setIsLoading(true);
     }
+    includeVol3 = true;
     setError(null);
     getAllProducts(storefrontQuery, (partial) => applyProducts(partial, true), revalidate)
       .then((complete) => applyProducts(complete))
       .catch((err) => {
         console.warn('Unable to refresh the Shopify catalog:', err);
-        if (!cancelled && !initial) setError('Failed to load products');
+        if (!cancelled) {
+          const fallback = prepareProducts(withBridalVol3(initial || []));
+          if (fallback.length > 0) {
+            setProducts(fallback);
+            setError(null);
+          } else if (!initial) {
+            setError('Failed to load products');
+          }
+        }
       })
       .finally(() => { if (!cancelled) setIsLoading(false); });
     return () => { cancelled = true; };
-  }, [category, revalidate, storefrontQuery, prepareProducts]);
+  }, [category, revalidate, storefrontQuery, prepareProducts, withBridalVol3]);
 
   // no-op loadMore since we fetch all at once
   const loadMore = useCallback(() => {}, []);

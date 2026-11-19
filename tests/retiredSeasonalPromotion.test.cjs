@@ -81,8 +81,40 @@ test('homepage hero renders both CTAs, three trust columns and the verified sour
   new Function('require', 'module', 'exports', built.outputFiles[0].text)(require, module, module.exports);
   const html = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(module.exports.default)));
   assert.equal((html.match(/<h1/g) || []).length, 1);
-  for (const route of ['/collections/wedding-guest-outfits', '/wedding-party-orders', 'https://www.ceremonyverse.com/']) assert.ok(html.includes(`href="${route}"`));
+  assert.equal((html.match(/aria-label="Slide \d+ of 5:/g) || []).length, 5);
+  assert.match(html, /aria-label="Previous slide"/);
+  assert.match(html, /aria-label="Next slide"/);
+  assert.match(html, /aria-label="Pause banner rotation"/);
+  for (const route of ['/collections/wedding-guest-outfits', '/wedding-party-orders', '/new-arrivals', '/sarees', '/lehengas', '/suits', '/ready-to-ship', 'https://www.ceremonyverse.com/']) {
+    assert.ok(html.includes(`href="${route}"`), `missing hero link ${route}`);
+  }
   for (const heading of ['Custom-Stitched to Your Fit', 'Tracked Doorstep Delivery', 'U.S.-Based Sizing &amp; Order Support']) assert.ok(html.includes(heading));
   assert.doesNotMatch(html, /pre-dispatch quality checks|partner workshops|continuous unboxing/i);
-  assert.ok(read('src/pages/Index.tsx').indexOf('<HomepageIntro />') < read('src/pages/Index.tsx').indexOf('<NewArrivalsBanner />'));
+
+  const catBuilt = await esbuild.build({ entryPoints: [path.join(root, 'src/components/home/CategoryShowcase.tsx')], bundle: true, write: false, format: 'cjs', platform: 'node', packages: 'external', jsx: 'automatic', alias: { '@': path.join(root, 'src') } });
+  const catMod = { exports: {} };
+  new Function('require', 'module', 'exports', catBuilt.outputFiles[0].text)(require, catMod, catMod.exports);
+  const catHtml = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(catMod.exports.default)));
+  for (const route of ['/sarees', '/lehengas', '/suits', '/indowestern', '/menswear', '/kids']) {
+    assert.equal((catHtml.match(new RegExp(`href="${route}"`, 'g')) || []).length, 1, `expected single category card for ${route}`);
+  }
+  assert.doesNotMatch(catHtml, /href="\/jewelry"/);
+
+  const occBuilt = await esbuild.build({ entryPoints: [path.join(root, 'src/components/home/ShopByOccasion.tsx')], bundle: true, write: false, format: 'cjs', platform: 'node', packages: 'external', jsx: 'automatic', alias: { '@': path.join(root, 'src') } });
+  const occMod = { exports: {} };
+  new Function('require', 'module', 'exports', occBuilt.outputFiles[0].text)(require, occMod, occMod.exports);
+  const occHtml = renderToStaticMarkup(React.createElement(MemoryRouter, null, React.createElement(occMod.exports.default)));
+  for (const route of ['/collections/bridal-lehengas', '/collections/wedding-guest-outfits', '/collections/party-wear-lehengas', '/collections/haldi-outfits', '/collections/mehendi-outfits', '/wedding-party-orders']) {
+    assert.ok(occHtml.includes(`href="${route}"`), `missing occasion link ${route}`);
+  }
+
+  const indexSource = read('src/pages/Index.tsx');
+  assert.ok(indexSource.indexOf('<HomepageIntro />') < indexSource.indexOf('<CategoryShowcase />'));
+  assert.ok(indexSource.indexOf('<CategoryShowcase />') < indexSource.indexOf('<NewArrivals />'));
+  assert.ok(indexSource.indexOf('<NewArrivals />') < indexSource.indexOf('id="shop-by-need-heading"'));
+  assert.ok(indexSource.indexOf('id="shop-by-need-heading"') < indexSource.indexOf('<ShopByOccasion />'));
+  assert.equal((indexSource.match(/<CategoryShowcase\s*\/>/g) || []).length, 1);
+  assert.equal((indexSource.match(/<NewArrivals\s*\/>/g) || []).length, 1);
+  assert.doesNotMatch(indexSource, /<ShopByCategory|<ServiceHighlights|<NewArrivalsBanner|<LookbookTeaser|<SustainabilityBanner|saree-edit-heading|our-story-heading/);
+  assert.doesNotMatch(read('src/components/home/NewArrivals.tsx'), /CATEGORY_LINKS/);
 });

@@ -73,3 +73,7 @@ public/sitemap-pages.xml
 public/sitemap-products.xml
 scripts/backups/
 !scripts/validate-navigation-parity.cjs
+!scripts/refresh-latest-homepage-imagery.cjs
+!scripts/debrand-bridal-vol3.py
+!scripts/build-shopify-csv-bridal-vol3.py
+!scripts/publish-bridal-vol3-shopify.mjs

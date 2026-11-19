@@ -31,7 +31,7 @@ export const SizeGuideModal = ({ category = '' }: SizeGuideModalProps) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button variant="ghost" size="sm" className="text-primary hover:text-primary/80 p-0 h-auto font-normal underline underline-offset-4">
+        <Button variant="ghost" size="sm" className="text-link hover:text-link/80 p-0 h-auto font-medium underline underline-offset-4">
           <Ruler className="h-4 w-4 mr-1" />
           {SIZING_GUIDANCE_LABEL}
         </Button>
@@ -120,7 +120,7 @@ export const SizeGuideModal = ({ category = '' }: SizeGuideModalProps) => {
                   <li>• Check the listing for ready-to-wear, semi-stitched or unstitched construction.</li>
                   <li>• Waistband style, sleeve length, dupatta dimensions and alteration options vary by product.</li>
                 </ul>
-                <a href="https://wa.me/12153419990" className="inline-block text-sm text-primary underline underline-offset-2">
+                <a href="https://wa.me/12153419990" className="inline-block text-sm font-medium text-link hover:text-link/80 underline underline-offset-2">
                   Ask for sizing help on WhatsApp
                 </a>
               </div>
@@ -142,7 +142,7 @@ export const SizeGuideModal = ({ category = '' }: SizeGuideModalProps) => {
         <div className="mt-6 p-4 bg-secondary/30 rounded-sm">
           <p className="text-sm text-center text-muted-foreground">
             Need help with sizing? Contact us at{' '}
-            <a href="mailto:hello@luxemia.shop" className="text-primary underline underline-offset-2">
+            <a href="mailto:hello@luxemia.shop" className="font-medium text-link hover:text-link/80 underline underline-offset-2">
               hello@luxemia.shop
             </a>
           </p>

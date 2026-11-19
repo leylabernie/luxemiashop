@@ -71,7 +71,7 @@ const MobileBottomNav = () => {
                   className={cn(
                     "flex flex-col items-center justify-center gap-0.5 px-3 py-2 rounded-lg transition-colors min-w-[60px]",
                     "text-muted-foreground hover:text-foreground hover:bg-muted/50",
-                    item.isActive && "text-primary"
+                    item.isActive && "text-link"
                   )}
                 >
                   <div className="relative">
@@ -96,7 +96,7 @@ const MobileBottomNav = () => {
                 className={cn(
                   "flex flex-col items-center justify-center gap-0.5 px-3 py-2 rounded-lg transition-colors min-w-[60px]",
                   "text-muted-foreground hover:text-foreground hover:bg-muted/50",
-                  item.isActive && "text-primary"
+                  item.isActive && "text-link"
                 )}
               >
                 <div className="relative">

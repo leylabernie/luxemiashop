@@ -21,6 +21,7 @@
     /* Primary - Deep rose accent */
     --primary: 0 73% 82%;
     --primary-foreground: 0 10% 15%;
+    --link: 352 54% 34%;
 
     /* Secondary - Soft blush */
     --secondary: 0 68% 93%;
@@ -80,6 +81,7 @@
 
     --primary: 0 60% 75%;
     --primary-foreground: 0 10% 10%;
+    --link: 0 70% 80%;
 
     --secondary: 0 30% 20%;
     --secondary-foreground: 0 20% 90%;

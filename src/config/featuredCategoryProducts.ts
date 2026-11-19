@@ -1,12 +1,10 @@
 /**
- * Banner products verified against live Shopify on 2026-09-08.
- * Kids and menswear refreshed against the active catalog on 2026-11-09.
- *
- * Selection rule: highest-priced active, published product with at least one
- * available variant in each storefront category. The local images below are
- * optimized copies of those products' Shopify images; product details are not
- * altered.
+ * Category banner products refreshed against the latest active Shopify catalog
+ * (2026-11-18). Replaces previously retired 2026-08 handles with current
+ * published, in-stock listings in each storefront department.
  */
+
+import latestHomepageImagery from '@/data/latestHomepageImagery.json';
 
 export interface FeaturedCategoryProduct {
   category: string;
@@ -19,76 +17,86 @@ export interface FeaturedCategoryProduct {
   alt: string;
 }
 
+const latestCategories = latestHomepageImagery.categories;
+const latestJewelry = latestCategories.jewelry as {
+  title: string;
+  handle: string;
+  price: number;
+  url: string;
+  webpUrl: string;
+  alt: string;
+} | null;
+
 export const FEATURED_CATEGORY_PRODUCTS = {
   lehengas: {
     category: 'Lehengas',
-    title: "Pistachio Green Embellished Tissue Viscose Lehenga Choli with Dupatta",
-    handle: "pistachio-green-lehenga-luxemia",
-    price: 199.97,
+    title: latestCategories.lehengas.title,
+    handle: latestCategories.lehengas.handle,
+    price: latestCategories.lehengas.price,
     href: '/lehengas',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/SqSOpxaPVPXqLswg_fc9e76df-32a6-41af-a70e-e4b1116c2c47.jpg?v=1787249774&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/SqSOpxaPVPXqLswg_fc9e76df-32a6-41af-a70e-e4b1116c2c47.jpg?v=1787249774&width=900&format=webp",
-    alt: "Pistachio Green Embellished Tissue Viscose Lehenga Choli with Dupatta",
+    image: latestCategories.lehengas.url,
+    imageWebp: latestCategories.lehengas.webpUrl,
+    alt: latestCategories.lehengas.alt,
   },
   sarees: {
     category: 'Sarees',
-    title: "Mint Seafoam Scalloped Metallic Embroidered Viscose Saree",
-    handle: "mint-seafoam-saree-luxemia",
-    price: 146.5,
+    title: latestCategories.sarees.title,
+    handle: latestCategories.sarees.handle,
+    price: latestCategories.sarees.price,
     href: '/sarees',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/TxOfcpEndlJzbnGu_23c9844f-f675-4746-af6f-fcf797809ea6.jpg?v=1787249941&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/TxOfcpEndlJzbnGu_23c9844f-f675-4746-af6f-fcf797809ea6.jpg?v=1787249941&width=900&format=webp",
-    alt: "Mint Seafoam Scalloped Metallic Embroidered Viscose Saree",
+    image: latestCategories.sarees.url,
+    imageWebp: latestCategories.sarees.webpUrl,
+    alt: latestCategories.sarees.alt,
   },
   suits: {
     category: 'Salwar Kameez',
-    title: "Powder Blue Premium Viscose Crepe Embroidered Palazzo Suit with Dupatta",
-    handle: "powder-blue-viscose-crepe-embroidered-palazzo-suit",
-    price: 123.3,
+    title: latestCategories.suits.title,
+    handle: latestCategories.suits.handle,
+    price: latestCategories.suits.price,
     href: '/suits',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/swKVNzOAAXsPGhOW.jpg?v=1787358107&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/swKVNzOAAXsPGhOW.jpg?v=1787358107&width=900&format=webp",
-    alt: "Powder Blue Premium Viscose Crepe Embroidered Palazzo Suit with Dupatta",
+    image: latestCategories.suits.url,
+    imageWebp: latestCategories.suits.webpUrl,
+    alt: latestCategories.suits.alt,
   },
   kids: {
-    category: "Kids",
-    title: "Purple Malai Satin Kids Boy Kurta Pajama with Koti Jacket",
-    handle: "kids-kurta-set-purple",
-    price: 66.99,
+    category: 'Kids',
+    title: latestCategories.kids.title,
+    handle: latestCategories.kids.handle,
+    price: latestCategories.kids.price,
     href: '/kids',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/kids-kurta-purple-img-01_f5249780-50cb-4287-bf29-744a98411ba9.jpg?v=1791220305&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/kids-kurta-purple-img-01_f5249780-50cb-4287-bf29-744a98411ba9.jpg?v=1791220305&width=900&format=webp",
-    alt: "Purple 10Y young man milestone kurta set - front view",
+    image: latestCategories.kids.url,
+    imageWebp: latestCategories.kids.webpUrl,
+    alt: latestCategories.kids.alt,
   },
   menswear: {
-    category: "Menswear",
-    title: "Navy Blue Embroidered Silk Kurta Pajama with Jacket",
-    handle: "navy-blue-embroidered-silk-kurta-pajama-with-jacket",
-    price: 55.77,
+    category: 'Menswear',
+    title: latestCategories.menswear.title,
+    handle: latestCategories.menswear.handle,
+    price: latestCategories.menswear.price,
     href: '/menswear',
-    image: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-navy-blue-embroidered-silk-kurta-pajama-with-jacket-navy-blue-1.jpg?v=1793034301&width=900",
-    imageWebp: "https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-navy-blue-embroidered-silk-kurta-pajama-with-jacket-navy-blue-1.jpg?v=1793034301&width=900&format=webp",
-    alt: "Navy Blue silk kurta pajama with jacket, full-length model view",
+    image: latestCategories.menswear.url,
+    imageWebp: latestCategories.menswear.webpUrl,
+    alt: latestCategories.menswear.alt,
   },
   indowestern: {
     category: 'Indo-Western',
-    title: 'Cream Indo Western Dress with Thread Embroidery for Wedding',
-    handle: 'cream-indo-western-dress-embroidery',
-    price: 244.33,
+    title: latestCategories.indowestern.title,
+    handle: latestCategories.indowestern.handle,
+    price: latestCategories.indowestern.price,
     href: '/indowestern',
-    image: '/images/categories/highest-price-indowestern-2026.jpg',
-    imageWebp: '/images/categories/highest-price-indowestern-2026.webp',
-    alt: 'Cream Indo-Western dress with pink thread embroidery shown on a model',
+    image: latestCategories.indowestern.url,
+    imageWebp: latestCategories.indowestern.webpUrl,
+    alt: latestCategories.indowestern.alt,
   },
   jewelry: {
     category: 'Jewelry',
-    title: 'Majestic Magenta Kundan Layered Bridal Necklace Set',
-    handle: 'majestic-magenta-kundan-layered-bridal-necklace-set',
-    price: 200,
+    title: latestJewelry?.title || 'Majestic Magenta Kundan Layered Bridal Necklace Set',
+    handle: latestJewelry?.handle || 'majestic-magenta-kundan-layered-bridal-necklace-set',
+    price: latestJewelry?.price || 200,
     href: '/jewelry',
-    image: '/images/categories/highest-price-jewelry-2026.jpg',
-    imageWebp: '/images/categories/highest-price-jewelry-2026.webp',
-    alt: 'Magenta-accent Kundan-style layered bridal necklace set on a display stand',
+    image: latestJewelry?.url || '/images/categories/highest-price-jewelry-2026.jpg',
+    imageWebp: latestJewelry?.webpUrl || '/images/categories/highest-price-jewelry-2026.webp',
+    alt: latestJewelry?.alt || 'Magenta-accent Kundan-style layered bridal necklace set on a display stand',
   },
 } as const satisfies Record<string, FeaturedCategoryProduct>;
 

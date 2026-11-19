@@ -1,6 +1,7 @@
 import { isReversiblyArchivedProduct } from '@/lib/reversibleProductArchive.cjs';
 import { useState, useEffect } from 'react';
 import { fetchProductByHandle, type ShopifyProduct } from '@/lib/shopify';
+import { getBridalVol3ProductByHandle } from '@/lib/bridalVol3Products';
 
 /**
  * Build-time product pages inject the exact product record as a small, route-
@@ -77,8 +78,14 @@ export const useShopifyProduct = (
           setProduct(data);
           setError(null);
         } else if (!initial) {
-          setProduct(null);
-          setError('Product not found');
+          const bridalFallback = getBridalVol3ProductByHandle(handle);
+          if (bridalFallback) {
+            setProduct(bridalFallback);
+            setError(null);
+          } else {
+            setProduct(null);
+            setError('Product not found');
+          }
         }
       } catch (err) {
         if (cancelled) return;
@@ -94,8 +101,14 @@ export const useShopifyProduct = (
         // A valid build-time record remains usable if a transient refresh
         // fails. Only show a blocking error when no product is available.
         if (!initial) {
-          setProduct(null);
-          setError('Failed to load product. Please refresh the page.');
+          const bridalFallback = getBridalVol3ProductByHandle(handle);
+          if (bridalFallback) {
+            setProduct(bridalFallback);
+            setError(null);
+          } else {
+            setProduct(null);
+            setError('Failed to load product. Please refresh the page.');
+          }
         }
       } finally {
         if (!cancelled) {

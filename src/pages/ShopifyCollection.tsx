@@ -158,12 +158,12 @@ const ShopifyCollectionPage = () => {
             <aside className="border border-border bg-card p-6">
               <h2 className="font-serif text-xl">Choose with confidence</h2>
               <nav className="mt-4 flex flex-col gap-3 text-sm">
-                {config.parentPath && <Link className="text-primary underline underline-offset-4" to={config.parentPath}>{config.parentName}</Link>}
-                <Link className="text-primary underline underline-offset-4" to="/sizing-measurements-guide">Sizing and measurement guide</Link>
-                <Link className="text-primary underline underline-offset-4" to="/blog">Indian attire guides</Link>
-                <Link className="text-primary underline underline-offset-4" to="/shipping">Shipping rates and timing</Link>
-                <Link className="text-primary underline underline-offset-4" to="/returns">Returns and issue reporting</Link>
-                <Link className="text-primary underline underline-offset-4" to="/us-support">Contact LuxeMia support</Link>
+                {config.parentPath && <Link className="font-medium text-link hover:text-link/80 underline underline-offset-4" to={config.parentPath}>{config.parentName}</Link>}
+                <Link className="font-medium text-link hover:text-link/80 underline underline-offset-4" to="/sizing-measurements-guide">Sizing and measurement guide</Link>
+                <Link className="font-medium text-link hover:text-link/80 underline underline-offset-4" to="/blog">Indian attire guides</Link>
+                <Link className="font-medium text-link hover:text-link/80 underline underline-offset-4" to="/shipping">Shipping rates and timing</Link>
+                <Link className="font-medium text-link hover:text-link/80 underline underline-offset-4" to="/returns">Returns and issue reporting</Link>
+                <Link className="font-medium text-link hover:text-link/80 underline underline-offset-4" to="/us-support">Contact LuxeMia support</Link>
               </nav>
             </aside>
           </div>
