@@ -167,8 +167,19 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
 
           {/* Brand Column — spans 2 cols on all screens for breathing room */}
           <div className="col-span-2 md:col-span-1 lg:col-span-2">
-            <Link to="/" className="font-serif text-2xl">
-              LuxeMia
+            <Link to="/" aria-label="LuxeMia home" className="inline-block">
+              <picture>
+                <source srcSet="/luxemia-logo.webp" type="image/webp" />
+                <img
+                  src="/luxemia-logo.png"
+                  alt="LuxeMia — Timeless Indian Elegance"
+                  width={680}
+                  height={400}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-20 lg:h-24 w-auto object-contain"
+                />
+              </picture>
             </Link>
             <p className="mt-4 text-sm text-foreground/60 font-light leading-relaxed max-w-xs">
               Indian ethnic wear available online for weddings and festivals coming up soon.

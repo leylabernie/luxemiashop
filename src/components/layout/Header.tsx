@@ -127,16 +127,27 @@ const Header = () => {
             </button>
 
             {/* Center Logo — CSS-only fade-in (PSI 2026-07-22: removed framer-motion) */}
-            <Link to="/" className="flex-shrink-0 mx-6 lg:ml-0 lg:mr-10">
-              <div
-                className="font-serif text-2xl lg:text-3xl tracking-wide"
+            <Link
+              to="/"
+              aria-label="LuxeMia home"
+              className="flex-shrink-0 mx-3 lg:ml-0 lg:mr-8 flex items-center"
+            >
+              <picture
                 style={{
                   animation: 'heroFadeIn 0.6s ease-out',
                   willChange: 'opacity',
                 }}
               >
-                <span>LuxeMia</span>
-              </div>
+                <source srcSet="/luxemia-logo.webp" type="image/webp" />
+                <img
+                  src="/luxemia-logo.png"
+                  alt="LuxeMia — Timeless Indian Elegance"
+                  width={680}
+                  height={400}
+                  decoding="async"
+                  className="h-[50px] lg:h-[58px] w-auto object-contain"
+                />
+              </picture>
             </Link>
 
             <button
@@ -260,8 +271,25 @@ const Header = () => {
               className="fixed top-0 left-0 bottom-0 w-80 max-w-[85vw] bg-background z-50 lg:hidden overflow-y-auto"
               style={{ animation: 'menuSlideIn 0.3s ease-out', willChange: 'transform' }}
             >
-              <div className="flex items-center justify-between p-4 border-b border-border/50">
-                <h2 className="font-serif text-xl">Menu</h2>
+              <div className="flex items-center justify-between px-4 py-3 border-b border-border/50">
+                <Link
+                  to="/"
+                  aria-label="LuxeMia home"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="inline-flex items-center"
+                >
+                  <picture>
+                    <source srcSet="/luxemia-logo.webp" type="image/webp" />
+                    <img
+                      src="/luxemia-logo.png"
+                      alt="LuxeMia — Timeless Indian Elegance"
+                      width={680}
+                      height={400}
+                      decoding="async"
+                      className="h-12 w-auto object-contain"
+                    />
+                  </picture>
+                </Link>
                 <button onClick={() => setIsMenuOpen(false)} aria-label="Close menu" data-testid="mobile-menu-close">
                   <X className="w-5 h-5" />
                 </button>

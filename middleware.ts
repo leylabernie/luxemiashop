@@ -592,6 +592,6 @@ export const config = {
   matcher: [
     '/robots.txt',
     '/sitemap.xml',
-    '/((?!_prerender|assets|api|favicon\\.ico|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|svg|ico|woff|woff2|csv|md|txt|xml|tsv)).*)',
+    '/((?!_prerender|assets|api|favicon\\.ico|manifest\\.json|og-image\\.jpg|robots\\.txt|sitemap\\.xml|images|catalogs|3c4a52b9-542f-4bfe-a61b-9afb42f4312c\\.txt|google4e3f332d00afc8ba\\.html|.*\\.(?:js|css|png|jpg|jpeg|gif|webp|svg|ico|woff|woff2|csv|md|txt|xml|tsv)).*)',
   ],
 };
