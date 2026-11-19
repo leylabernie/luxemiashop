@@ -514,8 +514,17 @@ export function getGoogleProductCategory(productType?: string, title?: string): 
 
 // ─── Image URL Helper ──────────────────────────────────────────────────────
 
+const SHOPIFY_STORE_FILES_WEBP_RE =
+  /^https:\/\/cdn\.shopify\.com\/s\/files\/1\/0746\/4707\/7035\/files\/([A-Za-z0-9][A-Za-z0-9._-]{0,200})\.webp(?:\?(.*))?$/i;
+
 export function forceJpegForGmc(url: string): string {
   if (!url) return url;
+  const shopifyWebp = url.match(SHOPIFY_STORE_FILES_WEBP_RE);
+  if (shopifyWebp && !shopifyWebp[1].includes('..')) {
+    const versionMatch = (shopifyWebp[2] || '').match(/(?:^|&)v=(\d{1,15})(?:&|$)/);
+    const versionSuffix = versionMatch ? `?v=${versionMatch[1]}` : '';
+    return `${SITE_URL}/gmc-images/${shopifyWebp[1]}.jpg${versionSuffix}`;
+  }
   if (url.includes('cdn.shopify.com') || url.includes('myshopify.com')) {
     try {
       const parsed = new URL(url);

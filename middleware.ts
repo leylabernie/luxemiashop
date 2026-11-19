@@ -7,6 +7,7 @@ import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { isReversiblyArchivedProduct } from './src/lib/reversibleProductArchive.cjs';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
 import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
+import { getBridalVol3ProductByHandle } from './src/middleware/bridalVol3Fallback.js';
 import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
 import { renderPrerenderedVariant, VARIANT_HTML_HEADERS } from './src/middleware/variantPrerender.js';
 
@@ -108,16 +109,53 @@ function isGoneProductPath(pathname: string): boolean {
   return handle.length > 0 && !handle.includes('/') && GONE_PRODUCT_HANDLES.has(handle);
 }
 
-// Helper: emit a 410 Gone response with proper noindex headers.
-function return410(): Response {
+function suggestLiveCollectionForRetiredPath(pathname: string): { href: string; label: string } {
+  const slug = pathname.toLowerCase();
+  if (slug.includes('couple')) return { href: '/collections/couple-outfits', label: 'Shop Couple Outfits' };
+  if (slug.includes('banarasi')) return { href: '/collections/banarasi-sarees', label: 'Shop Banarasi Sarees' };
+  if (slug.includes('saree') || slug.includes('sari')) return { href: '/sarees', label: 'Shop Wedding & Party Sarees' };
+  if (slug.includes('bridal') && slug.includes('lehenga')) return { href: '/collections/bridal-lehengas', label: 'Shop Bridal Lehengas' };
+  if (slug.includes('lehenga') || slug.includes('lehnga') || slug.includes('chaniya')) return { href: '/lehengas', label: 'Shop Bridal & Wedding Lehengas' };
+  if (slug.includes('sharara') || slug.includes('gharara')) return { href: '/collections/sharara-suits', label: 'Shop Sharara Suits' };
+  if (slug.includes('anarkali') || slug.includes('gown')) return { href: '/collections/anarkali-suits', label: 'Shop Anarkali Suits' };
+  if (slug.includes('palazzo') || slug.includes('plazzo')) return { href: '/collections/ready-to-wear-palazzo-suits', label: 'Shop Ready-to-Wear Palazzo Suits' };
+  if (slug.includes('sherwani') || slug.includes('kurta-pajama') || slug.includes('groom') || slug.includes('men-s') || slug.includes('mens')) {
+    return { href: '/menswear', label: 'Shop Menswear & Sherwanis' };
+  }
+  if (slug.includes('blouse')) return { href: '/collections/blouses', label: 'Shop Saree & Lehenga Blouses' };
+  if (slug.includes('indo-western') || slug.includes('indowestern') || slug.includes('coord') || slug.includes('jumpsuit')) {
+    return { href: '/indowestern', label: 'Shop Indo-Western Styles' };
+  }
+  if (slug.includes('suit') || slug.includes('salwar') || slug.includes('pakistani') || slug.includes('kurti')) {
+    return { href: '/suits', label: 'Shop Salwar Kameez & Suits' };
+  }
+  return { href: '/new-arrivals', label: 'Shop New Arrivals' };
+}
+
+// Helper: emit a 410 Gone response with proper noindex headers and helpful
+// shopper navigation into the closest active LuxeMia category.
+function return410(pathname = ''): Response {
+  const suggestion = suggestLiveCollectionForRetiredPath(pathname);
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
     `<meta name="viewport" content="width=device-width,initial-scale=1">` +
     `<meta name="robots" content="noindex,nofollow">` +
-    `<title>410 Gone — LuxeMia</title></head><body>` +
-    `<h1>410 — This page has been permanently removed.</h1>` +
-    `<p>The content you were looking for is no longer available.</p>` +
-    `<p><a href="/">Return to LuxeMia homepage</a> ` +
-    `or <a href="/collections">browse our collections</a>.</p></body></html>`;
+    `<title>Style No Longer Available — LuxeMia</title>` +
+    `<style>body{margin:0;font-family:Georgia,serif;background:#faf8f5;color:#1f1c19;display:flex;min-height:100vh;align-items:center;justify-content:center;padding:24px}` +
+    `.card{max-width:560px;text-align:center;background:#fff;border:1px solid #e6dfd5;padding:40px 32px}` +
+    `.eyebrow{font:600 11px/1 system-ui,sans-serif;letter-spacing:.22em;text-transform:uppercase;color:#8a6d46;margin:0 0 14px}` +
+    `h1{font-size:28px;font-weight:400;line-height:1.25;margin:0 0 12px}` +
+    `p{font:400 15px/1.6 system-ui,sans-serif;color:#5c554d;margin:0 0 24px}` +
+    `.actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}` +
+    `.btn{display:inline-block;padding:12px 22px;font:500 12px/1 system-ui,sans-serif;letter-spacing:.14em;text-transform:uppercase;text-decoration:none;border:1px solid #1f1c19}` +
+    `.btn-primary{background:#1f1c19;color:#fff}.btn-secondary{background:transparent;color:#1f1c19}` +
+    `.links{margin-top:22px;font:400 13px/1.6 system-ui,sans-serif}.links a{color:#5c554d;margin:0 8px}</style></head><body>` +
+    `<main class="card"><p class="eyebrow">LuxeMia Archive</p>` +
+    `<h1>This design has been retired from our current edit.</h1>` +
+    `<p>Explore currently available designs in the same silhouette, crafted for weddings, receptions, and festive celebrations.</p>` +
+    `<div class="actions"><a class="btn btn-primary" href="${suggestion.href}">${suggestion.label}</a>` +
+    `<a class="btn btn-secondary" href="/new-arrivals">New Arrivals</a></div>` +
+    `<div class="links"><a href="/lehengas">Lehengas</a><a href="/sarees">Sarees</a><a href="/suits">Suits</a><a href="/menswear">Menswear</a><a href="/collections">All Collections</a></div>` +
+    `</main></body></html>`;
   return new Response(html, {
     status: 410,
     headers: {
@@ -196,6 +234,43 @@ function hasIndexationNoiseParams(searchParams: URLSearchParams): boolean {
   return false;
 }
 
+// Known search, shopping, ad, email, and social attribution parameters. These
+// never change visible page content: they must NEVER trigger noindex or 404 on
+// canonical collection/product routes, and may be preserved across canonical
+// 301 redirects so Google/Meta/Pinterest/email attribution stays intact.
+const ALLOWED_ATTRIBUTION_PARAMS = new Set<string>([
+  '_gl',
+  'srsltid',
+  'gclid',
+  'gbraid',
+  'wbraid',
+  'gclsrc',
+  'gad_source',
+  'gad_campaignid',
+  'dclid',
+  'msclkid',
+  'fbclid',
+  'ttclid',
+  'twclid',
+  'epik',
+  'mc_cid',
+  'mc_eid',
+]);
+
+function isAllowedAttributionParam(name: string): boolean {
+  const normalized = name.toLowerCase();
+  return ALLOWED_ATTRIBUTION_PARAMS.has(normalized) || /^utm_[a-z0-9_]+$/.test(normalized);
+}
+
+function copyAllowedAttributionParams(source: URLSearchParams, target: URL): URL {
+  for (const [name, value] of source) {
+    if (isAllowedAttributionParam(name)) {
+      target.searchParams.append(name, value);
+    }
+  }
+  return target;
+}
+
 function getCleanFacetCanonicalPath(url: URL): string {
   const subcategory = url.searchParams.get('sub');
   const category = url.pathname.match(/^\/(lehengas|sarees|suits|menswear|jewelry)$/)?.[1];
@@ -205,8 +280,10 @@ function getCleanFacetCanonicalPath(url: URL): string {
 }
 
 function getLegacyFacetRedirectPath(url: URL): string | null {
-  const parameterNames = [...url.searchParams.keys()];
-  if (parameterNames.length !== 1 || parameterNames[0].toLowerCase() !== 'sub') return null;
+  const nonAttributionNames = [...url.searchParams.keys()].filter(
+    (name) => !isAllowedAttributionParam(name),
+  );
+  if (nonAttributionNames.length !== 1 || nonAttributionNames[0].toLowerCase() !== 'sub') return null;
 
   const canonicalPath = getCleanFacetCanonicalPath(url);
   return canonicalPath !== url.pathname ? canonicalPath : null;
@@ -310,17 +387,10 @@ async function routeRequest(request: Request): Promise<Response> {
   const merchantCartMatch = pathname.match(/^\/cart\/(?:[a-z0-9][a-z0-9-]*-(?:v)?)?(\d+):1$/i);
   if (merchantCartMatch && (request.method === 'GET' || request.method === 'HEAD')) {
     const variantId = merchantCartMatch[1];
-    const checkout = new URL(`https://lovable-project-zlh0w.myshopify.com/cart/${variantId}:1`);
-    for (const [name, value] of url.searchParams) {
-      const normalizedName = name.toLowerCase();
-      if (
-        normalizedName === '_gl'
-        || ['gclid', 'gbraid', 'wbraid', 'gclsrc', 'gad_source', 'gad_campaignid', 'srsltid', 'dclid', 'msclkid', 'fbclid'].includes(normalizedName)
-        || /^utm_[a-z0-9_]+$/.test(normalizedName)
-      ) {
-        checkout.searchParams.append(name, value);
-      }
-    }
+    const checkout = copyAllowedAttributionParams(
+      url.searchParams,
+      new URL(`https://lovable-project-zlh0w.myshopify.com/cart/${variantId}:1`),
+    );
     return new Response(null, {
       status: 302,
       headers: {
@@ -348,97 +418,10 @@ async function routeRequest(request: Request): Promise<Response> {
     return next();
   }
 
-  // Strip query parameters from collection/category filter URLs for every
-  // client. Serving the same response to crawlers and shoppers avoids
-  // user-agent-dependent rendering while keeping filtered URLs out of search.
-  // URLs like /lehengas?sub=wedding-guest or /sarees?color=red should NOT be
-  // indexed as separate pages — they cause duplicate content and waste crawl
-  // budget. Serve the canonical category page with a noindex header so Google
-  // drops the parameterized URL from the index.
-  if (url.search) {
-    const cleanPath = pathname; // without query params
-    // Only strip params from known category/collection routes
-    const CATEGORY_ROUTES = new Set([
-      '/lehengas', '/sarees', '/suits', '/menswear', '/jewelry',
-      '/indowestern', '/new-arrivals', '/collections',
-    ]);
-    if (CATEGORY_ROUTES.has(cleanPath) || cleanPath.startsWith('/collections/')) {
-      const facetRedirectPath = getLegacyFacetRedirectPath(url);
-      if (facetRedirectPath) {
-        return Response.redirect(new URL(facetRedirectPath, request.url).toString(), 301);
-      }
-
-      // Return the clean URL's content but with noindex to drop the param URL
-      if (PRERENDERED_ROUTES.has(cleanPath)) {
-        const prerenderPath = cleanPath === '/'
-          ? '/_prerender/index.html'
-          : `/_prerender${cleanPath}.html`;
-        const resp = await fetch(new URL(prerenderPath, request.url));
-        if (resp.ok) {
-          const html = await resp.text();
-          return new Response(html, {
-            status: 200,
-            headers: {
-              'Content-Type': 'text/html; charset=utf-8',
-              'X-Robots-Tag': 'noindex, follow',
-              'Link': `<https://luxemia.shop${cleanPath}>; rel="canonical"`,
-            },
-          });
-        }
-      }
-      return return404(request);
-    }
-  }
-
-  // Owner-authorized reversible archives must never serve stale prerenders or
-  // redirect into an unavailable garment. Do not add these to permanent 410s.
-  if (pathname.startsWith('/product/') && isReversiblyArchivedProduct(pathname.slice('/product/'.length))) {
-    return return404(request);
-  }
-
-  // Preserve search equity when a legacy product has a confirmed replacement.
-  if (PRODUCT_301_REDIRECTS[pathname]) {
-    return Response.redirect(new URL(PRODUCT_301_REDIRECTS[pathname], request.url).toString(), 301);
-  }
-
-  // 410 Gone check — explicit, confirmed retired URLs only.
-  // Confirmed replacement redirects above take precedence; every remaining
-  // retired URL stays 410 instead of falling through to a generic redirect.
-  if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
-    return return410();
-  }
-
-  // 301 Permanent Redirect for legacy regional pages
-  if (LEGACY_REGIONAL_REDIRECT_ROUTES.has(pathname)) {
-    return Response.redirect(new URL('/nri', request.url).toString(), 301);
-  }
-
-  // 301 Permanent Redirect for canonical URL aliases
-  if (pathname === '/privacy-policy') {
-    return Response.redirect(new URL('/privacy', request.url).toString(), 301);
-  }
-  if (pathname === '/terms-of-service') {
-    return Response.redirect(new URL('/terms', request.url).toString(), 301);
-  }
-  // Shopify-style page alias still appears in crawl logs; preserve the
-  // established contact destination with a single permanent hop.
-  if (pathname === '/pages/contact') {
-    return Response.redirect(new URL('/contact', request.url).toString(), 301);
-  }
-  // /products has no React route — redirect to /collections to prevent soft 404
-  if (pathname === '/products') {
-    return Response.redirect(new URL('/collections', request.url).toString(), 301);
-  }
-  // The virtual try-on feature has been retired with no semantically equivalent
-  // destination. A 410 accurately retires the old URL and avoids an irrelevant
-  // homepage redirect that Google can classify as a soft 404.
-  if (pathname === '/virtual-try-on') {
-    return return410();
-  }
   // 301 Permanent Redirect for /collections/* → canonical category pages.
-  // These routes exist as client-side React Router <Navigate> redirects, but
-  // bots need server-side 301s to properly transfer link equity and avoid
-  // indexing the redirect-source URL with thin/empty SPA content.
+  // Run BEFORE the parameterized collection block so ad/shopping/social links
+  // like /collections/sarees?srsltid=... or /collections/wedding-lehengas?gclid=...
+  // cleanly 301 to their canonical category instead of returning 404.
   const COLLECTION_301_REDIRECTS: Record<string, string> = {
     '/collections/earrings': '/jewelry',
     '/collections/evening-gowns': '/collections',
@@ -469,7 +452,111 @@ async function routeRequest(request: Request): Promise<Response> {
     '/collections/nri': '/nri',
   };
   if (COLLECTION_301_REDIRECTS[pathname]) {
-    return Response.redirect(new URL(COLLECTION_301_REDIRECTS[pathname], request.url).toString(), 301);
+    const redirectTarget = copyAllowedAttributionParams(
+      url.searchParams,
+      new URL(COLLECTION_301_REDIRECTS[pathname], request.url),
+    );
+    return Response.redirect(redirectTarget.toString(), 301);
+  }
+
+  // Handle query parameters on collection/category routes:
+  // - Single legacy ?sub=<slug> (with optional attribution params) 301s to its
+  //   dedicated canonical landing page.
+  // - Filter/sort/search noise params (?color=, ?sort=, ?sub=, ?price=, etc.)
+  //   return canonical prerendered HTML with X-Robots-Tag: noindex, follow so
+  //   faceted duplicates stay out of search.
+  // - Pure attribution/tracking URLs (?srsltid=, ?gclid=, ?utm_*, ?fbclid=,
+  //   etc.) MUST remain indexable (200 OK + clean Link: rel="canonical", with
+  //   no noindex header) so Google organic/Merchant auto-tagged URLs and paid
+  //   landing pages never suppress canonical collection rankings.
+  if (url.search) {
+    const cleanPath = pathname;
+    const CATEGORY_ROUTES = new Set([
+      '/lehengas', '/sarees', '/suits', '/menswear', '/jewelry',
+      '/indowestern', '/new-arrivals', '/collections',
+    ]);
+    if (CATEGORY_ROUTES.has(cleanPath) || cleanPath.startsWith('/collections/')) {
+      const facetRedirectPath = getLegacyFacetRedirectPath(url);
+      if (facetRedirectPath) {
+        const redirectTarget = copyAllowedAttributionParams(
+          url.searchParams,
+          new URL(facetRedirectPath, request.url),
+        );
+        return Response.redirect(redirectTarget.toString(), 301);
+      }
+
+      if (hasIndexationNoiseParams(url.searchParams)) {
+        if (PRERENDERED_ROUTES.has(cleanPath)) {
+          const prerenderPath = cleanPath === '/'
+            ? '/_prerender/index.html'
+            : `/_prerender${cleanPath}.html`;
+          const resp = await fetch(new URL(prerenderPath, request.url));
+          if (resp.ok) {
+            const html = await resp.text();
+            const canonicalTarget = getCleanFacetCanonicalPath(url);
+            return new Response(html, {
+              status: 200,
+              headers: {
+                'Content-Type': 'text/html; charset=utf-8',
+                'X-Robots-Tag': 'noindex, follow',
+                'Link': `<https://luxemia.shop${canonicalTarget}>; rel="canonical"`,
+              },
+            });
+          }
+        }
+        return return404(request);
+      }
+    }
+  }
+
+  // Owner-authorized reversible archives must never serve stale prerenders or
+  // redirect into an unavailable garment. Do not add these to permanent 410s.
+  if (pathname.startsWith('/product/') && isReversiblyArchivedProduct(pathname.slice('/product/'.length))) {
+    return return404(request);
+  }
+
+  // Preserve search equity when a legacy product has a confirmed replacement.
+  if (PRODUCT_301_REDIRECTS[pathname]) {
+    const redirectTarget = copyAllowedAttributionParams(
+      url.searchParams,
+      new URL(PRODUCT_301_REDIRECTS[pathname], request.url),
+    );
+    return Response.redirect(redirectTarget.toString(), 301);
+  }
+
+  // 410 Gone check — explicit, confirmed retired URLs only.
+  // Confirmed replacement redirects above take precedence; every remaining
+  // retired URL stays 410 instead of falling through to a generic redirect.
+  if (GONE_ROUTES.has(pathname) || isGoneProductPath(pathname)) {
+    return return410(pathname);
+  }
+
+  // 301 Permanent Redirect for legacy regional pages
+  if (LEGACY_REGIONAL_REDIRECT_ROUTES.has(pathname)) {
+    return Response.redirect(new URL('/nri', request.url).toString(), 301);
+  }
+
+  // 301 Permanent Redirect for canonical URL aliases
+  if (pathname === '/privacy-policy') {
+    return Response.redirect(new URL('/privacy', request.url).toString(), 301);
+  }
+  if (pathname === '/terms-of-service') {
+    return Response.redirect(new URL('/terms', request.url).toString(), 301);
+  }
+  // Shopify-style page alias still appears in crawl logs; preserve the
+  // established contact destination with a single permanent hop.
+  if (pathname === '/pages/contact') {
+    return Response.redirect(new URL('/contact', request.url).toString(), 301);
+  }
+  // /products has no React route — redirect to /collections to prevent soft 404
+  if (pathname === '/products') {
+    return Response.redirect(new URL('/collections', request.url).toString(), 301);
+  }
+  // The virtual try-on feature has been retired with no semantically equivalent
+  // destination. A 410 accurately retires the old URL and avoids an irrelevant
+  // homepage redirect that Google can classify as a soft 404.
+  if (pathname === '/virtual-try-on') {
+    return return410(pathname);
   }
 
   // Product pages use one response path for crawlers and shoppers. Existing
@@ -526,6 +613,32 @@ async function routeRequest(request: Request): Promise<Response> {
         headers: {
           'Content-Type': 'text/html; charset=utf-8',
           'Cache-Control': 'public, max-age=600, s-maxage=3600, stale-while-revalidate=86400',
+          'X-Robots-Tag': 'index, follow',
+        },
+      });
+    }
+
+    // Locally catalogued Royal Bridal Silk Vol. 3 styles stay 200/serviceable
+    // for homepage & collection internal links until the Shopify import lands,
+    // at which point fetchProductByHandle above takes precedence automatically.
+    const bridalVol3Product = getBridalVol3ProductByHandle(handle);
+    if (bridalVol3Product) {
+      const canonicalUrl = `https://luxemia.shop/product/${handle}`;
+      const selectedVariant = url.searchParams.get('variant') || undefined;
+      let html: string;
+      try {
+        html = await attachShoppingApp(
+          generateProductHtml(bridalVol3Product, canonicalUrl, selectedVariant),
+          request,
+        );
+      } catch {
+        return returnShopifyUnavailable();
+      }
+      return new Response(html, {
+        status: 200,
+        headers: {
+          'Content-Type': 'text/html; charset=utf-8',
+          'Cache-Control': 'public, max-age=300, s-maxage=900, stale-while-revalidate=3600',
           'X-Robots-Tag': 'index, follow',
         },
       });

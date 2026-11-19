@@ -148,7 +148,7 @@ requireText(articleHtml, 'FIRST10', 'article first-order offer');
 
 const priorityItems = [...feedXml.matchAll(/<item>[\s\S]*?<\/item>/gi)]
   .map((match) => match[0])
-  .filter((item) => /<g:custom_label_1>navratri_2026_priority<\/g:custom_label_1>/i.test(item));
+  .filter((item) => /<g:custom_label_1>(?:wedding_season_2026_priority|navratri_2026_priority)<\/g:custom_label_1>/i.test(item));
 const priorityHandles = new Set(priorityItems.map((item) => {
   const link = item.match(/<g:link>([\s\S]*?)<\/g:link>/i)?.[1]?.replace(/&amp;/g, '&') || '';
   try {

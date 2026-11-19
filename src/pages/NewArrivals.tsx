@@ -115,7 +115,7 @@ const NewArrivals = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="New Arrivals: Latest Indian Ethnic Wear Online | LuxeMia"
-        description="Shop the latest Indian ethnic wear online at LuxeMia. Discover new lehengas, sarees, co-ord sets, menswear and jewelry, with free U.S. standard shipping at $150 and above."
+        description="Shop new Indian wedding lehengas, Banarasi sarees, Anarkali suits & groom menswear at LuxeMia. Free U.S. standard shipping on orders $150+."
         canonical="https://luxemia.shop/new-arrivals"
       />
       <Header />

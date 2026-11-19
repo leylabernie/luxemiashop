@@ -62,7 +62,7 @@ const Collections = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Buy Indian Ethnic Wear Online | All Collections - LuxeMia"
-        description="Buy Indian ethnic wear online at LuxeMia. Shop bridal lehengas, sarees, salwar kameez, jewelry, menswear and indo-western outfits."
+        description="Shop Indian bridal lehengas, Banarasi sarees, Anarkali & sharara suits, menswear and couple sets online. Free U.S. standard shipping at $150+."
         canonical="https://luxemia.shop/collections"
         breadcrumbs={[
           { name: 'Home', url: '/' },

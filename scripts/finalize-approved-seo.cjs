@@ -10,9 +10,10 @@ const HOME_H1 = 'Curated Indian Wedding & Festive Wear, Delivered to Your Door.'
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 
 const routeDescriptions = {
-  '/lehengas': 'Shop wedding and festive lehenga choli online in the USA. Compare fabrics, included pieces, stitching, sizes and current prices.',
-  '/suits': 'Shop salwar kameez, Anarkali, sharara and palazzo suits. Compare fabric, included pieces, stitching, sizing, availability and processing details.',
-  '/menswear': 'Shop sherwanis, kurta pajama and Indo-Western menswear. Compare fabric, included pieces, sizes, availability and processing details.',
+  '/lehengas': 'Shop bridal, sangeet & wedding guest lehenga choli online. Silk, organza & georgette sets, stitching options & free U.S. standard shipping at $150+.',
+  '/sarees': 'Shop Banarasi, silk, georgette & ready-to-wear wedding sarees online. Optional blouse stitching, Fall & Pico & free U.S. standard shipping at $150+.',
+  '/suits': 'Shop Anarkali, sharara & ready-to-wear palazzo suits for Indian weddings and festivals. Clear sizing & free U.S. standard shipping on orders $150+.',
+  '/menswear': 'Shop Indian groom sherwanis, embroidered kurta pajama & jacket sets for weddings and receptions. Tracked delivery & free U.S. standard shipping $150+.',
   '/jewelry': 'Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, included pieces, measurements and availability.',
 };
 

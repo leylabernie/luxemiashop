@@ -53,7 +53,7 @@ const EidOutfits = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Eid Outfits — Indian Ethnic Wear for Eid | LuxeMia"
-        description="Browse currently available LuxeMia products explicitly marked for Eid, Ramadan, or chikankari. Review exact product details and U.S. shipping terms."
+        description="Shop embroidered Eid salwar suits, Anarkalis, sharara sets & chikankari styles for festive gatherings. Free U.S. standard shipping on orders $150+."
         canonical="https://luxemia.shop/collections/eid-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },

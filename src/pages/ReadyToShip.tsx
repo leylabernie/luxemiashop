@@ -58,7 +58,7 @@ const ReadyToShip = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Ready-to-Ship Indian Ethnic Wear | LuxeMia"
-        description="Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing."
+        description="Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (3–4 business day dispatch; alterations extra). Free U.S. standard shipping $150+."
         canonical="https://luxemia.shop/ready-to-ship"
         breadcrumbs={[
           { name: 'Home', url: '/' },
