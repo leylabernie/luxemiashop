@@ -843,7 +843,7 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
           <p className="text-muted-foreground">Sizes and measurements vary by design. Use the available options and any verified size chart or garment measurements in this listing. A size label alone does not establish bust, chest, waist, hip or length measurements.</p>
           <p className="text-muted-foreground">Measure with a soft tape and record the units. Confirm whether the listing describes body measurements or finished-garment measurements before comparing them.</p>
           <p className="text-muted-foreground">If important measurements are missing or you are between sizes, contact LuxeMia before ordering. This guide does not replace a product-specific size chart.</p>
-          <a href="/size-guide" className="text-primary underline underline-offset-2">How to compare product measurements</a>
+          <a href="/size-guide" className="font-medium text-link hover:text-link/80 underline underline-offset-2">How to compare product measurements</a>
         </div>
         )}
       </TabsContent>

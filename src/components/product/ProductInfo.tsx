@@ -1046,7 +1046,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
       {(product.vendor || sku) && (
         <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
           {product.vendor && (
-            <p className="text-xs tracking-luxury uppercase text-primary font-medium">
+            <p className="text-xs tracking-luxury uppercase text-link font-medium">
               {product.vendor}
             </p>
           )}
@@ -1078,7 +1078,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           )}
         </div>
         {currentReferencePrice && (
-          <p className="text-xs sm:text-sm text-primary font-medium">
+          <p className="text-xs sm:text-sm text-link font-medium">
             {Math.round((1 - parseFloat(currentPrice.amount) /
               parseFloat(currentReferencePrice.amount)) * 100)}% off — You save {formatPrice(
               (parseFloat(currentReferencePrice.amount) - parseFloat(currentPrice.amount)).toFixed(2),
@@ -1202,7 +1202,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
               </div>
               <button
                 onClick={() => setShowStitchingInfo(showStitchingInfo ? null : 'main')}
-                className="text-xs text-primary hover:text-primary/80 underline underline-offset-4"
+                className="text-xs font-medium text-link hover:text-link/80 underline underline-offset-4"
               >
                 What's this?
               </button>
@@ -1233,12 +1233,12 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex items-center gap-2">
                       <span className={`text-sm font-medium ${
-                        selectedStitchingType === option.id ? 'text-primary' : 'text-foreground'
+                        selectedStitchingType === option.id ? 'text-link' : 'text-foreground'
                       }`}>
                         {option.label}
                       </span>
                       {option.id === 'semi-stitched' && (
-                        <span className="text-[10px] font-medium uppercase tracking-wider bg-primary/15 text-primary px-2 py-0.5 rounded">Popular</span>
+                        <span className="text-[10px] font-medium uppercase tracking-wider bg-primary/20 text-link px-2 py-0.5 rounded">Popular</span>
                       )}
                       {option.id === 'made-to-measure' && (
                         <span className="text-[10px] font-medium uppercase tracking-wider bg-[#D4AF37]/15 text-[#D4AF37] px-2 py-0.5 rounded">UDesign</span>
@@ -1282,7 +1282,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
         {customizableProduct && (
           <section className="space-y-4 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="made-to-order-heading">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Fit and color requests require confirmation</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-link">Fit and color requests require confirmation</p>
               <h2 id="made-to-order-heading" className="mt-1 font-serif text-xl sm:text-2xl">Custom color and measurements</h2>
             </div>
             <ul className="list-disc space-y-1.5 pl-5 text-xs sm:text-sm leading-relaxed text-muted-foreground">
@@ -1330,7 +1330,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
             <h3 id="tailoring-enquiry-heading" className="font-serif text-xl">Garment alteration / custom size enquiry</h3>
             <p className="text-sm text-muted-foreground">{TAILORING_ENQUIRY_NOTICE}</p>
             <p className="text-sm">The garment with listed catalog size label 32 can be purchased without a tailoring request. This label is not a supplier-verified measurement, inches or a US size. No additional garment sizes, measurements or alteration allowance are confirmed here.</p>
-            <Link to={TAILORING_ENQUIRY_CONTACT_PATH} className="inline-flex rounded-sm border border-primary px-4 py-2 text-sm font-medium text-primary">Request written tailoring confirmation</Link>
+            <Link to={TAILORING_ENQUIRY_CONTACT_PATH} className="inline-flex rounded-sm border border-link/40 px-4 py-2 text-sm font-medium text-link hover:bg-link/5">Request written tailoring confirmation</Link>
             {selectionRequiresEnquiry && <p role="status" className="text-sm font-medium">Quote required — this request cannot be added to bag.</p>}
           </section>
         )}
@@ -1343,14 +1343,14 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           >
             <summary className="flex cursor-pointer list-none items-center justify-between gap-2 [&::-webkit-details-marker]:hidden">
               <div>
-                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-primary">
+                <span className="block text-[11px] font-semibold uppercase tracking-[0.14em] text-link">
                   {isSareeListing ? 'Optional saree finishing' : 'Optional services'}
                 </span>
                 <h3 id="listing-service-add-ons-heading" className="font-serif text-base sm:text-lg leading-snug">
                   {isSareeListing ? 'Finish your saree' : 'Optional finishing & tailoring'}
                 </h3>
               </div>
-              <span className="shrink-0 text-xs font-medium text-primary underline underline-offset-4">
+              <span className="shrink-0 text-xs font-medium text-link hover:text-link/80 underline underline-offset-4">
                 {selectedAvailableServiceAddOnCodes.length > 0
                   ? `+${formatPrice(selectedServiceAddOnCharge.toFixed(2), basePrice.currencyCode)}`
                   : 'View options'}
@@ -1432,7 +1432,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
         {isCustomSizeSelected && !customizableProduct && !tailoringEnquiryOnly && (
           <section className="space-y-3 rounded-sm border border-primary/30 bg-primary/5 p-4" aria-labelledby="custom-size-confirmation-heading">
             <div>
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-primary">Custom size selected</p>
+              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-link">Custom size selected</p>
               <h3 id="custom-size-confirmation-heading" className="mt-1 font-serif text-xl">Measurements must be confirmed before alterations</h3>
             </div>
             <p className="text-sm leading-relaxed text-muted-foreground">
@@ -1448,14 +1448,14 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
               <span>I understand that LuxeMia must confirm my measurements before alterations begin.</span>
             </label>
             <div className="flex flex-wrap gap-3 text-sm">
-              <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">View the sizing guide</Link>
+              <Link to="/size-guide" className="font-medium text-link hover:text-link/80 underline underline-offset-4">View the sizing guide</Link>
               <button
                 type="button"
                 onClick={() => {
                   const message = encodeURIComponent(`Hi LuxeMia, I selected Custom size for ${product.title} (${window.location.href}) and would like to confirm measurements before ordering.`);
                   window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
                 }}
-                className="font-medium text-primary underline underline-offset-4"
+                className="font-medium text-link hover:text-link/80 underline underline-offset-4"
               >
                 Confirm measurements by WhatsApp
               </button>
@@ -1689,19 +1689,19 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
       )}
 
       <nav aria-label="Purchase help" className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-xs">
-        <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
+        <Link to="/size-guide" className="font-medium text-link hover:text-link/80 underline underline-offset-4">
           {SIZING_GUIDANCE_LABEL}
         </Link>
-        <Link to="/shipping" className="font-medium text-primary underline underline-offset-4">
+        <Link to="/shipping" className="font-medium text-link hover:text-link/80 underline underline-offset-4">
           Shipping details
         </Link>
-        <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
+        <Link to="/returns" className="font-medium text-link hover:text-link/80 underline underline-offset-4">
           Returns &amp; cancellations
         </Link>
         <button
           type="button"
           onClick={handleShare}
-          className="sm:hidden font-medium text-primary underline underline-offset-4"
+          className="sm:hidden font-medium text-link hover:text-link/80 underline underline-offset-4"
         >
           Share
         </button>
@@ -1713,7 +1713,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           const message = encodeURIComponent(`Hi LuxeMia, can you share more photos or a product video for ${product.title}?`);
           window.open(`https://wa.me/12153419990?text=${message}`, '_blank', 'noopener,noreferrer');
         }}
-        className="w-full flex items-center justify-center gap-2 text-sm text-primary hover:underline underline-offset-4"
+        className="w-full flex items-center justify-center gap-2 text-sm font-medium text-link hover:text-link/80 hover:underline underline-offset-4"
       >
         <MessageCircle className="h-4 w-4" /> Ask for more photos or a product video
       </button>
@@ -1747,7 +1747,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
             {hasStitchedBlouse ? (
               <span>The size applies to the stitched blouse. Contact LuxeMia with full-bust and underbust measurements if you need fit guidance; these labels do not specify bra cup sizes.</span>
             ) : (
-              <Link to="/size-guide" className="font-medium text-primary underline underline-offset-4">
+              <Link to="/size-guide" className="font-medium text-link hover:text-link/80 underline underline-offset-4">
                 {SIZING_GUIDANCE_LABEL}
               </Link>
             )}
@@ -1818,7 +1818,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           <p className="text-sm font-medium">Order with sizing confidence</p>
           <p className="text-xs text-muted-foreground">
             Message Mini on WhatsApp for personal sizing help before you order — garments ship from India, so change-of-mind returns aren't possible. If anything arrives damaged, incorrect, or incomplete, the covered-order-issue process has you covered.{' '}
-            <Link to="/returns" className="font-medium text-primary underline underline-offset-4">
+            <Link to="/returns" className="font-medium text-link hover:text-link/80 underline underline-offset-4">
               Review the return policy and reporting steps
             </Link>
           </p>

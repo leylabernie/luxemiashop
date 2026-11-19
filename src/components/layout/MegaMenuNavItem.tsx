@@ -105,7 +105,7 @@ export function MegaMenuNavItem({ menu }: MegaMenuNavItemProps) {
               <div className="mt-4 pt-4 border-t border-border">
                 <Link
                   to={menu.href}
-                  className="text-xs text-primary hover:underline"
+                  className="text-xs font-medium text-link hover:underline"
                   onClick={() => setIsOpen(false)}
                 >
                   View all {menu.label} →

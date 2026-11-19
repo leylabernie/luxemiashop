@@ -14,7 +14,7 @@ const buttonVariants = cva(
         outline: "border border-foreground/20 bg-transparent hover:bg-foreground/5 text-foreground rounded-none tracking-editorial uppercase font-light",
         secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 rounded-md",
         ghost: "hover:bg-accent hover:text-accent-foreground rounded-md",
-        link: "text-primary underline-offset-4 hover:underline",
+        link: "text-link underline-offset-4 hover:underline",
         // Boutique variants for the online theme
         luxury: "bg-foreground text-background hover:bg-foreground/90 rounded-none tracking-editorial uppercase font-light",
         hero: "bg-background/90 text-foreground border border-foreground/20 hover:bg-background backdrop-blur-sm rounded-none tracking-editorial uppercase font-light",

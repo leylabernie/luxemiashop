@@ -99,7 +99,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-foreground/30 z-50"
+            className="fixed inset-0 bg-foreground/30 z-[60]"
             onClick={onClose}
           />
 
@@ -109,7 +109,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'tween', duration: 0.35, ease: 'easeInOut' }}
-            className="fixed top-0 right-0 bottom-0 z-50 flex w-full flex-col border-l border-border/60 bg-background shadow-2xl sm:w-[440px]"
+            className="fixed top-0 right-0 bottom-0 z-[60] flex w-full flex-col border-l border-border/60 bg-background shadow-2xl sm:w-[440px]"
             role="dialog"
             aria-modal="true"
             aria-labelledby="cart-title"
@@ -170,7 +170,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                           />
                         ) : (
                           isService ? (
-                            <div className="flex h-full w-full items-center justify-center bg-primary/5 px-2 text-center text-[10px] font-medium leading-tight text-primary">
+                            <div className="flex h-full w-full items-center justify-center bg-primary/10 px-2 text-center text-[10px] font-medium leading-tight text-link">
                               {isGarmentAlteration ? 'Garment alteration' : 'Saree service'}
                             </div>
                           ) : (
@@ -197,7 +197,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                         {visibleAttributes && visibleAttributes.length > 0 && (
                           <div className="mb-2 space-y-0.5">
                             {visibleAttributes.filter(attr => attr.key !== 'Configuration reference').map((attr, i) => (
-                              <p key={i} className="text-[10px] text-primary/80 italic leading-tight">
+                              <p key={i} className="text-[11px] text-link italic leading-tight">
                                 <span className="font-medium">{attr.key}:</span> {attr.value}
                               </p>
                             ))}
@@ -246,24 +246,24 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
               )}
             </div>
 
-            {/* Footer */}
+            {/* Footer — keeps Subtotal & Checkout immediately visible; detailed policies collapse */}
             {items.length > 0 && (
-              <div className="max-h-[60dvh] shrink-0 overflow-y-auto overscroll-contain border-t border-border/60 bg-card/70 backdrop-blur-sm safe-area-bottom">
+              <div className="shrink-0 border-t border-border bg-card safe-area-bottom">
                 {/* Free Shipping Progress */}
-                <div className="px-5 pb-3 pt-4 sm:px-6">
+                <div className="px-4 pt-3 pb-2 sm:px-6 sm:pt-3.5">
                   {subtotal >= FREE_SHIPPING_THRESHOLD ? (
-                    <div className="flex items-center gap-2 text-xs text-green-600 dark:text-green-400 font-medium mb-2">
-                      <Truck className="w-3.5 h-3.5" />
-                      Your current subtotal meets the free U.S. shipping threshold before checkout discounts
+                    <div className="flex items-center gap-1.5 text-xs text-green-700 dark:text-green-400 font-medium">
+                      <Truck className="w-3.5 h-3.5 shrink-0" />
+                      <span>Your current subtotal meets the free U.S. shipping threshold before checkout discounts</span>
                     </div>
                   ) : (
-                    <div className="mb-2">
-                      <div className="flex items-center justify-between text-xs text-muted-foreground mb-1.5">
-                        <span className="flex items-center gap-1">
-                          <Truck className="w-3.5 h-3.5" />
-                          {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} below the free U.S. shipping threshold before checkout discounts
+                    <div>
+                      <div className="flex items-center justify-between gap-2 text-xs text-foreground/75 mb-1">
+                        <span className="flex items-center gap-1.5">
+                          <Truck className="w-3.5 h-3.5 shrink-0" />
+                          <span>{formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} below the free U.S. shipping threshold before checkout discounts</span>
                         </span>
-                        <span className="font-medium">${FREE_SHIPPING_THRESHOLD}</span>
+                        <span className="shrink-0 font-medium">${FREE_SHIPPING_THRESHOLD}</span>
                       </div>
                       <div className="h-1.5 overflow-hidden rounded-full bg-foreground/10">
                         <motion.div
@@ -277,20 +277,16 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                   )}
                 </div>
 
-                <div className="space-y-3 px-5 pb-4 sm:px-6">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-foreground/70">Subtotal</span>
-                    <span className="font-medium">{formatPrice(subtotal, currencyCode)}</span>
-                  </div>
-                  <div className="flex justify-between gap-3 text-sm">
-                    <span className="text-foreground/70">Shipping</span>
-                    <span className="text-right">Calculated at checkout</span>
-                  </div>
-                  <p className="text-xs leading-relaxed text-muted-foreground">Subtotal excludes shipping and applicable sales tax. Enter any eligible discount codes at checkout; eligibility and final amounts are confirmed there.</p>
-                  <div className="rounded-sm border border-border/60 bg-background/80 px-3 py-2.5 text-center text-xs leading-relaxed text-muted-foreground">
-                    <p>{SHIPPING_PROMISE}</p>
-                    <p className="mt-1">{DESTINATION_IMPORT_NOTICE}</p>
-                    <p className="mt-1">Discounts are applied before shipping eligibility. Destination, local-currency conversion and final delivery options are confirmed at checkout.</p>
+                <div className="space-y-2.5 px-4 pb-3 sm:px-6 sm:pb-4">
+                  <div className="space-y-1">
+                    <div className="flex items-baseline justify-between text-sm sm:text-base">
+                      <span className="font-medium text-foreground">Subtotal</span>
+                      <span className="font-semibold text-foreground">{formatPrice(subtotal, currencyCode)}</span>
+                    </div>
+                    <div className="flex justify-between gap-3 text-xs text-muted-foreground">
+                      <span>Shipping &amp; tax</span>
+                      <span className="text-right">Calculated at checkout</span>
+                    </div>
                   </div>
                   {unavailableItems.length > 0 && (
                     <p className="text-xs text-destructive text-center" role="alert">
@@ -347,29 +343,38 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       )}
                     </Button>
                   )}
-                  <p className="text-center text-[11px] leading-relaxed text-muted-foreground">Payment is completed securely on LuxeMia’s checkout page.</p>
-                  <button
-                    onClick={onClose}
-                    className="w-full text-sm text-foreground/70 transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary underline underline-offset-4"
-                  >
-                    Continue Shopping
-                  </button>
-                </div>
-
-                {/* Trust Badges */}
-                <div className="grid grid-cols-3 divide-x divide-border/50 border-t border-border/50">
-                  <span className="flex flex-col items-center gap-1 px-2 py-3 text-center text-[10px] leading-tight text-muted-foreground">
-                    <ShieldCheck className="h-3.5 w-3.5 text-foreground" />
-                    Secure checkout
-                  </span>
-                  <span className="flex flex-col items-center gap-1 px-2 py-3 text-center text-[10px] leading-tight text-muted-foreground">
-                    <ShieldCheck className="h-3.5 w-3.5 text-foreground" />
-                    U.S.-based support
-                  </span>
-                  <span className="flex flex-col items-center gap-1 px-2 py-3 text-center text-[10px] leading-tight text-muted-foreground">
-                    <Award className="h-3.5 w-3.5 text-foreground" />
-                    Tracked shipping
-                  </span>
+                  <details className="group rounded-sm border border-border/70 bg-background px-3 py-2 text-xs leading-relaxed text-muted-foreground">
+                    <summary className="flex cursor-pointer list-none items-center justify-between gap-2 font-medium text-foreground/85 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
+                      <span>Shipping, duties &amp; discount policies</span>
+                      <span className="shrink-0 text-xs font-medium text-link underline underline-offset-4 group-open:hidden">Details</span>
+                      <span className="hidden shrink-0 text-xs font-medium text-link underline underline-offset-4 group-open:inline">Hide</span>
+                    </summary>
+                    <div className="mt-2 max-h-32 space-y-1.5 overflow-y-auto overscroll-contain border-t border-border/50 pt-2 text-left">
+                      <p>Subtotal excludes shipping and applicable sales tax. Enter any eligible discount codes at checkout; eligibility and final amounts are confirmed there.</p>
+                      <p>{SHIPPING_PROMISE}</p>
+                      <p>{DESTINATION_IMPORT_NOTICE}</p>
+                      <p>Discounts are applied before shipping eligibility. Destination, local-currency conversion and final delivery options are confirmed at checkout.</p>
+                      <p>Payment is completed securely on LuxeMia’s checkout page.</p>
+                    </div>
+                  </details>
+                  <div className="flex items-center justify-between gap-2 pt-0.5">
+                    <div className="flex items-center gap-3 text-[11px] text-muted-foreground">
+                      <span className="inline-flex items-center gap-1">
+                        <ShieldCheck className="h-3.5 w-3.5 shrink-0 text-foreground" />
+                        Secure
+                      </span>
+                      <span className="hidden xs:inline-flex sm:inline-flex items-center gap-1">
+                        <Award className="h-3.5 w-3.5 shrink-0 text-foreground" />
+                        Tracked shipping
+                      </span>
+                    </div>
+                    <button
+                      onClick={onClose}
+                      className="text-xs font-medium text-link transition-colors hover:text-link/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring underline underline-offset-4"
+                    >
+                      Continue Shopping
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

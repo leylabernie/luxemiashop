@@ -25,7 +25,7 @@ export const ProductDeliverySummary = ({ shipsWithinDays, hasAlterations, confir
       {isUnstitched && <p className="font-medium">Listed fabric-only / unstitched pieces are not finished garments. Separate local stitching is outside this estimate.</p>}
       <p className="text-muted-foreground">Ships from India. U.S. shipping: ${US_STANDARD_SHIPPING_RATE.toFixed(2)} below ${US_FREE_SHIPPING_THRESHOLD}; free at ${US_FREE_SHIPPING_THRESHOLD}+. No U.S. doorstep import fees; sales tax at checkout. Other-country shipping rates and import charges vary; see details.</p>
       <details className="group">
-        <summary className="cursor-pointer font-medium text-primary underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">Full delivery, shipping &amp; import details</summary>
+        <summary className="cursor-pointer font-medium text-link hover:text-link/80 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4">Full delivery, shipping &amp; import details</summary>
         <div className="mt-3 space-y-3">{children}</div>
       </details>
     </section>

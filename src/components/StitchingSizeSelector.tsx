@@ -40,14 +40,14 @@ export const StitchingSizeSelector = ({ selectedSize, onSizeChange, showValidati
         <button
           type="button"
           onClick={() => setSizeChartOpen(true)}
-          className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+          className="text-sm font-medium text-link hover:text-link/80 underline underline-offset-4 transition-colors"
         >
           Size Guidance
         </button>
         <button
           type="button"
           onClick={() => setHowToMeasureOpen(true)}
-          className="text-sm text-primary hover:text-primary/80 underline underline-offset-4 transition-colors"
+          className="text-sm font-medium text-link hover:text-link/80 underline underline-offset-4 transition-colors"
         >
           How to Measure
         </button>
