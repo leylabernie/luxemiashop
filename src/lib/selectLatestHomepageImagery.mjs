@@ -2,18 +2,28 @@ import { getPrimaryCategory } from './catalogCategories.mjs';
 
 const SERVICE_ADD_ON_HANDLE = 'luxemia-tailoring-saree-finishing-add-ons';
 
+// Listings verified as Navratri/folk or casual mirror-selfie shots rather than
+// studio wedding/celebration imagery.
+const NON_HOMEPAGE_FEATURE_HANDLES = new Set([
+  SERVICE_ADD_ON_HANDLE,
+  'multicolor-georgette-lehenga-choli-with-lace',
+]);
+
 export const LATEST_HOMEPAGE_IMAGERY_QUERY = `
   query GetLatestHomepageImagery {
     newest: products(first: 140, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true") {
       edges { node { ...HomepageImageFields } }
     }
-    sarees: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:Saree OR product_type:'Banarasi Saree' OR product_type:'Silk Saree' OR product_type:'Ready-to-Wear Saree' OR product_type:'Wedding Saree' OR product_type:'Georgette Saree' OR product_type:'Designer Saree' OR title:saree)") {
+    weddingLehengas: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:'Bridal Lehenga' OR product_type:'Bridal Lehenga Choli' OR product_type:'Wedding Lehenga' OR product_type:'Reception Lehengas' OR tag:'occasion:bridal' OR tag:'occasion:wedding' OR tag:'occasion:wedding-guest' OR tag:'occasion:reception' OR tag:'role:bride' OR tag:'role:bridesmaid')") {
       edges { node { ...HomepageImageFields } }
     }
-    lehengas: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:Lehenga OR product_type:'Lehenga Choli' OR product_type:'Bridal Lehenga' OR product_type:'Wedding Lehenga' OR product_type:'Party Wear Lehenga' OR product_type:'Navratri Lehenga' OR title:lehenga)") {
+    sarees: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:Saree OR product_type:'Banarasi Saree' OR product_type:'Silk Saree' OR product_type:'Ready-to-Wear Saree' OR product_type:'Wedding Saree' OR product_type:'Bridal Saree' OR product_type:'Georgette Saree' OR product_type:'Designer Saree' OR title:saree)") {
       edges { node { ...HomepageImageFields } }
     }
-    suits: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:'Salwar Suit' OR product_type:'Palazzo Suit' OR product_type:'Plazzo Suit' OR product_type:'Sharara Suit' OR product_type:'Anarkali Suit' OR product_type:Anarkali OR product_type:Sharara OR product_type:'Salwar Kameez' OR product_type:'Pakistani Suit' OR product_type:'Readymade Suit' OR product_type:'Suit Set' OR product_type:'Palazzo Set')") {
+    lehengas: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:Lehenga OR product_type:'Lehenga Choli' OR product_type:'Bridal Lehenga' OR product_type:'Bridal Lehenga Choli' OR product_type:'Wedding Lehenga' OR product_type:'Reception Lehengas' OR product_type:'Party Wear Lehenga' OR title:lehenga)") {
+      edges { node { ...HomepageImageFields } }
+    }
+    suits: products(first: 40, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:'Salwar Suit' OR product_type:'Palazzo Suit' OR product_type:'Plazzo Suit' OR product_type:'Sharara Suit' OR product_type:'Anarkali Suit' OR product_type:'Wedding Suit' OR product_type:Anarkali OR product_type:Sharara OR product_type:'Salwar Kameez' OR product_type:'Pakistani Suit' OR product_type:'Readymade Suit' OR product_type:'Suit Set' OR product_type:'Palazzo Set')") {
       edges { node { ...HomepageImageFields } }
     }
     indowestern: products(first: 30, sortKey: CREATED_AT, reverse: true, query: "available_for_sale:true AND (product_type:'Indo Western' OR product_type:'Indo-Western' OR product_type:'Indo Western Dress' OR product_type:'Indo-Western Set' OR product_type:'Fusion Wear' OR product_type:'Jacket Set' OR product_type:'Skirt Set' OR product_type:'Coord Set' OR product_type:'Co-ord Set' OR product_type:'Cape Set' OR product_type:Jumpsuit OR title:'indo western' OR title:'indo-western' OR title:'jacket set')") {
@@ -34,10 +44,14 @@ export const LATEST_HOMEPAGE_IMAGERY_QUERY = `
     id
     handle
     title
+    description
     productType
     tags
     availableForSale
     createdAt
+    occasionMetafield: metafield(namespace: "custom", key: "occasion") {
+      value
+    }
     priceRange {
       minVariantPrice {
         amount
@@ -481,7 +495,7 @@ function isMadeToOrderNode(node) {
 }
 
 function isNonEditorialImage(url, altText, title) {
-  return /(?:size[-_ ]?chart|color[-_ ]?chart|swatch|placeholder|logo|measurement)/i.test(
+  return /(?:size[-_ ]?chart|color[-_ ]?chart|swatch|placeholder|logo|measurement|selfie|whatsapp[-_ ]?image|flat[-_ ]?lay|hanger|mannequin)/i.test(
     `${url || ''} ${altText || ''} ${title || ''}`,
   );
 }
@@ -493,10 +507,154 @@ function isPortraitFriendly(image) {
   return h >= w * 0.78;
 }
 
-function isRetiredSeasonalNode(node, altText = '') {
-  return /\b(?:navratri|garba|kediyu|diwali|dussehra)\b/i.test(
-    `${node.handle || ''} ${node.title || ''} ${node.productType || ''} ${altText || ''}`,
+/**
+ * Detects Navratri, Garba, Dandiya, Chaniya Choli, Kediyu, Kutchi/Gamthi folk,
+ * oxidized-jewelry Garba styling, cotton/rayon folk lehengas, and rainbow
+ * multicolor kali lehengas across handle, title, type, tags, metafields,
+ * description, and image alt text so they are never presented as wedding wear.
+ */
+function isNavratriOrFolkNode(node, category, altText = '') {
+  const tags = Array.isArray(node.tags) ? node.tags.join(' ') : '';
+  const occasionMeta = String(node.occasionMetafield?.value || '');
+  const fullText = [
+    node.handle || '',
+    node.title || '',
+    node.productType || '',
+    tags,
+    occasionMeta,
+    node.description || '',
+    altText || '',
+  ].join(' ');
+
+  if (
+    /\b(?:navratri|garba|dandiya|raas|chaniya|kediyu|kediya|kutchi|kutch|gamthi|cowrie|kaudi|oxidized|oxidised|onam)\b/i.test(
+      fullText,
+    )
+  ) {
+    return true;
+  }
+
+  if (category === 'lehengas') {
+    const headline = `${node.handle || ''} ${node.title || ''} ${node.productType || ''}`;
+    // Multicolor kali lehengas and cotton/rayon lehengas in this catalog are
+    // Navratri/Garba chaniya cholis, not bridal or wedding lehengas.
+    if (/\b(?:multicolor|multicolour|multi[- ]color|rainbow|cotton|rayon)\b/i.test(headline)) {
+      return true;
+    }
+    if (/\bwith[- ]lace$/i.test(String(node.handle || '')) && !/\b(?:embroidered|zari|zardozi|sequin|handwork|bridal|wedding)\b/i.test(headline)) {
+      return true;
+    }
+  }
+
+  return false;
+}
+
+function isRetiredSeasonalNode(node, category, altText = '') {
+  if (isNavratriOrFolkNode(node, category, altText)) return true;
+
+  const surfaceText = `${node.handle || ''} ${node.title || ''} ${node.productType || ''} ${altText || ''}`;
+  if (/\b(?:diwali|dussehra|pongal|lohri|holi)\b/i.test(surfaceText)) {
+    return true;
+  }
+
+  const lowerTags = (Array.isArray(node.tags) ? node.tags : []).map((t) =>
+    String(t || '').trim().toLowerCase(),
   );
+  const hasRetiredOnlyTag = lowerTags.some((t) =>
+    t === 'occasion:diwali' || t === 'occasion:navratri' || t === 'occasion:onam',
+  );
+  const hasEvergreenOccasionTag = lowerTags.some((t) =>
+    t === 'occasion:bridal' ||
+    t === 'occasion:wedding' ||
+    t === 'occasion:wedding-guest' ||
+    t === 'occasion:reception' ||
+    t === 'occasion:sangeet' ||
+    t === 'occasion:party' ||
+    t === 'occasion:party-wear' ||
+    t === 'occasion:festive' ||
+    t === 'role:bride' ||
+    t === 'role:bridesmaid',
+  );
+  return hasRetiredOnlyTag && !hasEvergreenOccasionTag;
+}
+
+function isCasualNode(node) {
+  const lowerTags = (Array.isArray(node.tags) ? node.tags : []).map((t) =>
+    String(t || '').trim().toLowerCase(),
+  );
+  if (lowerTags.includes('occasion:casual') && !lowerTags.some((t) => t.startsWith('occasion:wedding') || t === 'occasion:bridal' || t === 'occasion:reception' || t === 'occasion:festive')) {
+    return true;
+  }
+  return /\b(?:casual|daily[- ]?wear|everyday|office[- ]?wear|lounge)\b/i.test(
+    `${node.handle || ''} ${node.title || ''} ${node.productType || ''}`,
+  );
+}
+
+function hasWeddingCraftsmanship(node) {
+  const tags = Array.isArray(node.tags) ? node.tags.join(' ') : '';
+  const surface = `${node.handle || ''} ${node.title || ''} ${node.productType || ''} ${tags}`;
+  return /\b(?:embroidered|embroidery|zari|zardozi|sequin|sequins|handwork|hand[- ]work|resham|cutdana|cutwork|cut[- ]work|stone|bead|beaded|banarasi|kanjivaram|kanchipuram|kanjeevaram|velvet|brocade|tissue|bridal)\b/i.test(
+    surface,
+  );
+}
+
+function isPrintOnlyNode(node) {
+  const headline = `${node.handle || ''} ${node.title || ''}`;
+  const mentionsPrint = /\b(?:print|printed|digital[- ]?print|floral[- ]?print|heritage[- ]?print|block[- ]?print)\b/i.test(
+    headline,
+  );
+  if (!mentionsPrint) return false;
+  return !/\b(?:embroidered|embroidery|zari|zardozi|handwork|hand[- ]work|bridal)\b/i.test(headline);
+}
+
+/**
+ * Verifies a product is explicitly merchandised for weddings, brides,
+ * bridesmaids, receptions, or wedding guests via structured Shopify tags,
+ * occasion metafield, product type, or explicit wedding/bridal title.
+ */
+function hasExplicitWeddingSignal(node, isNavratri) {
+  if (isNavratri) return false;
+  const lowerTags = (Array.isArray(node.tags) ? node.tags : []).map((t) =>
+    String(t || '').trim().toLowerCase(),
+  );
+  const weddingTagSet = new Set([
+    'occasion:bridal',
+    'occasion:wedding',
+    'occasion:wedding-guest',
+    'occasion:reception',
+    'occasion:sangeet',
+    'role:bride',
+    'role:bridesmaid',
+    'bridal',
+    'bridal lehenga',
+    'wedding lehenga',
+    'reception lehenga',
+    'wedding wear',
+    'wedding guest',
+    'bridesmaid',
+  ]);
+  if (lowerTags.some((t) => weddingTagSet.has(t))) return true;
+
+  const occasionMeta = String(node.occasionMetafield?.value || '').toLowerCase();
+  if (/\b(?:bridal|wedding|reception|bridesmaid|bride|baraat|engagement|nikah|walima)\b/.test(occasionMeta)) {
+    return true;
+  }
+
+  const type = String(node.productType || '').trim().toLowerCase();
+  if (
+    /\b(?:bridal|wedding|reception)\b/.test(type)
+  ) {
+    return true;
+  }
+
+  const headline = `${node.handle || ''} ${node.title || ''}`.toLowerCase();
+  return /\b(?:bridal|wedding|reception|bridesmaid|bride|ceremony)\b/.test(headline);
+}
+
+function hasDescriptionWeddingSignal(node, isNavratri) {
+  if (isNavratri) return false;
+  const desc = String(node.description || '').toLowerCase();
+  return /\b(?:bridal|wedding|reception|bridesmaid|bride|engagement|ceremony|baraat)\b/.test(desc);
 }
 
 function isDifferentUploadBatch(left, right, minHours = 18) {
@@ -509,16 +667,17 @@ function isDifferentUploadBatch(left, right, minHours = 18) {
  * Selects the newest distinct, active, model-ready Shopify product images for
  * all 5 homepage hero slides, all 7 category showcase cards, and both 2-up
  * editorial promo banners — strictly deduplicating both exact products AND
- * colorway/series variants so the same outfit never appears twice.
+ * colorway/series variants and matching each banner's exact occasion.
  */
 export function selectLatestHomepageImagery(data, options = {}) {
   const excludedHandles = new Set([
-    SERVICE_ADD_ON_HANDLE,
+    ...NON_HOMEPAGE_FEATURE_HANDLES,
     ...(options.archivedHandles || []),
     ...(options.goneHandles || []),
   ]);
 
   const buckets = [
+    data?.weddingLehengas,
     data?.newest,
     data?.sarees,
     data?.lehengas,
@@ -550,6 +709,13 @@ export function selectLatestHomepageImagery(data, options = {}) {
       const category = inferCategory(node);
       const price = Number.parseFloat(node.priceRange?.minVariantPrice?.amount || '0') || 0;
       const title = String(node.title || '').replace(/\s*\|\s*Ready to Ship/gi, '').trim();
+      const navratri = isNavratriOrFolkNode(node, category, image?.altText);
+      const seasonal = isRetiredSeasonalNode(node, category, image?.altText);
+      const crafted = hasWeddingCraftsmanship(node);
+      const printOnly = isPrintOnlyNode(node);
+      const casual = isCasualNode(node);
+      const explicitWedding = hasExplicitWeddingSignal(node, navratri);
+      const describedWedding = explicitWedding || hasDescriptionWeddingSignal(node, navratri);
 
       const item = {
         handle: node.handle,
@@ -566,7 +732,13 @@ export function selectLatestHomepageImagery(data, options = {}) {
         height: Number(image?.height) || 1100,
         portrait: isPortraitFriendly(image),
         madeToOrder: isMadeToOrderNode(node),
-        seasonal: isRetiredSeasonalNode(node, image?.altText),
+        navratri,
+        seasonal,
+        casual,
+        crafted,
+        printOnly,
+        explicitWedding,
+        describedWedding,
         _sig: null,
       };
       item._sig = buildDesignSignature(item);
@@ -613,9 +785,9 @@ export function selectLatestHomepageImagery(data, options = {}) {
       return true;
     });
     const chosen =
-      pool.find((item) => item.portrait && !item.seasonal) ||
-      pool.find((item) => !item.seasonal) ||
-      pool.find((item) => item.portrait) ||
+      pool.find((item) => item.portrait && !item.seasonal && !item.navratri) ||
+      pool.find((item) => !item.seasonal && !item.navratri) ||
+      pool.find((item) => item.portrait && !item.navratri) ||
       pool[0] ||
       null;
     if (!chosen) return null;
@@ -634,49 +806,141 @@ export function selectLatestHomepageImagery(data, options = {}) {
   const isAdultCelebration = (item) =>
     isWomensCelebration(item) || item.category === 'menswear';
 
-  // 1. Hero carousel slides — 5 distinct newest designs & varied silhouettes
-  const weddingEditItem =
-    pickRaw((item) => item.category === 'lehengas' && !item.seasonal) ||
-    pickRaw((item) => isWomensCelebration(item) && !item.seasonal);
+  const isTrueWeddingLehenga = (item) =>
+    item.category === 'lehengas' &&
+    !item.navratri &&
+    !item.seasonal &&
+    !item.casual &&
+    !item.printOnly &&
+    item.crafted;
 
+  // 1. Hero carousel slides — 5 distinct newest designs strictly matching each slide's theme
+  // Slide 1 ("Wedding & Celebration Edit"): MUST be a genuine embroidered wedding/bridal/reception lehenga
+  const weddingEditItem =
+    pickRaw((item) => isTrueWeddingLehenga(item) && item.explicitWedding) ||
+    pickRaw((item) => isTrueWeddingLehenga(item) && item.describedWedding) ||
+    pickRaw((item) => isTrueWeddingLehenga(item)) ||
+    pickRaw(
+      (item) =>
+        isWomensCelebration(item) &&
+        item.explicitWedding &&
+        item.crafted &&
+        !item.printOnly &&
+        !item.navratri &&
+        !item.seasonal,
+    );
+
+  // Slide 2 ("New Arrivals"): newest embroidered celebration arrival (different category from Slide 1)
   const newArrivalsItem =
     pickRaw(
       (item) =>
         isAdultCelebration(item) &&
+        item.crafted &&
+        !item.navratri &&
         !item.seasonal &&
+        !item.casual &&
         item.category !== weddingEditItem?.category,
-    ) || pickRaw((item) => isAdultCelebration(item) && !item.seasonal);
-
-  const sareesEditItem = pickRaw((item) => item.category === 'sarees' && !item.seasonal);
-
-  const lehengasSuitsItem =
-    pickRaw((item) => item.category === 'suits' && !item.seasonal) ||
-    pickRaw(
-      (item) => (item.category === 'lehengas' || item.category === 'suits') && !item.seasonal,
     ) ||
-    pickRaw((item) => isWomensCelebration(item) && !item.seasonal);
+    pickRaw(
+      (item) =>
+        isAdultCelebration(item) &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual &&
+        item.category !== weddingEditItem?.category,
+    ) ||
+    pickRaw((item) => isAdultCelebration(item) && !item.navratri && !item.seasonal);
 
+  // Slide 3 ("The Saree Edit"): newest embroidered/silk/Banarasi wedding saree
+  const sareesEditItem =
+    pickRaw(
+      (item) =>
+        item.category === 'sarees' &&
+        item.crafted &&
+        !item.printOnly &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual,
+    ) ||
+    pickRaw((item) => item.category === 'sarees' && !item.navratri && !item.seasonal);
+
+  // Slide 4 ("Lehengas & Festive Suits — Anarkalis, Shararas & Embroidered Sets"):
+  // strictly prefer an embroidered festive/wedding suit or wedding lehenga (not casual print)
+  const lehengasSuitsItem =
+    pickRaw(
+      (item) =>
+        item.category === 'suits' &&
+        item.crafted &&
+        !item.printOnly &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual,
+    ) ||
+    pickRaw((item) => isTrueWeddingLehenga(item)) ||
+    pickRaw(
+      (item) =>
+        (item.category === 'suits' || item.category === 'lehengas') &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual,
+    );
+
+  // Slide 5 ("Ready to Ship"): newest distinct ready-to-ship embroidered outfit from a separate shoot
   const readyToShipHeroItem =
     pickRaw(
       (item) =>
         isWomensCelebration(item) &&
         !item.madeToOrder &&
+        item.crafted &&
+        !item.printOnly &&
+        !item.navratri &&
         !item.seasonal &&
+        !item.casual &&
         isDifferentUploadBatch(item, lehengasSuitsItem),
     ) ||
-    pickRaw((item) => isWomensCelebration(item) && !item.madeToOrder && !item.seasonal) ||
-    pickRaw((item) => isAdultCelebration(item) && !item.madeToOrder && !item.seasonal);
+    pickRaw(
+      (item) =>
+        isWomensCelebration(item) &&
+        !item.madeToOrder &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual &&
+        isDifferentUploadBatch(item, lehengasSuitsItem),
+    ) ||
+    pickRaw(
+      (item) => isAdultCelebration(item) && !item.madeToOrder && !item.navratri && !item.seasonal,
+    );
 
-  // 2. Shop by Category — newest distinct design per department (never repeats hero designs)
+  // 2. Shop by Category — newest distinct wedding/celebration item per department (never Navratri)
   const pickCategory = (categoryName) => {
+    const preferCrafted =
+      categoryName === 'lehengas' || categoryName === 'sarees' || categoryName === 'suits';
     const chosen =
-      pickRaw((item) => item.category === categoryName && !item.seasonal) ||
-      pickRaw((item) => item.category === categoryName) ||
-      // Last resort only when a small department has just one design series
-      pickRaw((item) => item.category === categoryName && !item.seasonal, {
-        allowSameFamily: true,
-      }) ||
-      pickRaw((item) => item.category === categoryName, { allowSameFamily: true });
+      (categoryName === 'lehengas'
+        ? pickRaw((item) => isTrueWeddingLehenga(item) && item.explicitWedding) ||
+          pickRaw((item) => isTrueWeddingLehenga(item))
+        : null) ||
+      (preferCrafted
+        ? pickRaw(
+            (item) =>
+              item.category === categoryName &&
+              item.crafted &&
+              !item.printOnly &&
+              !item.navratri &&
+              !item.seasonal &&
+              !item.casual,
+          )
+        : null) ||
+      pickRaw(
+        (item) =>
+          item.category === categoryName && !item.navratri && !item.seasonal && !item.casual,
+      ) ||
+      pickRaw((item) => item.category === categoryName && !item.navratri && !item.seasonal) ||
+      // Last resort only when a small department has just one non-Navratri design series
+      pickRaw(
+        (item) => item.category === categoryName && !item.navratri && !item.seasonal,
+        { allowSameFamily: true },
+      );
     return formatEntry(chosen, 900);
   };
 
@@ -691,49 +955,89 @@ export function selectLatestHomepageImagery(data, options = {}) {
   };
 
   // 3. 2-up Editorial Promo Banners — strictly distinct designs, different garment
-  // categories, and different upload batches so side-by-side banners never look alike.
+  // categories, different shoots, and true wedding/bridal styling on Bridal Party.
   const readyToShipPromoItem =
     pickRaw(
       (item) =>
         (item.category === 'suits' || item.category === 'sarees') &&
         !item.madeToOrder &&
-        !item.seasonal,
+        item.crafted &&
+        !item.printOnly &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual,
     ) ||
-    pickRaw((item) => isWomensCelebration(item) && !item.madeToOrder && !item.seasonal) ||
-    pickRaw((item) => isAdultCelebration(item) && !item.madeToOrder && !item.seasonal);
+    pickRaw(
+      (item) =>
+        isWomensCelebration(item) &&
+        !item.madeToOrder &&
+        !item.navratri &&
+        !item.seasonal &&
+        !item.casual,
+    ) ||
+    pickRaw(
+      (item) => isAdultCelebration(item) && !item.madeToOrder && !item.navratri && !item.seasonal,
+    );
 
   const bridalPartyPromoItem =
-    // Prefer a wedding lehenga or Indo-Western set from a separate shoot/category
+    // Tier 1: explicitly tagged wedding/bridal/bridesmaid embroidered lehenga or Indo-Western set
     pickRaw(
       (item) =>
-        (item.category === 'lehengas' || item.category === 'indowestern') &&
+        (isTrueWeddingLehenga(item) ||
+          (item.category === 'indowestern' && item.crafted && !item.printOnly)) &&
+        item.explicitWedding &&
         item.category !== readyToShipPromoItem?.category &&
         isDifferentUploadBatch(item, readyToShipPromoItem) &&
+        !item.navratri &&
         !item.seasonal,
     ) ||
-    // Next: any women's celebration category different from left banner + separate shoot
+    // Tier 2: true embroidered wedding lehenga or embroidered Indo-Western set from a separate shoot
+    pickRaw(
+      (item) =>
+        (isTrueWeddingLehenga(item) ||
+          (item.category === 'indowestern' && item.crafted && !item.printOnly)) &&
+        item.category !== readyToShipPromoItem?.category &&
+        isDifferentUploadBatch(item, readyToShipPromoItem) &&
+        !item.navratri &&
+        !item.seasonal,
+    ) ||
+    // Tier 3: any explicitly wedding-tagged embroidered celebration outfit in a different category
     pickRaw(
       (item) =>
         isWomensCelebration(item) &&
+        item.explicitWedding &&
+        item.crafted &&
+        !item.printOnly &&
         item.category !== readyToShipPromoItem?.category &&
         isDifferentUploadBatch(item, readyToShipPromoItem) &&
+        !item.navratri &&
         !item.seasonal,
     ) ||
-    // Next: any women's celebration category different from left banner (still distinct design family)
+    // Tier 4: any embroidered celebration outfit in a different category (never print-only)
     pickRaw(
       (item) =>
         isWomensCelebration(item) &&
+        item.crafted &&
+        !item.printOnly &&
         item.category !== readyToShipPromoItem?.category &&
+        !item.navratri &&
         !item.seasonal,
     ) ||
-    // Final strict fallback: any distinct adult celebration design family (never same family)
     pickRaw(
       (item) =>
         isAdultCelebration(item) &&
-        isDifferentUploadBatch(item, readyToShipPromoItem) &&
+        !item.printOnly &&
+        item.category !== readyToShipPromoItem?.category &&
+        !item.navratri &&
         !item.seasonal,
     ) ||
-    pickRaw((item) => isAdultCelebration(item) && !item.seasonal);
+    pickRaw(
+      (item) =>
+        isAdultCelebration(item) &&
+        item.category !== readyToShipPromoItem?.category &&
+        !item.navratri &&
+        !item.seasonal,
+    );
 
   return {
     hero: {

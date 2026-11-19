@@ -23,6 +23,8 @@ function makeEdge({
   height = 1200,
   availableForSale = true,
   tags = [],
+  description = '',
+  occasion = null,
   price = '120.00',
 }) {
   return {
@@ -30,8 +32,10 @@ function makeEdge({
       id: `gid://shopify/Product/${handle}`,
       handle,
       title,
+      description,
       productType,
       tags,
+      occasionMetafield: occasion ? { value: occasion } : null,
       availableForSale,
       createdAt,
       priceRange: { minVariantPrice: { amount: price } },
@@ -215,19 +219,48 @@ test('selectLatestHomepageImagery never repeats colorway variants across hero, c
           price: '89.00',
           url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/printed-crape-pp.jpg?v=1794800004',
         }),
-        // Distinct lehengas, sarees, suits, indowestern, menswear, kids, jewelry
+        // Navratri/chaniya choli lehengas (tagged, described, or multicolor lace) must NEVER be selected
         makeEdge({
           handle: 'multicolor-georgette-lehenga-choli-with-lace',
           title: 'Multicolor Georgette Lehenga Choli with Lace',
           productType: 'Lehenga Choli',
-          createdAt: '2026-11-09T10:00:00Z',
+          tags: ['occasion:navratri'],
+          createdAt: '2026-11-16T10:00:00Z',
           price: '142.00',
-          url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/georgette-lace-lehenga.jpg?v=1794200000',
+          url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/georgette-lace-lehenga.jpg?v=1794900000',
+        }),
+        makeEdge({
+          handle: 'pink-georgette-flared-lehenga-choli',
+          title: 'Pink Georgette Flared Lehenga Choli',
+          description: 'Lightweight chaniya choli styled with oxidized jewelry for Garba and Dandiya nights.',
+          productType: 'Lehenga Choli',
+          createdAt: '2026-11-16T09:00:00Z',
+          price: '78.00',
+          url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/garba-pink.jpg?v=1794890000',
+        }),
+        makeEdge({
+          handle: 'beige-heritage-print-chinon-silk-lehenga-choli',
+          title: 'Beige Heritage Print Chinon Silk Lehenga Choli',
+          productType: 'Lehenga Choli',
+          createdAt: '2026-11-12T10:00:00Z',
+          price: '95.00',
+          url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/heritage-print-lehenga.jpg?v=1794500000',
+        }),
+        // Genuine wedding/bridal/reception lehengas, sarees, suits, indowestern, menswear, kids, jewelry
+        makeEdge({
+          handle: 'ruby-pink-sequin-embroidered-georgette-lehenga-choli',
+          title: 'Ruby Pink Sequin Embroidered Georgette Wedding Lehenga Choli',
+          productType: 'Wedding Lehenga',
+          tags: ['occasion:wedding', 'occasion:reception'],
+          createdAt: '2026-11-09T10:00:00Z',
+          price: '198.00',
+          url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/ruby-pink-wedding-lehenga.jpg?v=1794200000',
         }),
         makeEdge({
           handle: 'grey-georgette-embroidered-wedding-lehenga-choli',
           title: 'Grey Georgette Embroidered Unstitched Lehenga Choli – Wedding',
           productType: 'Lehenga Choli',
+          tags: ['occasion:wedding'],
           createdAt: '2026-11-01T12:00:00Z',
           price: '79.50',
           url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/grey-wedding-lehenga-4797-321-B_1.jpg?v=1793569611',
@@ -292,9 +325,19 @@ test('selectLatestHomepageImagery never repeats colorway variants across hero, c
           handle: 'midnight-blue-net-floral-embroidered-lehenga-choli',
           title: 'Midnight Blue Net Floral Embroidered Lehenga Choli',
           productType: 'Lehenga Choli',
+          tags: ['occasion:reception'],
           createdAt: '2026-10-19T10:00:00Z',
           price: '130.00',
           url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-6032-blue-1.jpg?v=1792438550',
+        }),
+        makeEdge({
+          handle: 'lilac-organza-embroidered-lehenga-choli',
+          title: 'Lilac Organza Embroidered Wedding Lehenga Choli',
+          productType: 'Wedding Lehenga',
+          tags: ['occasion:wedding-guest', 'role:bridesmaid'],
+          createdAt: '2026-10-15T10:00:00Z',
+          price: '113.13',
+          url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-405938-1.jpg?v=1792095979',
         }),
         makeEdge({
           handle: 'fuchsia-pink-embroidered-chinon-three-piece-jacket-set-indian-wedding-outfit',
@@ -329,7 +372,42 @@ test('selectLatestHomepageImagery never repeats colorway variants across hero, c
   assert.equal(allEntries.length, 14);
   for (const [slot, entry] of allEntries) {
     assert.ok(entry, `expected slot ${slot} to be populated`);
+    assert.notEqual(
+      entry.handle,
+      'multicolor-georgette-lehenga-choli-with-lace',
+      `Navratri multicolor lehenga must never appear in ${slot}`,
+    );
+    assert.notEqual(
+      entry.handle,
+      'pink-georgette-flared-lehenga-choli',
+      `Garba/chaniya choli lehenga must never appear in ${slot}`,
+    );
+    assert.notEqual(
+      entry.handle,
+      'beige-heritage-print-chinon-silk-lehenga-choli',
+      `print-only lehenga must not overtake embroidered wedding lehengas in ${slot}`,
+    );
   }
+
+  // Wedding hero slide picks the newest genuine wedding lehenga
+  assert.equal(
+    result.hero['wedding-edit'].handle,
+    'ruby-pink-sequin-embroidered-georgette-lehenga-choli',
+  );
+  // Lehengas & Festive Suits hero slide picks the newest embroidered suit (not printed)
+  assert.equal(
+    result.hero['lehengas-suits'].handle,
+    'embroidered-net-palazzo-suit-coral',
+  );
+  // Category lehenga and bridal-party promo pick distinct genuine embroidered wedding lehengas
+  assert.equal(
+    result.categories.lehengas.handle,
+    'midnight-blue-net-floral-embroidered-lehenga-choli',
+  );
+  assert.equal(
+    result.promos['bridal-party'].handle,
+    'lilac-organza-embroidered-lehenga-choli',
+  );
 
   // Pairwise verify NO two slots anywhere share the same handle, image, OR design family
   for (let i = 0; i < allEntries.length; i += 1) {

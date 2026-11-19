@@ -113,16 +113,14 @@ async function main() {
 
     fs.writeFileSync(OUTPUT_PATH, `${JSON.stringify(merged, null, 2)}\n`, 'utf8');
 
+    const fmt = (slot, item) =>
+      `${slot}=${item?.handle || 'none'} (${(item?.createdAt || '').slice(0, 10)}, $${item?.price ?? 0}, ${item?.width || 0}x${item?.height || 0}) "${item?.title || ''}"`;
     const summary = [
-      ...Object.entries(merged.hero).map(
-        ([slot, item]) => `hero.${slot}=${item?.handle || 'none'} (${(item?.createdAt || '').slice(0, 10)})`,
-      ),
+      ...Object.entries(merged.hero).map(([slot, item]) => fmt(`hero.${slot}`, item)),
       ...Object.entries(merged.categories)
         .filter(([, item]) => Boolean(item))
-        .map(([slot, item]) => `cat.${slot}=${item.handle} (${(item.createdAt || '').slice(0, 10)})`),
-      ...Object.entries(merged.promos).map(
-        ([slot, item]) => `promo.${slot}=${item?.handle || 'none'} (${(item?.createdAt || '').slice(0, 10)})`,
-      ),
+        .map(([slot, item]) => fmt(`cat.${slot}`, item)),
+      ...Object.entries(merged.promos).map(([slot, item]) => fmt(`promo.${slot}`, item)),
     ];
     console.log(`[homepage-imagery] Refreshed latest Shopify product photos:\n  ${summary.join('\n  ')}`);
   } catch (error) {
