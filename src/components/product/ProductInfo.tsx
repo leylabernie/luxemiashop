@@ -1689,7 +1689,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
             <SocialShare
               productTitle={product.title}
               productUrl={`https://luxemia.shop/product/${product.handle}`}
-              productImage={schemaVariant?.image?.url || product.images.edges[0]?.node.url || undefined}
+              productImage={product.images.edges[0]?.node.url || undefined}
               className="hidden sm:flex gap-2"
             />
           </div>
@@ -1804,7 +1804,7 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
         <SocialShare
           productTitle={product.title}
           productUrl={`https://luxemia.shop/product/${product.handle}`}
-          productImage={schemaVariant?.image?.url || product.images.edges[0]?.node.url || undefined}
+          productImage={product.images.edges[0]?.node.url || undefined}
           className="sm:hidden flex flex-col gap-2"
         />
       </nav>
