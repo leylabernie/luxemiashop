@@ -1,11 +1,18 @@
 import { mensPurchasePresentation, isMensSharedStockActive, ALTERATION_SERVICE_ID } from '@/lib/mensSharedStock';
-import { DESTINATION_IMPORT_NOTICE, BASE_SHIPPING_TIMING_NOTICE, alterationShippingTimingNotice, productShippingTimingNotice } from '@/config/shippingPolicy';
+import {
+  DESTINATION_IMPORT_NOTICE,
+  BASE_SHIPPING_TIMING_NOTICE,
+  alterationShippingTimingNotice,
+  productShippingTimingNotice,
+  usDeliveryWindowNotice,
+} from '@/config/shippingPolicy';
+import { WELCOME_OFFER } from '@/config/welcomeOffer';
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck } from 'lucide-react';
+import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getColorwaysForHandle } from '@/config/colorwayLinks';
@@ -1029,6 +1036,19 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
     });
   };
 
+  const copyWelcomeCode = async () => {
+    try {
+      await navigator.clipboard.writeText(WELCOME_OFFER.code);
+      toast.success(`Copied ${WELCOME_OFFER.code}`, {
+        description: 'Enter it at checkout for 10% off your first order.',
+      });
+    } catch {
+      toast.success(`${WELCOME_OFFER.code} — enter at checkout`, {
+        description: 'One use per customer. U.S. free shipping $150+ applies after discounts.',
+      });
+    }
+  };
+
   const handleShare = async () => {
     const productUrl = `https://luxemia.shop/product/${product.handle}`;
 
@@ -1151,6 +1171,22 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           </p>
         )}
       </div>
+
+      {WELCOME_OFFER.enabled && (
+        <div className="flex flex-wrap items-center gap-2 gap-y-1">
+          <button
+            type="button"
+            onClick={copyWelcomeCode}
+            className="inline-flex items-center gap-1.5 rounded-sm border border-background bg-background px-3 py-1.5 text-[11px] font-medium transition-colors hover:bg-muted text-foreground"
+          >
+            <Copy className="h-3 w-3 shrink-0" />
+            First order: {WELCOME_OFFER.code} → {WELCOME_OFFER.discountPercent} percent off at checkout
+          </button>
+          <p className="text-[10px] text-muted-foreground leading-none">
+            One use per customer · entered at checkout · U.S. free shipping $150+ applies after discounts
+          </p>
+        </div>
+      )}
 
       {/* ─── Essential Purchase Controls (kept directly under price) ─── */}
       <div id="product-options" className="scroll-mt-24 space-y-4">
@@ -1690,6 +1726,16 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
             <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
             <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
           </div>
+
+          {/* Dispatch + U.S. standard delivery window above the fold, next to Add to Bag */}
+          <p className="text-[11px] text-muted-foreground">
+            {usDeliveryWindowNotice({
+              shipsWithinDays,
+              hasAlterations: requiresNativeTimingConfirmation || hasSelectedAlterations || currentSelectionIsMadeToOrder,
+              isMadeToOrder: currentSelectionIsMadeToOrder,
+              confirmAvailability: product.tags?.includes('availability:Confirm before ordering'),
+            })}
+          </p>
         </div>
 
         {productHasNativeSizes && (

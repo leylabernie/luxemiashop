@@ -14,6 +14,7 @@ import {
   trackRemoveFromCart,
   trackViewCart,
 } from '@/hooks/useAnalytics';
+import { trackMarketingAddToCart, trackMarketingInitiateCheckout } from '@/lib/marketingPixels';
 import { toast } from 'sonner';
 import { isHiddenBillingProductHandle, type ServiceAddOnCode } from '@/lib/serviceAddOns';
 
@@ -186,6 +187,8 @@ export const useCartStore = create<CartStore>()(
         // Fire only after a valid cart action. Variant ID, selected variant, and
         // tailoring option are preserved for item-level GA4 analysis.
         trackAddToCart(toAnalyticsItem(item));
+        // Consent-gated Meta/Pinterest/TikTok AddToCart alongside GA4.
+        trackMarketingAddToCart(item.variantId, Number(item.price.amount), item.price.currencyCode, item.quantity);
 
         if (existingItem) {
           set({
@@ -219,6 +222,8 @@ export const useCartStore = create<CartStore>()(
         const quantityDelta = quantity - current.quantity;
         if (quantityDelta > 0) {
           trackAddToCart(toAnalyticsItem(current, quantityDelta));
+          // Consent-gated Meta/Pinterest/TikTok AddToCart alongside GA4.
+          trackMarketingAddToCart(current.variantId, Number(current.price.amount) * quantityDelta, current.price.currencyCode, quantityDelta);
         } else if (quantityDelta < 0) {
           trackRemoveFromCart(toAnalyticsItem(current, Math.abs(quantityDelta)));
         }
@@ -296,6 +301,12 @@ export const useCartStore = create<CartStore>()(
         const analyticsItems = normalizedItems.map((item) => toAnalyticsItem(item));
         trackBeginCheckout(analyticsItems, totalValue, normalizedItems[0]?.price.currencyCode);
         trackCheckoutHandoffSuccess(analyticsItems, totalValue, normalizedItems[0]?.price.currencyCode);
+        // Consent-gated Meta/Pinterest/TikTok InitiateCheckout alongside GA4.
+        trackMarketingInitiateCheckout(
+          totalValue,
+          normalizedItems[0]?.price.currencyCode,
+          normalizedItems.map((item) => item.variantId),
+        );
       },
 
       createCheckout: async (options) => {
@@ -328,6 +339,12 @@ export const useCartStore = create<CartStore>()(
             items.map((item) => toAnalyticsItem(item)),
             totalValue,
             items[0]?.price.currencyCode,
+          );
+          // Consent-gated Meta/Pinterest/TikTok InitiateCheckout alongside GA4.
+          trackMarketingInitiateCheckout(
+            totalValue,
+            items[0]?.price.currencyCode,
+            items.map((item) => item.variantId),
           );
         }
 

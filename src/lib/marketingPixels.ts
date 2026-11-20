@@ -45,6 +45,8 @@ export interface MarketingTracker {
   init: () => void;
   pageView: () => void;
   viewContent: (contentId: string, value?: number, currency?: string) => void;
+  addToCart: (contentId: string, value?: number, currency?: string, quantity?: number) => void;
+  initiateCheckout: (value?: number, currency?: string, contentIds?: string[]) => void;
   revoke: () => void;
 }
 
@@ -139,6 +141,27 @@ export function createMarketingTracker(ids: MarketingPixelIds, consentAllowed = 
     // Pinterest pagevisit belongs exclusively to the route tracker, not the PDP.
     if (ids.tiktok) safely(() => window.ttq?.track('ViewContent', { content_id: contentId, content_type: 'product', ...price }));
   }
+  function addToCart(contentId: string, value?: number, currency = 'USD', quantity = 1) {
+    if (!contentId) return;
+    init();
+    if (!initialized || !allowed()) return;
+    const price = typeof value === 'number' && Number.isFinite(value) ? { value, currency } : {};
+    const metaPayload = { content_ids: [contentId], content_type: 'product', contents: [{ id: contentId, quantity }], ...price };
+    if (ids.meta) safely(() => window.fbq?.('track', 'AddToCart', metaPayload));
+    if (ids.pinterest) safely(() => window.pintrk?.('track', 'addtocart', { content_ids: [contentId], ...price }));
+    if (ids.tiktok) safely(() => window.ttq?.track('AddToCart', { content_id: contentId, content_type: 'product', ...price }));
+  }
+  function initiateCheckout(value?: number, currency = 'USD', contentIds: string[] = []) {
+    init();
+    if (!initialized || !allowed()) return;
+    const price = typeof value === 'number' && Number.isFinite(value) ? { value, currency } : {};
+    const payload = contentIds.length
+      ? { ...price, content_ids: contentIds, content_type: 'product' }
+      : price;
+    if (ids.meta) safely(() => window.fbq?.('track', 'InitiateCheckout', payload));
+    if (ids.pinterest) safely(() => window.pintrk?.('track', 'checkout', payload));
+    if (ids.tiktok) safely(() => window.ttq?.track('InitiateCheckout', payload));
+  }
   function revoke() {
     // Clear not-yet-delivered work before the consent controller reloads denied.
     // Already-started requests cannot be undone by JavaScript.
@@ -153,7 +176,7 @@ export function createMarketingTracker(ids: MarketingPixelIds, consentAllowed = 
       ttq.disableCookie?.();
     });
   }
-  return { init, pageView, viewContent, revoke };
+  return { init, pageView, viewContent, addToCart, initiateCheckout, revoke };
 }
 const defaultTracker = createMarketingTracker(MARKETING_PIXEL_IDS);
 subscribeMarketingConsent(consent => {
@@ -166,3 +189,5 @@ subscribeMarketingConsent(consent => {
 export const initMarketingPixels = defaultTracker.init;
 export const trackMarketingPageView = defaultTracker.pageView;
 export const trackMarketingViewContent = defaultTracker.viewContent;
+export const trackMarketingAddToCart = defaultTracker.addToCart;
+export const trackMarketingInitiateCheckout = defaultTracker.initiateCheckout;

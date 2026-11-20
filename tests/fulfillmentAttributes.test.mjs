@@ -123,7 +123,8 @@ const { default: CartDrawer } = await load('src/components/cart/CartDrawer.tsx',
   builder.onLoad({ filter: /.*/, namespace: 'render-fixture' }, ({ path }) => {
     let contents;
     if (path === 'framer-motion') contents = 'import React from "react"; export const AnimatePresence=React.Fragment; export const motion=new Proxy({}, {get:(_,tag)=>({children,className,role})=>React.createElement(tag,{className,role},children)});';
-    else if (path === 'lucide-react') contents = 'export const X=()=>null,Minus=X,Plus=X,Trash2=X,Loader2=X,ArrowRight=X,ShieldCheck=X,Award=X,Truck=X;';
+    else if (path === 'lucide-react') contents = 'export const X=()=>null,Minus=X,Plus=X,Trash2=X,Loader2=X,ArrowRight=X,ShieldCheck=X,Award=X,Truck=X,Copy=X;';
+    else if (path.includes('welcomeOffer')) contents = 'export const WELCOME_OFFER={code:\"FIRST10\",discountPercent:10,oneUsePerCustomer:true,appliesAtCheckout:true,usFreeShippingAfterDiscounts:true,enabled:true};';
     else if (path.endsWith('cartStore')) contents = 'export const useCartStore=()=>globalThis.fulfillmentRenderStore;';
     else if (path.endsWith('serviceAddOns')) contents = 'export const isGarmentAlterationCartLine=()=>false, isHiddenBillingProductHandle=()=>false;';
     else if (path.endsWith('imageUtils')) contents = 'export const getOptimizedImage=x=>x;';

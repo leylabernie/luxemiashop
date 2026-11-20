@@ -1,6 +1,10 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { createMarketingTracker as makeTracker } from '../src/lib/marketingPixels.ts';
+import {
+  createMarketingTracker as makeTracker,
+  trackMarketingAddToCart,
+  trackMarketingInitiateCheckout,
+} from '../src/lib/marketingPixels.ts';
 
 const createMarketingTracker = (ids) => makeTracker(ids, () => true);
 
@@ -243,4 +247,118 @@ test('active product consent subscription tracks only the current product and cl
   assert.deepEqual(events, [['current', 10, 'USD']]);
   stopCurrent();
   assert.equal(listeners.size, 0);
+});
+
+test('exported conversion helpers exist on the default tracker', () => {
+  assert.equal(typeof trackMarketingAddToCart, 'function');
+  assert.equal(typeof trackMarketingInitiateCheckout, 'function');
+});
+
+test('Meta AddToCart fires with product contents, value and currency', () => {
+  installBrowserHost();
+  const tracker = createMarketingTracker({ meta: '1234567890' });
+  tracker.init();
+  tracker.addToCart('blush-beige-tissue-silk-saree', 96, 'USD', 2);
+
+  assert.deepEqual(window.fbq.queue[0], ['init', '1234567890']);
+  const call = window.fbq.queue.find((args) => args[0] === 'track' && args[1] === 'AddToCart');
+  assert.ok(call, 'Meta AddToCart was fired');
+  assert.deepEqual(call[2].content_ids, ['blush-beige-tissue-silk-saree']);
+  assert.equal(call[2].content_type, 'product');
+  assert.deepEqual(call[2].contents, [{ id: 'blush-beige-tissue-silk-saree', quantity: 2 }]);
+  assert.equal(call[2].value, 96);
+  assert.equal(call[2].currency, 'USD');
+});
+
+test('Meta InitiateCheckout fires with cart value and content IDs', () => {
+  installBrowserHost();
+  const tracker = createMarketingTracker({ meta: '1234567890' });
+  tracker.init();
+  tracker.initiateCheckout(148, 'USD', ['saree-1', 'blouse-2']);
+
+  const call = window.fbq.queue.find((args) => args[0] === 'track' && args[1] === 'InitiateCheckout');
+  assert.ok(call, 'Meta InitiateCheckout was fired');
+  assert.equal(call[2].value, 148);
+  assert.equal(call[2].currency, 'USD');
+  assert.deepEqual(call[2].content_ids, ['saree-1', 'blouse-2']);
+  assert.equal(call[2].content_type, 'product');
+});
+
+test('Pinterest addtocart and checkout events fire', () => {
+  installBrowserHost();
+  const tracker = createMarketingTracker({ pinterest: '2612345678901' });
+  tracker.init();
+  tracker.addToCart('saree-1', 48, 'USD', 1);
+  tracker.initiateCheckout(148, 'USD', ['saree-1']);
+
+  assert.deepEqual(window.pintrk.queue[0], ['load', '2612345678901']);
+  const addToCart = window.pintrk.queue.find((args) => args[1] === 'addtocart');
+  assert.ok(addToCart, 'Pinterest addtocart was fired');
+  assert.equal(addToCart[2].content_ids?.[0], 'saree-1');
+  assert.equal(addToCart[2].value, 48);
+  const checkout = window.pintrk.queue.find((args) => args[1] === 'checkout');
+  assert.ok(checkout, 'Pinterest checkout was fired');
+  assert.equal(checkout[2].value, 148);
+  assert.deepEqual(checkout[2].content_ids, ['saree-1']);
+});
+
+test('TikTok AddToCart and InitiateCheckout fire through the queue stub', () => {
+  installBrowserHost();
+  const tracker = createMarketingTracker({ tiktok: 'TT_PIXEL_1' });
+  tracker.init();
+  tracker.addToCart('saree-1', 48, 'USD', 1);
+  tracker.initiateCheckout(148, 'USD', ['saree-1']);
+
+  const added = [...window.ttq].find((args) => args[0] === 'track' && args[1] === 'AddToCart');
+  assert.ok(added, 'TikTok AddToCart was fired');
+  assert.equal(added[2].content_id, 'saree-1');
+  assert.equal(added[2].value, 48);
+  const started = [...window.ttq].find((args) => args[0] === 'track' && args[1] === 'InitiateCheckout');
+  assert.ok(started, 'TikTok InitiateCheckout was fired');
+  assert.equal(started[2].value, 148);
+  assert.deepEqual(started[2].content_ids, ['saree-1']);
+});
+
+test('conversion events are blocked without marketing consent', () => {
+  installBrowserHost();
+  let consent = false;
+  const tracker = makeTracker({ meta: '1', pinterest: '2', tiktok: '3' }, () => consent);
+  tracker.init();
+  tracker.addToCart('saree-1', 10, 'USD', 1);
+  tracker.initiateCheckout(10, 'USD', ['saree-1']);
+  assert.equal(window.fbq, undefined);
+  assert.equal(window.pintrk, undefined);
+  assert.equal(window.ttq, undefined);
+
+  consent = true;
+  tracker.addToCart('saree-1', 10, 'USD', 1);
+  assert.ok(window.fbq, 'scripts load once consent is granted');
+  assert.deepEqual(
+    window.fbq.queue.find((args) => args[0] === 'track' && args[1] === 'AddToCart')[2],
+    { content_ids: ['saree-1'], content_type: 'product', contents: [{ id: 'saree-1', quantity: 1 }], value: 10, currency: 'USD' },
+  );
+});
+
+test('an unconfigured vendor receives no conversion events even when others are configured', () => {
+  installBrowserHost();
+  const tracker = createMarketingTracker({ meta: '1' });
+  tracker.init();
+  tracker.addToCart('saree-1', 10, 'USD', 1);
+  tracker.initiateCheckout(10, 'USD', ['saree-1']);
+
+  assert.equal(window.pintrk, undefined);
+  assert.equal(window.ttq, undefined);
+  assert.equal(window.fbq.queue.filter((args) => args[0] === 'track').length, 2);
+});
+
+test('no pixel IDs means no conversion events fire', () => {
+  installBrowserHost();
+  const tracker = createMarketingTracker({});
+  tracker.init();
+  tracker.addToCart('saree-1', 10, 'USD', 1);
+  tracker.initiateCheckout(10, 'USD', ['saree-1']);
+
+  assert.equal(window.fbq, undefined);
+  assert.equal(window.pintrk, undefined);
+  assert.equal(window.ttq, undefined);
 });

@@ -3,6 +3,47 @@ export const SHIPPING_COUNTRIES = ['US', 'CA', 'GB', 'AU', 'NZ', 'ZA', 'MU'] as 
 export const US_STANDARD_SHIPPING_RATE = 14.99;
 export const US_FREE_SHIPPING_THRESHOLD = 150;
 
+// Source-of-truth U.S. standard shipping timelines (orders ship from India):
+// ready stock dispatches within 3–4 business days; standard transit is
+// approximately 9–14 business days after dispatch (12–18 business days
+// total). Requested alterations or finishing add 3 business days once,
+// after complete measurements and service details are confirmed.
+export const US_READY_STOCK_DISPATCH_MIN_DAYS = 3;
+export const US_READY_STOCK_DISPATCH_MAX_DAYS = 4;
+export const US_STANDARD_TRANSIT_MIN_DAYS = 9;
+export const US_STANDARD_TRANSIT_MAX_DAYS = 14;
+export const US_STANDARD_DELIVERY_MIN_TOTAL_DAYS = 12;
+export const US_STANDARD_DELIVERY_MAX_TOTAL_DAYS = 18;
+export const ALTERATION_ADD_BUSINESS_DAYS = 3;
+
+export interface UsDeliveryWindowOptions {
+  shipsWithinDays: number | null | undefined;
+  hasAlterations?: boolean;
+  isMadeToOrder?: boolean;
+  confirmAvailability?: boolean;
+}
+
+/** Concise, policy-compliant U.S. dispatch + standard delivery window copy. */
+export function usDeliveryWindowNotice({
+  shipsWithinDays,
+  hasAlterations = false,
+  isMadeToOrder = false,
+  confirmAvailability = false,
+}: UsDeliveryWindowOptions): string {
+  if (isMadeToOrder || confirmAvailability) {
+    return 'Confirm size and availability before ordering — estimated U.S. delivery 12–18 business days after dispatch.';
+  }
+  const dispatchExtra = hasAlterations ? ALTERATION_ADD_BUSINESS_DAYS : 0;
+  const dispatchSuffix = hasAlterations ? ' (+3 business days once for alterations)' : '';
+  if (shipsWithinDays) {
+    const dispatchEstimate = shipsWithinDays + dispatchExtra;
+    const totalMin = dispatchEstimate + US_STANDARD_TRANSIT_MIN_DAYS;
+    const totalMax = dispatchEstimate + US_STANDARD_TRANSIT_MAX_DAYS;
+    return `Estimated dispatch in ${dispatchEstimate} business day${dispatchEstimate === 1 ? '' : 's'}${dispatchSuffix} · U.S. standard delivery ${US_STANDARD_TRANSIT_MIN_DAYS}–${US_STANDARD_TRANSIT_MAX_DAYS} business days after dispatch (${totalMin}–${totalMax} total). Dates are estimates, not guaranteed.`;
+  }
+  return `Estimated dispatch within ${US_READY_STOCK_DISPATCH_MIN_DAYS}–${US_READY_STOCK_DISPATCH_MAX_DAYS} business days${dispatchSuffix} · U.S. standard delivery ${US_STANDARD_TRANSIT_MIN_DAYS}–${US_STANDARD_TRANSIT_MAX_DAYS} business days after dispatch (${US_STANDARD_DELIVERY_MIN_TOTAL_DAYS}–${US_STANDARD_DELIVERY_MAX_TOTAL_DAYS} business days total${dispatchSuffix}). Dates are estimates, not guaranteed.`;
+}
+
 export interface ShippingZonePolicy {
   id: string;
   name: string;

@@ -17,12 +17,13 @@ const result = await build({
     b.onLoad({filter:/.*/,namespace:'fixture'}, a => {
       let contents;
       if(a.path === 'framer-motion') contents=`import React from 'react'; export const AnimatePresence=React.Fragment; export const motion=new Proxy({}, { get:(_,tag)=>({children,className,role,...rest})=>React.createElement(tag,{className,role},children) });`;
-      else if(a.path === 'lucide-react') contents=`export const X=()=>null,Minus=X,Plus=X,Trash2=X,Loader2=X,ArrowRight=X,ShieldCheck=X,Award=X,Truck=X;`;
+      else if(a.path === 'lucide-react') contents=`export const X=()=>null,Minus=X,Plus=X,Trash2=X,Loader2=X,ArrowRight=X,ShieldCheck=X,Award=X,Truck=X,Copy=X;`;
       else if(a.path.includes('cartStore')) contents=`export const useCartStore=()=>globalThis.fixtureStore;`;
       else if(a.path.includes('serviceAddOns')) contents=`export const isGarmentAlterationCartLine=()=>false; export const isHiddenBillingProductHandle=()=>false;`;
       else if(a.path.includes('shipBy')) contents=`export const getProductShipsWithin=p=>Number(p.shipsWithinMetafield?.value || p.shipsWithin) || null;`;
       else if(a.path.includes('imageUtils')) contents=`export const getOptimizedImage=x=>x;`;
       else if(a.path.includes('/button')) contents=`import React from 'react'; export const Button=({children,asChild,variant,size,...props})=>asChild?React.cloneElement(React.Children.only(children),props):React.createElement('button',props,children);`;
+      else if(a.path.includes('welcomeOffer')) contents=`export const WELCOME_OFFER={code:'FIRST10',discountPercent:10,oneUsePerCustomer:true,appliesAtCheckout:true,usFreeShippingAfterDiscounts:true,enabled:true};`;
       else contents=`export default ()=>null;`;
       return {contents, loader:'js'};
     });

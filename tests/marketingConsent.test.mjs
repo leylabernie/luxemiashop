@@ -1,6 +1,8 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
+import { createRequire } from 'node:module';
+import path from 'node:path';
 import { createMarketingConsentStore, MARKETING_CONSENT_KEY, reloadWithMarketingDenied } from '../src/lib/marketingConsent.ts';
 
 function browser(initial, blocked = false) {
@@ -180,4 +182,75 @@ test('each withdrawal publishes a fresh denial even when denials are already sto
     assert.equal(storeB.get(), 'denied');
   }
   assert.equal(delivered, 3);
+});
+
+test('MarketingConsent source gates the unknown banner on configured pixel IDs', () => {
+  const source = readFileSync(new URL('../src/components/MarketingConsent.tsx', import.meta.url), 'utf8');
+  assert.match(source, /import \{ MARKETING_PIXEL_IDS \} from '@\/lib\/marketingPixels'/);
+  assert.match(source, /const hasPixels = Boolean\(/);
+  assert.match(source, /const visible = \(consent === 'unknown' && hasPixels\) \|\| open;/);
+  // Existing accessibility surface is unchanged.
+  assert.match(source, /aria-expanded=\{visible\}/);
+  assert.match(source, /aria-labelledby="marketing-privacy-title"/);
+  assert.match(source, /choose\('denied'\)/);
+  assert.match(source, /choose\('granted'\)/);
+  assert.match(source, /Withdraw permission/);
+  assert.match(source, /Privacy choices/);
+  assert.match(source, /href="\/privacy"/);
+});
+
+test('MarketingConsent never covers StickyAddToBag on /product/* routes', () => {
+  const source = readFileSync(new URL('../src/components/MarketingConsent.tsx', import.meta.url), 'utf8');
+  assert.match(
+    source,
+    /bottom-\[calc\(8rem\+env\(safe-area-inset-bottom,0px\)\)\]/,
+    'consent button clears the sticky add-to-bag bar on product routes',
+  );
+  assert.match(
+    source,
+    /bottom-\[calc\(8\.5rem\+env\(safe-area-inset-bottom,0px\)\)\]/,
+    'privacy choices panel clears the sticky add-to-bag bar on product routes',
+  );
+  assert.match(source, /window\.location\.pathname\.startsWith\('\/product\/'\)/);
+});
+
+test('MarketingConsent renders nothing when consent is unknown and no pixel IDs are configured', async () => {
+  const { buildSync } = await import('esbuild');
+  const { createElement } = await import('react');
+  const { renderToStaticMarkup } = await import('react-dom/server');
+  const root = new URL('..', import.meta.url).pathname;
+
+  // Minimal browser host: no marketing consent persisted, no VITE_* pixel IDs.
+  const values = new Map();
+  const storageHandlers = new Map();
+  globalThis.window = {
+    localStorage: {
+      getItem: (key) => values.get(key) ?? null,
+      setItem: (key, value) => { values.set(key, value); },
+    },
+    addEventListener: (name, fn) => storageHandlers.set(name, fn),
+    location: { pathname: '/product/dress', href: 'https://luxemia.shop/product/dress', search: '' },
+    history: { state: null, replaceState: () => {} },
+  };
+
+  const output = buildSync({
+    entryPoints: [path.join(root, 'src/components/MarketingConsent.tsx')],
+    bundle: true,
+    write: false,
+    platform: 'node',
+    format: 'cjs',
+    jsx: 'automatic',
+    alias: { '@': path.join(root, 'src') },
+    external: ['react', 'react-dom/server'],
+  }).outputFiles[0].text;
+  const require = createRequire(import.meta.url);
+  const m = { exports: {} };
+  new Function('require', 'module', 'exports', output)(require, m, m.exports);
+
+  const html = renderToStaticMarkup(createElement(m.exports.default));
+  // The Privacy choices trigger stays (shoppers can open it manually), but the
+  // consent banner panel must not render without any pixels configured.
+  assert.equal(html.includes('<section id="marketing-privacy-choices"'), false, 'consent banner panel must be suppressed without pixels');
+  assert.equal(html.includes('Privacy choices'), true);
+  assert.equal(html.includes('aria-expanded="false"'), true);
 });
