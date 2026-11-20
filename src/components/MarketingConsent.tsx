@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { MARKETING_PIXEL_IDS } from '@/lib/marketingPixels';
 import {
   getMarketingConsent,
   reloadWithMarketingDenied,
@@ -11,10 +12,23 @@ import {
 export default function MarketingConsent() {
   const [consent, setConsent] = useState(getMarketingConsent);
   const [open, setOpen] = useState(false);
+  const [isProductRoute, setIsProductRoute] = useState(false);
   const choicesButton = useRef<HTMLButtonElement>(null);
   const title = useRef<HTMLHeadingElement>(null);
-  const visible = consent === 'unknown' || open;
 
+  // No pixels configured → nothing to consent to. Suppress the initial
+  // unknown-state banner so first-time mobile shoppers keep the page
+  // unblocked; the shopper can still open Privacy choices manually.
+  const hasPixels = Boolean(
+    MARKETING_PIXEL_IDS.meta || MARKETING_PIXEL_IDS.pinterest || MARKETING_PIXEL_IDS.tiktok,
+  );
+  const visible = (consent === 'unknown' && hasPixels) || open;
+
+  useEffect(() => {
+    setIsProductRoute(
+      typeof window !== 'undefined' && window.location.pathname.startsWith('/product/'),
+    );
+  }, []);
   useEffect(() => subscribeMarketingConsent(setConsent), []);
   useEffect(() => { if (open) title.current?.focus(); }, [open]);
 
@@ -36,7 +50,7 @@ export default function MarketingConsent() {
         className={
           visible
             ? 'sr-only focus:not-sr-only focus:fixed focus:bottom-20 focus:left-3 focus:z-50 focus:rounded-md focus:border focus:border-foreground/30 focus:bg-background focus:px-3 focus:py-2 focus:text-xs focus:text-foreground focus:shadow-md'
-            : 'fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-3 z-40 rounded-full border border-foreground/30 bg-background px-3 py-1.5 text-[11px] text-foreground shadow-md transition-colors hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:bottom-4'
+            : `fixed ${isProductRoute ? 'bottom-[calc(8rem+env(safe-area-inset-bottom,0px))]' : 'bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))]'} left-3 z-40 rounded-full border border-foreground/30 bg-background px-3 py-1.5 text-[11px] text-foreground shadow-md transition-colors hover:bg-card focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 lg:bottom-4`
         }
       >
         Privacy choices
@@ -45,7 +59,7 @@ export default function MarketingConsent() {
         <section
           id="marketing-privacy-choices"
           aria-labelledby="marketing-privacy-title"
-          className="fixed bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))] left-2.5 right-2.5 z-50 isolate max-h-[45dvh] overflow-y-auto rounded-lg border border-foreground/30 bg-background p-3.5 text-foreground shadow-2xl sm:left-4 sm:right-auto sm:max-w-md sm:p-4 lg:bottom-4"
+          className={`fixed ${isProductRoute ? 'bottom-[calc(8.5rem+env(safe-area-inset-bottom,0px))]' : 'bottom-[calc(4.25rem+env(safe-area-inset-bottom,0px))]'} left-2.5 right-2.5 z-50 isolate max-h-[45dvh] overflow-y-auto rounded-lg border border-foreground/30 bg-background p-3.5 text-foreground shadow-2xl sm:left-4 sm:right-auto sm:max-w-md sm:p-4 lg:bottom-4`}
         >
           <div className="flex items-start justify-between gap-2">
             <h2 ref={title} tabIndex={-1} id="marketing-privacy-title" className="text-sm font-medium leading-snug">

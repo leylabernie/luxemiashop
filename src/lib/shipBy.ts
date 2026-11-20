@@ -82,3 +82,25 @@ export function getShipByLabel(product?: ShopifyProductNode | null): string | nu
   const shipByDate = addUsBusinessDays(new Date(), shipsWithin);
   return `Ships by ${format(shipByDate, 'EEEE d MMMM')}`;
 }
+
+/** Estimated U.S. standard delivery window from today: dispatch date plus
+ * 9–14 business days of carrier transit. Returns null when the listing has
+ *  no dispatch estimate. */
+export interface UsDeliveryRange {
+  dispatchBy: string;
+  deliveryFrom: string;
+  deliveryTo: string;
+}
+
+const US_TRANSIT_MIN_DAYS = 9;
+const US_TRANSIT_MAX_DAYS = 14;
+
+export function getEstimatedUsDeliveryRange(shipsWithinDays: number | null): UsDeliveryRange | null {
+  if (!shipsWithinDays) return null;
+  const dispatchBy = addUsBusinessDays(new Date(), shipsWithinDays);
+  return {
+    dispatchBy: format(dispatchBy, 'MMMM d'),
+    deliveryFrom: format(addUsBusinessDays(dispatchBy, US_TRANSIT_MIN_DAYS), 'MMMM d'),
+    deliveryTo: format(addUsBusinessDays(dispatchBy, US_TRANSIT_MAX_DAYS), 'MMMM d'),
+  };
+}

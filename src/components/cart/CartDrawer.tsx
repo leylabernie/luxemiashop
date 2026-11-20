@@ -1,7 +1,7 @@
 import { hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
-import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck } from 'lucide-react';
+import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
 import { getProductShipsWithin } from '@/lib/shipBy';
@@ -10,6 +10,7 @@ import ProductPlaceholder from '@/components/ui/ProductPlaceholder';
 import { getOptimizedImage } from '@/lib/imageUtils';
 import { isGarmentAlterationCartLine, isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
 import { DESTINATION_IMPORT_NOTICE, SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
+import { WELCOME_OFFER } from '@/config/welcomeOffer';
 const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
 const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
 
@@ -88,6 +89,19 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     if (unavailableItems.length > 0 || isLoading) return;
     attemptedCheckoutKey.current = checkoutRequestKey;
     void createCheckout({ trackEvents: false });
+  };
+
+  const copyWelcomeCode = async () => {
+    try {
+      await navigator.clipboard.writeText(WELCOME_OFFER.code);
+      toast.success(`Copied ${WELCOME_OFFER.code}`, {
+        description: 'Enter it at checkout for 10% off your first order.',
+      });
+    } catch {
+      toast.success(`${WELCOME_OFFER.code} — enter at checkout`, {
+        description: 'One use per customer. U.S. free shipping $150+ applies after discounts.',
+      });
+    }
   };
 
   return (
@@ -297,6 +311,21 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                     <p id="cart-checkout-error" className="text-xs text-destructive text-center" role="alert">
                       {checkoutError}
                     </p>
+                  )}
+                  {WELCOME_OFFER.enabled && checkoutUrl && unavailableItems.length === 0 && (
+                    <>
+                      <button
+                        type="button"
+                        onClick={copyWelcomeCode}
+                        className="w-full flex items-center justify-center gap-2 border border-background bg-background rounded-sm py-2.5 text-xs sm:text-sm font-medium transition-colors hover:bg-muted text-foreground"
+                      >
+                        <Copy className="h-4 w-4 shrink-0" />
+                        First order? Copy {WELCOME_OFFER.code} → {WELCOME_OFFER.discountPercent} percent off at checkout
+                      </button>
+                      <p className="text-[10px] text-center text-muted-foreground">
+                        One use per customer · entered at checkout · U.S. free shipping $150+ applies after discounts
+                      </p>
+                    </>
                   )}
                   {checkoutUrl && unavailableItems.length === 0 ? (
                     <Button
