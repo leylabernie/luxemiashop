@@ -12,7 +12,7 @@ import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Heart, Share2, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck, Copy } from 'lucide-react';
+import { Heart, Check, CheckCircle2, Minus, Plus, ShoppingBag, Truck, Package, Lock, Info, Scissors, MessageCircle, BadgeCheck, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { getColorwaysForHandle } from '@/config/colorwayLinks';
@@ -26,6 +26,7 @@ import { emptyMeasurementDraft, measurementError, measurementAttributes, type Me
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { ProductDeliverySummary } from './ProductDeliverySummary';
+import { SocialShare } from './SocialShare';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
 import { SleeveStyleSelector, type SleeveStyleOption } from './SleeveStyleSelector';
@@ -1049,29 +1050,6 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
     }
   };
 
-  const handleShare = async () => {
-    const productUrl = `https://luxemia.shop/product/${product.handle}`;
-
-    try {
-      if (navigator.share) {
-        await navigator.share({
-          title: product.title,
-          text: `View ${product.title} at LuxeMia`,
-          url: productUrl,
-        });
-        return;
-      }
-
-      await navigator.clipboard.writeText(productUrl);
-      toast.success('Product link copied');
-    } catch (error) {
-      if (error instanceof DOMException && error.name === 'AbortError') return;
-      toast.error('Unable to share this product', {
-        description: productUrl,
-      });
-    }
-  };
-
   const canStickyDirectAdd = Boolean(
     purchasableVariant
       && isAvailable
@@ -1708,16 +1686,12 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
               <Heart className={`h-5 w-5 ${isWishlisted ? 'fill-primary text-primary' : ''}`} />
             </Button>
 
-            <Button
-              type="button"
-              variant="outline"
-              size="icon"
-              className="hidden sm:inline-flex h-14 w-14 shrink-0"
-              aria-label="Share this product"
-              onClick={handleShare}
-            >
-              <Share2 className="h-5 w-5" />
-            </Button>
+            <SocialShare
+              productTitle={product.title}
+              productUrl={`https://luxemia.shop/product/${product.handle}`}
+              productImage={schemaVariant?.image?.url || product.images.edges[0]?.node.url || undefined}
+              className="hidden sm:flex gap-2"
+            />
           </div>
 
           {/* Trust micro-strip */}
@@ -1827,13 +1801,12 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
         <Link to="/returns" className="font-medium text-link hover:text-link/80 underline underline-offset-4">
           Returns &amp; cancellations
         </Link>
-        <button
-          type="button"
-          onClick={handleShare}
-          className="sm:hidden font-medium text-link hover:text-link/80 underline underline-offset-4"
-        >
-          Share
-        </button>
+        <SocialShare
+          productTitle={product.title}
+          productUrl={`https://luxemia.shop/product/${product.handle}`}
+          productImage={schemaVariant?.image?.url || product.images.edges[0]?.node.url || undefined}
+          className="sm:hidden flex flex-col gap-2"
+        />
       </nav>
 
       <button
