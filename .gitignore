@@ -77,3 +77,4 @@ scripts/backups/
 !scripts/debrand-bridal-vol3.py
 !scripts/build-shopify-csv-bridal-vol3.py
 !scripts/publish-bridal-vol3-shopify.mjs
+!scripts/verify-live-seo-tags.cjs
