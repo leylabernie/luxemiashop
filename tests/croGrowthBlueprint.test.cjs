@@ -545,3 +545,93 @@ test('Post-Deployment Check 2: Add-to-Cart -> Checkout URL carries _ga & _gl eve
     globalThis.localStorage = originalLocalStorage;
   }
 });
+
+test('Phase 2 Check: CartDrawer activates WhatsApp Sizing & Stitching Concierge for carts > $200', async () => {
+  const result = await build({
+    entryPoints: [path.join(root, 'src/components/cart/CartDrawer.tsx')],
+    bundle: true,
+    write: false,
+    platform: 'node',
+    format: 'cjs',
+    jsx: 'automatic',
+    external: ['react', 'react/jsx-runtime'],
+    plugins: [
+      {
+        name: 'cart-drawer-fixtures',
+        setup(b) {
+          b.onResolve({ filter: /^@\/lib\/measurementRequest$/ }, () => ({
+            path: path.join(root, 'src/lib/measurementRequest.ts'),
+          }));
+          b.onResolve({ filter: /^@\/config\/shippingPolicy$/ }, () => ({
+            path: path.join(root, 'src/config/shippingPolicy.ts'),
+          }));
+          b.onResolve({ filter: /^(framer-motion|lucide-react|@\/)/ }, (a) => ({
+            path: a.path,
+            namespace: 'fixture',
+          }));
+          b.onLoad({ filter: /.*/, namespace: 'fixture' }, (a) => {
+            let contents = 'export default () => null;';
+            if (a.path === 'framer-motion') {
+              contents = `import React from 'react'; export const AnimatePresence = React.Fragment; export const motion = new Proxy({}, { get: (_, tag) => ({ children, className, role }) => React.createElement(tag, { className, role }, children) });`;
+            } else if (a.path === 'lucide-react') {
+              contents = `export const X=()=>null,Minus=X,Plus=X,Trash2=X,Loader2=X,ArrowRight=X,ShieldCheck=X,Award=X,Truck=X,Copy=X;`;
+            } else if (a.path.includes('cartStore')) {
+              contents = `export const useCartStore = () => globalThis.__conciergeCartFixture;`;
+            } else if (a.path.includes('serviceAddOns')) {
+              contents = `export const isGarmentAlterationCartLine = () => false; export const isHiddenBillingProductHandle = () => false;`;
+            } else if (a.path.includes('shipBy')) {
+              contents = `export const getProductShipsWithin = () => null;`;
+            } else if (a.path.includes('imageUtils')) {
+              contents = `export const getOptimizedImage = (x) => x;`;
+            } else if (a.path.includes('/button')) {
+              contents = `import React from 'react'; export const Button = ({ children, asChild, variant, size, ...props }) => asChild ? React.cloneElement(React.Children.only(children), props) : React.createElement('button', props, children);`;
+            } else if (a.path.includes('welcomeOffer')) {
+              contents = `export const WELCOME_OFFER = { code: 'FIRST10', discountPercent: 10, oneUsePerCustomer: true, appliesAtCheckout: true, usFreeShippingAfterDiscounts: true, enabled: true };`;
+            }
+            return { contents, loader: 'js' };
+          });
+        },
+      },
+    ],
+  });
+
+  const mod = { exports: {} };
+  new Function('require', 'module', 'exports', result.outputFiles[0].text)(require, mod, mod.exports);
+  const CartDrawer = mod.exports.default;
+
+  const renderBag = (amount) => {
+    globalThis.__conciergeCartFixture = {
+      items: [
+        {
+          variantId: 'gid://shopify/ProductVariant/99',
+          variantTitle: 'Custom Stitched / M',
+          selectedOptions: [],
+          quantity: 1,
+          price: { amount: String(amount), currencyCode: 'USD' },
+          product: {
+            node: {
+              handle: 'crimson-banarasi-lehenga',
+              title: 'Crimson Banarasi Lehenga',
+              images: { edges: [] },
+              variants: { edges: [] },
+            },
+          },
+        },
+      ],
+      isLoading: false,
+      checkoutError: null,
+      checkoutUrl: 'https://checkout.luxemia.shop/cart/c/token123?channel=online_store',
+      trackCheckoutClick() {},
+      trackCartView() {},
+    };
+    return renderToStaticMarkup(React.createElement(CartDrawer, { isOpen: true, onClose: () => {} }));
+  };
+
+  assert.doesNotMatch(renderBag(199.99), /data-testid="whatsapp-cart-concierge"/);
+
+  const highValueHtml = renderBag(249.0);
+  assert.match(highValueHtml, /data-testid="whatsapp-cart-concierge"/);
+  assert.match(highValueHtml, /https:\/\/wa\.me\/12153419990\?text=/);
+  assert.match(highValueHtml, /Crimson%20Banarasi%20Lehenga/);
+  assert.match(highValueHtml, /%24249\.00/);
+});
