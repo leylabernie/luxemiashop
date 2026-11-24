@@ -2,7 +2,7 @@ const assert = require('node:assert/strict');
 const fs = require('node:fs');
 const path = require('node:path');
 const test = require('node:test');
-const { buildSync } = require('esbuild');
+const { build, buildSync } = require('esbuild');
 const React = require('react');
 const { renderToStaticMarkup } = require('react-dom/server');
 const { MemoryRouter } = require('react-router-dom');
@@ -343,4 +343,205 @@ test('Task 4: /api/gmc-feed builds optimized titles, canonical luxemia.shop link
     lines[0],
     'id,title,description,link,image_link,availability,price,google_product_category,brand,condition,gender,age_group,color,material,size,identifier_exists,custom_label_0,custom_label_1,shipping',
   );
+
+  // Verify merchant ID continuity mode + production handle exclusions + committed WebP->JPG map
+  const merchantRows = gmc.buildGmcFeedRows([sampleProduct], { idMode: 'merchant' });
+  assert.equal(merchantRows[0].id, 'teal-georgette-sequin-sangeet-lehenga-choli-99001');
+
+  const longHandleRows = gmc.buildGmcFeedRows(
+    [
+      {
+        ...sampleProduct,
+        handle: 'teal-georgette-sequin-sangeet-lehenga-choli-extra-long-bridal-edition',
+      },
+    ],
+    { idMode: 'merchant' },
+  );
+  assert.equal(longHandleRows[0].id, 'p8801-v99001');
+
+  const excludedRows = gmc.buildGmcFeedRows([
+    { ...sampleProduct, handle: 'luxemia-tailoring-saree-finishing-add-ons' },
+    { ...sampleProduct, handle: '3d-peacock-mirror-work-italian-silk-ready-made-blouse' },
+    { ...sampleProduct, handle: 'aqua-blue-ready-to-wear-jacquard-silk-saree' },
+  ]);
+  assert.equal(excludedRows.length, 0);
+
+  assert.equal(
+    gmc.forceGmcSafeImageUrl(
+      'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/17708061151830169163.webp?v=1770806115',
+    ),
+    'https://luxemia.shop/images/gmc/17708061151830169163.jpg',
+  );
+});
+
+test('Post-Deployment Check 1: Server-side HTML emits JSON-LD schemas in <head> before client hydration', async () => {
+  const { generateProductHtml } = loadTsModule('src/middleware/htmlGenerator.ts');
+
+  const fixtureProduct = {
+    id: 'gid://shopify/Product/91001',
+    handle: 'crimson-banarasi-silk-bridal-lehenga',
+    title: 'Crimson Banarasi Silk Bridal Lehenga',
+    description: 'Crimson Banarasi silk bridal lehenga choli with zari embroidery.',
+    vendor: 'LuxeMia',
+    productType: 'Lehenga Choli',
+    tags: ['silk', 'zari'],
+    priceRange: {
+      minVariantPrice: { amount: '349.00', currencyCode: 'USD' },
+      maxVariantPrice: { amount: '349.00', currencyCode: 'USD' },
+    },
+    options: [{ name: 'Size', values: ['S', 'M'] }],
+    images: {
+      edges: [
+        {
+          node: {
+            url: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/crimson-lehenga-1.jpg?v=1',
+            altText: 'Crimson Banarasi Silk Bridal Lehenga',
+          },
+        },
+      ],
+    },
+    variants: {
+      edges: [
+        {
+          node: {
+            id: 'gid://shopify/ProductVariant/55001',
+            title: 'S',
+            sku: 'LM-55001',
+            availableForSale: true,
+            price: { amount: '349.00', currencyCode: 'USD' },
+            compareAtPrice: null,
+            image: null,
+            selectedOptions: [{ name: 'Size', value: 'S' }],
+          },
+        },
+      ],
+    },
+  };
+
+  const serverHtml = generateProductHtml(
+    fixtureProduct,
+    'https://luxemia.shop/product/crimson-banarasi-silk-bridal-lehenga',
+  );
+  const headSection = serverHtml.split('</head>')[0];
+  const prerenderSchemaMatches = [
+    ...headSection.matchAll(
+      /<script type="application\/ld\+json" data-prerender-schema>([\s\S]*?)<\/script>/g,
+    ),
+  ];
+  assert.ok(prerenderSchemaMatches.length >= 5, 'Expected >= 5 server-side JSON-LD scripts in <head>');
+
+  const parsedSchemas = prerenderSchemaMatches.map((m) => JSON.parse(m[1]));
+  const types = parsedSchemas.map((s) => s['@type']);
+  assert.ok(types.includes('Organization'));
+  assert.ok(types.includes('Product'));
+  assert.ok(types.includes('BreadcrumbList'));
+  assert.ok(types.includes('WebPage'));
+  assert.ok(types.includes('FAQPage'));
+
+  // Verify main.tsx strips [data-prerender-schema] right before createRoot hydration to prevent duplicates
+  const mainTsx = fs.readFileSync(path.join(root, 'src/main.tsx'), 'utf8');
+  assert.match(mainTsx, /querySelectorAll\(['"]script\[data-prerender-schema\]['"]\)/);
+});
+
+test('Post-Deployment Check 2: Add-to-Cart -> Checkout URL carries _ga & _gl even when gtag sets cookie after drawer opens', async () => {
+  const originalDocument = globalThis.document;
+  const originalWindow = globalThis.window;
+  const originalLocalStorage = globalThis.localStorage;
+
+  try {
+    const storageMap = new Map();
+    globalThis.localStorage = {
+      getItem: (k) => (storageMap.has(k) ? storageMap.get(k) : null),
+      setItem: (k, v) => storageMap.set(k, String(v)),
+      removeItem: (k) => storageMap.delete(k),
+      clear: () => storageMap.clear(),
+    };
+
+    // Start BEFORE gtag.js has set _ga cookie (simulating deferred requestIdleCallback load)
+    globalThis.document = { cookie: '' };
+    globalThis.window = {
+      location: { search: '' },
+      gtag: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      localStorage: globalThis.localStorage,
+    };
+
+    const built = await build({
+      entryPoints: [path.join(root, 'src/stores/cartStore.ts')],
+      bundle: true,
+      write: false,
+      platform: 'node',
+      format: 'cjs',
+      packages: 'external',
+      alias: { '@': path.join(root, 'src') },
+      plugins: [
+        {
+          name: 'mock-shopify-checkout',
+          setup(b) {
+            b.onResolve({ filter: /^@\/lib\/shopify$/ }, (a) => ({
+              path: a.path,
+              namespace: 'shopify-mock',
+            }));
+            b.onLoad({ filter: /.*/, namespace: 'shopify-mock' }, () => ({
+              contents: `
+                import { appendGaLinkerParams } from './gaLinker';
+                export const createStorefrontCheckout = async () =>
+                  appendGaLinkerParams('https://checkout.luxemia.shop/cart/c/Z2NwLXVzLWVhc3QxOjAx?channel=online_store&return_url=https%3A%2F%2Fluxemia.shop%2Forder-confirmation');
+              `,
+              loader: 'ts',
+              resolveDir: path.join(root, 'src/lib'),
+            }));
+          },
+        },
+      ],
+    });
+
+    const mod = { exports: {} };
+    new Function('exports', 'require', 'module', '__filename', '__dirname', built.outputFiles[0].text)(
+      mod.exports,
+      require,
+      mod,
+      path.join(root, 'src/stores/cartStore.ts'),
+      path.join(root, 'src/stores'),
+    );
+
+    const { useCartStore } = mod.exports;
+    useCartStore.getState().clearCart();
+    useCartStore.getState().addItem({
+      product: {
+        node: {
+          id: 'gid://shopify/Product/91001',
+          title: 'Crimson Banarasi Silk Bridal Lehenga',
+          handle: 'crimson-banarasi-silk-bridal-lehenga',
+          productType: 'Lehenga Choli',
+          vendor: 'LuxeMia',
+        },
+      },
+      variantId: 'gid://shopify/ProductVariant/55001',
+      variantTitle: 'S',
+      price: { amount: '349.00', currencyCode: 'USD' },
+      quantity: 1,
+      selectedOptions: [{ name: 'Size', value: 'S' }],
+    });
+
+    const initialCheckoutUrl = await useCartStore.getState().createCheckout({ trackEvents: false });
+    assert.ok(initialCheckoutUrl.startsWith('https://checkout.luxemia.shop/cart/c/'));
+
+    // Now gtag.js finishes loading and writes _ga cookie + _gl in URL BEFORE shopper clicks "Proceed to Secure Checkout"
+    globalThis.document.cookie = '_ga=GA1.1.482910374.1795540000';
+    globalThis.window.location.search = '?_gl=1*xyz987*_ga*NDgyOTEwMzc0LjE3OTU1NDAwMDA.';
+
+    const anchorTarget = { href: initialCheckoutUrl };
+    useCartStore.getState().trackCheckoutClick({ currentTarget: anchorTarget });
+
+    const finalRedirectUrl = new URL(anchorTarget.href);
+    assert.equal(finalRedirectUrl.hostname, 'checkout.luxemia.shop');
+    assert.equal(finalRedirectUrl.searchParams.get('_ga'), 'GA1.1.482910374.1795540000');
+    assert.equal(finalRedirectUrl.searchParams.get('_gl'), '1*xyz987*_ga*NDgyOTEwMzc0LjE3OTU1NDAwMDA.');
+  } finally {
+    globalThis.document = originalDocument;
+    globalThis.window = originalWindow;
+    globalThis.localStorage = originalLocalStorage;
+  }
 });
