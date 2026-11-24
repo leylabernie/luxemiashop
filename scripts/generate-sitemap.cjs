@@ -112,6 +112,7 @@ const staticPages = [
   { loc: '/shipping/australia', changefreq: 'monthly', priority: '0.6' },
   { loc: '/pages/shipping-customs', changefreq: 'monthly', priority: '0.4' },
   { loc: '/returns', changefreq: 'monthly', priority: '0.4' },
+  { loc: '/alterations', changefreq: 'monthly', priority: '0.5' },
   { loc: '/size-guide', changefreq: 'monthly', priority: '0.5' },
   { loc: '/sizing-measurements-guide', changefreq: 'monthly', priority: '0.8' },
   { loc: '/care-guide', changefreq: 'monthly', priority: '0.5' },

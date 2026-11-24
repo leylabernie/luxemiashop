@@ -214,8 +214,8 @@ test('rendered native tailoring notice overrides inherited stock and custom ETAs
   ]) {
     const html = renderDelivery({ hasStitching: false, ...inherited, requiresTailoringTimingConfirmation: true });
     assert.match(html, /Alterations \/ finishing selected/);
-    if (inherited.shipsWithinDays) { assert.match(html, /7 business days before dispatch/); assert.match(html, /16–21 business days total/); } else { assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE)); }
-    assert.doesNotMatch(html, /Ready to ship|Estimated dispatch|4–5|Unstitched fabric set/);
+    if (inherited.shipsWithinDays) { assert.match(html, /14–16 business days before dispatch/); assert.match(html, /18–21 business days total/); } else { assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE)); }
+    assert.doesNotMatch(html, /Ready to ship|Estimated dispatch|4–5 weeks|Unstitched fabric set/);
   }
 });
 
@@ -225,9 +225,9 @@ test('rendered fabric-only and unrelated ready-stock shipping behavior is unchan
   assert.doesNotMatch(fabric, /Alterations \/ finishing selected/);
   const readyStock = renderDelivery({ hasStitching: false });
   assert.match(readyStock, /Available to order/);
-  assert.match(readyStock, /3–4 business days/);
+  assert.match(readyStock, /5–7 business days/);
   const madeToOrder = renderDelivery({ hasStitching: false, isMadeToOrder: true });
-  assert.match(madeToOrder, /15–21 business days total/);
+  assert.match(madeToOrder, /15–18 business days total/);
 });
 
 test('mixed-offer catalog tags use the actual selected Fabric Only variant in delivery', () => {
@@ -397,10 +397,10 @@ test('Made to Fit delivery renders tailoring timing while Standard Fit stays rea
     if (tailored) {
       assert.match(html, /Alterations \/ finishing selected/);
       assert.ok(html.includes(NATIVE_STITCHING_TIMING_NOTICE));
-      assert.doesNotMatch(html, /Ready to ship|3–4 business days/);
+      assert.doesNotMatch(html, /Ready to ship|5–7 business days/);
     } else {
       assert.match(html, /Available to order/);
-      assert.match(html, /3–4 business days/);
+      assert.match(html, /5–7 business days/);
     }
   }
 });

@@ -48,6 +48,7 @@ export const PRERENDERED_ROUTES: Set<string> = new Set([
   '/ready-to-ship',
   '/pages/shipping-customs',
   '/returns',
+  '/alterations',
   '/contact',
   '/privacy',
   '/terms',

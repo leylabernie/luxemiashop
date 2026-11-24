@@ -4,15 +4,24 @@ import { useLocation } from 'react-router-dom';
 
 const GA_MEASUREMENT_ID = 'G-D1NN0TC3Y0';
 
+export interface GoogleAdsRuntimeConfig {
+  conversionId?: string;
+  addToCartLabel?: string;
+  beginCheckoutLabel?: string;
+  purchaseLabel?: string;
+}
+
 declare global {
   interface Window {
     gtag?: (
-      command: 'config' | 'event',
+      command: 'config' | 'event' | 'set',
       targetIdOrEventName: string,
       params?: Record<string, unknown>,
     ) => void;
     dataLayer: unknown[];
     luxemiaAnalyticsEnabled?: boolean;
+    luxemiaGoogleAdsId?: string;
+    luxemiaGoogleAdsConfig?: GoogleAdsRuntimeConfig;
   }
 }
 
@@ -23,6 +32,7 @@ export interface AnalyticsItem {
   quantity?: number;
   currency?: string;
   category?: string;
+  brand?: string;
   variant?: string;
   productGroupId?: string;
   itemListId?: string;
@@ -48,12 +58,43 @@ interface AnalyticsPurchase {
 const cleanString = (value?: string) => value?.trim() || undefined;
 const resolveCurrency = (currency?: string) => cleanString(currency)?.toUpperCase() || 'USD';
 
-const toGaItem = (item: AnalyticsItem) => ({
+export const resolveAnalyticsCategory = (category?: string, itemName?: string): string => {
+  const cleaned = cleanString(category);
+  if (cleaned) return cleaned;
+  const lower = (itemName || '').toLowerCase();
+  if (lower.includes('saree')) return 'Sarees';
+  if (lower.includes('lehenga') || lower.includes('choli')) return 'Lehengas';
+  if (lower.includes('sherwani') || lower.includes('kurta')) return 'Menswear';
+  if (
+    lower.includes('earring') ||
+    lower.includes('necklace') ||
+    lower.includes('choker') ||
+    lower.includes('jewelry') ||
+    lower.includes('jewellery') ||
+    lower.includes('bangle')
+  ) {
+    return 'Jewelry';
+  }
+  if (
+    lower.includes('sharara') ||
+    lower.includes('gharara') ||
+    lower.includes('anarkali') ||
+    lower.includes('palazzo') ||
+    lower.includes('salwar') ||
+    lower.includes('suit')
+  ) {
+    return 'Suits';
+  }
+  return 'Indian Ethnic Wear';
+};
+
+export const toGaItem = (item: AnalyticsItem) => ({
   item_id: item.id,
   item_name: item.name,
-  price: item.price,
+  item_brand: cleanString(item.brand) || 'LuxeMia',
+  item_category: resolveAnalyticsCategory(item.category, item.name),
+  price: Number.isFinite(item.price) ? Number(item.price.toFixed(2)) : 0,
   quantity: item.quantity ?? 1,
-  ...(cleanString(item.category) && { item_category: cleanString(item.category) }),
   ...(cleanString(item.variant) && { item_variant: cleanString(item.variant) }),
   ...(cleanString(item.productGroupId) && { item_product_group_id: cleanString(item.productGroupId) }),
   ...(cleanString(item.itemListId) && { item_list_id: cleanString(item.itemListId) }),
@@ -62,6 +103,67 @@ const toGaItem = (item: AnalyticsItem) => ({
   ...(cleanString(item.tailoringOption) && { item_tailoring_option: cleanString(item.tailoringOption) }),
   ...(cleanString(item.occasion) && { item_occasion: cleanString(item.occasion) }),
 });
+
+function readGoogleAdsConfig(): GoogleAdsRuntimeConfig {
+  const runtimeCfg = (typeof window !== 'undefined' && window.luxemiaGoogleAdsConfig) || {};
+  let envCfg: Record<string, string | undefined> = {};
+  try {
+    envCfg = (import.meta as unknown as { env?: Record<string, string | undefined> })?.env || {};
+  } catch {
+    envCfg = {};
+  }
+  return {
+    conversionId: cleanString(
+      runtimeCfg.conversionId ||
+        (typeof window !== 'undefined' ? window.luxemiaGoogleAdsId : undefined) ||
+        envCfg.VITE_GOOGLE_ADS_ID,
+    ),
+    addToCartLabel: cleanString(
+      runtimeCfg.addToCartLabel || envCfg.VITE_GOOGLE_ADS_ADD_TO_CART_LABEL,
+    ),
+    beginCheckoutLabel: cleanString(
+      runtimeCfg.beginCheckoutLabel || envCfg.VITE_GOOGLE_ADS_BEGIN_CHECKOUT_LABEL,
+    ),
+    purchaseLabel: cleanString(
+      runtimeCfg.purchaseLabel || envCfg.VITE_GOOGLE_ADS_PURCHASE_LABEL,
+    ),
+  };
+}
+
+export const sendGoogleAdsConversion = (
+  action: 'add_to_cart' | 'begin_checkout' | 'purchase',
+  value: number,
+  currency?: string,
+  transactionId?: string,
+) => {
+  if (
+    typeof window === 'undefined' ||
+    window.luxemiaAnalyticsEnabled === false ||
+    typeof window.gtag !== 'function' ||
+    !Number.isFinite(value)
+  ) {
+    return;
+  }
+
+  const cfg = readGoogleAdsConfig();
+  if (!cfg.conversionId) return;
+
+  const label =
+    action === 'add_to_cart'
+      ? cfg.addToCartLabel
+      : action === 'begin_checkout'
+        ? cfg.beginCheckoutLabel
+        : cfg.purchaseLabel;
+
+  if (!label) return;
+
+  window.gtag('event', 'conversion', {
+    send_to: `${cfg.conversionId}/${label}`,
+    value: Number(value.toFixed(2)),
+    currency: resolveCurrency(currency),
+    ...(cleanString(transactionId) && { transaction_id: cleanString(transactionId) }),
+  });
+};
 
 const sendEcommerceEvent = (
   eventName: string,
@@ -134,7 +236,9 @@ export const trackViewItem = (item: AnalyticsItem) => {
 };
 
 export const trackAddToCart = (item: AnalyticsItem) => {
-  sendEcommerceEvent('add_to_cart', [item], item.price * (item.quantity ?? 1), item.currency);
+  const total = item.price * (item.quantity ?? 1);
+  sendEcommerceEvent('add_to_cart', [item], total, item.currency);
+  sendGoogleAdsConversion('add_to_cart', total, item.currency);
 };
 
 export const trackRemoveFromCart = (item: AnalyticsItem) => {
@@ -150,7 +254,9 @@ export const trackAddToWishlist = (item: AnalyticsItem) => {
 };
 
 export const trackBeginCheckout = (items: AnalyticsItem[], totalValue?: number, currency?: string) => {
-  sendEcommerceEvent('begin_checkout', items, totalValue ?? cartValue(items), currency);
+  const resolvedTotal = totalValue ?? cartValue(items);
+  sendEcommerceEvent('begin_checkout', items, resolvedTotal, currency);
+  sendGoogleAdsConversion('begin_checkout', resolvedTotal, currency);
 };
 
 // `begin_checkout` captures shopper intent. This companion event confirms that
@@ -212,6 +318,7 @@ export const trackPurchase = (data: AnalyticsPurchase) => {
     ...(data.customerType && { customer_type: data.customerType }),
     items: data.items.map(toGaItem),
   });
+  sendGoogleAdsConversion('purchase', data.value, data.currency, data.transactionId);
 };
 
 export const trackRefund = (data: AnalyticsPurchase) => {

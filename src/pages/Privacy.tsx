@@ -75,7 +75,7 @@ const Privacy = () => {
                   <ul className="list-disc pl-6 space-y-2 mt-4">
                     <li><strong>Order Processing & Fulfillment:</strong> To process your payments, confirm orders, arrange shipping via DHL Express, USPS, UPS, or FedEx, provide tracking information, and handle returns or damage claims.</li>
                     <li><strong>Account Management:</strong> To create and manage your LuxeMia account, maintain your order history, and save your preferences and wishlist items.</li>
-                    <li><strong>Customer Support:</strong> To respond to your inquiries, resolve issues, process damage claims (with mandatory unboxing video), and provide styling consultations via WhatsApp or email.</li>
+                    <li><strong>Customer Support:</strong> To respond to your inquiries, resolve issues, process 48-hour photo-verified order protection claims, and provide styling consultations via WhatsApp or email.</li>
                     <li><strong>Personalization:</strong> To recommend products based on your browsing and purchase history, display relevant content, and tailor your shopping experience.</li>
                     <li><strong>Marketing Communications:</strong> To send promotional emails, newsletters, and product updates — only with your consent. You may opt out at any time using the unsubscribe link in any email or by contacting us directly.</li>
                     <li><strong>Fraud Prevention & Security:</strong> To detect and prevent fraudulent transactions, unauthorized access, and other illegal activities, including verifying your identity when necessary.</li>

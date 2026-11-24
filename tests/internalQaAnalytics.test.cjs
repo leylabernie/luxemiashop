@@ -29,7 +29,15 @@ for(const [i,script] of scripts.entries()) {
     assert.equal(loaded.length,1);
     assert.equal(loaded[0].src,'https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0');
     const linker=Array.from(context.dataLayer[2]);assert.equal(linker[1],'linker');
-    assert.deepEqual(Array.from(linker[2].domains),['luxemia.shop','lovable-project-zlh0w.myshopify.com']);
+    assert.deepEqual(Array.from(linker[2].domains),[
+      'luxemia.shop',
+      'www.luxemia.shop',
+      'checkout.luxemia.shop',
+      'lovable-project-zlh0w.myshopify.com',
+      'luxemiashop.myshopify.com',
+      'luxemia.myshopify.com',
+    ]);
+    assert.equal(linker[2].accept_incoming,true);
     const config=Array.from(context.dataLayer[3]);assert.equal(config[1],'G-D1NN0TC3Y0');
     assert.equal(config[2].send_page_view,Boolean(i));assert.equal(config[2].allow_google_signals,true);
     context.gtag('event','add_to_cart',{value:10});assert.equal(context.dataLayer.length,5);
@@ -48,7 +56,13 @@ for(const [i,script] of scripts.entries()) {
     assert.equal(enabled.loaded.length,1);
     assert.equal(storage.get('luxemia.analytics.preview'),'1');
     assert.deepEqual(Array.from(enabled.context.dataLayer[2][2].domains),[
-      'luxemia.shop','lovable-project-zlh0w.myshopify.com',previewHost,
+      'luxemia.shop',
+      'www.luxemia.shop',
+      'checkout.luxemia.shop',
+      'lovable-project-zlh0w.myshopify.com',
+      'luxemiashop.myshopify.com',
+      'luxemia.myshopify.com',
+      previewHost,
     ]);
 
     // A separate document load with a clean URL models a browser full-page navigation.
@@ -56,7 +70,13 @@ for(const [i,script] of scripts.entries()) {
     assert.equal(navigated.context.luxemiaAnalyticsEnabled,true);
     assert.equal(navigated.loaded.length,1);
     assert.deepEqual(Array.from(navigated.context.dataLayer[2][2].domains),[
-      'luxemia.shop','lovable-project-zlh0w.myshopify.com',previewHost,
+      'luxemia.shop',
+      'www.luxemia.shop',
+      'checkout.luxemia.shop',
+      'lovable-project-zlh0w.myshopify.com',
+      'luxemiashop.myshopify.com',
+      'luxemia.myshopify.com',
+      previewHost,
     ]);
     assert.equal(run(script,{host:'another-preview.vercel.app',previewHost,storage,search:'?luxemia_preview_analytics=1'}).context.luxemiaAnalyticsEnabled,false);
 

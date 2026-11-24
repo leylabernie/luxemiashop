@@ -18,13 +18,13 @@ const m={exports:{}};new Function('require','module','exports',outputFiles[0].te
 const render = codes => renderToStaticMarkup(createElement(m.exports.DeliveryEstimate,{hasStitching:false,hasSelectedAlterations:selectedServicesRequireProcessing(codes)}));
 for(const codes of [[],['matching-petticoat']]) test(`base delivery for ${codes.join('+') || 'no service'}`,()=>{
  assert.equal(selectedServicesRequireProcessing(codes),false);
- assert.match(render(codes),/12–18 business days total/);
- assert.doesNotMatch(render(codes),/15–21 business days total/);
+ assert.match(render(codes),/5–7 business days/);
+ assert.doesNotMatch(render(codes),/15–18 business days total/);
 });
 for(const codes of [['garment-alteration'],['blouse-stitching'],['pico-fall'],['blouse-stitching','pico-fall','matching-petticoat']]) test(`one processing allowance for ${codes.join('+')}`,()=>{
  assert.equal(selectedServicesRequireProcessing(codes),true);
- const html=render(codes);assert.match(html,/add 3 business days once, not per service/);assert.match(html,/15–21 business days total/);
- assert.doesNotMatch(html,/12–18 business days total|Tailored to order|Made to Order|4–5 weeks/);
+ const html=render(codes);assert.match(html,/counted once per outfit not per service/);assert.match(html,/15–18 business days total/);
+ assert.doesNotMatch(html,/Tailored to order|Made to Order|4–5 weeks/);
  assert.match(html,/after complete measurements and service details are confirmed/);
 });
 test('three optional saree fees remain $26; fabricated construction is not introduced',()=>{
@@ -36,8 +36,8 @@ test('three optional saree fees remain $26; fabricated construction is not intro
  assert.equal(mayRequireAlterationProcessing(woven),true);assert.equal(mayRequireAlterationProcessing(sage),true);
 });
 test('public processing terms retain carrier window, exclude unverified speed and avoid stacking',()=>{
- assert.match(timing.SHIPPING_TIMING_NOTICE,/3–4 business days/);assert.match(timing.SHIPPING_TIMING_NOTICE,/9–14 business days after dispatch/);
- assert.doesNotMatch(timing.SHIPPING_TIMING_NOTICE,/4–6 business days|made.to.order|production/i);
+ assert.match(timing.SHIPPING_TIMING_NOTICE,/1–2 business days/);assert.match(timing.SHIPPING_TIMING_NOTICE,/5–7 business days.*DHL\/FedEx/);
+ assert.doesNotMatch(timing.SHIPPING_TIMING_NOTICE,/made.to.order|production/i);
  assert.match(timing.productShippingTimingNotice(6),/Ships within 6 business days/);
 });
 test('PDP service and native fitting state drive both shipping panel and spec; no selected price changes',()=>{
@@ -51,7 +51,7 @@ test('PDP service and native fitting state drive both shipping panel and spec; n
 test('hydrated product-specific dispatch survives confirmation and fabric-only branches',()=>{
  for(const extra of [{isUnstitched:true},{confirmAvailability:true},{}]) {
   const html=renderToStaticMarkup(createElement(m.exports.DeliveryEstimate,{hasStitching:false,shipsWithinDays:6,...extra}));
-  assert.match(html,/6 business days/);assert.doesNotMatch(html,/12–18 business days total|3–4 business days/);
+  assert.match(html,/6 business days/);assert.doesNotMatch(html,/5–7 business days|1–2 business days/);
  }
  const info=readFileSync(new URL('../src/components/product/ProductInfo.tsx',import.meta.url),'utf8');
  const detail=readFileSync(new URL('../src/pages/ProductDetail.tsx',import.meta.url),'utf8');
@@ -61,8 +61,8 @@ test('hydrated product-specific dispatch survives confirmation and fabric-only b
 
 for (const flag of ['hasSelectedAlterations', 'requiresTailoringTimingConfirmation', 'isMadeToOrder']) test(`explicit dispatch survives ${flag}`, () => {
  const html=renderToStaticMarkup(createElement(m.exports.DeliveryEstimate,{hasStitching:false,shipsWithinDays:6,[flag]:true}));
- assert.match(html,/9 business days before dispatch/); assert.match(html,/18–23 business days total/);
- assert.doesNotMatch(html,/15–21 business days total|6–7 business days/);
+ assert.match(html,/16–18 business days before dispatch/); assert.match(html,/20–23 business days total/);
+ assert.doesNotMatch(html,/15–18 business days total|5–7 business days/);
 });
 
 test('actual PDP handler keeps optional timing on removable processing-service lines', async () => {
@@ -104,8 +104,8 @@ test('actual PDP handler keeps optional timing on removable processing-service l
     const notices=attrs.filter(a=>/^Timing /.test(a.key));
     if (native || madeToOrder) {
       assert.equal(notices.length,1);
-      assert.match(notices[0].value,/add 3 business days once/);
-      assert.match(notices[0].value,days===6?/18–23 business days total/:/15–21 business days total/);
+      assert.match(notices[0].value,/counted once per outfit/);
+      assert.match(notices[0].value,days===6?/20–23 business days total/:/15–18 business days total/);
     } else assert.equal(notices.length,0);
     assert.equal(added.length,1+codes.length);
     for (const line of added.slice(1)) {
@@ -113,8 +113,8 @@ test('actual PDP handler keeps optional timing on removable processing-service l
       const serviceNotices=line.customAttributes.filter(a=>a.key==='Timing Estimate');
       assert.equal(serviceNotices.length,selectedServicesRequireProcessing([line.serviceAddOnCode])?1:0);
       if(serviceNotices.length) {
-        assert.match(serviceNotices[0].value,/add 3 business days once, not per service/);
-        assert.match(serviceNotices[0].value,days===6?/18–23 business days total/:/15–21 business days total/);
+        assert.match(serviceNotices[0].value,/counted once per outfit,? not per service/);
+        assert.match(serviceNotices[0].value,days===6?/20–23 business days total/:/15–18 business days total/);
       }
     }
     // Exercise the real store removal method against the actual handler payload.
@@ -181,7 +181,7 @@ test('designer native tailoring matrix requires handoff without inventing sizes,
       const attrs=added[0].customAttributes??[];assert(!attrs.some(a=>a.key==='Stitching Size'));
       assert.deepEqual(attrs.filter(a=>a.key==='Measurement Handoff'),needs?[{key:'Measurement Handoff',value:sentinel}]:[]);
       const notices=attrs.filter(a=>a.key==='Timing Confirmation');assert.equal(notices.length,needs?1:0);
-      if(notices.length)assert.match(notices[0].value,/add 3 business days once.*15–21 business days total/);
+      if(notices.length)assert.match(notices[0].value,/15–18 business days total.*counted once per outfit/);
     }
   }
   const selection=source.slice(source.indexOf('const handleOptionSelect ='),source.indexOf('\n  const handleStitchingTypeSelect'));
@@ -207,13 +207,13 @@ test('listed native blouse timing renders once for MTM, MTF or both and preserve
     for(const days of [undefined,6]) {
       const html=renderToStaticMarkup(createElement(m.exports.DeliveryEstimate,{hasStitching:false,requiresTailoringTimingConfirmation:processing,shipsWithinDays:days}));
       if(processing) {
-        assert.match(html,/add 3 business days once, not per service/);
-        assert.match(html,days===6?/18–23 business days total/:/15–21 business days total/);
-        assert.doesNotMatch(html,/add 6 business days|21–26 business days total/);
+        assert.match(html,/counted once per outfit,? not per service/);
+        assert.match(html,days===6?/20–23 business days total/:/15–18 business days total/);
+        assert.doesNotMatch(html,/add 6 business days|30–36 business days total/);
       } else {
-        assert.match(html,days===6?/Estimated dispatch in 6 business days without alterations/:/12–18 business days total/);
-        if(days===6) assert.match(html,/9–14 business days after dispatch/);
-        assert.doesNotMatch(html,/15–21 business days total|18–23 business days total/);
+        assert.match(html,days===6?/Estimated dispatch in 6 business days without alterations/:/5–7 business days/);
+        if(days===6) assert.match(html,/4–5 business days.*DHL\/FedEx|DHL\/FedEx.*4–5 business days/);
+        assert.doesNotMatch(html,days===6?/20–23 business days total/:/15–18 business days total/);
       }
     }
     assert.equal(serviceAddOnTotal([]),0,'native options never create optional-service fees');

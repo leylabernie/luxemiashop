@@ -52,7 +52,8 @@ test('homepage leads with accurate value rather than restrictive return copy', (
   }
   const copy = read('src/lib/homepageValueProposition.ts');
   for (const text of ['tracked international delivery from India', 'U.S.-based support', 'where offered on the product page']) assert.ok(copy.includes(text));
-  assert.match(read('src/lib/returnPolicyCopy.ts'), /continuous unboxing/);
+  assert.match(read('src/lib/returnPolicyCopy.ts'), /3-Point Quality Assurance Check/);
+  assert.match(read('src/lib/returnPolicyCopy.ts'), /2–3 clear photos/);
   assert.match(prerender.slice(end), /RETURN_POLICY_FAQ_ANSWER/);
 });
 

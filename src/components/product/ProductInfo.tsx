@@ -26,6 +26,8 @@ import { emptyMeasurementDraft, measurementError, measurementAttributes, type Me
 import { StitchingSizeSelector } from '@/components/StitchingSizeSelector';
 import { DeliveryEstimate } from './DeliveryEstimate';
 import { ProductDeliverySummary } from './ProductDeliverySummary';
+import { EstimatedDeliveryBadge } from '../pdp/EstimatedDeliveryBadge';
+import { SizingAlterationCallout } from '../pdp/SizingAlterationCallout';
 import { SocialShare } from './SocialShare';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
@@ -184,7 +186,7 @@ const extractProductSpecs = (
     [/\bcotton\b/i, 'Cotton'],
   ];
   const fabricKeywords = ['georgette silk', 'tissue silk', 'vichitra silk', 'rangoli silk', 'dola silk', 'fendi silk', 'banarasi', 'silk', 'cotton', 'georgette', 'chiffon', 'velvet', 'net', 'crepe', 'satin', 'brocade', 'jacquard', 'organza', 'chinnon', 'roman silk'];
-  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven', 'handcrafted'];
+  const workKeywords = ['embroidery', 'embroidered', 'sequins', 'mirror', 'zari', 'thread work', 'stone work', 'beadwork', 'digital print', 'printed', 'woven'];
   const titleWorkLabels: Array<[RegExp, string]> = [
     [/\bsequins?\b/i, 'Sequins'],
     [/\bthread\b/i, 'Thread Work'],
@@ -1694,11 +1696,19 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
             />
           </div>
 
+          {/* Dynamic Estimated Delivery Badge directly under Add to Cart */}
+          <EstimatedDeliveryBadge
+            shipsWithinDays={shipsWithinDays}
+            isCustomTailored={requiresNativeTimingConfirmation || hasSelectedAlterations || currentSelectionIsMadeToOrder}
+            confirmAvailability={product.tags?.includes('availability:Confirm before ordering')}
+            isUnstitched={isUnstitchedDelivery}
+          />
+
           {/* Trust micro-strip */}
           <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-1 text-xs text-muted-foreground">
-            <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />Tracked U.S. shipping</span>
+            <span className="flex items-center gap-1"><CheckCircle2 className="h-3.5 w-3.5 text-green-600" />3-Point QA Checked</span>
             <span className="flex items-center gap-1"><Lock className="h-3.5 w-3.5" />Secure checkout</span>
-            <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />U.S.-based support</span>
+            <span className="flex items-center gap-1"><MessageCircle className="h-3.5 w-3.5" />Philadelphia, PA support</span>
           </div>
 
           {/* Dispatch + U.S. standard delivery window above the fold, next to Add to Bag */}
@@ -1759,6 +1769,17 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           {productSpecs.work && <div className="sm:col-span-2"><dt className="font-medium">Work &amp; embellishment</dt><dd className="text-muted-foreground">{productSpecs.work}</dd></div>}
         </dl>
       )}
+
+      <SizingAlterationCallout
+        productTitle={product.title}
+        productType={product.productType}
+        description={product.description}
+        tags={product.tags}
+        includedPieces={productSpecs.includedPieces}
+        includedBulletItems={includedBulletItems}
+        isUnstitched={isUnstitchedDelivery}
+        isAccessory={isAccessoryProductType(product.productType)}
+      />
 
       <ProductDeliverySummary
         shipsWithinDays={shipsWithinDays}

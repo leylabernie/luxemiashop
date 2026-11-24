@@ -87,6 +87,7 @@ const STATIC_ROUTES = [
   '/ready-to-ship',
   '/pages/shipping-customs',
   '/returns',
+  '/alterations',
   '/contact',
   '/privacy',
   '/terms',

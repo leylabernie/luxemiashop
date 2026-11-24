@@ -74,7 +74,7 @@ test('actual handler NOW native request preserves variant price and one timing a
   assert(!attrs(line).some(a => ['Measurements', 'Measurement Handoff'].includes(a.key)));
   const notices = attrs(line).filter(a => /^Timing /.test(a.key));
   assert.equal(notices.length, 1);
-  assert.match(notices[0].value, /add 3 business days once.*15–21 business days total/);
+  assert.match(notices[0].value, /15–18 business days total.*counted once per outfit/);
 });
 
 test('actual handler LATER retains explicit after-order handoff and never hidden personal rows', async () => {
@@ -99,7 +99,7 @@ test('optional-service measurements stay on the applicable service, not garment 
     assert.equal(Number(line.price.amount), services.SERVICE_ADD_ONS[line.serviceAddOnCode].price);
     const notices = attrs(line).filter(a => /^Timing /.test(a.key));
     assert.equal(notices.length, line.serviceAddOnCode === 'matching-petticoat' ? 0 : 1);
-    if (notices.length) assert.match(notices[0].value, /add 3 business days once.*15–21 business days total/);
+    if (notices.length) assert.match(notices[0].value, /15–18 business days total.*counted once per outfit/);
   }
 });
 

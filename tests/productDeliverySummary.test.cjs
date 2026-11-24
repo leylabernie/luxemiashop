@@ -12,20 +12,20 @@ new Function('require','module','exports',output)(require,m,m.exports);
 const render = props => renderToStaticMarkup(createElement(m.exports.ProductDeliverySummary, {hasAlterations:false,...props}, createElement('p',null,'Original detailed terms')));
 test('compact initial view retains costs, origin and expandable complete terms',()=>{
  const html=render({});
- assert.match(html,/12–18 business days/);
+ assert.match(html,/5–7 business days/);
  assert.match(html,/\$14.99 below \$150; free at \$150\+/);
  assert.match(html,/Ships from India/); assert.match(html,/No U.S. doorstep import fees; sales tax at checkout/);
  assert.match(html,/Other-country shipping rates and import charges vary/);
  assert.match(html,/<details class="group"><summary/); assert.doesNotMatch(html,/<details[^>]* open/);
  assert.match(html,/Original detailed terms/); assert.match(html,/Dates are not guaranteed/);
 });
-test('selected processing adds three days once and preserves long-dispatch exceptions',()=>{
- assert.match(render({hasAlterations:true}),/15–21 business days after complete measurements/);
- assert.match(render({shipsWithinDays:6}),/15–20 business days/);
- assert.match(render({shipsWithinDays:6,hasAlterations:true}),/18–23 business days/);
- assert.match(render({shipsWithinDays:1}),/10–15 business days/);
- assert.match(render({shipsWithinDays:0}),/12–18 business days/);
- assert.match(render({hasAlterations:true}),/once for alterations \/ finishing, not per service/);
+test('selected processing uses Custom Tailored 15–18 business day window once and preserves long-dispatch exceptions',()=>{
+ assert.match(render({hasAlterations:true}),/15–18 business days.*after complete measurements/);
+ assert.match(render({shipsWithinDays:6}),/10–11 business days/);
+ assert.match(render({shipsWithinDays:6,hasAlterations:true}),/20–23 business days/);
+ assert.match(render({shipsWithinDays:1}),/5–6 business days/);
+ assert.match(render({shipsWithinDays:0}),/5–7 business days/);
+ assert.match(render({hasAlterations:true}),/counted once per outfit, not stacked per service/);
 });
 test('availability and construction warnings remain visible outside collapsed details',()=>{
  const html=render({confirmAvailability:true,isUnstitched:true});

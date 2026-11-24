@@ -428,6 +428,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       question: `What is the delivery time for the ${displayTitle}?`,
       answer: shippingEstimate,
     },
+    ...(!productAttributes.jewelry ? [{
+      question: `Does the ${displayTitle} include inner lining and alteration seam margin?`,
+      answer: 'Lined bodices and embroidered panels pair with breathable soft cotton or crepe inner lining where applicable (unstitched pieces are supplied in their listed fabric construction). Custom-stitched blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where construction permits, backed by up to $20 USD in Local Alteration Credit.',
+    }] : []),
     {
       question: `Can I return the ${displayTitle}?`,
       answer: RETURN_POLICY_FAQ_ANSWER,
@@ -438,9 +442,8 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     },
   ];
 
-  // FAQPage schema is intentionally suppressed — see generateFaqSchema() in
-  // src/lib/schema.ts for the rationale (Google Aug-2023 policy change).
-  // The same questions remain visible below for customers and answer engines.
+  // FAQPage JSON-LD mirrors the visible Product Questions section below for
+  // Googlebot and AI answer engines (ChatGPT, Perplexity, Claude).
   const faqSchema = generateFaqSchema(productFaqs);
   const faqHtml = productFaqs
     .map(({ question, answer }) => `<div style="margin-bottom:16px;"><h3 style="font-size:16px;margin-bottom:4px;">${escapeHtml(question)}</h3><p>${escapeHtml(answer)}</p></div>`)
@@ -548,11 +551,11 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
     function gtag(){if(window.luxemiaAnalyticsEnabled)dataLayer.push(arguments);}
     window.gtag = gtag;
     gtag('js', new Date());
-    var linkerDomains = ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com'];
+    var linkerDomains = ['luxemia.shop', 'www.luxemia.shop', 'checkout.luxemia.shop', 'lovable-project-zlh0w.myshopify.com', 'luxemiashop.myshopify.com', 'luxemia.myshopify.com'];
     // A branch preview must also be a participant in the cross-domain journey.
     // The runtime substitutes only the approved exact host; production gets ''.
     if (previewHost) linkerDomains.push(previewHost);
-    gtag('set', 'linker', { domains: linkerDomains });
+    gtag('set', 'linker', { domains: linkerDomains, accept_incoming: true });
     gtag('config', 'G-D1NN0TC3Y0', { send_page_view: true, allow_google_signals: true });
     if(window.luxemiaAnalyticsEnabled){var s=document.createElement('script');s.src='https://www.googletagmanager.com/gtag/js?id=G-D1NN0TC3Y0';s.async=true;document.head.appendChild(s);}
   </script>
@@ -634,10 +637,10 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
           <div class="trust-badge"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg>Shopify Secure Pay</div>
         </div>
         <div class="shipping-info">
-          <strong>Shipping:</strong> the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius. Standard U.S. shipping is free at $150 and above and $14.99 below $150.<br>
-          <strong>Tracking:</strong> Emailed when the shipping label is created for dispatch. Contact LuxeMia before ordering when an event date is time-sensitive.<br>
-          <strong>Returns:</strong> Orders ship from India, so change-of-mind returns are not possible, except where applicable law provides otherwise. Damaged, incorrect, or missing-item claims are covered within 48 hours of delivery with clear photos and a continuous unboxing/opening video.<br>
-          <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990
+          <strong>Shipping:</strong> Ready-to-Ship orders deliver in 5–7 business days to US/UK/CA via DHL/FedEx; Custom Tailored orders deliver in 15–18 business days total. Standard U.S. shipping is free at $150 and above ($14.99 below $150).<br>
+          <strong>Fit &amp; Alterations:</strong> Custom-stitched blouses and suits include a 2-inch internal seam allowance where construction permits + up to $20 USD Local Alteration Credit.<br>
+          <strong>Returns &amp; 3-Point QA:</strong> Every order passes our 3-Point Quality Assurance Check before dispatch. Change-of-mind returns are not accepted except where applicable law provides otherwise; damaged, defective, materially misdescribed, or missing-item claims are covered within 48 hours of delivery with 2–3 clear photos.<br>
+          <strong>Contact:</strong> hello@luxemia.shop | +1-215-341-9990 (Philadelphia, PA)
         </div>
       </div>
     </div>
@@ -646,8 +649,8 @@ export function generateProductHtml(product: ShopifyProduct, canonicalUrl: strin
       ${faqHtml}
     </section>
     <footer>
-      <p>&copy; 2026 LuxeMia. All rights reserved. | Online Indian ethnic wear | USA-based support</p>
-      <p><a href="${SITE_URL}/shipping">Shipping Policy</a> | <a href="${SITE_URL}/returns">Returns</a> | <a href="${SITE_URL}/privacy">Privacy</a> | <a href="${SITE_URL}/terms">Terms</a> | <a href="${SITE_URL}/contact">Contact</a></p>
+      <p>&copy; 2026 LuxeMia. All rights reserved. | Online Indian ethnic wear | Philadelphia, PA | +1-215-341-9990 | hello@luxemia.shop</p>
+      <p><a href="${SITE_URL}/shipping">Shipping Policy</a> | <a href="${SITE_URL}/returns">Returns &amp; Quality Guarantee</a> | <a href="${SITE_URL}/alterations">Alterations &amp; $20 Fit Credit</a> | <a href="${SITE_URL}/privacy">Privacy</a> | <a href="${SITE_URL}/terms">Terms</a> | <a href="${SITE_URL}/contact">Contact</a></p>
     </footer>
   </div>
 </body>

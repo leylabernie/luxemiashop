@@ -122,9 +122,14 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/pages/shipping-customs`,
   },
   '/returns': {
-    title: 'Returns & Cancellations Policy | LuxeMia',
+    title: 'Returns, Quality Guarantee & Cancellations | LuxeMia',
     description: RETURN_POLICY_SEO_DESCRIPTION,
     canonical: `${SITE_URL}/returns`,
+  },
+  '/alterations': {
+    title: 'Alterations, Fit Guarantee & $20 Credit | LuxeMia',
+    description: 'LuxeMia’s 2-inch internal seam allowance guarantee, $20 USD Local Alteration Credit for custom-stitched blouses and suits, and 15–18 business day tailoring timeline.',
+    canonical: `${SITE_URL}/alterations`,
   },
   '/privacy': {
     title: 'Privacy Policy | LuxeMia',
