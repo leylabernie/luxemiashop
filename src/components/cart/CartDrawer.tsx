@@ -87,6 +87,25 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
   };
 
+  const showWhatsAppConcierge = subtotal > 200;
+  const whatsAppConciergeUrl = (() => {
+    const itemLines = items
+      .filter((item) => !isHiddenBillingProductHandle(item.product.node.handle))
+      .slice(0, 5)
+      .map(
+        (item) =>
+          `• ${item.product.node.title}${
+            item.variantTitle && item.variantTitle !== 'Default Title' ? ` (${item.variantTitle})` : ''
+          } × ${item.quantity}`,
+      );
+    const message = [
+      'Hi LuxeMia Concierge, I have a question about sizing, custom blouse/suit stitching, or delivery timing for my bag:',
+      ...itemLines,
+      `Bag subtotal: ${formatPrice(subtotal, currencyCode)}`,
+    ].join('\n');
+    return `https://wa.me/12153419990?text=${encodeURIComponent(message)}`;
+  })();
+
   const handleCheckoutRetry = () => {
     if (unavailableItems.length > 0 || isLoading) return;
     attemptedCheckoutKey.current = checkoutRequestKey;
@@ -373,6 +392,30 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                         </>
                       )}
                     </Button>
+                  )}
+                  {showWhatsAppConcierge && (
+                    <a
+                      href={whatsAppConciergeUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      data-testid="whatsapp-cart-concierge"
+                      className="flex items-center justify-between gap-2.5 rounded-sm border border-emerald-700/25 bg-emerald-950/[0.04] px-3 py-2 text-xs text-foreground transition-colors hover:bg-emerald-950/[0.08]"
+                    >
+                      <span className="flex items-center gap-2 text-left leading-snug">
+                        <svg
+                          aria-hidden="true"
+                          viewBox="0 0 24 24"
+                          fill="currentColor"
+                          className="h-4 w-4 shrink-0 text-emerald-700"
+                        >
+                          <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91C21.95 6.45 17.5 2 12.04 2zm5.82 14.01c-.24.68-1.4 1.3-1.95 1.38-.5.08-1.14.11-1.85-.12-.43-.14-.98-.32-1.69-.63-2.98-1.29-4.93-4.29-5.08-4.49-.15-.2-1.21-1.61-1.21-3.07 0-1.46.77-2.18 1.04-2.48.27-.3.6-.37.8-.37.2 0 .4 0 .57.01.18.01.43-.07.67.51.24.59.83 2.02.9 2.17.07.15.12.32.02.52-.1.2-.15.32-.3.49-.15.17-.31.39-.45.52-.15.15-.3.31-.13.6.17.3.77 1.27 1.65 2.05 1.13 1.01 2.09 1.32 2.39 1.47.3.15.47.12.65-.07.17-.2.75-.87.95-1.17.2-.3.4-.25.67-.15.27.1 1.73.82 2.03.97.3.15.5.22.57.35.08.12.08.72-.16 1.4z" />
+                        </svg>
+                        <span>
+                          <strong className="font-medium">Sizing &amp; Stitching Concierge:</strong> Questions on custom fit, 2&quot; seam margins, or event dates? Chat on WhatsApp
+                        </span>
+                      </span>
+                      <span className="shrink-0 font-medium text-emerald-800 underline underline-offset-4">Chat</span>
+                    </a>
                   )}
                   <details className="group rounded-sm border border-border/70 bg-background px-3 py-2 text-xs leading-relaxed text-muted-foreground">
                     <summary className="flex cursor-pointer list-none items-center justify-between gap-2 font-medium text-foreground/85 [&::-webkit-details-marker]:hidden focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
