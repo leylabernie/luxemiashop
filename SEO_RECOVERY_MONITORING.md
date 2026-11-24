@@ -3,7 +3,7 @@
 **Day 0: 2026-11-24** · Owner action required: Google Search Console (manual)
 **Root cause & fix:** see [SEO_RECOVERY_REPORT.md](./SEO_RECOVERY_REPORT.md). The hreflang/canonical conflict fix in `scripts/prerender.js` is present in this branch and was promoted to `luxemia.shop` / `www.luxemia.shop` (deployment `dpl_54LMA9fFdxXD5gktpYPnJt6kudgL`).
 
-> No deployment was performed in this session. The monitoring infrastructure (tracking tab, live-tag verifier, tests) was added; see §5.
+> **Deployed 2026-11-24:** [PR #307](https://github.com/leylabernie/luxemiashop/pull/307) merged to `main` (`bbf5aec`) at 17:34 UTC; both Vercel production builds reported **success** at 17:35 UTC. The full `npm run build` gate passed in Vercel, including the two validators that cannot run in this sandbox. Live endpoints re-verified afterwards.
 **Tracking sheet:** [Google Sheet → "Recovery Tracking" tab](https://docs.google.com/spreadsheets/d/1Zn4boY0awsO9tSxFfuijA643hx68jDxF5Wlewn9bK6M/edit#gid=1981660601)
 
 ---
@@ -135,7 +135,7 @@ Compare like-for-like **7-day and 28-day rolling averages**, not single days (da
 - Added the **"Recovery Tracking"** tab to the GSC spreadsheet: baseline + reference tables, dated checkpoint rows with % -of-target formulas, 92-row daily series mirrored from the Chart tab, and a line chart of daily impressions (chart id `1357200394`).
 - Verified the live site end to end over HTTPS: homepage and product pages render, welcome offer is **`FIRST10`**, `/sitemap.xml` (`lastmod` 2026-11-24) plus all 5 child sitemaps are populated, and `/robots.txt` is correct.
 - Validators: `validate:indexation-recovery`, `validate:seo-architecture`, `validate:shopify-catalog`, `validate:policy-copy`, `validate:blog`, `validate:legacy-redirects` all **OK**. `validate:product-retirement-lifecycle` reported `fetch failed` — it needs live Shopify API access, which this sandbox does not have. This is an environment limitation, not a code regression; it must pass in the Vercel build environment (which has `SHOPIFY_STOREFRONT_TOKEN`).
-- Vercel connector: `get_authenticated_user` succeeded (account `lab.bhamini@gmail.com`, flagged `limited`), but `get_deployment`, `list_deployments`, `list_projects` and `get_domain` all returned **Access denied** — the token lacks deployment/project read scope, even with the correct `team_id`. The Vercel dashboard (or a token with those scopes) is needed to confirm deployment `dpl_54LMA9fFdxXD5gktpYPnJt6kudgL` is READY on both domains. The fresh sitemap `lastmod` is strong indirect evidence that the full production build ran today.
+- Vercel connector: `get_authenticated_user` succeeded (account `lab.bhamini@gmail.com`, flagged `limited`), but `get_deployment`, `list_deployments`, `list_projects` and `get_domain` all returned **Access denied** — the token lacks deployment/project read scope, even with the correct `team_id`. The Vercel dashboard (or a token with those scopes) is needed to confirm deployment `dpl_54LMA9fFdxXD5gktpYPnJt6kudgL` is READY on both domains. Deployment verification for this release was instead obtained from GitHub commit statuses on merge commit `bbf5aec`: both `Vercel – luxemiashop` checks turned **success** at 17:35 UTC. The fresh sitemap `lastmod` corroborates the full production build.
 - Page fetching reaches the live site but strips `<head>` markup, and the bash sandbox has no outbound HTTPS to `luxemia.shop`, so canonical/hreflang must still be confirmed with the curl/verifier command above or GSC's live test. This is the one check that cannot be completed from this environment.
 
 ## 6. Constraints preserved
@@ -143,4 +143,4 @@ Compare like-for-like **7-day and 28-day rolling averages**, not single days (da
 - Welcome offer `FIRST10` only; no retired codes (`LUXE10`, `LUXE15`, `LUXE20`).
 - No forbidden claims (`MerchantReturnPolicy`, `priceValidUntil`, `worldwide`, `handcrafted`, `artisan-made`, `100% authentic`) in SEO/schema/copy surfaces enforced by the validators.
 - The live product page shows `FIRST10` and no retired codes; no forbidden claims were introduced (all edits are docs + a verifier script + a test).
-- No deployment was performed: all validators + `npm test` + `npx vite build` remain the gate before any future deploy.
+- Deployment completed after the gate passed: `npm test` 982 tests / 0 failures, `npx vite build` clean, 7 standalone validators OK, and Vercel's full `npm run build` (all remaining validators, prerender, sitemap generation) succeeded on the merged commit.
