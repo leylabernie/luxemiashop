@@ -1,4 +1,6 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
+import legacyGoneProductHandles from '../src/data/legacyGoneProductHandles.json';
+import reversiblyArchivedProductHandles from '../src/data/reversiblyArchivedProductHandles.json';
 
 const SITE_URL = 'https://luxemia.shop';
 const SHOPIFY_STORE_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
@@ -9,6 +11,20 @@ const HIDDEN_BILLING_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
   'ws-art-silk-off-white-wedding-wear-thread-work-readymade-indo-western-sherwani-391809',
 ]);
+const EXCLUDED_PRODUCT_HANDLES = new Set<string>([
+  ...HIDDEN_BILLING_HANDLES,
+  ...(legacyGoneProductHandles as string[]),
+  ...(reversiblyArchivedProductHandles as string[]),
+]);
+
+const WEBP_SOURCE_LOCAL_JPG: Record<string, string> = {
+  '17708061151830169163': '/images/gmc/17708061151830169163.jpg',
+  '17708061181515555860': '/images/gmc/17708061181515555860.jpg',
+  '17708061281660913802': '/images/gmc/17708061281660913802.jpg',
+  '17708061311818557654': '/images/gmc/17708061311818557654.jpg',
+  '17708061321986578299': '/images/gmc/17708061321986578299.jpg',
+  '178704753992368782': '/images/gmc/178704753992368782.jpg',
+};
 
 export interface ShopifyFeedVariantNode {
   id: string;
@@ -146,6 +162,9 @@ export function forceGmcSafeImageUrl(url?: string | null): string {
   );
   if (shopifyWebp) {
     const [, name, query] = shopifyWebp;
+    if (WEBP_SOURCE_LOCAL_JPG[name]) {
+      return `${SITE_URL}${WEBP_SOURCE_LOCAL_JPG[name]}`;
+    }
     const version = query ? new URLSearchParams(query).get('v') : null;
     return `${SITE_URL}/gmc-images/${encodeURIComponent(name)}.jpg${
       version && /^\d{1,20}$/.test(version) ? `?v=${version}` : ''
@@ -479,12 +498,24 @@ function extractNumericId(gid: string): string {
   return tail.trim();
 }
 
-export function buildGmcFeedRows(products: ShopifyFeedProductNode[]): GmcFeedRow[] {
+export function fitMerchantId(preferred: string, fallback: string): string {
+  const cleanPreferred = preferred.trim();
+  if (cleanPreferred && cleanPreferred.length <= 50 && /^[A-Za-z0-9_-]+$/.test(cleanPreferred)) {
+    return cleanPreferred;
+  }
+  return fallback.trim().slice(0, 50);
+}
+
+export function buildGmcFeedRows(
+  products: ShopifyFeedProductNode[],
+  options?: { idMode?: 'sku' | 'merchant' },
+): GmcFeedRow[] {
   const rows: GmcFeedRow[] = [];
+  const idMode = options?.idMode || 'sku';
 
   for (const product of products) {
     if (!product || !product.handle) continue;
-    if (HIDDEN_BILLING_HANDLES.has(product.handle)) continue;
+    if (EXCLUDED_PRODUCT_HANDLES.has(product.handle)) continue;
     if (product.availableForSale === false) continue;
 
     const allVariants = (product.variants?.edges || []).map((edge) => edge.node);
@@ -501,8 +532,8 @@ export function buildGmcFeedRows(products: ShopifyFeedProductNode[]): GmcFeedRow
       inferOccasionAndCategory(product);
     const fabric = inferFabric(product);
     const work = inferWork(product);
-    const itemGroupId =
-      product.handle.length <= 50 ? product.handle : `p${extractNumericId(product.id)}`;
+    const numericProductId = extractNumericId(product.id);
+    const itemGroupId = fitMerchantId(product.handle, `p${numericProductId}`);
     const isMultiVariant = allVariants.length > 1;
     const isMadeToOrder = (product.tags || []).some((t) =>
       /^(?:made to order|availability:made to order|custom-made)$/i.test(t.trim()),
@@ -517,7 +548,13 @@ export function buildGmcFeedRows(products: ShopifyFeedProductNode[]): GmcFeedRow
 
     for (const variant of activeVariants) {
       const numericVariantId = extractNumericId(variant.id);
-      const id = variant.sku?.trim() || `LUXEMIA-${numericVariantId}`;
+      const merchantItemId = isMultiVariant
+        ? fitMerchantId(`${product.handle}-${numericVariantId}`, `p${numericProductId}-v${numericVariantId}`)
+        : fitMerchantId(product.handle, `p${numericProductId}`);
+      const id =
+        idMode === 'merchant'
+          ? merchantItemId
+          : variant.sku?.trim() || merchantItemId;
       const color = inferColor(product, variant);
       const size = inferSize(product, variant);
       const title = buildGmcOptimizedTitle({
@@ -784,9 +821,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       ? req.query.format[0]
       : req.query?.format;
     const format = String(rawFormat || 'xml').trim().toLowerCase();
+    const rawIdMode = Array.isArray(req.query?.id_mode)
+      ? req.query.id_mode[0]
+      : req.query?.id_mode;
+    const idMode = String(rawIdMode || 'sku').trim().toLowerCase() === 'merchant'
+      ? 'merchant'
+      : 'sku';
 
     const products = await fetchAllActiveShopifyProducts();
-    const rows = buildGmcFeedRows(products);
+    const rows = buildGmcFeedRows(products, { idMode });
 
     res.setHeader('Cache-Control', 'public, max-age=0, s-maxage=900, stale-while-revalidate=3600');
     res.setHeader('X-Robots-Tag', 'noindex, follow');

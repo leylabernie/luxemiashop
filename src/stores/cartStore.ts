@@ -17,6 +17,7 @@ import {
 import { trackMarketingAddToCart, trackMarketingInitiateCheckout } from '@/lib/marketingPixels';
 import { toast } from 'sonner';
 import { isHiddenBillingProductHandle, type ServiceAddOnCode } from '@/lib/serviceAddOns';
+import { appendGaLinkerParams } from '../lib/gaLinker';
 
 export interface CartAttribute {
   key: string;
@@ -60,7 +61,7 @@ interface CartStore {
   closeCart: () => void;
   trackCartView: () => void;
   createCheckout: (options?: { trackEvents?: boolean }) => Promise<string | null>;
-  trackCheckoutClick: () => void;
+  trackCheckoutClick: (event?: { currentTarget?: { href?: string } | null }) => void;
 }
 
 const sameAttributes = (left?: CartAttribute[], right?: CartAttribute[], days?: number | null) => (
@@ -290,9 +291,16 @@ export const useCartStore = create<CartStore>()(
         );
       },
 
-      trackCheckoutClick: () => {
+      trackCheckoutClick: (event) => {
         const { items, checkoutUrl } = get();
         if (!checkoutUrl || items.length === 0) return;
+        const decoratedCheckoutUrl = appendGaLinkerParams(checkoutUrl);
+        if (decoratedCheckoutUrl !== checkoutUrl) {
+          set({ checkoutUrl: decoratedCheckoutUrl });
+        }
+        if (event?.currentTarget && typeof event.currentTarget.href === 'string' && event.currentTarget.href) {
+          event.currentTarget.href = appendGaLinkerParams(event.currentTarget.href);
+        }
         const normalizedItems = normalizeCartItems(items);
         const totalValue = normalizedItems.reduce(
           (sum, item) => sum + Number(item.price.amount) * item.quantity,

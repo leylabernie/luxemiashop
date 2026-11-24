@@ -239,6 +239,7 @@ function hasIndexationNoiseParams(searchParams: URLSearchParams): boolean {
 // canonical collection/product routes, and may be preserved across canonical
 // 301 redirects so Google/Meta/Pinterest/email attribution stays intact.
 const ALLOWED_ATTRIBUTION_PARAMS = new Set<string>([
+  '_ga',
   '_gl',
   'srsltid',
   'gclid',

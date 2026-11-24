@@ -1467,6 +1467,38 @@ const FAQ_PAGE_SCHEMA = {
   ],
 };
 
+const ALTERATIONS_FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': 'https://luxemia.shop/alterations#faq',
+  mainEntity: [
+    {
+      '@type': 'Question',
+      name: 'How much internal seam allowance do LuxeMia custom-stitched outfits include?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Custom-stitched LuxeMia blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where garment construction permits, giving any local tailor up to 4 inches of total let-out margin.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How does the $20 Local Alteration Credit work?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'If your custom-stitched blouse, choli, or suit needs a minor local fit adjustment after delivery, email your LuxeMia order number and a clear photo of your local tailor’s itemized receipt to hello@luxemia.shop within 14 calendar days of delivery to receive up to $20 USD in LuxeMia store credit.',
+      },
+    },
+    {
+      '@type': 'Question',
+      name: 'How long do Custom Tailored outfits take to arrive compared with Ready-to-Ship?',
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: 'Ready-to-Ship selections deliver in 5–7 business days to the United States, United Kingdom, and Canada via DHL/FedEx, while Custom Tailored outfits and alteration selections deliver in 15–18 business days total after complete measurements are confirmed.',
+      },
+    },
+  ],
+};
+
 const MEASUREMENT_HOW_TO_SCHEMA = {
   '@context': 'https://schema.org',
   '@type': 'HowTo',
@@ -2221,14 +2253,12 @@ const routes = [
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (5–7 business days to US/UK/CA via DHL/FedEx). Free U.S. shipping $150+.',
+    description: 'Shop LuxeMia ready-to-ship sarees, lehengas, suits, menswear and jewelry. Review the selected construction and allow extra processing for requested alterations or finishing.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
       <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, Ready-to-Ship orders deliver in 5–7 business days to the US, UK &amp; Canada via DHL/FedEx (1–2 business days dispatch plus 4–5 business days transit). Custom Tailored selections and requested alterations or finishing take 15–18 business days total (counted once per outfit after complete measurements are confirmed). These are estimates, not guaranteed arrival dates.</p>
-      <h2>Stocked selections and custom selections</h2>
-      <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
-      <h2>Processing and carrier transit are separate</h2>
-      <p>Order processing happens before dispatch. Carrier transit begins after the parcel is accepted by the carrier. Confirm the selected size, included pieces and any custom option before ordering for a fixed event date.</p>
+      <h2>Stocked and custom selections are different</h2>
+      <p>Some stocked products also offer Custom Size, Custom Stitching or Made-to-Measure selections. Standard stocked selections remain Ready to Ship, while a custom selection requires the additional processing stated on the product page.</p>
       <h2>Shipping rates and timing</h2>
       <p><a href="/shipping">View route-based rates</a> for the United States, Canada, United Kingdom, Australia, New Zealand, South Africa and Mauritius.</p>
     `,
@@ -2262,7 +2292,8 @@ const routes = [
     title: 'Alterations, Fit Guarantee & $20 Credit | LuxeMia',
     description: 'LuxeMia’s 2-inch internal seam allowance guarantee, $20 USD Local Alteration Credit for custom-stitched blouses and suits, and 15–18 business day tailoring timeline.',
     h1: 'Alterations, Seam Allowance & $20 Fit Credit',
-    content: `<p>Every custom-stitched LuxeMia blouse, choli, and suit top includes a <strong>2-inch (5 cm) internal seam allowance on both side seams</strong> where garment construction permits so any local tailor in the US, UK, or Canada can easily let out or take in the fit.</p><h2>$20 Local Alteration Credit</h2><p>If your custom-stitched blouse or suit needs a minor local posture or fit adjustment after delivery, LuxeMia reimburses up to <strong>$20 USD in store credit</strong> when you email your LuxeMia order number and a clear photo of your local tailor’s receipt to <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> within 14 days of delivery.</p><h2>Tailoring &amp; Delivery Windows</h2><p>Ready-to-Ship selections deliver in <strong>5–7 business days</strong> to the US, UK &amp; Canada via DHL/FedEx, while Custom Tailored outfits and alteration selections deliver in <strong>15–18 business days total</strong> after complete measurements are confirmed. Read our <a href="/shipping">Shipping Policy</a> and <a href="/returns">Returns &amp; Quality Guarantee</a>, or contact our Philadelphia, PA support desk at <a href="tel:+12153419990">+1-215-341-9990</a>.</p>`,
+    schemas: [ALTERATIONS_FAQ_SCHEMA],
+    content: `<p>Every custom-stitched LuxeMia blouse, choli, and suit top includes a <strong>2-inch (5 cm) internal seam allowance on both side seams</strong> where garment construction permits so any local tailor in the US, UK, or Canada can easily let out or take in the fit.</p><h2>$20 Local Alteration Credit</h2><p>If your custom-stitched blouse or suit needs a minor local posture or fit adjustment after delivery, LuxeMia reimburses up to <strong>$20 USD in store credit</strong> when you email your LuxeMia order number and a clear photo of your local tailor’s receipt to <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> within 14 days of delivery.</p><h2>Tailoring &amp; Delivery Windows</h2><p>Ready-to-Ship selections deliver in <strong>5–7 business days</strong> to the US, UK &amp; Canada via DHL/FedEx, while Custom Tailored outfits and alteration selections deliver in <strong>15–18 business days total</strong> after complete measurements are confirmed. Read our <a href="/shipping">Shipping Policy</a> and <a href="/returns">Returns &amp; Quality Guarantee</a>, or contact our Philadelphia, PA support desk at <a href="tel:+12153419990">+1-215-341-9990</a>.</p><h2>Alterations &amp; Fit Guarantee FAQs</h2><h3>How much internal seam allowance do LuxeMia custom-stitched outfits include?</h3><p>Custom-stitched LuxeMia blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where garment construction permits, giving any local tailor up to 4 inches of total let-out margin.</p><h3>How does the $20 Local Alteration Credit work?</h3><p>If your custom-stitched blouse, choli, or suit needs a minor local fit adjustment after delivery, email your LuxeMia order number and a clear photo of your local tailor’s itemized receipt to hello@luxemia.shop within 14 calendar days of delivery to receive up to $20 USD in LuxeMia store credit.</p><h3>How long do Custom Tailored outfits take to arrive compared with Ready-to-Ship?</h3><p>Ready-to-Ship selections deliver in 5–7 business days to the United States, United Kingdom, and Canada via DHL/FedEx, while Custom Tailored outfits and alteration selections deliver in 15–18 business days total after complete measurements are confirmed.</p>`,
   },
   {
     path: '/contact',

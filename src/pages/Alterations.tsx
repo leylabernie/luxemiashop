@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -15,6 +14,38 @@ import {
 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
+export const ALTERATIONS_FAQS = [
+  {
+    question: 'How much internal seam allowance do LuxeMia custom-stitched outfits include?',
+    answer:
+      'Custom-stitched LuxeMia blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where garment construction permits, giving any local tailor up to 4 inches of total let-out margin.',
+  },
+  {
+    question: 'How does the $20 Local Alteration Credit work?',
+    answer:
+      'If your custom-stitched blouse, choli, or suit needs a minor local fit adjustment after delivery, email your LuxeMia order number and a clear photo of your local tailor’s itemized receipt to hello@luxemia.shop within 14 calendar days of delivery to receive up to $20 USD in LuxeMia store credit.',
+  },
+  {
+    question: 'How long do Custom Tailored outfits take to arrive compared with Ready-to-Ship?',
+    answer:
+      'Ready-to-Ship selections deliver in 5–7 business days to the United States, United Kingdom, and Canada via DHL/FedEx, while Custom Tailored outfits and alteration selections deliver in 15–18 business days total after complete measurements are confirmed.',
+  },
+] as const;
+
+const ALTERATIONS_FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  '@id': 'https://luxemia.shop/alterations#faq',
+  mainEntity: ALTERATIONS_FAQS.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+};
+
 const Alterations = () => {
   return (
     <div className="min-h-screen flex flex-col">
@@ -22,6 +53,7 @@ const Alterations = () => {
         title="Alterations, Fit Guarantee & $20 Credit | LuxeMia"
         description="LuxeMia’s 2-inch internal seam allowance guarantee, $20 USD Local Alteration Credit for custom-stitched blouses and suits, and 15–18 business day tailoring timeline."
         canonical="https://luxemia.shop/alterations"
+        jsonLd={[ALTERATIONS_FAQ_SCHEMA]}
       />
       <Header />
 
@@ -125,7 +157,7 @@ const Alterations = () => {
                 </ol>
                 <p>
                   If a garment ever arrives stitched materially off from the measurements confirmed on your order, that is covered separately under our{' '}
-                  <Link to="/returns" className="text-primary underline underline-offset-4">48-hour Photo-Verified Order Protection</Link>{' '}
+                  <a href="/returns" className="text-primary underline underline-offset-4">48-hour Photo-Verified Order Protection</a>{' '}
                   for a full refund or replacement at no cost to you.
                 </p>
               </div>
@@ -150,8 +182,8 @@ const Alterations = () => {
                 </ul>
                 <p>
                   Review route-based shipping rates and free-shipping thresholds on our{' '}
-                  <Link to="/shipping" className="text-primary underline underline-offset-4">Shipping Policy</Link>, and check measurement tips in our{' '}
-                  <Link to="/sizing-measurements-guide" className="text-primary underline underline-offset-4">Sizing &amp; Measurements Guide</Link>.
+                  <a href="/shipping" className="text-primary underline underline-offset-4">Shipping Policy</a>, and check measurement tips in our{' '}
+                  <a href="/sizing-measurements-guide" className="text-primary underline underline-offset-4">Sizing &amp; Measurements Guide</a>.
                 </p>
               </div>
             </div>
@@ -169,7 +201,20 @@ const Alterations = () => {
               </div>
             </div>
 
-            {/* 5. Support CTA */}
+            {/* 5. Frequently Asked Questions (mirrors FAQPage JSON-LD) */}
+            <div>
+              <h2 className="font-serif text-2xl mb-4">Alterations &amp; Fit Guarantee FAQs</h2>
+              <div className="space-y-4 text-sm text-muted-foreground leading-relaxed">
+                {ALTERATIONS_FAQS.map((faq) => (
+                  <div key={faq.question} className="border border-border rounded-sm p-4">
+                    <h3 className="font-medium text-foreground mb-1.5">{faq.question}</h3>
+                    <p>{faq.answer}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* 6. Support CTA */}
             <div className="bg-secondary/30 rounded-sm p-6 lg:p-8">
               <div className="flex items-center gap-2.5 mb-2">
                 <Ruler className="h-5 w-5 text-primary shrink-0" />
@@ -192,10 +237,10 @@ const Alterations = () => {
                   </a>
                 </Button>
                 <Button asChild variant="outline" size="sm">
-                  <Link to="/size-guide">
+                  <a href="/size-guide">
                     <CheckCircle2 className="h-4 w-4 mr-2" />
                     Size Guide
-                  </Link>
+                  </a>
                 </Button>
               </div>
             </div>
