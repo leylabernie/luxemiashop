@@ -52,7 +52,7 @@ public/merchant-feed.xml
 
 # CSV data files (not web assets — keep them out of public/)
 public/*.csv
-luxemia-gmc-feed-optimized.csv
+/luxemia-gmc-feed-optimized.csv
 
 
 # Local test scripts (use real Shopify data, not for commit)
