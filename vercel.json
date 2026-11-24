@@ -552,6 +552,56 @@
       "source": "/style-consultation",
       "destination": "/contact",
       "statusCode": 301
+    },
+    {
+      "source": "/policies/returns",
+      "destination": "/returns",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/refund-policy",
+      "destination": "/returns",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/return-policy",
+      "destination": "/returns",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/shipping",
+      "destination": "/shipping",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/shipping-policy",
+      "destination": "/shipping",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/privacy-policy",
+      "destination": "/privacy",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/terms-of-service",
+      "destination": "/terms",
+      "statusCode": 301
+    },
+    {
+      "source": "/policies/alterations",
+      "destination": "/alterations",
+      "statusCode": 301
+    },
+    {
+      "source": "/pages/alterations-policy",
+      "destination": "/alterations",
+      "statusCode": 301
+    },
+    {
+      "source": "/alteration-policy",
+      "destination": "/alterations",
+      "statusCode": 301
     }
   ],
   "headers": [
@@ -698,7 +748,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com https://connect.facebook.net https://analytics.tiktok.com https://s.pinimg.com https://ct.pinterest.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://stats.g.doubleclick.net https://*.googletagmanager.com https://www.facebook.com https://graph.facebook.com https://analytics.tiktok.com https://ct.pinterest.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://apis.google.com https://cdn.shopify.com https://connect.facebook.net https://analytics.tiktok.com https://s.pinimg.com https://ct.pinterest.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://checkout.luxemia.shop https://cdn.shopify.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://*.googletagmanager.com https://www.facebook.com https://graph.facebook.com https://analytics.tiktok.com https://ct.pinterest.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com https://checkout.luxemia.shop; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
         },
         {
           "key": "X-Frame-Options",
@@ -750,7 +800,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://apis.google.com https://cdn.shopify.com https://connect.facebook.net https://analytics.tiktok.com https://s.pinimg.com https://ct.pinterest.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://cdn.shopify.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://stats.g.doubleclick.net https://*.googletagmanager.com https://www.facebook.com https://graph.facebook.com https://analytics.tiktok.com https://ct.pinterest.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
+          "value": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://apis.google.com https://cdn.shopify.com https://connect.facebook.net https://analytics.tiktok.com https://s.pinimg.com https://ct.pinterest.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src 'self' data: https: blob:; font-src 'self' https://fonts.gstatic.com; connect-src 'self' https://mxrvlizhrofsroydenti.supabase.co https://jcyolouvxfxovzjyyrxu.supabase.co https://lovable-project-zlh0w.myshopify.com https://checkout.luxemia.shop https://cdn.shopify.com https://www.google-analytics.com https://*.google-analytics.com https://analytics.google.com https://*.analytics.google.com https://www.google.com https://www.googleadservices.com https://googleads.g.doubleclick.net https://stats.g.doubleclick.net https://*.googletagmanager.com https://www.facebook.com https://graph.facebook.com https://analytics.tiktok.com https://ct.pinterest.com https://*.kesimg.b-cdn.net https://api.stripe.com https://wa.me; frame-src https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com https://js.stripe.com https://hooks.stripe.com; frame-ancestors https://admin.shopify.com https://luxemia.myshopify.com https://lovable-project-zlh0w.myshopify.com; object-src 'none'; base-uri 'self'; form-action 'self' https://lovable-project-zlh0w.myshopify.com https://checkout.luxemia.shop; manifest-src 'self'; media-src 'self' https://cdn.shopify.com https://lovable-project-zlh0w.myshopify.com; worker-src 'self';"
         },
         {
           "key": "X-Frame-Options",
@@ -786,6 +836,23 @@
           "value": "public, max-age=3600, s-maxage=3600"
         }
       ]
+    },
+    {
+      "source": "/api/gmc-feed",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, s-maxage=900, stale-while-revalidate=3600"
+        },
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, follow"
+        },
+        {
+          "key": "Access-Control-Allow-Origin",
+          "value": "*"
+        }
+      ]
     }
   ],
   "rewrites": [
@@ -808,6 +875,10 @@
     {
       "source": "/api/meta-catalog",
       "destination": "/api/meta-catalog"
+    },
+    {
+      "source": "/api/gmc-feed",
+      "destination": "/api/gmc-feed"
     },
     {
       "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:md|txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz|csv)).*)",

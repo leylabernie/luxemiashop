@@ -46,7 +46,15 @@ for (const idleCallbackAvailable of [true, false]) {
     assert.equal(context.dataLayer[0], consent, 'Existing consent queue must not be reset');
     assert.deepEqual(queue.map(command => command[0]), ['consent', 'js', 'set', 'config', 'event']);
     assert.equal(queue[2][1], 'linker');
-    assert.deepEqual(Array.from(queue[2][2].domains), ['luxemia.shop', 'lovable-project-zlh0w.myshopify.com']);
+    assert.deepEqual(Array.from(queue[2][2].domains), [
+      'luxemia.shop',
+      'www.luxemia.shop',
+      'checkout.luxemia.shop',
+      'lovable-project-zlh0w.myshopify.com',
+      'luxemiashop.myshopify.com',
+      'luxemia.myshopify.com',
+    ]);
+    assert.equal(queue[2][2].accept_incoming, true);
     assert.equal(queue[3][1], measurementId);
     assert.equal(queue[3][2].send_page_view, false, 'SPA page tracking remains authoritative');
     assert.equal(queue[3][2].allow_google_signals, true);
@@ -80,7 +88,11 @@ test('approved Vercel preview host is included in the linker domain list', () =>
   assert.equal(linker[1], 'linker');
   assert.deepEqual(Array.from(linker[2].domains), [
     'luxemia.shop',
+    'www.luxemia.shop',
+    'checkout.luxemia.shop',
     'lovable-project-zlh0w.myshopify.com',
+    'luxemiashop.myshopify.com',
+    'luxemia.myshopify.com',
     previewHost,
   ]);
 });

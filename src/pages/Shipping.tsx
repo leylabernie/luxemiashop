@@ -1,177 +1,192 @@
-import { motion } from 'framer-motion';
-import { Clock, FileText, Package, ShieldCheck, ShoppingBag, Truck } from 'lucide-react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import SEOHead from '@/components/seo/SEOHead';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { Clock, Globe2, Mail, MessageSquare, Package, ShieldCheck, Truck } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
-  SHIPPING_CONSOLIDATION_NOTICE,
+  DELIVERY_WINDOW_TIERS,
   DESTINATION_IMPORT_NOTICE,
-  SHIPPING_DESTINATION_NAMES,
-  SHIPPING_POLICY_SUMMARY,
   SHIPPING_PROCESSING_NOTICE,
   SHIPPING_TIMING_NOTICE,
   SHIPPING_ZONES,
+  SUPPORTED_DESTINATION_LIST,
+  US_IMPORT_COVERAGE_NOTICE,
+  formatShippingThreshold,
 } from '@/config/shippingPolicy';
-
-const formatUsd = (amount: number) =>
-  new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(amount);
 
 const Shipping = () => {
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen flex flex-col">
       <SEOHead
-        title="International Shipping Rates & Delivery | LuxeMia"
-        description="See LuxeMia tracked shipping rates for the USA, Canada, UK, Australia, New Zealand, South Africa and Mauritius, including free-shipping thresholds and customs guidance."
+        title="Shipping Rates, DHL/FedEx Delivery Windows & Policy | LuxeMia"
+        description="Ready-to-Ship delivery in 5–7 business days to US/UK/CA via DHL/FedEx, Custom Tailored delivery in 15–18 business days total, and route-based rates."
         canonical="https://luxemia.shop/shipping"
       />
       <Header />
 
-      <main id="main-content" className="pt-[90px] lg:pt-[132px] pb-16">
-        <section className="py-16 lg:py-24 bg-gradient-to-b from-secondary to-background">
-          <div className="container mx-auto px-4 lg:px-8 text-center">
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-              <p className="text-sm tracking-luxury uppercase text-muted-foreground mb-4">Clear rates before checkout</p>
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-serif mb-6">Shipping &amp; Delivery</h1>
-              <p className="text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-                LuxeMia ships to {SHIPPING_DESTINATION_NAMES}. {SHIPPING_TIMING_NOTICE} Contact us before ordering when an event date is fixed.
-              </p>
-            </motion.div>
+      <main className="flex-1">
+        <section className="py-12 lg:py-16 bg-secondary/30">
+          <div className="container mx-auto px-4 max-w-4xl text-center">
+            <span className="text-xs uppercase tracking-[0.3em] text-primary mb-2 block">
+              Policies &amp; Express Transit
+            </span>
+            <h1 className="font-serif text-3xl lg:text-5xl mb-4">
+              Shipping Rates, Delivery Windows &amp; Policy
+            </h1>
+            <p className="text-muted-foreground font-light leading-relaxed max-w-3xl mx-auto">
+              LuxeMia ships tracked orders from India via <strong className="text-foreground font-medium">DHL / FedEx</strong> and partner international couriers to {SUPPORTED_DESTINATION_LIST}. <strong className="text-foreground font-medium">Ready-to-Ship</strong> selections arrive in <strong className="text-foreground font-medium">5–7 business days</strong> to the US, UK &amp; Canada, while <strong className="text-foreground font-medium">Custom Tailored</strong> outfits arrive in <strong className="text-foreground font-medium">15–18 business days total</strong>.
+            </p>
           </div>
         </section>
 
-        <aside aria-labelledby="shipping-at-a-glance" className="py-10 border-y border-border bg-card">
-          <div className="container mx-auto px-4 lg:px-8">
-            <h2 id="shipping-at-a-glance" className="sr-only">Shipping at a glance</h2>
-            <dl className="grid grid-cols-1 sm:grid-cols-3 gap-6 text-center max-w-5xl mx-auto">
-              <div>
-                <dt className="text-sm text-muted-foreground">Supported destinations</dt>
-                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">7 countries</dd>
-              </div>
-              <div>
-                <dt className="text-sm text-muted-foreground">Every dispatched order</dt>
-                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">Tracked</dd>
-              </div>
-              <div>
-                <dt className="text-sm text-muted-foreground">Express or split shipment</dt>
-                <dd className="mt-1 text-3xl font-serif font-semibold text-primary">Quoted</dd>
-              </div>
-            </dl>
-          </div>
-        </aside>
-
-        <section className="py-12 border-b border-border">
-          <div className="container mx-auto px-4 lg:px-8">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-              {[
-                { icon: Truck, title: 'Route-Based Rates', desc: 'Pricing reflects each destination group rather than one worldwide rate' },
-                { icon: Package, title: 'Consolidated Orders', desc: 'Multi-item orders normally ship together after all pieces are ready' },
-                { icon: Clock, title: 'Timing Shown', desc: 'Processing and carrier transit are stated separately' },
-                { icon: ShieldCheck, title: 'Tracked Dispatch', desc: 'Tracking is provided after the parcel is dispatched' },
-              ].map((item, index) => (
-                <motion.div
-                  key={item.title}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.4, delay: index * 0.1 }}
-                  className="text-center p-6"
-                >
-                  <item.icon className="h-8 w-8 mx-auto mb-3 text-primary" />
-                  <h3 className="font-medium mb-1">{item.title}</h3>
-                  <p className="text-sm text-muted-foreground">{item.desc}</p>
-                </motion.div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section className="py-16">
-          <div className="container mx-auto px-4 lg:px-8 max-w-6xl">
-            <div className="flex items-center justify-center gap-2 mb-8">
-              <ShoppingBag className="h-6 w-6 text-primary" />
-              <h2 className="text-3xl font-serif">Standard Shipping Rates</h2>
-            </div>
-            <div className="overflow-x-auto rounded-lg border border-border bg-card">
-              <table className="w-full min-w-[760px] text-left text-sm">
-                <thead className="border-b border-border bg-secondary/50">
+        {/* Explicit Delivery Windows Matrix */}
+        <section className="py-10 lg:py-12 border-b border-border">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="font-serif text-2xl mb-2">Explicit Delivery Windows (US, UK &amp; Canada via DHL / FedEx)</h2>
+            <p className="text-sm text-muted-foreground mb-5">
+              Processing and carrier transit are stated separately so you can plan confidently around wedding, sangeet, reception, and festival dates.
+            </p>
+            <div className="overflow-x-auto border border-border rounded-sm">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-secondary/40 text-foreground">
                   <tr>
-                    <th className="px-5 py-4 font-medium">Destination</th>
-                    <th className="px-5 py-4 font-medium">Standard rate</th>
-                    <th className="px-5 py-4 font-medium">Free shipping</th>
-                    <th className="px-5 py-4 font-medium">Duties and taxes</th>
+                    <th className="p-4 font-medium">Outfit Selection</th>
+                    <th className="p-4 font-medium">Dispatch / Tailoring</th>
+                    <th className="p-4 font-medium">Courier Transit</th>
+                    <th className="p-4 font-medium">Total Delivery Window</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-border">
-                  {SHIPPING_ZONES.map((zone) => (
-                    <tr key={zone.id}>
-                      <td className="px-5 py-4 font-medium text-foreground">{zone.name}</td>
-                      <td className="px-5 py-4 text-muted-foreground">{formatUsd(zone.standardRate)} per order</td>
-                      <td className="px-5 py-4 text-muted-foreground">
-                        {zone.freeShippingThreshold ? `At ${formatUsd(zone.freeShippingThreshold)}+ after discounts` : 'Not automatically offered'}
+                  {DELIVERY_WINDOW_TIERS.map((tier) => (
+                    <tr key={tier.id}>
+                      <td className="p-4 font-medium text-foreground">
+                        <div>{tier.category}</div>
+                        <div className="text-xs font-normal text-muted-foreground mt-0.5">{tier.notes}</div>
                       </td>
-                      <td className="px-5 py-4 text-muted-foreground">{zone.duties}</td>
+                      <td className="p-4 text-muted-foreground">{tier.processingWindow}</td>
+                      <td className="p-4 text-muted-foreground">{tier.transitWindow}</td>
+                      <td className="p-4 font-semibold text-foreground">{tier.totalWindow}</td>
                     </tr>
                   ))}
                 </tbody>
               </table>
             </div>
-            <p className="mt-4 text-xs leading-relaxed text-muted-foreground">
-              Rates are stated in USD. Shopify may display an available local presentment currency. Checkout controls the final converted amount and available service.
+          </div>
+        </section>
+
+        {/* Route-Based Shipping Rates */}
+        <section className="py-10 lg:py-12 border-b border-border">
+          <div className="container mx-auto px-4 max-w-4xl">
+            <h2 className="font-serif text-2xl mb-4">Standard Shipping Rates</h2>
+            <div className="overflow-x-auto border border-border rounded-sm">
+              <table className="w-full text-sm text-left">
+                <thead className="bg-secondary/40 text-foreground">
+                  <tr>
+                    <th className="p-4 font-medium">Destination</th>
+                    <th className="p-4 font-medium">Standard Rate (USD)</th>
+                    <th className="p-4 font-medium">Free Standard Shipping</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-border">
+                  {SHIPPING_ZONES.map((zone) => (
+                    <tr key={zone.id}>
+                      <td className="p-4 font-medium text-foreground">{zone.name}</td>
+                      <td className="p-4 text-muted-foreground">${zone.standardRate.toFixed(2)} USD</td>
+                      <td className="p-4 text-muted-foreground">{formatShippingThreshold(zone)}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-xs text-muted-foreground mt-3">
+              Free-shipping thresholds apply to order merchandise subtotal after discounts and before applicable tax. Local currency display may appear during checkout; billing and threshold rules follow Shopify checkout settings.
             </p>
           </div>
         </section>
 
-        <section className="py-16 bg-secondary/30">
-          <div className="container mx-auto px-4 lg:px-8 max-w-5xl">
-            <div className="flex items-center justify-center gap-2 mb-8">
-              <FileText className="h-6 w-6 text-primary" />
-              <h2 className="text-3xl font-serif">How Your Order Moves</h2>
+        <section className="py-12 lg:py-16">
+          <div className="container mx-auto px-4 max-w-4xl space-y-10 text-sm text-muted-foreground leading-relaxed">
+            <div>
+              <div className="flex items-center gap-2.5 mb-2 text-foreground">
+                <Clock className="h-5 w-5 text-primary shrink-0" />
+                <h2 className="font-serif text-2xl">Processing and Transit Timing</h2>
+              </div>
+              <p>{SHIPPING_PROCESSING_NOTICE}</p>
+              <p className="mt-3">{SHIPPING_TIMING_NOTICE}</p>
+              <p className="mt-3">
+                Processing and carrier transit are stated separately: Ready-to-Ship items complete our 3-Point Quality Assurance Check and dispatch in 1–2 business days (delivering in 5–7 business days to the US, UK &amp; Canada via DHL/FedEx), whereas Custom Tailored outfits and alteration requests deliver in 15–18 business days total once measurements are confirmed. Browse{' '}
+                <a href="/ready-to-ship" className="text-primary underline underline-offset-4">
+                  Ready-to-Ship styles
+                </a>{' '}
+                or review our{' '}
+                <a href="/alterations" className="text-primary underline underline-offset-4">
+                  Alterations &amp; $20 Fit Credit Policy
+                </a>.
+              </p>
             </div>
-            <div className="grid gap-6 md:grid-cols-3">
-              {[
-                ['1', 'Processing', SHIPPING_PROCESSING_NOTICE],
-                ['2', 'Consolidation', 'When an order contains multiple items, the item with the longest processing time normally determines the dispatch date.'],
-                ['3', 'Tracked Transit', 'Standard transit takes approximately 9–14 business days after dispatch; express transit takes approximately 3–6 business days. Delivery varies by destination and carrier or customs delays. Tracking is sent when the parcel enters the shipping workflow.'],
-              ].map(([step, title, copy]) => (
-                <div key={step} className="rounded-lg border border-border bg-card p-6">
-                  <p className="font-serif text-3xl text-primary">{step}</p>
-                  <h3 className="mt-4 font-medium">{title}</h3>
-                  <p className="mt-2 text-sm leading-6 text-muted-foreground">{copy}</p>
-                </div>
-              ))}
-            </div>
-            <div className="mt-6 rounded-lg border border-primary/20 bg-primary/5 p-6 text-sm leading-6 text-muted-foreground">
-              <p>{SHIPPING_CONSOLIDATION_NOTICE}</p>
-              <p className="mt-3">Express service is never assumed. Contact <a className="text-primary underline" href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> before ordering with the product, destination and event date so the incremental carrier cost can be checked.</p>
-            </div>
-          </div>
-        </section>
 
-        <section className="py-16">
-          <div className="container mx-auto px-4 lg:px-8 max-w-4xl">
-            <h2 className="text-2xl font-serif mb-8 text-center">Shipping FAQ</h2>
-            <Accordion type="single" collapsible className="w-full">
-              <AccordionItem value="destinations">
-                <AccordionTrigger>Where does LuxeMia ship?</AccordionTrigger>
-                <AccordionContent>LuxeMia ships to {SHIPPING_DESTINATION_NAMES}. Checkout accepts addresses only in currently enabled shipping countries.</AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="rates">
-                <AccordionTrigger>How much is shipping?</AccordionTrigger>
-                <AccordionContent>{SHIPPING_POLICY_SUMMARY} Discounts are applied before free-shipping eligibility.</AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="timing">
-                <AccordionTrigger>How quickly will my order arrive?</AccordionTrigger>
-                <AccordionContent>{SHIPPING_TIMING_NOTICE} Carrier and customs delays can occur, so contact LuxeMia before ordering for a fixed event date.</AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="duties">
-                <AccordionTrigger>Are duties and import taxes included?</AccordionTrigger>
-                <AccordionContent>{DESTINATION_IMPORT_NOTICE}</AccordionContent>
-              </AccordionItem>
-              <AccordionItem value="address">
-                <AccordionTrigger>Can I change my address after ordering?</AccordionTrigger>
-                <AccordionContent>Email hello@luxemia.shop immediately with the order number. Once processing or label creation begins, an address change may not be possible.</AccordionContent>
-              </AccordionItem>
-            </Accordion>
+            <div>
+              <div className="flex items-center gap-2.5 mb-2 text-foreground">
+                <Truck className="h-5 w-5 text-primary shrink-0" />
+                <h2 className="font-serif text-2xl">Carriers and Tracking</h2>
+              </div>
+              <p>
+                Parcels to the United States, United Kingdom, and Canada ship with tracked air courier service via DHL Express, FedEx, and qualified international logistics partners based on destination, parcel dimensions, and customs clearance routing. Express service is never assumed unless shown on the checkout shipping method. Tracking details are emailed automatically once the airway bill is generated.
+              </p>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2.5 mb-2 text-foreground">
+                <Globe2 className="h-5 w-5 text-primary shrink-0" />
+                <h2 className="font-serif text-2xl">Customs, Duties, VAT, and Import Taxes</h2>
+              </div>
+              <p>{US_IMPORT_COVERAGE_NOTICE}</p>
+              <p className="mt-3">{DESTINATION_IMPORT_NOTICE}</p>
+              <p className="mt-3">
+                Read destination guidance on{' '}
+                <a href="/pages/shipping-customs" className="text-primary underline underline-offset-4">
+                  International Shipping, Duties &amp; Taxes
+                </a>.
+              </p>
+            </div>
+
+            <div>
+              <div className="flex items-center gap-2.5 mb-2 text-foreground">
+                <Package className="h-5 w-5 text-primary shrink-0" />
+                <h2 className="font-serif text-2xl">Pre-Dispatch 3-Point Quality Assurance &amp; Support</h2>
+              </div>
+              <p>
+                Every order undergoes our 3-Point Quality Assurance Check (fabric &amp; embroidery audit, tape-measurement verification, and moisture-barrier packaging) before courier handoff. Verify your delivery address at checkout and see{' '}
+                <a href="/returns" className="text-primary underline underline-offset-4">
+                  Returns, Quality Guarantee &amp; Cancellations
+                </a>{' '}
+                for our 48-hour photo-verified order protection.
+              </p>
+            </div>
+
+            <div className="bg-secondary/30 rounded-sm p-6 lg:p-8">
+              <div className="flex items-center gap-2.5 mb-2 text-foreground">
+                <ShieldCheck className="h-5 w-5 text-primary shrink-0" />
+                <h2 className="font-serif text-xl">Planning for a wedding or event deadline?</h2>
+              </div>
+              <p className="mb-4">
+                Reach our Philadelphia, PA support desk with your style link, size, and event date before checkout so we can verify dispatch timing for you.
+              </p>
+              <div className="flex flex-wrap gap-3">
+                <Button asChild variant="luxury" size="sm">
+                  <a href="mailto:hello@luxemia.shop">
+                    <Mail className="h-4 w-4 mr-2" />
+                    hello@luxemia.shop
+                  </a>
+                </Button>
+                <Button asChild variant="outline" size="sm">
+                  <a href="tel:+12153419990">
+                    <MessageSquare className="h-4 w-4 mr-2" />
+                    +1-215-341-9990
+                  </a>
+                </Button>
+              </div>
+            </div>
           </div>
         </section>
       </main>

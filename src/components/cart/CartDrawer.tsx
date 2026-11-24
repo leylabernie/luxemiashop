@@ -11,6 +11,7 @@ import { getOptimizedImage } from '@/lib/imageUtils';
 import { isGarmentAlterationCartLine, isHiddenBillingProductHandle } from '@/lib/serviceAddOns';
 import { DESTINATION_IMPORT_NOTICE, SHIPPING_POLICY_SUMMARY, US_FREE_SHIPPING_THRESHOLD } from '@/config/shippingPolicy';
 import { WELCOME_OFFER } from '@/config/welcomeOffer';
+import { appendGaLinkerParams } from '../../lib/gaLinker';
 const FREE_SHIPPING_THRESHOLD = US_FREE_SHIPPING_THRESHOLD;
 const SHIPPING_PROMISE = SHIPPING_POLICY_SUMMARY;
 
@@ -23,7 +24,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
   const {
     items,
     isLoading,
-    checkoutUrl,
+    checkoutUrl: rawCheckoutUrl,
     checkoutError,
     updateQuantity,
     removeItem,
@@ -31,6 +32,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
     trackCheckoutClick,
     trackCartView,
   } = useCartStore();
+  const checkoutUrl = rawCheckoutUrl ? appendGaLinkerParams(rawCheckoutUrl) : null;
 
   useEffect(() => {
     if (isOpen) {

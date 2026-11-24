@@ -140,7 +140,7 @@ test('drawer renders canonical automatic metadata even for an old unhydrated lin
   try {
     const html = renderToStaticMarkup(React.createElement(CartDrawer, { isOpen: true, onClose() {} }));
     assert.match(html, /Alterations \/ finishing requested/);
-    assert.match(html, /15–21 business days total/);
+    assert.match(html, /15–18 business days total/);
     assert.match(html, /Fit Request/);
     assert.doesNotMatch(html, /Tailored to order|Made to Order|before production|4–5 weeks/);
     assert.match(html, /\$99.97/);
@@ -152,7 +152,7 @@ after(() => { globalThis.localStorage = originalStorage; globalThis.fulfillmentC
 
 test('legacy automatic timing preserves explicit dispatch without changing free text', () => {
  const result = normalizeFulfillmentAttributes(oldAttributes, 6);
- for (const item of result.filter(a => /^Timing /.test(a.key))) assert.match(item.value, /18–23 business days total/);
+ for (const item of result.filter(a => /^Timing /.test(a.key))) assert.match(item.value, /20–23 business days total/);
  const custom = [{key:'Timing Estimate', value:'Customer requested October delivery'}];
  assert.deepEqual(normalizeFulfillmentAttributes(custom, 6), custom);
 });

@@ -53,9 +53,13 @@ const footerLinks = {
     { name: 'Review us on Google', href: 'https://search.google.com/local/writereview?placeid=ChIJw2TQgyx3_WgRbxjTw6E4KhY', external: true },
     { name: 'Contact Us', href: '/contact' },
     { name: 'FAQ', href: '/faq' },
-    { name: 'Shipping Info', href: '/shipping' },
+    { name: 'Shipping Policy', href: '/shipping' },
+    { name: 'Returns & Quality Guarantee', href: '/returns' },
+    { name: 'Alterations & $20 Fit Credit', href: '/alterations' },
+    { name: 'Duties & Customs', href: '/pages/shipping-customs' },
+    { name: 'Privacy Policy', href: '/privacy' },
+    { name: 'Terms of Service', href: '/terms' },
     { name: 'U.S. Customer Support', href: '/us-support' },
-    { name: 'Returns & Cancellations', href: '/returns' },
     { name: 'Size Guide', href: '/size-guide' },
     { name: 'Measurement Worksheet', href: '/sizing-measurements-guide' },
     { name: 'Care Guide', href: '/care-guide' },
@@ -194,6 +198,9 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             </div>
             {/* Contact info — consolidated here, removed from separate column */}
             <div className="mt-6 space-y-2 text-sm text-foreground/60 font-light">
+              <div className="text-xs font-medium uppercase tracking-wider text-foreground/80">
+                Philadelphia, PA &middot; U.S. Support Desk
+              </div>
               <a href="tel:+1-215-341-9990" className="flex items-center gap-2 hover:text-foreground transition-colors">
                 <Phone className="w-4 h-4 flex-shrink-0" />
                 +1-215-341-9990
@@ -309,17 +316,19 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
             <span className="text-foreground/20">·</span>
             <Link to="/terms" className="hover:text-foreground transition-colors">Terms of Service</Link>
             <span className="text-foreground/20">·</span>
-            <Link to="/returns" className="hover:text-foreground transition-colors">Returns & Cancellations</Link>
+            <Link to="/returns" className="hover:text-foreground transition-colors">Returns &amp; Quality Guarantee</Link>
             <span className="text-foreground/20">·</span>
-            <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Info</Link>
+            <Link to="/shipping" className="hover:text-foreground transition-colors">Shipping Policy</Link>
             <span className="text-foreground/20">·</span>
-            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">International Shipping, Duties & Taxes</Link>
+            <Link to="/alterations" className="hover:text-foreground transition-colors">Alterations &amp; $20 Fit Credit</Link>
+            <span className="text-foreground/20">·</span>
+            <Link to="/pages/shipping-customs" className="hover:text-foreground transition-colors">International Shipping, Duties &amp; Taxes</Link>
           </div>
 
           {/* Copyright + business info — bottom row, centered */}
           <div className="text-center text-xs text-foreground/50 space-y-1">
             <p>© 2026 LuxeMia. All rights reserved.</p>
-            <p>LuxeMia &middot; Online Indian ethnic wear &middot; Philadelphia, PA &middot; USA-based support</p>
+            <p>LuxeMia &middot; Online Indian ethnic wear &middot; Philadelphia, PA &middot; +1-215-341-9990 &middot; hello@luxemia.shop</p>
           </div>
         </div>
       </div>

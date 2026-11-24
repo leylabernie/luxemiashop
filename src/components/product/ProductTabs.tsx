@@ -934,19 +934,15 @@ export const ProductTabs = ({ description, descriptionHtml, productType, isStitc
                     <ul className="text-sm text-muted-foreground mt-2 space-y-1.5">
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span><strong className="text-foreground">Record one continuous unboxing/opening video</strong> showing the unopened package, shipping label, opening process, contents, and item condition</span>
+                        <span><strong className="text-foreground">3-Point Quality Assurance Check</strong> completed on fabric/embroidery, measurements, and moisture-barrier packaging before dispatch</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span><strong className="text-foreground">Contact us within 48 hours</strong> of delivery</span>
+                        <span><strong className="text-foreground">Contact us within 48 hours</strong> of delivery with 2–3 clear photos (no unboxing video required)</span>
                       </li>
                       <li className="flex items-start gap-2">
                         <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>Include clear photos alongside the required video</span>
-                      </li>
-                      <li className="flex items-start gap-2">
-                        <CheckCircle2 className="h-3.5 w-3.5 text-green-500 mt-0.5 flex-shrink-0" />
-                        <span>Contact our support team with your order number for prompt resolution</span>
+                        <span>Email <strong className="text-foreground">hello@luxemia.shop</strong> or WhatsApp <strong className="text-foreground">+1-215-341-9990</strong> with your order number for a full refund or replacement</span>
                       </li>
                     </ul>
                   </div>

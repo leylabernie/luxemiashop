@@ -239,7 +239,7 @@ const Terms = () => {
                       <h3 className="font-semibold text-foreground mb-2">8.2 Covered Order Issues</h3>
                       <ul className="list-disc pl-6 space-y-2">
                         <li>For genuine shipping damage or defect, a materially misdescribed or incorrect item, or a missing item, contact us within 48 hours of delivery.</li>
-                        <li>Provide clear photos and a continuous unboxing/opening video showing the unopened package, shipping label, opening process, contents, and item condition.</li>
+                        <li>Provide 2–3 clear photos showing the outer courier packaging/shipping label, the garment with original tags attached, and the affected area (no unboxing video is required).</li>
                         <li>For covered order issues, the Returns Policy provides a full refund or replacement, your choice, without return shipping charges. Rights and remedies that cannot legally be excluded remain unaffected.</li>
                         <li>Keep the item and all packaging until LuxeMia reviews the claim. Do not send an item back unless LuxeMia authorizes it and provides instructions.</li>
                       </ul>

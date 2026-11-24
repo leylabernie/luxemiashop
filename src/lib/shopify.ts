@@ -5,6 +5,7 @@ import { loadCatalogPages } from './catalogPagination';
 import { assertCheckoutCartMatches, assertCheckoutCartPrices, CheckoutCartChangedError, CheckoutUrlError, isCacheableStorefrontOperation } from './checkoutCartIntegrity';
 
 import { isHiddenBillingProductHandle } from './serviceAddOns';
+import { appendGaLinkerParams } from './gaLinker';
 
 // Shopify API Configuration
 const SHOPIFY_API_VERSION = '2025-10';
@@ -886,5 +887,5 @@ export async function createStorefrontCheckout(items: Array<{ variantId: string;
     console.error(`Shopify cartCreate: invalid_checkout_url (${validation.code})`);
     throw new CheckoutUrlError('invalid_checkout_url', 'Checkout link could not be verified. Your bag is saved — please try again.');
   }
-  return validation.url;
+  return appendGaLinkerParams(validation.url);
 }

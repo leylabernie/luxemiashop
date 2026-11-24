@@ -25,8 +25,8 @@ test('merchandising build rewrite preserves approved alteration copy and is idem
       for (const relative of ['src/pages/ReadyToShip.tsx', 'scripts/prerender.js']) {
         const source = read(relative);
         assert.match(source, /Ready to Ship means the style is stocked/);
-        assert.match(source, /12–18 business days total/);
-        assert.match(source, /15–21 business days total/);
+        assert.match(source, /5–7 business days/);
+        assert.match(source, /15–18 business days total/);
         assert.doesNotMatch(source, /Every purchasable LuxeMia catalog item is Ready to Ship|Fully custom products are shown separately as Made to Order/);
       }
       assert.match(read('src/components/product/ProductInfo.tsx'), /alterationShippingTimingNotice\(shipsWithinDays\)/);

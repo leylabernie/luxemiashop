@@ -58,7 +58,7 @@ const ReadyToShip = () => {
     <div className="min-h-screen bg-background">
       <SEOHead
         title="Ready-to-Ship Indian Ethnic Wear | LuxeMia"
-        description="Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (3–4 business day dispatch; alterations extra). Free U.S. standard shipping $150+."
+        description="Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (5–7 business days to US/UK/CA via DHL/FedEx). Free U.S. shipping $150+."
         canonical="https://luxemia.shop/ready-to-ship"
         breadcrumbs={[
           { name: 'Home', url: '/' },
@@ -75,7 +75,7 @@ const ReadyToShip = () => {
             </span>
             <h1 className="mb-4 font-serif text-3xl lg:text-5xl">Ready-to-Ship Indian Ethnic Wear</h1>
             <p className="mx-auto max-w-3xl text-sm font-light leading-relaxed text-muted-foreground lg:text-base">
-              Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.
+              Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, Ready-to-Ship orders deliver in 5–7 business days to the US, UK &amp; Canada via DHL/FedEx (1–2 business days dispatch plus 4–5 business days transit). Custom Tailored selections and requested alterations or finishing take 15–18 business days total (counted once per outfit after complete measurements are confirmed). These are estimates, not guaranteed arrival dates.
             </p>
             <p className="mt-4 text-sm">
               <Link className="text-primary underline underline-offset-4" to="/collections/ready-to-wear-palazzo-suits">Shop ready-to-wear palazzo sets</Link>

@@ -326,6 +326,10 @@ const ProductDetail = () => {
       question: `What is the delivery time for the ${product.title}?`,
       answer: productShippingTimingNotice(productShipsWithinDays) + ' The selected variant and listing describe the supplied construction; explicit fabric-only or unstitched pieces are not ready-to-wear garments.'
     },
+    ...(!isJewelryProduct ? [{
+      question: `Does the ${product.title} include inner lining and alteration seam margin?`,
+      answer: 'Lined bodices and embroidered panels pair with breathable soft cotton or crepe inner lining where applicable (unstitched pieces are supplied in their listed fabric construction). Custom-stitched blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where construction permits, backed by up to $20 USD in Local Alteration Credit.',
+    }] : []),
     ...(customizableProduct ? [{
       question: `Can I request another color for the ${product.title}?`,
       answer: 'A different color is a request, not a guaranteed option. LuxeMia must confirm availability in writing. Contact LuxeMia with the product link and requested color so fabric availability can be confirmed before ordering. Other design changes are not promised unless LuxeMia confirms them in writing.',

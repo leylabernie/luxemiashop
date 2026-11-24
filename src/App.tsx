@@ -35,6 +35,7 @@ const Contact = lazy(() => import("./pages/Contact"));
 const Shipping = lazy(() => import("./pages/Shipping"));
 const ShippingCustoms = lazy(() => import("./pages/ShippingCustoms"));
 const Returns = lazy(() => import("./pages/Returns"));
+const Alterations = lazy(() => import("./pages/Alterations"));
 const Privacy = lazy(() => import("./pages/Privacy"));
 const Terms = lazy(() => import("./pages/Terms"));
 const NewArrivals = lazy(() => import("./pages/NewArrivals"));
@@ -162,6 +163,11 @@ const App = () => (
                 <Route path="/shipping-customs" element={<Navigate to="/pages/shipping-customs" replace />} />
                 <Route path="/customs" element={<Navigate to="/pages/shipping-customs" replace />} />
                 <Route path="/returns" element={<Suspense fallback={<PageLoader />}><Returns /></Suspense>} />
+                <Route path="/alterations" element={<Suspense fallback={<PageLoader />}><Alterations /></Suspense>} />
+                <Route path="/policies/returns" element={<Navigate to="/returns" replace />} />
+                <Route path="/policies/shipping" element={<Navigate to="/shipping" replace />} />
+                <Route path="/policies/alterations" element={<Navigate to="/alterations" replace />} />
+                <Route path="/pages/alterations-policy" element={<Navigate to="/alterations" replace />} />
                 <Route path="/privacy" element={<Suspense fallback={<PageLoader />}><Privacy /></Suspense>} />
                 <Route path="/privacy-policy" element={<Navigate to="/privacy" replace />} />
                 <Route path="/terms" element={<Suspense fallback={<PageLoader />}><Terms /></Suspense>} />

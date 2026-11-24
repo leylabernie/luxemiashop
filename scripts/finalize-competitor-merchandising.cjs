@@ -23,8 +23,8 @@ const changed = [];
 
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 const PRODUCT_SHIPPING_ANSWER = `LuxeMia ships to ${DESTINATIONS}. U.S. standard shipping is $14.99 below $150 and free at $150 and above. Other destinations use route-based rates shown on the Shipping page and at checkout. Tracking is emailed after dispatch.`;
-const PRODUCT_READY_DELIVERY_ANSWER = 'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.';
-const READY_PAGE_DESCRIPTION = 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (3–4 business day dispatch; alterations extra). Free U.S. standard shipping $150+.';
+const PRODUCT_READY_DELIVERY_ANSWER = 'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, Ready-to-Ship orders deliver in 5–7 business days to the US, UK & Canada via DHL/FedEx (1–2 business days dispatch plus 4–5 business days transit). Custom Tailored selections and requested alterations or finishing take 15–18 business days total (counted once per outfit after complete measurements are confirmed). These are estimates, not guaranteed arrival dates.';
+const READY_PAGE_DESCRIPTION = 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (5–7 business days to US/UK/CA via DHL/FedEx). Free U.S. shipping $150+.';
 const READY_ROUTE_CONTENT = `  {
     path: '/ready-to-ship',
     category: 'ready-to-ship',
@@ -32,7 +32,7 @@ const READY_ROUTE_CONTENT = `  {
     description: '${READY_PAGE_DESCRIPTION}',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: \`
-      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
+      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, Ready-to-Ship orders deliver in 5–7 business days to the US, UK &amp; Canada via DHL/FedEx (1–2 business days dispatch plus 4–5 business days transit). Custom Tailored selections and requested alterations or finishing take 15–18 business days total (counted once per outfit after complete measurements are confirmed). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
       <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>
@@ -102,7 +102,7 @@ function patchReadyToShipPage() {
     .replace(/Verified shorter processing/g, 'Stocked catalog styles')
     .replace(
       /These products have a verified semi-stitched processing window of up to five business days\.[\s\S]*?Review the exact product option and contact LuxeMia before ordering for a fixed event date\./,
-      'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.',
+      'Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, Ready-to-Ship orders deliver in 5–7 business days to the US, UK & Canada via DHL/FedEx (1–2 business days dispatch plus 4–5 business days transit). Custom Tailored selections and requested alterations or finishing take 15–18 business days total (counted once per outfit after complete measurements are confirmed). These are estimates, not guaranteed arrival dates.',
     )
     .replace(/styles with verified shorter processing/g, 'ready-to-ship styles')
     .replace(
@@ -562,7 +562,8 @@ function patchTrustSourceValidator() {
     `requireAll('src/pages/ReadyToShip.tsx', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
   'Ready to Ship means the style is stocked',
-  'Requested alterations or finishing add 3 business days once',
+  '5–7 business days',
+  '15–18 business days total',
   'View route-based rates',
 ]);`,
   );

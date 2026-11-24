@@ -92,7 +92,8 @@ requireAll('src/App.tsx', [
 requireAll('src/pages/ReadyToShip.tsx', [
   'isMadeToOrderProduct(product.node.handle, product.node.tags)',
   'Ready to Ship means the style is stocked',
-  'Requested alterations or finishing add 3 business days once',
+  '5–7 business days',
+  '15–18 business days total',
   'View route-based rates',
 ]);
 requireAll('src/lib/productFilters.ts', [

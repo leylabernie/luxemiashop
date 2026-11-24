@@ -118,8 +118,12 @@ const FAQ = () => {
           answer: RETURN_POLICY_FAQ_ANSWER,
         },
         {
-          question: 'Why do I need an unboxing video?',
-          answer: 'The continuous unboxing/opening video is required to review damage, defects, a materially misdescribed or incorrect item, or missing pieces. It must show the unopened package, shipping label, opening process, contents, and item condition. These reporting steps do not remove rights that cannot legally be excluded.',
+          question: 'How does your 3-Point Quality Assurance Check and 48-hour photo protection work?',
+          answer: 'Every outfit undergoes our 3-Point Quality Assurance Check before international dispatch: fabric and embroidery audit, tape-measurement fit check, and moisture-barrier packaging seal. If an item arrives damaged, defective, materially misdescribed, incorrect, or missing listed pieces, simply send 2–3 clear photos (outer courier label plus the affected garment area with tags attached) to hello@luxemia.shop or WhatsApp +1-215-341-9990 within 48 hours of delivery — no unboxing video is required. Mandatory consumer rights remain unaffected.',
+        },
+        {
+          question: 'What if my custom-stitched blouse or suit needs a minor fit adjustment?',
+          answer: 'Custom-stitched blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where garment construction permits so local tailors can easily let out or take in the fit. LuxeMia also reimburses up to $20 USD in Local Alteration Credit (store credit) when you email your local tailor receipt to hello@luxemia.shop within 14 days of delivery.',
         },
         {
           question: 'What items cannot be returned?',

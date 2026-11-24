@@ -151,7 +151,7 @@ async function loadTsModule(relativeSrcPath, externalPackages = false) {
 const { measurementTitle, measurementHtml, sizingNextStepsHtml } = await loadTsModule('scripts/render-sizing-content.tsx', true);
 const { getCatalogMaterial } = await loadTsModule('src/lib/catalogMaterial.ts');
 const { generateOfferShippingReferences } = await loadTsModule('src/lib/schema.ts');
-const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
+const { US_IMPORT_COVERAGE_NOTICE, DESTINATION_IMPORT_NOTICE, SHIPPING_ORIGIN_NOTICE, SHIPPING_TIMING_NOTICE, SHIPPING_PROCESSING_NOTICE, ALTERATION_TIMING_NOTICE, productShippingTimingNotice, alterationShippingTimingNotice } = await loadTsModule('src/config/shippingPolicy.ts');
 const { RETURN_POLICY_FAQ_ANSWER, RETURN_POLICY_SUMMARY, SUPPORT_CLAIM_SUMMARY } = await loadTsModule('src/lib/returnPolicyCopy.ts');
 const { HOMEPAGE_HEADLINE, HOMEPAGE_VALUE_PROPOSITION, HOMEPAGE_TRUST_ITEMS, HOMEPAGE_WEDDING_COPY, HOMEPAGE_WEDDING_LINK } = await loadTsModule('src/lib/homepageValueProposition.ts');
 const { hasNativeFullStitchingOptions } = await loadTsModule('src/lib/serviceAddOns.ts');
@@ -2203,9 +2203,14 @@ const routes = [
       <ul><li>$29.99 below $349</li><li>Free standard shipping at $349 and above</li></ul>
       <h3>South Africa</h3><p>$49.99 per order.</p>
       <h3>Mauritius</h3><p>$59.99 per order.</p>
+      <h2>Explicit delivery windows (US, UK &amp; Canada via DHL / FedEx)</h2>
+      <ul>
+        <li><strong>Ready-to-Ship:</strong> 1–2 business days dispatch (3-Point QA) + 4–5 business days transit = <strong>5–7 business days</strong></li>
+        <li><strong>Custom Tailored &amp; Alterations:</strong> 10–12 business days tailoring + 4–6 business days transit = <strong>15–18 business days total</strong></li>
+      </ul>
       <h2>Processing and carrier transit</h2>
       <p>${escapeHtml(SHIPPING_PROCESSING_NOTICE)}</p>
-      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any requested alterations or finishing and contact LuxeMia before ordering for a fixed event date.</p>
+      <p>${escapeHtml(SHIPPING_TIMING_NOTICE)} Review the exact product page for any requested alterations or finishing, or see our <a href="/alterations">Alterations &amp; $20 Fit Credit Policy</a>.</p>
       <h2>Carriers, consolidation and express service</h2>
       <p>LuxeMia may route a parcel through DHL, FedEx, UPS, Aramex or another qualified service based on destination, weight, dimensions, customs requirements and cost. Multi-item orders may be consolidated. Express and split-shipment service require a confirmed quote before ordering.</p>
       <h2>Customs and duties</h2>
@@ -2216,10 +2221,10 @@ const routes = [
     path: '/ready-to-ship',
     category: 'ready-to-ship',
     title: 'Ready-to-Ship Indian Ethnic Wear | LuxeMia',
-    description: 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (3–4 business day dispatch; alterations extra). Free U.S. standard shipping $150+.',
+    description: 'Shop stocked ready-to-ship Indian sarees, lehengas, suits & menswear (5–7 business days to US/UK/CA via DHL/FedEx). Free U.S. shipping $150+.',
     h1: 'Ready-to-Ship Indian Ethnic Wear',
     content: `
-      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, allow 3–4 business days for dispatch plus 9–14 business days in transit (12–18 business days total). Requested alterations or finishing add 3 business days once after complete details are confirmed (15–21 business days total). These are estimates, not guaranteed arrival dates.</p>
+      <p>Ready to Ship means the style is stocked and currently purchasable; it does not mean same-day dispatch or a finished, wearable outfit. Each listing states whether the garment is stitched, semi-stitched or unstitched, and unstitched pieces need assembly and any tailoring separately. Without alterations, Ready-to-Ship orders deliver in 5–7 business days to the US, UK &amp; Canada via DHL/FedEx (1–2 business days dispatch plus 4–5 business days transit). Custom Tailored selections and requested alterations or finishing take 15–18 business days total (counted once per outfit after complete measurements are confirmed). These are estimates, not guaranteed arrival dates.</p>
       <h2>Stocked selections and custom selections</h2>
       <p>Some stocked products also offer a Custom Size, Custom Stitching or Made-to-Measure selection. Requested fit changes require additional processing and use the timing stated on the product page; no new garment production is promised.</p>
       <h2>Processing and carrier transit are separate</h2>
@@ -2247,10 +2252,17 @@ const routes = [
   },
   {
     path: '/returns',
-    title: 'Returns, Refunds & Cancellations | LuxeMia',
-    description: 'LuxeMia’s final-sale policy, 48-hour damage and order-issue claim requirements, and cancellation terms.',
-    h1: 'Returns, Refunds & Cancellations',
-    content: `<p>${escapeHtml(RETURN_POLICY_SUMMARY)}</p><h2>Order cancellations</h2><p>Email hello@luxemia.shop with your order number as soon as possible. Cancellations within 24 hours of ordering receive a full refund. After 24 hours, requests are considered case by case and cancellation may not be possible. If cancellation is possible, the refund is reduced only by non-recoverable supplier costs, which will be disclosed before proceeding. This policy does not limit rights or remedies that cannot legally be excluded.</p>`,
+    title: 'Returns, Quality Guarantee & Cancellations | LuxeMia',
+    description: 'LuxeMia’s 3-Point Quality Assurance Check, 48-hour photo-verified order protection, $20 Local Alteration Credit, and 24-hour cancellation terms.',
+    h1: 'Returns, Quality Guarantee & Cancellations',
+    content: `<p>${escapeHtml(RETURN_POLICY_SUMMARY)}</p><h2>Our 3-Point Quality Assurance Check</h2><p>Every LuxeMia garment undergoes three checkpoints before international dispatch: (1) fabric and embroidery audit, (2) tape-measurement fit check against published or confirmed custom dimensions, and (3) moisture-barrier packaging seal.</p><h2>Order cancellations</h2><p>Email hello@luxemia.shop with your order number as soon as possible. Cancellations within 24 hours of ordering receive a full refund. After 24 hours, requests are considered case by case and cancellation may not be possible. If cancellation is possible, the refund is reduced only by non-recoverable supplier costs, which will be disclosed before proceeding. This policy does not limit rights or remedies that cannot legally be excluded.</p>`,
+  },
+  {
+    path: '/alterations',
+    title: 'Alterations, Fit Guarantee & $20 Credit | LuxeMia',
+    description: 'LuxeMia’s 2-inch internal seam allowance guarantee, $20 USD Local Alteration Credit for custom-stitched blouses and suits, and 15–18 business day tailoring timeline.',
+    h1: 'Alterations, Seam Allowance & $20 Fit Credit',
+    content: `<p>Every custom-stitched LuxeMia blouse, choli, and suit top includes a <strong>2-inch (5 cm) internal seam allowance on both side seams</strong> where garment construction permits so any local tailor in the US, UK, or Canada can easily let out or take in the fit.</p><h2>$20 Local Alteration Credit</h2><p>If your custom-stitched blouse or suit needs a minor local posture or fit adjustment after delivery, LuxeMia reimburses up to <strong>$20 USD in store credit</strong> when you email your LuxeMia order number and a clear photo of your local tailor’s receipt to <a href="mailto:hello@luxemia.shop">hello@luxemia.shop</a> within 14 days of delivery.</p><h2>Tailoring &amp; Delivery Windows</h2><p>Ready-to-Ship selections deliver in <strong>5–7 business days</strong> to the US, UK &amp; Canada via DHL/FedEx, while Custom Tailored outfits and alteration selections deliver in <strong>15–18 business days total</strong> after complete measurements are confirmed. Read our <a href="/shipping">Shipping Policy</a> and <a href="/returns">Returns &amp; Quality Guarantee</a>, or contact our Philadelphia, PA support desk at <a href="tel:+12153419990">+1-215-341-9990</a>.</p>`,
   },
   {
     path: '/contact',
@@ -3024,10 +3036,12 @@ function generateHtml(template, route, allShopifyProducts) {
       ? `Listed garment sizes: ${productAttributes.sizes.join(', ')}. Review ${SIZING_GUIDANCE_LABEL.toLowerCase()} before ordering.`
       : NO_FINISHED_GARMENT_SIZE_NOTICE;
     const nativeStitching = hasNativeFullStitchingOptions(p);
-    const shippingEstimate = productShippingTimingNotice(productAttributes.shipsWithinDays) + (nativeStitching
-      ? ' The Fabric Only selection retains its listed semi-stitched / unstitched pieces and requires finishing before wearing. Standard Stitched and Custom Stitched fitting selections use the alteration allowance.'
+    const shippingEstimate = (isMadeToOrderProduct(p)
+      ? alterationShippingTimingNotice(productAttributes.shipsWithinDays)
+      : productShippingTimingNotice(productAttributes.shipsWithinDays)) + (nativeStitching
+      ? ' The Fabric Only selection retains its listed semi-stitched / unstitched pieces and requires finishing before wearing. Standard Stitched and Custom Stitched fitting selections take 15–18 business days total.'
       : p.tags?.includes('construction:Unstitched')
-      ? ' This listing is supplied unstitched, not as a ready-to-wear garment.' : '') + (p.tags?.includes('availability:Confirm before ordering') ? ' Confirm the selected size and current availability before ordering.' : '');
+      ? ' This listing is supplied unstitched, not as a ready-to-wear garment. Optional Custom Tailored or alteration requests take 15–18 business days total.' : '') + (p.tags?.includes('availability:Confirm before ordering') ? ' Confirm the selected size and current availability before ordering; Custom Tailored or alteration requests take 15–18 business days total.' : '') + (!isMadeToOrderProduct(p) && !productAttributes.shipsWithinDays && !nativeStitching && !p.tags?.includes('construction:Unstitched') && !p.tags?.includes('availability:Confirm before ordering') ? ' Express options, when offered, are separately quoted and confirmed before ordering.' : '');
     // Specification rows render as a real <table> (th/td) so answer engines and
     // AI crawlers can lift fabric, sizing, and shipping facts as structured
     // key-value pairs instead of parsing prose.
@@ -3042,7 +3056,8 @@ function generateHtml(template, route, allShopifyProducts) {
       ['Brand', brandName],
       ...(productAttributes.color ? [['Color', productAttributes.color]] : []),
       ['Availability', isAvailable ? 'In Stock' : 'Currently Unavailable'],
-      ['Ships to', 'United States'],
+      ['Ships to', 'United States, Canada, United Kingdom, Australia, New Zealand, South Africa, Mauritius'],
+      ...(!productAttributes.jewelry ? [['Alteration Guarantee', '2-inch internal seam allowance on custom-stitched blouses/suits where construction permits + up to $20 USD Local Alteration Credit']] : []),
     ];
 
     const sizeAnswer = productAttributes.sizes.length === 0
@@ -3081,6 +3096,10 @@ function generateHtml(template, route, allShopifyProducts) {
         question: 'How is this product shipped?',
         answer: deliveryAnswer,
       },
+      ...(!productAttributes.jewelry ? [{
+        question: 'Does this outfit include inner lining and alteration seam margin?',
+        answer: 'Lined bodices and embroidered panels pair with breathable soft cotton or crepe inner lining where applicable (unstitched pieces are supplied in their listed fabric construction). Custom-stitched blouses, cholis, and suit tops include a 2-inch (5 cm) internal seam allowance on both side seams where construction permits, backed by up to $20 USD in Local Alteration Credit.',
+      }] : []),
       {
         question: 'What is the return policy?',
         answer: RETURN_POLICY_FAQ_ANSWER,

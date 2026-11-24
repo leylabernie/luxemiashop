@@ -63,8 +63,8 @@ test('prerender uses the shared route producer without duplicate literal routes'
 test('legacy fit guidance preserves approved timing and does not promise garment manufacture', () => {
   const page = definitions['/shop-by-fulfillment/made-to-order'];
   assert.match(page.answer, /not new garment production/);
-  assert.match(page.answer, /add 3 business days once/);
-  assert.match(page.answer, /15–21 business days, not guaranteed/);
+  assert.match(page.answer, /15–18 business days total.*once after complete details/);
+  assert.match(page.answer, /delivery dates are estimates, not guaranteed/);
 });
 
 test('real HTML generator retains full guidance, indexability and self-canonicals', async () => {
