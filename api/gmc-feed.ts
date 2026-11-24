@@ -57,6 +57,7 @@ export interface GmcFeedRow {
   title: string;
   description: string;
   link: string;
+  checkoutLinkTemplate?: string;
   imageLink: string;
   additionalImageLinks: string[];
   availability: 'in_stock' | 'out_of_stock';
@@ -78,6 +79,20 @@ export interface GmcFeedRow {
   customLabel1: string;
   shipping: string;
 }
+
+const INTERNATIONAL_SHIPPING_XML = [
+  ['CA', '24.99 USD'],
+  ['GB', '24.99 USD'],
+  ['AU', '29.99 USD'],
+  ['NZ', '29.99 USD'],
+  ['ZA', '49.99 USD'],
+  ['MU', '59.99 USD'],
+]
+  .map(
+    ([country, price]) =>
+      `      <g:shipping><g:country>${country}</g:country><g:service>Standard</g:service><g:price>${price}</g:price></g:shipping>`,
+  )
+  .join('\n');
 
 const STOREFRONT_CATALOG_QUERY = `
   query GmcFeedProducts($first: Int!, $after: String) {
@@ -570,6 +585,9 @@ export function buildGmcFeedRows(
       const link = isMultiVariant && numericVariantId
         ? `${canonicalBase}?variant=${encodeURIComponent(numericVariantId)}`
         : canonicalBase;
+      const checkoutLinkTemplate = /^\d+$/.test(numericVariantId)
+        ? `${SITE_URL}/cart/${encodeURIComponent(numericVariantId)}:1`
+        : undefined;
 
       const primaryImage = variant.image?.url
         ? forceGmcSafeImageUrl(variant.image.url)
@@ -599,6 +617,7 @@ export function buildGmcFeedRows(
         title,
         description: enrichedDescription,
         link,
+        checkoutLinkTemplate,
         imageLink: primaryImage,
         additionalImageLinks: additionalImages,
         availability: 'in_stock',
@@ -638,10 +657,10 @@ function escapeXml(value: string): string {
 export function serializeGmcXml(rows: GmcFeedRow[]): string {
   const itemsXml = rows
     .map((row) => {
-      const [shippingCountry, , shippingService, shippingPrice] = row.shipping.split(':');
       const additionalImgs = row.additionalImageLinks
         .map((img) => `      <g:additional_image_link>${escapeXml(img)}</g:additional_image_link>`)
         .join('\n');
+      const isApparel = row.googleProductCategory !== '188';
 
       return [
         '    <item>',
@@ -650,6 +669,9 @@ export function serializeGmcXml(rows: GmcFeedRow[]): string {
         `      <g:title>${escapeXml(row.title)}</g:title>`,
         `      <g:description>${escapeXml(row.description)}</g:description>`,
         `      <g:link>${escapeXml(row.link)}</g:link>`,
+        row.checkoutLinkTemplate
+          ? `      <g:checkout_link_template>${escapeXml(row.checkoutLinkTemplate)}</g:checkout_link_template>`
+          : '',
         `      <g:image_link>${escapeXml(row.imageLink)}</g:image_link>`,
         additionalImgs,
         `      <g:availability>${row.availability}</g:availability>`,
@@ -664,16 +686,14 @@ export function serializeGmcXml(rows: GmcFeedRow[]): string {
         `      <g:color>${escapeXml(row.color)}</g:color>`,
         `      <g:material>${escapeXml(row.material)}</g:material>`,
         `      <g:size>${escapeXml(row.size)}</g:size>`,
+        isApparel && row.size ? '      <g:size_type>regular</g:size_type>' : '',
+        isApparel && row.size && row.ageGroup === 'adult' ? '      <g:size_system>US</g:size_system>' : '',
         `      <g:identifier_exists>${row.identifierExists}</g:identifier_exists>`,
         row.gtin ? `      <g:gtin>${escapeXml(row.gtin)}</g:gtin>` : '',
         row.mpn ? `      <g:mpn>${escapeXml(row.mpn)}</g:mpn>` : '',
         `      <g:custom_label_0>${escapeXml(row.customLabel0)}</g:custom_label_0>`,
         `      <g:custom_label_1>${escapeXml(row.customLabel1)}</g:custom_label_1>`,
-        '      <g:shipping>',
-        `        <g:country>${escapeXml(shippingCountry || 'US')}</g:country>`,
-        `        <g:service>${escapeXml(shippingService || 'Standard')}</g:service>`,
-        `        <g:price>${escapeXml(shippingPrice || '14.99 USD')}</g:price>`,
-        '      </g:shipping>',
+        INTERNATIONAL_SHIPPING_XML,
         '    </item>',
       ]
         .filter(Boolean)

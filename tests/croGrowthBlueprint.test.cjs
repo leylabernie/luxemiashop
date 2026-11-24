@@ -332,8 +332,15 @@ test('Task 4: /api/gmc-feed builds optimized titles, canonical luxemia.shop link
   assert.match(xml, /xmlns:g="http:\/\/base\.google\.com\/ns\/1\.0"/);
   assert.match(xml, /<g:id>LM-99001<\/g:id>/);
   assert.match(xml, /<g:link>https:\/\/luxemia\.shop\/product\/teal-georgette-sequin-sangeet-lehenga-choli\?variant=99001<\/g:link>/);
+  assert.match(xml, /<g:checkout_link_template>https:\/\/luxemia\.shop\/cart\/99001:1<\/g:checkout_link_template>/);
   assert.match(xml, /<g:price>259\.00 USD<\/g:price>/);
   assert.match(xml, /<g:sale_price>219\.00 USD<\/g:sale_price>/);
+  assert.match(xml, /<g:size_type>regular<\/g:size_type>/);
+  assert.match(xml, /<g:size_system>US<\/g:size_system>/);
+  assert.doesNotMatch(xml, /<g:country>US<\/g:country>/);
+  for (const country of ['CA', 'GB', 'AU', 'NZ', 'ZA', 'MU']) {
+    assert.match(xml, new RegExp(`<g:country>${country}</g:country>`));
+  }
 
   const csv = gmc.serializeGmcCsv(rows);
   const lines = csv.trim().split('\n');
