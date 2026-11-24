@@ -2,7 +2,7 @@
 **Target Website**: [www.luxemia.shop](https://luxemia.shop)
 **Repository**: [github.com/leylabernie/luxemiashop](https://github.com/leylabernie/luxemiashop)
 **Author**: Senior Technical SEO Engineer & Web Performance Engineer
-**Status**: Root Causes Identified, Critical Fixes Deployed & Validated, Recovery Initiated
+**Status**: Root Causes Identified, Critical Fixes Deployed & Validated, Recovery Initiated · [Current traffic & GSC recovery monitoring →](./SEO_RECOVERY_MONITORING.md)
 
 ---
 
@@ -226,3 +226,27 @@ Once previous traffic levels are restored, the following strategic changes can d
 2.  **Day 3 - 5 (Errors Clear)**: "Duplicate, Google chose different canonical" warnings begin to drop in Search Console. Hreflang tags are validated as correct.
 3.  **Day 5 - 10 (Indexing Restoration)**: De-indexed products begin returning to Google's index. Daily organic impressions rise back to **200+ / day**.
 4.  **Day 10 - 14 (Full Restoration)**: Catalog indexing completes. Daily organic impressions return to the original **440+ / day** range, and clicks return to **6+ / day**, scaling up as the synchronized Shopify product quality updates are rolled out.
+
+---
+
+## 11. Current Status Update — 2026-11-24 (GSC data through 2026-11-22)
+
+**Deployment:** the hreflang/canonical fix is live on `luxemia.shop` / `www.luxemia.shop`. Indirect confirmation: the production `/sitemap.xml` index now reports `lastmod` **2026-11-24** (the build-generated index, not the stale `2026-09-26` fallback checked into `public/`), and all five child sitemaps plus `/robots.txt` resolve with correct, populated content. Direct deployment-status reads through the Vercel connector are blocked by the token's scope.
+
+**Measured traffic** (Google Sheets export `luxemia.shop-Performance-on-Search-2026-11-24`, Web search, 92 days, 2026-08-23 → 2026-11-22):
+
+| Window | Clicks/day | Impr/day | Avg position | vs. 440 impr/day |
+|---|---|---|---|---|
+| Collapse trough, Aug 23 – Sep 25 | 0.12 | 28.8 | 58.3 | −93.5% |
+| Recovery, Sep 26 – Nov 22 | 1.34 | 132.9 | 14.1 | −69.8% |
+| Last 28 days, Oct 26 – Nov 22 | 1.39 | 156.1 | 16.2 | −64.5% |
+| Last 7 days, Nov 16 – Nov 22 | 0.71 | 165.3 | 15.9 | −62.4% |
+
+The catastrophic collapse described in §1 is confirmed in the Aug 23 – Sep 25 trough (28.8 impressions/day and effectively zero clicks). A sharp inflection on **2026-09-26** began a partial recovery, but traffic has **plateaued at ~150–165 impressions/day and 1–1.5 clicks/day** since late October — roughly one-third of the 440/day baseline. GSC's ~2-day data lag means the newly promoted fix has **not yet influenced these numbers**: they are the clean Day-0 baseline against which recovery must be measured.
+
+Category pages still carry the de-indexation signature: `/sarees` (1,076 impressions, **0 clicks**, position 46.0), `/lehengas` (406, 0, 60.5), `/collections/party-wear-lehengas` (144, 0, 72.2), while the homepage, the sizing guide and one blog post take nearly all clicks.
+
+**Remaining owner actions (manual, in Google Search Console):** URL Inspection → Test Live URL → Request Indexing on the priority URLs; resubmit `/sitemap.xml`; snapshot the Indexing → Pages counts. Full runbook, dated checkpoints (Nov 26 / Nov 29 / Dec 4 / Dec 8) and escalation triggers live in [SEO_RECOVERY_MONITORING.md](./SEO_RECOVERY_MONITORING.md). The checkpoint log is the **"Recovery Tracking"** tab of the GSC spreadsheet.
+
+**Automation added:** `scripts/verify-live-seo-tags.cjs` verifies canonical/hreflang self-reference on the priority live URLs; `--dir dist/_prerender` checks every generated page offline and `--selftest` checks the parser without network. Its logic is covered by `tests/liveSeoTagsVerifier.test.cjs` in `npm test`. Current gate status: **982 tests pass, 0 failures**, `npx vite build` clean, 6 validators OK (one Shopify-network-dependent validator cannot run in this sandbox). No deployment was performed in this follow-up session.
+
