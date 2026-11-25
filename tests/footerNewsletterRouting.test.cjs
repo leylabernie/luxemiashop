@@ -29,9 +29,11 @@ function findForm(node) {
   return findForm(node.props?.children);
 }
 
-async function withFooter(response, callback, email = '  Shopper@Example.test  ') {
+// useState slots: 0 email, 1 submitting, 2 submitted, 3 discountCode,
+// 4 duplicate. Slot 4 is appended last in Footer.tsx for exactly this reason.
+async function withFooter(response, callback, email = '  Shopper@Example.test  ', stateValues = null) {
   const saved = Object.fromEntries(['fetch', 'footerFixture'].map(k => [k, Object.getOwnPropertyDescriptor(globalThis, k)]));
-  const f = { values: [email, false, false, null], cursor: 0, writes: [], toasts: [], requests: [] };
+  const f = { values: stateValues || [email, false, false, null], cursor: 0, writes: [], toasts: [], requests: [] };
   f.useState = value => {
     const i = f.cursor++;
     return [i < f.values.length ? f.values[i] : value, v => f.writes.push([i, v])];
@@ -47,9 +49,11 @@ async function withFooter(response, callback, email = '  Shopper@Example.test  '
   try {
     const m = { exports: {} };
     new Function('require','module','exports',(await compiled).outputFiles[0].text)(require,m,m.exports);
-    const form = findForm(m.exports.default({}, null));
-    assert(form, 'real footer renders its signup form');
-    await callback(f, () => form.props.onSubmit({ preventDefault() {} }));
+    const tree = m.exports.default({}, null);
+    const form = findForm(tree);
+    // A seeded success state renders the confirmation panel in place of the form.
+    if (!f.values[2]) assert(form, 'real footer renders its signup form');
+    await callback(f, () => form.props.onSubmit({ preventDefault() {} }), tree);
   } finally {
     for (const [key, descriptor] of Object.entries(saved)) {
       if (descriptor) Object.defineProperty(globalThis, key, descriptor);
@@ -135,4 +139,65 @@ test('newsletter routing leaves the shared client/config and popup endpoint alon
   const policies = config.headers.flatMap(rule => rule.headers).filter(header => header.key === 'Content-Security-Policy');
   assert(policies.length > 0);
   for (const policy of policies) assert(policy.value.includes('https://jcyolouvxfxovzjyyrxu.supabase.co'));
+});
+
+// ─── rendered confirmation panel ────────────────────────────────────────────
+
+function find(node, predicate) {
+  if (!node || typeof node !== 'object') return undefined;
+  if (Array.isArray(node)) return node.map(child => find(child, predicate)).find(Boolean);
+  if (predicate(node)) return node;
+  return find(node.props?.children, predicate);
+}
+
+function collectText(node, into = []) {
+  if (typeof node === 'string') into.push(node);
+  else if (Array.isArray(node)) node.forEach(child => collectText(child, into));
+  else if (node && typeof node === 'object') collectText(node.props?.children, into);
+  return into;
+}
+
+const panelText = tree => collectText(tree).join('').replace(/\s+/g, ' ');
+
+test('a repeat address sees "You\'re subscribed! Use code FIRST10 at checkout." in an announced status region', async () => {
+  await withFooter(new Error('must not run'), async (f, submit, tree) => {
+    const status = find(tree, node => node.props?.role === 'status');
+    assert(status, 'the confirmation must be announced, not only toasted');
+    assert.equal(status.props['aria-live'], 'polite');
+    assert.equal(f.requests.length, 0);
+    assert.match(
+      panelText(status),
+      /You're subscribed! Use code FIRST10 at checkout — 10% off an eligible first order\. One use per customer\. Final eligibility is confirmed at checkout\./,
+    );
+    assert.doesNotMatch(panelText(status), /Thank you! You're on the list/);
+    // `\'` inside JSX text is not an escape — it renders a literal backslash.
+    // tsc cannot see this, so the rendered string is asserted instead.
+    assert.doesNotMatch(panelText(status), /\\/, 'no escape characters leak into the copy');
+  }, 'shopper@example.test', ['shopper@example.test', false, true, 'FIRST10', true]);
+});
+
+test('a first signup keeps the welcome wording and does not claim a prior subscription', async () => {
+  await withFooter(new Error('must not run'), async (f, submit, tree) => {
+    const status = find(tree, node => node.props?.role === 'status');
+    assert(status, 'the confirmation must be announced');
+    assert.equal(f.requests.length, 0);
+    assert.match(
+      panelText(status),
+      /Thank you! Use FIRST10 for 10% off an eligible first order\. One use per customer\. Eligibility is confirmed at checkout\./,
+    );
+    assert.doesNotMatch(panelText(status), /You're subscribed!/);
+    assert.doesNotMatch(panelText(status), /\\/, 'no escape characters leak into the copy');
+  }, 'shopper@example.test', ['shopper@example.test', false, true, 'FIRST10', false]);
+});
+
+test('a disabled offer never advertises FIRST10, duplicate or not', async () => {
+  for (const duplicate of [false, true]) {
+    await withFooter(new Error('must not run'), async (f, submit, tree) => {
+      const status = find(tree, node => node.props?.role === 'status');
+      assert(status, 'the confirmation must still render');
+      assert.equal(f.requests.length, 0);
+      assert.match(panelText(status), /Thank you! You're on the list\./);
+      assert.doesNotMatch(panelText(tree), /FIRST10|10% off/, 'no code copy when the offer is off');
+    }, 'shopper@example.test', ['shopper@example.test', false, true, null, duplicate]);
+  }
 });

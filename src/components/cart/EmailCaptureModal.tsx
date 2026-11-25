@@ -1,3 +1,26 @@
+/**
+ * Pre-checkout email capture.
+ *
+ * STATUS (audited 2026-11-25): **not mounted anywhere.** Nothing in `src/`
+ * renders this component; the exit-intent/session-timer prompt shoppers actually
+ * see is `src/components/home/NewVisitorPopup.tsx`. Mounting this modal is a
+ * conversion decision for the owner, because it gates checkout behind an email
+ * field — see the note below before wiring it into `CartDrawer` or the checkout
+ * route.
+ *
+ * WHAT IT WRITES: `submit-email` with `type: 'cart'` → `public.abandoned_carts`
+ * (email, cart_items, cart_total, currency, status). It does **not** write
+ * `public.newsletter_subscribers`, so it never creates a marketing subscriber and
+ * never reaches the FIRST10_LEAD sync in `api/sync-lead.ts` — which is correct:
+ * `/privacy` publishes that marketing emails go out "only with your consent", and
+ * a cart reminder is transactional. If this is ever mounted, its copy must keep
+ * saying "save your cart", never "subscribe" or "get 10% off".
+ *
+ * Duplicates: `abandoned_carts` is append-only by design (each abandonment is an
+ * event with its own cart snapshot and timestamp), so a repeat submit is a
+ * success, not an error — unlike `newsletter_subscribers`, whose unique email
+ * index makes `submit-email` answer `{ success: true, duplicate: true }`.
+ */
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Loader2 } from 'lucide-react';
@@ -7,6 +30,7 @@ import { supabase } from '@/integrations/supabase/client';
 import { useCartStore } from '@/stores/cartStore';
 import { toast } from 'sonner';
 import { z } from 'zod';
+import { leadCaptureStorage, CART_RATE_LIMIT_KEY } from '@/lib/leadCaptureStorage';
 
 const emailSchema = z.object({
   email: z
@@ -20,27 +44,6 @@ const emailSchema = z.object({
       'Invalid characters in email'
     ),
 });
-
-const RATE_LIMIT_KEY = 'cart_email_submit_timestamps';
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const MAX_ATTEMPTS = 3;
-
-const checkRateLimit = (): boolean => {
-  const now = Date.now();
-  const stored = localStorage.getItem(RATE_LIMIT_KEY);
-  const timestamps: number[] = stored ? JSON.parse(stored) : [];
-  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
-  return recentAttempts.length < MAX_ATTEMPTS;
-};
-
-const recordAttempt = () => {
-  const now = Date.now();
-  const stored = localStorage.getItem(RATE_LIMIT_KEY);
-  const timestamps: number[] = stored ? JSON.parse(stored) : [];
-  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
-  recentAttempts.push(now);
-  localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
-};
 
 interface EmailCaptureModalProps {
   isOpen: boolean;
@@ -72,12 +75,15 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
       return;
     }
 
-    if (!checkRateLimit()) {
+    // Fails open when storage is blocked: a shopper must always be able to save
+    // their cart. Previously an unguarded localStorage/JSON.parse read threw here,
+    // before the try block, so the button silently did nothing at all.
+    if (!leadCaptureStorage.checkRateLimit(CART_RATE_LIMIT_KEY)) {
       toast.error('Too many attempts. Please try again in a minute.');
       return;
     }
 
-    recordAttempt();
+    leadCaptureStorage.recordAttempt(CART_RATE_LIMIT_KEY);
 
     setIsLoading(true);
     try {
@@ -120,12 +126,19 @@ const EmailCaptureModal = ({ isOpen, onClose, onEmailSubmitted, onSkip }: EmailC
         throw new Error(data.error);
       }
 
-      toast.success('Email saved! We\'ll remind you about your cart.');
+      // Promise only what happened. Nothing in this repo sends a cart reminder
+      // email yet (playbook §6.7), so the old "We'll remind you about your cart"
+      // copy claimed a message no system sends.
+      toast.success('Email saved. Continue to checkout whenever you\'re ready.');
       onEmailSubmitted(email);
       onClose();
     } catch (error) {
       console.error('Failed to save cart:', error);
-      // Still proceed with checkout even if saving fails
+      // Say the save failed instead of proceeding in silence, then let the
+      // shopper continue: a lost reminder must never block a checkout.
+      toast.error('We could not save your email', {
+        description: 'You can still continue to checkout — your bag is unchanged.',
+      });
       onEmailSubmitted(email);
       onClose();
     } finally {

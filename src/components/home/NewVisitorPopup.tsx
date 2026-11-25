@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { WELCOME_OFFER } from '@/config/welcomeOffer';
+import { leadCaptureStorage, NEWSLETTER_RATE_LIMIT_KEY } from '@/lib/leadCaptureStorage';
 
 // CRITICAL: Do NOT import supabase at the top level.
 // The supabase client chunk (~44KB / 37KB unused) was previously bundled
@@ -27,32 +28,17 @@ const emailSchema = z.object({
     ),
 });
 
-const RATE_LIMIT_KEY = 'newsletter_submit_timestamps';
-const RATE_LIMIT_WINDOW = 60000; // 1 minute
-const MAX_ATTEMPTS = 3;
 // Centralized so the popup, header announcements, and cart nudges always show
 // the same code. See src/config/welcomeOffer.ts for the Shopify discount
 // prerequisite.
 const DISCOUNT_CODE = WELCOME_OFFER.code;
+// The qualified offer sentence required wherever FIRST10 is advertised
+// (tests/activeDiscountCopy.test.cjs): the code is entered at checkout, one use
+// per customer, and eligibility is confirmed there.
+const QUALIFIED_OFFER_COPY =
+  '10% off an eligible first order. One use per customer. Final eligibility is confirmed at checkout.';
 const NEWSLETTER_FUNCTION_URL =
   'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email';
-
-const checkRateLimit = (): boolean => {
-  const now = Date.now();
-  const stored = localStorage.getItem(RATE_LIMIT_KEY);
-  const timestamps: number[] = stored ? JSON.parse(stored) : [];
-  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
-  return recentAttempts.length < MAX_ATTEMPTS;
-};
-
-const recordAttempt = () => {
-  const now = Date.now();
-  const stored = localStorage.getItem(RATE_LIMIT_KEY);
-  const timestamps: number[] = stored ? JSON.parse(stored) : [];
-  const recentAttempts = timestamps.filter((t) => now - t < RATE_LIMIT_WINDOW);
-  recentAttempts.push(now);
-  localStorage.setItem(RATE_LIMIT_KEY, JSON.stringify(recentAttempts));
-};
 
 // ─── Trigger tuning ────────────────────────────────────────────────────
 // Previous behavior: 4-second setTimeout. That fired the popup during
@@ -73,6 +59,9 @@ const NewVisitorPopup = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [discountCode, setDiscountCode] = useState<string | null>(null);
+  // Appended last on purpose: tests/newsletterPopupResponse.test.cjs drives
+  // useState by call position, so inserting state above would silently re-map it.
+  const [alreadySubscribed, setAlreadySubscribed] = useState(false);
   const triggeredRef = useRef(false);
 
   useEffect(() => {
@@ -88,11 +77,15 @@ const NewVisitorPopup = () => {
       return;
     }
 
-    // Respect previous dismissal
-    if (localStorage.getItem('luxemia_popup_seen')) return;
-
-    // Server-side / unsupported — bail without listeners
+    // Server-side / unsupported — bail before touching any browser API.
     if (typeof window === 'undefined') return;
+
+    // Respect a previous dismissal, but only for a bounded window: the legacy
+    // `luxemia_popup_seen` key suppressed this offer forever after one
+    // accidental click. lib/leadCaptureStorage expires dismissals after 30 days
+    // and fails open when storage is blocked, so a browser that cannot remember
+    // still gets to subscribe.
+    if (leadCaptureStorage.isPopupSuppressed()) return;
 
     const startedAt = Date.now();
     let deferTimer: number | undefined;
@@ -141,7 +134,9 @@ const NewVisitorPopup = () => {
 
   const handleClose = () => {
     setIsOpen(false);
-    localStorage.setItem('luxemia_popup_seen', 'true');
+    // A confirmed signup is recorded when it happens; closing the success panel
+    // must not downgrade it to a 30-day dismissal.
+    if (!isSuccess) leadCaptureStorage.rememberPopupDismissal();
   };
 
   const validateEmail = (value: string): boolean => {
@@ -161,12 +156,12 @@ const NewVisitorPopup = () => {
       return;
     }
 
-    if (!checkRateLimit()) {
+    if (!leadCaptureStorage.checkRateLimit(NEWSLETTER_RATE_LIMIT_KEY)) {
       toast.error('Too many attempts. Please try again in a minute.');
       return;
     }
 
-    recordAttempt();
+    leadCaptureStorage.recordAttempt(NEWSLETTER_RATE_LIMIT_KEY);
     setIsSubmitting(true);
 
     try {
@@ -184,6 +179,7 @@ const NewVisitorPopup = () => {
         success?: boolean;
         error?: string;
         retryAfter?: number;
+        duplicate?: boolean;
       } : null;
 
       // The verified service explicitly confirms both new and existing signups.
@@ -199,9 +195,20 @@ const NewVisitorPopup = () => {
         throw new Error(data?.error || 'We could not process your request just now. Please try again.');
       }
 
-      toast.success('Welcome to LuxeMia! Your discount code is ready.');
+      // submit-email answers a repeat signup with { success: true, duplicate: true }
+      // (unique index on newsletter_subscribers.email, Postgres 23505). That is a
+      // success, not an error: say so plainly instead of re-welcoming them.
+      const duplicate = data?.duplicate === true;
+      toast.success(
+        duplicate
+          ? `You're subscribed! Use code ${DISCOUNT_CODE} at checkout.`
+          : 'Welcome to LuxeMia! Your discount code is ready.',
+      );
+      setAlreadySubscribed(duplicate);
       setDiscountCode(DISCOUNT_CODE);
       setIsSuccess(true);
+      // They are on the list now; never re-prompt this browser for the offer.
+      leadCaptureStorage.rememberPopupSignup();
       navigator.clipboard.writeText(DISCOUNT_CODE).catch(() => {});
     } catch (error) {
       console.error('Subscription error:', error);
@@ -389,10 +396,16 @@ const NewVisitorPopup = () => {
                         <Check className="w-8 h-8 text-green-600 dark:text-green-400" />
                       </motion.div>
 
-                      <h3 className="font-serif text-2xl mb-2">You're In</h3>
+                      <h3 className="font-serif text-2xl mb-2">
+                        {alreadySubscribed ? "You're Subscribed" : "You're In"}
+                      </h3>
 
                       <p className="text-sm text-foreground/60 mb-4">
-                        Your <strong className="text-foreground">10% off</strong> code for an eligible first order:
+                        {alreadySubscribed ? (
+                          <>Use code <strong className="text-foreground">{DISCOUNT_CODE}</strong> at checkout — {QUALIFIED_OFFER_COPY}</>
+                        ) : (
+                          <>Your <strong className="text-foreground">10% off</strong> code for an eligible first order:</>
+                        )}
                       </p>
 
                       <div className="bg-muted px-6 py-3 rounded-md inline-block mb-4 border-2 border-dashed border-primary/30">
@@ -402,7 +415,9 @@ const NewVisitorPopup = () => {
                       </div>
 
                       <p className="text-xs text-foreground/50 mb-6">
-                        Code copied to clipboard. One use per customer. Apply it at checkout, where eligibility is confirmed.
+                        {alreadySubscribed
+                          ? 'Code copied to clipboard. You were already on the list — no second signup was created.'
+                          : 'Code copied to clipboard. One use per customer. Apply it at checkout, where eligibility is confirmed.'}
                       </p>
 
                       <Button
