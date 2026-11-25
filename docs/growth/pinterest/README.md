@@ -20,6 +20,16 @@ straight into the matching worksheet.
 3. Re-check any row marked `Draft — verify PDP before scheduling`; rows whose handle appears in the
    reversible retirement draft carry an explicit WARNING in `Notes / Callouts`.
 
+## Pinterest account side (no deploy needed)
+
+- **Domain claim**: `index.html` already publishes the `p:domain_verify` meta tag, so claiming
+  `luxemia.shop` is a paste-and-confirm step in Pinterest → Settings → Claimed accounts.
+- **Product pins at scale**: point Pinterest's catalog import at `https://luxemia.shop/merchant-feed.xml`
+  (Google Shopping RSS, regenerated and validated on every build; also served at `/feed.xml`,
+  `/shopping-feed.xml`, `/products.xml`, `/google-shopping.xml` and `/api/merchant-feed`).
+- **Rich pins**: the validator reads the `og:type=product` and price/availability meta that
+  `src/components/seo/SEOHead.tsx` already emits on every PDP.
+
 ## Regenerating
 
 ```bash

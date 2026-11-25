@@ -165,6 +165,8 @@ competitor's lead time as fact.
 | Social sharing on PDPs | `src/components/product/SocialShare.tsx` (WhatsApp / Pinterest / Facebook / Web Share), rendered desktop + mobile from `ProductInfo.tsx` |
 | Country landing pages for NRI traffic | `src/pages/nri/` (USA, UK, Canada, general) |
 | Pixels without spend | consent-gated Meta/Pinterest/TikTok loader; no-ops until IDs are set (`.env.example`) |
+| **Pinterest domain claim** | `index.html:74` already publishes `<meta name="p:domain_verify" content="b17dac3c…">` — the token is live, so claiming is a settings-side paste, not a code change |
+| **Pinterest catalog feed** | Pinterest's catalog import accepts a Google Shopping–format feed, which `public/merchant-feed.xml` already is (`rss 2.0` + `xmlns:g`), served at `/merchant-feed.xml`, `/feed.xml`, `/shopping-feed.xml`, `/products.xml`, `/google-shopping.xml` and `/api/merchant-feed` (aliases in `vercel.json`), and explicitly allowed in `robots.txt` |
 | Cart email capture | `src/components/cart/EmailCaptureModal.tsx` → Supabase `submit-email` |
 | Policy surfaces pins promise | `/shipping`, `/returns`, `/alterations`, `SizingAlterationCallout`, PDP trust strip + delivery badge |
 
@@ -196,9 +198,16 @@ confirm-first state. A custom-tailored selection can never inherit the 5–7 day
    or manually at 2–3 pins/day from the CSV (each row carries date, EST time, title, description, image URL
    and destination). Pinterest's recommended pin ratio is 2:3; the CSV's Shopify CDN image URLs take
    `width` / `height` / `crop` query params — render one crop before batch-pinning to confirm the framing. ~60 min.
-3. **Claim the site** in Pinterest settings and confirm **rich pins** are enabled — product rich pins pull
-   price/availability from the OG + product meta that `SEOHead.tsx` already emits, so no code change is
-   needed, only the claim + validator run. ~20 min.
+3. **Claim the domain — the verification tag is already live.** `index.html:74` publishes
+   `<meta name="p:domain_verify" content="b17dac3ccfc98d12ec596843262152c7"/>`, so in Pinterest →
+   Settings → Claimed accounts, enter `luxemia.shop` and confirm; no deploy is needed. Then run the rich-pin
+   validator on one PDP: product rich pins read the `og:type=product` + price/availability meta that
+   `SEOHead.tsx` already emits. ~15 min.
+3b. **Connect the catalog for product pins at scale (still $0).** Pinterest's catalog import takes a Google
+   Shopping feed URL — point it at `https://luxemia.shop/merchant-feed.xml` (regenerated and validated on
+   every build, 1,700 items / 237 product groups, retired and 410 handles already excluded). This is what
+   turns 206 pinnable styles into product pins without 206 manual uploads, and it keeps price/availability
+   in sync so pins never advertise a stale price. ~30 min.
 4. **Verify FIRST10 exists in Shopify** before any template or pin advertises it. `src/config/welcomeOffer.ts`
    ships `enabled: true` and warns in-code that advertising a dead discount code is worse than no code.
    Test it in checkout; if absent, create it or flip the flag. ~10 min.
@@ -241,7 +250,8 @@ Week 1 — Foundations (owner, ~2 h)
 ├── Day 1: Verify FIRST10 in Shopify checkout (§6.4). Fix or disable before advertising it.
 ├── Day 1: GSC sitemap + URL-inspect the 29 pinned PDPs; Bing Webmaster Tools (feeds Copilot/ChatGPT).
 ├── Day 2: GMC free listings + Microsoft Merchant Center with $14.99 / free $150+ and /returns policy text.
-├── Day 2: Create the 5 Pinterest boards from luxemia-pinterest-boards-corrected.csv; claim luxemia.shop.
+├── Day 2: Create the 5 Pinterest boards from luxemia-pinterest-boards-corrected.csv; claim luxemia.shop
+│          (p:domain_verify tag is already live) and connect /merchant-feed.xml as the catalog source.
 └── Day 3-7: Pin 2/day from the scheduler CSV (PIN-001…PIN-010).
 
 Week 2 — Community + creators (owner, ~1 h/day)
