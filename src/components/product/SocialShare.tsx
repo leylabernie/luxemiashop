@@ -1,5 +1,10 @@
 import { Facebook, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import {
+  buildPinterestPinDescription,
+  withShareUtm,
+  type PinFulfillment,
+} from '@/lib/pinterestPin';
 
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 32 32" className="h-5 w-5 fill-white" xmlns="http://www.w3.org/2000/svg">
@@ -17,6 +22,12 @@ interface SocialShareProps {
   productTitle: string;
   productUrl: string;
   productImage?: string;
+  /** Catalog attributes for the Pinterest pin formula. All optional. */
+  productColor?: string;
+  productMaterial?: string;
+  productCategory?: string;
+  productOccasion?: string;
+  fulfillment?: PinFulfillment;
   className?: string;
 }
 
@@ -36,10 +47,30 @@ export const SocialShare = ({
   productTitle,
   productUrl,
   productImage,
+  productColor,
+  productMaterial,
+  productCategory,
+  productOccasion,
+  fulfillment,
   className,
 }: SocialShareProps) => {
+  // Each channel gets its own utm_source so GA4 can attribute organic social
+  // clicks without any paid tooling. The canonical URL stays on the page.
+  const whatsappDestination = withShareUtm(productUrl, 'whatsapp');
+  const pinterestDestination = withShareUtm(productUrl, 'pinterest');
+  const facebookDestination = withShareUtm(productUrl, 'facebook');
   const whatsappText = `Check out ${productTitle} at LuxeMia`;
-  const pinterestDescription = `${productTitle} — Indian ethnic wear from LuxeMia`;
+  // Rich pin copy: published delivery, lining, seam-allowance and support
+  // facts only — never invented craftsmanship or insurance claims.
+  const pinterestDescription = buildPinterestPinDescription({
+    title: productTitle,
+    color: productColor,
+    material: productMaterial,
+    category: productCategory,
+    occasion: productOccasion,
+    url: pinterestDestination,
+    fulfillment,
+  });
 
   return (
     <div className={`flex flex-col sm:flex-row gap-2 sm:gap-3 ${className || ''}`}>
@@ -47,7 +78,7 @@ export const SocialShare = ({
 
       <Button
         as="a"
-        href={buildWhatsAppUrl(whatsappText, productUrl)}
+        href={buildWhatsAppUrl(whatsappText, whatsappDestination)}
         target="_blank"
         rel="noopener noreferrer"
         variant="outline"
@@ -62,7 +93,7 @@ export const SocialShare = ({
 
       <Button
         as="a"
-        href={buildPinterestUrl(productUrl, productImage, pinterestDescription)}
+        href={buildPinterestUrl(pinterestDestination, productImage, pinterestDescription)}
         target="_blank"
         rel="noopener noreferrer"
         variant="outline"
@@ -77,7 +108,7 @@ export const SocialShare = ({
 
       <Button
         as="a"
-        href={buildFacebookUrl(productUrl)}
+        href={buildFacebookUrl(facebookDestination)}
         target="_blank"
         rel="noopener noreferrer"
         variant="outline"

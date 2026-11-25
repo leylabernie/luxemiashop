@@ -8,6 +8,7 @@ import {
 } from '@/config/shippingPolicy';
 import { WELCOME_OFFER } from '@/config/welcomeOffer';
 import { getCatalogMaterial } from '@/lib/catalogMaterial';
+import { occasionFromTags, resolvePinFulfillment } from '@/lib/pinterestPin';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import { useState, useMemo, useEffect, useRef } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
@@ -640,6 +641,16 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
     || currentSelectionIsMadeToOrder || selectedStitchingType === 'made-to-measure';
   const shipsWithinDays = getProductShipsWithin(product);
   const shipByLabel = hasSelectedAlterations ? null : getShipByLabel(product);
+
+  // Shared social copy (Pinterest pins, WhatsApp, Facebook) may only repeat
+  // fulfillment facts the storefront already shows for this exact selection.
+  const pinFulfillment = resolvePinFulfillment({
+    shipsWithinDays,
+    isUnstitched: isUnstitchedDelivery,
+    isCustomTailored: requiresNativeTimingConfirmation || hasSelectedAlterations || currentSelectionIsMadeToOrder,
+    confirmAvailability: product.tags?.includes('availability:Confirm before ordering'),
+  });
+  const pinOccasion = occasionFromTags(product.tags);
 
   // Determine if the currently selected variant requires stitching size
   const needsStitchingSize = useMemo(() => {
@@ -1692,6 +1703,11 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
               productTitle={product.title}
               productUrl={`https://luxemia.shop/product/${product.handle}`}
               productImage={product.images.edges[0]?.node.url || undefined}
+              productColor={productSpecs.color}
+              productMaterial={productSpecs.fabric}
+              productCategory={productSpecs.type}
+              productOccasion={pinOccasion}
+              fulfillment={pinFulfillment}
               className="hidden sm:flex gap-2"
             />
           </div>
@@ -1826,6 +1842,11 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
           productTitle={product.title}
           productUrl={`https://luxemia.shop/product/${product.handle}`}
           productImage={product.images.edges[0]?.node.url || undefined}
+          productColor={productSpecs.color}
+          productMaterial={productSpecs.fabric}
+          productCategory={productSpecs.type}
+          productOccasion={pinOccasion}
+          fulfillment={pinFulfillment}
           className="sm:hidden flex flex-col gap-2"
         />
       </nav>
