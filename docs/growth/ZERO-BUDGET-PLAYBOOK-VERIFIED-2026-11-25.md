@@ -183,6 +183,7 @@ competitor's lead time as fact.
 | `scripts/generate-pinterest-scheduler.cjs` | **New.** Regenerates both CSVs from the live catalog with the guards in §2.2. |
 | `docs/growth/pinterest/*.csv` | **New.** 29 corrected pins + 5 corrected boards. |
 | `tests/pinterestPinCopy.test.cjs`, `tests/pinterestScheduler.test.cjs` | **New**, wired into `npm test`. 28 assertions pass alongside the existing `socialShare` suite. |
+| `api/sync-lead.ts`, `tests/syncLead.test.mjs` | **New** (same pass, different gap). Supabase Database Webhook → Shopify customer sync that tags every lead `FIRST10_LEAD`; see §6.9. 35 assertions, wired into `npm test`. |
 
 Key behavior: `resolvePinFulfillment()` only returns `ready-to-ship` when the storefront already shows a
 1–2 business-day dispatch metafield and the selection has no stitching, alteration, made-to-order or
@@ -224,6 +225,30 @@ confirm-first state. A custom-tailored selection can never inherit the 5–7 day
 8. **Creator barter tracking**: no referral-code or gifting tracker exists in the repo. If the barter engine
    runs, give each creator a distinct Shopify discount code (e.g. `AISHA10`) so usage is measurable —
    do **not** reuse FIRST10, or the channel is unattributable. ~30 min.
+9. **Switch on the lead → Shopify sync (`api/sync-lead.ts`, code is merged but inert until you do this).**
+   Today a FIRST10 signup lands in Supabase and nowhere else; this endpoint makes the same lead a tagged
+   Shopify customer so it is visible, segmentable and exportable where the rest of the business lives.
+   ~25 min, all in admin UIs:
+   - **Shopify** → Settings → Apps and sales channels → Develop apps: create (or reuse) a custom app with
+     `read_customers` + `write_customers`, grant it **access to protected customer data**, and copy the
+     Admin API access token into Vercel as `SHOPIFY_ADMIN_API_TOKEN`.
+   - **Vercel** → Project → Settings → Environment Variables: add `SUPABASE_WEBHOOK_SECRET` (any long
+     random string, e.g. `openssl rand -hex 32`). Without it the endpoint answers `503` for everyone — it
+     fails closed rather than accepting unauthenticated writes.
+   - **Supabase** → Database → Webhooks → Create a new hook: event **INSERT**, and pick the lead table.
+     **Note:** this project has no `email_captures` table — the live capture tables are
+     `newsletter_subscribers` (FIRST10 signups, written by `supabase/functions/submit-email`) and
+     `abandoned_carts` (cart reminders). Set `SUPABASE_WEBHOOK_TABLES=newsletter_subscribers` (comma-separate
+     for both) so the endpoint accepts the table you actually hooked; the default `email_captures` is there
+     to match the requested contract if you create that table later. Method `POST`, HTTP header
+     `x-supabase-webhook-secret` = the same secret, URL `https://luxemia.shop/api/sync-lead`.
+   - **Consent behaviour to know before you enable it:** a record whose `type`/`source` says `cart` is synced
+     and tagged but is **not** marked as a marketing subscriber, because `/privacy` publishes that marketing
+     emails go out "only with your consent". Everything else is created with `accepts_marketing: true`,
+     `marketing_opt_in_level: single_opt_in` and the `FIRST10_LEAD` tag. Flip
+     `SYNC_LEAD_DEFAULT_MARKETING_CONSENT=false` if you want an explicit opt-in column on every row first.
+   - **What this does not do:** it sends no email. Item 7 (the abandoned-cart sequence) is still open; this
+     only makes the audience real in Shopify so whatever you send next has a list to target.
 
 ---
 
