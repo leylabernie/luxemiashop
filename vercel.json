@@ -885,6 +885,31 @@
       "destination": "/api/sync-lead"
     },
     {
+      "source": "/api/meta-checkout",
+      "destination": "/api/meta-checkout"
+    },
+    {
+      "source": "/meta-checkout",
+      "has": [
+        {
+          "type": "query",
+          "key": "products",
+          "value": "^(?:lmv-)?\\d{1,20}(?::|%3A)[1-9]\\d{0,2}(?:(?:,|%2C)(?:lmv-)?\\d{1,20}(?::|%3A)[1-9]\\d{0,2})*$"
+        }
+      ],
+      "missing": [
+        {
+          "type": "query",
+          "key": "context"
+        },
+        {
+          "type": "query",
+          "key": "review"
+        }
+      ],
+      "destination": "/api/meta-checkout"
+    },
+    {
       "source": "/((?!_prerender/|assets/|merchant-feed\\.xml|.*\\.(?:md|txt|json|xml|ico|png|jpg|jpeg|webp|svg|css|js|map|gz|csv)).*)",
       "destination": "/index.html"
     }
