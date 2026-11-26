@@ -64,9 +64,23 @@ From `WELCOME_EMAIL_PREREQUISITES`:
 1. **`FIRST10` exists as an ACTIVE Shopify discount** (10% off, one use per
    customer, online store channel). `src/config/welcomeOffer.ts` carries the
    warning in-code: changing the code without creating the matching discount
-   advertises a dead code at checkout. Playbook §6.4 has been open since the
-   2026-11-25 audit and is still unverified — this email is the loudest possible
-   way to advertise a code that does not work. Test it in checkout first.
+   advertises a dead code at checkout, and this email is the loudest possible way
+   to advertise a code that does not work.
+
+   **Partly verified 2026-11-26 on production, by accident, while testing
+   `api/meta-checkout.ts`.** `GET
+   https://luxemia.shop/api/meta-checkout?products=lmv-48120657903787:1&coupon=FIRST10`
+   reaches a Shopify checkout at **$98.10**; the same single item with no coupon
+   reaches **$108.99**. The $10.89 difference is 10%, so the code exists and does
+   apply at checkout — the "dead code" half of this gate is closed.
+
+   **Still unverified, and still the owner's to read off Shopify Admin →
+   Discounts:** whether it is one use per customer, whether it is limited to the
+   online store channel, percentage or fixed, its expiry date, any minimum
+   purchase, which products or collections are eligible, and whether it stacks.
+   The offer line in §5 promises "10% off an eligible first order. One use per
+   customer." — those two qualifiers must match the discount's real configuration
+   before anything sends.
 2. **Postal address and unsubscribe placeholders are filled in.** Commercial
    email requires a valid physical postal address; luxemia.shop publishes only
    "Philadelphia, PA · U.S. Support Desk" (`Footer.tsx:202`), so the module ships

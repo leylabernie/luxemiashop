@@ -2,7 +2,7 @@
 
 Status: **implemented, tested, awaiting production deploy** (merge to `main`).
 Written 2026-11-25. Code: `api/meta-checkout.ts` + two `vercel.json` rewrites.
-Tests: `tests/metaCheckoutTranslator.test.mjs` (29 assertions).
+Tests: `tests/metaCheckoutTranslator.test.mjs` (31 assertions).
 
 ## The problem, precisely
 
@@ -87,7 +87,27 @@ curl -sSI "https://luxemia.shop/meta-checkout?products=lmv-48120657903787:1&coup
 ```
 
 `FIRST10` must exist as an ACTIVE Shopify discount for that to apply — see
-`docs/growth/email/FIRST10-WELCOME-FLOW.md` §2.
+`docs/growth/email/FIRST10-WELCOME-FLOW.md` §2. Verified live on production
+2026-11-26: `?products=lmv-48120657903787:1&coupon=FIRST10` reaches a Shopify
+checkout at **$98.10** against **$108.99** without it, a $10.89 (10%) deduction.
+
+### Meta Preview sends a bare `&coupon`
+
+Meta's Preview checkout tool appends `&coupon` with **no value** when no promotion
+was entered:
+
+```
+?products=lmv-48120657903787:1,lmv-48210922504363:5&coupon&cart_origin=meta_shops
+```
+
+An absent, empty or whitespace-only coupon therefore means *no coupon* and must
+still 302 — `src/lib/metaCheckout.ts` has always done this (`params.get('coupon')
+|| null`, with the reason in a comment and coverage in
+`tests/metaCheckout.test.mjs`), and this function must never be stricter than the
+page it stands in for. A padded code is trimmed before forwarding, because
+Shopify matches a discount code exactly. Only a control character or a value over
+256 characters is still refused: neither may ride along into the Shopify query
+string.
 
 ## Known limits
 

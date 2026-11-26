@@ -130,6 +130,38 @@ test('a coupon becomes ?discount= on the cart permalink', async () => {
   assert.match(encoded.location, /discount=FAMILY\+%26\+FRIENDS|discount=FAMILY%20%26%20FRIENDS/);
 });
 
+test('a bare or blank &coupon flag still redirects: Meta Preview sends it with no value', async () => {
+  // Meta's Preview checkout tool appends `&coupon` when no promotion was entered.
+  // src/lib/metaCheckout.ts already treats that as "no coupon" (and is tested for
+  // it), so this function must not be stricter than the page it stands in for —
+  // rejecting a blank turned Meta's own checkout test into a 400.
+  for (const suffix of ['&coupon', '&coupon=', '&coupon=%20', '&coupon=%20%20', '&coupon=+']) {
+    for (const method of ['GET', 'HEAD']) {
+      const res = await call(`${META_TEST_QUERY}${suffix}`, method);
+      assert.equal(res.statusCode, 302, `${suffix} ${method}`);
+      const location = new URL(locationOf(res));
+      assert.equal(location.pathname, EXPECTED_CART_PATH, suffix);
+      assert.equal(location.searchParams.has('discount'), false, `${suffix}: no discount code is invented`);
+      assert.equal(location.searchParams.get('cart_origin'), 'meta_shops', suffix);
+    }
+    assert.equal(translateMetaCheckout(`${META_TEST_QUERY}${suffix}`).coupon, null, suffix);
+  }
+});
+
+test('a padded coupon code is trimmed before it reaches Shopify', async () => {
+  const res = await call(`${META_TEST_QUERY}&coupon=%20FIRST10%20`);
+  assert.equal(res.statusCode, 302);
+  assert.equal(new URL(locationOf(res)).searchParams.get('discount'), 'FIRST10',
+    'Shopify matches a discount code exactly, so the padding must not ride along');
+});
+
+test('the coupon rule stays in step with the storefront page it mirrors', () => {
+  const source = readFileSync('src/lib/metaCheckout.ts', 'utf8');
+  assert.match(codeOnly(source), /params\.get\('coupon'\)\s*\|\|\s*null/,
+    'parseMetaCheckout() still treats an absent or empty coupon as no coupon');
+  assert.match(source, /bare `&coupon`/, 'the reason is still documented there too');
+});
+
 test('every response is uncacheable and kept out of search indexes', async () => {
   for (const [search, method] of [[META_TEST_QUERY, 'GET'], [META_TEST_QUERY, 'HEAD'], ['?products=nope', 'GET'], [META_TEST_QUERY, 'POST']]) {
     const res = await call(search, method);
@@ -234,7 +266,6 @@ for (const [label, search] of [
   ['nothing parseable', '?products=hello,world'],
   ['repeated products param', `?products=lmv-${ANARKALI_S}:1&products=lmv-${PEACH_S}:1`],
   ['repeated coupon param', `?products=lmv-${ANARKALI_S}:1&coupon=A&coupon=B`],
-  ['empty coupon', `?products=lmv-${ANARKALI_S}:1&coupon=%20`],
   ['control character in coupon', `?products=lmv-${ANARKALI_S}:1&coupon=%00`],
   ['over-long coupon', `?products=lmv-${ANARKALI_S}:1&coupon=${'A'.repeat(257)}`],
   ['too many entries', `?products=${Array.from({ length: 51 }, () => `lmv-${ANARKALI_S}:1`).join(',')}`],
@@ -370,8 +401,12 @@ test('pure helpers stay pure', () => {
   assert.deepEqual(readAttribution(new URLSearchParams('?cart_origin=meta_shops&junk=x')), { cart_origin: 'meta_shops' });
   assert.deepEqual(readAttribution(new URLSearchParams('?cart_origin=a&cart_origin=b')), {}, 'an ambiguous token is dropped');
   assert.equal(readCoupon(new URLSearchParams('?coupon=A')), 'A');
-  assert.equal(readCoupon(new URLSearchParams('')), null);
+  assert.equal(readCoupon(new URLSearchParams('')), null, 'no coupon param at all');
+  assert.equal(readCoupon(new URLSearchParams('?coupon=')), null, 'a bare &coupon= is no coupon');
+  assert.equal(readCoupon(new URLSearchParams('?coupon=%20')), null, 'blank is no coupon, not an error');
+  assert.equal(readCoupon(new URLSearchParams('?coupon=%20A%20')), 'A', 'padded codes are trimmed');
   assert.equal(readCoupon(new URLSearchParams('?coupon=%00')), 'invalid');
+  assert.equal(readCoupon(new URLSearchParams(`?coupon=${'A'.repeat(257)}`)), 'invalid');
   assert.equal(
     buildCartPermalink([{ variantId: ANARKALI_S, quantity: 1 }], 'FIRST10', { cart_origin: 'meta_shops' }),
     `${SHOPIFY_STORE_ORIGIN}/cart/${ANARKALI_S}:1?discount=FIRST10&cart_origin=meta_shops`,
