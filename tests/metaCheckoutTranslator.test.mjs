@@ -543,6 +543,8 @@ test('a summary page shows the basket and links to the self-contained checkout',
   assert.match(location.pathname, /^\/cart\/c\/[^/]+$/, 'the token path safeCheckoutPath() blesses');
   assert.equal(location.searchParams.get('key'), 'secret', "Shopify's own cart key survives");
   assert.equal(location.searchParams.get('cart_origin'), 'meta_shops', 'attribution is still passed along');
+  assert.equal(location.searchParams.get('channel'), 'online_store');
+  assert.equal(location.searchParams.get('return_url'), 'https://luxemia.shop/order-confirmation');
   assert.equal(location.searchParams.has('discount'), false);
 
   assert.equal(calls.length, 1, 'exactly one Storefront call');
@@ -566,15 +568,19 @@ test('the coupon is sent to Shopify as a discount code, and stays out of the URL
     'the token URL carries the discount already; a second ?discount= would be redundant');
 });
 
-test('a localized checkout path is accepted and a myshopify URL is re-hosted', async () => {
+test('the Shopify-issued checkout hostname is preserved for localized and permanent-domain URLs', async () => {
   const localized = brokenPayload(cart => { cart.checkoutUrl = 'https://checkout.luxemia.shop/en-ca/cart/c/TOKEN123?key=secret'; });
   const first = await withStorefront(jsonStub(localized), () => call(META_TEST_QUERY));
+  assert.equal(summaryLocation(first.result).hostname, SHOPIFY_CHECKOUT_HOST);
   assert.equal(summaryLocation(first.result).pathname, '/en-ca/cart/c/TOKEN123');
 
   const permanent = brokenPayload(cart => { cart.checkoutUrl = `https://${SHOPIFY_PERMANENT_DOMAIN}/cart/c/TOKEN123?key=secret`; });
   const second = await withStorefront(jsonStub(permanent), () => call(META_TEST_QUERY));
-  assert.equal(summaryLocation(second.result).hostname, SHOPIFY_CHECKOUT_HOST,
-    'whichever verified host Shopify names, the handoff is on the branded one');
+  assert.equal(summaryLocation(second.result).hostname, SHOPIFY_PERMANENT_DOMAIN,
+    'do not rewrite Shopify’s signed/session checkout URL to a different host');
+  assert.equal(summaryLocation(second.result).searchParams.get('key'), 'secret');
+  assert.equal(summaryLocation(second.result).searchParams.get('channel'), 'online_store');
+  assert.equal(summaryLocation(second.result).searchParams.get('return_url'), 'https://luxemia.shop/order-confirmation');
 });
 
 test('without a token Shopify is never called and the permalink is used', async () => {

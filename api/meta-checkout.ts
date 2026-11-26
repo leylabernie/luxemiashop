@@ -29,10 +29,11 @@
  * Acceptance by Meta remains to be verified in production.
  * Real browsers run the page's script and land on the Shopify checkout as
  * before. The checkout URL it points at is a **self-contained** one built by
- * calling Shopify's Storefront API `cartCreate` here, on the server; the
- * fallback is the `/cart/<variant>:<qty>` permalink. Both destinations are on
- * `checkout.luxemia.shop`, the branded host already in
- * `VERIFIED_CHECKOUT_HOSTS` (src/lib/shopify.ts).
+ * calling Shopify's Storefront API `cartCreate` here, on the server. Preserve
+ * Shopify's exact returned hostname after validating it against the allowlist:
+ * rewriting a signed/session checkout URL to another hostname can break
+ * Shopify's domain or Shop Pay routing. Only the fallback permalink uses the
+ * branded `checkout.luxemia.shop` host.
  *
  * ── Scope: only baskets this function can resolve completely ──────────────
  * `api/meta-catalog.ts` publishes `lmv-<variantId>` **only** for the two
@@ -84,6 +85,9 @@ export const SHOPIFY_CHECKOUT_HOST = 'checkout.luxemia.shop';
 export const SHOPIFY_STORE_ORIGIN = `https://${SHOPIFY_CHECKOUT_HOST}`;
 /** Stable host for Storefront API calls, and the other verified checkout host. */
 export const SHOPIFY_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
+/** Keep server-created Meta carts on the same online-store checkout contract as the storefront. */
+const SHOPIFY_CHECKOUT_CHANNEL = 'online_store';
+const SHOPIFY_CHECKOUT_RETURN_URL = 'https://luxemia.shop/order-confirmation';
 
 /** Mirrors MAX_QUANTITY / entry caps in src/lib/metaCheckout.ts. */
 export const MAX_QUANTITY = 99;
@@ -311,7 +315,7 @@ export interface StorefrontCartSummaryLine {
 
 /** The basket Shopify built, plus everything the summary page needs to show it. */
 export interface StorefrontCartResult {
-  /** The self-contained checkout URL (token path) on the branded host. */
+  /** The self-contained Shopify checkout URL (token path), on Shopify's returned verified host. */
   url: string;
   /** The cart subtotal Shopify computed, e.g. "496.44". */
   total: string;
@@ -399,8 +403,13 @@ export async function createStorefrontCart(
     const url = new URL(cart.checkoutUrl);
     if (url.protocol !== 'https:' || !VERIFIED_CHECKOUT_HOSTS.has(url.hostname.toLowerCase())) return null;
     if (!CHECKOUT_PATH_PATTERN.test(url.pathname)) return null;
-    // Always hand off on the branded host, whichever verified host Shopify named.
-    url.hostname = SHOPIFY_CHECKOUT_HOST;
+    // Keep Shopify's returned hostname. It is part of the checkout URL Shopify
+    // issued and can affect its domain/session routing (including Shop Pay).
+    // Do not rewrite it to the branded host even when both hosts are allowlisted.
+    // Match the normal storefront checkout contract: specify the channel and
+    // return destination before adding Meta's allowed attribution parameters.
+    url.searchParams.set('channel', SHOPIFY_CHECKOUT_CHANNEL);
+    url.searchParams.set('return_url', SHOPIFY_CHECKOUT_RETURN_URL);
     for (const [key, value] of Object.entries(attribution)) url.searchParams.set(key, value);
     return { url: url.toString(), total, lines: summaryLines };
   } catch {

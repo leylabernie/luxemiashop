@@ -1,28 +1,50 @@
 # Meta checkout translator — `/meta-checkout` (Commerce Manager validation)
 
-Status: **summary-page change implemented on the working branch; not deployed or Meta-validated.** The earlier redirect implementation described below is live on production.
+Status: **user reports the summary page renders via production curl; browser checkout still resets and Meta validation fails.** The hostname-preservation correction below is local and not yet deployed or live-verified.
 
-## Pending summary-page change
+## Latest browser-reset investigation (2026-11-26)
 
-The Chrome-user-agent curl reproduction also ended on the Shopify home page,
-not checkout. Changing the user-agent label did not fix that reproduction. This
-is evidence about a cookie-less curl client, not proof of Meta's internal session
-or rendering behavior.
+The summary page's browser handoff was rewriting Shopify's Storefront API
+`cart.checkoutUrl` hostname to `checkout.luxemia.shop`, even when Shopify issued
+a URL on its permanent `myshopify.com` domain. The ordinary storefront checkout
+helper preserves Shopify's returned verified hostname. This Meta-only rewrite
+was removed: the handoff now keeps Shopify's exact allowlisted host and still
+preserves its cart key and other query values. The server handoff also now adds
+the same `channel=online_store` and trusted `return_url` as the normal storefront
+checkout helper, so Meta's cart uses the same Shopify online-store checkout
+contract before Shop Pay processes it.
 
-The branch now serves a 200 HTML order summary after a successful Storefront
-`cartCreate`, with Shopify-returned titles, quantities, USD prices and cart total.
-It provides a checkout link and a JavaScript handoff for browsers. GET and HEAD
-have matching headers; HEAD has no body. Existing permalink fallbacks and SPA
-handoffs remain. All clients receive the same page (no user-agent branching).
+This is a code-level correction, **not proof of the reported connection reset's
+root cause or a verified live fix**. `checkout.luxemia.shop` is served by Shopify,
+not by this Vercel app; no repo code was found that blocks browser user agents on
+that host. Deploy the change, then inspect the browser redirect chain. If the
+canonical host itself redirects to `checkout.luxemia.shop` and the reset remains,
+check Shopify Settings → Domains for the checkout domain's connection/SSL status
+and obtain the failed browser request's TLS/network error. Redact cart keys and
+session parameters from any trace.
 
-Validation: 43 translator tests and 100 combined translator, Meta parser, pilot
-feed and checkout-integrity tests pass; standalone strict TypeScript check passes.
-No live Shopify or Meta acceptance test has been performed for this change.
+## Summary-page behavior and remaining acceptance checks
 
-Next: deploy through the normal review/release flow, confirm the exact bare
-`&coupon` URL returns 200 HTML with both lines and $496.44, verify browser checkout,
-and rerun Commerce Manager's checkout test. **Do not mark resolved until Meta
-passes.** The historical redirect notes below do not describe this pending page.
+The summary endpoint serves a 200 HTML order summary after a successful
+Storefront `cartCreate`, with Shopify-returned titles, quantities, USD prices and
+cart total. It provides a checkout link and browser handoff. User reports the
+production URL renders correctly via curl; that does not validate the downstream
+Shopify browser connection. The reported browser reset and Meta validator failure
+remain unresolved until the host-preservation correction is deployed and tested.
+
+GET and HEAD have matching headers; HEAD has no body. Existing permalink
+fallbacks and SPA handoffs remain. All clients receive the same page (no
+user-agent branching).
+
+Validation: 110 focused translator, Meta parser, pilot-feed and checkout-
+integrity tests pass locally. The API file passes a standalone strict TypeScript
+check. No live Shopify browser handoff or successful Meta acceptance test has
+been confirmed.
+
+Next: deploy the hostname-preservation correction, retry the test basket in a
+regular browser and Commerce Manager Preview, then rerun the Commerce Manager
+validator. **Do not mark resolved until Meta passes.** The historical redirect
+notes below do not describe the current summary-page response.
 
 Written 2026-11-25, updated 2026-11-26. Code: `api/meta-checkout.ts` + two
 `vercel.json` rewrites + one `middleware.ts` header rule.
