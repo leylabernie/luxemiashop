@@ -560,6 +560,29 @@ test('a summary page shows the basket and links to the self-contained checkout',
   assert.equal(body.variables.input.discountCodes, undefined, 'no coupon was sent');
 });
 
+test('the summary page carries machine-readable identity matching the catalog feed', async () => {
+  const { result: res } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY));
+  assert.equal(res.statusCode, 200);
+  // Per-line anchors to the exact `link` the feed publishes, plus the content ID as sku.
+  assert.match(res.body, new RegExp(`<a itemprop="url" href="https://luxemia\\.shop/product/anarkali-green-chinon\\?variant=${ANARKALI_S}"><span itemprop="name">Anarkali green chinon S</span></a><meta itemprop="sku" content="lmv-${ANARKALI_S}">`));
+  assert.match(res.body, new RegExp(`<a itemprop="url" href="https://luxemia\\.shop/product/dusty-peach-embroidered-a-line-palazzo-suit-chinon-indian-wedding-outfit-ready-to-wear\\?variant=${PEACH_S}"><span itemprop="name">Dusty peach palazzo suit S</span></a><meta itemprop="sku" content="lmv-${PEACH_S}">`));
+  // Offer microdata carrying the exact Shopify price.
+  assert.match(res.body, /<span itemprop="price" content="108\.99">\$108\.99<\/span><meta itemprop="priceCurrency" content="USD"><link itemprop="availability" href="https:\/\/schema\.org\/InStock">/);
+  assert.match(res.body, /<span itemprop="price" content="77\.49">\$77\.49<\/span>/);
+  // JSON-LD an ItemList of Product items with sku and url.
+  const ld = res.body.match(/<script type="application\/ld\+json">(.*?)<\/script>/)[1];
+  const parsed = JSON.parse(ld);
+  assert.equal(parsed['@type'], 'ItemList');
+  assert.equal(parsed.itemListElement.length, 2);
+  const skus = parsed.itemListElement.map(entry => entry.item.sku).sort();
+  assert.deepEqual(skus, [`lmv-${ANARKALI_S}`, `lmv-${PEACH_S}`].sort());
+  const links = parsed.itemListElement.map(entry => entry.item.url);
+  for (const link of links) assert.match(link, /^https:\/\/luxemia\.shop\/product\/[a-z0-9-]+\?variant=\d+$/);
+  assert.ok(parsed.itemListElement.every(entry => entry.item.offers.priceCurrency === 'USD'));
+  // The checkout button regex every other tooling test relies on is unchanged.
+  assert.match(res.body, /class="button" href="/);
+});
+
 test('the coupon is sent to Shopify as a discount code, and stays out of the URL', async () => {
   const { result: res, calls } = await withStorefront(jsonStub(cartPayload()), () => call(`${META_TEST_QUERY}&coupon=FIRST10`));
   assert.deepEqual(JSON.parse(calls[0].init.body).variables.input.discountCodes, ['FIRST10']);
