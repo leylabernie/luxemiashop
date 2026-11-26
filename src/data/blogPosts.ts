@@ -1,6 +1,6 @@
-import { recoveredBlogPosts } from './recoveredBlogPosts';
-import { seoGrowthBlogPosts } from './seoGrowthBlogPosts';
-import { semanticCommerceGuides } from './semanticCommerceGuides';
+import { recoveredBlogPosts } from './recoveredBlogPosts.js';
+import { seoGrowthBlogPosts } from './seoGrowthBlogPosts.js';
+import { semanticCommerceGuides } from './semanticCommerceGuides.js';
 
 export interface BlogSource {
   title: string;
@@ -265,7 +265,7 @@ export const blogPosts: BlogPost[] = [
       <p>The current <a href="/shipping">LuxeMia shipping policy</a> lists U.S. standard shipping at $14.99 below $150, with free standard shipping at $150 and above after discounts. A discount or a different combination of items can change the qualifying subtotal, so recheck the shipping line at checkout. Do not add an unwanted item merely to reach a threshold without comparing the overall amount.</p>
       <p>These are U.S. examples only. Other supported destinations have their own shipping rates and thresholds, and may involve duties, import taxes, brokerage or carrier fees unless checkout states otherwise. Checkout controls the final available service, currency conversion and applicable tax.</p>
       <h2>Can tailoring affect the event timeline?</h2>
-      <p>Yes. Ready-to-ship dispatch is approximately 3–4 business days. Standard carrier transit is approximately 9–14 business days after dispatch, or approximately 12–18 business days total. Optional tailoring can add processing time. These are estimates, not a guarantee that an outfit will arrive before a particular celebration.</p>
+      <p>Yes. Ready-to-Ship items dispatch in 1–2 business days and are estimated to arrive in 5–7 business days to the US, UK and Canada. Custom Tailored outfits and requested alterations are estimated at 15–18 business days total after measurements and service details are confirmed. These are estimates, not a guarantee that an outfit will arrive before a particular celebration.</p>
       <p>Before ordering for a fixed date, contact LuxeMia with the product link, selected services, destination and event date. Allow time to inspect and try the complete outfit. For a winter celebration, the <a href="/blog/winter-indian-wedding-guest-outfits-layering-guide">winter wedding guest and layering guide</a> can help you plan an outer layer and shoes without assuming those pieces come with the saree.</p>
       <h2>What should you check before paying?</h2>
       <ol>

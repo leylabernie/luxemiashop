@@ -1163,6 +1163,24 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
         )}
       </div>
 
+      <section aria-label="Product at a glance" className="space-y-1.5 rounded-sm border border-border/60 bg-card/50 p-3.5 text-xs leading-relaxed">
+        {(product.metadata?.includedComponents?.length || includedBulletItems.length > 0) ? (
+          <p><strong>Includes:</strong> {product.metadata?.includedComponents?.length ? product.metadata.includedComponents.join(', ') : includedBulletItems.join(', ')}</p>
+        ) : null}
+        {Object.entries(selectedOptions).filter(([name, value]) => isProductSizeOptionName(name) && value && value !== 'Default Title').map(([name, value]) => (
+          <p key={name}><strong>Fit ({name}):</strong> {value}</p>
+        ))}
+        <p>
+          <strong>Dispatch &amp; shipping:</strong>{' '}
+          {shipsWithinDays && !hasSelectedAlterations && !product.tags?.includes('availability:Confirm before ordering')
+            ? `Estimated dispatch within ${shipsWithinDays} business days; transit is additional. `
+            : 'Confirm the selected option and dispatch timing before ordering. '}
+          Free U.S. standard shipping at $150+ after discounts; $14.99 below.{' '}
+          <a href="sms:+12153419990" className="text-link underline">Text +1-215-341-9990</a> to confirm event dates.
+        </p>
+        <p>Inspected before dispatch · Coverage for shipping damage or defects · Up to $20 local alteration credit for eligible custom-stitched blouses and suit tops · U.S. support in Philadelphia. <Link to="/returns" className="text-link underline">See terms</Link>.</p>
+      </section>
+
       {WELCOME_OFFER.enabled && (
         <div className="flex flex-wrap items-center gap-2 gap-y-1">
           <button

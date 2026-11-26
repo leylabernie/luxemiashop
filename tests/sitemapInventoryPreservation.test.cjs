@@ -68,6 +68,9 @@ async function runGenerator(options = {}) {
         return { retained: baselineHandles.slice(0, 149).map(handle => ({ handle })), retired: (options.retiredHandles || []).map(handle => ({ handle })) };
       }
       if (name === '../src/config/emptyCatalogRoutes.json') return options.emptyCatalogRoutes || [];
+      if (name === '../src/lib/manualGoneRoutes.cjs') return { GONE_ROUTES: new Set(options.manualGoneRoutes || []) };
+      if (name === '../src/data/reversiblyArchivedProductHandles.json') return options.reversibleArchives || [];
+      if (name === '../src/data/legacyGoneProductHandles.json') return options.legacyGoneHandles || [];
       throw new Error(`Unexpected module dependency: ${name}`);
     },
     async fetch(url, request) {
@@ -306,4 +309,21 @@ test('empty reviewed sitemap exception requires its actual self-canonical, not a
   assert.equal(result.exitCode, 1);
   assert.equal(result.writes.length, 0);
   assert.ok(result.logs.error.some(message => message.includes(`Invalid reviewed collection prerender: ${route}`)));
+});
+
+test('new trailing-hyphen handles are not enrolled even with self-canonical prerender files', async () => {
+  const result = await runGenerator({ responseHandles: [...baselineHandles, 'new-product-'] });
+  assert.equal(result.exitCode, 0);
+  assert.ok(!result.productSitemap.includes('/new-product-</loc>'));
+  assert.ok(result.logs.log.some(message => message.includes('Noncanonical product path')));
+});
+
+test('middleware-retired and reversible products cannot enter a sitemap even if Shopify and prerender still list them', async () => {
+  const retired = 'retired-example';
+  const archived = 'archived-example';
+  const result = await runGenerator({ responseHandles: [...baselineHandles, retired, archived], manualGoneRoutes: [`/product/${retired}`], reversibleArchives: [archived] });
+  assert.equal(result.exitCode, 0);
+  assert.ok(!result.productSitemap.includes(`/product/${retired}</loc>`));
+  assert.ok(!result.productSitemap.includes(`/product/${archived}</loc>`));
+  assert.ok(result.logs.log.some(message => message.includes('exact redirect source')));
 });

@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import { clampTitle, clampDescription } from '../src/lib/meta/clamp.ts';
+import { generateMetaDescription } from '../src/lib/productDescriptionEnrichment.ts';
 
 test('long product titles retain one brand and fit the search limit', () => {
   const title = clampTitle('Mint Green Silk Lehenga Choli with Sequin Work and Net Dupatta | LuxeMia');
@@ -40,7 +41,7 @@ test('all rendering paths use the shared metadata helpers', () => {
   assert.ok(middleware.includes('const description = clampDescription('));
 });
 
-test('duplicate titles retain distinguishing catalog words within 58 characters', () => {
+test('product titles preserve distinguishing catalog words without hard truncation', () => {
   const source = readFileSync(new URL('../scripts/prerender.js', import.meta.url), 'utf8');
   const truncate = source.slice(source.indexOf('function truncateAtWord('), source.indexOf('// Use the same limits'));
   const disambiguate = source.slice(source.indexOf('function disambiguateDuplicateProductRouteTitles('), source.indexOf('// ─── Shopify Storefront API'));
@@ -52,9 +53,28 @@ test('duplicate titles retain distinguishing catalog words within 58 characters'
     product: {},
   }));
   run(routes);
-  const titles = routes.map(route => clampTitle(route.title));
+  const titles = routes.map(route => clampTitle(route.title, undefined, Infinity));
   assert.equal(new Set(titles).size, 2);
-  assert.ok(titles.every(title => title.length < 60));
+  assert.ok(titles.every(title => !title.includes('…')));
   assert.ok(titles[0].toLowerCase().includes('tissue'));
   assert.ok(titles[1].toLowerCase().includes('chinon'));
+});
+
+test('product titles remain complete while normal page title clamping remains available', () => {
+  const long = 'Crimson Red Silk Royal Arch Zardosi Bridal Lehenga Double Dupatta | LuxeMia';
+  assert.equal(clampTitle(long, undefined, Infinity), long);
+  assert.ok(clampTitle(long).includes('…'));
+});
+
+test('product snippets use supplied facts without inventing missing pieces or amounts', () => {
+  const rich = generateMetaDescription('', 'Suit', 'Silk Suit', '99.00', '', 'Silk', 'Kurta, pants');
+  assert.match(rich, /Shop Silk Suit \(\$99\.00\) at LuxeMia/);
+  assert.match(rich, /Silk · Includes Kurta, pants/);
+  assert.ok(clampDescription(rich).length <= 155);
+  const sparse = generateMetaDescription('', 'Suit', 'Silk Suit');
+  assert.doesNotMatch(sparse, /Includes|\$99/);
+  assert.match(sparse, /shipping at \$150\+ after discounts/);
+  const long = generateMetaDescription('', '', 'Wedding outfit '.repeat(30));
+  assert.ok(clampDescription(long).length <= 155);
+  assert.doesNotMatch(long, /…/);
 });

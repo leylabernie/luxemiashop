@@ -24,6 +24,9 @@ const PRERENDER_MANIFEST_PATH = path.join(PRERENDER_DIR, 'manifest.json');
 const APPROVED_INVENTORY_PATH = path.resolve(__dirname, 'approved-sitemap-inventory.json');
 const retirement = require('./product-retirement-20260908.json');
 const emptyCatalogRoutes = new Set(require('../src/config/emptyCatalogRoutes.json'));
+const { GONE_ROUTES } = require('../src/lib/manualGoneRoutes.cjs');
+const reversibleArchives = require('../src/data/reversiblyArchivedProductHandles.json');
+const legacyGoneHandles = require('../src/data/legacyGoneProductHandles.json');
 const MIN_APPROVED_SITEMAP_URL_COUNT = retirement.retained.filter(product => product.handle !== 'luxemia-tailoring-saree-finishing-add-ons').length;
 const HIDDEN_BILLING_PRODUCT_HANDLES = new Set([
   'luxemia-tailoring-saree-finishing-add-ons',
@@ -274,6 +277,9 @@ function expectedCanonical(routePath) {
 }
 
 function validatePrerenderedRoute(routePath, manifestRoutes, exactRedirectSources) {
+  if (routePath.startsWith('/product/') && !/^\/product\/[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(routePath)) {
+    throw new Error(`Noncanonical product path in sitemap: ${routePath}`);
+  }
   if (exactRedirectSources.has(routePath)) {
     throw new Error(`Sitemap route is an exact redirect source: ${routePath}`);
   }
@@ -359,6 +365,9 @@ function generateSitemap(products) {
 
   // Product pages with images
   for (const product of products) {
+    if (typeof product.handle !== 'string' || !/^[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$/.test(product.handle)) {
+      throw new Error(`Noncanonical product handle in sitemap: ${product.handle}`);
+    }
     const loc = `${SITE_URL}/product/${escapeXml(product.handle)}`;
     const lastmod = product.updatedAt ? new Date(product.updatedAt).toISOString().split('T')[0] : null;
     const imageUrl = product.images?.edges?.[0]?.node?.url;
@@ -461,6 +470,16 @@ async function main() {
       .map((redirect) => redirect.source)
       .filter((source) => !source.includes(':') && !source.includes('('))
   );
+  // These paths are intercepted by middleware before prerender lookup, even
+  // when a stale asset or a Shopify response still happens to contain them.
+  for (const route of GONE_ROUTES) exactRedirectSources.add(route);
+  for (const handle of [...reversibleArchives, ...legacyGoneHandles]) exactRedirectSources.add(`/product/${handle}`);
+  const deadHandlesPath = path.resolve(__dirname, '../dist/dead-product-handles.json');
+  if (fs.existsSync(deadHandlesPath)) {
+    const deadHandles = JSON.parse(fs.readFileSync(deadHandlesPath, 'utf8'));
+    if (!Array.isArray(deadHandles)) throw new Error('Invalid dead-product-handles inventory');
+    for (const handle of deadHandles) if (typeof handle === 'string') exactRedirectSources.add(`/product/${handle}`);
+  }
   const redirectConflicts = staticPages
     .map((page) => page.loc)
     .filter((loc) => exactRedirectSources.has(loc));

@@ -32,7 +32,6 @@ import { generateProductGroupSchema, getGoogleProductCategory, normalizeBrandNam
 import { getActualProductSizeValues, NO_FINISHED_GARMENT_SIZE_NOTICE, SIZING_GUIDANCE_LABEL } from '@/lib/productOptionNames';
 import { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_SIZE_NOTICE } from '@/lib/tailoringEnquiry';
 import { getProductShipsWithin } from '@/lib/shipBy';
-import { hasReviewedProductCopy } from '@/lib/reviewedProductCopy.mjs';
 import { getVariantReferencePrice } from '@/lib/variantReferencePrice';
 import type { ShopifyProduct } from '@/lib/shopify';
 
@@ -71,11 +70,6 @@ const isJewelryProductType = (productType?: string): boolean => {
   const lower = productType.toLowerCase();
   return JEWELRY_PRODUCT_TYPES.some((type) => lower.includes(type));
 };
-
-const sanitizeSeoTitle = (value?: string | null): string => (value || '')
-  .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
-  .replace(/\s+/g, ' ')
-  .trim();
 
 const ProductDetail = () => {
   const { handle } = useParams<{ handle: string }>();
@@ -242,27 +236,7 @@ const ProductDetail = () => {
     { name: 'Market', value: 'United States' },
   ].filter((entry): entry is { name: string; value: string } => Boolean(entry.value));
 
-  // Prefer Shopify admin "Search engine listing" (SEO) fields when present.
-  // Falls back to long-tail buyer keywords for AI/organic discovery.
-  // Note: `product.seo` is typed via ShopifyProduct['node'] in src/lib/shopify.ts.
-  const seoTitleRaw = sanitizeProductTitle(sanitizeSeoTitle(product?.seo?.title));
-  const seoTitle = seoTitleRaw || (() => {
-    if (!product) return '';
-    const t = sanitizeProductTitle(product.title);
-    const lower = t.toLowerCase();
-    if (/\b(?:navratri|garba|dandiya|chaniya)\b/i.test(lower)) {
-      return `${t} for Garba USA | LuxeMia`;
-    }
-    if (lower.includes('saree') && (lower.includes('tissue') || lower.includes('wedding') || lower.includes('ready to wear') || lower.includes('pre-draped'))) {
-      return `${t} for Weddings USA | LuxeMia`;
-    }
-    if (lower.includes('saree')) return `${t} | LuxeMia USA`;
-    if (lower.includes('lehenga')) return `${t} | LuxeMia USA`;
-    return `${t} | LuxeMia USA`;
-  })();
-  // Historic Shopify SEO descriptions contain obsolete fulfillment and policy
-  // copy. The field-backed generator below is the crawler and shopper source.
-  const seoDescription = hasReviewedProductCopy(product?.tags, product?.id) ? product?.seo?.description || '' : '';
+  const seoTitle = product ? `${sanitizeProductTitle(product.title)} | LuxeMia` : '';
 
   const enrichedDescription = useMemo(() => {
     if (!product) return '';
@@ -281,9 +255,10 @@ const ProductDetail = () => {
       product.description || '',
       product.productType || '',
       product.title,
-      product?.priceRange?.minVariantPrice?.amount,
+      product.priceRange.minVariantPrice.currencyCode === 'USD' ? product.priceRange.minVariantPrice.amount : undefined,
       productColor,
       productMaterial,
+      product.metadata?.includedComponents?.join(', '),
     );
   }, [product, productColor, productMaterial]);
 
@@ -424,7 +399,7 @@ const ProductDetail = () => {
       {product ? (
         <SEOHead
           title={seoTitle || `${product.title} | ${categoryName} | LuxeMia`}
-          description={seoDescription || seoMetaDescription || (() => {
+          description={seoMetaDescription || (() => {
             return generateMetaDescription(
               '',
               product.productType || '',

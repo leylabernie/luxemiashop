@@ -200,6 +200,9 @@ test('Royal Bridal Vol. 3 homepage handles serve indexable 200 SSR HTML before S
   const vol3Html = await vol3Res.text();
   assert.match(vol3Html, /Sindoori Red Silk Heritage Jharokha/);
   assert.match(vol3Html, /luxemia-bv3-175-sindoori-jharokha-1\.jpg/);
+  const schemas = [...vol3Html.matchAll(/<script\b[^>]*type="application\/ld\+json"[^>]*>([\s\S]*?)<\/script>/g)].map(match => JSON.parse(match[1]));
+  assert.ok(schemas.some(schema => schema['@type'] === 'Product' || schema['@type'] === 'ProductGroup'));
+  assert.match(vol3Html, /<h1\b[^>]*>[^<]*Sindoori/i);
 
   const goneRes = await runMiddleware(
     'https://luxemia.shop/product/chinon-lime-yellow-wedding-wear-embroidery-work-readymade-sharara-suit',
@@ -284,4 +287,46 @@ test('stocked blouses & couple-outfits collections are indexable and enrolled in
   assert.doesNotMatch(prerenderSource, /path:\s*'\/collections\/couple-outfits'[^\n]*noIndexFollow:\s*true/);
   assert.match(sitemapSource, /loc:\s*'\/collections\/blouses'/);
   assert.match(sitemapSource, /loc:\s*'\/collections\/couple-outfits'/);
+});
+
+test('dangling product hyphens redirect permanently while preserving variants and attribution', async () => {
+  const middleware = await loadBundledMiddleware(() => { throw new Error('redirect must not fetch'); });
+  for (const suffix of ['-', '---']) {
+    const response = await middleware(`https://luxemia.shop/product/crimson-red-silk-royal-arch-zardosi-bridal-lehenga-double-dupatta${suffix}?variant=123&utm_source=test`);
+    assert.equal(response.status, 301);
+    assert.equal(response.headers.get('location'), 'https://luxemia.shop/product/crimson-red-silk-royal-arch-zardosi-bridal-lehenga-double-dupatta?variant=123&utm_source=test');
+  }
+});
+
+test('removed named blog slugs redirect to the blog, while unknown slugs stay 404', async () => {
+  const run = await loadBundledMiddleware(async () => { throw new Error('redirects and unknown slugs must not fetch'); });
+  for (const slug of ['indian-wedding-dress-complete-guide', 'how-to-choose-perfect-lehenga-wedding-2026']) {
+    const response = await run(`https://luxemia.shop/blog/${slug}`);
+    assert.equal(response.status, 301);
+    assert.equal(response.headers.get('location'), 'https://luxemia.shop/blog');
+  }
+  assert.equal((await run('https://luxemia.shop/blog/no-such-unpublished-article')).status, 404);
+});
+
+test('published blog posts and hubs recover full source text and schema when prerender is missing', async () => {
+  const fetched = [];
+  const run = await loadBundledMiddleware(async input => {
+    const url = new URL(String(input));
+    fetched.push(url.pathname + url.search);
+    if (url.pathname.startsWith('/_prerender/')) return new Response('not found', { status: 404 });
+    assert.equal(url.pathname, '/index.html');
+    return new Response('<html><head><script type="module" src="/assets/app.js"></script></head><body><div id="root"></div></body></html>');
+  });
+  for (const slug of ['wedding-guest-outfit-ideas', 'indian-wedding-guest-attire']) {
+    const response = await run(`https://luxemia.shop/blog/${slug}?utm_source=test`);
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, /<h1>/);
+    assert.match(html, /<script type="application\/ld\+json">/);
+    assert.match(html, /src="\/assets\/app.js"/);
+    assert.ok(html.length > 1000, 'source-backed text and links are rendered');
+    assert.ok(html.includes(`https://luxemia.shop/blog/${slug}`));
+    assert.ok(fetched.includes(`/_prerender/blog/${slug}.html`));
+  }
+  assert.ok(fetched.every(path => !path.includes('?')), 'query parameters never enter asset lookups');
 });
