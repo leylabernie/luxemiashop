@@ -1,50 +1,57 @@
 # Meta checkout translator — `/meta-checkout` (Commerce Manager validation)
 
-Status: **user reports the summary page renders via production curl; browser checkout still resets and Meta validation fails.** The hostname-preservation correction below is local and not yet deployed or live-verified.
+Status: **User reports Preview checkout loads with the verified $496.44 basket; Commerce Manager now fails with “A product name was incorrect.” Not resolved.**
 
-## Latest browser-reset investigation (2026-11-26)
+## Current title and cache audit (2026-11-26)
 
-The summary page's browser handoff was rewriting Shopify's Storefront API
-`cart.checkoutUrl` hostname to `checkout.luxemia.shop`, even when Shopify issued
-a URL on its permanent `myshopify.com` domain. The ordinary storefront checkout
-helper preserves Shopify's returned verified hostname. This Meta-only rewrite
-was removed: the handoff now keeps Shopify's exact allowlisted host and still
-preserves its cart key and other query values. The server handoff also now adds
-the same `channel=online_store` and trusted `return_url` as the normal storefront
-checkout helper, so Meta's cart uses the same Shopify online-store checkout
-contract before Shop Pay processes it.
+- The live Meta feed handler (`/api/meta-catalog`) writes each pilot row's
+  `title` from Shopify's parent `product.title` (truncated to 150 characters).
+  The variant size is a separate `size` field; the feed does not append `S` to
+  the title.
+- The server summary reads `cart.lines[].merchandise.product.title` and prints
+  it unchanged. Its GraphQL query does not request variant `title` or
+  `selectedOptions`, so it does not append a size suffix either. At the source
+  field level, the Meta feed and summary should therefore match when both are
+  generated from the same Shopify product record.
+- Shopify checkout renders its own line-item presentation. This repository
+  cannot verify the exact live text or how Meta's validator parses the separate
+  size option. The summary's test fixture titles are synthetic, not a live
+  Shopify title lookup.
+- The old Vercel feed header allowed a 5-minute shared cache plus 10 minutes of
+  stale-while-revalidate. The endpoint now sends `Cache-Control: no-store` so a
+  feed refresh cannot receive a stale Vercel copy. Meta's own imported-item
+  cache is separate; no connected Meta tool is available to inspect its saved
+  title or last-fetch time.
+- `public/feeds/meta-catalog.csv` is a legacy static sample and contains no
+  `lmv-` pilot IDs. The configured Meta source should be the dynamic
+  `/api/meta-catalog` endpoint, not that static file.
 
-This is a code-level correction, **not proof of the reported connection reset's
-root cause or a verified live fix**. `checkout.luxemia.shop` is served by Shopify,
-not by this Vercel app; no repo code was found that blocks browser user agents on
-that host. Deploy the change, then inspect the browser redirect chain. If the
-canonical host itself redirects to `checkout.luxemia.shop` and the reset remains,
-check Shopify Settings → Domains for the checkout domain's connection/SSL status
-and obtain the failed browser request's TLS/network error. Redact cart keys and
-session parameters from any trace.
+Next: trigger a fresh catalog fetch in Commerce Manager and check the item
+records for both exact `lmv-` IDs and their last-updated time. Then rerun the
+validator. If Meta's refreshed titles still match the visible checkout names,
+its diagnostic needs to identify whether the mismatch is actually the size/variant
+label or a cached parsed checkout value. **Do not mark resolved until Meta
+passes.**
 
-## Summary-page behavior and remaining acceptance checks
+## Earlier browser-reset investigation (2026-11-26)
 
-The summary endpoint serves a 200 HTML order summary after a successful
-Storefront `cartCreate`, with Shopify-returned titles, quantities, USD prices and
-cart total. It provides a checkout link and browser handoff. User reports the
-production URL renders correctly via curl; that does not validate the downstream
-Shopify browser connection. The reported browser reset and Meta validator failure
-remain unresolved until the host-preservation correction is deployed and tested.
+The Meta handoff previously rewrote Shopify's returned checkout hostname to
+`checkout.luxemia.shop` and omitted the storefront's `channel=online_store` and
+`return_url` parameters. PR #319 removed that host rewrite, preserved Shopify's
+validated URL, and aligned the parameters with the ordinary storefront flow.
+The user subsequently reported that Preview checkout loaded and the basket
+verified at $496.44. The precise network cause was not independently measured.
 
-GET and HEAD have matching headers; HEAD has no body. Existing permalink
-fallbacks and SPA handoffs remain. All clients receive the same page (no
-user-agent branching).
+## Summary-page behavior
 
-Validation: 110 focused translator, Meta parser, pilot-feed and checkout-
-integrity tests pass locally. The API file passes a standalone strict TypeScript
-check. No live Shopify browser handoff or successful Meta acceptance test has
-been confirmed.
+The summary endpoint serves a 200 HTML order summary after successful Storefront
+`cartCreate`, with Shopify-returned titles, quantities, USD prices and cart total.
+It provides a checkout link and browser handoff. GET and HEAD have matching
+headers; HEAD has no body. Existing permalink fallbacks and SPA handoffs remain.
+All clients receive the same page (no user-agent branching).
 
-Next: deploy the hostname-preservation correction, retry the test basket in a
-regular browser and Commerce Manager Preview, then rerun the Commerce Manager
-validator. **Do not mark resolved until Meta passes.** The historical redirect
-notes below do not describe the current summary-page response.
+Validation: 110 focused checkout tests passed before the latest feed-cache change;
+rerun the feed tests after this change. **Do not mark resolved until Meta passes.**
 
 Written 2026-11-25, updated 2026-11-26. Code: `api/meta-checkout.ts` + two
 `vercel.json` rewrites + one `middleware.ts` header rule.
