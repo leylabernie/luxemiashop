@@ -67,11 +67,19 @@ const footerLinks = {
   ],
 };
 
+// The qualified FIRST10 sentence required wherever the code is advertised
+// (tests/activeDiscountCopy.test.cjs, src/config/welcomeOffer.ts).
+const QUALIFIED_OFFER_COPY =
+  '10% off an eligible first order. One use per customer. Final eligibility is confirmed at checkout.';
+
 const Footer = forwardRef<HTMLElement>((_props, ref) => {
   const [newsletterEmail, setNewsletterEmail] = useState('');
   const [newsletterSubmitting, setNewsletterSubmitting] = useState(false);
   const [newsletterSubmitted, setNewsletterSubmitted] = useState(false);
   const [newsletterDiscountCode, setNewsletterDiscountCode] = useState<string | null>(null);
+  // Appended last: tests/footerNewsletterRouting.test.cjs drives useState by
+  // call position, so new state must not be inserted above the existing four.
+  const [newsletterDuplicate, setNewsletterDuplicate] = useState(false);
   const newsletterRequestPending = useRef(false);
 
   const handleNewsletterSubmit = async (e: React.FormEvent) => {
@@ -81,12 +89,18 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
     newsletterRequestPending.current = true;
     setNewsletterSubmitting(true);
     try {
-      await subscribeFooterNewsletter(newsletterEmail);
+      const { duplicate } = await subscribeFooterNewsletter(newsletterEmail);
       // Use the same verified first-order offer as the welcome popup and header.
       const discountCode = WELCOME_OFFER.enabled ? WELCOME_OFFER.code : null;
       setNewsletterDiscountCode(discountCode);
+      setNewsletterDuplicate(duplicate);
       setNewsletterSubmitted(true);
-      toast.success(discountCode ? `Welcome — use ${discountCode}` : 'Thank you for subscribing', {
+      // A repeat address is a confirmed subscription, not a failure — but it is
+      // not a welcome either, so the toast and the panel both say "subscribed".
+      const successTitle = duplicate
+        ? discountCode ? `You're subscribed — use ${discountCode}` : "You're subscribed"
+        : discountCode ? `Welcome — use ${discountCode}` : 'Thank you for subscribing';
+      toast.success(successTitle, {
         description: discountCode
           ? '10% off eligible first orders. One use per customer. Eligibility is confirmed at checkout.'
           : 'We\'ll send new arrivals and offers.',
@@ -134,12 +148,29 @@ const Footer = forwardRef<HTMLElement>((_props, ref) => {
               Be the first to discover new collections, exclusive offers, and styling inspiration.
             </p>
             {newsletterSubmitted ? (
-              <div className="flex items-center justify-center gap-2 py-3 text-sm text-green-700 dark:text-green-400">
+              <div
+                className="flex items-center justify-center gap-2 py-3 text-sm text-green-700 dark:text-green-400"
+                role="status"
+                aria-live="polite"
+              >
                 <Check className="h-4 w-4" />
                 <span>
-                  {newsletterDiscountCode
-                    ? <>Thank you! Use <strong>{newsletterDiscountCode}</strong> for 10% off an eligible first order. One use per customer. Eligibility is confirmed at checkout.</>
-                    : 'Thank you! You\'re on the list.'}
+                  {/* A repeat signup is a success, not an error: submit-email answers it
+                      with { success: true, duplicate: true }. Never advertise the code
+                      when the offer is disabled. */}
+                  {/* Apostrophes belong in JS strings, never in JSX text: `\'`
+                      inside JSX text renders a literal backslash. */}
+                  {newsletterDuplicate && newsletterDiscountCode
+                    ? (
+                      <>
+                        {"You're subscribed! Use code "}
+                        <strong>{newsletterDiscountCode}</strong>
+                        {` at checkout — ${QUALIFIED_OFFER_COPY}`}
+                      </>
+                    )
+                    : newsletterDiscountCode
+                      ? <>Thank you! Use <strong>{newsletterDiscountCode}</strong> for 10% off an eligible first order. One use per customer. Eligibility is confirmed at checkout.</>
+                      : 'Thank you! You\'re on the list.'}
                 </span>
               </div>
             ) : (

@@ -3,7 +3,16 @@
 export const NEWSLETTER_FUNCTION_URL =
   'https://jcyolouvxfxovzjyyrxu.supabase.co/functions/v1/submit-email';
 
-export async function subscribeFooterNewsletter(email: string): Promise<void> {
+export interface NewsletterSubscribeResult {
+  /**
+   * `submit-email` answers a repeat address with `{ success: true, duplicate: true }`
+   * (unique index on `newsletter_subscribers.email`, Postgres 23505). Both are a
+   * confirmed subscription — the caller just words the success state differently.
+   */
+  duplicate: boolean;
+}
+
+export async function subscribeFooterNewsletter(email: string): Promise<NewsletterSubscribeResult> {
   const normalizedEmail = email.trim().toLowerCase();
   if (!normalizedEmail) throw new Error('Email is required');
 
@@ -22,4 +31,5 @@ export async function subscribeFooterNewsletter(email: string): Promise<void> {
     // An HTTP response alone cannot confirm a saved signup or email delivery.
     throw new Error('Newsletter signup could not be confirmed');
   }
+  return { duplicate: (data as { duplicate?: unknown }).duplicate === true };
 }

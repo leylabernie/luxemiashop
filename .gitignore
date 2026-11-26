@@ -63,6 +63,8 @@ scripts/*
 !scripts/validate-openai-search-feed.cjs
 !scripts/submit-indexnow.cjs
 !scripts/validate-semantic-completion.cjs
+# Regenerates the audited Pinterest scheduler + board plan (docs/growth/pinterest)
+!scripts/generate-pinterest-scheduler.cjs
 
 banner-img-urls.json
 banner_products.json
