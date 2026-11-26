@@ -701,3 +701,76 @@ test('invalid summary amounts and absent titles fall back rather than inventing 
     assert.equal(res.statusCode, 302);
   }
 });
+
+test('time-limited diagnostics capture response and Shopify prices without checkout secrets', async () => {
+  const originalLog = console.info;
+  const logs = [];
+  console.info = (...args) => logs.push(args);
+  process.env.META_CHECKOUT_DIAGNOSTICS = '1';
+  process.env.META_CHECKOUT_DIAGNOSTICS_UNTIL = new Date(Date.now() + 60_000).toISOString();
+  const payload = cartPayload();
+  payload.data.cartCreate.cart.cost.subtotalAmount = { amount: '496.44', currencyCode: 'USD' };
+  try {
+    const { result: res } = await withStorefront(jsonStub(payload), async () => {
+      const response = mockRes();
+      await handler({ method: 'GET', query: queryFrom(`${META_TEST_QUERY}&coupon=PRIVATECODE&fbclid=PRIVATECLICK`), headers: { 'user-agent': 'Meta test crawler', accept: 'text/html', cookie: 'SESSION_SECRET', authorization: 'Bearer SECRET' } }, response);
+      return response;
+    });
+    assert.equal(res.statusCode, 200);
+    assert.equal(logs.length, 1);
+    const event = JSON.parse(logs[0][1]);
+    assert.equal(event.stage, 'function-response');
+    assert.equal(event.products, `lmv-${ANARKALI_S}:1,lmv-${PEACH_S}:5`);
+    assert.equal(event.headers['user-agent'], 'Meta test crawler');
+    assert.equal(event.hasCoupon, true);
+    assert.equal(event.shopifySubtotal.amount, '496.44');
+    assert.equal(event.shopifyTotal.amount, '496.44');
+    assert.deepEqual(event.shopifyLines.map(line => [line.variantId, line.quantity, line.price]), [[ANARKALI_S,1,'108.99'],[PEACH_S,5,'77.49']]);
+    assert.equal(event.response.status, 200);
+    assert.match(event.response.body, /Subtotal: \$496\.44/);
+    const { createHash } = await import('node:crypto');
+    assert.equal(event.response.bodySha256, createHash('sha256').update(res.body).digest('hex'));
+    assert.doesNotMatch(JSON.stringify(event), /TOKEN123|secret|SESSION_SECRET|Bearer SECRET|PRIVATECODE|PRIVATECLICK/);
+  } finally {
+    console.info = originalLog;
+    delete process.env.META_CHECKOUT_DIAGNOSTICS;
+    delete process.env.META_CHECKOUT_DIAGNOSTICS_UNTIL;
+  }
+});
+
+test('diagnostics are off by default and reject arbitrary product query content', async () => {
+  const source = await build({entryPoints:['src/lib/metaCheckoutDiagnostics.ts'],bundle:true,write:false,platform:'node',format:'cjs'});
+  const m = {exports:{}}; new Function('module','exports',source.outputFiles[0].text)(m,m.exports);
+  const { metaDiagnosticsEnabled, metaDiagnosticRequest } = m.exports;
+  const now = Date.now();
+  assert.equal(metaDiagnosticsEnabled({}, now), false);
+  assert.equal(metaDiagnosticsEnabled({META_CHECKOUT_DIAGNOSTICS:'1', META_CHECKOUT_DIAGNOSTICS_UNTIL:new Date(now-1).toISOString()}, now), false);
+  assert.equal(metaDiagnosticsEnabled({META_CHECKOUT_DIAGNOSTICS:'1', META_CHECKOUT_DIAGNOSTICS_UNTIL:new Date(now+25*3600000).toISOString()}, now), false);
+  assert.equal(metaDiagnosticsEnabled({META_CHECKOUT_DIAGNOSTICS:'1', META_CHECKOUT_DIAGNOSTICS_UNTIL:new Date(now+3600000).toISOString()}, now), true);
+  const event = metaDiagnosticRequest('GET', new URLSearchParams('products=email%40example.com%3A1&coupon=secret'), new Headers({cookie:'session',authorization:'token','user-agent':'test'}));
+  assert.equal(event.products, null);
+  assert.deepEqual(event.headers, {'user-agent':'test'});
+  assert.doesNotMatch(JSON.stringify(event), /email|secret|session|token/);
+});
+
+test('diagnostics distinguish HEAD summary and unavailable-cart redirect without leaking session data', async () => {
+  const original = console.info, logs = [];
+  console.info = (...args) => logs.push(JSON.parse(args[1]));
+  process.env.META_CHECKOUT_DIAGNOSTICS = '1';
+  process.env.META_CHECKOUT_DIAGNOSTICS_UNTIL = new Date(Date.now() + 60000).toISOString();
+  try {
+    const { result: head } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY, 'HEAD'));
+    assert.equal(head.statusCode, 200); assert.equal(head.body, undefined);
+    assert.equal(logs[0].response.body, null); assert.equal(logs[0].response.status, 200);
+    const redirect = await call(META_TEST_QUERY);
+    assert.equal(redirect.statusCode, 302);
+    assert.equal(logs[1].outcome, 'shopify-cart-unavailable-permalink');
+    assert.equal(logs[1].response.locationKind, 'shopify-cart-permalink');
+    assert.equal(logs[1].response.body, null);
+    assert.doesNotMatch(JSON.stringify(logs), /TOKEN123|key=secret/);
+  } finally {
+    console.info = original;
+    delete process.env.META_CHECKOUT_DIAGNOSTICS;
+    delete process.env.META_CHECKOUT_DIAGNOSTICS_UNTIL;
+  }
+});

@@ -13,6 +13,7 @@ import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
 import { renderPrerenderedVariant, VARIANT_HTML_HEADERS } from './src/middleware/variantPrerender.js';
 import { readPrerender } from './src/middleware/prerenderResponse.js';
 import { generateBlogFallback } from './src/middleware/blogFallback.js';
+import { metaDiagnosticRequest, metaDiagnosticsEnabled } from './src/lib/metaCheckoutDiagnostics.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -681,6 +682,11 @@ async function routeRequest(request: Request): Promise<Response> {
     '/order-confirmation',
     '/meta-checkout',
   ]);
+  if (pathname === '/meta-checkout' && metaDiagnosticsEnabled(process.env)) {
+    try {
+      console.info('[meta-checkout-diagnostic]', JSON.stringify({ stage: 'edge-request', time: new Date().toISOString(), ...metaDiagnosticRequest(request.method, url.searchParams, request.headers) }));
+    } catch { /* Diagnostics must never affect checkout. */ }
+  }
   if (PRIVATE_SPA_ROUTES.has(pathname) || pathname.startsWith('/admin/')) {
     const privateResponse = next();
     // A redirect response carries no links, and `nofollow` on a 3xx can be read by
