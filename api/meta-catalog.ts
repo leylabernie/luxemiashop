@@ -93,7 +93,10 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
     if (!rows.length || seenPilots.size !== META_PILOT_PRODUCTS.length) throw new Error('Catalog incomplete');
     res.setHeader('Content-Type','text/csv; charset=utf-8');
-    res.setHeader('Cache-Control','public, max-age=0, s-maxage=300, stale-while-revalidate=600');
+    // Meta's checkout validator compares the imported item title with Shopify's
+    // checkout line item. Never let Vercel serve a previous catalog title while
+    // that validation is running; the consumer can still cache its own import.
+    res.setHeader('Cache-Control','no-store, max-age=0, must-revalidate');
     res.setHeader('X-Catalog-Products',String(rows.length));
     res.setHeader('X-Robots-Tag','noindex');
     return res.status(200).send([META_CATALOG_FIELDS,...rows].map(row=>row.map(quote).join(',')).join('\r\n')+'\r\n');
