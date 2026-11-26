@@ -74,7 +74,7 @@ const blocked = [
   /Glamour Indian Wear/i,
   /United States addresses only/i,
   /U\.S\. delivery only/i,
-  /\$12[^\n]{0,100}(?:shipping|below \$199)/i,
+  /\$12(?:\.00)?(?!\d|\.\d)[^\n]{0,100}(?:shipping|below \$199)/i,
   /free[^\n]{0,60}\$199/i,
   /International standard shipping is \$14\.99 below \$300/i,
   /Free worldwide shipping/i,
