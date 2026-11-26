@@ -53,6 +53,8 @@ function sitemap(html = '') {
       };
       if (name === './product-retirement-20260908.json') return { retained: [] };
       if (name === '../src/config/emptyCatalogRoutes.json') return JSON.parse(read('src/config/emptyCatalogRoutes.json'));
+      if (name === '../src/lib/manualGoneRoutes.cjs') return { GONE_ROUTES: new Set() };
+      if (name === '../src/data/reversiblyArchivedProductHandles.json' || name === '../src/data/legacyGoneProductHandles.json') return [];
       if (name === './storefront-catalog.cjs') return require('../scripts/storefront-catalog.cjs');
       throw new Error(`Unexpected sitemap dependency: ${name}`);
     },

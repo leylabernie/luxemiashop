@@ -392,9 +392,17 @@ function getListedProductAttributes(product) {
   const includedPiecesPrefix = includedPiecesTag
     ? includedPiecePrefixes.find(prefix => String(includedPiecesTag).toLowerCase().startsWith(prefix))
     : null;
-  const includedPieces = includedPiecesTag && includedPiecesPrefix
+  const rawComponents = product?.includedComponentsMetafield?.value;
+  let metafieldComponents = '';
+  if (rawComponents) {
+    try {
+      const parsed = JSON.parse(rawComponents);
+      if (Array.isArray(parsed)) metafieldComponents = parsed.filter(value => typeof value === 'string' && value.trim()).join(', ');
+    } catch { /* Invalid metafields are not evidence of included pieces. */ }
+  }
+  const includedPieces = metafieldComponents || (includedPiecesTag && includedPiecesPrefix
     ? String(includedPiecesTag).slice(includedPiecesPrefix.length).trim()
-    : getExplicitIncludedPieces(product);
+    : getExplicitIncludedPieces(product));
   const rawShipsWithin = product?.shipsWithinMetafield?.value;
   const shipsWithinDays = rawShipsWithin ? Number.parseInt(String(rawShipsWithin), 10) : null;
 
@@ -556,7 +564,7 @@ function disambiguateDuplicateProductRouteTitles(routes) {
   const groups = new Map();
 
   for (const route of productRoutes) {
-    const finalTitle = clampTitle(route.title).toLowerCase();
+    const finalTitle = clampTitle(route.title, undefined, Infinity).toLowerCase();
     const group = groups.get(finalTitle) || [];
     group.push(route);
     groups.set(finalTitle, group);
@@ -603,11 +611,7 @@ function disambiguateDuplicateProductRouteTitles(routes) {
         const base = brandPos >= 0 ? route.title.slice(0, brandPos).trim() : route.title.trim();
         const suffix = ' | LuxeMia';
         const diffText = ` — ${differentiator}`;
-        const budget = Math.max(1, 58 - suffix.length - diffText.length);
-        const baseText = truncateAtWord(base, budget)
-          .replace(/…$/, '')
-          .replace(/\s+[—–-]\s*$/, '')
-          .trim();
+        const baseText = base;
         route.title = `${baseText}${diffText}${suffix}`;
         fallbackCount += 1;
       }
@@ -674,6 +678,7 @@ query GetAllProducts($first: Int!, $after: String) {
         materialMetafield: metafield(namespace: "custom", key: "material") {
           value
         }
+        includedComponentsMetafield: metafield(namespace: "custom", key: "included_components") { value }
         careInstructionsMetafield: metafield(namespace: "custom", key: "care_instructions") { value }
         seo {
           title
@@ -1138,6 +1143,7 @@ function buildHydrationProductNode(product) {
     tags: getCrawlerSafeTags(product.tags),
     availableForSale: product.availableForSale,
     shipsWithinMetafield: product.shipsWithinMetafield || null,
+    includedComponentsMetafield: product.includedComponentsMetafield || null,
     priceRange: product.priceRange,
     compareAtPriceRange: product.compareAtPriceRange,
     images: product.images,
@@ -2632,7 +2638,7 @@ function generateHtml(template, route, allShopifyProducts) {
     route.noIndexFollow = true;
   }
   let html = template;
-  const seoTitle = clampTitle(route.title, undefined, route.titleMaxLength);
+  const seoTitle = clampTitle(route.title, undefined, route.path.startsWith('/product/') ? Infinity : route.titleMaxLength);
   const seoDescription = clampDescription(route.description);
   const routeContent = normalizeInternalNavigationHtml(route.content) +
     (['/lehengas', '/collections'].includes(route.path)
@@ -3626,6 +3632,17 @@ async function main() {
       const cleanedH1 = cleanProductDisplayTitle(route.h1, route.product && route.product.title);
       if (cleanedH1) route.h1 = cleanedH1;
     }
+  }
+  // Generate metadata from the same current catalog fields for fixed and
+  // automatically discovered product routes, rather than stale SEO excerpts.
+  for (const route of routes) {
+    if (!route.path.startsWith('/product/') || !route.product) continue;
+    const p = route.product;
+    const attrs = getListedProductAttributes(p);
+    const price = p.priceRange?.minVariantPrice;
+    route.title = `${sanitizeProductTitle(p.title)} | LuxeMia`;
+    route.description = generateProductMetaDescription('', p.productType || '', p.title,
+      price?.currencyCode === 'USD' ? price.amount : undefined, attrs.color, attrs.material, attrs.includedPieces);
   }
   disambiguateDuplicateProductRouteTitles(routes);
 

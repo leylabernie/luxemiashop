@@ -286,8 +286,9 @@ test('middleware preserves bare static routing and isolates sequential variant r
     } });
   });
   const bare = await run(new Request(canonical));
-  assert.equal(bare.headers.get('x-middleware-rewrite'), `https://luxemia.shop/_prerender/product/${handle}.html`);
-  assert.equal(fetchCount, 0, 'No additional work for bare product URLs');
+  assert.equal(bare.status, 200);
+  assert.match(await bare.text(), /data-prerender-schema/);
+  assert.equal(fetchCount, 1, 'The bare route checks the actual asset, not just the manifest');
   const responses = [];
   for (const id of ['100', '200', '100']) {
     const response = await run(new Request(`${canonical}?variant=${id}`));
@@ -302,7 +303,7 @@ test('middleware preserves bare static routing and isolates sequential variant r
     assert.match(response.headers.get('Link') || '', new RegExp(canonical));
     responses.push(await response.text());
   }
-  assert.equal(fetchCount, 3);
+  assert.equal(fetchCount, 4);
   assert.equal(responses[0], responses[2]);
   assert.match(region(responses[0], 'price'), /59\.99/);
   assert.match(region(responses[1], 'price'), /88\.99/);
@@ -489,4 +490,39 @@ test('collection prerender offers use the same shared shipping references', asyn
   assert.equal(offer.price, '59.99');
   assert.equal(offer.priceCurrency, 'USD');
   assert.equal(offer.url, canonical);
+});
+
+test('missing or shell-only bare product assets fall back to current Shopify for shoppers and bots', async t => {
+  const run = await middleware();
+  lookupState.result = { status: 'found', product: productFixture() };
+  t.after(() => { lookupState.result = { status: 'unavailable' }; });
+  let brokenAsset = new Response('missing', { status: 404 });
+  t.mock.method(globalThis, 'fetch', async url => {
+    if (url.pathname.startsWith('/_prerender/')) return brokenAsset.clone();
+    assert.equal(url.pathname, '/index.html');
+    return new Response(template);
+  });
+  for (const [agent, asset] of [['Googlebot', new Response('missing', { status: 404 })], ['Mozilla/5.0', new Response('<html><head></head><body><div id="root"></div></body></html>')]]) {
+    brokenAsset = asset;
+    const response = await run(new Request(`${canonical}?utm_source=test`, { headers: { 'User-Agent': agent } }));
+    assert.equal(response.status, 200);
+    const html = await response.text();
+    assert.match(html, /Cotton Mirror Lehenga Choli/);
+    assert.match(html, /application\/ld\+json/);
+    assert.match(html, /src="\/assets\/app.js"/);
+  }
+});
+
+test('a missing asset with an unavailable upstream remains 503, never a cached 404 or 410', async t => {
+  const run = await middleware();
+  lookupState.result = { status: 'unavailable' };
+  t.mock.method(globalThis, 'fetch', async url => {
+    assert.equal(url.pathname, `/_prerender/product/${handle}.html`);
+    return new Response('missing', { status: 404 });
+  });
+  for (const query of ['', '?variant=200']) {
+    const response = await run(new Request(`${canonical}${query}`, { headers: { 'user-agent': 'Googlebot' } }));
+    assert.equal(response.status, 503);
+    assert.match(response.headers.get('cache-control') || '', /no-store/);
+  }
 });

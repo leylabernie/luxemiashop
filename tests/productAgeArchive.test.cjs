@@ -56,8 +56,14 @@ test('real middleware rejects archives before stale prerender/live lookup and re
     assert.equal(r.status,404,handle);assert.match(r.headers.get('x-robots-tag'),/noindex/);assert.doesNotMatch(await r.text(),/ProductGroup|InStock|Add to cart/);
   }
   assert.equal(lookups,0);
-  const retained=await m.exports.default(new Request('https://luxemia.shop/product/retained-fixture'));
-  assert.match(retained.headers.get('x-rewrite'),/retained-fixture.html/);
+  const originalFetch = globalThis.fetch;
+  let retained;
+  try {
+    globalThis.fetch = async () => new Response('<html><head><link rel="canonical" href="https://luxemia.shop/product/retained-fixture"><script data-prerender-schema></script></head><body><main>Retained</main></body></html>');
+    retained = await m.exports.default(new Request('https://luxemia.shop/product/retained-fixture'));
+  } finally { globalThis.fetch = originalFetch; }
+  assert.equal(retained.status, 200);
+  assert.match(await retained.text(), /Retained/);
   const permanent=await m.exports.default(new Request('https://luxemia.shop/product/permanently-retired-fixture'));
   assert.equal(permanent.status,410);
 });

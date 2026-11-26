@@ -6,10 +6,13 @@ import { PRERENDERED_ROUTES } from './src/lib/autoRoutes.js';
 import { PRERENDERED_PRODUCT_HANDLES } from './src/lib/prerenderManifest.js';
 import { isReversiblyArchivedProduct } from './src/lib/reversibleProductArchive.cjs';
 import { GONE_PRODUCT_HANDLES } from './src/lib/goneRoutes.js';
+import { GONE_ROUTES } from './src/lib/manualGoneRoutes.cjs';
 import { getJewelryProductByHandle, generateJewelryProductHtml } from './src/middleware/jewelryFallback.js';
 import { getBridalVol3ProductByHandle } from './src/middleware/bridalVol3Fallback.js';
 import { getDedicatedSubcategoryPath } from './src/config/seoArchitecture.js';
 import { renderPrerenderedVariant, VARIANT_HTML_HEADERS } from './src/middleware/variantPrerender.js';
+import { readPrerender } from './src/middleware/prerenderResponse.js';
+import { generateBlogFallback } from './src/middleware/blogFallback.js';
 
 /**
  * Vercel Edge Middleware (non-Next.js / Vite)
@@ -48,58 +51,6 @@ const PRODUCT_301_REDIRECTS: Record<string, string> = {
 
 
 };
-
-// Explicit 410 Gone routes — URLs that have been permanently retired and have
-// NO semantic replacement. Only manually confirmed deletions belong here.
-//
-// Format: full pathname starting with '/'.
-// Example: '/collections/some-old-collection', '/some-old-landing-page'
-const GONE_ROUTES: Set<string> = new Set<string>([
-  // ── Manually maintained entries (add retired URLs from GSC export here) ──
-  // Product was deleted from Shopify but still gets GSC impressions (8 imp, 1 click
-  // at pos 6.38 as of 2026-07-11). 410 tells Google to drop it from the index
-  // immediately, vs. 404 which Google retries for weeks.
-  '/product/art-silk-pista-green-groom-wear-thread-work-readymade-sherwani',
-  // Search Console redirect examples checked on 22 Aug 2026. Shopify searches
-  // found no exact active replacement, so these retired product URLs must not
-  // redirect shoppers or crawlers to unrelated catalog items.
-  '/product/luxemia-off-white-sequin-work-net-lehenga-choli-for-sangeet-and-wedding-guests',
-  '/product/black-cotton-embroidered-men-s-kurta-pajama-set',
-  // Current 404s from the 22 Aug 2026 Search Console crawled-not-indexed
-  // examples. The three blog slugs have no published source route; the product
-  // handles are absent from Shopify, except one explicitly archived product.
-  // No exact live replacement was source-verified for any of them.
-  '/blog/designer-wedding-dress-under-50000',
-  '/blog/red-bridal-lehenga-trends-2026',
-  '/blog/unstitched-vs-ready-to-wear-vs-made-to-measure',
-  '/product/chinon-lime-yellow-wedding-wear-embroidery-work-readymade-sharara-suit',
-  '/product/chinon-silk-orange-occasional-wear-embroidery-work-readymade-plazzo-suit',
-  '/product/classic-bridal-red-silk-lehenga',
-  '/product/faux-georgette-wine-occasional-wear-sequins-work-readymade-sharara-suit',
-  '/product/georgette-green-occasional-wear-embroidery-work-readymade-plazzo-suit',
-  '/product/georgette-rani-pink-festival-wear-embroidery-work-readymade-sharara-suit',
-  '/product/lilac-linen-cotton-embroidered-men-s-kurta-pajama-set',
-  '/product/luxemia-black-chinon-silk-embroidery-work-occasional-wear-sharara-suit',
-  '/product/luxemia-brown-embroidered-art-silk-indo-western-for-south-asian-weddings',
-  '/product/luxemia-front-cut-western-top-set',
-  '/product/luxemia-olive-green-embroidered-satin-lehenga-choli-for-sangeet-and-wedding-guests',
-  '/product/luxemia-tissue-brocade-pre-draped-saree',
-  '/product/net-black-eid-wear-sequins-work-sharara-suit',
-  '/product/pure-gmy-silk-red-eid-wear-embroidery-work-readymade-pakistani-suit',
-  '/product/royal-rani-pink-silk-bridal-lehenga',
-  '/product/shimmer-silk-sky-blue-occasional-wear-mirror-work-readymade-plazzo-suit',
-  '/product/silk-green-occasional-wear-mirror-work-readymade-patiyala-suit',
-  '/product/wine-net-embroidery-festive-lehenga-choli',
-  // Google-selected-canonical examples checked on 22 Aug 2026. All seven
-  // handles are absent from Shopify and have no source-verified replacement.
-  '/product/art-silk-cream-groom-wear-thread-work-readymade-sherwani',
-  '/product/chinon-navy-blue-occasional-wear-embroidery-work-readymade-plazzo-suit',
-  '/product/georgette-purple-wedding-wear-embroidery-work-readywar-plazzo-suit',
-  '/product/luxemia-multicolor-mirror-work-cotton-lehenga-choli-for-sangeet-and-wedding-guests',
-  '/product/luxemia-navy-blue-hand-worked-imported-lachka-indo-western-for-south-asian-weddings',
-  '/product/teal-blue-art-silk-patterned-sherwani-style-kurta-pajama-set',
-  '/product/wine-art-banarasi-silk-patterned-men-s-kurta-pajama-with-jacket',
-]);
 
 // Combine manual GONE_ROUTES with auto-discovered dead product handles from build.
 // This produces 410 Gone for any /product/{handle} in the set.
@@ -170,7 +121,7 @@ function returnShopifyUnavailable(): Response {
   const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">` +
     `<meta name="viewport" content="width=device-width,initial-scale=1">` +
     `<title>Temporarily unavailable — LuxeMia</title></head><body>` +
-    `<h1>This product is temporarily unavailable.</h1>` +
+    `<h1>This page is temporarily unavailable.</h1>` +
     `<p>Please try again shortly.</p></body></html>`;
   return new Response(html, {
     status: 503,
@@ -380,6 +331,15 @@ async function routeRequest(request: Request): Promise<Response> {
     return Response.redirect(canonical.toString(), 301);
   }
 
+  // Shopify handles are canonical without dangling hyphens. Normalize only a
+  // single nonempty product segment and preserve variant/attribution queries.
+  const trailingProductHyphen = pathname.match(/^\/product\/([a-z0-9](?:[a-z0-9-]*[a-z0-9])?)-+$/i);
+  if (trailingProductHyphen) {
+    const canonical = new URL(request.url);
+    canonical.pathname = `/product/${trailingProductHyphen[1]}`;
+    return Response.redirect(canonical.toString(), 301);
+  }
+
   // Merchant Center checkout links select the exact feed variant and quantity.
   // Keep the cart permalink on LuxeMia's origin for the feed, then hand off to
   // Shopify's hosted checkout. Only forward known attribution parameters; never
@@ -570,10 +530,12 @@ async function routeRequest(request: Request): Promise<Response> {
     }
     if (PRERENDERED_PRODUCT_HANDLES.has(handle)) {
       if (!url.searchParams.has('variant')) {
-        return rewrite(new URL(`/_prerender/product/${handle}.html`, request.url));
+        const staticResponse = await readPrerender(request, `/_prerender/product/${handle}.html`, pathname);
+        if (staticResponse) return staticResponse;
+      } else {
+        const selectedResponse = await renderPrerenderedVariant(request, handle, url.searchParams.get('variant'));
+        if (selectedResponse) return selectedResponse;
       }
-      const selectedResponse = await renderPrerenderedVariant(request, handle, url.searchParams.get('variant'));
-      if (selectedResponse) return selectedResponse;
       // A missing/stale asset must not silently return the wrong selected price.
       // Fall through to the existing live product renderer instead.
     }
@@ -667,9 +629,35 @@ async function routeRequest(request: Request): Promise<Response> {
     '/blog/saree-vs-lehenga-wedding-guest-guide-2026': '/blog/wedding-guest-outfit-ideas',
     '/blog/indian-wedding-guest-outfits-men-usa-guide': '/menswear',
     '/blog/mehendi-outfit-by-role': '/collections/mehendi-outfits',
+    // These old slugs are absent from the published articles and topic hubs.
+    '/blog/indian-wedding-dress-complete-guide': '/blog',
+    '/blog/how-to-choose-perfect-lehenga-wedding-2026': '/blog',
   };
   if (LEGACY_BLOG_REDIRECTS[pathname]) {
     return Response.redirect(new URL(LEGACY_BLOG_REDIRECTS[pathname], request.url).toString(), 301);
+  }
+
+  // Only source-backed blog articles and hubs may use the emergency renderer.
+  // Query strings do not participate in the static asset lookup.
+  const blogMatch = pathname.match(/^\/blog\/([a-z0-9-]+)$/);
+  if (blogMatch) {
+    const fallbackHtml = generateBlogFallback(blogMatch[1]);
+    if (!fallbackHtml) return return404(request);
+    if (PRERENDERED_ROUTES.has(pathname)) {
+      const staticResponse = await readPrerender(request, `/_prerender${pathname}.html`, pathname);
+      if (staticResponse) return staticResponse;
+    }
+    try {
+      const html = await attachShoppingApp(fallbackHtml, request);
+      return new Response(html, { status: 200, headers: {
+        'Content-Type': 'text/html; charset=utf-8',
+        'Cache-Control': 'public, max-age=300, s-maxage=900',
+        'X-Robots-Tag': 'index, follow',
+      } });
+    } catch {
+      // A broken app shell is a temporary deployment failure, never a 404.
+      return returnShopifyUnavailable();
+    }
   }
 
   // Every public indexable route is served from the same prerendered file to

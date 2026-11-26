@@ -135,37 +135,31 @@ export function enrichProductDescription(
 
 export function generateMetaDescription(
   _description: string,
-  productType: string,
+  _productType: string,
   title: string,
-  _price?: string,
-  color?: string,
+  price?: string,
+  _color?: string,
   material?: string,
+  includedComponents?: string,
 ): string {
   const safeTitle = sanitizeProductTitle(title) || 'Indian ethnic wear';
-  const maxLength = 155;
-  let lead = `Shop ${safeTitle} at LuxeMia.`;
-  if (lead.length > maxLength) {
-    const identifyingDetails = [cleanAttribute(color), cleanAttribute(material), cleanAttribute(productType)]
-      .filter(Boolean).join(' ') || 'Indian ethnic wear';
-    lead = `Shop ${identifyingDetails} at LuxeMia.`;
+  const amount = price && /^\d+(?:\.\d{1,2})?$/.test(price) ? Number(price) : NaN;
+  const priceText = Number.isFinite(amount) && amount > 0 ? ` ($${amount.toFixed(2)})` : '';
+  const facts = [cleanAttribute(material), cleanAttribute(includedComponents) ? `Includes ${cleanAttribute(includedComponents)}` : ''].filter(Boolean);
+  const segments = [`Shop ${safeTitle}${priceText} at LuxeMia.`, facts.length ? `${facts.join(' · ')}.` : '', 'Tracked delivery from India. Free U.S. standard shipping at $150+ after discounts.', 'No U.S. doorstep import fees.'].filter(Boolean);
+  const max = 153; // leave room for the shared description normalizer's period
+  let result = '';
+  for (const segment of segments) {
+    const next = result ? `${result} ${segment}` : segment;
+    if (next.length <= max) { result = next; continue; }
+    if (!result) {
+      const prefix = segment.slice(0, max + 1);
+      const cut = prefix.lastIndexOf(' ');
+      result = (cut > 0 ? prefix.slice(0, cut) : prefix.slice(0, max)).replace(/[\s,;·.-]+$/, '');
+    }
+    break;
   }
-  // Explicit facet sentences (color, fabric) mirror the way established
-  // ethnic-wear listings expose attributes in snippets; only facts carried by
-  // the listing are used, and long titles fall back to the facet-only lead.
-  const titleCaseValue = (value: string) =>
-    value.replace(/\b[a-z]/g, (ch) => ch.toUpperCase());
-  const facetParts = [
-    cleanAttribute(color) ? `Color: ${titleCaseValue(cleanAttribute(color))}.` : '',
-    cleanAttribute(material) ? `Fabric: ${titleCaseValue(cleanAttribute(material))}.` : '',
-  ].filter(Boolean);
-  const detail = /\bsaree\b/i.test(`${productType} ${safeTitle}`)
-    ? 'Check blouse details and sizes.'
-    : 'Check included pieces and sizes.';
-  const sentences = [...facetParts, detail, 'Tracked U.S. shipping.'];
-  return sentences.reduce((copy, sentence) =>
-    `${copy} ${sentence}`.length <= maxLength ? `${copy} ${sentence}` : copy,
-  lead);
-
+  return result;
 }
 
 export function getProductCategoryDescription(productType: string): string {

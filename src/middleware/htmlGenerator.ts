@@ -16,6 +16,7 @@ import { forceJpegForGmc, generateOrganizationSchema, generateProductSchema, gen
 import { getActualProductSizeValues, NO_FINISHED_GARMENT_SIZE_NOTICE, SIZING_GUIDANCE_LABEL } from '../lib/productOptionNames.js';
 import { requiresTailoringEnquiry, TAILORING_ENQUIRY_NOTICE, TAILORING_CATALOG_SIZE_NOTICE } from '../lib/tailoringEnquiry.js';
 import { clampTitle, clampDescription } from '../lib/meta/clamp.js';
+import { generateMetaDescription } from '../lib/productDescriptionEnrichment.js';
 import { renderSelectedOptions, selectInitialVariant } from './variantPrerender.js';
 import { getVariantReferencePrice } from '../lib/variantReferencePrice.js';
 
@@ -28,13 +29,6 @@ function getConfiguredGa4PreviewHost(): string {
   if (!host.endsWith('.vercel.app') || !/^[a-z0-9.-]+$/.test(host)
     || labels.some(label => !label || label.length > 63 || label.startsWith('-') || label.endsWith('-'))) return '';
   return host;
-}
-
-function sanitizeSeoTitle(value: string): string {
-  return (value || '')
-    .replace(/\s*\|\s*Handcrafted Indian Bridal Luxury/gi, '')
-    .replace(/\s+/g, ' ')
-    .trim();
 }
 
 function sanitizeProductTitle(value: string): string {
@@ -215,20 +209,13 @@ function buildVerifiedProductDescription(product: ShopifyProduct): string {
 
 export function generateProductHtml(product: ShopifyProduct, canonicalUrl: string, requestedVariantId?: string | null): string {
   const displayTitle = sanitizeProductTitle(product.title);
-  // Prefer Shopify admin "Search engine listing" (SEO) fields when set, fall
-  // back to a template built from the plain product title/type. This matches
-  // the behavior Shopify's own theme uses on the myshopify.com product page
-  // and prevents the SEO Title/Description set in admin from being silently
-  // ignored.
-  const seoTitle = sanitizeProductTitle(sanitizeSeoTitle(product.seo?.title || ''));
-  // Do not republish historic SEO or supplier descriptions containing obsolete claims.
   const cleanProductDescription = buildVerifiedProductDescription(product);
   const productAttributes = getListedProductAttributes(product);
-  const title = clampTitle(seoTitle || `${displayTitle} | ${product.productType || 'Ethnic Wear'} | LuxeMia`);
-  const fallbackDescription = productAttributes.jewelry
-    ? `Shop ${displayTitle} at LuxeMia. Indian jewelry online for U.S. customers. Review the listing for exact materials, finish, stones, and included pieces.`
-    : `Shop ${displayTitle} at LuxeMia. Indian ethnic wear online with tracked U.S. shipping.`;
-  const description = clampDescription((product.tags?.includes('facts:source-verified') ? product.seo?.description : '') || cleanProductDescription || fallbackDescription);
+  const title = clampTitle(`${displayTitle} | LuxeMia`, undefined, Infinity);
+  const minPrice = product.priceRange.minVariantPrice;
+  const description = clampDescription(generateMetaDescription('', product.productType || '', displayTitle,
+    minPrice.currencyCode === 'USD' ? minPrice.amount : undefined, productAttributes.color,
+    productAttributes.material, productAttributes.includedPieces));
   const selectedVariant = requestedVariantId !== undefined ? selectInitialVariant(product, requestedVariantId) : undefined;
   const price = selectedVariant?.price.amount || product.priceRange.minVariantPrice.amount;
   const currency = selectedVariant?.price.currencyCode || product.priceRange.minVariantPrice.currencyCode;

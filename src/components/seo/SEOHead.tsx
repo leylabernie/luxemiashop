@@ -102,7 +102,7 @@ const SEOHead = ({
   hreflang,
 }: SEOHeadProps) => {
   const siteUrl = SITE_URL;
-  const seoTitle = clampTitle(title, undefined, titleMaxLength);
+  const seoTitle = clampTitle(title, undefined, type === 'product' ? Infinity : titleMaxLength);
   const seoDescription = clampDescription(description);
   // Canonicals must always resolve to the production apex domain. Using only
   // the pathname prevents Vercel/Lovable preview hosts, query parameters, and

@@ -1,4 +1,4 @@
-import type { BlogPost } from './blogPosts';
+import type { BlogPost } from './blogPosts.js';
 
 const REVIEWED_AT = '2026-08-14';
 const EDITORIAL_TEAM = 'LuxeMia Editorial Team';
