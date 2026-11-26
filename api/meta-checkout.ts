@@ -76,6 +76,8 @@
  */
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getMetaPilotVariant } from '../src/lib/metaPilot.js';
+import { createHash } from 'node:crypto';
+import { metaDiagnosticRequest, metaDiagnosticsEnabled } from '../src/lib/metaCheckoutDiagnostics.js';
 
 /** Branded checkout host. The permanent myshopify domain only 301s here, so
  *  redirecting to it adds a cross-domain hop a crawler may not follow. Both are
@@ -275,7 +277,7 @@ const CART_CREATE_MUTATION = `mutation cartCreate($input: CartInput!) {
       id
       checkoutUrl
       totalQuantity
-      cost { totalAmount { amount currencyCode } }
+      cost { totalAmount { amount currencyCode } subtotalAmount { amount currencyCode } }
       lines(first: 100) {
         pageInfo { hasNextPage }
         edges { node { quantity merchandise { ... on ProductVariant { id price { amount currencyCode } product { title } } } } }
@@ -296,7 +298,7 @@ interface StorefrontCartLine {
 interface StorefrontCart {
   checkoutUrl?: string | null;
   totalQuantity?: number;
-  cost?: { totalAmount?: { amount?: string; currencyCode?: string } } | null;
+  cost?: { totalAmount?: { amount?: string; currencyCode?: string }; subtotalAmount?: { amount?: string; currencyCode?: string } } | null;
   lines?: {
     pageInfo?: { hasNextPage?: boolean } | null;
     edges?: Array<{ node?: StorefrontCartLine | null }> | null;
@@ -311,6 +313,7 @@ export interface StorefrontCartSummaryLine {
   title: string;
   quantity: number;
   price: string;
+  variantId?: string;
 }
 
 /** The basket Shopify built, plus everything the summary page needs to show it. */
@@ -319,6 +322,7 @@ export interface StorefrontCartResult {
   url: string;
   /** The cart subtotal Shopify computed, e.g. "496.44". */
   total: string;
+  subtotal?: { amount?: string; currencyCode?: string };
   lines: StorefrontCartSummaryLine[];
 }
 
@@ -395,7 +399,7 @@ export async function createStorefrontCart(
       const title = merchandise?.product?.title;
       if (typeof price !== 'string' || !/^\d+(?:\.\d{1,2})?$/.test(price)) return null;
       if (typeof title !== 'string' || !title.trim()) return null;
-      summaryLines.push({ title, quantity: edge.node?.quantity ?? 0, price });
+      summaryLines.push({ title, quantity: edge.node?.quantity ?? 0, price, variantId });
       expected.delete(variantId);
     }
     if (expected.size) return null;
@@ -411,7 +415,7 @@ export async function createStorefrontCart(
     url.searchParams.set('channel', SHOPIFY_CHECKOUT_CHANNEL);
     url.searchParams.set('return_url', SHOPIFY_CHECKOUT_RETURN_URL);
     for (const [key, value] of Object.entries(attribution)) url.searchParams.set(key, value);
-    return { url: url.toString(), total, lines: summaryLines };
+    return { url: url.toString(), total, subtotal: cart.cost?.subtotalAmount, lines: summaryLines };
   } catch {
     return null;
   }
@@ -512,7 +516,33 @@ function sendHtml(res: VercelResponse, html: string, method: string): void {
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
   const method = (req.method || 'GET').toUpperCase();
+  const diagnostic = (details: Record<string, unknown>) => {
+    if (!metaDiagnosticsEnabled(process.env)) return;
+    try {
+      const requestHeaders = new Headers();
+      for (const name of ['user-agent', 'accept', 'accept-language', 'content-type', 'x-vercel-id']) {
+        const value = req.headers?.[name];
+        if (typeof value === 'string') requestHeaders.set(name, value);
+        else if (Array.isArray(value)) requestHeaders.set(name, value.join(', '));
+      }
+      const safeParams = new URLSearchParams();
+      for (const key of ['products', 'coupon', 'context', 'review']) {
+        const value = req.query?.[key];
+        if (Array.isArray(value)) value.forEach(entry => safeParams.append(key, String(entry)));
+        else if (value !== undefined) safeParams.append(key, String(value));
+      }
+      console.info('[meta-checkout-diagnostic]', JSON.stringify({ stage: 'function-response', time: new Date().toISOString(), ...metaDiagnosticRequest(method, safeParams, requestHeaders), ...details }));
+    } catch { /* Diagnostic failure must never alter the response. */ }
+  };
+  const describeResponse = (status: number, body: string | null, safeBody: string | null, locationKind?: string) => ({
+    status, headers: { 'cache-control': NO_STORE, 'x-robots-tag': status >= 300 && status < 400 ? 'noindex' : 'noindex, nofollow', ...(body !== null && (status === 200 || method !== 'HEAD') ? { 'content-type': status === 200 ? 'text/html; charset=utf-8' : 'text/plain; charset=utf-8' } : {}), ...(status === 405 ? { allow: 'GET, HEAD' } : {}) },
+    locationKind: locationKind || null,
+    // Hash the exact bytes sent; the logged body removes checkout session URLs.
+    bodySha256: createHash('sha256').update(method === 'HEAD' ? '' : body || '').digest('hex'),
+    body: method === 'HEAD' ? null : safeBody,
+  });
   if (method !== 'GET' && method !== 'HEAD') {
+    diagnostic({ outcome: 'method-not-allowed', response: describeResponse(405, 'Method Not Allowed', 'Method Not Allowed') });
     return send(res, 405, null, 'Method Not Allowed', method);
   }
 
@@ -528,6 +558,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
 
   const result = translateMetaCheckout(`?${params.toString()}`);
   if (result.kind === 'rejected') {
+    diagnostic({ outcome: result.kind, response: describeResponse(result.status, result.body, result.body) });
     return send(res, result.status, null, result.body, method);
   }
   if (result.kind === 'cart') {
@@ -541,10 +572,17 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     // never remove a working one.
     const cart = await createStorefrontCart(result.lines, result.coupon, result.attribution);
     if (cart) {
-      return sendHtml(res, buildCheckoutSummaryHtml(cart), method);
+      const html = buildCheckoutSummaryHtml(cart);
+      if (metaDiagnosticsEnabled(process.env)) {
+        const safeHtml = buildCheckoutSummaryHtml({ ...cart, url: '[checkout URL redacted]' });
+        diagnostic({ outcome: 'shopify-summary', requestedLines: result.lines, shopifyLines: cart.lines, shopifyTotal: { amount: cart.total, currencyCode: 'USD' }, shopifySubtotal: cart.subtotal || null, response: describeResponse(200, html, safeHtml) });
+      }
+      return sendHtml(res, html, method);
     }
+    diagnostic({ outcome: 'shopify-cart-unavailable-permalink', requestedLines: result.lines, response: describeResponse(302, null, null, 'shopify-cart-permalink') });
     return send(res, 302, result.location, null, method);
   }
   // 302, never 301/308: the basket a link names is not cacheable or permanent.
+  diagnostic({ outcome: 'spa-handoff', reason: result.reason, response: describeResponse(302, null, null, 'storefront-review') });
   return send(res, 302, result.location, null, method);
 }
