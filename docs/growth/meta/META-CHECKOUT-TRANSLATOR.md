@@ -9,7 +9,7 @@ Tests: `tests/metaCheckoutTranslator.test.mjs` (40 assertions).
 |---|---|---|
 | 2026-11-25 | Translator deployed (#314, `main` `75ddf82`) | *"The subtotal was incorrect"* |
 | 2026-11-26 | Bare `&coupon` treated as no coupon (#315, `main` `3e81410`) | Meta Preview sent `&coupon` with no value → 400 |
-| 2026-11-26 | Branded checkout host + server-side `cartCreate` + no `nofollow` on redirects | *"The checkout page couldn't be loaded"* |
+| 2026-11-26 | Branded checkout host + server-side `cartCreate` + no `nofollow` on redirects (#316, `main` `21cea2a`) | *"The checkout page couldn't be loaded"* |
 
 ## The problem, precisely
 
@@ -130,10 +130,25 @@ location: https://checkout.luxemia.shop/cart/c/<token>?key=…&cart_origin=meta_
 location: https://checkout.luxemia.shop/cart/48120657903787:1,48210922504363:5?cart_origin=meta_shops   ← fallback
 ```
 
-Which one you get depends on whether the Storefront API answered in time. Confirmed
-live on 2026-11-26 with the bare-`&coupon` URL Meta Preview sends: `HTTP/1.1 302
-Found`, `Cache-Control: no-store`, `X-Robots-Tag: noindex, nofollow` (before fix 3),
-`X-Vercel-Cache: MISS`, `Content-Length: 0`.
+Which one you get depends on whether the Storefront API answered within 4 s.
+
+**Confirmed live on production 2026-11-26** with the exact URL Meta Preview sends,
+bare `&coupon` included (`curl -g -sS -D - -o NUL`):
+
+```
+HTTP/1.1 302 Found
+Cache-Control: no-store
+Content-Length: 0
+X-Robots-Tag: noindex
+X-Vercel-Cache: MISS
+Location: https://checkout.luxemia.shop/cart/c/<token>?key=<cart key>&_s=<session>&_y=<visitor>&cart_origin=meta_shops
+```
+
+`key`, `_s` and `_y` are Storefront API cart identifiers, so seeing them is the
+proof that the preferred path ran: the permalink fallback carries none of them and
+instead produces `cart_link_id=` on the checkout it reaches. Treat that `key` as
+a secret — it grants access to that cart — and never paste a full one into an
+issue, a chat or a screenshot.
 
 The `cart_origin` parameter is deliberate: Meta's checkout-URL spec says a
 redirect must pass the received parameters along, and `middleware.ts` already
