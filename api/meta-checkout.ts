@@ -444,10 +444,54 @@ function escapeHtml(value: string): string {
  * button for anyone without JavaScript). No payment is handled here.
  */
 export function buildCheckoutSummaryHtml(cart: StorefrontCartResult): string {
-  const rows = cart.lines.map(line => {
+  // Every line is a pilot item by construction (the numeric-lmv basket only ever
+  // reaches this page), but resolve defensively: a missing pilot entry must never
+  // break the page, it just loses the per-line identity markup.
+  const products = cart.lines.map(line => {
+    const contentId = line.variantId ? `lmv-${line.variantId}` : null;
+    const pilot = contentId ? getMetaPilotVariant(contentId) : undefined;
+    // The exact `link` the Meta catalog feed publishes for this variant. Meta's
+    // checkout validator matches lines to catalog items by ID and link — the
+    // summary page previously carried neither, so the validator could parse the
+    // subtotal but had no way to bind a name to an item ("A product name was
+    // incorrect" while the subtotal passed).
+    const productUrl = pilot && line.variantId
+      ? `https://luxemia.shop/product/${pilot.handle}?variant=${line.variantId}`
+      : '';
+    return { line, contentId, productUrl };
+  });
+  const rows = products.map(({ line, contentId, productUrl }) => {
     const lineTotal = (Number(line.price) * line.quantity).toFixed(2);
-    return `<tr><td>${escapeHtml(line.title)}</td><td>${line.quantity}</td><td>$${line.price}</td><td>$${lineTotal}</td></tr>`;
+    const name = escapeHtml(line.title);
+    const productBody = productUrl
+      ? `<a itemprop="url" href="${escapeHtml(productUrl)}"><span itemprop="name">${name}</span></a>`
+      : `<span itemprop="name">${name}</span>`;
+    const skuMeta = contentId ? `<meta itemprop="sku" content="${escapeHtml(contentId)}">` : '';
+    return `<tr itemscope itemtype="https://schema.org/Product"><td>${productBody}${skuMeta}</td><td>${line.quantity}</td><td itemprop="offers" itemscope itemtype="https://schema.org/Offer"><span itemprop="price" content="${line.price}">$${line.price}</span><meta itemprop="priceCurrency" content="USD"><link itemprop="availability" href="https://schema.org/InStock"></td><td>$${lineTotal}</td></tr>`;
   }).join('');
+  // Machine-readable identity for a plain-HTTP crawler that does not parse
+  // microdata: content ID (sku) and link, plus the same price Shopify charged.
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    itemListElement: products.map(({ line, contentId, productUrl }, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      item: {
+        '@type': 'Product',
+        name: line.title,
+        ...(contentId ? { sku: contentId } : {}),
+        ...(productUrl ? { url: productUrl } : {}),
+        offers: {
+          '@type': 'Offer',
+          price: line.price,
+          priceCurrency: 'USD',
+          availability: 'https://schema.org/InStock',
+        },
+      },
+    })),
+  };
+  const jsonLdScript = JSON.stringify(jsonLd).replace(/</g, '\\u003c');
   const url = escapeHtml(cart.url);
   return `<!DOCTYPE html>
 <html lang="en">
@@ -455,6 +499,7 @@ export function buildCheckoutSummaryHtml(cart: StorefrontCartResult): string {
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Checkout — Luxemia</title>
+<script type="application/ld+json">${jsonLdScript}</script>
 <style>
 body{font-family:system-ui,-apple-system,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
 h1{font-size:1.4rem}table{width:100%;border-collapse:collapse;margin:1rem 0}

@@ -446,3 +446,40 @@ Three independent levers, smallest first:
 3. The `middleware.ts` header rule is independent of both and safe to keep: it
    only narrows `noindex, nofollow` to `noindex` on 3xx responses from private
    SPA routes.
+
+## Summary page machine-readable identity (2026-11-26)
+
+Diagnostic evidence from the 20:49–20:56 UTC run (Vercel runtime log, deployment
+`dpl_2pe6in4xqVduKvapnMzR9SMWEUXj`): Meta's validator (`meta-externalads/1.1`)
+fetched `/meta-checkout?products=lmv-48120657903787:1,lmv-48210922504363:5` at
+20:50:47Z and received `200 shopify-summary` with the exact basket, Shopify's own
+lines ($108.99 × 1, $77.49 × 5) and `shopifySubtotal = shopifyTotal = $496.44`.
+Commerce Manager's "subtotal was incorrect" complaint cleared; the remaining
+complaint was "A product name was incorrect".
+
+Why: that page printed the line-item titles as plain table text only — no
+`sku`, no product `link`, no structured data. A plain-HTTP validator can parse a
+loose `Subtotal:` token unambiguously, but it had no machine-readable way to bind
+any line item to a catalog item (every other field the pilot publishes — `title`,
+`size`, `color`, `price` — matches Shopify exactly, so none of those can be the
+mismatch). The visible rendering was never the problem; the bindings were missing.
+
+Fix (`api/meta-checkout.ts`, `buildCheckoutSummaryHtml`): each line now renders as
+`schema.org/Product` microdata — the title anchors to the exact `link` the feed
+publishes (`https://luxemia.shop/product/<handle>?variant=<numericVariantId>`),
+carries `itemprop="sku"` = `lmv-<variantId>` (the feed's content ID), and the unit
+price cell is `schema.org/Offer` with `price`/`priceCurrency`/`availability`. An
+`ItemList` JSON-LD block mirrors the same sku/url/offers for parsers that ignore
+microdata. Handle resolution reuses `getMetaPilotVariant()` so the allowlist is not
+duplicated; a line with no pilot entry still renders (without identity markup) and
+the page never throws. Visible rendering is unchanged except the title is now a link.
+
+Tests: `tests/metaCheckoutTranslator.test.mjs` gained
+`the summary page carries machine-readable identity matching the catalog feed`,
+which pins the anchors, sku meta, Offer microdata and the ItemList JSON-LD.
+`npm test`: 0 failures.
+
+Not resolved yet: Commerce Manager has not reported PASS. Next steps — merge this
+change, redeploy production (the diagnostics window through 2026-11-27T18:00Z
+covers it), re-run the checkout validation, and only then remove
+`META_CHECKOUT_DIAGNOSTICS` / `META_CHECKOUT_DIAGNOSTICS_UNTIL` and redeploy.
