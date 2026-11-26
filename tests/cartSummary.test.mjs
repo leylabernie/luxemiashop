@@ -54,12 +54,12 @@ test('no subtotal or date resurrects the retired campaign',()=>{
  }
 });
 test('quantity changes update the actual subtotal and shipping progress',()=>{
- assert.ok(render(79.99,1).includes('$70.01 below the free U.S. shipping threshold before checkout discounts'));
+ assert.ok(render(79.99,1).includes('Add $70.01 more for free U.S. standard shipping before checkout discounts'));
  assert.ok(render(79.99,2).includes('$159.98'));
  assert.ok(render(79.99,3).includes('$239.97'));
 });
 test('free-shipping progress uses the $150 undiscounted boundary and qualifies the estimate',()=>{
- assert.ok(render(149.99).includes('$0.01 below'));
+ assert.ok(render(149.99).includes('Add $0.01 more for free U.S. standard shipping before checkout discounts'));
  assert.ok(render(150).includes('before checkout discounts'));
  assert.ok(render(150).includes('Discounts are applied before shipping eligibility.'));
 });
