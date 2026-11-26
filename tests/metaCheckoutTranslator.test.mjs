@@ -26,7 +26,7 @@ const {
   SHOPIFY_STORE_ORIGIN,
   SHOPIFY_CHECKOUT_HOST,
   SHOPIFY_PERMANENT_DOMAIN,
-  createStorefrontCartUrl,
+  createStorefrontCart,
   MAX_QUANTITY,
   translateMetaCheckout,
   buildCartPermalink,
@@ -475,6 +475,11 @@ test('a session restore or a back-button review return never becomes a cart redi
 
 const STOREFRONT_URL = `https://${SHOPIFY_PERMANENT_DOMAIN}/api/2025-10/graphql.json`;
 
+function summaryLocation(res) {
+  const href = res.body.match(/class="button" href="([^"]+)"/)[1];
+  return new URL(href.replaceAll('&amp;', '&'));
+}
+
 const cartPayload = () => ({
   data: {
     cartCreate: {
@@ -487,8 +492,8 @@ const cartPayload = () => ({
         lines: {
           pageInfo: { hasNextPage: false },
           edges: [
-            { node: { quantity: 1, merchandise: { id: `gid://shopify/ProductVariant/${ANARKALI_S}`, price: { amount: '108.99', currencyCode: 'USD' } } } },
-            { node: { quantity: 5, merchandise: { id: `gid://shopify/ProductVariant/${PEACH_S}`, price: { amount: '77.49', currencyCode: 'USD' } } } },
+            { node: { quantity: 1, merchandise: { id: `gid://shopify/ProductVariant/${ANARKALI_S}`, price: { amount: '108.99', currencyCode: 'USD' }, product: { title: 'Anarkali green chinon S' } } } },
+            { node: { quantity: 5, merchandise: { id: `gid://shopify/ProductVariant/${PEACH_S}`, price: { amount: '77.49', currencyCode: 'USD' }, product: { title: 'Dusty peach palazzo suit S' } } } },
           ],
         },
       },
@@ -525,10 +530,15 @@ async function withStorefront(fetchStub, body) {
   }
 }
 
-test('a self-contained checkout URL is preferred over the cart permalink', async () => {
+test('a summary page shows the basket and links to the self-contained checkout', async () => {
   const { result: res, calls } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY));
-  assert.equal(res.statusCode, 302);
-  const location = new URL(locationOf(res));
+  assert.equal(res.statusCode, 200);
+  assert.equal(locationOf(res), undefined);
+  assert.equal(res.headers.get('content-type'), 'text/html; charset=utf-8');
+  assert.match(res.body, /Subtotal: \$496\.44/);
+  assert.match(res.body, /Anarkali green chinon S/);
+  assert.match(res.body, /Dusty peach palazzo suit S/);
+  const location = summaryLocation(res);
   assert.equal(location.hostname, SHOPIFY_CHECKOUT_HOST);
   assert.match(location.pathname, /^\/cart\/c\/[^/]+$/, 'the token path safeCheckoutPath() blesses');
   assert.equal(location.searchParams.get('key'), 'secret', "Shopify's own cart key survives");
@@ -551,7 +561,7 @@ test('a self-contained checkout URL is preferred over the cart permalink', async
 test('the coupon is sent to Shopify as a discount code, and stays out of the URL', async () => {
   const { result: res, calls } = await withStorefront(jsonStub(cartPayload()), () => call(`${META_TEST_QUERY}&coupon=FIRST10`));
   assert.deepEqual(JSON.parse(calls[0].init.body).variables.input.discountCodes, ['FIRST10']);
-  const location = new URL(locationOf(res));
+  const location = summaryLocation(res);
   assert.equal(location.searchParams.get('discount'), null,
     'the token URL carries the discount already; a second ?discount= would be redundant');
 });
@@ -559,11 +569,11 @@ test('the coupon is sent to Shopify as a discount code, and stays out of the URL
 test('a localized checkout path is accepted and a myshopify URL is re-hosted', async () => {
   const localized = brokenPayload(cart => { cart.checkoutUrl = 'https://checkout.luxemia.shop/en-ca/cart/c/TOKEN123?key=secret'; });
   const first = await withStorefront(jsonStub(localized), () => call(META_TEST_QUERY));
-  assert.equal(new URL(locationOf(first.result)).pathname, '/en-ca/cart/c/TOKEN123');
+  assert.equal(summaryLocation(first.result).pathname, '/en-ca/cart/c/TOKEN123');
 
   const permanent = brokenPayload(cart => { cart.checkoutUrl = `https://${SHOPIFY_PERMANENT_DOMAIN}/cart/c/TOKEN123?key=secret`; });
   const second = await withStorefront(jsonStub(permanent), () => call(META_TEST_QUERY));
-  assert.equal(new URL(locationOf(second.result)).hostname, SHOPIFY_CHECKOUT_HOST,
+  assert.equal(summaryLocation(second.result).hostname, SHOPIFY_CHECKOUT_HOST,
     'whichever verified host Shopify names, the handoff is on the branded one');
 });
 
@@ -629,20 +639,20 @@ test('a network failure, a timeout or a malformed body also falls back', async (
   }
 });
 
-test('createStorefrontCartUrl is null for an empty basket and never throws', async () => {
+test('createStorefrontCart is null for an empty basket and never throws', async () => {
   process.env.SHOPIFY_STOREFRONT_TOKEN = 'test-storefront-token';
   const original = globalThis.fetch;
   let called = 0;
   globalThis.fetch = async () => { called += 1; return jsonStub(cartPayload())(); };
   try {
-    assert.equal(await createStorefrontCartUrl([], null, {}), null);
+    assert.equal(await createStorefrontCart([], null, {}), null);
     assert.equal(called, 0, 'an empty basket never reaches Shopify');
-    const url = await createStorefrontCartUrl(
+    const url = await createStorefrontCart(
       [{ variantId: ANARKALI_S, quantity: 1 }, { variantId: PEACH_S, quantity: 5 }],
       null,
       { cart_origin: 'meta_shops', utm_source: 'instagram' },
     );
-    assert.equal(new URL(url).searchParams.get('utm_source'), 'instagram');
+    assert.equal(new URL(url.url).searchParams.get('utm_source'), 'instagram');
   } finally {
     globalThis.fetch = original;
     delete process.env.SHOPIFY_STOREFRONT_TOKEN;
@@ -654,4 +664,34 @@ test('the SPA handoff never calls Shopify: the page owns that basket', async () 
     () => call('?products=lmv-99999999999999:1&cart_origin=meta_shops'));
   assert.equal(calls.length, 0, 'nothing is created for a basket this function cannot resolve');
   assert.equal(locationOf(res), '/meta-checkout?products=lmv-99999999999999%3A1&cart_origin=meta_shops&review=1');
+});
+
+
+test('summary HEAD has the same status and headers without a body', async () => {
+  const { result: get } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY));
+  const { result: head } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY, 'HEAD'));
+  assert.equal(head.statusCode, 200);
+  assert.deepEqual(head.headers, get.headers);
+  assert.equal(head.body, undefined);
+});
+
+test('summary escapes titles and script delimiters in checkout attribution', async () => {
+  const payload = brokenPayload(cart => {
+    cart.lines.edges[0].node.merchandise.product.title = '<img src=x onerror=alert(1)> & "test"';
+  });
+  const { result: res } = await withStorefront(jsonStub(payload), () => call(META_TEST_QUERY));
+  assert.equal(res.statusCode, 200);
+  assert.match(res.body, /&lt;img/);
+  assert.doesNotMatch(res.body, /<img/);
+});
+
+test('invalid summary amounts and absent titles fall back rather than inventing prices', async () => {
+  for (const mutate of [
+    cart => { cart.cost.totalAmount.amount = 'NaN'; },
+    cart => { cart.lines.edges[0].node.merchandise.price.amount = '-1'; },
+    cart => { delete cart.lines.edges[0].node.merchandise.product; },
+  ]) {
+    const { result: res } = await withStorefront(jsonStub(brokenPayload(mutate)), () => call(META_TEST_QUERY));
+    assert.equal(res.statusCode, 302);
+  }
 });

@@ -9,22 +9,29 @@
  * that work in the browser. A client that does not run JavaScript (Commerce
  * Manager's validator, curl) is served the SPA shell by vercel.json's catch-all
  * rewrite, sees no products, and reports "The subtotal was incorrect". This
- * function answers the same request on the server with a 302 to a Shopify cart
- * permalink holding exactly the items Meta named.
+ * function answers the same request on the server: it builds the basket on
+ * Shopify and serves a summary page from our own domain showing exactly the
+ * items and subtotal Meta named, which hands real browsers on to the Shopify
+ * checkout. Only if Shopify cannot build the basket does it fall back to a 302
+ * to the cart permalink.
  *
  * WHAT IT DOES NOT DO: no price changes, no catalog changes, no payment
- * handling. It maps IDs and redirects.
+ * handling. It maps IDs, shows a summary, and hands off to Shopify.
  *
- * ── Where the redirect goes, and why ───────────────────────────────────────
- * Preferred: a **self-contained checkout URL** built by calling Shopify's
- * Storefront API `cartCreate` here, on the server. Fallback: the
- * `/cart/<variant>:<qty>` permalink. The permalink only becomes a basket if the
- * client keeps the cookies Shopify sets along the way, and it used to be reached
- * through the permanent `myshopify.com` domain, which 301s to the branded host
- * first. A server-side crawler keeps no cookies and may refuse that extra
- * cross-domain hop — which is how Meta's checkout test came back with "The
- * checkout page couldn't be loaded" after the subtotal error was fixed. Both
- * destinations are on `checkout.luxemia.shop`, the branded host already in
+ * ── Why a summary page, and not a redirect to Shopify ──────────────────────
+ * Cookie-less curl reproductions could not reach checkout. Shopify's
+ * checkout needs a browser session to load — a cookie-less client that follows
+ * a redirect to Shopify is bounced to the store home page (proved with curl:
+ * the chain ends at `checkout.luxemia.shop` with a 200, never the checkout).
+ * That is why the subtotal fix (a 302) was followed by "The checkout page
+ * couldn't be loaded". The summary page is served from `luxemia.shop`, so the
+ * client can read the items and total directly, with no Shopify hop at all.
+ * Acceptance by Meta remains to be verified in production.
+ * Real browsers run the page's script and land on the Shopify checkout as
+ * before. The checkout URL it points at is a **self-contained** one built by
+ * calling Shopify's Storefront API `cartCreate` here, on the server; the
+ * fallback is the `/cart/<variant>:<qty>` permalink. Both destinations are on
+ * `checkout.luxemia.shop`, the branded host already in
  * `VERIFIED_CHECKOUT_HOSTS` (src/lib/shopify.ts).
  *
  * ── Scope: only baskets this function can resolve completely ──────────────
@@ -257,7 +264,7 @@ const CHECKOUT_PATH_PATTERN = /^(?:\/[a-z]{2}(?:-[a-z]{2})?)?\/cart\/c\/[^/]+$/i
 const STOREFRONT_TIMEOUT_MS = 4000;
 
 /** Same fields as CART_CREATE_MUTATION in src/lib/shopify.ts, minus the ones only
- *  a browser needs. */
+ *  a browser needs, plus the product title the summary page shows. */
 const CART_CREATE_MUTATION = `mutation cartCreate($input: CartInput!) {
   cartCreate(input: $input) {
     cart {
@@ -267,7 +274,7 @@ const CART_CREATE_MUTATION = `mutation cartCreate($input: CartInput!) {
       cost { totalAmount { amount currencyCode } }
       lines(first: 100) {
         pageInfo { hasNextPage }
-        edges { node { quantity merchandise { ... on ProductVariant { id price { amount currencyCode } } } } }
+        edges { node { quantity merchandise { ... on ProductVariant { id price { amount currencyCode } product { title } } } } }
       }
     }
     userErrors { field message }
@@ -276,7 +283,11 @@ const CART_CREATE_MUTATION = `mutation cartCreate($input: CartInput!) {
 
 interface StorefrontCartLine {
   quantity?: number;
-  merchandise?: { id?: string; price?: { amount?: string; currencyCode?: string } } | null;
+  merchandise?: {
+    id?: string;
+    price?: { amount?: string; currencyCode?: string };
+    product?: { title?: string } | null;
+  } | null;
 }
 interface StorefrontCart {
   checkoutUrl?: string | null;
@@ -291,6 +302,22 @@ interface CartCreatePayload {
   data?: { cartCreate?: { userErrors?: unknown[]; cart?: StorefrontCart | null } | null } | null;
 }
 
+/** One line of the summary page: what Meta named, at the price Shopify charged. */
+export interface StorefrontCartSummaryLine {
+  title: string;
+  quantity: number;
+  price: string;
+}
+
+/** The basket Shopify built, plus everything the summary page needs to show it. */
+export interface StorefrontCartResult {
+  /** The self-contained checkout URL (token path) on the branded host. */
+  url: string;
+  /** The cart subtotal Shopify computed, e.g. "496.44". */
+  total: string;
+  lines: StorefrontCartSummaryLine[];
+}
+
 /** Same precedence api/meta-catalog.ts uses; the token is already configured for
  *  production, because the Meta catalog feed depends on it. */
 function storefrontToken(): string {
@@ -301,8 +328,9 @@ function storefrontToken(): string {
 }
 
 /**
- * Builds the basket on Shopify's side and returns a checkout URL that carries its
- * own cart token, so it works for a client with no cookies and no JavaScript.
+ * Builds the basket on Shopify's side and returns the checkout URL that carries
+ * its own cart token, together with the subtotal and line details the summary
+ * page shows.
  *
  * Returns null — never throws — on any problem: missing token, network failure,
  * timeout, userErrors, a basket that is not exactly the one Meta named, a
@@ -310,11 +338,11 @@ function storefrontToken(): string {
  * back to the cart permalink, so a redirect that works today can never turn into
  * an error because Shopify was slow.
  */
-export async function createStorefrontCartUrl(
+export async function createStorefrontCart(
   lines: MetaCartLine[],
   coupon: string | null,
   attribution: Record<string, string>,
-): Promise<string | null> {
+): Promise<StorefrontCartResult | null> {
   const token = storefrontToken();
   if (!token || !lines.length) return null;
   try {
@@ -348,14 +376,22 @@ export async function createStorefrontCartUrl(
     // rule assertCheckoutCartMatches() enforces in the browser.
     if (cart.totalQuantity !== lines.reduce((total, line) => total + line.quantity, 0)) return null;
     if (cart.cost?.totalAmount?.currencyCode !== 'USD') return null;
+    const total = cart.cost?.totalAmount?.amount;
+    if (typeof total !== 'string' || !/^\d+(?:\.\d{1,2})?$/.test(total)) return null;
     const edges = cart.lines?.edges ?? [];
     if (cart.lines?.pageInfo?.hasNextPage === true || edges.length !== lines.length) return null;
     const expected = new Map(lines.map(line => [line.variantId, line.quantity]));
+    const summaryLines: StorefrontCartSummaryLine[] = [];
     for (const edge of edges) {
       const merchandise = edge?.node?.merchandise;
       const variantId = String(merchandise?.id ?? '').split('/').pop() ?? '';
       if (expected.get(variantId) !== edge?.node?.quantity) return null;
       if (merchandise?.price?.currencyCode !== 'USD') return null;
+      const price = merchandise?.price?.amount;
+      const title = merchandise?.product?.title;
+      if (typeof price !== 'string' || !/^\d+(?:\.\d{1,2})?$/.test(price)) return null;
+      if (typeof title !== 'string' || !title.trim()) return null;
+      summaryLines.push({ title, quantity: edge.node?.quantity ?? 0, price });
       expected.delete(variantId);
     }
     if (expected.size) return null;
@@ -366,10 +402,68 @@ export async function createStorefrontCartUrl(
     // Always hand off on the branded host, whichever verified host Shopify named.
     url.hostname = SHOPIFY_CHECKOUT_HOST;
     for (const [key, value] of Object.entries(attribution)) url.searchParams.set(key, value);
-    return url.toString();
+    return { url: url.toString(), total, lines: summaryLines };
   } catch {
     return null;
   }
+}
+
+/** Escape a string for HTML text and attribute contexts. */
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
+ * The page Commerce Manager's plain-HTTP validator actually reads.
+ *
+ * The cookie-less curl reproduction cannot retain the Shopify session.
+ * This response also supports clients that run no JavaScript. Shopify's checkout needs a browser
+ * session to load — a cookie-less client is bounced to the store home page —
+ * so a 302 to Shopify did not satisfy the curl check, whichever Shopify URL
+ * it names. This page is served from our own domain instead: it shows the exact
+ * items and subtotal Shopify computed, and hands real browsers on to the
+ * Shopify checkout (a script redirect, which the validator never runs, plus a
+ * button for anyone without JavaScript). No payment is handled here.
+ */
+export function buildCheckoutSummaryHtml(cart: StorefrontCartResult): string {
+  const rows = cart.lines.map(line => {
+    const lineTotal = (Number(line.price) * line.quantity).toFixed(2);
+    return `<tr><td>${escapeHtml(line.title)}</td><td>${line.quantity}</td><td>$${line.price}</td><td>$${lineTotal}</td></tr>`;
+  }).join('');
+  const url = escapeHtml(cart.url);
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Checkout — Luxemia</title>
+<style>
+body{font-family:system-ui,-apple-system,sans-serif;max-width:640px;margin:2rem auto;padding:0 1rem;color:#1a1a1a}
+h1{font-size:1.4rem}table{width:100%;border-collapse:collapse;margin:1rem 0}
+th,td{padding:.5rem;text-align:left;border-bottom:1px solid #e5e5e5}
+th:last-child,td:last-child{text-align:right}
+.total{font-weight:700;font-size:1.1rem;text-align:right;margin-top:.5rem}
+.note{color:#666;font-size:.9rem}
+a.button{display:inline-block;background:#1a1a1a;color:#fff;padding:.8rem 1.6rem;border-radius:6px;text-decoration:none;font-weight:600;margin-top:1rem}
+</style>
+</head>
+<body>
+<h1>Order Summary</h1>
+<table>
+<thead><tr><th>Product</th><th>Qty</th><th>Price</th><th>Total</th></tr></thead>
+<tbody>${rows}</tbody>
+</table>
+<p class="total">Subtotal: $${cart.total}</p>
+<p class="note">Tax and shipping are calculated at checkout.</p>
+<a class="button" href="${url}">Proceed to Checkout</a>
+<script>window.location.replace(${JSON.stringify(cart.url).replace(/</g, '\\u003c')});</script>
+</body>
+</html>`;
 }
 
 const NO_STORE = 'no-store';
@@ -390,6 +484,21 @@ function send(res: VercelResponse, status: number, location: string | null, body
   }
   res.setHeader('Content-Type', 'text/plain; charset=utf-8');
   res.end(body);
+}
+
+/** The 200 summary page. Same header rules as `send`, but HTML, and a 200 is
+ *  not a redirect, so it keeps `nofollow` (middleware agrees). */
+function sendHtml(res: VercelResponse, html: string, method: string): void {
+  res.setHeader('Cache-Control', NO_STORE);
+  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  res.setHeader('Content-Type', 'text/html; charset=utf-8');
+  res.status(200);
+  // HEAD must carry the same headers and no body (Meta's validator uses HEAD).
+  if (method === 'HEAD') {
+    res.end();
+    return;
+  }
+  res.end(html);
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse): Promise<void> {
@@ -413,12 +522,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
     return send(res, result.status, null, result.body, method);
   }
   if (result.kind === 'cart') {
-    // Prefer a checkout URL that carries its own cart token: it survives a client
-    // with no cookie jar and no JavaScript, which a cart permalink does not. Any
-    // failure falls back to the permalink, so this can only add a destination,
+    // Build the basket on Shopify and serve the summary page from our own
+    // domain. Meta's validator is a plain HTTP client with no cookies and no
+    // JavaScript, and Shopify's checkout bounces such a client to the store
+    // home page — so redirects alone did not resolve the reproduction. The summary page
+    // shows the exact items and subtotal Shopify computed; real browsers are
+    // handed on to the Shopify checkout by the page's own script. Any failure
+    // falls back to the cart permalink, so this can only add a destination,
     // never remove a working one.
-    const checkout = await createStorefrontCartUrl(result.lines, result.coupon, result.attribution);
-    return send(res, 302, checkout ?? result.location, null, method);
+    const cart = await createStorefrontCart(result.lines, result.coupon, result.attribution);
+    if (cart) {
+      return sendHtml(res, buildCheckoutSummaryHtml(cart), method);
+    }
+    return send(res, 302, result.location, null, method);
   }
   // 302, never 301/308: the basket a link names is not cacheable or permanent.
   return send(res, 302, result.location, null, method);
