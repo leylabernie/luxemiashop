@@ -13,7 +13,19 @@
  * permalink holding exactly the items Meta named.
  *
  * WHAT IT DOES NOT DO: no price changes, no catalog changes, no payment
- * handling, no Storefront API call. It maps IDs and redirects.
+ * handling. It maps IDs and redirects.
+ *
+ * ── Where the redirect goes, and why ───────────────────────────────────────
+ * Preferred: a **self-contained checkout URL** built by calling Shopify's
+ * Storefront API `cartCreate` here, on the server. Fallback: the
+ * `/cart/<variant>:<qty>` permalink. The permalink only becomes a basket if the
+ * client keeps the cookies Shopify sets along the way, and it used to be reached
+ * through the permanent `myshopify.com` domain, which 301s to the branded host
+ * first. A server-side crawler keeps no cookies and may refuse that extra
+ * cross-domain hop — which is how Meta's checkout test came back with "The
+ * checkout page couldn't be loaded" after the subtotal error was fixed. Both
+ * destinations are on `checkout.luxemia.shop`, the branded host already in
+ * `VERIFIED_CHECKOUT_HOSTS` (src/lib/shopify.ts).
  *
  * ── Scope: only baskets this function can resolve completely ──────────────
  * `api/meta-catalog.ts` publishes `lmv-<variantId>` **only** for the two
@@ -57,8 +69,14 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node';
 import { getMetaPilotVariant } from '../src/lib/metaPilot.js';
 
-/** Same store `middleware.ts` and `api/sync-lead.ts` use. */
-export const SHOPIFY_STORE_ORIGIN = 'https://lovable-project-zlh0w.myshopify.com';
+/** Branded checkout host. The permanent myshopify domain only 301s here, so
+ *  redirecting to it adds a cross-domain hop a crawler may not follow. Both are
+ *  in VERIFIED_CHECKOUT_HOSTS (src/lib/shopify.ts); this is the one shoppers and
+ *  crawlers are sent to. Same store `middleware.ts` and `api/sync-lead.ts` use. */
+export const SHOPIFY_CHECKOUT_HOST = 'checkout.luxemia.shop';
+export const SHOPIFY_STORE_ORIGIN = `https://${SHOPIFY_CHECKOUT_HOST}`;
+/** Stable host for Storefront API calls, and the other verified checkout host. */
+export const SHOPIFY_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
 
 /** Mirrors MAX_QUANTITY / entry caps in src/lib/metaCheckout.ts. */
 export const MAX_QUANTITY = 99;
@@ -82,7 +100,7 @@ const CART_ORIGINS = new Set(['facebook', 'instagram', 'meta_shops']);
 export type MetaCartLine = { variantId: string; quantity: number };
 
 export type TranslateResult =
-  | { kind: 'cart'; location: string; lines: MetaCartLine[]; coupon: string | null }
+  | { kind: 'cart'; location: string; lines: MetaCartLine[]; coupon: string | null; attribution: Record<string, string> }
   | { kind: 'spa-handoff'; location: string; reason: 'unapproved' | 'malformed' | 'page-owned' }
   | { kind: 'rejected'; status: 400 | 405; body: string };
 
@@ -215,20 +233,153 @@ export function translateMetaCheckout(search: string): TranslateResult {
   }
 
   const lines = Array.from(quantities, ([variantId, quantity]) => ({ variantId, quantity }));
+  const attribution = readAttribution(params);
   return {
     kind: 'cart',
-    location: buildCartPermalink(lines, coupon, readAttribution(params)),
+    location: buildCartPermalink(lines, coupon, attribution),
     lines,
     coupon,
+    attribution,
   };
+}
+
+// ─── Storefront API: build the basket server-side ──────────────────────────
+
+/** Mirrors SHOPIFY_API_VERSION in src/lib/shopify.ts. */
+const STOREFRONT_API_VERSION = '2025-10';
+const STOREFRONT_API_URL = `https://${SHOPIFY_PERMANENT_DOMAIN}/api/${STOREFRONT_API_VERSION}/graphql.json`;
+/** Nothing outside these two hosts is ever redirected to. */
+const VERIFIED_CHECKOUT_HOSTS = new Set([SHOPIFY_CHECKOUT_HOST, SHOPIFY_PERMANENT_DOMAIN]);
+/** `/cart/c/<token>`, optionally behind a locale prefix — the self-contained
+ *  shape `safeCheckoutPath()` in src/lib/shopify.ts blesses. A
+ *  `/cart/<variant>:<qty>` permalink is deliberately not in that list. */
+const CHECKOUT_PATH_PATTERN = /^(?:\/[a-z]{2}(?:-[a-z]{2})?)?\/cart\/c\/[^/]+$/i;
+const STOREFRONT_TIMEOUT_MS = 4000;
+
+/** Same fields as CART_CREATE_MUTATION in src/lib/shopify.ts, minus the ones only
+ *  a browser needs. */
+const CART_CREATE_MUTATION = `mutation cartCreate($input: CartInput!) {
+  cartCreate(input: $input) {
+    cart {
+      id
+      checkoutUrl
+      totalQuantity
+      cost { totalAmount { amount currencyCode } }
+      lines(first: 100) {
+        pageInfo { hasNextPage }
+        edges { node { quantity merchandise { ... on ProductVariant { id price { amount currencyCode } } } } }
+      }
+    }
+    userErrors { field message }
+  }
+}`;
+
+interface StorefrontCartLine {
+  quantity?: number;
+  merchandise?: { id?: string; price?: { amount?: string; currencyCode?: string } } | null;
+}
+interface StorefrontCart {
+  checkoutUrl?: string | null;
+  totalQuantity?: number;
+  cost?: { totalAmount?: { amount?: string; currencyCode?: string } } | null;
+  lines?: {
+    pageInfo?: { hasNextPage?: boolean } | null;
+    edges?: Array<{ node?: StorefrontCartLine | null }> | null;
+  } | null;
+}
+interface CartCreatePayload {
+  data?: { cartCreate?: { userErrors?: unknown[]; cart?: StorefrontCart | null } | null } | null;
+}
+
+/** Same precedence api/meta-catalog.ts uses; the token is already configured for
+ *  production, because the Meta catalog feed depends on it. */
+function storefrontToken(): string {
+  return process.env.SHOPIFY_STOREFRONT_TOKEN
+    || process.env.VITE_SHOPIFY_STOREFRONT_TOKEN
+    || process.env.SHOPIFY_STOREFRONT_ACCESS_TOKEN
+    || '';
+}
+
+/**
+ * Builds the basket on Shopify's side and returns a checkout URL that carries its
+ * own cart token, so it works for a client with no cookies and no JavaScript.
+ *
+ * Returns null — never throws — on any problem: missing token, network failure,
+ * timeout, userErrors, a basket that is not exactly the one Meta named, a
+ * non-USD price, an unverified host or an unexpected path. The caller then falls
+ * back to the cart permalink, so a redirect that works today can never turn into
+ * an error because Shopify was slow.
+ */
+export async function createStorefrontCartUrl(
+  lines: MetaCartLine[],
+  coupon: string | null,
+  attribution: Record<string, string>,
+): Promise<string | null> {
+  const token = storefrontToken();
+  if (!token || !lines.length) return null;
+  try {
+    const response = await fetch(STOREFRONT_API_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'X-Shopify-Storefront-Access-Token': token },
+      body: JSON.stringify({
+        query: CART_CREATE_MUTATION,
+        variables: {
+          input: {
+            lines: lines.map(line => ({
+              quantity: line.quantity,
+              merchandiseId: `gid://shopify/ProductVariant/${line.variantId}`,
+            })),
+            ...(coupon ? { discountCodes: [coupon] } : {}),
+          },
+        },
+      }),
+      cache: 'no-store',
+      signal: AbortSignal.timeout(STOREFRONT_TIMEOUT_MS),
+    });
+    if (!response.ok) return null;
+    const payload = await response.json() as CartCreatePayload;
+    const created = payload?.data?.cartCreate;
+    if (!created || (created.userErrors?.length ?? 0) > 0) return null;
+    const cart = created.cart;
+    if (!cart || typeof cart.checkoutUrl !== 'string' || !cart.checkoutUrl.trim()) return null;
+
+    // Shopify can silently drop or reduce an unavailable line without a
+    // userError. Never hand Meta a different basket than the one it named — the
+    // rule assertCheckoutCartMatches() enforces in the browser.
+    if (cart.totalQuantity !== lines.reduce((total, line) => total + line.quantity, 0)) return null;
+    if (cart.cost?.totalAmount?.currencyCode !== 'USD') return null;
+    const edges = cart.lines?.edges ?? [];
+    if (cart.lines?.pageInfo?.hasNextPage === true || edges.length !== lines.length) return null;
+    const expected = new Map(lines.map(line => [line.variantId, line.quantity]));
+    for (const edge of edges) {
+      const merchandise = edge?.node?.merchandise;
+      const variantId = String(merchandise?.id ?? '').split('/').pop() ?? '';
+      if (expected.get(variantId) !== edge?.node?.quantity) return null;
+      if (merchandise?.price?.currencyCode !== 'USD') return null;
+      expected.delete(variantId);
+    }
+    if (expected.size) return null;
+
+    const url = new URL(cart.checkoutUrl);
+    if (url.protocol !== 'https:' || !VERIFIED_CHECKOUT_HOSTS.has(url.hostname.toLowerCase())) return null;
+    if (!CHECKOUT_PATH_PATTERN.test(url.pathname)) return null;
+    // Always hand off on the branded host, whichever verified host Shopify named.
+    url.hostname = SHOPIFY_CHECKOUT_HOST;
+    for (const [key, value] of Object.entries(attribution)) url.searchParams.set(key, value);
+    return url.toString();
+  } catch {
+    return null;
+  }
 }
 
 const NO_STORE = 'no-store';
 
 function send(res: VercelResponse, status: number, location: string | null, body: string | null, method: string): void {
   res.setHeader('Cache-Control', NO_STORE);
-  // /meta-checkout is a private SPA route (middleware.ts): keep it out of the index.
-  res.setHeader('X-Robots-Tag', 'noindex, nofollow');
+  // /meta-checkout is a private SPA route (middleware.ts): keep it out of the
+  // index. A redirect carries no links, and `nofollow` on a 3xx can be read by a
+  // crawler as "do not follow this redirect", so redirects are noindex only.
+  res.setHeader('X-Robots-Tag', status >= 300 && status < 400 ? 'noindex' : 'noindex, nofollow');
   if (location) res.setHeader('Location', location);
   if (status === 405) res.setHeader('Allow', 'GET, HEAD');
   res.status(status);
@@ -261,6 +412,14 @@ export default async function handler(req: VercelRequest, res: VercelResponse): 
   if (result.kind === 'rejected') {
     return send(res, result.status, null, result.body, method);
   }
-  // 302, never 301/308: the cart a link names is not cacheable or permanent.
+  if (result.kind === 'cart') {
+    // Prefer a checkout URL that carries its own cart token: it survives a client
+    // with no cookie jar and no JavaScript, which a cart permalink does not. Any
+    // failure falls back to the permalink, so this can only add a destination,
+    // never remove a working one.
+    const checkout = await createStorefrontCartUrl(result.lines, result.coupon, result.attribution);
+    return send(res, 302, checkout ?? result.location, null, method);
+  }
+  // 302, never 301/308: the basket a link names is not cacheable or permanent.
   return send(res, 302, result.location, null, method);
 }

@@ -694,7 +694,18 @@ async function routeRequest(request: Request): Promise<Response> {
     '/meta-checkout',
   ]);
   if (PRIVATE_SPA_ROUTES.has(pathname) || pathname.startsWith('/admin/')) {
-    return withResponseHeader(next(), 'X-Robots-Tag', 'noindex, nofollow');
+    const privateResponse = next();
+    // A redirect response carries no links, and `nofollow` on a 3xx can be read by
+    // a crawler as "do not follow this redirect". `/meta-checkout` is one of these
+    // routes and answers Meta's checkout validator with a 302, so stamping
+    // `nofollow` on it is how "The checkout page couldn't be loaded" can happen
+    // even when the redirect itself is correct. Redirects stay noindex; every
+    // other response on a private route keeps both directives.
+    return withResponseHeader(
+      privateResponse,
+      'X-Robots-Tag',
+      privateResponse.status >= 300 && privateResponse.status < 400 ? 'noindex' : 'noindex, nofollow',
+    );
   }
 
   // No public route matched: return the same real 404 to shoppers, Googlebot,
