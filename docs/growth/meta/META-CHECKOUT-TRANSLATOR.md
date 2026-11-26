@@ -1,6 +1,29 @@
 # Meta checkout translator — `/meta-checkout` (Commerce Manager validation)
 
-Status: **live on production**, and corrected twice after Meta's own testing.
+Status: **summary-page change implemented on the working branch; not deployed or Meta-validated.** The earlier redirect implementation described below is live on production.
+
+## Pending summary-page change
+
+The Chrome-user-agent curl reproduction also ended on the Shopify home page,
+not checkout. Changing the user-agent label did not fix that reproduction. This
+is evidence about a cookie-less curl client, not proof of Meta's internal session
+or rendering behavior.
+
+The branch now serves a 200 HTML order summary after a successful Storefront
+`cartCreate`, with Shopify-returned titles, quantities, USD prices and cart total.
+It provides a checkout link and a JavaScript handoff for browsers. GET and HEAD
+have matching headers; HEAD has no body. Existing permalink fallbacks and SPA
+handoffs remain. All clients receive the same page (no user-agent branching).
+
+Validation: 43 translator tests and 100 combined translator, Meta parser, pilot
+feed and checkout-integrity tests pass; standalone strict TypeScript check passes.
+No live Shopify or Meta acceptance test has been performed for this change.
+
+Next: deploy through the normal review/release flow, confirm the exact bare
+`&coupon` URL returns 200 HTML with both lines and $496.44, verify browser checkout,
+and rerun Commerce Manager's checkout test. **Do not mark resolved until Meta
+passes.** The historical redirect notes below do not describe this pending page.
+
 Written 2026-11-25, updated 2026-11-26. Code: `api/meta-checkout.ts` + two
 `vercel.json` rewrites + one `middleware.ts` header rule.
 Tests: `tests/metaCheckoutTranslator.test.mjs` (40 assertions).
