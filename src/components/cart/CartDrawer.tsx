@@ -1,6 +1,7 @@
 import { hasPendingMeasurementAttributes } from '@/lib/measurementRequest';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useEffect, useRef } from 'react';
+import { toast } from 'sonner';
 import { X, Minus, Plus, Trash2, Loader2, ArrowRight, ShieldCheck, Award, Truck, Copy } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useCartStore } from '@/stores/cartStore';
@@ -296,7 +297,7 @@ const CartDrawer = ({ isOpen, onClose }: CartDrawerProps) => {
                       <div className="flex items-center justify-between gap-2 text-xs text-foreground/75 mb-1">
                         <span className="flex items-center gap-1.5">
                           <Truck className="w-3.5 h-3.5 shrink-0" />
-                          <span>{formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} below the free U.S. shipping threshold before checkout discounts</span>
+                          <span>Add {formatPrice(FREE_SHIPPING_THRESHOLD - subtotal, currencyCode)} more for free U.S. standard shipping before checkout discounts</span>
                         </span>
                         <span className="shrink-0 font-medium">${FREE_SHIPPING_THRESHOLD}</span>
                       </div>

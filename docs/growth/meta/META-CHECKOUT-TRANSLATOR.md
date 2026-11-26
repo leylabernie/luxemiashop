@@ -1,6 +1,92 @@
 # Meta checkout translator — `/meta-checkout` (Commerce Manager validation)
 
-Status: **User reports Preview checkout loads with the verified $496.44 basket; Commerce Manager now fails with “A product name was incorrect.” Not resolved.**
+Status: **Not resolved.** Preview checkout loads with the verified $496.44 basket;
+Commerce Manager fails with “A product name was incorrect.” This branch found and
+fixed a cause that was upstream of every title comparison: `/api/meta-catalog`
+was returning **503 for the entire feed** on the pilot's real Shopify option
+shape, so Meta could not refresh the item records it validates against. Awaiting
+a deploy, a forced re-fetch and a rerun of Meta's checkout test.
+
+## The catalog feed itself was failing closed (2026-11-26)
+
+**Found and fixed in this branch.** `/api/meta-catalog` was not serving a feed at
+all for the pilot's real Shopify data — it returned **503 for every product**, so
+Meta had nothing to re-fetch. A `no-store` header (PR #320) cannot help a
+response that is never a 200.
+
+### Evidence, from this repository's own captured Shopify data
+
+`public/merchant-feed.xml` is generated from the live Storefront API
+(`scripts/generate-static-feed.cjs` → `fetchCompleteStorefrontCatalog`;
+`last_build_date` `2026-11-05T18:52:12.090Z`, 1,700 items — the count
+`docs/growth/ZERO-BUDGET-PLAYBOOK-VERIFIED-2026-11-25.md` documents as current).
+Its `composeMerchantVariantTitle()` joins **every** native `selectedOptions`
+value into the variant title, and its description prints the non-size options
+verbatim, so it records each variant's real Shopify option shape:
+
+| Pilot variant | `g:item_group_title` (parent) | `g:title` (variant-level) | Recorded options |
+|---|---|---|---|
+| `lmv-48120657903787` | Green Digital Printed Chinon Anarkali Suit Set, Mehendi Festive Outfit | …Outfit **— S / Standard** | `Size: S` + `Alteration: Standard` |
+| `lmv-48210922504363` | Dusty Peach Embroidered A-Line Palazzo Suit, Chinon, Indian Wedding Outfit (Ready-to-Wear) | …(Ready-to-Wear) **— S** | `Size: S` |
+
+`anarkali-green-chinon` has **ten** native variants in that snapshot — five
+`Standard` and five `Custom` — so it carries a native `Alteration` option.
+`src/lib/metaPilot.ts` declared its approved variants with `Size` **only**: the
+`family(..., standard)` parameter that adds `{name:'Alteration',value:'Standard'}`
+was never passed `true`, so it was dead code. `verifyMetaPilotVariant()` compares
+`variant.selectedOptions.length !== approved.selectedOptions.length` and throws.
+
+### Reproduced before the fix
+
+Feeding that captured shape into the real handler (376 ordinary products + both
+pilot families, mocked Storefront responses):
+
+```
+HTTP status       : 503
+X-Catalog-Products: undefined
+Cache-Control     : undefined            ← PR #320's header is never reached
+body              : "Catalog temporarily unavailable; retry later"
+server log        : [meta-catalog] Meta pilot variant no longer matches its approved configuration.
+```
+
+`metaCatalogRows()` throws, the handler's `catch` fails the **whole** feed closed,
+and all 387 rows are lost — not just the pilot's. That behaviour is deliberate
+(a partial REPLACE CSV would delete Meta items) and is left unchanged.
+
+### Why this produces “A product name was incorrect”
+
+Meta's catalog can only hold `lmv-` IDs because it imported a feed that published
+them, so a fetch did succeed once. Every fetch since has been a 503, so Meta's
+item records are **frozen at that last successful import** — saved `title`,
+`size` and price included. The checkout summary is built live from Shopify and
+still works (`createStorefrontCart()` never calls `verifyMetaPilotVariant`), which
+is exactly the reported symptom: the basket loads and totals $496.44, while the
+name Meta compares against is the one it could not refresh.
+
+### The fix
+
+`verifyMetaPilotVariant()` now approves `Alteration` at exactly `Standard` as an
+*optional* native option, in addition to a family's declared options. Declared
+options must still all be present exactly once, and any other native option —
+`Alteration: Custom`, `Made to fit (+$20.00)`, a renamed size, a repeated option
+name, a third option — still throws.
+
+Tolerating the option's presence *or* absence, rather than declaring it strictly
+with `family('anarkali-green-chinon', 'Green', [...], true)`, is deliberate:
+strictness leaves the same whole-feed 503 one Shopify option edit away in **either**
+direction, and this sandbox cannot query Shopify to know which shape is live
+today. Both shapes publish byte-identical rows (id, title, size, color and link
+come from the declared pilot entry; price from the native variant), so the
+tolerance cannot publish a different item. The `standard` parameter keeps its
+strict meaning for any family that declares it.
+
+### Tests
+
+`tests/metaPilotFeed.test.mjs` gained five parity tests that derive the pilot's
+expected option shape, parent title and selling price from the captured snapshot
+instead of from the declaration itself — closing the self-consistent-fixture gap
+noted below. They fail without the fix (`4` failures, including the endpoint
+returning 503) and pass with it. `npm test`: **1050 passed, 0 failed**.
 
 ## Current title and cache audit (2026-11-26)
 
@@ -13,25 +99,86 @@ Status: **User reports Preview checkout loads with the verified $496.44 basket; 
   `selectedOptions`, so it does not append a size suffix either. At the source
   field level, the Meta feed and summary should therefore match when both are
   generated from the same Shopify product record.
+- **Both titles are now confirmed identical from captured Shopify data, not
+  inferred.** Two independent snapshots agree on the parent titles: the catalog
+  snapshot `tests/fixtures/catalog-included-pieces-20261028.json`
+  (`capturedAt 2026-10-28T18:13:15Z`) and the merchant feed
+  (`2026-11-05`). At **70** and **90** characters neither title reaches the
+  feed's 150-character `slice`, and neither contains `&`, `<`, `>`, `"` or `'`,
+  so the summary's `escapeHtml()` cannot alter it either. Feed title and summary
+  title are therefore byte-identical today — the mismatch Meta reports is *not*
+  produced by these two code paths disagreeing.
+- The peach pilot's selling price is `g:sale_price` `77.49 USD` against a
+  `g:price` compare-at of `154.97 USD`, so 1 × $108.99 + 5 × $77.49 = **$496.44**
+  was already correct on 2026-11-05. The snapshot is price-consistent with the
+  basket Meta verified, which is why its option data is treated as trustworthy.
 - Shopify checkout renders its own line-item presentation. This repository
   cannot verify the exact live text or how Meta's validator parses the separate
-  size option. The summary's test fixture titles are synthetic, not a live
-  Shopify title lookup.
+  size option. The summary's own test fixtures remain synthetic; the new parity
+  tests are what tie the pilot declaration to captured Shopify data.
 - The old Vercel feed header allowed a 5-minute shared cache plus 10 minutes of
   stale-while-revalidate. The endpoint now sends `Cache-Control: no-store` so a
-  feed refresh cannot receive a stale Vercel copy. Meta's own imported-item
-  cache is separate; no connected Meta tool is available to inspect its saved
-  title or last-fetch time.
+  feed refresh cannot receive a stale Vercel copy — but only on a 200, which is
+  why the 503 above had to be fixed first. Meta's own imported-item cache is
+  separate; no connected Meta tool is available to inspect its saved title or
+  last-fetch time.
 - `public/feeds/meta-catalog.csv` is a legacy static sample and contains no
   `lmv-` pilot IDs. The configured Meta source should be the dynamic
   `/api/meta-catalog` endpoint, not that static file.
 
-Next: trigger a fresh catalog fetch in Commerce Manager and check the item
-records for both exact `lmv-` IDs and their last-updated time. Then rerun the
-validator. If Meta's refreshed titles still match the visible checkout names,
-its diagnostic needs to identify whether the mismatch is actually the size/variant
-label or a cached parsed checkout value. **Do not mark resolved until Meta
+## What still cannot be verified from here, and the exact evidence needed
+
+This sandbox has outbound network access to GitHub, npm and PyPI **only**. All
+three of the following were attempted and are unavailable, so nothing below is
+guessed:
+
+| Needed | Attempted | Result |
+|---|---|---|
+| Live `https://luxemia.shop/api/meta-catalog` and `/meta-checkout` | `curl` | `SSL_ERROR_SYSCALL` — host not reachable from the sandbox |
+| Shopify Storefront/Admin API | `curl` | not reachable; no `SHOPIFY_STOREFRONT_TOKEN` in the workspace |
+| Commerce Manager catalog records (saved `title`, `size`, last fetch) | — | no Meta connector is available in this session |
+| Vercel deployment state and build logs | `list_projects` via the connected Vercel app | **Access denied** — the connected token is scope-limited (`limited: true`, `list_teams` returns `[]`). It authenticates as `lab.bhamini@gmail.com` but cannot read projects or deployments, so the reported successful production deploy could not be confirmed here either |
+
+Run these from any machine with internet access. They settle steps 1–3 with
+evidence instead of inference:
+
+```bash
+# 1. Is the feed serving 200 now, and what exact title/size does it publish?
+curl -sS -D /tmp/h.txt -o /tmp/meta.csv "https://luxemia.shop/api/meta-catalog"
+head -1 /tmp/h.txt; grep -i "x-catalog-products\|cache-control\|x-vercel-cache" /tmp/h.txt
+grep -E "lmv-48120657903787|lmv-48210922504363" /tmp/meta.csv
+
+# 2. What exact names does the validator read off the checkout summary?
+curl -g -sS "https://luxemia.shop/meta-checkout?products=lmv-48120657903787:1,lmv-48210922504363:5&coupon&cart_origin=meta_shops" \
+  | grep -o "<td>[^<]*</td>" | head -8
+```
+
+Expected once this branch is deployed: `HTTP/1.1 200`, `x-catalog-products: 387`,
+`cache-control: no-store, max-age=0, must-revalidate`, and the two feed rows
+carrying `Green Digital Printed Chinon Anarkali Suit Set, Mehendi Festive Outfit`
+/ `size S` and `Dusty Peach Embroidered A-Line Palazzo Suit, Chinon, Indian
+Wedding Outfit (Ready-to-Wear)` / `size S`. A `503` means Shopify's option shape
+drifted again — read the `[meta-catalog]` line in Vercel runtime logs for which.
+
+Then in Commerce Manager: **Catalog → Items**, search each `lmv-` ID and record
+the saved *title*, *size* and *last updated*, force a feed re-fetch, and rerun the
+checkout test with the same basket. Interpret it as follows — do not skip ahead:
+
+| Commerce Manager shows | Meaning | Action |
+|---|---|---|
+| Saved title **differs** from the live feed title | Stale record; the 503 blocked refresh | Re-fetch, wait for the import to report success, rerun the test |
+| Saved title **equals** the live feed and summary titles, test still fails on name | Meta is comparing something other than the stored `title` — most likely a variant-level name it composes from `title` + `size` | Capture Meta's exact diagnostic wording and the item's displayed name in Commerce Manager, then decide whether the feed *and* summary must both publish a size-suffixed title. Changing only one side would recreate this bug |
+| Feed re-fetch reports an error | Shopify-side data problem | Read the error text; the `[meta-catalog]` log line names the failing rule |
+
+**Not resolved.** Commerce Manager has not reported PASS, and this branch cannot
+make it report one from here — it removes the failure that was preventing Meta
+from refreshing the titles it validates against.
+
+Next: deploy, run the two curls above, then trigger a fresh catalog fetch in
+Commerce Manager and check the item records for both exact `lmv-` IDs and their
+last-updated time. Then rerun the validator. **Do not mark resolved until Meta
 passes.**
+
 
 ## Earlier browser-reset investigation (2026-11-26)
 
@@ -50,18 +197,26 @@ It provides a checkout link and browser handoff. GET and HEAD have matching
 headers; HEAD has no body. Existing permalink fallbacks and SPA handoffs remain.
 All clients receive the same page (no user-agent branching).
 
-Validation: 110 focused checkout tests passed before the latest feed-cache change;
-rerun the feed tests after this change. **Do not mark resolved until Meta passes.**
+Validation: 110 focused checkout tests passed before the latest feed-cache change.
+After the pilot-verification fix in this branch: `npm test` **1050 passed,
+0 failed, 5 skipped**, including the five new snapshot-parity tests in
+`tests/metaPilotFeed.test.mjs`. **Do not mark resolved until Meta passes.**
 
 Written 2026-11-25, updated 2026-11-26. Code: `api/meta-checkout.ts` + two
-`vercel.json` rewrites + one `middleware.ts` header rule.
-Tests: `tests/metaCheckoutTranslator.test.mjs` (40 assertions).
+`vercel.json` rewrites + one `middleware.ts` header rule; the feed fix is in
+`src/lib/metaPilot.ts` only.
+Tests: `tests/metaCheckoutTranslator.test.mjs` (40 assertions),
+`tests/metaPilotFeed.test.mjs` (12 tests, 5 derived from the captured Shopify
+snapshot).
 
 | Date | Change | Trigger |
 |---|---|---|
 | 2026-11-25 | Translator deployed (#314, `main` `75ddf82`) | *"The subtotal was incorrect"* |
 | 2026-11-26 | Bare `&coupon` treated as no coupon (#315, `main` `3e81410`) | Meta Preview sent `&coupon` with no value → 400 |
 | 2026-11-26 | Branded checkout host + server-side `cartCreate` + no `nofollow` on redirects (#316, `main` `21cea2a`) | *"The checkout page couldn't be loaded"* |
+| 2026-11-26 | Kept Shopify's own checkout hostname and storefront parameters (#319) | Cookie-less crawler could not reach checkout |
+| 2026-11-26 | `Cache-Control: no-store` on `/api/meta-catalog` (#320, `main` `f6d50b3`) | Suspected stale Vercel feed response |
+| 2026-11-26 | Pilot verification approves native `Alteration: Standard`, so the feed stops 503-ing (this branch) | *"A product name was incorrect"* |
 
 ## The problem, precisely
 
