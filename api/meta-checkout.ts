@@ -99,14 +99,25 @@ export function readAttribution(params: URLSearchParams): Record<string, string>
   return result;
 }
 
-/** Coupon rules match parseMetaCheckout(): present-but-empty is rejected, and
- *  control characters cannot ride along into the Shopify query string. */
+/**
+ * Meta's Preview tool appends a bare `&coupon` when no promotion was entered, so
+ * an absent, empty or blank value means "no coupon" and must still redirect.
+ * Mirrors parseMetaCheckout() in src/lib/metaCheckout.ts (`params.get('coupon')
+ * || null`), which tests/metaCheckout.test.mjs covers for '', '&coupon' and
+ * '&coupon=' — rejecting a blank here was a divergence from that source of truth
+ * and turned Meta's own checkout test into a 400.
+ *
+ * Length and control characters are still refused: neither can be allowed to ride
+ * along into the Shopify query string. The code is trimmed before forwarding,
+ * which the page does not do, because Shopify matches a discount code exactly.
+ */
 export function readCoupon(params: URLSearchParams): string | null | 'invalid' {
-  const coupon = params.get('coupon');
-  if (coupon === null) return null;
-  if (!coupon.trim() || coupon.length > MAX_COUPON_LENGTH
-    || Array.from(coupon).some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127)) return 'invalid';
-  return coupon;
+  const raw = params.get('coupon');
+  if (raw === null) return null;
+  if (raw.length > MAX_COUPON_LENGTH
+    || Array.from(raw).some(char => char.charCodeAt(0) < 32 || char.charCodeAt(0) === 127)) return 'invalid';
+  const coupon = raw.trim();
+  return coupon === '' ? null : coupon;
 }
 
 /**
@@ -156,7 +167,7 @@ export function translateMetaCheckout(search: string): TranslateResult {
 
   const coupon = readCoupon(params);
   if (coupon === 'invalid') {
-    return { kind: 'rejected', status: 400, body: 'This Meta shopping link contains an invalid discount code.' };
+    return { kind: 'rejected', status: 400, body: 'This Meta shopping link contains a discount code we cannot read.' };
   }
 
   const entries = raw.split(',');
@@ -199,10 +210,8 @@ export function translateMetaCheckout(search: string): TranslateResult {
     return { kind: 'spa-handoff', location: spaHandoffLocation(search), reason: unapproved ? 'unapproved' : 'malformed' };
   }
   // Merging duplicates can push a line past the cap; fail loudly, never trim.
-  for (const quantity of quantities.values()) {
-    if (quantity > MAX_QUANTITY) {
-      return { kind: 'rejected', status: 400, body: 'The requested quantity exceeds the limit of 99 per product.' };
-    }
+  if (Array.from(quantities.values()).some(quantity => quantity > MAX_QUANTITY)) {
+    return { kind: 'rejected', status: 400, body: 'The requested quantity exceeds the limit of 99 per product.' };
   }
 
   const lines = Array.from(quantities, ([variantId, quantity]) => ({ variantId, quantity }));
