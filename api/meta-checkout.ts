@@ -85,6 +85,9 @@ export const SHOPIFY_CHECKOUT_HOST = 'checkout.luxemia.shop';
 export const SHOPIFY_STORE_ORIGIN = `https://${SHOPIFY_CHECKOUT_HOST}`;
 /** Stable host for Storefront API calls, and the other verified checkout host. */
 export const SHOPIFY_PERMANENT_DOMAIN = 'lovable-project-zlh0w.myshopify.com';
+/** Keep server-created Meta carts on the same online-store checkout contract as the storefront. */
+const SHOPIFY_CHECKOUT_CHANNEL = 'online_store';
+const SHOPIFY_CHECKOUT_RETURN_URL = 'https://luxemia.shop/order-confirmation';
 
 /** Mirrors MAX_QUANTITY / entry caps in src/lib/metaCheckout.ts. */
 export const MAX_QUANTITY = 99;
@@ -403,6 +406,10 @@ export async function createStorefrontCart(
     // Keep Shopify's returned hostname. It is part of the checkout URL Shopify
     // issued and can affect its domain/session routing (including Shop Pay).
     // Do not rewrite it to the branded host even when both hosts are allowlisted.
+    // Match the normal storefront checkout contract: specify the channel and
+    // return destination before adding Meta's allowed attribution parameters.
+    url.searchParams.set('channel', SHOPIFY_CHECKOUT_CHANNEL);
+    url.searchParams.set('return_url', SHOPIFY_CHECKOUT_RETURN_URL);
     for (const [key, value] of Object.entries(attribution)) url.searchParams.set(key, value);
     return { url: url.toString(), total, lines: summaryLines };
   } catch {

@@ -543,6 +543,8 @@ test('a summary page shows the basket and links to the self-contained checkout',
   assert.match(location.pathname, /^\/cart\/c\/[^/]+$/, 'the token path safeCheckoutPath() blesses');
   assert.equal(location.searchParams.get('key'), 'secret', "Shopify's own cart key survives");
   assert.equal(location.searchParams.get('cart_origin'), 'meta_shops', 'attribution is still passed along');
+  assert.equal(location.searchParams.get('channel'), 'online_store');
+  assert.equal(location.searchParams.get('return_url'), 'https://luxemia.shop/order-confirmation');
   assert.equal(location.searchParams.has('discount'), false);
 
   assert.equal(calls.length, 1, 'exactly one Storefront call');
@@ -577,6 +579,8 @@ test('the Shopify-issued checkout hostname is preserved for localized and perman
   assert.equal(summaryLocation(second.result).hostname, SHOPIFY_PERMANENT_DOMAIN,
     'do not rewrite Shopify’s signed/session checkout URL to a different host');
   assert.equal(summaryLocation(second.result).searchParams.get('key'), 'secret');
+  assert.equal(summaryLocation(second.result).searchParams.get('channel'), 'online_store');
+  assert.equal(summaryLocation(second.result).searchParams.get('return_url'), 'https://luxemia.shop/order-confirmation');
 });
 
 test('without a token Shopify is never called and the permalink is used', async () => {

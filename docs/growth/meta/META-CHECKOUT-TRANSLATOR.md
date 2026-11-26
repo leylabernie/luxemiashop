@@ -9,8 +9,10 @@ The summary page's browser handoff was rewriting Shopify's Storefront API
 a URL on its permanent `myshopify.com` domain. The ordinary storefront checkout
 helper preserves Shopify's returned verified hostname. This Meta-only rewrite
 was removed: the handoff now keeps Shopify's exact allowlisted host and still
-preserves its cart key and other query values. This avoids changing a
-Shopify-issued checkout/session URL before Shop Pay processes it.
+preserves its cart key and other query values. The server handoff also now adds
+the same `channel=online_store` and trusted `return_url` as the normal storefront
+checkout helper, so Meta's cart uses the same Shopify online-store checkout
+contract before Shop Pay processes it.
 
 This is a code-level correction, **not proof of the reported connection reset's
 root cause or a verified live fix**. `checkout.luxemia.shop` is served by Shopify,
