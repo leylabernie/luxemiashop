@@ -24,6 +24,9 @@ const mod = { exports: {} };
 new Function('module', 'exports', 'require', compiled.outputFiles[0].text)(mod, mod.exports, createRequire(import.meta.url));
 const {
   SHOPIFY_STORE_ORIGIN,
+  SHOPIFY_CHECKOUT_HOST,
+  SHOPIFY_PERMANENT_DOMAIN,
+  createStorefrontCartUrl,
   MAX_QUANTITY,
   translateMetaCheckout,
   buildCartPermalink,
@@ -32,6 +35,10 @@ const {
   spaHandoffLocation,
   default: handler,
 } = mod.exports;
+
+for (const key of ['SHOPIFY_STOREFRONT_TOKEN', 'VITE_SHOPIFY_STOREFRONT_TOKEN', 'SHOPIFY_STOREFRONT_ACCESS_TOKEN']) {
+  delete process.env[key];
+}
 
 // Meta's own test cart, and the two approved pilot variants it names.
 const META_TEST_QUERY = '?products=lmv-48120657903787:1,lmv-48210922504363:5&cart_origin=meta_shops';
@@ -162,12 +169,33 @@ test('the coupon rule stays in step with the storefront page it mirrors', () => 
   assert.match(source, /bare `&coupon`/, 'the reason is still documented there too');
 });
 
-test('every response is uncacheable and kept out of search indexes', async () => {
-  for (const [search, method] of [[META_TEST_QUERY, 'GET'], [META_TEST_QUERY, 'HEAD'], ['?products=nope', 'GET'], [META_TEST_QUERY, 'POST']]) {
+test('every response is uncacheable, and no redirect tells a crawler not to follow it', async () => {
+  // `nofollow` on a 3xx can be read as "do not follow this redirect", which is
+  // one way Meta's server-side test reports "The checkout page couldn't be
+  // loaded" even though the redirect itself is correct.
+  for (const [search, method, robots] of [
+    [META_TEST_QUERY, 'GET', 'noindex'],
+    [META_TEST_QUERY, 'HEAD', 'noindex'],
+    ['?products=lmv-99999999999999:1', 'GET', 'noindex'],
+    ['?products=nope', 'GET', 'noindex, nofollow'],
+    [META_TEST_QUERY, 'POST', 'noindex, nofollow'],
+  ]) {
     const res = await call(search, method);
     assert.equal(res.headers.get('cache-control'), 'no-store', `${search} ${method}`);
-    assert.equal(res.headers.get('x-robots-tag'), 'noindex, nofollow', `${search} ${method}`);
+    assert.equal(res.headers.get('x-robots-tag'), robots, `${search} ${method}`);
+    assert.equal(res.statusCode === 302, robots === 'noindex', `${search} ${method}`);
   }
+});
+
+test('middleware does not overwrite that with nofollow on a private-route redirect', () => {
+  // /meta-checkout is in PRIVATE_SPA_ROUTES, and withResponseHeader() uses
+  // headers.set(), so middleware has the last word on X-Robots-Tag.
+  const source = readFileSync('middleware.ts', 'utf8');
+  const start = source.indexOf('PRIVATE_SPA_ROUTES.has(pathname)');
+  assert.ok(start > 0, 'the private-route branch still exists');
+  const block = source.slice(start, start + 900);
+  assert.match(block, /status >= 300 && privateResponse\.status < 400/, 'redirects are detected');
+  assert.match(block, /\?\s*'noindex'\s*:\s*'noindex, nofollow'/, 'a redirect gets noindex alone');
 });
 
 // ─── basket shaping ─────────────────────────────────────────────────────────
@@ -307,6 +335,10 @@ test('no redirect can be aimed anywhere but the Shopify store or this origin', a
     targets.add(location.startsWith('/') ? 'relative' : new URL(location).origin);
   }
   assert.deepEqual([...targets].sort(), [SHOPIFY_STORE_ORIGIN, 'relative'].sort());
+  assert.equal(SHOPIFY_STORE_ORIGIN, `https://${SHOPIFY_CHECKOUT_HOST}`);
+  assert.equal(SHOPIFY_CHECKOUT_HOST, 'checkout.luxemia.shop');
+  assert.ok(!SHOPIFY_STORE_ORIGIN.includes('myshopify.com'),
+    'shoppers and crawlers are sent to the branded host; the permanent myshopify domain only 301s there');
 });
 
 // ─── routing: which requests the function owns ──────────────────────────────
@@ -432,4 +464,194 @@ test('a session restore or a back-button review return never becomes a cart redi
   const served = await call(`?context=${token}`);
   assert.equal(served.statusCode, 302);
   assert.ok(locationOf(served).startsWith('/meta-checkout?'));
+});
+
+// ─── Storefront API: the self-contained checkout URL ────────────────────────
+//
+// A `/cart/<variant>:<qty>` permalink only becomes a basket if the client keeps
+// the cookies Shopify sets along the way. A server-side crawler keeps none, so
+// the function prefers a checkout URL that carries its own cart token — the same
+// `cartCreate` call the storefront page makes in the browser, moved server-side.
+
+const STOREFRONT_URL = `https://${SHOPIFY_PERMANENT_DOMAIN}/api/2025-10/graphql.json`;
+
+const cartPayload = () => ({
+  data: {
+    cartCreate: {
+      userErrors: [],
+      cart: {
+        id: 'gid://shopify/Cart/c1',
+        checkoutUrl: 'https://checkout.luxemia.shop/cart/c/TOKEN123?key=secret&_s=s1',
+        totalQuantity: 6,
+        cost: { totalAmount: { amount: '496.44', currencyCode: 'USD' } },
+        lines: {
+          pageInfo: { hasNextPage: false },
+          edges: [
+            { node: { quantity: 1, merchandise: { id: `gid://shopify/ProductVariant/${ANARKALI_S}`, price: { amount: '108.99', currencyCode: 'USD' } } } },
+            { node: { quantity: 5, merchandise: { id: `gid://shopify/ProductVariant/${PEACH_S}`, price: { amount: '77.49', currencyCode: 'USD' } } } },
+          ],
+        },
+      },
+    },
+  },
+});
+
+/** Mutate a copy of the happy payload, so each case breaks exactly one thing. */
+const brokenPayload = (mutate) => {
+  const payload = cartPayload();
+  mutate(payload.data.cartCreate.cart);
+  return payload;
+};
+
+const jsonStub = (payload, ok = true) => async () => ({
+  ok,
+  status: ok ? 200 : 500,
+  json: async () => payload,
+});
+
+async function withStorefront(fetchStub, body) {
+  const original = globalThis.fetch;
+  const calls = [];
+  process.env.SHOPIFY_STOREFRONT_TOKEN = 'test-storefront-token';
+  globalThis.fetch = async (url, init) => {
+    calls.push({ url: String(url), init });
+    return fetchStub(calls.length);
+  };
+  try {
+    return { result: await body(), calls };
+  } finally {
+    globalThis.fetch = original;
+    delete process.env.SHOPIFY_STOREFRONT_TOKEN;
+  }
+}
+
+test('a self-contained checkout URL is preferred over the cart permalink', async () => {
+  const { result: res, calls } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY));
+  assert.equal(res.statusCode, 302);
+  const location = new URL(locationOf(res));
+  assert.equal(location.hostname, SHOPIFY_CHECKOUT_HOST);
+  assert.match(location.pathname, /^\/cart\/c\/[^/]+$/, 'the token path safeCheckoutPath() blesses');
+  assert.equal(location.searchParams.get('key'), 'secret', "Shopify's own cart key survives");
+  assert.equal(location.searchParams.get('cart_origin'), 'meta_shops', 'attribution is still passed along');
+  assert.equal(location.searchParams.has('discount'), false);
+
+  assert.equal(calls.length, 1, 'exactly one Storefront call');
+  assert.equal(calls[0].url, STOREFRONT_URL);
+  assert.equal(calls[0].init.method, 'POST');
+  assert.equal(calls[0].init.headers['X-Shopify-Storefront-Access-Token'], 'test-storefront-token');
+  assert.equal(calls[0].init.cache, 'no-store');
+  const body = JSON.parse(calls[0].init.body);
+  assert.deepEqual(body.variables.input.lines, [
+    { quantity: 1, merchandiseId: `gid://shopify/ProductVariant/${ANARKALI_S}` },
+    { quantity: 5, merchandiseId: `gid://shopify/ProductVariant/${PEACH_S}` },
+  ], 'the exact basket Meta named, in its order');
+  assert.equal(body.variables.input.discountCodes, undefined, 'no coupon was sent');
+});
+
+test('the coupon is sent to Shopify as a discount code, and stays out of the URL', async () => {
+  const { result: res, calls } = await withStorefront(jsonStub(cartPayload()), () => call(`${META_TEST_QUERY}&coupon=FIRST10`));
+  assert.deepEqual(JSON.parse(calls[0].init.body).variables.input.discountCodes, ['FIRST10']);
+  const location = new URL(locationOf(res));
+  assert.equal(location.searchParams.get('discount'), null,
+    'the token URL carries the discount already; a second ?discount= would be redundant');
+});
+
+test('a localized checkout path is accepted and a myshopify URL is re-hosted', async () => {
+  const localized = brokenPayload(cart => { cart.checkoutUrl = 'https://checkout.luxemia.shop/en-ca/cart/c/TOKEN123?key=secret'; });
+  const first = await withStorefront(jsonStub(localized), () => call(META_TEST_QUERY));
+  assert.equal(new URL(locationOf(first.result)).pathname, '/en-ca/cart/c/TOKEN123');
+
+  const permanent = brokenPayload(cart => { cart.checkoutUrl = `https://${SHOPIFY_PERMANENT_DOMAIN}/cart/c/TOKEN123?key=secret`; });
+  const second = await withStorefront(jsonStub(permanent), () => call(META_TEST_QUERY));
+  assert.equal(new URL(locationOf(second.result)).hostname, SHOPIFY_CHECKOUT_HOST,
+    'whichever verified host Shopify names, the handoff is on the branded one');
+});
+
+test('without a token Shopify is never called and the permalink is used', async () => {
+  const original = globalThis.fetch;
+  let called = 0;
+  globalThis.fetch = async () => { called += 1; return jsonStub(cartPayload())(); };
+  try {
+    const res = await call(META_TEST_QUERY);
+    assert.equal(called, 0, 'no token, no API call');
+    assert.equal(res.statusCode, 302);
+    assert.equal(new URL(locationOf(res)).pathname, EXPECTED_CART_PATH);
+  } finally {
+    globalThis.fetch = original;
+  }
+});
+
+test('anything but the exact basket Meta named falls back to the permalink', async () => {
+  const extraLine = { node: { quantity: 1, merchandise: { id: 'gid://shopify/ProductVariant/999', price: { amount: '1.00', currencyCode: 'USD' } } } };
+  const cases = [
+    ['userErrors', () => ({ data: { cartCreate: { userErrors: [{ field: ['lines'], message: 'unavailable' }], cart: null } } })],
+    ['HTTP 500', () => cartPayload(), false],
+    ['no cart returned', () => ({ data: { cartCreate: { userErrors: [], cart: null } } })],
+    ['empty checkoutUrl', () => brokenPayload(cart => { cart.checkoutUrl = ''; })],
+    ['short totalQuantity', () => brokenPayload(cart => { cart.totalQuantity = 5; })],
+    ['a dropped line', () => brokenPayload(cart => { cart.lines.edges = cart.lines.edges.slice(0, 1); cart.totalQuantity = 1; })],
+    ['an extra line', () => brokenPayload(cart => { cart.lines.edges = [...cart.lines.edges, extraLine]; cart.totalQuantity = 7; })],
+    ['a reduced quantity', () => brokenPayload(cart => { cart.lines.edges[1].node.quantity = 4; cart.totalQuantity = 5; })],
+    ['a swapped variant', () => brokenPayload(cart => { cart.lines.edges[0].node.merchandise.id = 'gid://shopify/ProductVariant/123'; })],
+    ['non-USD total', () => brokenPayload(cart => { cart.cost.totalAmount.currencyCode = 'EUR'; })],
+    ['non-USD line price', () => brokenPayload(cart => { cart.lines.edges[0].node.merchandise.price.currencyCode = 'INR'; })],
+    ['a second page of lines', () => brokenPayload(cart => { cart.lines.pageInfo.hasNextPage = true; })],
+    ['an unverified host', () => brokenPayload(cart => { cart.checkoutUrl = 'https://checkout.luxemia.shop.evil.example/cart/c/TOKEN'; })],
+    ['a lookalike subdomain', () => brokenPayload(cart => { cart.checkoutUrl = 'https://sub.checkout.luxemia.shop/cart/c/TOKEN'; })],
+    ['a foreign myshopify store', () => brokenPayload(cart => { cart.checkoutUrl = 'https://other-store.myshopify.com/cart/c/TOKEN'; })],
+    ['non-https', () => brokenPayload(cart => { cart.checkoutUrl = 'http://checkout.luxemia.shop/cart/c/TOKEN'; })],
+    ['a permalink-shaped path', () => brokenPayload(cart => { cart.checkoutUrl = `https://checkout.luxemia.shop/cart/${ANARKALI_S}:1`; })],
+    ['a bare /cart path', () => brokenPayload(cart => { cart.checkoutUrl = 'https://checkout.luxemia.shop/cart'; })],
+    ['a traversal path', () => brokenPayload(cart => { cart.checkoutUrl = 'https://checkout.luxemia.shop/cart/c/TOKEN/../../admin'; })],
+  ];
+  for (const [label, payload, ok = true] of cases) {
+    const { result: res } = await withStorefront(jsonStub(payload(), ok), () => call(META_TEST_QUERY));
+    assert.equal(res.statusCode, 302, `${label}: still a redirect, never an error`);
+    const location = new URL(locationOf(res));
+    assert.equal(location.origin, SHOPIFY_STORE_ORIGIN, label);
+    assert.equal(location.pathname, EXPECTED_CART_PATH, `${label}: the fallback still names every item`);
+    assert.equal(location.searchParams.get('cart_origin'), 'meta_shops', label);
+  }
+});
+
+test('a network failure, a timeout or a malformed body also falls back', async () => {
+  const stubs = [
+    ['fetch throws', async () => { throw new Error('ECONNRESET'); }],
+    ['abort/timeout', async () => { throw new DOMException('The operation was aborted due to timeout', 'TimeoutError'); }],
+    ['unparseable JSON', async () => ({ ok: true, status: 200, json: async () => { throw new SyntaxError('Unexpected token'); } })],
+    ['null body', async () => ({ ok: true, status: 200, json: async () => null })],
+    ['GraphQL errors only', async () => ({ ok: true, status: 200, json: async () => ({ errors: [{ message: 'Throttled' }] }) })],
+  ];
+  for (const [label, stub] of stubs) {
+    const { result: res } = await withStorefront(stub, () => call(META_TEST_QUERY));
+    assert.equal(res.statusCode, 302, label);
+    assert.equal(new URL(locationOf(res)).pathname, EXPECTED_CART_PATH, label);
+  }
+});
+
+test('createStorefrontCartUrl is null for an empty basket and never throws', async () => {
+  process.env.SHOPIFY_STOREFRONT_TOKEN = 'test-storefront-token';
+  const original = globalThis.fetch;
+  let called = 0;
+  globalThis.fetch = async () => { called += 1; return jsonStub(cartPayload())(); };
+  try {
+    assert.equal(await createStorefrontCartUrl([], null, {}), null);
+    assert.equal(called, 0, 'an empty basket never reaches Shopify');
+    const url = await createStorefrontCartUrl(
+      [{ variantId: ANARKALI_S, quantity: 1 }, { variantId: PEACH_S, quantity: 5 }],
+      null,
+      { cart_origin: 'meta_shops', utm_source: 'instagram' },
+    );
+    assert.equal(new URL(url).searchParams.get('utm_source'), 'instagram');
+  } finally {
+    globalThis.fetch = original;
+    delete process.env.SHOPIFY_STOREFRONT_TOKEN;
+  }
+});
+
+test('the SPA handoff never calls Shopify: the page owns that basket', async () => {
+  const { result: res, calls } = await withStorefront(jsonStub(cartPayload()),
+    () => call('?products=lmv-99999999999999:1&cart_origin=meta_shops'));
+  assert.equal(calls.length, 0, 'nothing is created for a basket this function cannot resolve');
+  assert.equal(locationOf(res), '/meta-checkout?products=lmv-99999999999999%3A1&cart_origin=meta_shops&review=1');
 });
