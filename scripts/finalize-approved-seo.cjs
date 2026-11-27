@@ -15,7 +15,7 @@ const routeDescriptions = {
   '/suits': 'Shop Anarkali, sharara & ready-to-wear palazzo suits for Indian weddings and festivals. Clear sizing & free U.S. standard shipping on orders $150+.',
   '/menswear': 'Shop Indian groom sherwanis, embroidered kurta pajama & jacket sets for weddings and receptions. Tracked delivery & free U.S. standard shipping $150+.',
   '/collections/sharara-suits': 'Shop sharara suits & sharara sets for women for weddings & sangeet. Tracked DHL/FedEx delivery, 48-hour damage protection, free U.S. shipping $150+.',
-  '/collections/wedding-guest-outfits': 'Curated Indian wedding guest outfits for sangeet, mehendi & receptions. Free U.S. standard shipping at $150+ and no doorstep tariffs for U.S. buyers.',
+  '/collections/wedding-guest-outfits': 'Shop Indian wedding guest outfits & dresses for sangeet, mehendi & receptions, plus guest sarees. Free U.S. shipping at $150+, no doorstep tariffs.',
   '/jewelry': 'Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, included pieces, measurements and availability.',
 };
 

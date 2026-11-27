@@ -75,8 +75,8 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Navratri Chaniya Choli for Garba in the USA"
     },
     "/collections/wedding-guest-outfits": {
-      "title": "Indian Wedding Guest Outfits Online USA | LuxeMia",
-      "description": "Curated Indian wedding guest outfits for sangeet, mehendi & receptions. Free U.S. standard shipping at $150+ and no doorstep tariffs for U.S. buyers.",
+      "title": "Indian Wedding Guest Outfits & Dresses USA | LuxeMia",
+      "description": "Shop Indian wedding guest outfits & dresses for sangeet, mehendi & receptions, plus guest sarees. Free U.S. shipping at $150+, no doorstep tariffs.",
       "h1": "Indian Wedding Guest Sarees & Lehengas in the USA"
     },
     "/kids": {
