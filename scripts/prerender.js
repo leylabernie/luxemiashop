@@ -1816,7 +1816,7 @@ const routes = [
     image: 'https://cdn.shopify.com/s/files/1/0746/4707/7035/files/luxemia-4584171319-1.jpg?v=1791590961',
     category: 'collection:ready-to-wear-palazzo-suits',
     title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece | LuxeMia',
-    description: 'Shop stitched 3-piece ready-to-wear palazzo suits with embroidered top, trousers & dupatta. 3–4 day dispatch & free U.S. standard shipping at $150+.',
+    description: 'Shop readymade, ready-to-wear palazzo suit sets: stitched 3-piece with embroidered top, trousers & dupatta. 3–4 day dispatch; free U.S. shipping $150+.',
     h1: 'Ready-to-Wear Palazzo Suits',
     content: '<p>Explore embroidered three-piece sets in blush pink, aqua blue, lavender purple, green and rani pink. Each selected listing includes a stitched top, palazzo trousers and dupatta.</p><p>Compare current prices and listed sizes on each product page. Stocked, non-custom selections dispatch within 3–4 business days; carrier transit is additional.</p><p><a href="/size-guide">Check your measurements</a> · <a href="/shipping">Shipping rates and timing</a> · <a href="/ready-to-ship">All ready-to-ship outfits</a></p>',
   },
@@ -2193,7 +2193,7 @@ const routes = [
     path: '/sizing-measurements-guide',
     title: measurementTitle,
     titleMaxLength: 60,
-    description: 'Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable worksheet. Compare your measurements with the exact product listing before ordering.',
+    description: 'Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable measurement template. Compare your measurements with the exact product listing before ordering.',
     h1: 'Indian Clothing Measurement Guide',
     contentIncludesH1: true,
     schemas: [MEASUREMENT_HOW_TO_SCHEMA],
@@ -2350,8 +2350,8 @@ const routes = [
   {
     path: '/indowestern',
     category: 'indowestern',
-    title: 'Indo-Western Outfits USA | Fusion Wedding Wear | LuxeMia',
-    description: 'Shop Indo-Western outfits, embroidered gown sets & contemporary fusion wear for sangeet and receptions. Free U.S. standard shipping on orders $150+.',
+    title: 'Indo-Western Dresses & Fusion Wear Online USA | LuxeMia',
+    description: 'Shop Indo-Western dresses, fusion wear & embroidered gown sets for modern Indian weddings, sangeet and receptions. Free U.S. standard shipping $150+.',
     h1: 'Indo-Western Collection',
     content: `
       <p>Where tradition meets modernity. Explore our Indo-Western collection featuring fusion silhouettes, contemporary cuts, and ethnic embellishments for the modern woman.</p>

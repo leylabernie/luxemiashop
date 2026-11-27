@@ -10,7 +10,7 @@ const SizingMeasurementsGuide = () => (
     <SEOHead
       title={measurementTitle}
       titleMaxLength={60}
-      description="Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable worksheet. Compare your measurements with the exact product listing before ordering."
+      description="Measure for a saree blouse, lehenga, salwar suit, kurta or sherwani with a free printable measurement template. Compare your measurements with the exact product listing before ordering."
       canonical="https://luxemia.shop/sizing-measurements-guide"
       faqs={measurementFaqs}
       additionalSchemas={[howToMeasureSchema()]}

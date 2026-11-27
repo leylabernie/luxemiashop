@@ -92,8 +92,8 @@ export const STATIC_PAGE_METADATA: Record<string, PageMetadata> = {
     canonical: `${SITE_URL}/new-arrivals`,
   },
   '/indowestern': {
-    title: 'Indo-Western Collection | Fusion Wear Online | LuxeMia',
-    description: 'Browse currently listed Indo-Western and fusion outfits at LuxeMia. See exact product details, stitching, sizes, prices, processing information and availability.',
+    title: 'Indo-Western Dresses & Fusion Wear Online USA | LuxeMia',
+    description: 'Shop currently listed Indo-Western dresses and fusion wear at LuxeMia. See exact product details, stitching, sizes, prices and availability.',
     canonical: `${SITE_URL}/indowestern`,
   },
   '/nri': {
