@@ -52,8 +52,8 @@ const WeddingGuestOutfits = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Indian Wedding Guest Outfits Online USA | LuxeMia"
-        description="Curated Indian wedding guest outfits for sangeet, mehendi & receptions. Free U.S. standard shipping at $150+ and no doorstep tariffs for U.S. buyers."
+        title="Indian Wedding Guest Outfits & Dresses USA | LuxeMia"
+        description="Shop Indian wedding guest outfits & dresses for sangeet, mehendi & receptions, plus guest sarees. Free U.S. shipping at $150+, no doorstep tariffs."
         canonical="https://luxemia.shop/collections/wedding-guest-outfits"
         breadcrumbs={[
           { name: 'Home', url: '/' },
