@@ -65,8 +65,8 @@ const Indowestern = () => {
   return (
     <div className="min-h-screen bg-background">
       <SEOHead
-        title="Buy Indo-Western Dresses Online | Fusion Indian Outfits USA | LuxeMia"
-        description="Shop Indo-Western outfits, embroidered gown sets & contemporary fusion wear for sangeet and receptions. Free U.S. standard shipping on orders $150+."
+        title="Indo-Western Dresses & Fusion Wear Online USA | LuxeMia"
+        description="Shop Indo-Western dresses, fusion wear & embroidered gown sets for modern Indian weddings, sangeet and receptions. Free U.S. standard shipping $150+."
         canonical="https://luxemia.shop/indowestern"
         breadcrumbs={[
           { name: 'Home', url: '/' },
