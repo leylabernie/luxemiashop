@@ -1,6 +1,7 @@
 import { recoveredBlogPosts } from './recoveredBlogPosts.js';
 import { seoGrowthBlogPosts } from './seoGrowthBlogPosts.js';
 import { semanticCommerceGuides } from './semanticCommerceGuides.js';
+import { sizingFitCalloutHtml, sizingEndCalloutHtml } from './sizingCalloutCopy.js';
 
 export interface BlogSource {
   title: string;
@@ -349,6 +350,7 @@ export const blogPosts: BlogPost[] = [
           <tr><td>Men's versus women's sizes</td><td>Use the chart for that garment's cut. Matching letter labels do not imply matching chest, bust, waist or hip dimensions.</td></tr>
         </tbody>
       </table>
+      ${sizingFitCalloutHtml}
 
       <h2>What is Indian shirt size 42 in US sizing?</h2>
       <p>A shirt label marked 42 does not establish a U.S. size. First check the seller's chart: does 42 refer to a body chest measurement, a finished-shirt measurement, or a size code? Only if the chart explicitly says <strong>42-inch chest</strong> can you convert that measurement to <strong>106.68 cm</strong>. It still does not establish a universal U.S. L or XL.</p>
@@ -384,6 +386,7 @@ export const blogPosts: BlogPost[] = [
 
       <h2>What LuxeMia does and does not promise</h2>
       <p>Available sizes, stitching status, margins and customization options vary by product. A general guide cannot guarantee fit. Review the exact listing and the <a href="/sizing-measurements-guide">LuxeMia measurement guide</a>; for a final-sale order, ask about any unclear measurement before purchasing. If you are comparing silhouettes while checking measurements, browse <a href="/collections/gharara-suits">Gharara Suits</a>, <a href="/collections/anarkali-suits">Anarkali Suits</a>, and <a href="/collections/sharara-suits">Sharara Suits</a>.</p>
+      ${sizingEndCalloutHtml}
     `,
     author: EDITORIAL_TEAM,
     publishedAt: '2026-07-15',

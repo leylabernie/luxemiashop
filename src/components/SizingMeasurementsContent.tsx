@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { ArrowRight, CheckCircle2, ClipboardList, Printer, Ruler, Users } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import SizingCallout from '@/components/SizingCallout';
+import { SIZING_CALLOUT_TOP, SIZING_CALLOUT_FIT, SIZING_CALLOUT_END } from '@/data/sizingCalloutCopy';
 
 type MeasurementRow = {
   name: string;
@@ -91,6 +93,8 @@ export default function SizingMeasurementsContent({ isStaticFallback = false }: 
             </div>
           </div>
         </section>
+
+        <SizingCallout ariaLabel="Ready-to-Ship shopping" text={SIZING_CALLOUT_TOP.text} label={SIZING_CALLOUT_TOP.label} href={SIZING_CALLOUT_TOP.href} />
 
         <section className="no-print py-14">
           <div className="container mx-auto px-4">
@@ -211,6 +215,8 @@ export default function SizingMeasurementsContent({ isStaticFallback = false }: 
           </div>
         </section>
 
+        <SizingCallout ariaLabel="Fit support" {...SIZING_CALLOUT_FIT} />
+
         <section className="no-print bg-secondary/30 py-16">
           <div className="container mx-auto px-4">
             <div className="mx-auto max-w-3xl">
@@ -226,6 +232,8 @@ export default function SizingMeasurementsContent({ isStaticFallback = false }: 
             </div>
           </div>
         </section>
+
+        <SizingCallout ariaLabel="Shop LuxeMia collections" {...SIZING_CALLOUT_END} />
 
         <section className="no-print bg-primary py-16 text-primary-foreground">
           <div className="container mx-auto px-4 text-center">

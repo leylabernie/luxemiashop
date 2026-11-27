@@ -36,7 +36,7 @@ const LANDINGS: Record<CommercialLandingSlug, CommercialLandingDefinition> = {
     categorySlug: 'suits',
     subcategorySlug: 'sharara',
     name: 'Sharara Suits',
-    title: 'Sharara Suits Online USA | Wedding Sets | LuxeMia',
+    title: 'Sharara Suits Online USA | Designer Sets | LuxeMia',
     description: 'Shop sharara suits online in the USA. Compare current colors, stated fabric, embroidery, included kurti, sharara and dupatta pieces, sizing and availability.',
     editorialTitle: 'Shop Sharara Suits Online for Weddings and Celebrations',
     editorialContent: (

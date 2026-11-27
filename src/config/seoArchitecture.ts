@@ -10,13 +10,13 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Curated Indian Wedding & Festive Wear, Delivered to Your Door."
     },
     "/lehengas": {
-      "title": "Bridal & Wedding Lehengas Online USA | LuxeMia",
-      "description": "Shop bridal, sangeet & wedding guest lehenga choli online. Silk, organza & georgette sets, stitching options & free U.S. standard shipping at $150+.",
+      "title": "Bridal & Party Wear Lehengas Online USA | LuxeMia",
+      "description": "Shop bridal & wedding guest lehengas online in the USA. Stitching options, 2-inch seam allowance on custom blouses & free U.S. shipping at $150+.",
       "h1": "Wedding & Festive Lehenga Choli Online in the USA"
     },
     "/sarees": {
-      "title": "Indian Wedding Sarees Online USA | LuxeMia",
-      "description": "Shop Banarasi, silk, georgette & ready-to-wear wedding sarees online. Optional blouse stitching, Fall & Pico & free U.S. standard shipping at $150+.",
+      "title": "Indian Sarees Online USA | Silk & Designer | LuxeMia",
+      "description": "Shop Banarasi, silk & pre-draped sarees online in the USA. Tracked DHL/FedEx shipping, 48-hour damage protection & free U.S. shipping at $150+.",
       "h1": "Indian Wedding Sarees Online in the USA"
     },
     "/suits": {
@@ -55,8 +55,8 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Designer & Party-Wear Sarees Online in the USA"
     },
     "/collections/sharara-suits": {
-      "title": "Sharara Suits Online USA | Wedding Sets | LuxeMia",
-      "description": "Shop embroidered sharara suits for sangeet, mehendi & Indian wedding guests. Complete kurti & dupatta sets with free U.S. standard shipping at $150+.",
+      "title": "Sharara Suits Online USA | Designer Sets | LuxeMia",
+      "description": "Shop embroidered sharara suit sets for sangeet & weddings. Tracked DHL/FedEx delivery, 48-hour damage protection & free U.S. shipping at $150+.",
       "h1": "Sharara Suits Online in the USA"
     },
     "/collections/gharara-suits": {
@@ -75,8 +75,8 @@ const architecture = /* seo-architecture-json:start */ {
       "h1": "Navratri Chaniya Choli for Garba in the USA"
     },
     "/collections/wedding-guest-outfits": {
-      "title": "Indian Wedding Guest Outfits USA | LuxeMia",
-      "description": "Shop Indian wedding guest lehengas, sarees & suits for sangeet, mehendi and receptions. Tracked delivery & free U.S. standard shipping on orders $150+.",
+      "title": "Indian Wedding Guest Outfits Online USA | LuxeMia",
+      "description": "Curated Indian wedding guest outfits for sangeet, mehendi & receptions. Free U.S. standard shipping at $150+ and no doorstep tariffs for U.S. buyers.",
       "h1": "Indian Wedding Guest Sarees & Lehengas in the USA"
     },
     "/kids": {

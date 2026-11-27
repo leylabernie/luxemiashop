@@ -29,6 +29,7 @@ import { DeliveryEstimate } from './DeliveryEstimate';
 import { ProductDeliverySummary } from './ProductDeliverySummary';
 import { EstimatedDeliveryBadge } from '../pdp/EstimatedDeliveryBadge';
 import { SizingAlterationCallout } from '../pdp/SizingAlterationCallout';
+import { WhyBuyFromLuxeMia } from '../pdp/WhyBuyFromLuxeMia';
 import { SocialShare } from './SocialShare';
 import { NecklineSelector, type NecklineOption } from './NecklineSelector';
 import { BottomStyleSelector, type BottomStyleOption } from './BottomStyleSelector';
@@ -1754,6 +1755,8 @@ export const ProductInfo = ({ product: rawProduct, onSelectedVariantChange, onSt
               confirmAvailability: product.tags?.includes('availability:Confirm before ordering'),
             })}
           </p>
+
+          <WhyBuyFromLuxeMia />
         </div>
 
         {productHasNativeSizes && (
