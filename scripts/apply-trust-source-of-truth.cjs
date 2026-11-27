@@ -192,7 +192,7 @@ function updateArchitectureObject(architecture) {
     h1: HOME_H1,
   };
   if (routes['/lehengas']) {
-    routes['/lehengas'].title = 'Bridal & Wedding Lehengas Online USA | LuxeMia';
+    routes['/lehengas'].title = 'Bridal & Party Wear Lehengas Online USA | LuxeMia';
     routes['/lehengas'].description = 'Shop bridal and wedding-guest lehengas online in the USA. Compare fabric, included pieces, stitching, sizing, availability and product-level processing details.';
   }
   if (routes['/suits']) {

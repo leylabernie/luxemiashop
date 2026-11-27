@@ -2412,8 +2412,8 @@ const routes = [
   {
     path: '/collections/wedding-guest-outfits',
     category: 'occasion:wedding-guest',
-    title: 'Indian Wedding Guest Outfits — What to Wear to an Indian Wedding | LuxeMia',
-    description: 'Shop Indian wedding guest lehengas, sarees & suits for sangeet, mehendi and receptions. Tracked delivery & free U.S. standard shipping on orders $150+.',
+    title: getIndexableRouteSeo('/collections/wedding-guest-outfits').title,
+    description: getIndexableRouteSeo('/collections/wedding-guest-outfits').description,
     h1: 'Indian Wedding Guest Outfits',
     content: `
       <p>This collection shows currently available products whose catalog title, product type, or tags explicitly mention a wedding-guest role, bridesmaid role, sangeet, or reception.</p>
