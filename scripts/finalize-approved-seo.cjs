@@ -10,11 +10,11 @@ const HOME_H1 = 'Curated Indian Wedding & Festive Wear, Delivered to Your Door.'
 const DESTINATIONS = 'the United States, Canada, the United Kingdom, Australia, New Zealand, South Africa, and Mauritius';
 
 const routeDescriptions = {
-  '/lehengas': 'Shop bridal & wedding guest lehengas online in the USA. Stitching options, 2-inch seam allowance on custom blouses & free U.S. shipping at $150+.',
-  '/sarees': 'Shop Banarasi, silk & pre-draped sarees online in the USA. Tracked DHL/FedEx shipping, 48-hour damage protection & free U.S. shipping at $150+.',
+  '/lehengas': 'Shop bridal lehenga, wedding & party wear lehengas online in the USA. Stitching options, 2-inch seam allowance on custom blouses, free U.S. shipping $150+.',
+  '/sarees': 'Shop Indian wedding sarees online in the USA: Banarasi, silk & designer. Tracked DHL/FedEx shipping, 48-hour damage protection, free U.S. shipping $150+.',
   '/suits': 'Shop Anarkali, sharara & ready-to-wear palazzo suits for Indian weddings and festivals. Clear sizing & free U.S. standard shipping on orders $150+.',
   '/menswear': 'Shop Indian groom sherwanis, embroidered kurta pajama & jacket sets for weddings and receptions. Tracked delivery & free U.S. standard shipping $150+.',
-  '/collections/sharara-suits': 'Shop embroidered sharara suit sets for sangeet & weddings. Tracked DHL/FedEx delivery, 48-hour damage protection & free U.S. shipping at $150+.',
+  '/collections/sharara-suits': 'Shop sharara suits & sharara sets for women for weddings & sangeet. Tracked DHL/FedEx delivery, 48-hour damage protection, free U.S. shipping $150+.',
   '/collections/wedding-guest-outfits': 'Curated Indian wedding guest outfits for sangeet, mehendi & receptions. Free U.S. standard shipping at $150+ and no doorstep tariffs for U.S. buyers.',
   '/jewelry': 'Shop Kundan-style, polki-style and bridal necklace sets. Compare materials, finish, included pieces, measurements and availability.',
 };
