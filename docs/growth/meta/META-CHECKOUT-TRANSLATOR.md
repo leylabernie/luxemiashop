@@ -483,3 +483,45 @@ Not resolved yet: Commerce Manager has not reported PASS. Next steps — merge t
 change, redeploy production (the diagnostics window through 2026-11-27T18:00Z
 covers it), re-run the checkout validation, and only then remove
 `META_CHECKOUT_DIAGNOSTICS` / `META_CHECKOUT_DIAGNOSTICS_UNTIL` and redeploy.
+
+## Amendment — auto-redirect vs. visible DOM text (2026-11-27)
+
+Correction to the "The visible rendering was never the problem" line in the
+2026-11-26 section: with hindsight and new evidence, that assertion was
+premature.
+
+What the evidence shows now (2026-11-26/27):
+
+- The 22:00Z browser smoke test loaded `/meta-checkout` and was forwarded to
+  Shopify checkout (`checkout.luxemia.shop`) within ~1s: the page carries
+  `<script>window.location.replace("<cart.url>")</script>` — an unconditional
+  client-side redirect. Two independent headless probes (22:00Z and later)
+  landed on `checkout.luxemia.shop` and saw a headless error shell: **no line
+  items in the DOM**, a red "There was a problem with our checkout" banner,
+  Request IDs `a60c3a08afb42e05` and `a60cfa57cb3ccb80`.
+- A real browser (desktop) renders the checkout perfectly: both line items with
+  titles and size S, subtotal/total $496.44, working Pay now button, no error
+  banner. Shopify Payments is healthy; nothing else broke.
+- On a **mobile** viewport (Meta's validator simulates one), Shopify's checkout
+  collapses the order summary behind a "Show order summary" accordion —
+  `element.innerText` excludes collapsed content, so no product-name string is
+  visible even though the total ($496.44) is visible in the collapsed bar. That
+  matches the observed split verdict exactly: subtotal ✓, product name ✗.
+- Microdata/JSON-LD (sku binding from the previous fix) is invisible to a
+  validator that matches visible DOM text; it is still correct to keep, but is
+  not what binds the verdict.
+
+Fix (`api/meta-checkout.ts`, `buildCheckoutSummaryHtml`): remove the
+`window.location.replace(cart.url)` line. `/meta-checkout` now stays on the
+server-rendered summary page — exact catalog titles as plain visible text,
+fully visible at any viewport (it is static HTML, no accordion), subtotal
+plainly visible, plus the "Proceed to Checkout" CTA button for real users (one
+extra tap). Regression test: `tests/metaCheckoutTranslator.test.mjs` gained
+`the summary page stays on the readable page instead of auto-forwarding the
+visitor`, which asserts the absence of `window.location.replace`, the presence
+of `Proceed to Checkout`, and both exact title strings as visible anchor text.
+
+Status: **HYPOTHESIS, awaiting Meta verdict.** This mechanism is the strongest
+explanation consistent with every observation to date. The flag must only be
+treated as cleared when Commerce Manager reports PASS on a fresh validation —
+the repo cannot verify that itself.
