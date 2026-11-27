@@ -44,7 +44,7 @@ const collectionConfigs: Record<string, ShopifyCollectionPageConfig> = {
     name: 'Ready-to-Wear Palazzo Suits',
     eyebrow: 'Embroidered Three-Piece Sets',
     title: 'Ready-to-Wear Palazzo Suits | Stitched 3-Piece | LuxeMia',
-    description: 'Shop stitched 3-piece ready-to-wear palazzo suits with embroidered top, trousers & dupatta. 3–4 day dispatch & free U.S. standard shipping at $150+.',
+    description: 'Shop readymade, ready-to-wear palazzo suit sets: stitched 3-piece with embroidered top, trousers & dupatta. 3–4 day dispatch; free U.S. shipping $150+.',
     canonical: 'https://luxemia.shop/collections/ready-to-wear-palazzo-suits',
     intro: 'Explore embroidered three-piece sets in blush pink, aqua blue, lavender purple, green and rani pink. Each reviewed listing includes a stitched top, palazzo trousers and dupatta. Open a product to compare its current price and size options.',
     editorialTitle: 'A Complete Outfit, with Fit Details to Check',

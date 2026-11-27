@@ -66,7 +66,7 @@ const architecture = /* seo-architecture-json:start */ {
     },
     "/collections/anarkali-suits": {
       "title": "Anarkali Suits Online USA | Wedding & Party Wear | LuxeMia",
-      "description": "Shop embroidered Anarkali suits & gowns in silk, chinon and georgette for weddings, sangeet & receptions. Free U.S. standard shipping at $150+.",
+      "description": "Shop designer Anarkali suits & gowns for weddings, sangeet & receptions in silk, chinon and georgette. Free U.S. standard shipping at $150+.",
       "h1": "Anarkali Suits Online in the USA"
     },
     "/collections/navratri-outfits": {
