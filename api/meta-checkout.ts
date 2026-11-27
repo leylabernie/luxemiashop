@@ -519,7 +519,6 @@ a.button{display:inline-block;background:#1a1a1a;color:#fff;padding:.8rem 1.6rem
 <p class="total">Subtotal: $${cart.total}</p>
 <p class="note">Tax and shipping are calculated at checkout.</p>
 <a class="button" href="${url}">Proceed to Checkout</a>
-<script>window.location.replace(${JSON.stringify(cart.url).replace(/</g, '\\u003c')});</script>
 </body>
 </html>`;
 }

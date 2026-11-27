@@ -797,3 +797,20 @@ test('diagnostics distinguish HEAD summary and unavailable-cart redirect without
     delete process.env.META_CHECKOUT_DIAGNOSTICS_UNTIL;
   }
 });
+
+test('the summary page stays on the readable page instead of auto-forwarding the visitor', async () => {
+  // Meta's checkout validator matches the *visible DOM text* of the page where
+  // the /meta-checkout URL finally settles. An instant client-side redirect
+  // (window.location.replace) forwards mobile headless loads to Shopify's
+  // checkout, where the order summary is collapsed behind an accordion and the
+  // line-item titles are not visible — which reads to the validator as
+  // "A product name was incorrect" even though every byte here is correct.
+  const { result: res } = await withStorefront(jsonStub(cartPayload()), () => call(META_TEST_QUERY));
+  assert.equal(res.statusCode, 200);
+  assert.doesNotMatch(res.body, /window\.location\.replace/);
+  assert.match(res.body, />Proceed to Checkout</);
+  // The exact catalog title strings appear as plain, visible text (innerText-reachable).
+  assert.match(res.body, />Anarkali green chinon S</);
+  assert.match(res.body, />Dusty peach palazzo suit S</);
+  assert.match(res.body, /Subtotal: \$496\.44/);
+});
