@@ -25,11 +25,11 @@ export const measurementFaqs = [
   },
   {
     question: 'Is there an Indian clothes measurement template I can print?',
-    answer: 'Yes. Use the free printable worksheet on this page to record bust, waist, hip, shoulder, sleeve, blouse length, yoke length and other measurements for a saree blouse, lehenga, salwar suit, kurta or sherwani. Print it or save it as a PDF from your browser, then compare each number with the size information on the exact product page.',
+    answer: 'Yes. Use the free printable worksheet on this page to record bust, waist, hip, shoulder, sleeve, blouse length and other measurements for a saree blouse, lehenga, salwar suit, kurta or sherwani. Write yoke length in the blank space or notes if your outfit needs it. Print it or save it as a PDF from your browser, then compare each number with the size information on the exact product page.',
   },
   {
     question: 'Which measurements does an Indian tailor usually ask for?',
-    answer: 'Tailors commonly ask for bust or chest, waist, hip, shoulder width, armhole, sleeve length and round, front and back neck depth, yoke length, top or blouse length, and for bottoms the waist-to-ankle length. Record each measurement twice on the worksheet, and ask the tailor which ones they need for the specific garment.',
+    answer: 'Tailors commonly ask for bust or chest, waist, hip, shoulder width, armhole, sleeve length and round, front and back neck depth, yoke length, top or blouse length, and for bottoms the waist-to-ankle length. Record each measurement twice, and ask the tailor which ones they need for the specific garment.',
   },
   {
     question: 'What measurements do I need for a lehenga?',
