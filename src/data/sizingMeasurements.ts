@@ -19,6 +19,22 @@ export const measurementFaqs = [
     question: 'Does completing this worksheet mean tailoring is included?',
     answer: 'No. This is a free planning worksheet. Choose only the size or stitching options shown on the product page, and confirm any measurement-based service before ordering.',
   },
+  {
+    question: 'What is yoke length and how do I measure it for an Indian dress?',
+    answer: 'Yoke length is the vertical distance from the high point of your shoulder (where the neck meets the shoulder) down to the seam where the yoke ends on a kurta, kameez, anarkali or blouse. Hold the tape straight down the front without pulling it tight and note the number. Yoke depth differs by design, so always follow the measurement instructions on the product page or from your tailor.',
+  },
+  {
+    question: 'Is there an Indian clothes measurement template I can print?',
+    answer: 'Yes. Use the free printable worksheet on this page to record bust, waist, hip, shoulder, sleeve, blouse length, yoke length and other measurements for a saree blouse, lehenga, salwar suit, kurta or sherwani. Print it or save it as a PDF from your browser, then compare each number with the size information on the exact product page.',
+  },
+  {
+    question: 'Which measurements does an Indian tailor usually ask for?',
+    answer: 'Tailors commonly ask for bust or chest, waist, hip, shoulder width, armhole, sleeve length and round, front and back neck depth, yoke length, top or blouse length, and for bottoms the waist-to-ankle length. Record each measurement twice on the worksheet, and ask the tailor which ones they need for the specific garment.',
+  },
+  {
+    question: 'What measurements do I need for a lehenga?',
+    answer: 'For the choli, record bust, under-bust, waist, shoulder, armhole, sleeve and blouse length. For the skirt, record waist and the length from your natural waist to the floor while wearing the shoes you plan to wear. Check the product page for the listed sizes and stitching status before ordering.',
+  },
 ];
 
 export const measurementTitle = 'Indian Clothing Measurements & Printable Worksheet | LuxeMia';
